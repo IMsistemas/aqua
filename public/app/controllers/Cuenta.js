@@ -1,6 +1,6 @@
 app.controller('suministrosController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
-    $http.get(API_URL + "suministros")
+    $http.get(API_URL + "suministros/getsuministros")
             .success(function(response) {
                 $scope.suministros = response;
             });

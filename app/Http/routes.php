@@ -12,8 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('Suministros\index');
+    return view('welcome');
 });
-
-Route::get('/suministros/','Suministros\SuministroController@index');
-Route::get('/suministros/{id}','Suministros\SuministroController@getsuministro');
