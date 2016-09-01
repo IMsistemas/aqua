@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Modelos\Cuentas\RubroFijo;
+use App\Modelos\Cuentas\RubroVariable;
 use App\Modelos\Suministros\Suministro;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Tarifas\Tarifa;
@@ -32,6 +34,20 @@ class CobroAguaController extends Controller
 	public function getSuministro($numeroSuministro){
         $suministro = Suministro::with('cliente','tarifa','calle')->get();
         return $suministro[$numeroSuministro-1];
+    }
+
+    /**
+	*Retorna los rubros variables de la junta
+	**/
+    public function getRubrosVariables(){
+    	return RubroVariable::all();
+    }
+
+    /**
+	*Retorna los rubros fijos de la junta
+	**/
+    public function getRubrosFijos(){
+    	return RubroFijo::all();
     }
 
     /**

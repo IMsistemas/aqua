@@ -66,8 +66,16 @@
 									</tr>
 								</thead>
 								<tbody>
-									<td></td>
-									<td></td>
+									<tr ng-repeat="rubroVariable in rubrosVariables">
+										<td>{{rubroVariable.nombrerubrovariable}}</td>
+										<td><input type="text" name=""></td>	
+									</tr>
+
+									<tr ng-repeat="rubroFijo in rubrosFijos">
+										<td>{{rubroFijo.nombrerubrofijo}}</td>
+										<td><input type="text" name=""></td>	
+									</tr>
+
 								</tbody>
 							</table>
 

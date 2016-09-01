@@ -25,6 +25,10 @@ Route::get('/recaudacion/otrosrubros', function (){
 Route::get('/recaudacion/otrosrubros/suministros','Cuentas\CobroAguaController@getSuministros');
 //Ruta devuelve un arreglo de un solo suministro a AngularJS 
 Route::get('/recaudacion/otrosrubros/suministros\{id}','Cuentas\CobroAguaController@getSuministro');
+//Ruta devuelve un arreglo de todos los rubros variables a AngularJS
+Route::get('/recaudacion/otrosrubros/rubrosvariables','Cuentas\CobroAguaController@getRubrosVariables');
+//Ruta devuelve un arreglo de todos los rubros fijos a AngularJS
+Route::get('/recaudacion/otrosrubros/rubrosfijos','Cuentas\CobroAguaController@getRubrosFijos');
 
 /*Christian*/
 

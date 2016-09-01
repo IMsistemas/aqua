@@ -4,6 +4,16 @@ app.controller('otrosRubrosController', function($scope, $http, API_URL) {
             .success(function(response) {
                 $scope.suministros = response;
             });
+
+     $http.get(API_URL + "recaudacion/otrosrubros/rubrosfijos")
+            .success(function(response) {
+                $scope.rubrosFijos = response;
+            });
+
+      $http.get(API_URL + "recaudacion/otrosrubros/rubrosvariables")
+            .success(function(response) {
+                $scope.rubrosVariables = response;
+            });
      
     $scope.modalIngresoOtrosRubros = function(numeroSuministro){
         $scope.suministro = $scope.suministros[numeroSuministro-1];
