@@ -1,17 +1,14 @@
-app.controller('suministrosController', function($scope, $http, API_URL) {
+app.controller('otrosRubrosController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
-    $http.get(API_URL + "suministros/getsuministros")
+    $http.get(API_URL + "recaudacion/otrosrubros")
             .success(function(response) {
                 $scope.suministros = response;
             });
      
-    $scope.modalNuevaRecaudacion = function(numeroSuministro){
-        $http.get(API_URL + 'suministros/'+numeroSuministro)
-            .success(function(response){
-                $scope.suministro = response;
-            })
-         $('#nueva-recaudacion').modal('show');
-    }
+    $scope.modalIngresoOtrosRubros = function(numeroSuministro){
+        $scope.suministro = $scope.suministros[numeroSuministro-1];
+        $('#ingresar-otros-rubros').modal('show');
+    };
 
 /*
     //save new record / update existing record
