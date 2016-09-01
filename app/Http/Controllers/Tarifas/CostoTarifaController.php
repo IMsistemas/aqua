@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\\Tarifas;
+namespace App\Http\Controllers\Tarifas;
 
 use Illuminate\Http\Request;
 
