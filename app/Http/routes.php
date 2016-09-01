@@ -20,7 +20,7 @@ Route::get('/', function () {
 //Ruta agina de inicio para el ingreso de otros rubros antes de tomar la lectura
 Route::get('/recaudacion/otrosrubros', function (){
 	return view('cuentas/otros-rubros');
-})
+});
 //Ruta devuelve un arreglo de todos los suministros a AngularJS 
 Route::get('/recaudacion/otrosrubros/suministros','Cuentas\CobroAguaController@getSuministros');
 //Ruta devuelve un arreglo de un solo suministro a AngularJS 

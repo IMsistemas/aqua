@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es-ES" ng-app="softver-aqua">
 <head>
-	<title>Aqua-Suministros</title>
+	<title>Aqua-Recaudacion</title>
 	<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
 </head>
 <body>
-	<div class="container" ng-controller="suministrosController">
-		<h2>Suministros</h2>
+	<div class="container" ng-controller="otrosRubrosController">
+		<h2>Ingreso de otros rubros </h2>
 		<table class="table">
 			<thead>
 				<tr>
@@ -28,13 +28,13 @@
 					<td>{{suministro.direccionsuministro}}</td>
 					<td>{{suministro.telefonosuministro}}</td>
 					<td>
-						<button class="btn btn-success btn-xs btn-delete" ng-click="modalNuevaRecaudacion(suministro.numerosuministro)">Otros Rubros</button>
+						<button class="btn btn-success btn-xs btn-delete" ng-click="modalIngresoOtrosRubros(suministro.numerosuministro)">Otros Rubros</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="modal fade" id="nueva-recaudacion" tabindex="-1" role="dialog">
+		<div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -42,7 +42,7 @@
 						<h5>Fecha:{{"22/04/2016"}}</h5>
 					</div>
 					<div class="modal-body">
-						<form name="formularioRecaudacion" class="form-horizonal" novalidate="">
+						<form name="formularioOtrosRubros" class="form-horizonal" novalidate="">
 							<label>Período</label> <br>
 							<label>Año</label>
 							<select>
@@ -89,7 +89,7 @@
         
         <!-- AngularJS Application Scripts -->
         <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/suministros.js') ?>"></script>
+        <script src="<?= asset('app/controllers/otrosRubrosController.js') ?>"></script>
 	
 </body>
 </html>

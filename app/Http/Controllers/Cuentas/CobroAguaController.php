@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\\Cuentas;
+namespace App\Http\Controllers\Cuentas;
 
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Tarifas\Tarifa;
 use App\Modelos\Sectores\Calle;
 
-class CobroAgua extends Controller
+class CobroAguaController extends Controller
 {
 
 	/**

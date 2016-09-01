@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\\Nomina;
+namespace App\Http\Controllers\Nomina;
 
 use Illuminate\Http\Request;
 

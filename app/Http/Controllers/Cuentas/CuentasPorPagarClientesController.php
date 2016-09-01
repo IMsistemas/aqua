@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\\Cuentas;
+namespace App\Http\Controllers\Cuentas;
 
 use Illuminate\Http\Request;
 

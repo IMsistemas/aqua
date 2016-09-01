@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\\Lecturas;
+namespace App\Http\Controllers\Lecturas;
 
 use Illuminate\Http\Request;
 
