@@ -8,9 +8,9 @@
 	<div class="container" ng-controller="recaudacionController">
 		<h2>Recaudación</h2>
 
-		<input type="text" ng-pagination-search="cuentas" ng-pagination-size="2">
+		<input type="text" ng-pagination-search="cuentas" >
 		<table class="table">
-			<thead>
+			<thead class="thead-inverse">
 				<tr>
 					<th>Período</th>
 					<th>Nro. Suministro</th>
@@ -19,19 +19,25 @@
 					<th>Ubicación</th>
 					<th>Dirección</th>
 					<th>Teléfono</th>
+					<th>Consumo m3</th>
+					<th>Total a pagar $</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-pagination="cuenta in cuentas">
-					<td>abril-2016</td>
+				<tr ng-pagination="cuenta in cuentas" ng-pagination-size="2">
+					<td>{{cuenta.fechaperiodo | date:'MMM yyyy'}}</td>
 					<td>{{cuenta.suministro.numerosuministro}}</td>
 					<td>{{cuenta.suministro.cliente.apellido+" "+cuenta.suministro.cliente.nombre}}</td>
 					<td>{{cuenta.suministro.tarifa.nombretarifa}}</td>
 					<td>{{cuenta.suministro.calle.nombrecalle}}</td>
 					<td>{{cuenta.suministro.direccionsuministro}}</td>
 					<td>{{cuenta.suministro.telefonosuministro}}</td>
+					<td>{{cuenta.consumo}}</td>
+					<td>{{cuenta.total}}</td>
+					
 					<td>
+						<button class="btn btn-success btn-xs btn-delete" ng-click="modalIngresoOtrosRubros(cuenta.suministro.numerosuministro)">Ver cuenta</button>
 						<button class="btn btn-success btn-xs btn-delete" ng-click="modalIngresoOtrosRubros(cuenta.suministro.numerosuministro)">Otros Rubros</button>
 					</td>
 				</tr>
@@ -71,10 +77,11 @@
 									</tr>
 								</thead>
 								<tbody>
+								costo: {{costo}}
 									<tr ng-repeat="rubroVariable in rubrosVariables">
 										<td>{{rubroVariable.nombrerubrovariable}}</td>
 										<td><input type="text" name="" ng-model="costo"></td>
-										costo: {{costo}}	
+											
 									</tr>
 
 									<tr ng-repeat="rubroFijo in rubrosFijos">

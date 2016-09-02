@@ -37,7 +37,10 @@ Route::post('/recaudacion/cobroagua/guardarrubros{numerocuenta}','Cuentas\CobroA
 
 /*=============================================================================================*/
 
-/*Christian*/
+
+/*------------------------------------Christian------------------------------------------------*/
+
+/*===================================Módulo Clientes===========================================*/
 //Ruta página de inicio de gestión de clientes
 Route::get('/clientes', function (){
 	return view('/clientes/index');
