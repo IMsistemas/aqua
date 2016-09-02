@@ -38,6 +38,18 @@ Route::post('/recaudacion/cobroagua/guardarrubros{numerocuenta}','Cuentas\CobroA
 /*=============================================================================================*/
 
 /*Christian*/
+//Ruta página de inicio de gestión de clientes
+Route::get('/clientes', function (){
+	return view('/clientes/index');
+});
+//Ruta devuelve un arreglo de todos los clientes a AngularJS 
+Route::get('/clientes/{cedulapersona?}','Clientes\ClienteController@index');
+//Ruta página de inicio de gestión de clientes
+Route::post('/clientes/','Clientes\ClientesController@store');
+//Ruta página de inicio de gestión de clientes
+Route::post('/clientes/{cedulapersona}','Clientes\ClienteController@update');
+//Ruta página de inicio de gestión de clientes
+Route::delete('/clientes/{cedulapersona}','Clientes\ClienteController@destroy');
 
 /*Raidel*/
 
