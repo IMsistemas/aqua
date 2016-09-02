@@ -1,5 +1,6 @@
 app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
+    $scope.cuentas = [];
     $http.get(API_URL + "recaudacion/cobroagua/cuentas")
             .success(function(response) {
                 $scope.cuentas = response;

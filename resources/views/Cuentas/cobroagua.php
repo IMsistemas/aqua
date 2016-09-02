@@ -7,6 +7,8 @@
 <body>
 	<div class="container" ng-controller="recaudacionController">
 		<h2>Recaudación</h2>
+
+		<input type="text" ng-pagination-search="cuentas" ng-pagination-size="2">
 		<table class="table">
 			<thead>
 				<tr>
@@ -21,7 +23,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="cuenta in cuentas">
+				<tr ng-pagination="cuenta in cuentas">
 					<td>abril-2016</td>
 					<td>{{cuenta.suministro.numerosuministro}}</td>
 					<td>{{cuenta.suministro.cliente.apellido+" "+cuenta.suministro.cliente.nombre}}</td>
@@ -35,6 +37,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<ng-pagination-control pagination-id="cuentas"></ng-pagination-control>
 
 		 <div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
@@ -95,6 +98,7 @@
 	</div>
 
 	 	<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+	 	<script src="<?= asset('app/lib/angular/angular-pagination.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
         
