@@ -1,22 +1,22 @@
-app.controller('otrosRubrosController', function($scope, $http, API_URL) {
+app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
-    $http.get(API_URL + "recaudacion/otrosrubros/suministros")
+    $http.get(API_URL + "recaudacion/cobroagua/cuentas")
             .success(function(response) {
-                $scope.suministros = response;
+                $scope.cuentas = response;
             });
 
-     $http.get(API_URL + "recaudacion/otrosrubros/rubrosfijos")
+     $http.get(API_URL + "recaudacion/cobroagua/rubrosfijos")
             .success(function(response) {
                 $scope.rubrosFijos = response;
             });
 
-      $http.get(API_URL + "recaudacion/otrosrubros/rubrosvariables")
+      $http.get(API_URL + "recaudacion/cobroagua/rubrosvariables")
             .success(function(response) {
                 $scope.rubrosVariables = response;
             });
      
-    $scope.modalIngresoOtrosRubros = function(numeroSuministro){
-        $scope.suministro = $scope.suministros[numeroSuministro-1];
+    $scope.modalIngresoOtrosRubros = function(numeroCuenta){
+        $scope.cuenta = $scope.cuentas[numeroCuenta-1];
         $('#ingresar-otros-rubros').modal('show');
     };
 

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es-ES" ng-app="softver-aqua">
 <head>
-	<title>Aqua-Recaudacion</title>
+	<title>Aqua-Recaudación</title>
 	<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
 </head>
 <body>
-	<div class="container" ng-controller="otrosRubrosController">
-		<h2>Ingreso de otros rubros </h2>
+	<div class="container" ng-controller="recaudacionController">
+		<h2>Recaudación</h2>
 		<table class="table">
 			<thead>
 				<tr>
+					<th>Período</th>
 					<th>Nro. Suministro</th>
 					<th>Cliente</th>
 					<th>Tarifa</th>
@@ -20,21 +21,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="suministro in suministros">
-					<td>{{suministro.numerosuministro}}</td>
-					<td>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}</td>
-					<td>{{suministro.tarifa.nombretarifa}}</td>
-					<td>{{suministro.calle.nombrecalle}}</td>
-					<td>{{suministro.direccionsuministro}}</td>
-					<td>{{suministro.telefonosuministro}}</td>
+				<tr ng-repeat="cuenta in cuentas">
+					<td>abril-2016</td>
+					<td>{{cuenta.suministro.numerosuministro}}</td>
+					<td>{{cuenta.suministro.cliente.apellido+" "+cuenta.suministro.cliente.nombre}}</td>
+					<td>{{cuenta.suministro.tarifa.nombretarifa}}</td>
+					<td>{{cuenta.suministro.calle.nombrecalle}}</td>
+					<td>{{cuenta.suministro.direccionsuministro}}</td>
+					<td>{{cuenta.suministro.telefonosuministro}}</td>
 					<td>
-						<button class="btn btn-success btn-xs btn-delete" ng-click="modalIngresoOtrosRubros(suministro.numerosuministro)">Otros Rubros</button>
+						<button class="btn btn-success btn-xs btn-delete" ng-click="modalIngresoOtrosRubros(cuenta.suministro.numerosuministro)">Otros Rubros</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
+		 <div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -53,10 +55,10 @@
 								<option>Agosto</option>
 							</select> <br>
 							<label>Datos Suministros</label><br>
-							<label>Suministro:</label>{{suministro.numerosuministro}}<br>
-							<label>Cliente:</label>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}<br>
+							<label>Suministro:</label>{{cuenta.suministro.numerosuministro}}<br>
+							<label>Cliente:</label>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}}<br>
 							<label>Barrio:</label> {{""}}<br>
-							<label>Direccion:</label>{{suministro.direccionsuministro}}<br>
+							<label>Direccion:</label>{{cuenta.suministro.direccionsuministro}}<br>
 							<label>Rubros:</label>
 							<table class="table">
 								<thead>
@@ -68,7 +70,8 @@
 								<tbody>
 									<tr ng-repeat="rubroVariable in rubrosVariables">
 										<td>{{rubroVariable.nombrerubrovariable}}</td>
-										<td><input type="text" name=""></td>	
+										<td><input type="text" name="" ng-model="costo"></td>
+										costo: {{costo}}	
 									</tr>
 
 									<tr ng-repeat="rubroFijo in rubrosFijos">
@@ -97,7 +100,7 @@
         
         <!-- AngularJS Application Scripts -->
         <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/otrosRubrosController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/recaudacionController.js') ?>"></script>
 	
 </body>
 </html>

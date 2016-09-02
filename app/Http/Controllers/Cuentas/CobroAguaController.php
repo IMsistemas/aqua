@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Cuentas\RubroVariable;
 use App\Modelos\Suministros\Suministro;
@@ -18,22 +19,22 @@ class CobroAguaController extends Controller
 {
 
 	/**
-	========Kevin=======================================================================================
+	=========================================Kevin======================================================
 	**/
 
 	/**
-	*Retorna todos los suministros con sus respectivos dueños, sus tarifas y su calle
+	*Retorna todas las cuentas con los suministros, los clientes y tarifas del suministro
 	**/
-	public function getSuministros(){
-		return Suministro::with('cliente','tarifa','calle')->get();
+	public function getCuentas(){
+		return $aux = CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
 	}
 
 	/**
-	*Retorna un suministro con su respectivos dueño, su tarifa y su calle
+	*Retorna una cuenta con el suministro, el dueño del suministro y su tarifa
 	**/
-	public function getSuministro($numeroSuministro){
-        $suministro = Suministro::with('cliente','tarifa','calle')->get();
-        return $suministro[$numeroSuministro-1];
+	public function getCuenta($numeroCuenta){
+        $cuenta = CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
+        return $cuenta[$numeroCuenta-1];
     }
 
     /**
@@ -53,8 +54,24 @@ class CobroAguaController extends Controller
     /**
 	*Guarda los rubros fijos y variables para antes de la toma de lecturas
 	**/
-    public function guardarRubros(){
+    public function guardarRubros(Request $request,$numeroCobro){
+        $cobroAgua = CobroAgua::find($numeroCobro);
+        $rubrosFijos = $cobroAgua->rubrosfijos;
+        $rubrosVariables = $cobroAgua->rubrosvariables;
         
+        $rubrosfijos->idcuenta = $numeroCobro;
+        $rubrosfijos->idrubrofijo = $request->input('');
+        $rubrosfijos->costorubro = $request->input('costoRubroFijo');
+       
+        $rubrosvariables->idcuenta = $numeroCobro;
+        $rubrosvariables->idrubrovariable = $request->input('');
+        $rubrosvariables->idrubrovariable = $request->input('costoRubroFijo');
+
+        $rubrosfijos->save();
+        $rubrosvariables->save();
+
+        return 'Se agregaron los valores de otros rubros con exito';
+
     }
 
     /**

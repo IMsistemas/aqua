@@ -15,20 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*Kevin*/
+/*--------------------------------------Kevin-------------------------------------------------*/
+
+/*===========================Ingreso rubros fijos y variables=================================*/
 
 //Ruta agina de inicio para el ingreso de otros rubros antes de tomar la lectura
-Route::get('/recaudacion/otrosrubros', function (){
-	return view('cuentas/otros-rubros');
+Route::get('/recaudacion', function (){
+	return view('Cuentas/cobroagua');
 });
 //Ruta devuelve un arreglo de todos los suministros a AngularJS 
-Route::get('/recaudacion/otrosrubros/suministros','Cuentas\CobroAguaController@getSuministros');
+Route::get('/recaudacion/cobroagua/cuentas','Cuentas\CobroAguaController@getCuentas');
 //Ruta devuelve un arreglo de un solo suministro a AngularJS 
-Route::get('/recaudacion/otrosrubros/suministros\{id}','Cuentas\CobroAguaController@getSuministro');
+Route::get('/recaudacion/cobroagua/cuentas/{numerocuenta}','Cuentas\CobroAguaController@getCuenta');
 //Ruta devuelve un arreglo de todos los rubros variables a AngularJS
-Route::get('/recaudacion/otrosrubros/rubrosvariables','Cuentas\CobroAguaController@getRubrosVariables');
+Route::get('/recaudacion/cobroagua/rubrosvariables','Cuentas\CobroAguaController@getRubrosVariables');
 //Ruta devuelve un arreglo de todos los rubros fijos a AngularJS
-Route::get('/recaudacion/otrosrubros/rubrosfijos','Cuentas\CobroAguaController@getRubrosFijos');
+Route::get('/recaudacion/cobroagua/rubrosfijos','Cuentas\CobroAguaController@getRubrosFijos');
+//Ruta para guardar los valores de los rubros variables y fijos
+Route::post('/recaudacion/cobroagua/guardarrubros{numerocuenta}','Cuentas\CobroAguaController@guardarRubros');
+
+
+/*=============================================================================================*/
 
 /*Christian*/
 
