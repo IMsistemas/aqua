@@ -10,7 +10,7 @@ class Solicitud extends Model
     protected $primaryKey = "idsolicitud";
     public $timestamps = false; 
 
-    public function (){
+    public function solicitud(){
     	return $this->belongsTo('App\Modelos\Clientes\cliente');
     }
 }

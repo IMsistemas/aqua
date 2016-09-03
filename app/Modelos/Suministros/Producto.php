@@ -11,6 +11,6 @@ class Producto extends Model
     public $timestamps = false;
 
     public function suministro(){
-    	return this->hasMany('App\Modelos\Suministros\suministro','idproducto');
+    	return $this->hasMany('App\Modelos\Suministros\suministro','idproducto');
     }
 }

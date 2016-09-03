@@ -36,4 +36,15 @@ Route::get('/recaudacion/otrosrubros/rubrosfijos','Cuentas\CobroAguaController@g
 
 /*Yamilka*/
 
+Route::get('cargo/lastId', 'Nomina\CargoController@getLastID');
+Route::get('cargo/getCargos', 'Nomina\CargoController@getCargos');
+Route::get('cargo/{id}', 'Nomina\CargoController@show');
+Route::resource('cargo', 'Nomina\CargoController');
+
+
+Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
+Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
+Route::resource('empleado', 'Nomina\EmpleadoController');
+
+
 /*Sebastian*/
