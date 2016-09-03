@@ -20,11 +20,21 @@ class CargoController extends Controller
         return view('Nomina.index_cargo');
     }
 
+    /**
+     * Obtener todos los cargos de manera ascendente
+     *
+     * @return mixed
+     */
     public function getCargos()
     {
         return Cargo::orderBy('idcargo', 'asc')->get();
     }
 
+    /**
+     * Obtener el ultimo ID insertado y sumarle 1
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getLastID()
     {
         $lastID = Cargo::max('idcargo');
@@ -47,7 +57,7 @@ class CargoController extends Controller
 
 
     /**
-     *Almacenar un recurso cargo recién creado.
+     * Almacenar un recurso cargo recién creado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

@@ -56,8 +56,9 @@ Route::delete('/clientes/{cedulapersona}','Clientes\ClienteController@destroy');
 
 /*Raidel*/
 
-/*Yamilka*/
+/*------------------------------------Yamilka------------------------------------------------*/
 
+/*===================================Módulo Nomina===========================================*/
 //Ruta devuelve el ultimo ID + 1 de cargos
 Route::get('cargo/lastId', 'Nomina\CargoController@getLastID');
 //Ruta devuelve todos los cargos

@@ -12,11 +12,21 @@ use App\Http\Controllers\Controller;
 class EmpleadoController extends Controller
 {
 
+    /**
+     * Devolver la vista
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('Nomina.index_empleado');
     }
 
+    /**
+     * Obtener todos los empleados
+     *
+     * @return mixed
+     */
     public function getEmployees()
     {
         return Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
@@ -28,17 +38,34 @@ class EmpleadoController extends Controller
 
     }
 
+    /**
+     * Obtener todos los cargos
+     *
+     * @return mixed
+     */
     public function getAllPositions()
     {
         return Cargo::orderBy('nombrecargo', 'asc')->get();
     }
 
+    /**
+     * Almacenar el recurso empleado
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $result = Empleado::create($request->all());
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
+    /**
+     * Mostrar un recurso empleado especifico.
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         $empleado = Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
@@ -51,6 +78,13 @@ class EmpleadoController extends Controller
         return response()->json($empleado);
     }
 
+    /**
+     * Actualizar el recurso empleado seleccionado
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         $empleado = Empleado::find($id);
@@ -59,6 +93,12 @@ class EmpleadoController extends Controller
         return response()->json(['success' => true]);
     }
 
+    /**
+     * Eliminar el recurso empleado seleccionado
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $empleado = Empleado::find($id);
