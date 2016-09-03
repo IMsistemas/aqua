@@ -2,6 +2,7 @@
 
 app.controller('cargosController', function($scope, $http, API_URL) {
 
+    $scope.cargos = [];
     $scope.idcargo_del = 0;
 
     $scope.initLoad = function(){

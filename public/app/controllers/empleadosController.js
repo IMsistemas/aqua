@@ -1,17 +1,35 @@
 
-
-
 app.controller('cargosController', function($scope, $http, API_URL) {
 
+    $scope.empleados = [];
     $scope.empleado_del = 0;
 
-    $scope.initLoad = function(){
+    $scope.initLoad = function(verifyPosition){
+
+        if (verifyPosition != undefined){
+            $scope.searchPosition();
+        }
+
         $http.get(API_URL + 'empleado/getEmployees').success(function(response){
             $scope.empleados = response;
         });
     }
 
-    $scope.initLoad();
+    $scope.searchPosition = function(){
+        $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
+            var longitud = response.length;
+            if(longitud == 0){
+                $('#btnAgregar').prop('disabled', true);
+                $('#message-positions').show();
+            } else {
+                $('#btnAgregar').prop('disabled', false);
+                $('#message-positions').hide();
+            }
+        });
+    }
+
+
+    $scope.initLoad(true);
 
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;
@@ -83,7 +101,7 @@ app.controller('cargosController', function($scope, $http, API_URL) {
                     .success(function(response) {
                         $scope.name_employee = response[0].apellido + ' ' + response[0].nombre;
                         $scope.cargo_employee = response[0].nombrecargo;
-                        $scope.date_registry_employee = response[0].fechaingreso;
+                        $scope.date_registry_employee = convertDatetoDB(response[0].fechaingreso, true);
                         $scope.phones_employee = response[0].telefonoprincipal + '/' + response[0].telefonosecundario;
                         $scope.cel_employee = response[0].celular;
                         $scope.address_employee = response[0].direccion;
