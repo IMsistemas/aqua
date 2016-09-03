@@ -3,14 +3,15 @@
 <head>
 	<title>Aqua-Recaudación</title>
 	<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
+	<link href="<?= asset('css/modal.css') ?>" rel="stylesheet">
 </head>
 <body>
 	<div class="container" ng-controller="recaudacionController">
 		<h2>Recaudación</h2>
 
 		<input type="text" ng-pagination-search="cuentas" >
-		<table class="table">
-			<thead class="thead-inverse">
+		<table class="table table-bordered table-hover">
+			<thead class="">
 				<tr>
 					<th>Período</th>
 					<th>Nro. Suministro</th>
@@ -20,7 +21,7 @@
 					<th>Dirección</th>
 					<th>Teléfono</th>
 					<th>Consumo m3</th>
-					<th>Total a pagar $</th>
+					<th>Total a pagar</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
@@ -48,28 +49,24 @@
 		 <div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header  before">
 						<h4 class="modal-title" id="myModalLabel">Ingreso otros rubros</h4>
-						<h5>Fecha:{{"22/04/2016"}}</h5>
+						Período: {{cuenta.fechaperiodo | date:'MMM yyyy'}}
 					</div>
+
 					<div class="modal-body">
 						<form name="formularioOtrosRubros" class="form-horizonal" novalidate="">
-							<label>Período</label> <br>
-							<label>Año</label>
-							<select>
-								<option>2016</option>
-							</select>
-							<label>mes</label>
-							<select>
-								<option>Agosto</option>
-							</select> <br>
-							<label>Datos Suministros</label><br>
-							<label>Suministro:</label>{{cuenta.suministro.numerosuministro}}<br>
-							<label>Cliente:</label>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}}<br>
-							<label>Barrio:</label> {{""}}<br>
-							<label>Direccion:</label>{{cuenta.suministro.direccionsuministro}}<br>
-							<label>Rubros:</label>
-							<table class="table">
+							
+						<div class="seccion">
+						  Datos Suministros
+						</div>
+							
+							Nro. Suministro: {{cuenta.suministro.numerosuministro}}<br>
+							Cliente: {{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}}<br>
+							Barrio: {{cuenta.suministro.calla.barrio}}<br>
+							Direccion: {{cuenta.suministro.direccionsuministro}}<br>
+							Rubros <hr>
+							<table class="table table-bordered table-hover">
 								<thead>
 									<tr>
 										<th>Rubro</th>
@@ -77,25 +74,21 @@
 									</tr>
 								</thead>
 								<tbody>
-								costo: {{costo}}
 									<tr ng-repeat="rubroVariable in rubrosVariables">
 										<td>{{rubroVariable.nombrerubrovariable}}</td>
-										<td><input type="text" name="" ng-model="costo"></td>
-											
+										<td><input type="text" name="" ng-model="costo"></td>	
 									</tr>
-
 									<tr ng-repeat="rubroFijo in rubrosFijos">
 										<td>{{rubroFijo.nombrerubrofijo}}</td>
 										<td><input type="text" name=""></td>	
 									</tr>
-
 								</tbody>
 							</table>
-
-							<button class="btn btn-success">Guardar</button>
-
-
 						</form>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary">Guardar</button>
+						<button class="btn btn-default" data-dismiss="modal" >Cerrar</button>
 					</div>
 				</div>
 			</div>			

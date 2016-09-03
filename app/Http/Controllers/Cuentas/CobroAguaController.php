@@ -33,8 +33,8 @@ class CobroAguaController extends Controller
 	*Retorna una cuenta con el suministro, el dueño del suministro y su tarifa
 	**/
 	public function getCuenta($numeroCuenta){
-        $cuenta = CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
-        return $cuenta[$numeroCuenta-1];
+        $cuenta = CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->get();
+        return dd($cuenta[$numeroCuenta-1]);
     }
 
     /**

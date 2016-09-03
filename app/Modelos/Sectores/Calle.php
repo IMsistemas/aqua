@@ -11,7 +11,7 @@ class Calle extends Model
     public $timestamps = false;
 
     public function barrio(){
-    	return $this->belongsTo('App\Modelos\Sectores\barrio');
+    	return $this->belongsTo('App\Modelos\Sectores\barrio','idbarrio');
     }
 }
  

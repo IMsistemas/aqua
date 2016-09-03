@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Barrio extends Model
 {
     protected $table = "barrio";
-    protected $primarykey = "idbarrio";
+    protected $primaryKey = "idbarrio";
     public $timestamps = false;
 
     public function parroquia(){
-    	return $this->belongsTo('App\Modelos\Sectores\parroquia');
+    	return $this->belongsTo('App\Modelos\Sectores\parroquia','idparroquia');
     }
 
     public function calle(){
