@@ -74,3 +74,10 @@ insert into suministro values (1,1,'CAL00001','1720276177','PRO00001','Av. del s
 insert into suministro values (2,2,'CAL00002','1720276178','PRO00001','Av. del suministro 2','2157961');
 insert into suministro values (3,3,'CAL00003','1720276179','PRO00001','Av. del suministro 3','2157962');
 
+/*-----Ingreso de lectura---------*/
+insert into lectura values(1,1);
+
+/*-----Ingreso de cobros--------*/
+insert into cobroagua values(1,1,1);
+insert into cobroagua values(1,2,1);
+
