@@ -12,19 +12,19 @@ class CobroAgua extends Model
      public $timestamps = false;
 
      public function suministro(){
-    	return $this->belongsTo('App\Modelos\Suministros\suministro');
+    	return $this->belongsTo('App\Modelos\Suministros\suministro','numerosuministro');
     }
 
     public function lectura(){
-    	return $this->belongsTo('App\Modelos\Lecturas\lectura');
+    	return $this->belongsTo('App\Modelos\Lecturas\lectura','idlectura');
     }
 
     public function rubrosvariables(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\rubrovariable','rubrosvariablescuentas','idcuenta','idrubrovariable');
+    	return $this->belongsToMany('App\Modelos\Cuentas\rubrovariable','rubrosvariablescuenta','idcuenta','idrubrovariable')->withPivot('costorubro');
     }
 
     public function rubrosfijos(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\rubrofijo','rubrosfijoscuentas','idcuenta','idrubrofijo');
+    	return $this->belongsToMany('App\Modelos\Cuentas\rubrofijo','rubrosfijoscuenta','idcuenta','idrubrofijo');
     }
 
 }
