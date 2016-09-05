@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="softver-aqua">
+<html lang="es-ES" ng-app="softver-aqua">
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -8,11 +8,12 @@
 	<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
 	<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
 	<link href="<?= asset('css/index.css') ?>" rel="stylesheet">
+  <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 </head>
-<body ng-controller="inicioController">
+<body ng-controller="mainController">
   <header>
   <hr>
-    <div class="titulo">Titulo</div>
+    <div class="titulo">{{titulo}}</div>
     
     <nav>
     <div class="brandLogo">
@@ -22,59 +23,69 @@
         <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
         <li class="padre"><a href="#"><i class="fa fa-tint" aria-hidden="true"></i>Recaudación<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="recaudacion">Cobro Agua</a></li>
-            <li><a href="lecturas">Lecturas</a></li>
+            <li><a href="#" ng-click="toModuloRecaudacion();">Cobro Agua</a></li>
+            <li><a href="#" ng-click="">Lecturas</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i></i>Suministros<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="suminsitros">Suministros</a></li>
-            <li><a href="sectores">Sectores</a></li>
+            <li><a href="#" ng-click="">Suministros</a></li>
+            <li><a href="#" ng-click="">Sectores</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Solicitudes<i class=" der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="solicitudes">Solicitudes</a></li>
-            <li><a href="">Solicitudes en espera</a></li>
+            <li><a href="#" ng-click="">Solicitudes</a></li>
+            <li><a href="#" ng-click="">Solicitudes en espera</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>Clientes<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="clientes">Clientes</a></li>
+            <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Perfil<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="perfil">Editar Perfil</a></li>
+            <li><a href="perfil" ng-click="">Editar Perfil</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-users" aria-hidden="true"></i>Usuarios<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="usuarios">Usuarios</a></li>
-            <li><a href="usuarios/roles">Roles</a></li>
+            <li><a href="#" ng-click="">Usuarios</a></li>
+            <li><a href="#" ng-click="">Roles</a></li>
+            <li><a href="#" ng-click="toModuloEmpleado();">Empleados</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-cog fa-spin" aria-hidden="true"></i>Configuración<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="">Configuración del sistema</a></li>
+            <li><a href="#">Configuración del sistema</a></li>
           </ul>
         </li>
       </ul>
     </nav>
   </header>
 
-  <section>
-   
+  <section ng-include="toModulo">
+   la secccion
   </section>
 
   <footer>
     powered by IMMPACT MEDIA
   </footer>
+
+  </body>
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-        <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/inicioController.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
         <script src="<?= asset('js/menuLateral.js') ?>"></script>
-</body>
+        
+        <script src="<?= asset('app/app.js') ?>"></script>
+
+        <script src="<?= asset('app/controllers/mainController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/cargosController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/recaudacionController.js') ?>"></script>
+        
+
 </html>

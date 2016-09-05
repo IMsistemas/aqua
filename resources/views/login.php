@@ -21,13 +21,15 @@
 		<input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="usuario" class=user""><br> 
 		
 		<input type="text" name="passUsuario" id="passUsuario" placeholder="clave">
+		<br>
+		<a href="">Ingresar</a>
 		
 		
 	</form>
 </section>
 <hr>
 <footer>
-	<img src="img/logotipo-imnegocios.png">
+	<a href="https://www.imnegocios.com/"><img src="img/logotipo-imnegocios.png"></a>
 </footer>
 </body>
 </html>

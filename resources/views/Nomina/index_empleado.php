@@ -1,15 +1,5 @@
-<!doctype html>
-<html lang="es-ES" ng-app="softver-aqua">
-    <head>
-        <meta charset="UTF-8">
 
-        <title>Aqua - Empleados</title>
-
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-    </head>
-    <body ng-controller="cargosController">
+    <div ng-controller="cargosController">
 
         <div class="container" style="margin-top: 2%;">
             <fieldset>
@@ -46,7 +36,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-pagination="empleado in empleados" ng-pagination-size="10">
+                            <tr ng-repeat="empleado in empleados" >
                                 <td>{{empleado.documentoidentidadempleado}}</td>
                                 <td>{{empleado.apellido + ' ' + empleado.nombre}}</td>
                                 <td>{{empleado.nombrecargo}}</td>
@@ -60,7 +50,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <ng-pagination-control pagination-id="empleados"></ng-pagination-control>
+                    
                 </div>
 
 
@@ -304,14 +294,4 @@
             </div>
         </div>
 
-    </body>
-
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-pagination.js') ?>"></script>
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-
-    <!-- AngularJS Application Scripts -->
-    <script src="<?= asset('app/app.js') ?>"></script>
-    <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
-</html>
+    </div>

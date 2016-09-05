@@ -135,6 +135,11 @@ header nav ul li .hijos li a{
 	font-size: 12px;
 }
  
-footer{
-	display: block;
+section{
+	
+    margin-left: 20%;
+    margin-top: 120px;
+    width: 80%;
+    height: 100%;
+    overflow: hidden;
 }
