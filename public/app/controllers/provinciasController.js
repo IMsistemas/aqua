@@ -1,27 +1,32 @@
-    app.controller('clientesController', function($scope, $http, API_URL) {
-    //retrieve clientes listing from API
-    $scope.clientes=[];
-    $http.get(API_URL + "clientes/gestion")
+app.controller('provinciasController', function($scope, $http, API_URL) {
+    //retrieve provincias listing from API
+    $scope.provincias=[];
+    $http.get(API_URL + "provincias/gestion")
         .success(function(response) {
-                $scope.clientes = response;             
+                $scope.provincias = response;             
 
             });
     //show modal form
-    $scope.toggle = function(modalstate, documentoidentidad) {
+    $scope.toggle = function(modalstate, idprovincia) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Nuevo Cliente";
+                $scope.form_title = "Nueva Provincia";
+                $http.get(API_URL + 'provincias/gestion/ultimocodigoprovincia')
+                        .success(function(response) {
+                            console.log(response);
+                            $scope.idprovincia = response.idProvincia;
+                        });
                 $('#add').modal('show');
                 break;
             case 'edit':
-                $scope.form_title = "Editar Cliente";
-                $scope.documentoidentidad = documentoidentidad;
-                $http.get(API_URL + 'clientes/gestion/' + documentoidentidad)
+                $scope.form_title = "Editar Provincia";
+                $scope.idprovincia = idprovincia;
+                $http.get(API_URL + 'provincias/gestion/' + idprovincia)
                         .success(function(response) {
                             console.log(response);
-                            $scope.cliente = response;
+                            $scope.provincia = response;
                         });
                 $('#edit').modal('show');
                 break;
@@ -34,40 +39,40 @@
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
-    $scope.save = function(modalstate, documentoidentidad) {
-        var url = API_URL + "clientes/gestion";    
+    $scope.save = function(modalstate, idprovincia) {
+        var url = API_URL + "provincias/gestion";    
         console.log(modalstate); 
         
-        //append cliente id to the URL if the form is in edit mode
+        //append provincia id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
-            url += "/actualizarcliente/" + documentoidentidad;
+            url += "/actualizarprovincia/" + idprovincia;
         }else{
-            url += "/guardarcliente" ;
+            url += "/guardarprovincia" ;
         }
         
         $http({
             method: 'POST',
             url: url,
-            data: $.param($scope.cliente),
+            data: $.param($scope.provincia),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.cliente);
+            console.log($scope.provincia);
             console.log(response);
             location.reload();
         }).error(function(response) {
-            console.log($scope.cliente);
+            console.log($scope.provincia);
             console.log(response);
-            alert('This is embarassing. An error has occured. Please check the log for details');
+            alert('Ha ocurrido un error');
         });
     }
 
     //delete record
-    $scope.confirmDelete = function(documentoidentidad) {
+    $scope.confirmDelete = function(idprovincia) {
         var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
         if (isConfirmDelete) {
             $http({
                 method: 'POST',
-                url: API_URL + 'clientes/gestion/eliminarcliente/' + documentoidentidad,
+                url: API_URL + 'provincias/gestion/eliminarprovincia/' + idprovincia,
             }).success(function(data) {
                     console.log(data);
                     location.reload();

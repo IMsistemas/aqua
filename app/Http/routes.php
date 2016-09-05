@@ -47,16 +47,36 @@ Route::post('/recaudacion/cobroagua/guardarrubros{numerocuenta}','Cuentas\CobroA
 /*===================================Módulo Clientes===========================================*/
 //Ruta página de inicio de gestión de clientes
 Route::get('/clientes', function (){
-	return view('/clientes/index');
+	return view('clientes/index');
 });
+
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
-Route::get('/clientes/{cedulapersona?}','Clientes\ClienteController@index');
+Route::get('/clientes/gestion/','Clientes\ClienteController@index');
+//Ruta devuelve un arreglo de todos los clientes a AngularJS 
+Route::get('/clientes/gestion/{documentoidentidad}','Clientes\ClienteController@show');
 //Ruta página de inicio de gestión de clientes
-Route::post('/clientes/','Clientes\ClientesController@store');
+Route::post('/clientes/gestion/guardarcliente','Clientes\ClienteController@store');
 //Ruta página de inicio de gestión de clientes
-Route::post('/clientes/{cedulapersona}','Clientes\ClienteController@update');
+Route::post('/clientes/gestion/actualizarcliente/{documentoidentidad}','Clientes\ClienteController@update');
 //Ruta página de inicio de gestión de clientes
-Route::delete('/clientes/{cedulapersona}','Clientes\ClienteController@destroy');
+Route::post('/clientes/gestion/eliminarcliente/{documentoidentidad}','Clientes\ClienteController@destroy');
+
+Route::get('/provincias', function (){
+	return view('Sectores/provincia');
+});
+
+//Ruta devuelve un arreglo de todos los provincias a AngularJS 
+Route::get('/provincias/gestion/','Sectores\ProvinciaController@index');
+//Ruta devuelve un arreglo de todos los provincias a AngularJS 
+Route::get('/provincias/gestion/{idprovincia?}','Sectores\ProvinciaController@show');
+//Ruta página de inicio de gestión de provincias
+Route::get('/provincias/gestion/ultimocodigoprovincia','Sectores\ProvinciaController@getUltimoCodigoProvincia');
+//Ruta página de inicio de gestión de provincias
+Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@postCrearProvincia');
+//Ruta página de inicio de gestión de provincias
+Route::post('/provincias/gestion/actualizarprovincia/{idprovincia}','Sectores\ProvinciaController@postActualizarProvincia');
+//Ruta página de inicio de gestión de provincias
+Route::post('/provincias/gestion/eliminarprovincia/{idprovincia}','Sectores\ProvinciaController@destroy');
 
 /*Raidel*/
 

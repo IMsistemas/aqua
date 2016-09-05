@@ -11,7 +11,8 @@
         <div  ng-controller="clientesController" class="container">
 
             <!-- Table-to-load-the-data Part -->
-            <table class="table">
+            <input type="text" ng-pagination-search="clientes" >
+            <table class="table" >
                 <thead>
                     <tr>
                         <th>Documento de Identidad</th>
@@ -39,21 +40,15 @@
                             <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', cliente.documentoidentidad)">Editar Cliente</button>
                             <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar Cliente</button>
                         </td>
-                <tfoot>
-                    <tr>
-                        <td>
-                            <ng-pagination-control pagination-id="clientes"></ng-pagination-control>
-                        </td>                        
-                    </tr>
-                 </tfoot>
                     </tr>
 
                 </tbody>
                     
             </table>
+              <ng-pagination-control pagination-id="clientes"></ng-pagination-control>
             <!-- End of Table-to-load-the-data Part -->
             <!-- Modal (Pop up when detail button clicked) -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -76,79 +71,188 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Fecha de Ingreso</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control" id="fechaingreso" name="fechaingreso" value="{{fechaingreso}}"
-                                        ng-model="cliente.fechaingreso" ng-required="true">
+                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso" placeholder="Fecha Ingreso" value="{{fechaingreso}}" ng-model="cliente.fechaingreso" ng-required="true">
                                         <span class="help-inline" 
-                                        ng-show="frmClientes.fechaingresonombrepersona && frmClientes.fechaingresonombrepersona">La fecha de ingreso del cliente es requerida</span>
+                                        ng-show="frmClientes.fechaingreso.invalid && frmClientes.fechaingreso.touched">La fecha de ingreso del cliente es requerida</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Nombre del Cliente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombrepersona" name="nombrepersona" placeholder="Nombre del Cliente" value="{{nombrepersona}}" 
-                                        ng-model="cliente.nombrepersona" ng-required="true">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Cliente" value="{{nombre}}" 
+                                        ng-model="cliente.nombre" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.nombrepersona.$invalid && frmClientes.nombrepersona.$touched">El nombre del cliente del cliente es requerido</span>
+                                        ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$touched">El nombre del cliente del cliente es requerido</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Apellido del CLiente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="apellidopersona" name="apellidopersona" placeholder="Apellido del Cliente" value="{{apellidopersona}}" 
-                                        ng-model="cliente.apellidopersona" ng-required="true">
+                                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido del Cliente" value="{{apellido}}" 
+                                        ng-model="cliente.apellido" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.apellidopersona.$invalid && frmClientes.apellidopersona.$touched">El apellido del cliente del es requerido</span>
+                                        ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$touched">El apellido del cliente del es requerido</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group" >
                                     <label for="inputEmail3" class="col-sm-3 control-label">Teléfono del CLiente</label>
                                     <div class="col-sm-9" >
-                                        <input type="text" class="form-control" id="telefonoprincipalpersona" name="telefonoprincipalpersona" placeholder="Teléfono del Cliente" value="{{telefonoprincipalpersona}}" 
-                                        ng-model="cliente.telefonoprincipalpersona" ng-required="true">
+                                        <input type="text" class="form-control" id="telefonoprincipal" name="telefonoprincipal" placeholder="Teléfono del Cliente" value="{{telefonoprincipal}}" 
+                                        ng-model="cliente.telefonoprincipal" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.telefonoprincipalpersona.$invalid && frmClientes.telefonoprincipalpersona.$touched">El teléfono del cliente es requerido</span>
+                                        ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$touched">El teléfono del cliente es requerido</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Teléfono alternativo del CLiente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="telefonosecundariopersona" name="telefonosecundariopersona" placeholder="Teléfono Alternativo del Cliente" value="{{telefonosecundariopersona}}" 
-                                        ng-model="cliente.telefonosecundariopersona" ng-required="true">
+                                        <input type="text" class="form-control" id="telefonosecundario" name="telefonosecundario" placeholder="Teléfono Alternativo del Cliente" value="{{telefonosecundario}}" 
+                                        ng-model="cliente.telefonosecundario" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.telefonosecundariopersona.$invalid && frmClientes.telefonosecundariopersona.$touched">El telélefono alternativo del cliente es requerido</span>
+                                        ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$touched">El telélefono alternativo del cliente es requerido</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Celular del CLiente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="celudarpersona" name="celudarpersona" placeholder="Celular del Cliente" value="{{celudarpersona}}" 
-                                        ng-model="cliente.celudarpersona" ng-required="true">
+                                        <input type="text" class="form-control" id="celudar" name="celudar" placeholder="Celular del Cliente" value="{{celudar}}" 
+                                        ng-model="cliente.celular" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.celudarpersona.$invalid && frmClientes.celudarpersona.$touched">El celular de la persona es requerido</span>
+                                        ng-show="frmClientes.celudar.$invalid && frmClientes.celudar.$touched">El celular de la  es requerido</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Dirección del CLiente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="drirecionpersona" name="drirecionpersona" placeholder="Direción del Cliente" value="{{drirecionpersona}}" 
-                                        ng-model="cliente.drirecionpersona" ng-required="true">
+                                        <input type="text" class="form-control" id="drirecion" name="drirecion" placeholder="Direción del Cliente" value="{{drirecion}}" 
+                                        ng-model="cliente.direccion" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.drirecionpersona.$invalid && frmClientes.drirecionpersona.$touched">La direción del cliente es requerida</span>
+                                        ng-show="frmClientes.drirecion.$invalid && frmClientes.drirecion.$touched">La direción del cliente es requerida</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Correo del CLiente</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="correopersona" name="correopersona" placeholder="Correo del CLiente" value="{{correopersona}}" 
-                                        ng-model="cliente.correopersona" ng-required="true">
+                                        <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo del CLiente" value="{{correo}}" 
+                                        ng-model="cliente.correo" ng-required="true">
                                     <span class="help-inline" 
-                                        ng-show="frmClientes.correopersona.$invalid && frmClientes.correopersona.$touched">El correo electrónico es requerido</span>
+                                        ng-show="frmClientes.correo.$invalid && frmClientes.correo.$touched">El correo electrónico es requerido</span>
+                                    </div>
+                                </div>                          
+                                
+
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmClientes.$invalid">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="frmClientes" class="form-horizontal" novalidate="">
+
+                                <div class="form-group error">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Documento de identidad del Cliente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control has-error" id="documentoidentidad" name="documentoidentidad" placeholder="Cédula" value="{{documentoidentidad}}" 
+                                        ng-model="cliente.documentoidentidad" ng-required="true">
+                                        <span class="help-inline" 
+                                        ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$touched">La cédula del cliente es requerida</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Fecha de Ingreso</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso" value="{{fechaingreso" ng-model="cliente.fechaingreso" ng-required="true">
+                                        <span class="help-inline" 
+                                        ng-show="frmClientes.fechaingreso && frmClientes.fechaingreso">La fecha de ingreso del cliente es requerida</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre del Cliente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Cliente" value="{{nombre}}" 
+                                        ng-model="cliente.nombre" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$touched">El nombre del cliente del cliente es requerido</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Apellido del CLiente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido del Cliente" value="{{apellido}}" 
+                                        ng-model="cliente.apellido" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$touched">El apellido del cliente del es requerido</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" >
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Teléfono del CLiente</label>
+                                    <div class="col-sm-9" >
+                                        <input type="text" class="form-control" id="telefonoprincipal" name="telefonoprincipal" placeholder="Teléfono del Cliente" value="{{telefonoprincipal}}" 
+                                        ng-model="cliente.telefonoprincipal" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$touched">El teléfono del cliente es requerido</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Teléfono alternativo del CLiente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="telefonosecundario" name="telefonosecundario" placeholder="Teléfono Alternativo del Cliente" value="{{telefonosecundario}}" 
+                                        ng-model="cliente.telefonosecundario" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$touched">El telélefono alternativo del cliente es requerido</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Celular del CLiente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="celudar" name="celudar" placeholder="Celular del Cliente" value="{{celudar}}" 
+                                        ng-model="cliente.celular" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.celudar.$invalid && frmClientes.celudar.$touched">El celular de la  es requerido</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Dirección del CLiente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="drirecion" name="drirecion" placeholder="Direción del Cliente" value="{{drirecion}}" 
+                                        ng-model="cliente.direccion" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.drirecion.$invalid && frmClientes.drirecion.$touched">La direción del cliente es requerida</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Correo del CLiente</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo del CLiente" value="{{correo}}" 
+                                        ng-model="cliente.correo" ng-required="true">
+                                    <span class="help-inline" 
+                                        ng-show="frmClientes.correo.$invalid && frmClientes.correo.$touched">El correo electrónico es requerido</span>
                                     </div>
                                 </div>                          
                                 

@@ -8,33 +8,28 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\Clientes\Cliente;
+use Ayora\Http\Requests\EliminarClienteRequest;
 
 class ClienteController extends Controller
 {
-    public function index($documentoidentidad=null)
-	{	
-		if($documentoidentidad==null){		 
+    public function index()
+	{		 
 		return $clientes=Cliente::all();
-		}else
-		{
-			return $this->show($documentoidentidad);
-		}
 	}
 	public function store(Request $request)
 	{
-		$cliente=new Cliente;
+		$cliente= new Cliente;
 		$cliente->documentoidentidad = $request->input('documentoidentidad');
 		$cliente->fechaingreso = $request->input('fechaingreso');
 		$cliente->nombre = $request->input('nombre');
-		$cliente->apellido = $request->input('apellido');			
+		$cliente->apellido = $request->input('apellido');
 		$cliente->telefonoprincipal = $request->input('telefonoprincipal');
 		$cliente->telefonosecundario = $request->input('telefonosecundario');
 		$cliente->celular = $request->input('celular');
-		$cliente->direccion= $request->input('direccion');
+		$cliente->direccion = $request->input('direccion');
 		$cliente->correo = $request->input('correo');
 		$cliente->save();
-
-		return 'El Cliente fue creado correctamente con cedula'.$cliente->documentoidentidad;
+		return 'El Cliente fue creado correctamente con su documento de identidad'.$cliente->documentoidentidad;
 	}
 
 	public function show($documentoidentidad)
@@ -45,6 +40,7 @@ class ClienteController extends Controller
 	public function update(Request $request,$documentoidentidad)
 	{
 		$cliente = Cliente::find($request->input('documentoidentidad'));
+		$cliente->documentoidentidad = $request->input('documentoidentidad');
 		$cliente->fechaingreso = $request->input('fechaingreso');
 		$cliente->nombre = $request->input('nombre');
 		$cliente->apellido = $request->input('apellido');
@@ -59,9 +55,9 @@ class ClienteController extends Controller
 	}
 	public function destroy(Request $request)
 	{
-		$cliente = Cliente::find($request->get('documentoidentidad'));
+		$cliente = Cliente::find($request->input('documentoidentidad'));
 		$cliente->delete();
-		return "Cliente borrado correctamente".$request->get('documentoidentidad');
+		return "Cliente borrado correctamente".$request->input('documentoidentidad');
 	}
 
 	public function missingMethod($parameters = array())
