@@ -14,7 +14,7 @@
         <div class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">ADMINISTRACION DE EMPLEADOS</span>
+                    <span style="font-weight: bold;">EMPLEADOS</span>
                     <button type="button" id="btnAgregar" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
                 </legend>
 
@@ -278,7 +278,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-xs-12 text-center">
-                            <img class="img-thumbnail" src="<?= asset('img/user_anonymous.jpg') ?>" alt="">
+                            <img class="img-thumbnail" src="<?= asset('img/empleado.png') ?>" alt="">
                         </div>
                         <div class="row text-center">
                             <div class="col-xs-12 text-center" style="font-size: 18px;">{{name_employee}}</div>

@@ -21,6 +21,20 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         $('#ingresar-otros-rubros').modal('show');
     };
 
+    $scope.modalInformacionCuenta = function(numeroCuenta){
+        $scope.cuenta = $scope.cuentas[numeroCuenta-1];
+        $('#modalInfoCuenta').modal('show');
+
+    };
+
+    $scope.fechasPeriodo = function(){
+
+        fechaActual = new Date();
+        yearActual = fechaActual.getFullYear();
+        fechasCuenta = $scope.cuentas;
+        alert(fechasCuenta);
+    }
+
 /*
     //save new record / update existing record
     $scope.save = function(modalstate, id) {
