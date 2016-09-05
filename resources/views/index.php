@@ -44,6 +44,12 @@
             <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
           </ul>
         </li>
+        <li class="padre"><a href="#"><i class="fa fa-male" aria-hidden="true"></i>Nomina<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
+          <ul class="hijos">
+            <li><a href="#" ng-click="toModuloEmpleado();">Personal</a></li>
+            <li><a href="#" ng-click="toModuloCargo();">Cargos</a></li>
+          </ul>
+        </li>
         <li class="padre"><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Perfil<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
             <li><a href="perfil" ng-click="">Editar Perfil</a></li>
@@ -53,7 +59,7 @@
           <ul class="hijos">
             <li><a href="#" ng-click="">Usuarios</a></li>
             <li><a href="#" ng-click="">Roles</a></li>
-            <li><a href="#" ng-click="toModuloEmpleado();">Empleados</a></li>
+            
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-cog fa-spin" aria-hidden="true"></i>Configuración<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>

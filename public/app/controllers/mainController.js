@@ -1,3 +1,5 @@
+(function(){
+
 app.controller('mainController', function($scope, $http, API_URL) {
 
 	$scope.titulo = "Inicio";
@@ -26,3 +28,4 @@ app.controller('mainController', function($scope, $http, API_URL) {
 
 	
 });
+})();
