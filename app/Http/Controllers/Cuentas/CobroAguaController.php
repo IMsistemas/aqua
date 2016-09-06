@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\Cuentas;
 
 use Illuminate\Http\Request;
@@ -20,21 +20,20 @@ class CobroAguaController extends Controller
 
 	/**
 	=========================================Kevin======================================================
-	**/
+	**/    
 
 	/**
 	*Retorna todas las cuentas con los suministros, los clientes y tarifas del suministro
 	**/
 	public function getCuentas(){
-		return $aux = CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
+		return CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
 	}
 
 	/**
 	*Retorna una cuenta con el suministro, el dueño del suministro y su tarifa
 	**/
 	public function getCuenta($numeroCuenta){
-        $cuenta = CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->get();
-        return dd($cuenta[$numeroCuenta-1]);
+        return dd( CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->where('idcuenta',$numeroCuenta)->get());
     }
 
     /**

@@ -10,7 +10,8 @@ class Solicitud extends Model
     protected $primaryKey = "idsolicitud";
     public $timestamps = false; 
 
-    public function solicitud(){
-    	return $this->belongsTo('App\Modelos\Clientes\cliente');
+    public function cliente(){
+    	return $this->belongsTo('App\Modelos\Clientes\Cliente','documentoidentidad');
     }
 }
+  

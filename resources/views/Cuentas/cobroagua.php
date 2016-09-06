@@ -3,10 +3,6 @@
 
 	<div class="container" style="margin-top: 2%;">
 	
-		 <legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">RECAUDACIÓN {{cuenta.fechaperiodo | date:'MMM yyyy'}}</span>
-          </legend>
-
 		
 	
 			<div class="col-xs-6">

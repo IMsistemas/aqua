@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
@@ -100,4 +100,15 @@ Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPosition
 Route::resource('empleado', 'Nomina\EmpleadoController');
 
 
-/*Sebastian*/
+/*------------------------------------Sebastian------------------------------------------------*/
+
+/*=============================Módulo Solicitud Suministro====================================*/
+
+
+Route::get('/suministros/solicitudes', function (){
+	return view('Suministros/Solicitudes/index');
+});
+
+Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
+
+Route::get('suministros/solicitudes/{idSolicitud}','Suministros\SolicitudController@getSolicitud');

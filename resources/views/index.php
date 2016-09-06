@@ -13,7 +13,7 @@
 <body ng-controller="mainController">
   <header>
   <hr>
-    <div class="titulo">{{titulo}}</div>
+    <div class="titulo"><span style="font-weight: bold;">{{titulo | uppercase}}</span></div>
     
     <nav>
     <div class="brandLogo">
@@ -35,7 +35,7 @@
         </li>
         <li class="padre"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Solicitudes<i class=" der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="#" ng-click="">Solicitudes</a></li>
+            <li><a href="#" ng-click="toModuloSolicitud();">Solicitudes</a></li>
             <li><a href="#" ng-click="">Solicitudes en espera</a></li>
           </ul>
         </li>
@@ -72,14 +72,13 @@
   </header>
 
   <section ng-include="toModulo">
-   la secccion
+
   </section>
 
   <footer>
     powered by IMMPACT MEDIA
   </footer>
 
-  </body>
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
@@ -92,6 +91,12 @@
         <script src="<?= asset('app/controllers/cargosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/recaudacionController.js') ?>"></script>
-        
+        <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
 
+  </body>
+
+  
+
+        
 </html>
+
