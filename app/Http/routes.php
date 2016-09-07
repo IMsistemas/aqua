@@ -80,6 +80,11 @@ Route::post('/provincias/gestion/eliminarprovincia/{idprovincia}','Sectores\Prov
 
 /*Raidel*/
 
+Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
+Route::get('nuevaLectura/getRubros', 'Lecturas\LecturaController@getRubros');
+Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}', 'Lecturas\LecturaController@getRubrosValue');
+Route::resource('nuevaLectura', 'Lecturas\LecturaController');
+
 /*------------------------------------Yamilka------------------------------------------------*/
 
 /*===================================Módulo Nomina===========================================*/
