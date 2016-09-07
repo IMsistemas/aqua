@@ -12,9 +12,9 @@ use App\Modelos\Sectores\Calle;
 
 class CalleController extends Controller
 {
-	public function index()
+	public function index($idbarrio)
 	{
-		return $calles=DB::table('calle')->get();
+		return $calles=DB::table('calle')->where('idbarrio',$idbarrio)->get();
 	}
 
 	public function show($idcalle)

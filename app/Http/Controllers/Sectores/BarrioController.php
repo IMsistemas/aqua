@@ -11,9 +11,9 @@ use App\Modelos\Sectores\Barrio;
 
 class BarrioController extends Controller
 {
-	public function index()
+	public function index($idparroquia)
 	{
-		return $barrios=DB::table('barrio')->get();
+		return $barrios=DB::table('barrio')->where('idparroquia',$idparroquia)->get();
 	}
 	public function show($idbarrio)
 	{

@@ -1,7 +1,7 @@
-app.controller('parroquiasController', function($scope, $http, API_URL, idcanton) {
+app.controller('parroquiasController', function($scope, $http, API_URL) {
     //retrieve parroquia listing from API
     $scope.parroquias=[];
-    $http.get(API_URL + "parroquias/gestion/"+idcanton)
+    $http.get(API_URL + "parroquias/gestion/"+$scope.idcanton)
         .success(function(response) {
                 $scope.parroquias = response;             
 

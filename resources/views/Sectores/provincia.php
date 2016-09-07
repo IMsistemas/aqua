@@ -24,7 +24,7 @@
                         <td>
                             <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</button>
                             <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</button>
-                            <button ng-click="toModuloCanton();">Ver Cantones</button>
+                            <button ng-click="toModuloCanton(provincia.idprovincia);">Ver Cantones</button>
                         </td>
                        
                     </tr>

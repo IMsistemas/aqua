@@ -24,7 +24,7 @@
                         <td>
                             <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', barrio.idbarrio)">Editar Barrio</button>
                             <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(barrio.idbarrio)">Borrar Barrio</button>
-                            <button ng-click="toModuloCalle();">Ver Calles</button>
+                            <button ng-click="toModuloCalle(barrio.idbarrio);">Ver Calles</button>
                         </td>
                     </tr>
 

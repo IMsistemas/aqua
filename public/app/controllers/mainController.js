@@ -21,7 +21,8 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "provincias";
 	}
 
-	$scope.toModuloCanton = function(){		
+	$scope.toModuloCanton = function(idprovincia){		
+		$scope.idprovincia = idprovincia;	
 		$scope.titulo = "Cantones";
 		$scope.toModulo = "cantones";
 	}
@@ -32,12 +33,14 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "parroquias";
 	}
 
-	$scope.toModuloBarrio = function(){		
+	$scope.toModuloBarrio = function(idparroquia){		
+		$scope.idparroquia = idparroquia;	
 		$scope.titulo = "Barrios";
 		$scope.toModulo = "barrios";
 
 	}
-	$scope.toModuloCalle = function(){		
+	$scope.toModuloCalle = function(idbarrio){		
+		$scope.idbarrio = idbarrio;	
 		$scope.titulo = "Calles";
 		$scope.toModulo = "calles";
 	}

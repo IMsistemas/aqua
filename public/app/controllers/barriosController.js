@@ -1,7 +1,7 @@
 app.controller('barriosController', function($scope, $http, API_URL) {
     //retrieve barrios listing from API
     $scope.barrios=[];
-    $http.get(API_URL + "barrios/gestion")
+    $http.get(API_URL + "barrios/gestion/"+$scope.idparroquia)
         .success(function(response) {
                 $scope.barrios = response;        
 

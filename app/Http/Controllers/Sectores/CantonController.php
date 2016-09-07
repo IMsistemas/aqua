@@ -9,12 +9,9 @@ use App\Modelos\Sectores\Provincia;
 
 class CantonController extends Controller
 {
-	public function index()
+	public function index($idprovincia)
 	{
-		
-		return //Canton::with('provincia')->get();//
-		$cantones=DB::table('canton')->get();
-		//with('canton.idcanton','provincia.nombreprovincia','canton.nombrecanton')->get();
+		return $cantones=DB::table('canton')->where('idprovincia',$idprovincia)->get();
 	}
 
 	public function show($idcanton)

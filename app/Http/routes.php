@@ -89,7 +89,7 @@ Route::get('/cantones', function (){
 });
 
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
-Route::get('/cantones/gestion/','Sectores\CantonController@index');
+Route::get('/cantones/gestion/{idprovincia?}','Sectores\CantonController@index');
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/cantones/gestion/{idcanton?}','Sectores\CantonController@show');
 //Ruta página de inicio de gestión de Cantons
@@ -128,7 +128,7 @@ Route::get('/barrios', function (){
 });
 
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
-Route::get('/barrios/gestion/','Sectores\BarrioController@index');
+Route::get('/barrios/gestion/{idparroquia?}','Sectores\BarrioController@index');
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/barrios/gestion/{idbarrio?}','Sectores\BarrioController@show');
 //Ruta página de inicio de gestión de barrios
@@ -147,7 +147,7 @@ Route::get('/calles', function (){
 });
 
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
-Route::get('/calles/gestion/','Sectores\CalleController@index');
+Route::get('/calles/gestion/{idbarrio?}','Sectores\CalleController@index');
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/calles/gestion/{idcalle?}','Sectores\CalleController@show');
 //Ruta página de inicio de gestión de calles

@@ -1,7 +1,7 @@
 app.controller('callesController', function($scope, $http, API_URL) {
     //retrieve calles listing from API
     $scope.calles=[];
-    $http.get(API_URL + "calles/gestion")
+    $http.get(API_URL + "calles/gestion/"+$scope.idbarrio)
         .success(function(response) {
                 $scope.calles = response;             
 

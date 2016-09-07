@@ -1,7 +1,7 @@
 app.controller('cantonesController', function($scope, $http, API_URL) {
     //retrieve cantones listing from API
     $scope.cantones=[];
-    $http.get(API_URL + "cantones/gestion")
+    $http.get(API_URL + "cantones/gestion/"+$scope.idprovincia)
         .success(function(response) {
                 console.log(response);
                 $scope.cantones = response;             
