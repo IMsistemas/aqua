@@ -1,5 +1,5 @@
-    <div ng-controller="provinciasController">
-        <h2 class="container">Lista de Provincias</h2>
+    <div ng-controller="callesController">
+        <h2 class="container">Lista de Calles</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->
@@ -13,21 +13,19 @@
             <table class="table" >
                 <thead>
                     <tr>
-                        <th>Código de Provincia</th>
-                        <th>Nombre de Provincia</th>
+                        <th>Código de Calle</th>
+                        <th>Nombre de Calle</th>
                         <th><button id="btn-add" class="btn btn-primary btn-xs" ng-click="toggle('add', 0)">Agregar</button></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="provincia in provincias|filter:busqueda">
-                        <td>{{provincia.idprovincia}}</td>
-                        <td>{{provincia.nombreprovincia}}</td>
+                    <tr ng-repeat="calle in calles|filter:busqueda">
+                        <td>{{calle.idcalle}}</td>
+                        <td>{{calle.nombrecalle}}</td>
                         <td>
-                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</button>
-                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</button>
-                            <button ng-click="toModuloCanton();">Ver Cantones</button>
+                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', calle.idcalle)">Editar Calle</button>
+                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(calle.idcalle)">Borrar Calle</button>
                         </td>
-                       
                     </tr>
 
                 </tbody>
@@ -103,7 +101,6 @@
                                 </div>
                             </form>
                         </div>
-s
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmProvincias.$invalid">Guardar</button>
                         </div>

@@ -1,32 +1,33 @@
-app.controller('provinciasController', function($scope, $http, API_URL) {
-    //retrieve provincias listing from API
-    $scope.provincias=[];
-    $http.get(API_URL + "provincias/gestion")
+app.controller('cantonesController', function($scope, $http, API_URL) {
+    //retrieve cantones listing from API
+    $scope.cantones=[];
+    $http.get(API_URL + "cantones/gestion")
         .success(function(response) {
-                $scope.provincias = response;             
+                console.log(response);
+                $scope.cantones = response;             
 
             });
     //show modal form
-    $scope.toggle = function(modalstate, idprovincia) {
+    $scope.toggle = function(modalstate, idcanton) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva Provincia";
-                $http.get(API_URL + 'provincias/gestion/ultimocodigoprovincia')
+                $http.get(API_URL + 'cantones/gestion/ultimocodigocanton')
                         .success(function(response) {
                             console.log(response);
-                            $scope.idprovincia = response.idprovincia;
+                            $scope.idcanton = response.idcanton;
                         });
                 $('#add').modal('show');
                 break;
             case 'edit':
                 $scope.form_title = "Editar Provincia";
-                $scope.idprovincia = idprovincia;
-                $http.get(API_URL + 'provincias/gestion/' + idprovincia)
+                $scope.idcanton = idcanton;
+                $http.get(API_URL + 'cantones/gestion/' + idcanton)
                         .success(function(response) {
                             console.log(response);
-                            $scope.provincia = response;
+                            $scope.canton = response;
                         });
                 $('#edit').modal('show');
                 break;
@@ -35,37 +36,12 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         }
      
     }
-    
-
-    app.config(function($routeProvider){
-        $routeProvider.when("/", {
-        templateUrl : "templates/index.html",
-        controller : "indexController"
-        })
-        .when("/home", {
-        templateUrl : "templates/home.html",
-        controller : "homeController"
-        })
-        .when("/login", {
-        templateUrl : "templates/login.html",
-        controller : "loginController"
-         })
-        //este es digamos, al igual que en un switch el default, en caso que 
-        //no hayamos concretado que nos redirija a la página principal
-         .otherwise({ reditrectTo : "/" });
-    })
-
-   $scope.toModuloCanton = function(idprovincia){        
-        $scope.idprovincia = idprovincia;
-        $scope.titulo = "Cantones";
-        $scope.toModulo = "cantones";
-    }
 
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
     $scope.save = function(modalstate, idprovincia) {
-        var url = API_URL + "provincias/gestion";    
+        var url = API_URL + "cantones/gestion";    
         console.log(modalstate); 
         
         //append provincia id to the URL if the form is in edit mode
@@ -97,7 +73,7 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         if (isConfirmDelete) {
             $http({
                 method: 'POST',
-                url: API_URL + 'provincias/gestion/eliminarprovincia/' + idprovincia,
+                url: API_URL + 'cantones/gestion/eliminarprovincia/' + idprovincia,
             }).success(function(data) {
                     console.log(data);
                     location.reload();

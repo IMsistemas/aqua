@@ -30,7 +30,11 @@
         <li class="padre"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i></i>Suministros<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
             <li><a href="#" ng-click="">Suministros</a></li>
-            <li><a href="#" ng-click="">Sectores</a></li>
+             <li><a href="#" ng-click="toModuloProvincia();">Provincia</a></li>
+            <li><a href="#" ng-click="toModuloCanton();">Canton</a></li>
+            <li><a href="#" ng-click="toModuloParroquia();">Parroquia</a></li>
+            <li><a href="#" ng-click="toModuloBarrio();">Barrio</a></li>
+            <li><a href="#" ng-click="toModuloCalle();">Calle</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Solicitudes<i class=" der fa fa-chevron-down" aria-hidden="true"></i></a>

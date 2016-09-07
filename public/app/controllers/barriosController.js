@@ -1,32 +1,32 @@
-app.controller('provinciasController', function($scope, $http, API_URL) {
-    //retrieve provincias listing from API
-    $scope.provincias=[];
-    $http.get(API_URL + "provincias/gestion")
+app.controller('barriosController', function($scope, $http, API_URL) {
+    //retrieve barrios listing from API
+    $scope.barrios=[];
+    $http.get(API_URL + "barrios/gestion")
         .success(function(response) {
-                $scope.provincias = response;             
+                $scope.barrios = response;        
 
             });
     //show modal form
-    $scope.toggle = function(modalstate, idprovincia) {
+    $scope.toggle = function(modalstate, idbarrio) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Nueva Provincia";
-                $http.get(API_URL + 'provincias/gestion/ultimocodigoprovincia')
+                $scope.form_title = "Nueva barrio";
+                $http.get(API_URL + 'barrios/gestion/ultimocodigobarrio')
                         .success(function(response) {
                             console.log(response);
-                            $scope.idprovincia = response.idprovincia;
+                            $scope.idbarrio = response.idbarrio;
                         });
                 $('#add').modal('show');
                 break;
             case 'edit':
-                $scope.form_title = "Editar Provincia";
-                $scope.idprovincia = idprovincia;
-                $http.get(API_URL + 'provincias/gestion/' + idprovincia)
+                $scope.form_title = "Editar barrio";
+                $scope.idbarrio = idbarrio;
+                $http.get(API_URL + 'barrios/gestion/' + idbarrio)
                         .success(function(response) {
                             console.log(response);
-                            $scope.provincia = response;
+                            $scope.barrio = response;
                         });
                 $('#edit').modal('show');
                 break;
@@ -35,7 +35,6 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         }
      
     }
-    
 
     app.config(function($routeProvider){
         $routeProvider.when("/", {
@@ -55,8 +54,8 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
          .otherwise({ reditrectTo : "/" });
     })
 
-   $scope.toModuloCanton = function(idprovincia){        
-        $scope.idprovincia = idprovincia;
+   $scope.toModuloCanton = function(idbarrio){        
+        $scope.idbarrio = idbarrio;
         $scope.titulo = "Cantones";
         $scope.toModulo = "cantones";
     }
@@ -64,40 +63,40 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
-    $scope.save = function(modalstate, idprovincia) {
-        var url = API_URL + "provincias/gestion";    
+    $scope.save = function(modalstate, idbarrio) {
+        var url = API_URL + "barrios/gestion";    
         console.log(modalstate); 
         
-        //append provincia id to the URL if the form is in edit mode
+        //append barrio id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
-            url += "/actualizarprovincia/" + idprovincia;
+            url += "/actualizarbarrio/" + idbarrio;
         }else{
-            url += "/guardarprovincia" ;
+            url += "/guardarbarrio" ;
         }
         
         $http({
             method: 'POST',
             url: url,
-            data: $.param($scope.provincia),
+            data: $.param($scope.barrio),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.provincia);
+            console.log($scope.barrio);
             console.log(response);
             location.reload();
         }).error(function(response) {
-            console.log($scope.provincia);
+            console.log($scope.barrio);
             console.log(response);
             alert('Ha ocurrido un error');
         });
     }
 
     //delete record
-    $scope.confirmDelete = function(idprovincia) {
+    $scope.confirmDelete = function(idbarrio) {
         var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
         if (isConfirmDelete) {
             $http({
                 method: 'POST',
-                url: API_URL + 'provincias/gestion/eliminarprovincia/' + idprovincia,
+                url: API_URL + 'barrios/gestion/eliminarbarrio/' + idbarrio,
             }).success(function(data) {
                     console.log(data);
                     location.reload();

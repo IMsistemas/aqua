@@ -1,15 +1,12 @@
 <?php 
 namespace App\Http\Controllers\Sectores;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
-use Ayora\Http\Requests\CrearProvinciaRequest;
-use Ayora\Http\Requests\ActualizarProvinciaRequest;
-use Ayora\Http\Requests\EliminarProvinciaRequest;
 use Illuminate\Http\Request;
 use App\Modelos\Sectores\Provincia;
+
+
 
 class ProvinciaController extends Controller
 {
@@ -27,6 +24,7 @@ class ProvinciaController extends Controller
 	{
 		$provincia=DB::table('provincia')->orderBy('idprovincia')->get();
 		$length = count($provincia);
+		$provincia=DB::max('idprovincia');
 				
 		if($provincia==NULL){
 			$idProvincia='PRO00001';
@@ -55,8 +53,9 @@ class ProvinciaController extends Controller
 			$idProvincia=$identificadorLetras.$identificadorNumero;
 			
 		}
-		$arreglo = ["idprovincia" => $idProvincia,];
-		return response()->json($arreglo);
+		return $provincia=DB::table('provincia')->get();
+		//$provincia->idprovincia =$idProvincia;
+		//return $provincia;
 	}
 
 	public function postCrearProvincia(Request $request)

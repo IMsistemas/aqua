@@ -1,5 +1,5 @@
-    <div ng-controller="provinciasController">
-        <h2 class="container">Lista de Provincias</h2>
+    <div ng-controller="cantonesController">
+        <h2 class="container">Lista de Cantones</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->
@@ -13,21 +13,22 @@
             <table class="table" >
                 <thead>
                     <tr>
-                        <th>Código de Provincia</th>
+                        <th>Código de Canton</th>
                         <th>Nombre de Provincia</th>
+                        <th>Nombre de Canton</th>
                         <th><button id="btn-add" class="btn btn-primary btn-xs" ng-click="toggle('add', 0)">Agregar</button></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="provincia in provincias|filter:busqueda">
-                        <td>{{provincia.idprovincia}}</td>
-                        <td>{{provincia.nombreprovincia}}</td>
+                    <tr ng-repeat="canton in cantones|filter:busqueda">
+                        <td>{{canton.idcanton}}</td>
+                        <td>{{canton.idprovincia}}</td>
+                        <td>{{canton.nombrecanton}}</td>
                         <td>
-                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</button>
-                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</button>
-                            <button ng-click="toModuloCanton();">Ver Cantones</button>
+                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', canton.idcanton)">Editar Canton</button>
+                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(canton.idcanton)">Borrar Canton</button>
+                            <button ng-click="toModuloParroquia(canton.idcanton);">Ver Parroquias</button>
                         </td>
-                       
                     </tr>
 
                 </tbody>
@@ -103,7 +104,6 @@
                                 </div>
                             </form>
                         </div>
-s
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmProvincias.$invalid">Guardar</button>
                         </div>

@@ -16,6 +16,33 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "clientes";
 	}
 
+	$scope.toModuloProvincia = function(){		
+		$scope.titulo = "Provincias";
+		$scope.toModulo = "provincias";
+	}
+
+	$scope.toModuloCanton = function(){		
+		$scope.titulo = "Cantones";
+		$scope.toModulo = "cantones";
+	}
+
+	$scope.toModuloParroquia = function(idcanton){
+		$scope.idcanton = idcanton;		
+		$scope.titulo = "Parroquias";
+		$scope.toModulo = "parroquias";
+	}
+
+	$scope.toModuloBarrio = function(){		
+		$scope.titulo = "Barrios";
+		$scope.toModulo = "barrios";
+
+	}
+	$scope.toModuloCalle = function(){		
+		$scope.titulo = "Calles";
+		$scope.toModulo = "calles";
+	}
+
+
 	$scope.toModuloLectura = function(){		
 		$scope.titulo = "Lecturas";
 		$scope.toModulo = "lecturas";

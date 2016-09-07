@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en-US" ng-app="softver-aqua">
-    <head>
-        <title>Clientes</title>
-
-        <!-- Load Bootstrap CSS -->
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    </head>
-    <body>
-        <h2 class="container">Lista de Clientes</h2>
-        <div  ng-controller="clientesController" class="container">
+    <div ng-controller="clientesController">
+        <h2 class="container">Lista de Provincia</h2>
+        <div   class="container">
 
             <!-- Table-to-load-the-data Part -->
-            <input type="text" ng-pagination-search="clientes" >
+            <div class="col-xs-6">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
+                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                </div>
+
+            </div>
             <table class="table" >
                 <thead>
                     <tr>
@@ -27,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-pagination="cliente in clientes" ng-pagination-size="2">
+                    <tr ng-repeat="cliente in clientes|filter:busqueda">
                         <td>{{cliente.documentoidentidad}}</td>
                         <td>{{cliente.fechaingreso|date}}</td>
                         <td>{{cliente.apellido+' '+cliente.nombre}}</td>                    
@@ -45,7 +43,7 @@
                 </tbody>
                     
             </table>
-              <ng-pagination-control pagination-id="clientes"></ng-pagination-control>
+
             <!-- End of Table-to-load-the-data Part -->
             <!-- Modal (Pop up when detail button clicked) -->
             <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -62,7 +60,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Documento de identidad del Cliente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control has-error" id="documentoidentidad" name="documentoidentidad" placeholder="Cédula" value="{{documentoidentidad}}" 
-                                        ng-model="cliente.documentoidentidad" ng-required="true">
+                                         ng-required="true">
                                         <span class="help-inline" 
                                         ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$touched">La cédula del cliente es requerida</span>
                                     </div>
@@ -71,7 +69,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Fecha de Ingreso</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso" placeholder="Fecha Ingreso" value="{{fechaingreso}}" ng-model="cliente.fechaingreso" ng-required="true">
+                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso" placeholder="Fecha Ingreso" value="{{fechaingreso}}"  ng-required="true">
                                         <span class="help-inline" 
                                         ng-show="frmClientes.fechaingreso.invalid && frmClientes.fechaingreso.touched">La fecha de ingreso del cliente es requerida</span>
                                     </div>
@@ -81,7 +79,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Nombre del Cliente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Cliente" value="{{nombre}}" 
-                                        ng-model="cliente.nombre" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$touched">El nombre del cliente del cliente es requerido</span>
                                     </div>
@@ -91,7 +89,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Apellido del CLiente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido del Cliente" value="{{apellido}}" 
-                                        ng-model="cliente.apellido" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$touched">El apellido del cliente del es requerido</span>
                                     </div>
@@ -101,7 +99,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Teléfono del CLiente</label>
                                     <div class="col-sm-9" >
                                         <input type="text" class="form-control" id="telefonoprincipal" name="telefonoprincipal" placeholder="Teléfono del Cliente" value="{{telefonoprincipal}}" 
-                                        ng-model="cliente.telefonoprincipal" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$touched">El teléfono del cliente es requerido</span>
                                     </div>
@@ -110,7 +108,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Teléfono alternativo del CLiente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="telefonosecundario" name="telefonosecundario" placeholder="Teléfono Alternativo del Cliente" value="{{telefonosecundario}}" 
-                                        ng-model="cliente.telefonosecundario" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$touched">El telélefono alternativo del cliente es requerido</span>
                                     </div>
@@ -120,7 +118,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Celular del CLiente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="celudar" name="celudar" placeholder="Celular del Cliente" value="{{celudar}}" 
-                                        ng-model="cliente.celular" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.celudar.$invalid && frmClientes.celudar.$touched">El celular de la  es requerido</span>
                                     </div>
@@ -130,7 +128,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Dirección del CLiente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="drirecion" name="drirecion" placeholder="Direción del Cliente" value="{{drirecion}}" 
-                                        ng-model="cliente.direccion" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.drirecion.$invalid && frmClientes.drirecion.$touched">La direción del cliente es requerida</span>
                                     </div>
@@ -140,7 +138,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Correo del CLiente</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo del CLiente" value="{{correo}}" 
-                                        ng-model="cliente.correo" ng-required="true">
+                                         ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="frmClientes.correo.$invalid && frmClientes.correo.$touched">El correo electrónico es requerido</span>
                                     </div>
@@ -267,16 +265,5 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
-        <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-        <script src="<?= asset('app/lib/angular/angular-pagination.js') ?>"></script>
-        <script src="<?= asset('js/jquery.min.js') ?>"></script>
-        <script src="<?= asset('js/bootstrap.min.js') ?>"></script>      
-        <!-- AngularJS Application Scripts -->
-        <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
-        
-
-    </body>
-</html>
