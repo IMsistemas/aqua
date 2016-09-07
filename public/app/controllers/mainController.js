@@ -22,7 +22,7 @@ app.controller('mainController', function($scope, $http, API_URL) {
 	}
 
 	$scope.toModuloRecaudacion = function(){		
-		$scope.titulo = "Recaudacion";
+		$scope.titulo = "Recaudación";
 		$scope.toModulo = "recaudacion";
 	}
 

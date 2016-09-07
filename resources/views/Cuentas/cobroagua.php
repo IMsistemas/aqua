@@ -1,35 +1,28 @@
-
 <div ng-controller="recaudacionController">
-
 	<div class="container" style="margin-top: 2%;">
-	
-		
-	
-			<div class="col-xs-6">
-	            <div class="form-group has-feedback">
-	                <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
-	                <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-	            </div>
+		<div class="col-xs-6">
+			<div class="form-group has-feedback">
+				<input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
+	             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+	         </div>
+		</div>
 
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="comboYear">Año</label>
+				<select class="form-control" id="comboYear" ng-model="yearSeleccionado" >
+				<option value="">Seleccione año</option>
+					<option ng-repeat="cuenta in cuentas" value="" >{{cuenta.fechaperiodo | date:'yyyy'}}</option>
+				</select>
 			</div>
-
-			<form class="form-inline">
-				<div class="form-group">
-				    <label for="comboYear">Año</label>
-				    <select class="form-control" id="comboYear" ng-model="yearSeleccionado" >
-				    	<option value="">Seleccione año</option>
-				    	<option ng-repeat="cuenta in cuentas" value="" >{{cuenta.fechaperiodo | date:'yyyy'}}</option>
-				    </select>
-				</div>
-				<div class="form-group">
-				    <label for="comboMes">Mes</label>
-				    <select class="form-control" id="comboMes" ng-model="mesSeleccionado" >
-				    	<option value="">Seleccione mes</option>
-				    	<option ng-repeat="cuenta in cuentas" value="" >{{cuenta.fechaperiodo | date:'MMM'}}</option>
-				    </select>
-
-				</div>
-			</form>
+			<div class="form-group">
+				<label for="comboMes">Mes</label>
+				<select class="form-control" id="comboMes" ng-model="mesSeleccionado" >
+					<option value="">Seleccione mes</option>
+				    <option ng-repeat="cuenta in cuentas" value="" >{{cuenta.fechaperiodo | date:'MMM'}}</option>
+				</select>
+			</div>
+		</form>
 	   
 	    
            
