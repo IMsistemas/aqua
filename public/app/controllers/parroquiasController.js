@@ -47,7 +47,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
         if (modalstate === 'edit'){
             url += "/actualizarparroquia/" + idprovincia;
         }else{
-            url += "/guardarparroquia" ;
+            url += "/guardarparroquia/"+$scope.idcanton ;
         }
         
         $http({

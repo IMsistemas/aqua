@@ -43,30 +43,30 @@
                             <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
                         </div>
                         <div class="modal-body">
-                            <form name="frmProvincias" class="form-horizontal" novalidate="">
+                            <form name="frmCanton" class="form-horizontal" novalidate="">
 
                                 <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Documento de identidad del Cliente</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Código Cantón</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="idprovincia" name="idprovincia" placeholder="Cédula" value="{{idprovincia}}" 
-                                        ng-model="provincia.idprovincia" ng-required="true">
+                                        <input type="text" class="form-control has-error" id="idcanton" name="idcanton" placeholder="Cédula" value="{{idcanton}}" 
+                                        ng-model="canton.idcanton" ng-required="true">
                                         <span class="help-inline" 
-                                        ng-show="frmProvincias.idprovincia.$invalid && frmProvincias.idprovincia.$touched">La cédula del cliente es requerida</span>
+                                        ng-show="frmCanton.idcanton.$invalid && frmCanton.idcanton.$touched">El código del cantón es requerido</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre de Provincia</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre de Cantón</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombreprovincia" name="nombreprovincia" placeholder="Fecha Ingreso" value="{{nombreprovincia}}" ng-model="cliente.nombreprovincia" ng-required="true">
+                                        <input type="text" class="form-control" id="nombrecanton" name="nombrecanton" placeholder="Fecha Ingreso" value="{{nombrecanton}}" ng-model="canton.nombrecanton" ng-required="true">
                                         <span class="help-inline" 
-                                        ng-show="frmProvincias.nombreprovincia.invalid && frmProvincias.nombreprovincia.touched">La fecha de ingreso del cliente es requerida</span>
+                                        ng-show="frmCanton.nombrecanton.invalid && frmCanton.nombrecanton.touched">La fecha de ingreso del cliente es requerida</span>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmProvincias.$invalid">Guardar</button>
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, idcanton)" ng-disabled="frmCanton.$invalid">Guardar</button>
                         </div>
                     </div>
                 </div>

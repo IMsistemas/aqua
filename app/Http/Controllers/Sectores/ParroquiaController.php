@@ -57,22 +57,14 @@ class ParroquiaController extends Controller
 		return view('parroquias.crear-parroquia', ['idCanton' => $idCanton,'nombreCanton' => $nombreCanton,'idParroquia' => $idParroquia]);
 	}
 
-	public function postCrearParroquia(CrearParroquiaRequest $request)
+	public function postCrearParroquia(Request $request,$idcanton)
 	{
-		Parroquia::create
-		(
-			[
-				'idparroquia' => $request->get('idparroquia'),
-				'idcanton' => $request->get('idcanton'),
-				'nombreparroquia' => $request->get('nombreparroquia'),
-			]
-		);
-
-
-		$idcanton=$request->get('idcanton');
-		
-
-		return redirect("/validado/parroquias?idcanton=$idcanton")->with('creado', 'El Barrio ha sido creado');
+		$parroquia= new ;
+		$parroquia->idparroquia = $request->input('idparroquia');
+		$parroquia->idcanton = $idcanton;
+		$parroquia->nombreparroquia = $request->input('nombreparroquia');
+		$parroquia->save();
+		return 'El Canton fue creado correctamente con su documento de identidad'.$parroquia->idparroquia;
 	}
 
 	public function getActualizarParroquia($idparroquia)

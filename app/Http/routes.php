@@ -95,7 +95,7 @@ Route::get('/cantones/gestion/{idcanton?}','Sectores\CantonController@show');
 //Ruta página de inicio de gestión de Cantons
 Route::get('/cantones/gestion/ultimocodigocanton','Sectores\CantonController@getUltimoCodigoCanton');
 //Ruta página de inicio de gestión de Cantons
-Route::post('/cantones/gestion/guardarcanton','Sectores\CantonController@postCrearCanton');
+Route::post('/cantones/gestion/guardarcanton/{idprovincia}','Sectores\CantonController@postCrearCanton');
 //Ruta página de inicio de gestión de Cantons
 Route::post('/cantones/gestion/actualizarcanton/{idcanton}','Sectores\CantonController@postActualizarCanton');
 //Ruta página de inicio de gestión de Cantons
@@ -114,7 +114,7 @@ Route::get('/parroquias/gestion/{idparroquia?}','Sectores\ParroquiaController@sh
 //Ruta página de inicio de gestión de parroquias
 Route::get('/parroquias/gestion/ultimocodigoparroquia','Sectores\ParroquiaController@getUltimoCodigoparroquia');
 //Ruta página de inicio de gestión de parroquias
-Route::post('/parroquias/gestion/guardarparroquia','Sectores\ParroquiaController@postCrearparroquia');
+Route::post('/parroquias/gestion/guardarparroquia/{idcanton?}','Sectores\ParroquiaController@postCrearparroquia');
 //Ruta página de inicio de gestión de parroquias
 Route::post('/parroquias/gestion/actualizarparroquia/{idparroquia}','Sectores\ParroquiaController@postActualizarparroquia');
 //Ruta página de inicio de gestión de parroquias
@@ -134,7 +134,7 @@ Route::get('/barrios/gestion/{idbarrio?}','Sectores\BarrioController@show');
 //Ruta página de inicio de gestión de barrios
 Route::get('/barrios/gestion/ultimocodigobarrio','Sectores\BarrioController@getUltimoCodigobarrio');
 //Ruta página de inicio de gestión de barrios
-Route::post('/barrios/gestion/guardarbarrio','Sectores\BarrioController@postCrearbarrio');
+Route::post('/barrios/gestion/guardarbarrio/{idparroquia?}','Sectores\BarrioController@postCrearbarrio');
 //Ruta página de inicio de gestión de barrios
 Route::post('/barrios/gestion/actualizarbarrio/{idbarrio}','Sectores\BarrioController@postActualizarbarrio');
 //Ruta página de inicio de gestión de barrios
@@ -153,7 +153,7 @@ Route::get('/calles/gestion/{idcalle?}','Sectores\CalleController@show');
 //Ruta página de inicio de gestión de calles
 Route::get('/calles/gestion/ultimocodigocalle','Sectores\CalleController@getUltimoCodigocalle');
 //Ruta página de inicio de gestión de calles
-Route::post('/calles/gestion/guardarcalle','Sectores\CalleController@postCrearcalle');
+Route::post('/calles/gestion/guardarcalle/{idbarrio?}','Sectores\CalleController@postCrearcalle');
 //Ruta página de inicio de gestión de calles
 Route::post('/calles/gestion/actualizarcalle/{idcalle}','Sectores\CalleController@postActualizarcalle');
 //Ruta página de inicio de gestión de calles

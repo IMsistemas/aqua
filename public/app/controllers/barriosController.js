@@ -36,30 +36,6 @@ app.controller('barriosController', function($scope, $http, API_URL) {
      
     }
 
-    app.config(function($routeProvider){
-        $routeProvider.when("/", {
-        templateUrl : "templates/index.html",
-        controller : "indexController"
-        })
-        .when("/home", {
-        templateUrl : "templates/home.html",
-        controller : "homeController"
-        })
-        .when("/login", {
-        templateUrl : "templates/login.html",
-        controller : "loginController"
-         })
-        //este es digamos, al igual que en un switch el default, en caso que 
-        //no hayamos concretado que nos redirija a la página principal
-         .otherwise({ reditrectTo : "/" });
-    })
-
-   $scope.toModuloCanton = function(idbarrio){        
-        $scope.idbarrio = idbarrio;
-        $scope.titulo = "Cantones";
-        $scope.toModulo = "cantones";
-    }
-
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
@@ -71,7 +47,7 @@ app.controller('barriosController', function($scope, $http, API_URL) {
         if (modalstate === 'edit'){
             url += "/actualizarbarrio/" + idbarrio;
         }else{
-            url += "/guardarbarrio" ;
+            url += "/guardarbarrio/"+$scope.idparroquia ;
         }
         
         $http({

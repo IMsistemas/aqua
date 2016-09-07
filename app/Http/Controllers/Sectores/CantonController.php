@@ -61,24 +61,14 @@ class CantonController extends Controller
 		return view('cantones.crear-canton', ['idCanton' => $idCanton,'nombrecanton' => $nombrecanton,'idcanton' => $idcanton]);
 	}
 
-	public function postCrearCanton(CrearCantonRequest $request)
+	public function postCrearCanton(Request $request, $idprovincia)
 	{
-	
-
-		Canton::create
-		(
-			[
-				'idcanton' => $request->get('idcanton'),
-				'idcanton' => $request->get('idcanton'),
-				'nombrecanton' => $request->get('nombrecanton'),
-			]
-		);
-
-
-		$idcanton=$request->get('idcanton');
-		
-
-		return redirect("/validado/cantones?idcanton=$idcanton")->with('creado', 'El Barrio ha sido creado');
+		$canton= new Canton;
+		$canton->idcanton = $request->input('idcanton');
+		$canton->idprovincia = $idprovincia;
+		$canton->nombrecanton = $request->input('nombrecanton');
+		$canton->save();
+		return 'El Canton fue creado correctamente con su documento de identidad'.$canton->idcanton;
 	}
 
 	public function getActualizarCanton($idcanton)

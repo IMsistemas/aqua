@@ -60,19 +60,14 @@ class BarrioController extends Controller
 		return view('barrios.crear-barrio', ['idParroquia' => $idParroquia,'nombreParroquia' => $nombreParroquia,'idBarrio' => $idBarrio]);
 	}
 
-	public function postCrearBarrio(CrearBarrioRequest $request)
+	public function postCrearBarrio(Request $request,$idparroquia)
 	{
-		Barrio::create
-		(
-			[
-				'idbarrio' => $request->get('idbarrio'),
-				'idparroquia' => $request->get('idparroquia'),
-				'nombrebarrio' => $request->get('nombrebarrio'),
-			]
-		);
-		$idparroquia=$request->get('idparroquia');
-
-		return redirect("/validado/barrios?idparroquia=$idparroquia")->with('creado', 'El Barrio ha sido creado');
+		$barrio= new Barrio;
+		$barrio->idbarrio = $request->input('idbarrio');
+		$barrio->idparroquia = $idparroquia;
+		$barrio->nombrebarrio = $request->input('nombrebarrio');
+		$barrio->save();
+		return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
 	}
 
 	public function getActualizarBarrio($idbarrio)

@@ -63,19 +63,14 @@ class CalleController extends Controller
 		return view('calles.crear-calle', ['idBarrio' => $idBarrio,'nombreBarrio' => $nombreBarrio,'idCalle' => $idCalle]);
 	}
 
-	public function postCrearCalle(CrearCalleRequest $request)
+	public function postCrearCalle(Request $request,$idbarrio)
 	{
-		Calle::create
-		(
-			[
-				'idcalle' => $request->get('idcalle'),
-				'idbarrio' => $request->get('idbarrio'),
-				'nombrecalle' => $request->get('nombrecalle'),
-			]
-		);
-		$idbarrio=$request->get('idbarrio');
-
-		return redirect("/validado/calles?idbarrio=$idbarrio")->with('creado', 'El Barrio ha sido creado');
+		$calle= new Calle;
+		$calle->idcalle = $request->input('idcalle');
+		$calle->idbarrio = $idbarrio;
+		$calle->nombrecalle = $request->input('nombrecalle');
+		$calle->save();
+		return 'El calle fue creado correctamente con su documento de identidad'.$calle->idcalle;
 	}
 
 	public function getActualizarCalle($idcalle)
