@@ -96,6 +96,7 @@
         <script src="<?= asset('app/controllers/parroquiasController.js') ?>"></script>
         <script src="<?= asset('app/controllers/barriosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/callesController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
   </body>
 
   

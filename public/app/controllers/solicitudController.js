@@ -2,6 +2,8 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
 
     $scope.ahora = new Date();
 
+
+
 	$http.get(API_URL+"suministros/solicitudes/solicitudes")
         .success(function (response) {
             $scope.solicitudes = response;
@@ -13,15 +15,15 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
             $scope.clienteActual = response.data;
         });
         $('#nueva-solicitud-cliente').modal('show');
-    };
+    }
 
     $scope.modalNuevaSolicitud = function(documento){
        $http.get(API_URL+'clientes/gestion/'+documento)
         .success(function (response) {
             $scope.clienteActual = response.data;
         });
-        $('#nueva-solicitud-cliente').modal('show');
-    };
+        $('#nueva-solicitud').modal('show');
+    }
 
      $scope.estaProcesada = function(id){
      	$http.get(API_URL+'suministros/solicitudes/'+id)
@@ -43,34 +45,36 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
      		$("#estaProcesada i").removeClass("fa fa-file-pdf-o");
      	}
      }
-
-     $scope.save = function(modalstate, documentoidentidad) {
-        var url = API_URL + "clientes/gestion";    
-        console.log(modalstate); 
-        
-        //append cliente id to the URL if the form is in edit mode
-        if (modalstate === 'edit'){
-            url += "/actualizarcliente/" + documentoidentidad;
-        }else{
-            url += "/guardarcliente" ;
-        }
+     
+      $scope.save = function() {
+        var url = API_URL + "clientes/gestion/guardarcliente";    
         
         $http({
             method: 'POST',
             url: url,
-            data: $.param($scope.cliente),
+            data: $.param($scope.solicitud.cliente),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.cliente);
-            console.log(response);
-            location.reload();
+             guardarSolicitud();
         }).error(function(response) {
-            console.log($scope.cliente);
-            console.log(response);
-            alert('This is embarassing. An error has occured. Please check the log for details');
+           
         });
     }
 
+    guardarSolicitud = function(){
+        var url = API_URL + "suministros/solicitudes/nueva";    
+        
+        $http({
+            method: 'POST',
+            url: url,
+            data: $.param($scope.solicitud),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(response) {
+             $scope.message = 'Se ingreso correctamente la solicitud';
+             $('#modalMessage').modal('show');
+        }).error(function(response) {
+           
+        });
+    }
 
-     
 });

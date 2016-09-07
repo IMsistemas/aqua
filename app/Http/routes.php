@@ -198,3 +198,5 @@ Route::get('/suministros/solicitudes', function (){
 Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
 
 Route::get('suministros/solicitudes/{idSolicitud}','Suministros\SolicitudController@getSolicitud');
+
+Route::post('suministros/solicitudes/nueva','Suministros\SolicitudController@nuevaSolicitud');

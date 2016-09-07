@@ -27,5 +27,16 @@ class SolicitudController extends Controller
 	public function getSolicitud($idSolicitud){
 		return Solicitud::with('cliente')->where('idsolicitud',$idSolicitud)->get();
 	}
+
+	public function nuevaSolicitud(Request $request){
+		$solicitud = new Solicitud();
+		$solicitud->documentoidentidad = $request->input('');
+        $solicitud->fechasolicitud = $request->input('email');
+        $solicitud->direccionsuministro = $request->input('contact_number');
+        $solicitud->telefonosuministro = $request->input('position');
+        $solicitud->estaprocesada = $request->input('position');
+        $solicitud->save();
+
+	}
     
 }

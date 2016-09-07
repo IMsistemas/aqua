@@ -8,8 +8,8 @@
 	         </div> 
 	     </div>
 			<form class="form-inline">
-			<button type="button" id="btnNuevaSol" class="btn btn-info" style="float: right;" ng-click="">Nueva</button>
-			 <button type="button" id="btnNuevaSolCli" class="btn btn-info" style="float: right;" ng-click="modalNuevaSolicitudCliente(1);">Nueva sol. cliente</button>
+			<button type="button" id="btnNuevaSol" class="btn btn-info" style="float: right;" ng-click="modalNuevaSolicitud();">Nueva</button>
+			 
 				<div class="form-group">
 				    <label for="comboYear">Año</label>
 				    <select class="form-control" id="comboYear"  >
@@ -174,7 +174,7 @@
                             <div class="form-group">
                                 <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
                                 <div class="col-sm-6" style="padding: 0;">
-                                   {{ahora | date : fromat : 'fullDate'}}
+                                   <label ng-model="solicitud.cliente.fechaingreso">{{ahora | date : format : 'fullDate'}}</label>
                                 </div>
                                 <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -187,17 +187,30 @@
                         <div class="row">
                             <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
 
+							<fieldset>
+							<legend style="padding-bottom: 5px; padding-left: 20px">Datos Cliente</legend>
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Documento:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="documentoidentidadcliente" id="documentoidentidadempleado"
-                                                       ng-model="documentoidentidadcliente" ng-required="true" ng-maxlength="32"  >
-                                                       {{documentoidentidadcliente}}
+                                                       ng-model="solicitud.cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Correo:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="solicitud.cliente.correo" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                     </div>
+
                                     
                                 </div>
                                 <div class="col-xs-12">
@@ -206,7 +219,7 @@
                                             <label class="col-sm-4 control-label">Apellidos:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.apellido" ng-required="true" ng-maxlength="32" >
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +228,7 @@
                                             <label class="col-sm-4 control-label">Nombres:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefono" id="telefono"
-                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.nombre" ng-required="true" ng-maxlength="32"  >
                                             </div>
                                         </div>
                                     </div>
@@ -227,7 +240,7 @@
                                             <label class="col-sm-4 control-label">Telf. Principal:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.telefonoprincipal" ng-required="true" ng-maxlength="32" >
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +249,7 @@
                                             <label class="col-sm-4 control-label">Telf. Secundario:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefono" id="telefono"
-                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.telefonosecundario" ng-required="true" ng-maxlength="32"  >
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +261,7 @@
                                             <label class="col-sm-4 control-label">Celular:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.celular" ng-required="true" ng-maxlength="32" >
                                             </div>
                                         </div>
                                     </div>
@@ -257,23 +270,63 @@
                                             <label class="col-sm-4 control-label">Dirección:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefono" id="telefono"
-                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.direccion" ng-required="true" ng-maxlength="32"  >
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </fieldset>
+                                	
+                                <fieldset>
+                                	<legend style="padding-bottom: 5px; padding-left: 20px">Datos Instalacion</legend>
+                                	<div class="col-xs-12">
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Dirección:</label>
+	                                            <div class="col-sm-8">
+	                                                <input type="text" class="form-control" name="direccion" id="direccion"
+	                                                       ng-model="solicitud.direccion" ng-required="true" ng-maxlength="32" >
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Telefono:</label>
+	                                            <div class="col-sm-8">
+	                                                <input type="text" class="form-control" name="telefono" id="telefono"
+	                                                       ng-model="solicitud.direccion" ng-required="true" ng-maxlength="32"  >
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                </div>
+
+                                </fieldset>
                             </form>
                         </div>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="" ng-disabled="">Guardar</button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save();" ng-disabled="">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
 
+
+		 <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 	
 
 </div>
