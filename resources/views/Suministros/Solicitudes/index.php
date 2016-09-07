@@ -9,7 +9,7 @@
 	     </div>
 			<form class="form-inline">
 			<button type="button" id="btnNuevaSol" class="btn btn-info" style="float: right;" ng-click="">Nueva</button>
-			 <button type="button" id="btnNuevaSolCli" class="btn btn-info" style="float: right;" ng-click="">Nueva sol. cliente</button>
+			 <button type="button" id="btnNuevaSolCli" class="btn btn-info" style="float: right;" ng-click="modalNuevaSolicitudCliente(1);">Nueva sol. cliente</button>
 				<div class="form-group">
 				    <label for="comboYear">Año</label>
 				    <select class="form-control" id="comboYear"  >
@@ -81,43 +81,198 @@
 	</div>
 
 
-	<!--================Modal Nueva Solicitud=================================================================--> 
+	<!--================Modal Nueva Solicitud Cliente=================================================================--> 
 
-	 <div class="modal fade" id="nueva-solicitud" tabindex="-1" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header  modal-header-primary">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel"Nueva solicitud</h4>
-						Período: {{ahora | date:'MMM yyyy'}}
-					</div>
+	  <div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud-cliente">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
+                            <h4 class="modal-title">Ingresar Solicitud Nro. 0001</h4>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   {{ahora | date : fromat : 'fullDate'}}
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
 
-					<div class="modal-body">
-						<form name="formularioOtrosRubros" class="form-horizonal" novalidate="">
-							<fieldset>
-								<legend>Datos suministro</legend>
-								<div class="col-xs-12">
-		                                <span style="font-weight: bold">No. suministro: </span>{{cuenta.suministro.numerosuministro}} 
-		                        </div>
-		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Cliente: </span>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}} 
-		                        </div>
-		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Barrio: </span>{{cuenta.suministro.calle.barrio}} 
-		                        </div>
-		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Dirección: </span>{{cuenta.suministro.direccionsuministro}} 
-		                        </div>
-							</fieldset>
-							<br>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary">Guardar</button>
-					</div>
-				</div>
-			</div>			
-		</div>
+                        <div class="row">
+                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
+
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="documentoidentidadcliente" id="documentoidentidadempleado"
+                                                       ng-model="documentoidentidadcliente" ng-required="true" ng-maxlength="32"  >
+                                                       {{documentoidentidadcliente}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Cliente:</label>
+                                            <div class="col-sm-8">
+                                                {{clienteActual.apellido+" "+clienteActual.nombre | uppercase}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Dirección:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Teléfono:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"
+                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="" ng-disabled="">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--================Modal Nueva Solicitud======================================================================--> 
+
+	  <div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
+                            <h4 class="modal-title">Ingresar Solicitud Nro. 0001 </h4>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   {{ahora | date : fromat : 'fullDate'}}
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
+
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="documentoidentidadcliente" id="documentoidentidadempleado"
+                                                       ng-model="documentoidentidadcliente" ng-required="true" ng-maxlength="32"  >
+                                                       {{documentoidentidadcliente}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Apellidos:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Nombres:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"
+                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Telf. Principal:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Telf. Secundario:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"
+                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Celular:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Dirección:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"
+                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="" ng-disabled="">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 	
 
