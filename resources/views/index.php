@@ -30,7 +30,7 @@
         <li class="padre"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i></i>Suministros<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
             <li><a href="#" ng-click="">Suministros</a></li>
-             <li><a href="#" ng-click="toModuloProvincia();">Provincia</a></li>
+            <li><a href="#" ng-click="toModuloProvincia();">Provincia</a></li>
             <li><a href="#" ng-click="toModuloCanton();">Canton</a></li>
             <li><a href="#" ng-click="toModuloParroquia();">Parroquia</a></li>
             <li><a href="#" ng-click="toModuloBarrio();">Barrio</a></li>
@@ -95,8 +95,11 @@
         <script src="<?= asset('app/controllers/cargosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/recaudacionController.js') ?>"></script>
-        <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
-
+        <script src="<?= asset('app/controllers/provinciasController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/cantonesController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/parroquiasController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/barriosController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/callesController.js') ?>"></script>
   </body>
 
   

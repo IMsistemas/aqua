@@ -1,5 +1,4 @@
     <div ng-controller="cantonesController">
-        <h2 class="container">Lista de Cantones</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->

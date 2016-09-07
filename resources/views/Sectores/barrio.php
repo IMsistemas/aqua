@@ -1,5 +1,4 @@
     <div ng-controller="barriosController">
-        <h2 class="container">Lista de Barrios</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->

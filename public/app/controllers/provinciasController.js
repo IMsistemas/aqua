@@ -3,7 +3,7 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
     $scope.provincias=[];
     $http.get(API_URL + "provincias/gestion")
         .success(function(response) {
-                $scope.provincias = response;             
+                console.log($scope.provincias = response);             
 
             });
     //show modal form

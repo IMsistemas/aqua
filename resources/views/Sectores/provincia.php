@@ -1,5 +1,4 @@
     <div ng-controller="provinciasController">
-        <h2 class="container">Lista de Provincias</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->

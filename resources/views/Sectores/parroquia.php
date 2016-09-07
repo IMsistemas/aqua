@@ -1,5 +1,4 @@
     <div ng-controller="parroquiasController">
-        <h2 class="container">Lista de Parroquias</h2>
         <div   class="container">
 
             <!-- Table-to-load-the-data Part -->
