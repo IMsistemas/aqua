@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Lecturas;
 
+use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Tarifas\CostoTarifa;
@@ -52,10 +53,29 @@ class LecturaController extends Controller
 
     public function getRubros()
     {
-        return RubroFijo::all();
+        //$rubrofijo = RubroFijo::all();
+        
+        $rubrofijo = DB::select('SELECT * FROM rubrofijo');
+
+        $rubrovariable = DB::select('
+                                    
+                                SELECT idrubrovariable AS idrubrofijo, nombrerubrovariable AS nombrerubrofijo,
+                                (
+                                SELECT costorubro FROM rubrosvariablescuenta, cobroagua 
+                                    WHERE rubrovariable.idrubrovariable = rubrosvariablescuenta.idrubrovariable
+                                    AND cobroagua.idcuenta = rubrosvariablescuenta.idcuenta
+                                ) AS valorrubro
+                                FROM rubrovariable
+
+
+                            ');
+
+        $result = array_merge($rubrofijo, $rubrovariable);
+
+        return $result;
     }
 
-    public function getRubrosValue($consumo, $tarifa)
+    public function getRubrosValue($consumo, $tarifa, $numerosuministro)
     {
         $tarifabasica = DB::table('costotarifa')
                                 ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
@@ -87,17 +107,67 @@ class LecturaController extends Controller
         $object_ddss = RubroFijo::find(3)->valorrubro;
         $ddss = ($tarifabasica[0]->valorconsumo + $excedente) * $object_ddss;
 
+
+        $estaPaga = CobroAgua::where([
+                                ['numerosuministro', '=', $numerosuministro],
+                                ['estapagada', '=', false]
+                            ])->count();
+
+        $rubrovariable = DB::select('
+                                    
+                                SELECT idrubrovariable AS idrubrofijo, nombrerubrovariable AS nombrerubrofijo,
+                                (
+                                SELECT costorubro FROM rubrosvariablescuenta, cobroagua 
+                                    WHERE rubrovariable.idrubrovariable = rubrosvariablescuenta.idrubrovariable
+                                    AND cobroagua.idcuenta = rubrosvariablescuenta.idcuenta
+                                    AND cobroagua.numerosuministro = ' . $numerosuministro . '
+                                ) AS valorrubro
+                                FROM rubrovariable
+
+
+                            ');
+
+
+
         return response()->json([
             'tarifabasica' => $tarifabasica[0]->valorconsumo,
             'excedente' => $excedente,
             'medioambiente' => $medioambiente,
             'alcantarillado' => $alcantarillado,
+            'mesesatrasados' => $estaPaga,
             'ddss' => $ddss
         ]);
     }
 
     public function store(Request $request)
     {
+        //$lectura = Lectura::create($request->all());
+        
+        $lectura = new Lectura();
+        $lectura->numerosuministro = $request->input('numerosuministro');
+        $lectura->fechalectura = $request->input('fechalectura');
+        $lectura->lecturaactual = $request->input('lecturaactual');
+        $lectura->lecturaanterior = $request->input('lecturaanterior');
+        $lectura->consumo = $request->input('consumo');
+
+        $lectura->save();
+
+        $cobroagua = new CobroAgua();
+        $cobroagua->numerosuministro = $request->input('numerosuministro');
+        $cobroagua->idlectura =  $lectura->idlectura;
+        $cobroagua->valorconsumo = $request->input('consumo');
+
+        $cobroagua->valorexcedente = $request->input('excedente');
+        $cobroagua->mesesatrasados = $request->input('mesesatrasados');
+        $cobroagua->total = $request->input('total');
+
+        $cobroagua->save();
+
+
+        //return ($lectura) ? response()->json(['success' => true, 'lastID' => $lectura->idlectura]) : response()->json(['success' => false]);
+
+        return response()->json(['success' => true]);
+
 
     }
 

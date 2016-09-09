@@ -10,6 +10,10 @@ class Lectura extends Model
     protected $primaryKey = "idlectura";
     public $timestamps = false;
 
+    protected $fillable =  [
+        'fechalectura', 'numerosuministro', 'lecturaanterior', 'lecturaactual', 'consumo'
+    ];
+
     public function suministro(){
     	return $this->belongsTo('App\Modelos\Suministros\suministro');
     }
