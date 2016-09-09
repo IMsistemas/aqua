@@ -2,13 +2,16 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
 
     $scope.ahora = new Date();//fecha actual
    
-    
-
-	$http.get(API_URL+"suministros/solicitudes/solicitudes")
+    $scope.initLoad = function(){
+        $http.get(API_URL+"suministros/solicitudes/solicitudes")
         .success(function (response) {
             $scope.solicitudes = response;
             $scope.cantidadSolicitudes = $scope.solicitudes.length;
         });
+    }
+    $scope.initLoad();
+
+	
 
     
     $scope.modalNuevaSolicitud = function(){
@@ -89,6 +92,7 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
             data: $.param($scope.suministro),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
+             $scope.initLoad();
              $scope.message = 'Solicitud procesada con exito';
              $('#procesar-solicitud').modal('hide');
              $('#modalMessage').modal('show');
@@ -126,9 +130,11 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
             data: $.param($scope.solicitud),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
+             $scope.initLoad();
              $scope.message = 'Se ingreso correctamente la solicitud';
              $('#modalMessage').modal('show');
              $('#nueva-solicitud').modal('hide');
+
              
         }).error(function(response) {
             $scope.messageError = 'Error al ingresar la solicitud';

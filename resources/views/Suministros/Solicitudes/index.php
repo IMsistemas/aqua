@@ -71,10 +71,16 @@
 							<td ng-show="solicitud.estaprocesada==true"><span>Procesada</span></td>
 							<td ng-show="solicitud.estaprocesada==false"><span>En espera</span></td>
 							<td >
-								<a href="#" class="btn btn-warning" >Editar</a>
-								<a href="#" class="btn btn-danger" >Eliminar</a>
+								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false">Editar</a>
+
+                                <a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==true">Ver</a>
+
+
+								<a href="#" class="btn btn-danger" ng-hide="solicitud.estaprocesada==true">Eliminar</a>
+
                                 <a id="procesar" href="#" class="btn btn-success" ng-show="solicitud.estaprocesada==false" ng-click="modalProcesaSolicitud(solicitud.idsolicitud);"><i class="fa fa-check fa-lg" aria-hidden="true" ></i></a>
-                                <a id="pdf" href="#" class="btn btn-info" ng-show="solicitud.estaprocesada==true"><i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a>
+
+                                <a id="pdf" href="#" class="btn btn-danger" ng-show="solicitud.estaprocesada==true"><i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a>
 							</td>
 						</tr>
 					</tbody>
