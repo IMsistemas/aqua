@@ -7,6 +7,8 @@ use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
+use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,6 +32,16 @@ class ViewLecturaController extends Controller
                                         'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
                                         'cliente.apellido')
                             ->get();
+    }
+
+    public function getBarrios()
+    {
+        return Barrio::orderBy('nombrebarrio', 'asc')->get(); 
+    }
+
+    public function getCalles($idbarrio)
+    {
+        return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get(); 
     }
 
 }

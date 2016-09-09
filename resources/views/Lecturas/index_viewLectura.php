@@ -84,7 +84,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Barrio:</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" name="s_barrio" id="s_barrio" ng-model="s_calle"></select>
+                                        <select class="form-control" name="s_barrio" id="s_barrio" ng-model="s_barrio"
+                                                ng-options="value.id as value.label for value in barrios"
+                                                ng-change="loadCalles()"></select>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +94,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Calle:</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" name="s_calle" id="s_calle" ng-model="s_calle"></select>
+                                        <select class="form-control" name="s_calle" id="s_calle" ng-model="s_calle"
+                                            ng-options="value.id as value.label for value in calles"></select>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +134,7 @@
                                 <td>{{lectura.lecturaanterior}}</td>
                                 <td><input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"></td>
                                 <td>{{lectura.consumo}}</td>
-                                <td><textarea class="form-control" name="" id="" cols="10" rows="3"></textarea></td>
+                                <td><textarea class="form-control" name="" id="" cols="5" rows="2"></textarea></td>
                             </tr>
                         </tbody>
                     </table>
