@@ -51,8 +51,6 @@ class ViewLecturaController extends Controller
             $array_filters[] = ['calle.idcalle', '=', $filter->calle];       
         }
 
-
-
         $lecturas = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
                             ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
                             ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
@@ -62,15 +60,10 @@ class ViewLecturaController extends Controller
                                         'cliente.apellido');
 
         if(count($array_filters) == 1){
-
             $array_filters[0][2] = "'" . $array_filters[0][2] . "'";
-
-            $lecturas->whereRaw(implode(' ', $array_filters[0]));
-        
-        } else {
-        
-            $lecturas->where($array_filters);
-        
+            $lecturas->whereRaw(implode(' ', $array_filters[0]));        
+        } else {        
+            $lecturas->where($array_filters);        
         }
 
         if($filter->mes != null && $filter->mes != ''){
@@ -79,6 +72,10 @@ class ViewLecturaController extends Controller
 
         if($filter->anno != null && $filter->anno != ''){
             $lecturas->whereRaw('EXTRACT( YEAR FROM lectura.fechalectura) = ' . $filter->anno);       
+        }
+
+        if($filter->text != null && $filter->text != ''){
+            $lecturas->whereRaw("cliente.nombre LIKE '%" . $filter->text . "%' OR cliente.apellido LIKE '%" . $filter->text . "%' ");       
         }
 
         return $lecturas->get();

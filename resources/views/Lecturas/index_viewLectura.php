@@ -107,7 +107,8 @@
 
                 <div class="col-xs-12" style="margin-top: 10px;">
                     <div class="form-group has-feedback" style="float: right; width: 50%;">
-                        <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." ng-model="t_search" >
+                        <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." 
+                                ng-model="t_search" ng-change="searchByFilter();" >
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>

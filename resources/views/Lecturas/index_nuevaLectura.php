@@ -134,7 +134,7 @@
                         <fieldset>
                             <legend>Datos Suministro:</legend>
                             <div class="col-xs-6">
-                                <div class="col-xs-12" style="border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
+                                <div class="col-xs-12" style="background: #e3f2fd; border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
                                     <p>
                                         <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
                                     </p>
