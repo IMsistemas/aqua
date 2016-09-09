@@ -1,76 +1,148 @@
 app.controller('solicitudController',function ($scope,$http,API_URL) {
 
-    $scope.ahora = new Date();
+    $scope.ahora = new Date();//fecha actual
+   
+    
 
 	$http.get(API_URL+"suministros/solicitudes/solicitudes")
         .success(function (response) {
             $scope.solicitudes = response;
+            $scope.cantidadSolicitudes = $scope.solicitudes.length;
         });
 
-    $scope.modalNuevaSolicitudCliente = function(documento){
-       $http.get(API_URL+'clientes/gestion/'+documento)
+    
+    $scope.modalNuevaSolicitud = function(){
+        $('#nueva-solicitud').modal('show');
+    }
+
+
+    $scope.modalProcesaSolicitud = function(id){
+        $http.get(API_URL+"suministros/solicitudes/"+id)
         .success(function (response) {
-            $scope.clienteActual = response.data;
-        });
-        $('#nueva-solicitud-cliente').modal('show');
-    };
 
-    $scope.modalNuevaSolicitud = function(documento){
-       $http.get(API_URL+'clientes/gestion/'+documento)
+            $http.get(API_URL+"suministros/suministros")
         .success(function (response) {
-            $scope.clienteActual = response.data;
+            $scope.suministros = response;
+            $scope.cantidadSuministros = $scope.suministros.length;
         });
-        $('#nueva-solicitud-cliente').modal('show');
-    };
 
-     $scope.estaProcesada = function(id){
-     	$http.get(API_URL+'suministros/solicitudes/'+id)
-        .success(function (response) {
-        	$scope.getSolicitud = response.data;
+        $http.get(API_URL+"tarifas/tarifas")
+            .success(function (response) {
+                $scope.tarifas = response;
+            });
+
+         $http.get(API_URL+"barrios/gestion/concalles")
+            .success(function (response) {
+                $scope.barrios = response;
+            });
+
+        $http.get(API_URL+"configuracion/configuracion")
+            .success(function (response) {
+                $scope.configuracion = response[0];
+                $scope.nDividendos = [];
+                $scope.acometida = (parseInt($scope.configuracion.aaguapotable) + parseInt($scope.configuracion.alcantarillado));
+                for(var i = 1; i<=$scope.configuracion.dividendos; i++ ){
+                    $scope.nDividendos[i] = i;
+                }
+                console.log($scope.nDividendos);
+            });
+
+         $http.get(API_URL+"suministros/productos")
+            .success(function (response) {
+                $scope.producto = response[0];
+            });
+
+
+            $scope.procesarSolicitud = response[0];
+            $('#procesar-solicitud').modal('show');
         });
-       // console.log($scope.estaProcesada);
-       // console.log($scope.getSolicitud.estaprocesada);
-     	if(true){
-     		$scope.procesado = "";
-     		$scope.estoyProcesada = "procesada";
-     		$("#estaProcesada").removeClass("btn btn-info").addClass("btn btn-danger");
-     		$("#estaProcesada i").addClass("fa fa-file-pdf-o");
+    }
 
-     	} else{
-     		$scope.procesado = "Procesar";
-     		$scope.estoyProcesada = "En espera";
-     		$("#estaProcesada").removeClass("btn btn-danger").addClass("btn btn-info");
-     		$("#estaProcesada i").removeClass("fa fa-file-pdf-o");
-     	}
-     }
+    $scope.procesaSolicitud = function(id) {
 
-     $scope.save = function(modalstate, documentoidentidad) {
-        var url = API_URL + "clientes/gestion";    
-        console.log(modalstate); 
-        
-        //append cliente id to the URL if the form is in edit mode
-        if (modalstate === 'edit'){
-            url += "/actualizarcliente/" + documentoidentidad;
-        }else{
-            url += "/guardarcliente" ;
-        }
-        
-        $http({
+        $scope.suministro.cliente = $scope.procesarSolicitud.cliente;
+        $scope.suministro.direccionsuministro = $scope.procesarSolicitud.direccionsuministro;
+        $scope.suministro.telefonosuministro = $scope.procesarSolicitud.telefonosuministro;
+        $scope.suministro.producto = $scope.producto;
+
+        console.log($scope.suministro);
+
+        var url = API_URL +"suministros/solicitudes/procesar/"+id;    
+         $http({
             method: 'POST',
             url: url,
-            data: $.param($scope.cliente),
+            data: $.param($scope.suministro),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.cliente);
-            console.log(response);
-            location.reload();
+             ingresarSuministro();
         }).error(function(response) {
-            console.log($scope.cliente);
-            console.log(response);
-            alert('This is embarassing. An error has occured. Please check the log for details');
-        });
+            $scope.messageError = 'Error al procesar solicitud';
+           $('#modalMessageError').modal('show');           
+        });        
+    }
+
+    ingresarSuministro = function(){
+        var url = API_URL +"suministros/nuevo";    
+         $http({
+            method: 'POST',
+            url: url,
+            data: $.param($scope.suministro),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(response) {
+             $scope.message = 'Solicitud procesada con exito';
+             $('#procesar-solicitud').modal('hide');
+             $('#modalMessage').modal('show');
+        }).error(function(response) {
+            $scope.messageError = 'Error al ingresar el suministro';
+            $('#modalMessage').modal('hide');
+           $('#modalMessageError').modal('show');           
+        }); 
     }
 
 
      
+      $scope.guardarNuevoCliente = function() {
+        var url = API_URL + "clientes/gestion/guardarcliente";    
+        
+        $http({
+            method: 'POST',
+            url: url,
+            data: $.param($scope.solicitud.cliente),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(response) {
+             guardarSolicitud();
+        }).error(function(response) {
+            $scope.messageError = 'Error al ingresar el cliente';
+           $('#modalMessageError').modal('show');           
+        });
+    }
+
+    guardarSolicitud = function(){
+        var url = API_URL + "suministros/solicitudes/nueva/solicitud";    
+        
+        $http({
+            method: 'POST',
+            url: url,
+            data: $.param($scope.solicitud),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function(response) {
+             $scope.message = 'Se ingreso correctamente la solicitud';
+             $('#modalMessage').modal('show');
+             $('#nueva-solicitud').modal('hide');
+             
+        }).error(function(response) {
+            $scope.messageError = 'Error al ingresar la solicitud';
+            $('#modalMessage').modal('hide');
+            $('#modalMessageError').modal('show');
+        });
+    }
+
 });
+
+/* $scope.modalNuevaSolicitudCliente = function(documento){
+       $http.get(API_URL+'clientes/gestion/'+documento)
+        .success(function (response) {
+            $scope.clienteActual = response.data;
+        });
+        $('#nueva-solicitud-cliente').modal('show');
+    }*/

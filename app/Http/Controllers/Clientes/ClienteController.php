@@ -17,7 +17,7 @@ class ClienteController extends Controller
 	{
 		$cliente= new Cliente;
 		$cliente->documentoidentidad = $request->input('documentoidentidad');
-		$cliente->fechaingreso = $request->input('fechaingreso');
+		$cliente->fechaingreso = date("Y-m-d H:i:s");
 		$cliente->nombre = $request->input('nombre');
 		$cliente->apellido = $request->input('apellido');
 		$cliente->telefonoprincipal = $request->input('telefonoprincipal');

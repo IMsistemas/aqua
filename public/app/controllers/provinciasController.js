@@ -1,11 +1,14 @@
 app.controller('provinciasController', function($scope, $http, API_URL) {
     //retrieve provincias listing from API
     $scope.provincias=[];
+    $scope.initLoad = function(){
     $http.get(API_URL + "provincias/gestion")
         .success(function(response) {
                 console.log($scope.provincias = response);             
 
             });
+    }
+    $scope.initLoad();
     //show modal form
     $scope.toggle = function(modalstate, idprovincia) {
         $scope.modalstate = modalstate;
@@ -13,10 +16,10 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva Provincia";
-                $http.get(API_URL + 'provincias/gestion/ultimocodigoprovincia')
+                $http.get(API_URL + 'provincias/gestion/ultimoidprovincia')
                         .success(function(response) {
-                            console.log(response);
-                            $scope.idprovincia = response;
+                            $scope.provincia.idprovincia = response.idprovincia;
+                            $scope.provincia.nombreprovincia = "";
                         });
                 break;
             case 'edit':
@@ -25,7 +28,8 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
                 $http.get(API_URL + 'provincias/gestion/' + idprovincia)
                         .success(function(response) {
                             console.log(response);
-                            $scope.provincia = response;
+                            $scope.provincia.idprovincia = (response.idprovincia).trim();
+                            $scope.provincia.nombreprovincia = (response.nombreprovincia).trim();
                         });
                 break;
             default:
@@ -47,17 +51,18 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         }else{
             url += "/guardarprovincia" ;
         }
-        
+        console.log($scope.provincia);
         $http({
             method: 'POST',
             url: url,
             data: $.param($scope.provincia),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
+            $scope.initLoad();
             console.log($scope.provincia);
             console.log(response);
-            location.reload();
         }).error(function(response) {
+            $scope.initLoad();
             console.log($scope.provincia);
             console.log(response);
             alert('Ha ocurrido un error');

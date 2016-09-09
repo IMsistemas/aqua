@@ -18,7 +18,7 @@ app.controller('barriosController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.idbarrio = response.idbarrio;
                         });
-                $('#add').modal('show');
+                
                 break;
             case 'edit':
                 $scope.form_title = "Editar barrio";
@@ -28,11 +28,12 @@ app.controller('barriosController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.barrio = response;
                         });
-                $('#edit').modal('show');
+                
                 break;
             default:
                 break;
         }
+         $('#myModal').modal('show');
      
     }
 

@@ -19,7 +19,7 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.idcanton = response.idcanton;
                         });
-                $('#add').modal('show');
+                
                 break;
             case 'edit':
                 $scope.form_title = "Editar Canton";
@@ -29,11 +29,12 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.canton = response;
                         });
-                $('#edit').modal('show');
+                
                 break;
             default:
                 break;
         }
+         $('#myModal').modal('show');
      
     }
 

@@ -20,7 +20,7 @@ class ProvinciaController extends Controller
 		return $provincia=DB::table('provincia')->where('idprovincia',$idprovincia)->get();
 	}
 
-	public function getUltimoCodigoProvincia()
+	public function getUltimoIDProvincia()
 	{
 		$provincia=DB::table('provincia')->orderBy('idprovincia')->get();
 		$length = count($provincia);
@@ -53,7 +53,7 @@ class ProvinciaController extends Controller
 			$idProvincia=$identificadorLetras.$identificadorNumero;
 			
 		}
-		return $provincia=DB::table('provincia')->get();
+		return $provincia=$provincias=DB::table('provincia')->orderBY('idprovincia')->get();
 		//$provincia->idprovincia =$idProvincia;
 		//return $provincia;
 	}

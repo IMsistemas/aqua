@@ -73,9 +73,9 @@ Route::get('/provincias/gestion','Sectores\ProvinciaController@index');
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
 Route::get('/provincias/gestion/{idprovincia?}','Sectores\ProvinciaController@show');
 //Ruta página de inicio de gestión de provincias
-Route::get('/provincias/gestion/ultimocodigoprovincia','Sectores\ProvinciaController@getUltimoCodigoProvincia');
+Route::get('/provincias/gestion/ultimoidprovincia','Sectores\ProvinciaController@getUltimoIdProvincia');
 //Ruta página de inicio de gestión de provincias
-Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@postCrearProvincia');
+Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@index');
 //Ruta página de inicio de gestión de provincias
 Route::post('/provincias/gestion/actualizarprovincia/{idprovincia}','Sectores\ProvinciaController@postActualizarProvincia');
 //Ruta página de inicio de gestión de provincias
@@ -126,6 +126,10 @@ Route::post('/parroquias/gestion/eliminarparroquia/{idparroquia}','Sectores\Parr
 Route::get('/barrios', function (){
 	return view('Sectores/barrio');
 });
+
+//----Kevin Tambien :-(---------
+Route::get('/barrios/gestion/concalles','Sectores\BarrioController@getBarriosCalles');
+
 
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
 Route::get('/barrios/gestion/{idparroquia?}','Sectores\BarrioController@index');
@@ -186,11 +190,12 @@ Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPosition
 Route::resource('empleado', 'Nomina\EmpleadoController');
 
 
-/*------------------------------------Sebastian------------------------------------------------*/
+/*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 
 /*=============================Módulo Solicitud Suministro====================================*/
 
 
+//---------SOLICITUDES-----------------------------------------------------------------------
 Route::get('/suministros/solicitudes', function (){
 	return view('Suministros/Solicitudes/index');
 });
@@ -198,3 +203,30 @@ Route::get('/suministros/solicitudes', function (){
 Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
 
 Route::get('suministros/solicitudes/{idSolicitud}','Suministros\SolicitudController@getSolicitud');
+
+Route::post('suministros/solicitudes/nueva/solicitud','Suministros\SolicitudController@ingresarSolicitud');
+
+Route::post('suministros/solicitudes/procesar/{idSolicitud}','Suministros\SolicitudController@procesarSolicitud');
+
+Route::post('suministros/solicitudes/eliminar/{idSolicitud}'
+	,'Suministros\SolicitudController@eliminarSolicitud');
+
+Route::post('suministros/solicitudes/modificar/{idSolicitud}','Suministros\SolicitudController@modificarSolicitud');
+
+//------SUMINISTROS-----------------------------------------------------------------------------
+
+Route::get('/suministros', function (){
+	return view('Suministros/index');
+});
+
+Route::get('suministros/suministros','Suministros\SuministroController@index');
+Route::get('tarifas/tarifas','Tarifas\TarifaController@index');
+
+Route::get('suministros/productos','Suministros\ProductoController@index');
+
+Route::post('suministros/nuevo','Suministros\SuministroController@ingresarSuministro');
+
+
+//-----CONFIGURACION--------------------------------------------------------------------------
+
+Route::get('configuracion/configuracion','Configuraciones\ConfiguracionController@index');

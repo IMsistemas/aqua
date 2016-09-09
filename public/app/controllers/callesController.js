@@ -18,7 +18,6 @@ app.controller('callesController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.idcalle = response.idcalle;
                         });
-                $('#add').modal('show');
                 break;
             case 'edit':
                 $scope.form_title = "Editar calle";
@@ -28,11 +27,11 @@ app.controller('callesController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.calle = response;
                         });
-                $('#edit').modal('show');
                 break;
             default:
                 break;
         }
+         $('#myModal').modal('show');
      
     }
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion

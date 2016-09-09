@@ -45,9 +45,9 @@
             <!-- End of Table-to-load-the-data Part -->
             <!-- Modal (Pop up when detail button clicked) -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header modal-header-primary">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                             <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
                         </div>

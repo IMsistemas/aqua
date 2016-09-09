@@ -11,14 +11,6 @@ use App\Http\Controllers\Controller;
 
 class SolicitudController extends Controller
 {
-	public function show($idSolicitud){
-		if($id == "solCli"){
-			$ultimo = Solicitud::max('idsolicitud');
-			return $ultimo+1;
-		}else{
-			return Solicitud::with('cliente')->where('idsolicitud',$idSolicitud)->get();
-		}
-	}
 
 	public function index(){
 		return Solicitud::with('cliente')->get();
@@ -26,6 +18,37 @@ class SolicitudController extends Controller
 
 	public function getSolicitud($idSolicitud){
 		return Solicitud::with('cliente')->where('idsolicitud',$idSolicitud)->get();
+	}
+
+	public function ingresarSolicitud(Request $request){
+		$solicitud = new Solicitud();
+		$solicitud->documentoidentidad = $request->input('cliente.documentoidentidad');
+        $solicitud->fechasolicitud = date("Y-m-d H:i:s");
+        $solicitud->direccionsuministro = $request->input('direccionsuministro');
+        $solicitud->telefonosuministro = $request->input('telefonosuministro');
+        $solicitud->estaprocesada = false;
+        $solicitud->save();
+        return response()->json(['success' => true]);
+	}
+
+	public function modificarSolicitud(Request $request, $idSolicitud){
+		$solicitud = Solicitud::find($idSolicitud);
+		$solicitud->fechasolicitud = date("Y-m-d H:i:s");
+		$solicitud->direccionsuministro = $request->input('direccionsuministro');	
+		$solicitud->telefonosuministro = $request->input('telefonosuministro');
+		return response()->json(['success' => true]);
+	}
+
+	public function procesarSolicitud(Request $request, $idSolicitud){
+		$solicitud = Solicitud::find($idSolicitud);	
+		$solicitud->estaprocesada = true;
+		$solicitud->save();
+		return response()->json(['success' => true]);
+	}
+
+	public function eliminarSolicitud(Request $request, $idSolicitud){
+		$solicitud = Solicitud::find($idSolicitud);
+		$solicitud->delete();
 	}
     
 }

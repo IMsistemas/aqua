@@ -56,8 +56,13 @@
             <!-- End of Table-to-load-the-data Part -->
             <!-- Modal (Pop up when detail button clicked) -->
 
+<<<<<<< HEAD
 
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+=======
+ 
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+>>>>>>> origin/master
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

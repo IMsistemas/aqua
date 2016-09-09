@@ -29,7 +29,7 @@
                 break;
         }
      
-    }
+    } 
 
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 

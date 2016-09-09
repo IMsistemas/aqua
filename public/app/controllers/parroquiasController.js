@@ -17,8 +17,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             //$scope.idparroquia = response.idparroquia;
-                        });
-                $('#add').modal('show');
+                        });        
                 break;
             case 'edit':
                 $scope.form_title = "Editar Parroquia";
@@ -28,11 +27,11 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.parroquia = response;
                         });
-                $('#edit').modal('show');
                 break;
             default:
                 break;
         }
+         $('#myModal').modal('show');
      
     }
 

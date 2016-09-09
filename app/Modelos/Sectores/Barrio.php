@@ -9,6 +9,7 @@ class Barrio extends Model
     protected $table = "barrio";
     protected $primaryKey = "idbarrio";
     public $timestamps = false;
+     public $incrementing = false;
 
     public function parroquia(){
     	return $this->belongsTo('App\Modelos\Sectores\Parroquia','idparroquia');
