@@ -25,13 +25,9 @@
                                 <td class="text-center">{{provincia.idprovincia}}</td>
                                 <td>{{provincia.nombreprovincia}}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-default" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-danger" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</button>
-                                </td>
-                                <td class="text-center">
-                                    <button  class="btn btn-default" ng-click="toModuloCanton(provincia.idprovincia);">Ver Cantones</button>
+                                    <a href="#" class="btn btn-warning" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</a>                           
+                                     <a href="#" class="btn btn-danger" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</a>                              
+                                    <a  href="#" class="btn btn-info" ng-click="toModuloCanton(provincia.idprovincia);">Ver Cantones</a>
                                 </td>
                                
                             </tr>

@@ -4,8 +4,7 @@
             <div class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">ADMINISTRACION DE CLIENTES</span>
-                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
+                    <button type="button" class="btn btn-primary" style="float: right;" ng-show="false" ng-click="toggle('add', 0)">Agregar</button>
                 </legend>
             <div class="col-xs-6">
                 <div class="form-group has-feedback">
@@ -41,10 +40,8 @@
                         <td>{{cliente.direccion}}</td>
                         <td>{{cliente.correo}}</td>
                         <td class="text-center">
-                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', cliente.documentoidentidad)">Editar Cliente</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar Cliente</button>
+                            <a href="#" class="btn btn-default btn-xs btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar Cliente</a>
+                            <a href="#" class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar Cliente</a>
                         </td>
                     </tr>
 
@@ -58,10 +55,9 @@
 
 
 
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 
  
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">>>>>>>> origin/master
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -84,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Fecha de Ingreso</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso"="cliente.fechaingreso" ng-required="true">
+                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso"="cliente.fechaingreso" ng-required="true" ng-model="cliente.fechaingreso">
                                         <span class="help-inline" 
                                         ng-show="frmClientes.fechaingreso && frmClientes.fechaingreso">La fecha de ingreso del cliente es requerida</span>
                                     </div>

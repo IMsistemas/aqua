@@ -1,11 +1,14 @@
     app.controller('clientesController', function($scope, $http, API_URL) {
     //retrieve clientes listing from API
     $scope.clientes=[];
+     $scope.initLoad = function(){
     $http.get(API_URL + "clientes/gestion")
         .success(function(response) {
                 $scope.clientes = response;             
 
             });
+    }
+    $scope.initLoad();
     //show modal form
     $scope.toggle = function(modalstate, documentoidentidad) {
         $scope.modalstate = modalstate;
@@ -13,7 +16,6 @@
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nuevo Cliente";
-                $('#add').modal('show');
                 break;
             case 'edit':
                 $scope.form_title = "Editar Cliente";
@@ -22,12 +24,13 @@
                         .success(function(response) {
                             console.log(response);
                             $scope.cliente = response;
+                            console.log( $scope.cliente);
                         });
-                $('#edit').modal('show');
                 break;
             default:
                 break;
         }
+          $('#myModal').modal('show');
      
     } 
 
@@ -51,9 +54,9 @@
             data: $.param($scope.cliente),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
+            $scope.initLoad();
             console.log($scope.cliente);
             console.log(response);
-            location.reload();
         }).error(function(response) {
             console.log($scope.cliente);
             console.log(response);
