@@ -1,4 +1,4 @@
-    <div ng-controller="cargosController">
+    <div ng-controller="empleadosController">
         <div class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">

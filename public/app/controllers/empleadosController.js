@@ -1,5 +1,5 @@
 
-app.controller('cargosController', function($scope, $http, API_URL) {
+app.controller('empleadosController', function($scope, $http, API_URL) {
 
     $scope.empleados = [];
     $scope.empleado_del = 0;

@@ -34,20 +34,37 @@
 
             $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
 
+                if(response[0].lecturaactual == null || response[0].lecturaactual == undefined){
+                    response[0].lecturaactual = 0;
+                }
+
                 var lectura_anterior = parseFloat(response[0].lecturaactual);
                 var lectura_actual = parseFloat($scope.t_lectura);
 
-                $scope.lectura_anterior = lectura_anterior;
-                $scope.lectura_actual = lectura_actual;
-                $scope.consumo = lectura_actual - lectura_anterior;
+                if(lectura_anterior > lectura_actual){
+                    $scope.lectura_anterior = lectura_anterior;
+                    $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
+                    $('#modalMessage').modal('show');
 
-                $scope.getValueRublos($scope.consumo, response[0].idtarifa);
+                } else {
 
-                $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
-                $scope.barrio = response[0].nombrebarrio;
-                $scope.calle = response[0].nombrecalle;
-                $scope.tarifa = response[0].nombretarifa;
-                //$scope.idtarifa = response[0].idtarifa;
+                    $scope.lectura_anterior = lectura_anterior;
+                    $scope.lectura_actual = lectura_actual;
+
+                    $scope.consumo = lectura_actual - lectura_anterior;
+
+
+                    $scope.getValueRublos($scope.consumo, response[0].idtarifa);
+
+                    $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
+                    $scope.barrio = response[0].nombrebarrio;
+                    $scope.calle = response[0].nombrecalle;
+                    $scope.tarifa = response[0].nombretarifa;  
+                          
+                }
+
+
+                
 
 
             });

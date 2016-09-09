@@ -7,6 +7,7 @@ use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -36,7 +37,7 @@ class LecturaController extends Controller
 
     public function show($id)
     {
-        $lectura = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
+        /*$lectura = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
                             ->join('tarifa', 'suministro.idtarifa', '=', 'tarifa.idtarifa')
                             ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
                             ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
@@ -46,7 +47,18 @@ class LecturaController extends Controller
                             ->where('lectura.numerosuministro', '=', $id)
                             ->orderBy('idlectura', 'desc')
                             ->take(1)
+                            ->get();*/
+
+        $lectura = Suministro::join('tarifa', 'suministro.idtarifa', '=', 'tarifa.idtarifa')
+                            ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+                            ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
+                            ->join('barrio', 'calle.idbarrio', '=', 'barrio.idbarrio')
+                            ->select('tarifa.nombretarifa', 'calle.nombrecalle', 'barrio.nombrebarrio',
+                                        'cliente.apellido', 'cliente.nombre', 'tarifa.idtarifa', 
+                                        DB::raw('(SELECT lecturaactual FROM lectura WHERE lectura.numerosuministro = suministro.numerosuministro)'))
+                            ->where('suministro.numerosuministro', '=', $id)
                             ->get();
+
 
         return response()->json($lectura);
     }
