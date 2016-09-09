@@ -46,8 +46,8 @@ class SolicitudController extends Controller
 		return response()->json(['success' => true]);
 	}
 
-	public function eliminarSolicitud(Request $request, $idSolicitud){
-		$solicitud = Solicitud::find($idSolicitud);
+	public function eliminarSolicitud(Request $request, $idsolicitud){
+		$solicitud = Solicitud::find($idsolicitud);
 		$solicitud->delete();
 	}
     

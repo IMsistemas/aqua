@@ -38,7 +38,7 @@
 							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.suministro.numerosuministro'; reversa = !reversa;"># Sum.</a>
 						</th>
 						<th style="width:25%">
-							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.suministro.cliente.apellido'; reversa = !reversa">Cliente</a>
+							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'Cliente'; reversa = !reversa">Cliente</a>
 						</th>
 						<th>
 							<a href="#" style="text-decoration:none; color:white;"  ng-click="columna = 'cuenta.suministro.tarifa.nombretarifa'; reversa = !reversa;">Tarifa</a>

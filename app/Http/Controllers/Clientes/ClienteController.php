@@ -62,3 +62,4 @@ class ClienteController extends Controller
 		abort(404);
 	}
 }
+  

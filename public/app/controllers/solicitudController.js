@@ -1,18 +1,30 @@
 app.controller('solicitudController',function ($scope,$http,API_URL) {
 
     $scope.ahora = new Date();//fecha actual
+
    
     $scope.initLoad = function(){
         $http.get(API_URL+"suministros/solicitudes/solicitudes")
         .success(function (response) {
             $scope.solicitudes = response;
             $scope.cantidadSolicitudes = $scope.solicitudes.length;
+            var fecha = $scope.solicitudes.sort(function(a,b){
+                return (new Date(a.fechasolicitud) - new Date(b.fechasolicitud));
+            });
         });
     }
     $scope.initLoad();
 
-	
+    $scope.ordenarColumna = 'estaprocesada';
 
+	$scope.modalVerSolicitud = function(id){
+         $http.get(API_URL+"suministros/solicitudes/"+id)
+        .success(function (response) {
+            $scope.solicitud = response[0];
+            $('#modalInfoSolicitud').modal('show');
+        });
+
+    }
     
     $scope.modalNuevaSolicitud = function(){
         $('#nueva-solicitud').modal('show');
@@ -47,7 +59,7 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
                 for(var i = 1; i<=$scope.configuracion.dividendos; i++ ){
                     $scope.nDividendos[i] = i;
                 }
-                console.log($scope.nDividendos);
+                
             });
 
          $http.get(API_URL+"suministros/productos")
@@ -68,7 +80,7 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
         $scope.suministro.telefonosuministro = $scope.procesarSolicitud.telefonosuministro;
         $scope.suministro.producto = $scope.producto;
 
-        console.log($scope.suministro);
+        
 
         var url = API_URL +"suministros/solicitudes/procesar/"+id;    
          $http({
@@ -141,6 +153,33 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
             $('#modalMessage').modal('hide');
             $('#modalMessageError').modal('show');
         });
+    }
+
+
+    $scope.modalEliminarSolicitud = function(id){
+        $scope.solicitudSeleccionada = id;
+        $('#modalConfirmDelete').modal('show');
+        
+    }
+
+
+    $scope.eliminarSolicitud = function(){
+        
+      $http({
+                method: 'POST',
+                url: API_URL + 'suministros/solicitudes/eliminar/' + $scope.solicitudSeleccionada,
+                data: $.param($scope.solicitudSeleccionada),
+            }).success(function(data) {
+                 $scope.initLoad();
+             $scope.message = 'Solicitud eliminada con exito';
+             $('#modalConfirmDelete').modal('hide');
+             $('#modalMessage').modal('show');
+                    
+            }).error(function(data) {
+                $scope.messageError = 'Error al eliminar a solicitud';
+                $('#modalMessageError').modal('show'); 
+                  
+            });
     }
 
 });
