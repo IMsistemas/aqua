@@ -2,7 +2,6 @@
         <div   class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">ADMINISTRACION DE PROVINCIAS</span>
                     <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
                 </legend>
                 <div class="col-xs-6">

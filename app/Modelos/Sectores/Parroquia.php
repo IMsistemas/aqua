@@ -9,6 +9,7 @@ class Parroquia extends Model
     protected $table = "parroquia";
     protected $primarykey = "idparroquia";
     public $timestamps = false;
+    public $incrementing = false;
 
     public function canton(){
     	return $this->belongsTo('App\Modelos\Sectores\Canton');
