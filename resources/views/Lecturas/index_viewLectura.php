@@ -140,7 +140,8 @@
                                 </td>
                                 <td>{{lectura.consumo}}</td>
                                 <td>
-                                    <textarea class="form-control" name="" id="" cols="5" rows="2" ng-model="observacion"></textarea>
+                                    <textarea class="form-control" name="" id="" cols="5" rows="2" 
+                                            ng-change="prepareUpdate(lectura)" ng-model="lectura.observacion"></textarea>
                                 </td>
                             </tr>
                         </tbody>

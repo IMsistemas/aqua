@@ -52,7 +52,7 @@ class ViewLecturaController extends Controller
         foreach ($params as $item) {
             $lectura = Lectura::find($item->idlectura);
             $lectura->lecturaactual = $item->lecturaactual;
-
+            $lectura->observacion = $item->observacion;
             $lectura->save();
         }
 

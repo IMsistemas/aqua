@@ -11,7 +11,7 @@ class Lectura extends Model
     public $timestamps = false;
 
     protected $fillable =  [
-        'fechalectura', 'numerosuministro', 'lecturaanterior', 'lecturaactual', 'consumo'
+        'fechalectura', 'numerosuministro', 'lecturaanterior', 'lecturaactual', 'consumo', 'observacion'
     ];
 
     public function suministro(){
