@@ -3,7 +3,7 @@
     app.controller('viewLecturaController', function($scope, $http, API_URL) {
 
         $scope.lecturas = [];
-
+        $scope.lecturasUpdate=[];
 
         $scope.initData = function(){
 
@@ -14,6 +14,42 @@
             });
 
         }        
+        
+
+        $scope.save=function() {
+
+            //console.log($scope.lecturasUpdate);
+
+            $http.put(API_URL + 'verLectura/update/' + JSON.stringify($scope.lecturasUpdate)).success(function(response){
+                console.log(response);
+
+                $scope.lecturasUpdate = [];
+            });
+
+        };
+        
+        $scope.prepareUpdate=function (lectura) {
+
+            var longitud = ($scope.lecturasUpdate).length;
+
+            if (longitud == 0){
+                $scope.lecturasUpdate.push(lectura);
+            } else {
+                var flag = false;
+                for (var i = 0; i < longitud; i++) {
+                    if(($scope.lecturasUpdate)[i].idlectura == lectura.idlectura){
+                        
+                        ($scope.lecturasUpdate)[i] = lectura;    
+
+                        flag = true;
+                    }
+                }
+
+                if (flag == false)  $scope.lecturasUpdate.push(lectura);
+            }
+
+            
+        };
 
         $scope.loadBarrios = function(){
             $http.get(API_URL + 'verLectura/getBarrios').success(function(response){

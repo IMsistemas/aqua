@@ -132,16 +132,23 @@
                                 <td>{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td>{{lectura.lecturaanterior}}</td>
-                                <td><input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"></td>
+                                <td>
+                                   <!-- <input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"
+                                        ng-model="lectura.lecturaactual">-->
+                                         <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;" 
+                                        ng-model="lectura.lecturaactual">
+                                </td>
                                 <td>{{lectura.consumo}}</td>
-                                <td><textarea class="form-control" name="" id="" cols="5" rows="2"></textarea></td>
+                                <td>
+                                    <textarea class="form-control" name="" id="" cols="5" rows="2" ng-model="observacion"></textarea>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="col-xs-12">
-                    <button type="button" class="btn btn-success" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-success" style="float: right;" ng-click="save()">
                         Guardar
                     </button>
                 </div>

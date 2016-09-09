@@ -44,4 +44,19 @@ class ViewLecturaController extends Controller
         return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get(); 
     }
 
+    public function update($request)
+    {
+        
+        $params = json_decode($request);
+
+        foreach ($params as $item) {
+            $lectura = Lectura::find($item->idlectura);
+            $lectura->lecturaactual = $item->lecturaactual;
+
+            $lectura->save();
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 }
