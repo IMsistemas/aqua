@@ -228,8 +228,7 @@ Route::post('suministros/solicitudes/nueva/solicitud','Suministros\SolicitudCont
 
 Route::post('suministros/solicitudes/procesar/{idSolicitud}','Suministros\SolicitudController@procesarSolicitud');
 
-Route::post('suministros/solicitudes/eliminar/{idSolicitud}'
-	,'Suministros\SolicitudController@eliminarSolicitud');
+Route::post('suministros/solicitudes/eliminar/{idSolicitud}','Suministros\SolicitudController@eliminarSolicitud');
 
 Route::post('suministros/solicitudes/modificar/{idSolicitud}','Suministros\SolicitudController@modificarSolicitud');
 

@@ -3,7 +3,7 @@
 	
 		<div class="col-xs-4">
 			<div class="form-group has-feedback">
-				<input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
+				<input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda.cliente.apellido">
 	            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
 	         </div> 
 	     </div>
@@ -26,9 +26,10 @@
 				</div>
 				<div class="form-group">
 				    <label for="comboEstado">Estado:</label>
-				    <select class="form-control" id="comboEstado" >
-				    	<option value="">Estado:</option>
-				    	<option  value="" ></option>
+				    <select class="form-control" ng-model="busqueda.estaprocesada" >
+				    	<option value="">Todos</option>
+                        <option value="false">En espera</option>
+				    	<option  value="true" >Procesada</option>
 				    </select>
 				</div>
 				
@@ -39,32 +40,32 @@
 					<thead class="bg-primary">
 						<tr>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Nro. Solicitud</a>
+								<a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='idsolicitud'; reversa=!reversa;">Nro. Solicitud</a>
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Fecha</a>
+								<a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='fechasolicitud'; reversa=!reversa;">Fecha</a>
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Cliente</a>
+								<a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='cliente.apellido'; reversa=!reversa;">Cliente</a>
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Dirección</a>
+								Dirección
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Teléfono</a>
+								Teléfono
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Estado</a>
+								<a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='estaprocesada'; reversa=!reversa;">Estado</a>
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Acciones</a>
+								Acciones
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="solicitud in solicitudes" ">
+						<tr ng-repeat="solicitud in solicitudes | filter: busqueda | orderBy:ordenarColumna:reversa" >
 							<td>{{solicitud.idsolicitud}}</td>
-							<td>{{solicitud.fechasolicitud}}</td>
+							<td>{{solicitud.fechasolicitud | date : format : 'fullDate'}}</td>
 							<td>{{solicitud.cliente.apellido+" "+solicitud.cliente.nombre}}</td>
 							<td>{{solicitud.direccionsuministro}}</td>
 							<td>{{solicitud.telefonosuministro}}</td>
@@ -73,10 +74,10 @@
 							<td >
 								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false">Editar</a>
 
-                                <a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==true">Ver</a>
+                                <a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==true" ng-click="modalVerSolicitud(solicitud.idsolicitud);">Ver</a>
 
 
-								<a href="#" class="btn btn-danger" ng-hide="solicitud.estaprocesada==true">Eliminar</a>
+								<a href="#" class="btn btn-danger" ng-hide="solicitud.estaprocesada==true" ng-click="modalEliminarSolicitud(solicitud.idsolicitud); ">Eliminar</a>
 
                                 <a id="procesar" href="#" class="btn btn-success" ng-show="solicitud.estaprocesada==false" ng-click="modalProcesaSolicitud(solicitud.idsolicitud);"><i class="fa fa-check fa-lg" aria-hidden="true" ></i></a>
 
@@ -542,5 +543,61 @@
             </div>
         </div>
 	
+<!--=================================Modal Confirmacion eliminar====================================-->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmDelete">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>Realmente desea eliminar la solicitud</span>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="eliminarSolicitud();">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--=================================Modal Ver====================================-->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoSolicitud">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-info">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Solicitud No.{{solicitud.idsolicitud}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-xs-12 text-center">
+                            <img class="img-thumbnail" src="<?= asset('img/solicitud.png') ?>" alt="">
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-xs-12 text-center" style="font-size: 18px;">{{solicitud.cliente.apellido+" "+solicitud.cliente.nombre}}</div>
+                            
+                      
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Fecha Solicitud:</span>{{solicitud.fechasolicitud}} 
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Dirección suministro: </span>{{solicitud.direccionsuministro}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Teléfono Suministro: </span>{{solicitud.telefonosuministro}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">La solicitud esta procesada </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 </div>
