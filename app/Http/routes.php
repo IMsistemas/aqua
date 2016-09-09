@@ -173,6 +173,7 @@ Route::resource('nuevaLectura', 'Lecturas\LecturaController');
 Route::get('verLectura/getLecturas', 'Lecturas\ViewLecturaController@getLecturas');
 Route::get('verLectura/getBarrios', 'Lecturas\ViewLecturaController@getBarrios');
 Route::get('verLectura/getCalles/{idbarrio}', 'Lecturas\ViewLecturaController@getCalles');
+Route::get('verLectura/getByFilter/{filters}', 'Lecturas\ViewLecturaController@getByFilter');
 Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update');
 Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 

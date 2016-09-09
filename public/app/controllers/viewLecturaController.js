@@ -47,7 +47,6 @@
 
                 if (flag == false)  $scope.lecturasUpdate.push(lectura);
             }
-
             
         };
 
@@ -72,6 +71,45 @@
                     array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
                 }
                 $scope.calles = array_temp;
+            });
+        }
+
+        
+        $scope.searchByFilter = function(){
+
+            if($scope.s_anno == undefined){
+                var anno = null;
+            } else var anno = $scope.s_anno;
+
+            if($scope.s_mes == undefined){
+                var mes = null;
+            } else var mes = $scope.s_mes;
+
+            if($scope.s_barrio == undefined){
+                var barrio = null;
+            } else var barrio = $scope.s_barrio;
+
+            if($scope.s_calle == undefined){
+                var calle = null;
+            } else var calle = $scope.s_calle;
+
+            if($scope.t_search == undefined){
+                var t_search = null;
+            } else var t_search = $scope.t_search;
+
+
+            var filters = {
+                anno: anno,
+                mes: mes,
+                barrio: barrio,
+                calle: calle,
+                text: t_search
+            }
+
+            console.log(filters);
+
+            $http.get(API_URL + 'verLectura/getByFilter/' + JSON.stringify(filters)).success(function(response){
+                $scope.lecturas = response;
             });
         }
 

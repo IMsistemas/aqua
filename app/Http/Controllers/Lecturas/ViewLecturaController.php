@@ -34,6 +34,57 @@ class ViewLecturaController extends Controller
                             ->get();
     }
 
+
+    public function getByFilter($filter)
+    {
+        
+        $filter = json_decode($filter);
+
+
+        $array_filters = [];
+
+        if($filter->barrio != null && $filter->barrio != ''){
+            $array_filters[] = ['calle.idbarrio', '=', $filter->barrio];       
+        }
+
+        if($filter->calle != null && $filter->calle != ''){
+            $array_filters[] = ['calle.idcalle', '=', $filter->calle];       
+        }
+
+
+
+        $lecturas = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
+                            ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
+                            ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+                            ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
+                            ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion',
+                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
+                                        'cliente.apellido');
+
+        if(count($array_filters) == 1){
+
+            $array_filters[0][2] = "'" . $array_filters[0][2] . "'";
+
+            $lecturas->whereRaw(implode(' ', $array_filters[0]));
+        
+        } else {
+        
+            $lecturas->where($array_filters);
+        
+        }
+
+        if($filter->mes != null && $filter->mes != ''){
+            $lecturas->whereRaw('EXTRACT( MONTH FROM lectura.fechalectura) = ' . $filter->mes);       
+        }
+
+        if($filter->anno != null && $filter->anno != ''){
+            $lecturas->whereRaw('EXTRACT( YEAR FROM lectura.fechalectura) = ' . $filter->anno);       
+        }
+
+        return $lecturas->get();
+
+    }
+
     public function getBarrios()
     {
         return Barrio::orderBy('nombrebarrio', 'asc')->get(); 
