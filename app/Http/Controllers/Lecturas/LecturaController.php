@@ -55,7 +55,7 @@ class LecturaController extends Controller
                             ->join('barrio', 'calle.idbarrio', '=', 'barrio.idbarrio')
                             ->select('tarifa.nombretarifa', 'calle.nombrecalle', 'barrio.nombrebarrio',
                                         'cliente.apellido', 'cliente.nombre', 'tarifa.idtarifa', 
-                                        DB::raw('(SELECT lecturaactual FROM lectura WHERE lectura.numerosuministro = suministro.numerosuministro)'))
+                                        DB::raw('(SELECT lecturaactual FROM lectura WHERE lectura.numerosuministro = suministro.numerosuministro LIMIT 1)'))
                             ->where('suministro.numerosuministro', '=', $id)
                             ->get();
 

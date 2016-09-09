@@ -37,24 +37,24 @@
                     </button>
                 </legend>
 
-                <div class="col-xs-12">
+                <div class="col-xs-6">
                     <fieldset>
                         <legend>Periodo:</legend>
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-6" style="padding: 0;">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Año:</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-2 control-label">Año:</label>
+                                    <div class="col-sm-10">
                                         <input type="text" class="form-control datepicker_a" name="s_anno"
-                                               id="s_anno" ng-model="s_anno">
+                                               id="s_anno" ng-model="s_anno" ng-change="searchByFilter();">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-6" style="padding: 0;">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Mes:</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes">
+                                    <label class="col-sm-2 control-label">Mes:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes" ng-change="searchByFilter();">
                                             <option value="01">Enero</option>
                                             <option value="02">Febrero</option>
                                             <option value="03">Marzo</option>
@@ -76,26 +76,27 @@
                     </fieldset>
                 </div>
                 
-                <div class="col-xs-12">
+                <div class="col-xs-6">
                     <fieldset>
                         <legend>Sector:</legend>
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-6" style="padding: 0;">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Barrio:</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-3 control-label">Barrio:</label>
+                                    <div class="col-sm-9">
                                         <select class="form-control" name="s_barrio" id="s_barrio" ng-model="s_barrio"
                                                 ng-options="value.id as value.label for value in barrios"
-                                                ng-change="loadCalles()"></select>
+                                                ng-change="loadCalles(); searchByFilter();"></select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-6" style="padding: 0;">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Calle:</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-3 control-label">Calle:</label>
+                                    <div class="col-sm-9">
                                         <select class="form-control" name="s_calle" id="s_calle" ng-model="s_calle"
-                                            ng-options="value.id as value.label for value in calles"></select>
+                                            ng-options="value.id as value.label for value in calles"
+                                            ng-change="searchByFilter();"></select>
                                     </div>
                                 </div>
                             </div>
@@ -105,40 +106,41 @@
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 10px;">
-                    <div class="form-group has-feedback" style="float: right;">
-                        <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." >
+                    <div class="form-group has-feedback" style="float: right; width: 50%;">
+                        <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." 
+                                ng-model="t_search" ng-change="searchByFilter();" >
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
 
                 <div class="col-xs-12">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr class="bg-primary">
-                                <th>Código</th>
+                                <th style="width: 5%;">Código</th>
                                 <th>Cliente</th>
                                 <th>Suministro</th>
                                 <th>Calle</th>
-                                <th>Lectura Anterior</th>
-                                <th>Lectura Actual</th>
-                                <th>Consumo del Mes</th>
+                                <th style="width: 10%;">Lectura Anterior</th>
+                                <th style="width: 10%;">Lectura Actual</th>
+                                <th style="width: 10%;">Consumo del Mes</th>
                                 <th>Observaciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="lectura in lecturas" ng-cloak>
-                                <td>{{lectura.idlectura}}</td>
+                                <td class="text-right">{{lectura.idlectura}}</td>
                                 <td>{{lectura.apellido + ' ' + lectura.nombre}}</td>
-                                <td>{{lectura.numerosuministro}}</td>
+                                <td class="text-right">{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
-                                <td>{{lectura.lecturaanterior}}</td>
-                                <td>
+                                <td class="text-right">{{lectura.lecturaanterior}}</td>
+                                <td  class="text-right">
                                    <!-- <input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"
                                         ng-model="lectura.lecturaactual">-->
-                                         <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;" 
+                                         <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;" 
                                         ng-model="lectura.lecturaactual">
                                 </td>
-                                <td>{{lectura.consumo}}</td>
+                                <td class="text-right">{{lectura.consumo}}</td>
                                 <td>
                                     <textarea class="form-control" name="" id="" cols="5" rows="2" 
                                             ng-change="prepareUpdate(lectura)" ng-model="lectura.observacion"></textarea>
