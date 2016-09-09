@@ -1,18 +1,18 @@
 <?php 
 namespace App\Http\Controllers\Sectores;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Modelos\Sectores\Provincia;
 
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Modelos\Sectores\Provincia;
 
 
 class ProvinciaController extends Controller
 {
 	public function index()
 	{
-		return $provincias=DB::table('provincia')->get();
+		return $provincias=DB::table('provincia')->orderBY('idprovincia')->get();
 	}
 
 	public function show($idprovincia)
@@ -69,15 +69,12 @@ class ProvinciaController extends Controller
 	}
 
 
-	public function postActualizarProvincia(Request $request)
+	public function postActualizarProvincia(Request $request,$idprovincia)
 	{
-		$provincia = Provincia::find($request->input('idprovincia'));
-		$provincia->idprovincia = $request->input('idprovincia');
+		$provincia = Provincia::find($idprovincia);
 		$provincia->nombreprovincia = $request->input('nombreprovincia');
-
 		$provincia->save();
 		return "Se actualizo correctamente".$provincia->idprovincia;
-
 	}
 
 	public function postEliminarProvincia(EliminarProvinciaRequest $request)

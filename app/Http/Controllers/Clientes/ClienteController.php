@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Clientes;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Modelos\Clientes\Cliente;
-use Ayora\Http\Requests\EliminarClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -39,7 +36,7 @@ class ClienteController extends Controller
 
 	public function update(Request $request,$documentoidentidad)
 	{
-		$cliente = Cliente::find($request->input('documentoidentidad'));
+		$cliente = Cliente::find($documentoidentidad);
 		$cliente->documentoidentidad = $request->input('documentoidentidad');
 		$cliente->fechaingreso = $request->input('fechaingreso');
 		$cliente->nombre = $request->input('nombre');

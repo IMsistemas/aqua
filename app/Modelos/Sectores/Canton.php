@@ -11,10 +11,10 @@ class Canton extends Model
     public $timestamps = false;
 
     public function provincia(){
-    	return $this->belongsTo('App\Modelos\Sectores\provincia','idprovincia');
+    	return $this->belongsTo('App\Modelos\Sectores\Provincia','idprovincia');
     }
 
     public function parroquia(){
-    	return $this->hasMany('App\Modelos\Sectores\parroquia','idcanton');
+    	return $this->hasMany('App\Modelos\Sectores\Parroquia','idcanton');
     }
 }

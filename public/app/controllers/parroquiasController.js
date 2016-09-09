@@ -41,7 +41,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
     //save new record / update existing record
     $scope.save = function(modalstate, idparroquia) {
         var url = API_URL + "parroquias/gestion";    
-        console.log(modalstate); 
+        console.log(idparroquia); 
         
         //append parroquia id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
@@ -49,18 +49,16 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
         }else{
             url += "/guardarparroquia/"+$scope.idcanton ;
         }
-        
+         console.log($scope.parroquia);
         $http({
             method: 'POST',
             url: url,
             data: $.param($scope.parroquia),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.parroquia);
             console.log(response);
             location.reload();
         }).error(function(response) {
-            console.log($scope.parroquia);
             console.log(response);
             alert('Ha ocurrido un error');
         });

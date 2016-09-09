@@ -1,18 +1,16 @@
 <?php 
 namespace App\Http\Controllers\Sectores;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Modelos\Sectores\Canton;
-use App\Modelos\Sectores\Provincia;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Modelos\Sectores\Parroquia;
 
 class ParroquiaController extends Controller
 {
 	public function index($idcanton)
 	{
-		return $parroquias=DB::table('parroquia')->where('idcanton',$idcanton)->get();
+		return $parroquias=DB::table('parroquia')->where('idcanton',$idcanton)->orderBy('idparroquia')->get();
 	}
 
 	public function getCrearParroquia(Request $request)
@@ -59,28 +57,20 @@ class ParroquiaController extends Controller
 
 	public function postCrearParroquia(Request $request,$idcanton)
 	{
-		$parroquia= new ;
+		$parroquia= new Parroquia;
 		$parroquia->idparroquia = $request->input('idparroquia');
 		$parroquia->idcanton = $idcanton;
 		$parroquia->nombreparroquia = $request->input('nombreparroquia');
 		$parroquia->save();
-		return 'El Canton fue creado correctamente con su documento de identidad'.$parroquia->idparroquia;
+		return 'La Parroquia fue creada correctamente con su documento de identidad'.$parroquia->idparroquia;
 	}
 
-	public function getActualizarParroquia($idparroquia)
+	public function postActualizarParroquia(Request $request,$idparroquia)
 	{
-		$parroquia = Parroquia::find($idparroquia);		
-		$canton=Canton::Select('nombrecanton')->where('idcanton',$parroquia->idcanton)->get();
-		$nombreCanton=$canton[0]->nombreprovincia;
-		return view('parroquias.actualizar-parroquia',['parroquia' => $parroquia,'nombreCanton' => $nombreCanton]);
-	}
-
-	public function postActualizarParroquia(ActualizarParroquiaRequest $request)
-	{
-		$parroquia = Parroquia::find($request->get('idparroquia'));
+		$parroquia = Parroquia::find($idparroquia);
 		$parroquia->nombreparroquia = $request->get('nombreparroquia');
 		$parroquia->save();
-		return redirect("/validado/parroquias?idcanton=$parroquia->idcanton")->with('actualizado', 'El parroquia se actualizó');
+		return 'La Parroquia fue actualizada correctamente con su documento de identidad'.$parroquia->idparroquia;
 	}
 
 	public function postEliminarParroquia(EliminarParroquiaRequest $request)

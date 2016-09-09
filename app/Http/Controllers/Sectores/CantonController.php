@@ -71,21 +71,15 @@ class CantonController extends Controller
 		return 'El Canton fue creado correctamente con su documento de identidad'.$canton->idcanton;
 	}
 
-	public function getActualizarCanton($idcanton)
+	public function postActualizarCanton(Request $request,$idcanton)
 	{
 		$canton = Canton::find($idcanton);
-		$canton=canton::Select('nombrecanton')->where('idcanton',$canton->idcanton)->get();
-		$nombrecanton=$canton[0]->nombrecanton;
-		return view('cantones.actualizar-canton', ['canton' => $canton,'nombrecanton' => $nombrecanton]);
-	}
-
-	public function postActualizarCanton(ActualizarCantonRequest $request)
-	{
-		$canton = Canton::find($request->get('idcanton'));
-		$canton->idcanton=$request->get('idcanton');
-		$canton->nombrecanton=$request->get('nombrecanton');
+		
+		//$canton->idcanton = $request->input('idcanton');
+		//$canton->idprovincia = $request->input('idprovincia');
+		$canton->nombrecanton = $request->input('nombrecanton');
 		$canton->save();
-		return redirect("/validado/cantones?idcanton=$canton->idcanton")->with('actualizado', 'El canton se actualizó');
+		return "Se actualizo correctamente".$canton->idcanton;
 	}
 
 	public function postEliminarCanton(EliminarCantonRequest $request)

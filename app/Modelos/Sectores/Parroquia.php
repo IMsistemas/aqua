@@ -11,11 +11,11 @@ class Parroquia extends Model
     public $timestamps = false;
 
     public function canton(){
-    	return $this->belongsTo('App\Modelos\Sectores\canton');
+    	return $this->belongsTo('App\Modelos\Sectores\Canton');
     }
 
     public function barrio(){
-    	return $this->hasMany('App\Modelos\Sectores\barrio','idparroquia');
+    	return $this->hasMany('App\Modelos\Sectores\Barrio','idparroquia');
     }
 
 

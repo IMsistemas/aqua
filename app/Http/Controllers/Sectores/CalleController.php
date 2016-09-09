@@ -8,7 +8,6 @@ use App\Modelos\Sectores\Provincia;
 use App\Modelos\Sectores\Canton;
 use App\Modelos\Sectores\Parroquia;
 use App\Modelos\Sectores\Barrio;
-use App\Modelos\Sectores\Calle;
 
 class CalleController extends Controller
 {
@@ -70,7 +69,7 @@ class CalleController extends Controller
 		$calle->idbarrio = $idbarrio;
 		$calle->nombrecalle = $request->input('nombrecalle');
 		$calle->save();
-		return 'El calle fue creado correctamente con su documento de identidad'.$calle->idcalle;
+		return 'El calle fue creada correctamente con su documento de identidad'.$calle->idcalle;
 	}
 
 	public function getActualizarCalle($idcalle)
@@ -81,7 +80,7 @@ class CalleController extends Controller
 		return view('calles.actualizar-calle', ['calle' => $calle,'nombreBarrio' => $nombreBarrio]);
 	}
 
-	public function postActualizarCalle(ActualizarCalleRequest $request)
+	public function postActualizarCalle(Request $request,$calle)
 	{
 		$calle = Calle::find($request->get('idcalle'));
 		$calle->nombrecalle = $request->get('nombrecalle');

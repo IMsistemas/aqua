@@ -16,9 +16,8 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
                 $http.get(API_URL + 'provincias/gestion/ultimocodigoprovincia')
                         .success(function(response) {
                             console.log(response);
-                            $scope.idprovincia = response.idprovincia;
+                            $scope.idprovincia = response;
                         });
-                $('#add').modal('show');
                 break;
             case 'edit':
                 $scope.form_title = "Editar Provincia";
@@ -28,11 +27,11 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
                             console.log(response);
                             $scope.provincia = response;
                         });
-                $('#edit').modal('show');
                 break;
             default:
                 break;
         }
+         $('#myModal').modal('show');
      
     }
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
@@ -74,7 +73,7 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
                 url: API_URL + 'provincias/gestion/eliminarprovincia/' + idprovincia,
             }).success(function(data) {
                     console.log(data);
-                    location.reload();
+                    //location.reload();
             }).error(function(data) {
                     console.log(data);
                     alert('Unable to delete');

@@ -78,12 +78,12 @@ class BarrioController extends Controller
 		return view('barrios.actualizar-barrio', ['barrio' => $barrio]);
 	}
 
-	public function postActualizarBarrio(ActualizarBarrioRequest $request)
+	public function postActualizarBarrio(Request $request,$idbarrio)
 	{
-		$barrio = Barrio::find($request->get('idbarrio'));
+		$barrio = Barrio::find($idbarrio);
 		$barrio->nombrebarrio = $request->get('nombrebarrio');
 		$barrio->save();
-		return redirect("/validado/barrios?idparroquia=$barrio->idparroquia")->with('actualizado', 'El barrio se actualizó');
+		return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
 
 	}
 

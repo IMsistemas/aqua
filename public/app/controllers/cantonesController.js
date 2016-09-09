@@ -42,14 +42,14 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
     //save new record / update existing record
     $scope.save = function(modalstate, idcanton) {
         var url = API_URL + "cantones/gestion";     
-        
+        console.log(idcanton);
         //append canton id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
             url += "/actualizarcanton/" + idcanton;
         }else{
             url += "/guardarcanton/"+$scope.idprovincia ;
         }
-        
+        console.log($scope.canton);
         $http({
             method: 'POST',
             url: url,

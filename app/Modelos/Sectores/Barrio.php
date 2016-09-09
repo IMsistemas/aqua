@@ -11,11 +11,11 @@ class Barrio extends Model
     public $timestamps = false;
 
     public function parroquia(){
-    	return $this->belongsTo('App\Modelos\Sectores\parroquia','idparroquia');
+    	return $this->belongsTo('App\Modelos\Sectores\Parroquia','idparroquia');
     }
 
     public function calle(){
-    	return $this->hasMany('App\Modelos\Sectores\calle','idbarrio');
+    	return $this->hasMany('App\Modelos\Sectores\Calle','idbarrio');
     }
 }
  

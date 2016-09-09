@@ -11,6 +11,6 @@ class Provincia extends Model
     public $timestamps = false;
 
     public function canton (){
-    	return $this->hasMany('App\Modelos\Sectores\canton','idprovincia');
+    	return $this->hasMany('App\Modelos\Sectores\Canton','idprovincia');
     }
 }

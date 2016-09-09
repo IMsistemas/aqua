@@ -1,7 +1,12 @@
     <div ng-controller="callesController">
         <div   class="container">
 
-            <!-- Table-to-load-the-data Part -->
+             <div class="container" style="margin-top: 2%;">
+            <fieldset>
+                <legend style="padding-bottom: 10px;">
+                    <span style="font-weight: bold;">ADMINISTRACION DE CALLES</span>
+                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
+                </legend>
             <div class="col-xs-6">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
@@ -9,102 +14,107 @@
                 </div>
 
             </div>
-            <table class="table" >
-                <thead>
+            <div class="col-xs-12">
+            <table class="table table-responsive table-striped table-hover table-condensed" >
+                <thead class="bg-primary">
                     <tr>
-                        <th>Código de Calle</th>
+                        <th style="width: 90px;">Código de Calle</th>
+                        <th style="width: 90px;">Código de Barrio</th>
                         <th>Nombre de Calle</th>
-                        <th><button id="btn-add" class="btn btn-primary btn-xs" ng-click="toggle('add', 0)">Agregar</button></th>
+                        <th style="width: 180px;" colspan="2" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="calle in calles|filter:busqueda">
-                        <td>{{calle.idcalle}}</td>
+                        <td class="text-center">{{calle.idcalle}}</td>
+                        <td class="text-center">{{calle.idbarrio}}</td>
                         <td>{{calle.nombrecalle}}</td>
-                        <td>
-                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', calle.idcalle)">Editar Calle</button>
-                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(calle.idcalle)">Borrar Calle</button>
+                        <td class="text-center">
+                            <button class="btn btn-default " ng-click="toggle('edit', calle.idcalle)">Editar Calle</button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger " ng-click="confirmDelete(calle.idcalle)">Borrar Calle</button>
+                        </td>
                         </td>
                     </tr>
 
                 </tbody>
                     
             </table>
+            </fieldset>
             <!-- End of Table-to-load-the-data Part -->
             <!-- Modal (Pop up when detail button clicked) -->
-            <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" >
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <div class="modal-header modal-header-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
                         </div>
                         <div class="modal-body">
-                            <form name="frmProvincias" class="form-horizontal" novalidate="">
+                            <form name="frmCalle" class="form-horizontal" novalidate="">
 
-                                <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Documento de identidad del Cliente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="idprovincia" name="idprovincia" placeholder="Cédula" value="{{idprovincia}}" 
-                                        ng-model="provincia.idprovincia" ng-required="true">
-                                        <span class="help-inline" 
-                                        ng-show="frmProvincias.idprovincia.$invalid && frmProvincias.idprovincia.$touched">La cédula del cliente es requerida</span>
+                                <div class="form-group">
+                                    <label for="t_codigo_calle" class="col-sm-4 control-label">Codigo de la Calle</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="idcalle" name="idcalle" placeholder="Código calle"  
+                                        ng-model="calle.idcalle" disable>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre de Provincia</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombreprovincia" name="nombreprovincia" placeholder="Fecha Ingreso" value="{{nombreprovincia}}" ng-model="cliente.nombreprovincia" ng-required="true">
+                                    <label for="t_nombre_calle" class="col-sm-4 control-label">Nombre de la Calle</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="nombrecalle" name="nombrecalle" placeholder=""  ng-model="calle.nombrecalle" ng-required="true" ng-maxlength="32">
                                         <span class="help-inline" 
-                                        ng-show="frmProvincias.nombreprovincia.invalid && frmProvincias.nombreprovincia.touched">La fecha de ingreso del cliente es requerida</span>
+                                        ng-show="frmCalle.nombrecalle.invalid && frmCalle.nombrecalle.touched">La fecha de ingreso del cliente es requerida</span>
+                                        <span class="help-inline" 
+                                        ng-show="frmCalle.nombrecalle.invalid && frmCalle.nombrecalle.$error.maxlength">La longitud máxima es de 16 caracteres</span>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmProvincias.$invalid">Guardar</button>
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, idcalle)" ng-disabled="frmCalle.$invalid">Guardar</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form name="frmProvincias" class="form-horizontal" novalidate="">
-
-                                <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Código de Provincia</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="idprovincia" name="idprovincia" placeholder="Cédula" value="{{idprovincia}}" 
-                                        ng-model="provincia.idprovincia" ng-required="true">
-                                        <span class="help-inline" 
-                                        ng-show="frmProvincias.idprovincia.$invalid && frmProvincias.idprovincia.$touched">La cédula del provincia es requerida</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre Provincia</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombreprovincia" name="nombreprovincia" value="{{nombreprovincia}}" ng-model="provincia.nombreprovincia" ng-required="true">
-                                        <span class="help-inline" 
-                                        ng-show="frmProvincias.nombreprovincia && frmProvincias.nombreprovincia">La fecha de ingreso del provincia es requerida</span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmProvincias.$invalid">Guardar</button>
-                        </div>
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmDelete">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>Realmente desea eliminar el Calle: <span style="font-weight: bold;">{{calle_seleccionado}}</span></span>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCalle()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         </div>
     </div>

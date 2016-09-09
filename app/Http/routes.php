@@ -112,11 +112,11 @@ Route::get('/parroquias/gestion/{idcanton?}','Sectores\ParroquiaController@index
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/parroquias/gestion/{idparroquia?}','Sectores\ParroquiaController@show');
 //Ruta página de inicio de gestión de parroquias
-Route::get('/parroquias/gestion/ultimocodigoparroquia','Sectores\ParroquiaController@getUltimoCodigoparroquia');
+Route::get('/parroquias/gestion/ultimocodigoparroquia','Sectores\ParroquiaController@getUltimoCodigoParroquia');
 //Ruta página de inicio de gestión de parroquias
-Route::post('/parroquias/gestion/guardarparroquia/{idcanton?}','Sectores\ParroquiaController@postCrearparroquia');
+Route::post('/parroquias/gestion/guardarparroquia/{idcanton}','Sectores\ParroquiaController@postCrearParroquia');
 //Ruta página de inicio de gestión de parroquias
-Route::post('/parroquias/gestion/actualizarparroquia/{idparroquia}','Sectores\ParroquiaController@postActualizarparroquia');
+Route::post('/parroquias/gestion/actualizarparroquia/{idparroquia}','Sectores\ParroquiaController@postActualizarParroquia');
 //Ruta página de inicio de gestión de parroquias
 Route::post('/parroquias/gestion/eliminarparroquia/{idparroquia}','Sectores\ParroquiaController@destroy');
 
@@ -134,9 +134,9 @@ Route::get('/barrios/gestion/{idbarrio?}','Sectores\BarrioController@show');
 //Ruta página de inicio de gestión de barrios
 Route::get('/barrios/gestion/ultimocodigobarrio','Sectores\BarrioController@getUltimoCodigobarrio');
 //Ruta página de inicio de gestión de barrios
-Route::post('/barrios/gestion/guardarbarrio/{idparroquia?}','Sectores\BarrioController@postCrearbarrio');
+Route::post('/barrios/gestion/guardarbarrio/{idparroquia}','Sectores\BarrioController@postCrearBarrio');
 //Ruta página de inicio de gestión de barrios
-Route::post('/barrios/gestion/actualizarbarrio/{idbarrio}','Sectores\BarrioController@postActualizarbarrio');
+Route::post('/barrios/gestion/actualizarbarrio/{idbarrio}','Sectores\BarrioController@postActualizarBarrio');
 //Ruta página de inicio de gestión de barrios
 Route::post('/barrios/gestion/eliminarbarrio/{idbarrio}','Sectores\BarrioController@destroy');
 
@@ -151,11 +151,11 @@ Route::get('/calles/gestion/{idbarrio?}','Sectores\CalleController@index');
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/calles/gestion/{idcalle?}','Sectores\CalleController@show');
 //Ruta página de inicio de gestión de calles
-Route::get('/calles/gestion/ultimocodigocalle','Sectores\CalleController@getUltimoCodigocalle');
+Route::get('/calles/gestion/ultimocodigocalle','Sectores\CalleController@getUltimoCodigoCalle');
 //Ruta página de inicio de gestión de calles
-Route::post('/calles/gestion/guardarcalle/{idbarrio?}','Sectores\CalleController@postCrearcalle');
+Route::post('/calles/gestion/guardarcalle/{idbarrio}','Sectores\CalleController@postCrearCalle');
 //Ruta página de inicio de gestión de calles
-Route::post('/calles/gestion/actualizarcalle/{idcalle}','Sectores\CalleController@postActualizarcalle');
+Route::post('/calles/gestion/actualizarcalle/{idcalle}','Sectores\CalleController@postActualizarCalle');
 //Ruta página de inicio de gestión de calles
 Route::post('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleController@destroy');
 
