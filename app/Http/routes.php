@@ -163,19 +163,32 @@ Route::post('/calles/gestion/actualizarcalle/{idcalle}','Sectores\CalleControlle
 //Ruta página de inicio de gestión de calles
 Route::post('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleController@destroy');
 
-/*Raidel*/
+/*------------------------------------Raidel------------------------------------------------*/
 
+/*===================================Módulo Lectura===========================================*/
+
+//Ruta devuelve el ultimo ID + 1
 Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
+//Ruta devuelve todos los rubros
 Route::get('nuevaLectura/getRubros', 'Lecturas\LecturaController@getRubros');
+//Ruta devuelve los valores de los rublos en dependencia del suministro, consumo y tarifa
 Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@getRubrosValue');
+//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Lectura
 Route::resource('nuevaLectura', 'Lecturas\LecturaController');
-
+//Ruta devuelve las lecturas
 Route::get('verLectura/getLecturas', 'Lecturas\ViewLecturaController@getLecturas');
+//Ruta devuelve los barrios
 Route::get('verLectura/getBarrios', 'Lecturas\ViewLecturaController@getBarrios');
+//Ruta devuelve las calles
 Route::get('verLectura/getCalles/{idbarrio}', 'Lecturas\ViewLecturaController@getCalles');
+//Ruta devuelve las lecturas por filtro
 Route::get('verLectura/getByFilter/{filters}', 'Lecturas\ViewLecturaController@getByFilter');
+//Ruta para actualizar los campos de lectura actual y observacion en cada lectura
 Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update');
+//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia ViewLectura
 Route::resource('verLectura', 'Lecturas\ViewLecturaController');
+
+
 
 /*------------------------------------Yamilka------------------------------------------------*/
 
