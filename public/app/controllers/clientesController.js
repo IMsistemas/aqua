@@ -1,6 +1,7 @@
     app.controller('clientesController', function($scope, $http, API_URL) {
     //retrieve clientes listing from API
     $scope.clientes=[];
+    //$scope.fecha=0;
      $scope.initLoad = function(){
     $http.get(API_URL + "clientes/gestion")
         .success(function(response) {
@@ -22,9 +23,7 @@
                 $scope.documentoidentidad = documentoidentidad;
                 $http.get(API_URL + 'clientes/gestion/' + documentoidentidad)
                         .success(function(response) {
-                            console.log(response);
                             $scope.cliente = response;
-                            console.log( $scope.cliente);
                         });
                 break;
             default:

@@ -17,15 +17,15 @@
             <table class="table table-responsive table-striped table-hover table-condensed" >
                 <thead class="bg-primary">
                     <tr>
-                        <th style="width: 90px;">Documento de Identidad</th>
-                        <th>Fecha</th>
-                        <th>Razón Social</th>
-                        <th>Teléfono</th>
-                        <th>Teléfono Secundario</th>
-                        <th>Celular</th>
-                        <th>Dirección</th>
-                        <th>Correo</th>
-                        <th style="width: 180px;" colspan="3" class="text-center">Acciones</th>
+                        <th style="text-decoration:none; color:white;">Documento</th>
+                        <th style="text-decoration:none; color:white;">Fecha</th>
+                        <th style="text-decoration:none; color:white;">Razón Social</th>
+                        <th style="text-decoration:none; color:white;">Telf. Principal</th>
+                        <th style="text-decoration:none; color:white;">Telf. Secundario</th>
+                        <th style="text-decoration:none; color:white;">Celular</th>
+                        <th style="text-decoration:none; color:white;">Dirección</th>
+                        <th style="text-decoration:none; color:white;">Correo</th>
+                        <th style="text-decoration:none; color:white;" colspan="2" class="text-center">Acciones</th>
                         
                     </tr>
                 </thead>
@@ -39,9 +39,11 @@
                         <td>{{cliente.celular}}</td>
                         <td>{{cliente.direccion}}</td>
                         <td>{{cliente.correo}}</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-default btn-xs btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar Cliente</a>
-                            <a href="#" class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar Cliente</a>
+                        <td >
+                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar</a>
+                        </td>
+                        <td >
+                            <a href="#" class="btn btn-danger" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar</a>
                         </td>
                     </tr>
 
@@ -58,106 +60,123 @@
 
  
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</span></button>
+                        <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
                             <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
                         </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   <label >{{cliente.fechaingreso | date : format : 'fullDate'}}</label>
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
                         <div class="modal-body">
                             <form name="frmClientes" class="form-horizontal" novalidate="">
+                         <div class="row">
+                        <fieldset>
+                            <legend style="padding-bottom: 5px; padding-left: 20px">Datos Cliente</legend>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="documentoidentidad" id="documentoidentidad"
+                                                       ng-model="cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Documento de identidad del Cliente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="documentoidentidad" name="documentoidentidad" placeholder="" 
-                                        ng-model="cliente.documentoidentidad" ng-required="true">
-                                        <span class="help-inline" 
-                                        ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$touched">La cédula del cliente es requerida</span>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Correo:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="correo" id="correro"
+                                                       ng-model="cliente.correo" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                     </div>
+
+                                    
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Apellidos:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="apellido" id="apellido"
+                                                       ng-model="cliente.apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Nombres:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="nombre" id="nombre"
+                                                       ng-model="cliente.nombre" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Fecha de Ingreso</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="fechaingreso" name="fechaingreso"="cliente.fechaingreso" ng-required="true" ng-model="cliente.fechaingreso">
-                                        <span class="help-inline" 
-                                        ng-show="frmClientes.fechaingreso && frmClientes.fechaingreso">La fecha de ingreso del cliente es requerida</span>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Telf. Principal:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
+                                                       ng-model="cliente.telefonoprincipal" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Telf. Secundario:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
+                                                       ng-model="cliente.telefonosecundario" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Nombre del Cliente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" 
-                                        ng-model="cliente.nombre" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$touched">El nombre del cliente del cliente es requerido</span>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Celular:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="celular" id="celular"
+                                                       ng-model="cliente.celular" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Dirección:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="cliente.direccion" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Apellido del CLiente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="" 
-                                        ng-model="cliente.apellido" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$touched">El apellido del cliente del es requerido</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" >
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Teléfono del CLiente</label>
-                                    <div class="col-sm-9" >
-                                        <input type="text" class="form-control" id="telefonoprincipal" name="telefonoprincipal" placeholder="Teléfono del Cliente" 
-                                        ng-model="cliente.telefonoprincipal" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$touched">El teléfono del cliente es requerido</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Teléfono alternativo del CLiente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="telefonosecundario" name="telefonosecundario" placeholder="Teléfono Alternativo del Cliente" 
-                                        ng-model="cliente.telefonosecundario" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$touched">El telélefono alternativo del cliente es requerido</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Celular del CLiente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="celudar" name="celudar" placeholder="Celular del Cliente" 
-                                        ng-model="cliente.celular" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.celudar.$invalid && frmClientes.celudar.$touched">El celular de la  es requerido</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Dirección del CLiente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="drirecion" name="drirecion" placeholder="Direción del Cliente" 
-                                        ng-model="cliente.direccion" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.drirecion.$invalid && frmClientes.drirecion.$touched">La direción del cliente es requerida</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Correo del CLiente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo del CLiente" 
-                                        ng-model="cliente.correo" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmClientes.correo.$invalid && frmClientes.correo.$touched">El correo electrónico es requerido</span>
-                                    </div>
-                                </div>                          
+                                </fieldset>           
                                 
 
 
                             </form>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmClientes.$invalid">Guardar</button>
