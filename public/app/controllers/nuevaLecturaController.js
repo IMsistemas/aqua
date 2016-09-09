@@ -34,37 +34,43 @@
 
             $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
 
-                if(response[0].lecturaactual == null || response[0].lecturaactual == undefined){
-                    response[0].lecturaactual = 0;
-                }
+                if (response.length == 0){
 
-                var lectura_anterior = parseFloat(response[0].lecturaactual);
-                var lectura_actual = parseFloat($scope.t_lectura);
-
-                if(lectura_anterior > lectura_actual){
-                    $scope.lectura_anterior = lectura_anterior;
-                    $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
+                    $scope.message = 'No exite registro del Número de Suministro Insertado...';
                     $('#modalMessage').modal('show');
 
                 } else {
 
-                    $scope.lectura_anterior = lectura_anterior;
-                    $scope.lectura_actual = lectura_actual;
+                    if(response[0].lecturaactual == null || response[0].lecturaactual == undefined){
+                        response[0].lecturaactual = 0;
+                    }
 
-                    $scope.consumo = lectura_actual - lectura_anterior;
+                    var lectura_anterior = parseFloat(response[0].lecturaactual);
+                    var lectura_actual = parseFloat($scope.t_lectura);
+
+                    if(lectura_anterior > lectura_actual){
+                        $scope.lectura_anterior = lectura_anterior;
+                        $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
+                        $('#modalMessage').modal('show');
+
+                    } else {
+
+                        $scope.lectura_anterior = lectura_anterior;
+                        $scope.lectura_actual = lectura_actual;
+
+                        $scope.consumo = lectura_actual - lectura_anterior;
 
 
-                    $scope.getValueRublos($scope.consumo, response[0].idtarifa);
+                        $scope.getValueRublos($scope.consumo, response[0].idtarifa);
 
-                    $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
-                    $scope.barrio = response[0].nombrebarrio;
-                    $scope.calle = response[0].nombrecalle;
-                    $scope.tarifa = response[0].nombretarifa;  
-                          
+                        $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
+                        $scope.barrio = response[0].nombrebarrio;
+                        $scope.calle = response[0].nombrecalle;
+                        $scope.tarifa = response[0].nombretarifa;  
+                              
+                    }
+
                 }
-
-
-                
 
 
             });
@@ -142,7 +148,9 @@
         }
 
         $scope.confirmSave = function(){
+
             $('#modalConfirm').modal('show');
+
         }
 
         $scope.save = function(){
@@ -191,3 +199,24 @@
             return t[2] + '/' + t[1] + '/' + t[0];
         }
     }
+
+    function isOnlyNumberPto(field, e, length) {
+            //var valor = $('#' + field.id).val();
+            var valor = document.getElementById(field.id);
+
+            if (length != undefined) {
+                if (valor.length == length) return false;
+            }
+
+            if (valor != undefined) {
+                k = (document.all) ? e.keyCode : e.which;
+                if (k == 8 || k == 0) return true;
+                patron = /\d/;
+                n = String.fromCharCode(k);
+                if (n == ".") {
+                    if (valor.indexOf('.') != -1 || valor.length < 0) {
+                        return false;
+                    } else return true;
+                } else return patron.test(n);
+            } 
+        }

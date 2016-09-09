@@ -51,11 +51,13 @@
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <div class="form-group">
+                            <div class="form-group error">
                                 <label class="col-sm-4 control-label">Fecha Ingreso:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control datepicker" name="t_fecha_ing"
-                                           id="t_fecha_ing" ng-model="t_fecha_ing" />
+                                           id="t_fecha_ing" ng-model="t_fecha_ing" ng-required="true" />
+                                    <span class="help-block error"
+                                                      ng-show="formNewLectura.t_fecha_ing.$invalid && formNewLectura.t_fecha_ing.$touched">La fecha de ingreso es requerida</span>
                                 </div>
                             </div>
                         </div>
@@ -66,12 +68,14 @@
                             <legend>Periodo:</legend>
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <div class="form-group">
+                                    <div class="form-group error">
                                         <label class="col-sm-4 control-label">Año:</label>
                                         <div class="col-sm-8">
                                             <!--<select class="form-control" name="s_anno" id="s_anno" ng-model=""></select>-->
-                                            <input type="text" class="form-control datepicker_a" name="s_anno"
-                                                   id="s_anno" ng-model="s_anno">
+                                            <input type="text" class="form-control datepicker_a" name="s_anno" id="s_anno" 
+                                                ng-model="s_anno" ng-required="true" >
+                                            <span class="help-block error"
+                                                      ng-show="formNewLectura.s_anno.$invalid && formNewLectura.s_anno.$touched">El año es requerido</span>    
                                         </div>
                                     </div>
                                 </div>
@@ -97,26 +101,31 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group">
+                                    <div class="form-group error">
                                         <label class="col-sm-6 control-label" >Suministro Nro:</label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" name="t_no_suministro"
-                                                   id="t_no_suministro" ng-model="t_no_suministro" />
+                                            <input type="number" class="form-control" name="t_no_suministro"
+                                                   id="t_no_suministro" ng-model="t_no_suministro" onkeypress="return isOnlyNumberPto(this, event);" 
+                                                   ng-required="true" />
+                                            <span class="help-block error"
+                                                      ng-show="formNewLectura.t_no_suministro.$invalid && formNewLectura.t_no_suministro.$touched">El Nro. de Suministro es requerido</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group">
+                                    <div class="form-group error">
                                         <label class="col-sm-4 control-label">Lectura:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="t_lectura" id="t_lectura"
-                                                   ng-model="t_lectura" />
+                                            <input type="number" class="form-control" name="t_lectura" id="t_lectura"
+                                                   ng-model="t_lectura" onkeypress="return isOnlyNumberPto(this, event);" ng-required="true" />
+                                            <span class="help-block error"
+                                                      ng-show="formNewLectura.t_lectura.$invalid && formNewLectura.t_lectura.$touched">El Nro de Lectura es requerido</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 text-center">
-                                <button type="button" class="btn btn-primary" ng-click="loadInfo();">
+                                <button type="button" class="btn btn-primary" ng-click="loadInfo();" ng-disabled="formNewLectura.$invalid">
                                     Ingresar
                                 </button>
                             </div>
@@ -125,19 +134,19 @@
                         <fieldset>
                             <legend>Datos Suministro:</legend>
                             <div class="col-xs-6">
-                                <div class="col-xs-12" ng-cloak>
+                                <div class="col-xs-12" style="border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
                                     <p>
-                                        <span class="dataclient">Cliente: </span>{{nombre_cliente}}
+                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
                                     </p>
                                     <p>
-                                        <span class="dataclient">Barrio: </span>{{barrio}}
+                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Barrio:</span> </span>{{barrio}}
                                     </p>
                                     <p>
-                                        <span class="dataclient">Calle: </span>{{calle}}
+                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Calle:</span> </span>{{calle}}
                                     </p>
-                                    <p>
-                                        <span class="dataclient">Tarifa: </span>{{tarifa}}
-                                    </p>
+                                    
+                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
+                                    
                                 </div>
                             </div>
                             <div class="col-xs-6">
@@ -151,7 +160,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr class="text-right">
                                                 <td>{{lectura_anterior}}</td>
                                                 <td>{{lectura_actual}}</td>
                                                 <td>{{consumo}}</td>
@@ -163,14 +172,14 @@
                         </fieldset>
                     </div>
 
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="margin-top: 15px;">
                         <fieldset>
                             <legend>Detalle de Consumo:</legend>
 
                             <div class="col-xs-12" ng-cloak>
-                                Meses Atrasados: {{meses_atrasados}}
+                                <span style="font-size: 14px !important;" class="label label-default">Meses Atrasados: {{meses_atrasados}}</span>
                             </div>
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" style="margin-top: 15px;">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead class="bg-primary">
                                         <tr>
@@ -190,14 +199,14 @@
                         </fieldset>
                     </div>
 
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="margin-bottom: 15px;">
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" ng-click="confirmSave()">
                                 Guardar
                             </button>
                         </div>
                         <div class="col-xs-6 text-right" ng-cloak>
-                            Total: {{total}}
+                            <span style="font-size: 14px !important;" class="label label-primary">Total: {{total}}</span>
                         </div>
                     </div>
 
