@@ -27,7 +27,6 @@
 
             });
 
-
         }
 
         $scope.loadInfo = function(){
@@ -55,6 +54,7 @@
         }
 
         $scope.createTableRubros = function(){
+
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
 
                 var object_basico = {
@@ -69,6 +69,12 @@
                     valorrubro: 0.00
                 }
 
+                var object_mesesatrasados = {
+                    idrubrofijo: 0,
+                    nombrerubrofijo: "Valores Atrasados",
+                    valorrubro: 0.00
+                }
+
                 $scope.rubros = response;
 
                 var longitud = ($scope.rubros).length;
@@ -77,6 +83,7 @@
                     ($scope.rubros)[i].valorrubro = 0;
                 }
 
+                ($scope.rubros).unshift(object_mesesatrasados);    
                 ($scope.rubros).unshift(object_excedente);
                 ($scope.rubros).unshift(object_basico);
 
@@ -86,16 +93,23 @@
         }
 
         $scope.getValueRublos = function(consumo, tarifa){
-            $http.get(API_URL + 'nuevaLectura/getRubros/' + consumo + '/' + tarifa).success(function(response) {
+
+            var id = $scope.t_no_suministro;
+
+            var url = API_URL + 'nuevaLectura/getRubros/' + consumo + '/' + tarifa + '/' + id;
+
+            $http.get(url).success(function(response) {
 
                 console.log(response);
 
                 $scope.rubros[0].valorrubro = parseFloat(response.tarifabasica).toFixed(2);
                 $scope.rubros[1].valorrubro = (response.excedente).toFixed(2);
-                $scope.rubros[2].valorrubro = parseFloat(response.medioambiente).toFixed(2);
-                $scope.rubros[3].valorrubro = (response.alcantarillado).toFixed(2);
-                $scope.rubros[4].valorrubro = (response.ddss).toFixed(2);
+                $scope.rubros[2].valorrubro = response.mesesatrasados;
+                $scope.rubros[3].valorrubro = parseFloat(response.medioambiente).toFixed(2);
+                $scope.rubros[4].valorrubro = (response.alcantarillado).toFixed(2);
+                $scope.rubros[5].valorrubro = (response.ddss).toFixed(2);
 
+                $scope.meses_atrasados =  response.mesesatrasados;   
 
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
@@ -117,16 +131,22 @@
         $scope.save = function(){
 
             $scope.lectura_data = {
-                fechaingreso: $scope.t_fecha_ing,
+                fechalectura: convertDatetoDB($scope.t_fecha_ing),
                 numerosuministro: $scope.t_no_suministro,
                 lecturaanterior: $scope.lectura_anterior,
                 lecturaactual: $scope.lectura_actual,
                 consumo: $scope.consumo,
+
+                excedente: $scope.rubros[1].valorrubro,
+                mesesatrasados: $scope.rubros[2].valorrubro,
+                total: $scope.total,
             };
 
             var url = API_URL + "nuevaLectura";
 
-            $http.post(url, $scope.lectura_data ).success(function (data) {
+            $http.post(url, $scope.lectura_data ).success(function (response) {
+
+                console.log(response);
 
                 //$scope.initLoad();
                 $('#modalConfirm').modal('hide');
@@ -144,3 +164,13 @@
         $scope.initData();
 
     });
+
+    function convertDatetoDB(now, revert){
+        if (revert == undefined){
+            var t = now.split('/');
+            return t[2] + '-' + t[1] + '-' + t[0];
+        } else {
+            var t = now.split('-');
+            return t[2] + '/' + t[1] + '/' + t[0];
+        }
+    }

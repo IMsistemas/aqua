@@ -167,8 +167,14 @@ Route::post('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleController@
 
 Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
 Route::get('nuevaLectura/getRubros', 'Lecturas\LecturaController@getRubros');
-Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}', 'Lecturas\LecturaController@getRubrosValue');
+Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@getRubrosValue');
 Route::resource('nuevaLectura', 'Lecturas\LecturaController');
+
+Route::get('verLectura/getLecturas', 'Lecturas\ViewLecturaController@getLecturas');
+Route::get('verLectura/getBarrios', 'Lecturas\ViewLecturaController@getBarrios');
+Route::get('verLectura/getCalles/{idbarrio}', 'Lecturas\ViewLecturaController@getCalles');
+Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update');
+Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 
 /*------------------------------------Yamilka------------------------------------------------*/
 

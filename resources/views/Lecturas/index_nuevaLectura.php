@@ -121,10 +121,11 @@
                                 </button>
                             </div>
                         </fieldset>
+                        
                         <fieldset>
                             <legend>Datos Suministro:</legend>
                             <div class="col-xs-6">
-                                <div class="col-xs-12">
+                                <div class="col-xs-12" ng-cloak>
                                     <p>
                                         <span class="dataclient">Cliente: </span>{{nombre_cliente}}
                                     </p>
@@ -140,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <div class="col-xs-12">
+                                <div class="col-xs-12" ng-cloak>
                                     <table class="table table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
@@ -166,8 +167,8 @@
                         <fieldset>
                             <legend>Detalle de Consumo:</legend>
 
-                            <div class="col-xs-12">
-                                Meses Atrasados:
+                            <div class="col-xs-12" ng-cloak>
+                                Meses Atrasados: {{meses_atrasados}}
                             </div>
                             <div class="col-xs-12">
                                 <table class="table table-bordered table-striped table-hover">
@@ -178,7 +179,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="rubro in rubros">
+                                        <tr ng-repeat="rubro in rubros" ng-cloak>
                                             <td>{{rubro.nombrerubrofijo}}</td>
                                             <td class="text-right">{{rubro.valorrubro}}</td>
                                         </tr>
@@ -195,7 +196,7 @@
                                 Guardar
                             </button>
                         </div>
-                        <div class="col-xs-6 text-right">
+                        <div class="col-xs-6 text-right" ng-cloak>
                             Total: {{total}}
                         </div>
                     </div>
@@ -219,7 +220,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="">Aceptar</button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save()">Aceptar</button>
                     </div>
                 </div>
             </div>
