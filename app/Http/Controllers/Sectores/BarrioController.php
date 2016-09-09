@@ -101,4 +101,9 @@ class BarrioController extends Controller
 		abort(404);
 	}
 
+	/*=============================Kevin Tambien :-( =========================*/
+	public function getBarriosCalles(){
+		return Barrio::with('calle')->get();
+	}
+
 }

@@ -9,13 +9,14 @@ class Barrio extends Model
     protected $table = "barrio";
     protected $primaryKey = "idbarrio";
     public $timestamps = false;
+     public $incrementing = false;
 
     public function parroquia(){
-    	return $this->belongsTo('App\Modelos\Sectores\parroquia','idparroquia');
+    	return $this->belongsTo('App\Modelos\Sectores\Parroquia','idparroquia');
     }
 
     public function calle(){
-    	return $this->hasMany('App\Modelos\Sectores\calle','idbarrio');
+    	return $this->hasMany('App\Modelos\Sectores\Calle','idbarrio');
     }
 }
  

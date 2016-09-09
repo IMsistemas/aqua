@@ -10,6 +10,7 @@ class Cliente extends Model
     protected $table = "cliente";
     protected $primaryKey = "documentoidentidad";
     public $timestamps = false;
+    public $incrementing = false;
 
     public function solicitud(){
     	return $this->hasMany('App\Modelos\Suministros\Solicitud','documentoidentidad');

@@ -9,15 +9,16 @@
 	<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
 	<link href="<?= asset('css/index.css') ?>" rel="stylesheet">
   <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
+  
 </head>
 <body ng-controller="mainController">
   <header>
   <hr>
-    <div class="titulo"><span style="font-weight: bold;">{{titulo | uppercase}}</span></div>
+    <div class="titulo"><span style="font-weight: bold;" ng-bind="titulo | uppercase"></span></div>
     
     <nav>
     <div class="brandLogo">
-      <img src="img/logotipo-interno.png">
+      <img ng-src="img/logotipo-interno.png">
     </div>
       <ul>
         <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
