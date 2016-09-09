@@ -2,7 +2,7 @@
         <div class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">EMPLEADOS</span>
+                  
                     <button type="button" id="btnAgregar" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
                 </legend>
 

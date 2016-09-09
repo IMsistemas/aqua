@@ -45,6 +45,11 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "calles";
 	}
 
+	$scope.toModuloCargo = function(){
+		$scope.titulo = "Cargos";
+		$scope.toModulo = "cargo";
+	}
+
 
 	$scope.toModuloLectura = function(){		
 		$scope.titulo = "Lecturas";

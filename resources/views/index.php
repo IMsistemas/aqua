@@ -43,11 +43,13 @@
         <li class="padre"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>Clientes<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
             <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
+            <li><a href="#" ng-click="toModuloCliente();">Cuentas por cobrar clientes</a></li>
+            <li><a href="#" ng-click="toModuloCliente();">Cuentas por pagar clientes</a></li>
           </ul>
         </li>
-        <li class="padre"><a href="#"><i class="fa fa-male" aria-hidden="true"></i>Nomina<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
+        <li class="padre"><a href="#"><i class="fa fa-male" aria-hidden="true"></i>Personal<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="#" ng-click="toModuloEmpleado();">Personal</a></li>
+            <li><a href="#" ng-click="toModuloEmpleado();">Empleados</a></li>
             <li><a href="#" ng-click="toModuloCargo();">Cargos</a></li>
           </ul>
         </li>
