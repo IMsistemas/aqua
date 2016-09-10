@@ -17,20 +17,34 @@
             <table class="table table-responsive table-striped table-hover table-condensed" >
                 <thead class="bg-primary">
                     <tr>
-                        <th style="text-decoration:none; color:white;">Documento</th>
-                        <th style="text-decoration:none; color:white;">Fecha</th>
-                        <th style="text-decoration:none; color:white;">Razón Social</th>
-                        <th style="text-decoration:none; color:white;">Telf. Principal</th>
-                        <th style="text-decoration:none; color:white;">Telf. Secundario</th>
-                        <th style="text-decoration:none; color:white;">Celular</th>
-                        <th style="text-decoration:none; color:white;">Dirección</th>
-                        <th style="text-decoration:none; color:white;">Correo</th>
-                        <th style="text-decoration:none; color:white;" colspan="2" class="text-center">Acciones</th>
+                        <th> 
+                            <a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='documentoidentidad'; reversa=!reversa;">CI |RUC</a>
+                        </th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='fechaingreso'; reversa=!reversa;">Fecha</a>
+                        </th>
+                        <th style="text-decoration:none; color:white;" >Razón Social</th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='telefonoprincipal'; reversa=!reversa;">Telf. Principal</a>
+                        </th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='telefonosecundario'; reversa=!reversa;">Telf. Secundario
+                        </th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='celular'; reversa=!reversa;">Celular</a>
+                        </th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='direccion'; reversa=!reversa;">Dirección</a>
+                        </th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='correo'; reversa=!reversa;">Correo</a>
+                        </th>
+                        <th style="text-decoration:none; color:white;"  class="text-center">Acciones</th>
                         
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="cliente in clientes|filter:busqueda">
+                    <tr ng-repeat="cliente in clientes|filter:busqueda| orderBy:ordenarColumna:reversa">
                         <td class="text-center">{{cliente.documentoidentidad}}</td>
                         <td>{{cliente.fechaingreso|date}}</td>
                         <td>{{cliente.apellido+' '+cliente.nombre}}</td>                    

@@ -13,6 +13,7 @@
             });
     }
     $scope.initLoad();
+    $scope.ordenarColumna = 'estaprocesada';
     //show modal form
     $scope.toggle = function(modalstate, documentoidentidad) {
         $scope.modalstate = modalstate;
