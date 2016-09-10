@@ -48,7 +48,7 @@ class ClienteController extends Controller
 		$cliente->correo = $request->input('correo');
 
 		$cliente->save();
-		return "Se actualizo correctamente".$cliente->documentoidentidad;
+		return "Se actualizo correctamente el cliente con CI || RUC ".$cliente->documentoidentidad;
 	}
 	public function destroy(Request $request)
 	{

@@ -40,12 +40,11 @@
                         <td>{{cliente.direccion}}</td>
                         <td>{{cliente.correo}}</td>
                         <td >
-                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar</a>
-                            <a href="#" class="btn btn-warning" ng-click="toggle('add', 0)">guar</a>
+                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar</a>                          
                         </td>
-                        <td >
+                        <!--<td >
                             <a href="#" class="btn btn-danger" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar</a>
-                        </td>
+                        </td>-->
                     </tr>
 
                 </tbody>
@@ -89,13 +88,18 @@
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <label class="col-sm-4 control-label">CI | RUC:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control has-error" name="documentoidentidad" id="documentoidentidad"
-                                                       ng-model="cliente.documentoidentidad" ng-required="true" ng-minlength ="10"  ng-pattern="/^[0-9]{1,10}$/">
-                                                        <span class="help-inline" ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$touched">El documento del cliente es requerido</span>
+                                                       ng-model="cliente.documentoidentidad" ng-required="true" ng-minlength ="10" ng-maxlength ="32" ng-pattern="/^[0-9]+$/">
+                                                        <span class="help-inline" ng-show="frmClientes.documentoidentidad.$invalid">El documento del cliente es requerido <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$error.minlength">La longitud mínima es de 10 caracteres</span>
+                                                        ng-show="frmClientes.documentoidentidad.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show=" frmClientes.documentoidentidad.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show=" frmClientes.documentoidentidad.$error.maxlength">La longitud máxima es de 32 caracteres</span>
+                                                       
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +111,8 @@
                                             <div class="col-sm-8">
                                                 <input type="email" class="form-control" name="correo" id="correro"
                                                        ng-model="cliente.correo" ng-required="true" >
-                                                       <span class="help-inline" ng-show="frmClientes.correo.$invalid && frmClientes.correo.$touched">El el correo del cliente es requerido</span>                                                        
+                                                       <span class="help-inline" ng-show="frmClientes.correo.$invalid">El el correo del cliente es requerido <br></span>
+                                                        <span class="help-inline" ng-show="frmClientes.correo.$error.email">No es un correo valido <br></span>                                                        
                                             </div>
                                         </div>
                                      </div>
@@ -120,10 +125,12 @@
                                             <label class="col-sm-4 control-label">Apellidos:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="apellido" id="apellido"
-                                                       ng-model="cliente.apellido" ng-required="true" ng-maxlength ="32" ng-pattern="/^[a-zA-Z]*$/" >
-                                                       <span class="help-inline" ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$touched">El apellido del cliente es requerido</span>
+                                                       ng-model="cliente.apellido" ng-required="true" ng-maxlength ="32" ng-pattern="/^[a-zA-Z]+(?[a-zA-Z])+$/" >
+                                                       <span class="help-inline" ng-show="frmClientes.apellido.$invalid">El apellido del cliente es requerido <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.apellido.$invalid && frmClientes.apellido.$error.minlength">La longitud máxima es de 32 caracteres</span>
+                                                        ng-show="frmClientes.apellido.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="frmClientes.apellido.$error.pattern">Sólo se aceptan caracteres alfabeticos <br></span>
 
                                             </div>
                                         </div>
@@ -133,10 +140,12 @@
                                             <label class="col-sm-4 control-label">Nombres:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="nombre" id="nombre"
-                                                       ng-model="cliente.nombre" ng-required="true" ng-minlength ="32"  ng-pattern="/^[a-zA-Z]*$/">
-                                                        <span class="help-inline" ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$touched">El nombre del cliente es requerido</span>
+                                                       ng-model="cliente.nombre" ng-required="true" ng-maxlength ="32"   ng-pattern="/^[a-zA-Z]+(?[a-zA-Z])+$/">
+                                                        <span class="help-inline" ng-show="frmClientes.nombre.$invalid">El nombre del cliente es requerido <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.nombre.$invalid && frmClientes.nombre.$error.minlength">La longitud máxima es de 32 caracteres</span>
+                                                        ng-show="frmClientes.nombre.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="frmClientes.nombre.$error.pattern">Sólo se aceptan caracteres alfanumericos <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -148,10 +157,12 @@
                                             <label class="col-sm-4 control-label">Telf. Principal:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
-                                                       ng-model="cliente.telefonoprincipal" ng-required="true" ng-minlength ="16" >
-                                                       <span class="help-inline" ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$touched">El teléfono principal del cliente es requerido</span>
+                                                       ng-model="telprincipal" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
+                                                       <span class="help-inline" ng-show="frmClientes.telefonoprincipal.$invalid">El teléfono principal del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="frmClientes.telefonoprincipal.$error.pattern">Sólo se permiten números <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.telefonoprincipal.$invalid && frmClientes.telefonoprincipal.$error.minlength">La longitud mínima es de 16 caracteres</span>
+                                                        ng-show="frmClientes.telefonoprincipal.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -160,10 +171,12 @@
                                             <label class="col-sm-4 control-label">Telf. Secundario:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
-                                                       ng-model="cliente.telefonosecundario" ng-required="true" ng-minlength ="16"  >
-                                                       <span class="help-inline" ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$touched">El teléfono secundario del cliente es requerido</span>
+                                                       ng-model="telsecundario" ng-required="true" ng-maxlength ="16"  ng-pattern="/^[0-9]+$/">
+                                                       <span class="help-inline" ng-show="frmClientes.telefonosecundario.$invalid">El teléfono secundario del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="frmClientes.telefonosecundario.$error.pattern">Sólo se permiten números <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.telefonosecundario.$invalid && frmClientes.telefonosecundario.$error.minlength">La longitud mínima es de 16 caracteres</span>
+                                                        ng-show="frmClientes.telefonosecundario.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -175,10 +188,12 @@
                                             <label class="col-sm-4 control-label">Celular:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="celular" id="celular"
-                                                       ng-model="cliente.celular" ng-required="true" ng-minlength ="16" >
-                                                       <span class="help-inline" ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$touched">El celular del cliente es requerido</span>
+                                                       ng-model="celular" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
+                                                       <span class="help-inline" ng-show=" frmClientes.celular.$invalid">El celular del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="frmClientes.celular.$error.pattern">Sólo se permiten números <br></span>
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.documentoidentidad.$invalid && frmClientes.documentoidentidad.$error.minlength">La longitud mínima es de 16 caracteres</span>
+                                                        ng-show=" frmClientes.celular.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -187,10 +202,10 @@
                                             <label class="col-sm-4 control-label">Dirección:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-model="cliente.direccion" ng-required="true" ng-minlength ="32"  ng-pattern="/^[a-zA-Z]*$/">
-                                                       <span class="help-inline" ng-show="frmClientes.direccion.$invalid && frmClientes.direccion.$touched">El dirección del cliente es requerido</span>
+                                                       ng-model="cliente.direccion" ng-required="true" ng-maxlength ="32">
+                                                       <span class="help-inline" ng-show="frmClientes.direccion.$invalid">El dirección del cliente es requerido <br></span>                         
                                                         <span class="help-inline" 
-                                                        ng-show="frmClientes.direccion.$invalid && frmClientes.direccion.$error.minlength">La longitud máxima es de 32 caracteres</span>
+                                                        ng-show="frmClientes.direccion.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
 
                                             </div>
                                         </div>
@@ -209,6 +224,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
