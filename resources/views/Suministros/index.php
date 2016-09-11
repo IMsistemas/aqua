@@ -1,4 +1,4 @@
-<div ng-controller="suministroController">
+<div ng-controller="suministrosController">
 	<div class="container" style="margin-top: 2%;">
 	
 		<div class="col-xs-4">
@@ -7,45 +7,22 @@
 	            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
 	         </div> 
 	     </div>
-			<form class="form-inline">
-			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="modalNuevaSolicitud();">Nueva</button>
-			 
-				<div class="form-group">
-				    <label for="comboYear">Año</label>
-				    <select class="form-control" id="comboYear"  >
-				    	<option value="">Seleccione año</option>
-				    	<option  value="" ></option>
-				    </select>
-				</div>
-				<div class="form-group">
-				    <label for="comboMes">Mes</label>
-				    <select class="form-control" id="comboMes" >
-				    	<option value="">Seleccione mes</option>
-				    	<option  value="" ></option>
-				    </select>
-				</div>
-				<div class="form-group">
-				    <label for="comboEstado">Estado:</label>
-				    <select class="form-control" id="comboEstado" >
-				    	<option value="">Estado:</option>
-				    	<option  value="" ></option>
-				    </select>
-				</div>
-				
-			</form>
 			
 			<div class="cos-xs-12">
 				<table class="table table-responsive table-striped table-hover table-condensed">
 					<thead class="bg-primary">
 						<tr>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Nro. Solicitud</a>
-							</th>
-							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Fecha</a>
+								<a href="#" style="text-decoration:none; color:white;" >Nro.</a>
 							</th>
 							<th>
 								<a href="#" style="text-decoration:none; color:white;" >Cliente</a>
+							</th>
+							<th>
+								<a href="#" style="text-decoration:none; color:white;" >Tarifa</a>
+							</th>
+							<th>
+								<a href="#" style="text-decoration:none; color:white;" >Zona</a>
 							</th>
 							<th>
 								<a href="#" style="text-decoration:none; color:white;" >Dirección</a>
@@ -54,37 +31,217 @@
 								<a href="#" style="text-decoration:none; color:white;" >Teléfono</a>
 							</th>
 							<th>
-								<a href="#" style="text-decoration:none; color:white;" >Estado</a>
-							</th>
-							<th>
 								<a href="#" style="text-decoration:none; color:white;" >Acciones</a>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="solicitud in solicitudes" ">
-							<td>{{solicitud.idsolicitud}}</td>
-							<td>{{solicitud.fechasolicitud}}</td>
-							<td>{{solicitud.cliente.apellido+" "+solicitud.cliente.nombre}}</td>
-							<td>{{solicitud.direccionsuministro}}</td>
-							<td>{{solicitud.telefonosuministro}}</td>
-							<td ng-show="solicitud.estaprocesada==true"><span>Procesada</span></td>
-							<td ng-show="solicitud.estaprocesada==false"><span>En espera</span></td>
+						<tr ng-repeat="suministro in suministros" >
+							<td>{{suministro.numerosuministro}}</td>
+							<td>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}</td>
+							<td>{{suministro.tarifa.nombretarifa}}</td>
+							<td>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}</td>
+							<td>{{suministro.direccionsuministro}}</td>
+							<td>{{suministro.telefonosuministro}}</td>
 							<td >
-								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false">Editar</a>
-
-                                <a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==true">Ver</a>
-
-
-								<a href="#" class="btn btn-danger" ng-hide="solicitud.estaprocesada==true">Eliminar</a>
-
-                                <a id="procesar" href="#" class="btn btn-success" ng-show="solicitud.estaprocesada==false" ng-click="modalProcesaSolicitud(solicitud.idsolicitud);"><i class="fa fa-check fa-lg" aria-hidden="true" ></i></a>
-
-                                <a id="pdf" href="#" class="btn btn-danger" ng-show="solicitud.estaprocesada==true"><i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a>
+								<a href="#" class="btn btn-info" ng-click="getSuministro(suministro.numerosuministro);">Ver</a>
+								<a href="#" class="btn btn-warning" ng-click="modalEditarSuministro();">Editar</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 	</div>
+
+<!--====================================MODALES===================================================================-->
+
+<!--====================================MODAL EDITAR SUMINISTROS==================================================-->
+<div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
+                            <h4 class="modal-title">Editar suministro Nro. {{suministro.numerosuministro}} </h4>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   <label >{{12/02/2016 | date : format : 'fullDate'}}</label>
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
+
+							<fieldset>
+							<legend style="padding-bottom: 5px; padding-left: 20px">Datos Cliente</legend>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="documentoidentidad" id="documentoidentidad"
+                                                       ng-model="suministro.cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">{{cliente.apellido+" "+cliente.nombre}}</label>
+                                            <div class="col-sm-8">
+                                            </div>
+                                        </div>
+                                     </div>
+                                </div>
+                                </fieldset>
+                                	
+                                <fieldset>
+                                	<legend style="padding-bottom: 5px; padding-left: 20px">Datos Suministro</legend>
+                                	<div class="col-xs-12">
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Tarifa:</label>
+	                                            <div class="col-sm-8">
+
+	                                                <select class="form-control" ng-model="suministro.tarifa" ng-options="tarifa as tarifa.nombretarifa for tarifa in tarifas track by tarifa.idtarifa">
+	                                                	<option>Elige tarifa</option>
+`		                                            </select>
+
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Zona:</label>
+	                                            <div class="col-sm-8">
+
+	                                               <select class="form-control" ng-model="barrio" ng-options="barrio as barrio.nombrebarrio for barrio in barrios track by barrio.idbarrio">
+                                                	<option>Seleccione Zona</option>
+                                               	   </select>
+
+                                               	   <select class="form-control" ng-model="suministro.calle" 
+                                                 	ng-options="calle as calle.nombrecalle for calle in barrio.calle track by calle.idcalle" >
+                                                	<option>Seleccione transversal</option>
+                                                	</select>
+
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Dirección:</label>
+	                                            <div class="col-sm-8">
+	                                                <input type="text" class="form-control" name="direccionsolicitud" id="direccionsolicitud"
+	                                                       ng-model="solicitud.direccionsuministro" ng-required="true" ng-maxlength="32" >
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6 col-xs-12">
+	                                        <div class="form-group error">
+	                                            <label class="col-sm-4 control-label">Telefono:</label>
+	                                            <div class="col-sm-8">
+	                                                <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
+	                                                       ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength="32"  >
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="guardarNuevoCliente();" ng-disabled="">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<!--====================================MODAL VER SUMINISTROS=====================================================-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalVerSuministro">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-info">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Suministro No.{{suministro.numerosuministro}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-xs-12 text-center">
+                            <img class="img-thumbnail" src="<?= asset('img/suministro.png') ?>" alt="">
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-xs-12 text-center" style="font-size: 18px;">Instalado el: 17/02/1991</div>
+                      		<div class="col-xs-12">
+                                <span style="font-weight: bold">Cliente:</span>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}} 
+                            </div>      
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Tarifa:</span>{{suministro.tarifa.nombretarifa}} 
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Zona: </span>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Dirección Suministro: </span>{{suministro.direccionsuministro}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Teléfono: </span>{{suministro.telefonosuministro}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--=================================Modal Confirmacion====================================-->
+		 <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmacion">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--=================================Modal Error====================================-->
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalError">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Error</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{mensajeError}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+	
+
+
+
+
+
 </div>

@@ -403,9 +403,9 @@
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Tarifa:</label>
                                             <div class="col-sm-8">
-                                            	 <select class="form-control" ng-model="suministro.tarifa" ng-options="tarifa as tarifa.nombretarifa for tarifa in tarifas track by tarifa.idtarifa">
+                                            	<select class="form-control" ng-model="suministro.tarifa" ng-options="tarifa as tarifa.nombretarifa for tarifa in tarifas track by tarifa.idtarifa">
 	                                                	<option>Elige tarifa</option>
-	                                                </select>
+	                                            </select>
                                         	</div>
                                         </div>
                                     </div>

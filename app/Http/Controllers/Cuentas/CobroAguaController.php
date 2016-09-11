@@ -20,7 +20,16 @@ class CobroAguaController extends Controller
 
 	/**
 	=========================================Kevin======================================================
-	**/    
+	**/ 
+
+    public function generarFacturas(){
+        $suministros = Suministro::all();
+        foreach ($suministros as $suministro) {
+            $nuevoCobro = new CobroAgua();
+            $nuevoCobro->fechacreacion = date("Y-m-d H:i:s");;
+            $nuevoCobro->numerosuministro = $suministro->numerosuministro;   
+        }
+    }   
 
 	/**
 	*Retorna todas las cuentas con los suministros, los clientes y tarifas del suministro

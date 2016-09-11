@@ -7,7 +7,7 @@ app.controller('mainController', function($scope, $http, API_URL) {
 
 
 	$scope.toModuloEmpleado = function(){		
-		$scope.titulo = "Empleados";
+		$scope.titulo = "Colaboradores";
 		$scope.toModulo = "empleado";
 	}
 
@@ -66,6 +66,10 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "suministros/solicitudes";
 	}
 
+	$scope.toModuloSuministro = function(){		
+		$scope.titulo = "suministros";
+		$scope.toModulo = "suministros";
+	}
 	
 });
 })();

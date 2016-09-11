@@ -22,13 +22,22 @@
 		
 		<input type="text" name="passUsuario" id="passUsuario" placeholder="clave">
 		<br>
-		<a href="">Ingresar</a>
+		<a href="" onclick="pantallaCompleta();">Ingresar</a>
 		
 		
 	</form>
 </section>
 <hr>
 <footer>
+<script type="text/javascript">
+	pantallaCompleta = function(){
+		javascript:window.open("http://localhost:88/aqua/public/inicio", "_blank", "resizable=yes,scrollbars=yes,status=no, directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=yes")
+
+		
+		window.close();
+	}
+	
+</script>
 	<a href="https://www.imnegocios.com/"><img src="img/logotipo-imnegocios.png"></a>
 </footer>
 </body>

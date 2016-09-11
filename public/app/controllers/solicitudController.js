@@ -1,6 +1,6 @@
 app.controller('solicitudController',function ($scope,$http,API_URL) {
 
-    $scope.ahora = new Date();//fecha actual
+    $scope.ahora = new Date();
 
    
     $scope.initLoad = function(){
@@ -80,10 +80,8 @@ app.controller('solicitudController',function ($scope,$http,API_URL) {
         $scope.suministro.telefonosuministro = $scope.procesarSolicitud.telefonosuministro;
         $scope.suministro.producto = $scope.producto;
 
-        
-
         var url = API_URL +"suministros/solicitudes/procesar/"+id;    
-         $http({
+        $http({
             method: 'POST',
             url: url,
             data: $.param($scope.suministro),

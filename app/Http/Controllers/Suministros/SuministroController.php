@@ -15,11 +15,24 @@ use App\Modelos\Suministros\Suministro;
 class SuministroController extends Controller
 {
     public function index(){
-		return Suministro::with('cliente','tarifa','calle')->get();
+		return Suministro::with('cliente','tarifa','calle.barrio')->get();
 	}
 
-	public function getSuministro($numerosuministro){
-		return Suministro::with('cliente','tarifa','calle')->where('numerosuministro',$numerosuministro)->get();
+	public function getSuministro($numeroSuministro){
+		return Suministro::with('cliente','tarifa','calle')->where('numerosuministro',$numeroSuministro)->get();
+	}
+
+	public function editarSuministro(Request $request, $numeroSuministro){
+		$suministro = Suministro::find($numeroSuministro);
+
+		$suministro->idtarifa = $request->input('tarifa.idtarifa');
+		$suministro->idcalle = $request->input('calle.idcalle');
+		$suministro->documentoidentidad = $request->input('cliente.documentoidentidad');
+		$suministro->direccionsuministro = $request->input('direccionsuministro');
+		$suministro->telefonosuministro = $request->input('telefonosuministro');
+
+		$suministro->save();
+
 	}
 
 	public function ingresarSuministro(Request $request){

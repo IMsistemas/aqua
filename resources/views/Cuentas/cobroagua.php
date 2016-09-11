@@ -8,6 +8,9 @@
 		</div>
 
 		<form class="form-inline">
+		
+			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="generarFacturasPeriodo();">Generar</button>
+
 			<div class="form-group">
 				<label for="comboYear">Año</label>
 				<select class="form-control" id="comboYear" ng-model="yearSeleccionado" >
@@ -22,6 +25,8 @@
 				    <option ng-repeat="cuenta in cuentas" value="" >{{cuenta.fechaperiodo | date:'MMM'}}</option>
 				</select>
 			</div>
+
+
 		</form>
 	   
 	    

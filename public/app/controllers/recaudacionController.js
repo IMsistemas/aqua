@@ -15,6 +15,10 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
             .success(function(response) {
                 $scope.rubrosVariables = response;
             });
+
+    $scope.generarFacturasPeriodo = function(){
+        
+    }
      
     $scope.modalIngresoOtrosRubros = function(numeroCuenta){
         $scope.cuenta = $scope.cuentas[numeroCuenta-1];

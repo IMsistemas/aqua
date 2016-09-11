@@ -16,6 +16,7 @@
   <hr>
     <div class="titulo"><span style="font-weight: bold;" ng-bind="titulo | uppercase"></span></div>
     
+    
     <nav>
     <div class="brandLogo">
       <img ng-src="img/logotipo-interno.png">
@@ -30,7 +31,7 @@
         </li>
         <li class="padre"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i></i>Suministros<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="#" ng-click="">Suministros</a></li>
+            <li><a href="#" ng-click="toModuloSuministro();">Suministros</a></li>
             <li><a href="#" ng-click="toModuloProvincia();">Sectores</a></li>            
           </ul>
         </li>
@@ -49,8 +50,8 @@
         </li>
         <li class="padre"><a href="#"><i class="fa fa-male" aria-hidden="true"></i>Personal<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="#" ng-click="toModuloEmpleado();">Empleados</a></li>
             <li><a href="#" ng-click="toModuloCargo();">Cargos</a></li>
+            <li><a href="#" ng-click="toModuloEmpleado();">Colaboradores</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Perfil<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
@@ -81,7 +82,8 @@
   <footer>
     powered by IMMPACT MEDIA
   </footer>
-
+       
+        
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
@@ -100,6 +102,7 @@
         <script src="<?= asset('app/controllers/barriosController.js') ?>"></script>
         <script src="<?= asset('app/controllers/callesController.js') ?>"></script>
         <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
+        <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
   </body>
 
   

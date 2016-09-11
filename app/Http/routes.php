@@ -238,7 +238,10 @@ Route::get('/suministros', function (){
 	return view('Suministros/index');
 });
 
+Route::get('suministros/suministros/{numeroSuministro}','Suministros\SuministroController@getSuministro');
+
 Route::get('suministros/suministros','Suministros\SuministroController@index');
+
 Route::get('tarifas/tarifas','Tarifas\TarifaController@index');
 
 Route::get('suministros/productos','Suministros\ProductoController@index');
