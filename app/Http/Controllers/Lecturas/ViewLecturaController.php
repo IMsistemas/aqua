@@ -18,11 +18,22 @@ use Illuminate\Support\Facades\DB;
 class ViewLecturaController extends Controller
 {
 
+    /**
+     * Retorna la vista de Consulta de Lectura
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('Lecturas.index_viewLectura');
     }
 
+
+    /**
+     * Retorna las lecturas insertadas
+     *
+     * @return mixed
+     */
     public function getLecturas()
     {
     	return Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
@@ -35,6 +46,12 @@ class ViewLecturaController extends Controller
     }
 
 
+    /**
+     * Retorna las lecturas insertadas filtradas
+     *
+     * @param $filter
+     * @return mixed
+     */
     public function getByFilter($filter)
     {
         
@@ -82,16 +99,36 @@ class ViewLecturaController extends Controller
 
     }
 
+
+    /**
+     * Retorna los barrios insertados
+     *
+     * @return mixed
+     */
     public function getBarrios()
     {
         return Barrio::orderBy('nombrebarrio', 'asc')->get(); 
     }
 
+
+    /**
+     * Retorna las calles insertadas que pertenecen al barrio entrado por parametro
+     *
+     * @param $idbarrio
+     * @return mixed
+     */
     public function getCalles($idbarrio)
     {
         return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get(); 
     }
 
+
+    /**
+     * Actualiza el recurso de lectura en Lectura Actual y Observacion
+     *
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update($request)
     {
         

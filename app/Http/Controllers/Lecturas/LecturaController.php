@@ -17,37 +17,38 @@ use Illuminate\Support\Facades\DB;
 class LecturaController extends Controller
 {
 
+    /**
+     * Retorna la vista de la nueva Lectura
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('Lecturas.index_nuevaLectura');
     }
 
+
+    /**
+     * Retorna el ultimo id insertado + 1
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getLastID()
     {
         $last_id = Lectura::max('idlectura');
-
-        if ($last_id == 0){
-            $last_id = 1;
-        } else {
-            $last_id += 1;
-        }
-
+        ($last_id == 0) ? $last_id = 1 : $last_id += 1;
         return response()->json(['lastID' => $last_id]);
     }
 
+
+    /**
+     * Retorna los datos del recurso mediante el id entrado por parametro
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
-        /*$lectura = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
-                            ->join('tarifa', 'suministro.idtarifa', '=', 'tarifa.idtarifa')
-                            ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
-                            ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-                            ->join('barrio', 'calle.idbarrio', '=', 'barrio.idbarrio')
-                            ->select('tarifa.nombretarifa', 'calle.nombrecalle', 'barrio.nombrebarrio',
-                                        'cliente.apellido', 'cliente.nombre', 'lectura.lecturaactual', 'tarifa.idtarifa')
-                            ->where('lectura.numerosuministro', '=', $id)
-                            ->orderBy('idlectura', 'desc')
-                            ->take(1)
-                            ->get();*/
 
         $lectura = Suministro::join('tarifa', 'suministro.idtarifa', '=', 'tarifa.idtarifa')
                             ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
@@ -63,10 +64,14 @@ class LecturaController extends Controller
         return response()->json($lectura);
     }
 
+
+    /**
+     * Retorna un array de los rubros existentes fijos y variables
+     *
+     * @return array
+     */
     public function getRubros()
     {
-        //$rubrofijo = RubroFijo::all();
-        
         $rubrofijo = DB::select('SELECT * FROM rubrofijo');
 
         $rubrovariable = DB::select('
@@ -87,6 +92,15 @@ class LecturaController extends Controller
         return $result;
     }
 
+
+    /**
+     * Retorna los valores ya calculados de los rubros existentes en base a los parametros
+     *
+     * @param $consumo
+     * @param $tarifa
+     * @param $numerosuministro
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getRubrosValue($consumo, $tarifa, $numerosuministro)
     {
         $tarifabasica = DB::table('costotarifa')
@@ -151,6 +165,13 @@ class LecturaController extends Controller
         ]);
     }
 
+
+    /**
+     * Almacena el recurso de Lectura
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         //$lectura = Lectura::create($request->all());

@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc92b6bd-88ac-4176-8987-1f939ea91b36" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Modelos/Lecturas/Lectura.php" afterPath="$PROJECT_DIR$/app/Modelos/Lecturas/Lectura.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/app.js" afterPath="$PROJECT_DIR$/public/app/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" afterPath="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php" afterPath="$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php" />
     </list>
@@ -41,48 +37,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_nuevaLectura.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3757">
-              <caret line="222" column="100" selection-start-line="222" selection-start-column="100" selection-end-line="222" selection-end-column="100" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LecturaController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="136" column="42" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="42" />
-              <folding>
-                <element signature="e#49#83#0#PHP" expanded="true" />
-                <element signature="e#407#494#0#PHP" expanded="false" />
-                <element signature="e#500#752#0#PHP" expanded="false" />
-                <element signature="e#758#1765#0#PHP" expanded="false" />
-                <marker date="1473377049221" expanded="true" signature="1888:1911" ph="SELECT * FRO... rubrofijo" />
-                <marker date="1473377049221" expanded="true" signature="2023:2527" ph="SELECT idrub... rubrovariable" />
-                <marker date="1473377049221" expanded="true" signature="2168:2428" ph="SELECT costo... rubrosvariablescuenta" />
-                <marker date="1473377049221" expanded="true" signature="4432:5031" ph="SELECT idrub... rubrovariable" />
-                <marker date="1473377049221" expanded="true" signature="4577:4907" ph="SELECT costo... rubrosvariablescuenta" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewLecturaController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -91,22 +47,128 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CargoController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php">
+      <file leaf-file-name="index_nuevaLectura.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-              <folding />
+            <state relative-caret-position="-185">
+              <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+              <folding>
+                <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmpleadoController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/EmpleadoController.php">
+      <file leaf-file-name="LecturaController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="59" column="106" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="106" />
-              <folding />
+            <state relative-caret-position="527">
+              <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+              <folding>
+                <element signature="e#49#83#0#PHP" expanded="true" />
+                <element signature="e#447#581#0#PHP" expanded="false" />
+                <element signature="e#586#673#0#PHP" expanded="false" />
+                <element signature="e#680#785#0#PHP" expanded="false" />
+                <element signature="e#790#988#0#PHP" expanded="false" />
+                <element signature="e#995#1150#0#PHP" expanded="false" />
+                <element signature="e#1155#2093#0#PHP" expanded="false" />
+                <element signature="e#1207#1394#0#PHP" expanded="false" />
+                <element signature="e#1207#1482#0#PHP" expanded="false" />
+                <element signature="e#1207#1569#0#PHP" expanded="false" />
+                <element signature="e#1207#1928#0#PHP" expanded="false" />
+                <element signature="e#1207#2005#0#PHP" expanded="false" />
+                <element signature="e#2100#2206#0#PHP" expanded="false" />
+                <element signature="e#2211#3042#0#PHP" expanded="false" />
+                <element signature="e#2331#2950#0#PHP" expanded="false" />
+                <element signature="e#3049#3280#0#PHP" expanded="false" />
+                <element signature="e#3285#6015#0#PHP" expanded="false" />
+                <element signature="e#3384#3495#0#PHP" expanded="false" />
+                <element signature="e#3384#3668#0#PHP" expanded="false" />
+                <element signature="e#3536#3667#1#PHP" expanded="false" />
+                <element signature="e#3712#3827#0#PHP" expanded="false" />
+                <element signature="e#3712#3997#0#PHP" expanded="false" />
+                <element signature="e#3868#3996#1#PHP" expanded="false" />
+                <element signature="e#4015#4156#0#PHP" expanded="false" />
+                <element signature="e#4166#4375#0#PHP" expanded="false" />
+                <element signature="e#4274#4375#0#PHP" expanded="false" />
+                <element signature="e#4754#4940#0#PHP" expanded="false" />
+                <element signature="e#4771#4939#1#PHP" expanded="false" />
+                <element signature="e#4977#5691#0#PHP" expanded="false" />
+                <element signature="e#5711#6008#0#PHP" expanded="false" />
+                <element signature="e#5728#6007#1#PHP" expanded="false" />
+                <element signature="e#6022#6154#0#PHP" expanded="false" />
+                <element signature="e#6159#7328#0#PHP" expanded="false" />
+                <marker date="1473601922269" expanded="true" signature="2278:2301" ph="SELECT * FRO... rubrofijo" />
+                <marker date="1473601922269" expanded="false" signature="2413:2917" ph="SELECT idrub... rubrovariable" />
+                <marker date="1473601922269" expanded="false" signature="2558:2818" ph="SELECT costo... rubrosvariablescuenta" />
+                <marker date="1473601922269" expanded="false" signature="5059:5658" ph="SELECT idrub... rubrovariable" />
+                <marker date="1473601922269" expanded="false" signature="5204:5534" ph="SELECT costo... rubrosvariablescuenta" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewLecturaController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
+              <folding>
+                <element signature="e#476#613#0#PHP" expanded="false" />
+                <element signature="e#618#704#0#PHP" expanded="false" />
+                <element signature="e#711#789#0#PHP" expanded="false" />
+                <element signature="e#794#1421#0#PHP" expanded="false" />
+                <element signature="e#842#1003#0#PHP" expanded="false" />
+                <element signature="e#842#1099#0#PHP" expanded="false" />
+                <element signature="e#842#1378#0#PHP" expanded="false" />
+                <element signature="e#1428#1538#0#PHP" expanded="false" />
+                <element signature="e#1543#3515#0#PHP" expanded="false" />
+                <element signature="e#1675#1818#0#PHP" expanded="false" />
+                <element signature="e#1828#1967#0#PHP" expanded="false" />
+                <element signature="e#1989#2168#0#PHP" expanded="false" />
+                <element signature="e#1989#2282#0#PHP" expanded="false" />
+                <element signature="e#1989#2369#0#PHP" expanded="false" />
+                <element signature="e#1989#2648#0#PHP" expanded="false" />
+                <element signature="e#2659#2922#0#PHP" expanded="false" />
+                <element signature="e#2844#2922#0#PHP" expanded="false" />
+                <element signature="e#2932#3092#0#PHP" expanded="false" />
+                <element signature="e#3102#3264#0#PHP" expanded="false" />
+                <element signature="e#3274#3474#0#PHP" expanded="false" />
+                <element signature="e#3522#3599#0#PHP" expanded="false" />
+                <element signature="e#3604#3707#0#PHP" expanded="false" />
+                <element signature="e#3714#3861#0#PHP" expanded="false" />
+                <element signature="e#3866#4005#0#PHP" expanded="false" />
+                <element signature="e#4012#4169#0#PHP" expanded="false" />
+                <element signature="e#4174#4573#0#PHP" expanded="false" />
+                <element signature="e#4272#4512#0#PHP" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CargoController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+              <folding>
+                <element signature="e#414#506#0#PHP" expanded="false" />
+                <element signature="e#511#606#0#PHP" expanded="false" />
+                <element signature="e#612#725#0#PHP" expanded="false" />
+                <element signature="e#730#1245#0#PHP" expanded="false" />
+                <element signature="e#814#1182#0#PHP" expanded="false" />
+                <element signature="e#875#1182#0#PHP" expanded="false" />
+                <element signature="e#1252#1410#0#PHP" expanded="false" />
+                <element signature="e#1415#1623#0#PHP" expanded="false" />
+                <element signature="e#1629#1756#0#PHP" expanded="false" />
+                <element signature="e#1761#1874#0#PHP" expanded="false" />
+                <element signature="e#1881#2063#0#PHP" expanded="false" />
+                <element signature="e#2068#2277#0#PHP" expanded="false" />
+                <element signature="e#2283#2417#0#PHP" expanded="false" />
+                <element signature="e#2422#2577#0#PHP" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,44 +176,17 @@
       <file leaf-file-name="nuevaLecturaController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
+            <state relative-caret-position="408">
+              <caret line="194" column="21" selection-start-line="194" selection-start-column="21" selection-end-line="194" selection-end-column="21" />
               <folding>
-                <marker date="1473377300741" expanded="true" signature="181:790" ph="{...}" />
-                <marker date="1473377300741" expanded="true" signature="306:777" ph="{...}" />
-                <marker date="1473377300741" expanded="false" signature="828:1715" ph="{...}" />
-                <marker date="1473377300741" expanded="true" signature="957:1703" ph="{...}" />
-                <marker date="1473377300741" expanded="true" signature="1762:1777" ph="{...}" />
-                <marker date="1473377300741" expanded="true" signature="4701:4716" ph="{&quot;numerosuministro&quot;: $scope.t_no_suministro...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2533">
-              <caret line="161" column="10" selection-start-line="161" selection-start-column="10" selection-end-line="161" selection-end-column="10" />
-              <folding>
-                <marker date="1473381696961" expanded="true" signature="406:452" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="424:451" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="467:519" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="491:518" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="811:876" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="839:875" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="2058:2117" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="2083:2116" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="2957:3022" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="2984:3021" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="4066:4126" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="4091:4125" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="5126:5191" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="5153:5190" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="6256:6315" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="6280:6314" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="7306:7363" ph="..." />
-                <marker date="1473381696961" expanded="true" signature="7329:7362" ph="..." />
+                <element signature="e#148#756#0" expanded="false" />
+                <element signature="e#794#2483#0" expanded="false" />
+                <element signature="e#2530#3667#0" expanded="false" />
+                <element signature="e#3726#4867#0" expanded="false" />
+                <element signature="e#4908#4965#0" expanded="false" />
+                <element signature="e#4999#5970#0" expanded="false" />
+                <element signature="n#!!block;n#convertDatetoDB#0" expanded="false" />
+                <element signature="n#!!block;n#isOnlyNumberPto#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -198,13 +233,14 @@
         <option value="$PROJECT_DIR$/public/app/controllers/empleadosController.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Nomina/EmpleadoController.php" />
-        <option value="$PROJECT_DIR$/public/app/app.js" />
-        <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php" />
         <option value="$PROJECT_DIR$/app/Modelos/Lecturas/Lectura.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/public/app/app.js" />
       </list>
     </option>
   </component>
@@ -283,8 +319,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -451,6 +485,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -535,15 +571,17 @@
       <workItem from="1473129312778" duration="42194000" />
       <workItem from="1473358003870" duration="1520000" />
       <workItem from="1473408685451" duration="1037000" />
+      <workItem from="1473484303488" duration="244000" />
+      <workItem from="1473600824221" duration="1365000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100264000" />
+    <option name="totallyTimeSpent" value="101873000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2057101" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -585,7 +623,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="9" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -779,7 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,7 +831,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -840,14 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/parroquiasController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-969">
@@ -866,15 +894,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,94 +905,169 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/EmpleadoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3757">
-          <caret line="222" column="100" selection-start-line="222" selection-start-column="100" selection-end-line="222" selection-end-column="100" />
+        <state relative-caret-position="342">
+          <caret line="47" column="59" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
-          <folding>
-            <marker date="1473377300741" expanded="true" signature="181:790" ph="{...}" />
-            <marker date="1473377300741" expanded="true" signature="306:777" ph="{...}" />
-            <marker date="1473377300741" expanded="false" signature="828:1715" ph="{...}" />
-            <marker date="1473377300741" expanded="true" signature="957:1703" ph="{...}" />
-            <marker date="1473377300741" expanded="true" signature="1762:1777" ph="{...}" />
-            <marker date="1473377300741" expanded="true" signature="4701:4716" ph="{&quot;numerosuministro&quot;: $scope.t_no_suministro...}" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2533">
-          <caret line="161" column="10" selection-start-line="161" selection-start-column="10" selection-end-line="161" selection-end-column="10" />
+        <state relative-caret-position="87">
+          <caret line="173" column="32" selection-start-line="173" selection-start-column="32" selection-end-line="173" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-185">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
           <folding>
-            <marker date="1473381696961" expanded="true" signature="406:452" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="424:451" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="467:519" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="491:518" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="811:876" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="839:875" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="2058:2117" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="2083:2116" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="2957:3022" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="2984:3021" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="4066:4126" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="4091:4125" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="5126:5191" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="5153:5190" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="6256:6315" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="6280:6314" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="7306:7363" ph="..." />
-            <marker date="1473381696961" expanded="true" signature="7329:7362" ph="..." />
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="194" column="21" selection-start-line="194" selection-start-column="21" selection-end-line="194" selection-end-column="21" />
+          <folding>
+            <element signature="e#148#756#0" expanded="false" />
+            <element signature="e#794#2483#0" expanded="false" />
+            <element signature="e#2530#3667#0" expanded="false" />
+            <element signature="e#3726#4867#0" expanded="false" />
+            <element signature="e#4908#4965#0" expanded="false" />
+            <element signature="e#4999#5970#0" expanded="false" />
+            <element signature="n#!!block;n#convertDatetoDB#0" expanded="false" />
+            <element signature="n#!!block;n#isOnlyNumberPto#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding>
+            <element signature="e#414#506#0#PHP" expanded="false" />
+            <element signature="e#511#606#0#PHP" expanded="false" />
+            <element signature="e#612#725#0#PHP" expanded="false" />
+            <element signature="e#730#1245#0#PHP" expanded="false" />
+            <element signature="e#814#1182#0#PHP" expanded="false" />
+            <element signature="e#875#1182#0#PHP" expanded="false" />
+            <element signature="e#1252#1410#0#PHP" expanded="false" />
+            <element signature="e#1415#1623#0#PHP" expanded="false" />
+            <element signature="e#1629#1756#0#PHP" expanded="false" />
+            <element signature="e#1761#1874#0#PHP" expanded="false" />
+            <element signature="e#1881#2063#0#PHP" expanded="false" />
+            <element signature="e#2068#2277#0#PHP" expanded="false" />
+            <element signature="e#2283#2417#0#PHP" expanded="false" />
+            <element signature="e#2422#2577#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="136" column="42" selection-start-line="136" selection-start-column="41" selection-end-line="136" selection-end-column="42" />
+        <state relative-caret-position="527">
+          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
           <folding>
             <element signature="e#49#83#0#PHP" expanded="true" />
-            <element signature="e#407#494#0#PHP" expanded="false" />
-            <element signature="e#500#752#0#PHP" expanded="false" />
-            <element signature="e#758#1765#0#PHP" expanded="false" />
-            <marker date="1473377049221" expanded="true" signature="1888:1911" ph="SELECT * FRO... rubrofijo" />
-            <marker date="1473377049221" expanded="true" signature="2023:2527" ph="SELECT idrub... rubrovariable" />
-            <marker date="1473377049221" expanded="true" signature="2168:2428" ph="SELECT costo... rubrosvariablescuenta" />
-            <marker date="1473377049221" expanded="true" signature="4432:5031" ph="SELECT idrub... rubrovariable" />
-            <marker date="1473377049221" expanded="true" signature="4577:4907" ph="SELECT costo... rubrosvariablescuenta" />
+            <element signature="e#447#581#0#PHP" expanded="false" />
+            <element signature="e#586#673#0#PHP" expanded="false" />
+            <element signature="e#680#785#0#PHP" expanded="false" />
+            <element signature="e#790#988#0#PHP" expanded="false" />
+            <element signature="e#995#1150#0#PHP" expanded="false" />
+            <element signature="e#1155#2093#0#PHP" expanded="false" />
+            <element signature="e#1207#1394#0#PHP" expanded="false" />
+            <element signature="e#1207#1482#0#PHP" expanded="false" />
+            <element signature="e#1207#1569#0#PHP" expanded="false" />
+            <element signature="e#1207#1928#0#PHP" expanded="false" />
+            <element signature="e#1207#2005#0#PHP" expanded="false" />
+            <element signature="e#2100#2206#0#PHP" expanded="false" />
+            <element signature="e#2211#3042#0#PHP" expanded="false" />
+            <element signature="e#2331#2950#0#PHP" expanded="false" />
+            <element signature="e#3049#3280#0#PHP" expanded="false" />
+            <element signature="e#3285#6015#0#PHP" expanded="false" />
+            <element signature="e#3384#3495#0#PHP" expanded="false" />
+            <element signature="e#3384#3668#0#PHP" expanded="false" />
+            <element signature="e#3536#3667#1#PHP" expanded="false" />
+            <element signature="e#3712#3827#0#PHP" expanded="false" />
+            <element signature="e#3712#3997#0#PHP" expanded="false" />
+            <element signature="e#3868#3996#1#PHP" expanded="false" />
+            <element signature="e#4015#4156#0#PHP" expanded="false" />
+            <element signature="e#4166#4375#0#PHP" expanded="false" />
+            <element signature="e#4274#4375#0#PHP" expanded="false" />
+            <element signature="e#4754#4940#0#PHP" expanded="false" />
+            <element signature="e#4771#4939#1#PHP" expanded="false" />
+            <element signature="e#4977#5691#0#PHP" expanded="false" />
+            <element signature="e#5711#6008#0#PHP" expanded="false" />
+            <element signature="e#5728#6007#1#PHP" expanded="false" />
+            <element signature="e#6022#6154#0#PHP" expanded="false" />
+            <element signature="e#6159#7328#0#PHP" expanded="false" />
+            <marker date="1473601922269" expanded="true" signature="2278:2301" ph="SELECT * FRO... rubrofijo" />
+            <marker date="1473601922269" expanded="false" signature="2413:2917" ph="SELECT idrub... rubrovariable" />
+            <marker date="1473601922269" expanded="false" signature="2558:2818" ph="SELECT costo... rubrosvariablescuenta" />
+            <marker date="1473601922269" expanded="false" signature="5059:5658" ph="SELECT idrub... rubrovariable" />
+            <marker date="1473601922269" expanded="false" signature="5204:5534" ph="SELECT costo... rubrosvariablescuenta" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
+          <folding>
+            <element signature="e#476#613#0#PHP" expanded="false" />
+            <element signature="e#618#704#0#PHP" expanded="false" />
+            <element signature="e#711#789#0#PHP" expanded="false" />
+            <element signature="e#794#1421#0#PHP" expanded="false" />
+            <element signature="e#842#1003#0#PHP" expanded="false" />
+            <element signature="e#842#1099#0#PHP" expanded="false" />
+            <element signature="e#842#1378#0#PHP" expanded="false" />
+            <element signature="e#1428#1538#0#PHP" expanded="false" />
+            <element signature="e#1543#3515#0#PHP" expanded="false" />
+            <element signature="e#1675#1818#0#PHP" expanded="false" />
+            <element signature="e#1828#1967#0#PHP" expanded="false" />
+            <element signature="e#1989#2168#0#PHP" expanded="false" />
+            <element signature="e#1989#2282#0#PHP" expanded="false" />
+            <element signature="e#1989#2369#0#PHP" expanded="false" />
+            <element signature="e#1989#2648#0#PHP" expanded="false" />
+            <element signature="e#2659#2922#0#PHP" expanded="false" />
+            <element signature="e#2844#2922#0#PHP" expanded="false" />
+            <element signature="e#2932#3092#0#PHP" expanded="false" />
+            <element signature="e#3102#3264#0#PHP" expanded="false" />
+            <element signature="e#3274#3474#0#PHP" expanded="false" />
+            <element signature="e#3522#3599#0#PHP" expanded="false" />
+            <element signature="e#3604#3707#0#PHP" expanded="false" />
+            <element signature="e#3714#3861#0#PHP" expanded="false" />
+            <element signature="e#3866#4005#0#PHP" expanded="false" />
+            <element signature="e#4012#4169#0#PHP" expanded="false" />
+            <element signature="e#4174#4573#0#PHP" expanded="false" />
+            <element signature="e#4272#4512#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/EmpleadoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="59" column="106" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="106" />
           <folding />
         </state>
       </provider>

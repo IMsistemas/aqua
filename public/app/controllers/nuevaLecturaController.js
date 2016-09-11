@@ -3,8 +3,6 @@
     app.controller('nuevaLecturaController', function($scope, $http, API_URL) {
 
         $scope.rubros = [];
-        //$scope.idtarifa = '';
-
 
         $scope.initData = function(){
 
@@ -13,7 +11,6 @@
             $http.get(API_URL + 'nuevaLectura/lastId').success(function(response){
 
                 var now = new Date();
-
                 var dd = now.getDate();
                 if (dd < 10) dd = '0' + dd;
                 var mm = now.getMonth() + 1;
@@ -71,7 +68,6 @@
                     }
 
                 }
-
 
             });
         }
@@ -148,9 +144,7 @@
         }
 
         $scope.confirmSave = function(){
-
             $('#modalConfirm').modal('show');
-
         }
 
         $scope.save = function(){
@@ -179,9 +173,7 @@
                 //$('#modalMessage').modal('show');
 
             }).error(function (res) {
-
                 console.log(res);
-
             });
 
         }
@@ -201,22 +193,19 @@
     }
 
     function isOnlyNumberPto(field, e, length) {
-            //var valor = $('#' + field.id).val();
-            var valor = document.getElementById(field.id);
-
-            if (length != undefined) {
-                if (valor.length == length) return false;
-            }
-
-            if (valor != undefined) {
-                k = (document.all) ? e.keyCode : e.which;
-                if (k == 8 || k == 0) return true;
-                patron = /\d/;
-                n = String.fromCharCode(k);
-                if (n == ".") {
-                    if (valor.indexOf('.') != -1 || valor.length < 0) {
-                        return false;
-                    } else return true;
-                } else return patron.test(n);
-            } 
+        var valor = document.getElementById(field.id);
+        if (length != undefined) {
+            if (valor.length == length) return false;
         }
+        if (valor != undefined) {
+            var k = (document.all) ? e.keyCode : e.which;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+            if (n == ".") {
+                if (valor.indexOf('.') != -1 || valor.length < 0) {
+                    return false;
+                } else return true;
+            } else return patron.test(n);
+        }
+    }
