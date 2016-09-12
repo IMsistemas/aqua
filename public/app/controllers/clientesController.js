@@ -28,7 +28,7 @@
                 $http.get(API_URL + 'clientes/gestion/' + documentoidentidad)
                         .success(function(response) {
                             $scope.cliente = response;
-                             $scope.telprincipal=$scope.cliente.telefonoprincipal.trim();
+                            $scope.telprincipal=$scope.cliente.telefonoprincipal.trim();
                             $scope.telsecundario=$scope.cliente.telefonosecundario.trim();
                             $scope.celular=$scope.cliente.celular.trim();
                         });

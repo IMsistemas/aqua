@@ -15,18 +15,22 @@
                     <table class="table" >
                         <thead class="bg-primary">
                             <tr>
-                                <th style="width: 90px;">Código</th>
-                                <th>Nombre</th>
-                                <th style="width: 180px;" colspan="3" class="text-center">Acciones</th>
+                                <th>
+                                    <a href="#" style="text-decoration:none; color:white; width: 10%;" ng-click="ordenarColumna='idprovincia'; reversa=!reversa;">Código</a>
+                                </th>
+                                <th>
+                                    <a href="#" style="text-decoration:none; color:white; width: 10%;" ng-click="ordenarColumna='nombreprovincia'; reversa=!reversa;">Nombre</a>
+                                </th>
+                                <th style="text-decoration:none; color:white; width: 40%; "  class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="provincia in provincias|filter:busqueda">
-                                <td class="text-center">{{provincia.idprovincia}}</td>
-                                <td>{{provincia.nombreprovincia}}</td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-warning" ng-click="toggle('edit', provincia.idprovincia)">Editar Provincia</a>                           
-                                     <a href="#" class="btn btn-danger" ng-click="confirmDelete(provincia.idprovincia)">Borrar Provincia</a>                              
+                            <tr ng-repeat="provincia in provincias|filter:busqueda | orderBy:ordenarColumna:reversa"">
+                                <td >{{provincia.idprovincia}}</td>
+                                <td >{{provincia.nombreprovincia}}</td>
+                                <td  >
+                                    <a href="#" class="btn btn-warning" ng-click="toggle('edit', provincia.idprovincia,provincia.nombreprovincia)">Editar Provincia</a>                           
+                                     <a href="#" class="btn btn-danger" ng-click="showModalConfirm(provincia.idprovincia,provincia.nombreprovincia)">Borrar Provincia</a>                              
                                     <a  href="#" class="btn btn-info" ng-click="toModuloCanton(provincia.idprovincia);">Ver Cantones</a>
                                 </td>
                                
@@ -51,14 +55,14 @@
                                     <label for="t_codigo_provincia" class="col-sm-4 control-label">Código Provincia</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="idprovincia" name="idprovincia" placeholder="" disable 
-                                        ng-model="provincia.idprovincia">                                    
+                                        ng-model="idprovincia">                                    
                                     </div>
                                 </div>
 
                                 <div class="form-group error">
                                     <label for="t_name_provincia" class="col-sm-4 control-label">Nombre de Provincia</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="nombreprovincia" name="nombreprovincia" placeholder=""  ng-model="provincia.nombreprovincia" ng-required="true" ng-maxlength="32">
+                                        <input type="text" class="form-control" id="nombreprovincia" name="nombreprovincia" placeholder=""  ng-model="nombreprovincia" ng-required="true" ng-maxlength="32">
                                         <span class="help-inline" 
                                         ng-show="frmProvincias.nombreprovincia.invalid && frmProvincias.nombreprovincia.touched">El nombre de la provincia es requerida</span>
                                     </div>
@@ -71,6 +75,8 @@
                     </div>
                 </div>
             </div>
+
+
 
              <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
             <div class="modal-dialog" role="document">

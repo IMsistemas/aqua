@@ -1,6 +1,9 @@
 app.controller('provinciasController', function($scope, $http, API_URL) {
     //retrieve provincias listing from API
     $scope.provincias=[];
+    $scope.idprovincia="";
+    $scope.nombreprovincia="";
+    $scope.idprovincia_del=0;
     $scope.initLoad = function(){
     $http.get(API_URL + "provincias/gestion")
         .success(function(response) {
@@ -9,28 +12,24 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
             });
     }
     $scope.initLoad();
+     $scope.ordenarColumna = 'estaprocesada';
     //show modal form
-    $scope.toggle = function(modalstate, idprovincia) {
+    $scope.toggle = function(modalstate, idprovincia ,nombreprovincia) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva Provincia";
-                $http.get(API_URL + 'provincias/gestion/ultimoidprovincia')
+                $http.get(API_URL + 'provincias/maxid')
                         .success(function(response) {
-                            $scope.provincia.idprovincia = response.idprovincia;
-                            $scope.provincia.nombreprovincia = "";
+                            console.log(response);
+                            $scope.idprovincia = response;
                         });
                 break;
             case 'edit':
                 $scope.form_title = "Editar Provincia";
-                $scope.idprovincia = idprovincia;
-                $http.get(API_URL + 'provincias/gestion/' + idprovincia)
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.provincia.idprovincia = (response.idprovincia).trim();
-                            $scope.provincia.nombreprovincia = (response.nombreprovincia).trim();
-                        });
+                $scope.idprovincia = idprovincia
+                $scope.nombreprovincia=nombreprovincia.trim();
                 break;
             default:
                 break;
@@ -51,6 +50,10 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
         }else{
             url += "/guardarprovincia" ;
         }
+        $scope.provincia={
+            idprovincia: $scope.idprovincia,
+            nombreprovincia: $scope.nombreprovincia
+        };
         console.log($scope.provincia);
         $http({
             method: 'POST',
@@ -59,8 +62,10 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
             $scope.initLoad();
-            console.log($scope.provincia);
-            console.log(response);
+            $('#myModal').modal('hide');
+                $scope.message = response;
+             $('#modalMessage').modal('show');
+             setTimeout("$('#modalMessage').modal('hide')",5000);
         }).error(function(response) {
             $scope.initLoad();
             console.log($scope.provincia);
@@ -70,21 +75,20 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
     }
 
     //delete record
-    $scope.confirmDelete = function(idprovincia) {
-        var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
-        if (isConfirmDelete) {
-            $http({
-                method: 'POST',
-                url: API_URL + 'provincias/gestion/eliminarprovincia/' + idprovincia,
-            }).success(function(data) {
-                    console.log(data);
-                    //location.reload();
-            }).error(function(data) {
-                    console.log(data);
-                    alert('Unable to delete');
+    $scope.showModalConfirm = function(idprovincia,nombreprovincia){
+        $scope.idprovincia_del = idprovincia;
+        $scope.provincia_seleccionado = nombreprovincia.trim();
+            $('#modalConfirmDelete').modal('show');
+    }
+
+    $scope.destroyProvincia = function(){
+        $http.delete(API_URL + 'provincias/gestion/eliminarprovincia/' + $scope.idprovincia_del).success(function(response) {
+            $scope.initLoad();
+            $('#modalConfirmDelete').modal('hide');
+            $scope.idprovincia_del = 0;
+            $scope.message = response;
+            $('#modalMessage').modal('show')
+            setTimeout("$('#modalMessage').modal('hide')",5000);
             });
-        } else {
-            return false;
-        }
     }
 });

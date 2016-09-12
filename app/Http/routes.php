@@ -75,13 +75,14 @@ Route::get('/provincias/gestion','Sectores\ProvinciaController@index');
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
 Route::get('/provincias/gestion/{idprovincia?}','Sectores\ProvinciaController@show');
 //Ruta página de inicio de gestión de provincias
-Route::get('/provincias/gestion/ultimoidprovincia','Sectores\ProvinciaController@getUltimoIdProvincia');
+Route::get('/provincias/gestion/ultimoidprovincia','Sectores\ProvinciaController@maxId');
+Route::get('/provincias/maxid','Sectores\ProvinciaController@maxId');
 //Ruta página de inicio de gestión de provincias
-Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@index');
+Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@postCrearProvincia');
 //Ruta página de inicio de gestión de provincias
 Route::post('/provincias/gestion/actualizarprovincia/{idprovincia}','Sectores\ProvinciaController@postActualizarProvincia');
 //Ruta página de inicio de gestión de provincias
-Route::post('/provincias/gestion/eliminarprovincia/{idprovincia}','Sectores\ProvinciaController@destroy');
+Route::Delete('/provincias/gestion/eliminarprovincia/{idprovincia?}','Sectores\ProvinciaController@destroy');
 
 /*===================================Módulo Cantón===========================================*/
 

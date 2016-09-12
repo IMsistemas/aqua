@@ -19,19 +19,14 @@ class ProvinciaController extends Controller
 	{
 		return $provincia=DB::table('provincia')->where('idprovincia',$idprovincia)->get();
 	}
-
-	public function getUltimoIDProvincia()
+	public function maxId()
 	{
-		$provincia=DB::table('provincia')->orderBy('idprovincia')->get();
-		$length = count($provincia);
-		$provincia=DB::max('idprovincia');
-				
+		$provincia=Provincia::max('idprovincia');
 		if($provincia==NULL){
-			$idProvincia='PRO00001';
+			$provincia='PRO00001';
 		}else{
-			$idProvincia=$provincia[$length-1]->idprovincia;
-			$identificadorLetras=substr($idProvincia, 0,-5);//obtiene las tetras del idProvincia de Provincia
-			$identificadorNumero=substr($idProvincia, 3); //obtiene las tetras del idProvincia de Provincia
+			$identificadorLetras=substr($provincia, 0,-5);//obtiene las tetras del provincia de Provincia
+			$identificadorNumero=substr($provincia, 3); //obtiene las tetras del provincia de Provincia
 			$identificadorNumero=$identificadorNumero+1;
 			$longitudNumero =strlen($identificadorNumero);//obtiene el número de caracteres existentes
 			//asigna el identificador numerico del siguiente registro
@@ -50,13 +45,12 @@ class ProvinciaController extends Controller
              	break;
 			}
 			
-			$idProvincia=$identificadorLetras.$identificadorNumero;
+			$provincia=$identificadorLetras.$identificadorNumero;
+			return $provincia;
 			
 		}
-		return $provincia=$provincias=DB::table('provincia')->orderBY('idprovincia')->get();
-		//$provincia->idprovincia =$idProvincia;
-		//return $provincia;
 	}
+
 
 	public function postCrearProvincia(Request $request)
 	{
@@ -65,7 +59,7 @@ class ProvinciaController extends Controller
 		$provincia->idprovincia = $request->input('idprovincia');
 		$provincia->nombreprovincia = $request->input('nombreprovincia');
 		$provincia->save();
-		return 'El Provincia fue creado correctamente con su documento de identidad'.$provincia->idprovincia;
+		return 'El Provincia fue creado correctamente con su código  '.$provincia->idprovincia;
 	}
 
 
@@ -77,12 +71,11 @@ class ProvinciaController extends Controller
 		return "Se actualizo correctamente".$provincia->idprovincia;
 	}
 
-	public function postEliminarProvincia(EliminarProvinciaRequest $request)
+	public function destroy($idprovincia)
 	{
-		$provincia = Provincia::find($request->get('idprovincia'));
-		$provincia->cantones()->delete();
+		$provincia = Provincia::find($idprovincia);
 		$provincia->delete();
-		return redirect('/validado/provincias')->with('eliminado', 'el Barrio fue eliminado');
+		return "Se elimino correctamente".$idprovincia;
 	}
 
 	public function missingMethod($parameters = array())
