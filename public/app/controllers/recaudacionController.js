@@ -62,7 +62,12 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
     };
 
     $scope.guardarOtrosRubros = function(){
-        console.log($scope.rubroVariableCuenta.costorubro);
+        var inputsRV = $(".rubrosVariables");
+        var inputsRF = $(".rubrosFijos");
+        for(var i = 0; i<inputsRV.length; i++){
+            console.log($(inputsRV[i]).val());
+        }
+        
 
     }
 
