@@ -17,7 +17,7 @@
   <div class="barraNavegacion">
    <a href=""> <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a>
    <a href=""><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
-   <a href=""><i class="fa fa-refresh fa-2x" aria-hidden="true"></i></a>
+   <a href=""><i class="fa fa-refresh fa-2x" aria-hidden="true" ng-click="reloadRoute();"></i></a>
    <!-- <a href=""><i class="fa fa-times fa-2x" aria-hidden="true"></i></a> -->
   </div>
     <div class="titulo"><span style="font-weight: bold;" ng-bind="titulo | uppercase"></span></div>
@@ -91,6 +91,7 @@
        
         
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+        <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
         <script src="<?= asset('js/menuLateral.js') ?>"></script>

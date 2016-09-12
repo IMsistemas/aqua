@@ -6,7 +6,7 @@
 	             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
 	         </div>
 		</div>
-
+ 
 		<form class="form-inline">
 		
 			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="generarFacturasPeriodo();" ng-hide="estaVacio">Generar</button>
@@ -72,7 +72,7 @@
 						<td>{{cuenta.suministro.direccionsuministro}}</td>
 						<td>{{cuenta.suministro.telefonosuministro}}</td>
 						<td>{{cuenta.consumom3}}</td>
-						<td>{{25.00 | currency}}</td>
+						<td>{{cuenta.total | currency}}</td>
 						
 						<td>
 							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);">Agregar</a>
@@ -145,31 +145,31 @@
 											<td></td>	
 										</tr>
 										
-										<tr ng-repeat="rubroVariable in rubrosVariables">
-											<td>{{rubroVariable.nombrerubrovariable}}</td>
-											<td><input type="text" name="" ng-model="costo"></td>	
+										<tr ng-repeat="rubroVariableCuenta in rubrosVariablesCuenta ">
+											<td>{{rubroVariableCuenta.nombrerubrovariable}}</td>
+											<td><input type="text" class="form-control" ng-model="rubroVariableCuenta.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
 										</tr>
-										<tr ng-repeat="rubroFijo in rubrosFijos">
-											<td>{{rubroFijo.nombrerubrofijo}}</td>
-											<td><input type="text" name=""></td>	
+										<tr ng-repeat="rubroFijoCuenta in rubrosFijosCuenta">
+											<td>{{rubroFijoCuenta.nombrerubrofijo}}</td>
+											<td><input type="text" class="form-control" ng-model="rubroFijoCuenta.costorubro" ng-value="rubroFijoCuenta.costorubro | currency"></td>	
 										</tr>
 										<tr>
 											<td><b>Total</b></td>
-											<td>{{cuenta.total}}</td>
+											<td>{{totalCuenta | currency}}</td>
 										</tr>
 									</tbody>
 								</table>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary">Guardar</button>
+						<button class="btn btn-primary" ng-click="guardarOtrosRubros();">Guardar</button>
 						<button class="btn btn-success">Pagar</button>
 					</div>
 				</div>
 			</div>			
 		</div>
 
-		 <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoCuenta">
+		 <!-- <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoCuenta">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header modal-header-info">
@@ -209,6 +209,6 @@
         </div>
 
 		
-	</div>
+	</div> -->
 
 </div>

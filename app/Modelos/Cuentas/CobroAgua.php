@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace App\Modelos\Cuentas;
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ class CobroAgua extends Model
     }
 
     public function rubrosfijos(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\rubrofijo','rubrosfijoscuenta','idcuenta','idrubrofijo');
+    	return $this->belongsToMany('App\Modelos\Cuentas\rubrofijo','rubrosfijoscuenta','idcuenta','idrubrofijo')->withPivot('costorubro');
     }
 
 }
