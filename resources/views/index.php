@@ -14,6 +14,12 @@
 <body ng-controller="mainController">
   <header>
   <hr>
+  <div class="barraNavegacion">
+   <a href=""> <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a>
+   <a href=""><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+   <a href=""><i class="fa fa-refresh fa-2x" aria-hidden="true"></i></a>
+   <!-- <a href=""><i class="fa fa-times fa-2x" aria-hidden="true"></i></a> -->
+  </div>
     <div class="titulo"><span style="font-weight: bold;" ng-bind="titulo | uppercase"></span></div>
     
     
@@ -103,6 +109,19 @@
         <script src="<?= asset('app/controllers/callesController.js') ?>"></script>
         <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
         <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
+
+
+        <script type="text/javascript">
+         $(function() {
+           $(document).keydown(function(e){
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code == 116) {
+             e.preventDefault();
+             alert('no puedes we');
+            }
+           });
+        });
+        </script>
   </body>
 
   

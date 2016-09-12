@@ -9,7 +9,7 @@
 
 		<form class="form-inline">
 		
-			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="generarFacturasPeriodo();">Generar</button>
+			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="generarFacturasPeriodo();" ng-hide="estaVacio">Generar</button>
 
 			<div class="form-group">
 				<label for="comboYear">Año</label>
@@ -37,7 +37,7 @@
 				<thead class="bg-primary">
 					<tr>
 						<th style="width:8%">
-							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.fechaperiodo'; reversa = !reversa;">Período</a>
+							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.fechaperiodo'; reversa = !reversa;">Período<i class="fa fa-sort" aria-hidden="true"></i></a>
 						</th>
 						<th style="width:8%">
 							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.suministro.numerosuministro'; reversa = !reversa;"># Sum.</a>
@@ -59,7 +59,7 @@
 						<th>
 							<a href="#" style="text-decoration:none; color:white;" ng-click="columna = 'cuenta.consumo'; reversa = !reversa;">Total</a>
 						</th>
-						<th style="width: 25%;" >Acciones</th>
+						<th style="width: 15%;" >Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,12 +71,11 @@
 						<td>{{cuenta.suministro.calle.nombrecalle}}</td>
 						<td>{{cuenta.suministro.direccionsuministro}}</td>
 						<td>{{cuenta.suministro.telefonosuministro}}</td>
-						<td>{{cuenta.consumo}}</td>
+						<td>{{cuenta.consumom3}}</td>
 						<td>{{25.00 | currency}}</td>
 						
 						<td>
-							<a href="#" class="btn btn-primary" ng-click="modalIngresoOtrosRubros(cuenta.suministro.numerosuministro)">Otros rubros</a>
-                            <a href="#" class="btn btn-info" ng-click="modalInformacionCuenta(cuenta.suministro.numerosuministro)">Ver</a>
+							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);">Agregar</a>
                            <a href="#" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
                             
 						</td>
@@ -85,12 +84,12 @@
 			</table>
 		</div>
 
-		 <div class="modal fade" id="ingresar-otros-rubros" tabindex="-1" role="dialog">
+		 <div class="modal fade" id="ingresarValores" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header  modal-header-primary">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Ingreso otros rubros</h4>
+						<h4 class="modal-title" id="myModalLabel">Nueva cuenta</h4>
 						Período: {{cuenta.fechaperiodo | date:'MMM yyyy'}}
 					</div>
 
@@ -105,7 +104,7 @@
 		                                <span style="font-weight: bold">Cliente: </span>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}} 
 		                        </div>
 		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Barrio: </span>{{cuenta.suministro.calle.barrio}} 
+		                                <span style="font-weight: bold">Barrio: </span>{{cuenta.suministro.calle.barrio.nombrebarrio}} 
 		                        </div>
 		                        <div class="col-xs-12">
 		                                <span style="font-weight: bold">Dirección: </span>{{cuenta.suministro.direccionsuministro}} 
@@ -116,13 +115,36 @@
 								<legend>Rubros</legend>
 							</fieldset>	
 								<table class="table table-bordered table-hover">
-									<thead class="bg-info">
+									<thead class="bg-primary">
 										<tr>
 											<th>Rubro</th>
 											<th>Valor</th>
 										</tr>
 									</thead>
 									<tbody>
+										<tr class="bg-info">
+											<td><b>Valores Mes</b></td>
+											<td></td>
+										</tr>
+										
+										<tr>
+											<td>Consumo mes</td>
+											<td>{{cuenta.valorconsumo}}</td>
+										</tr>
+										<tr>
+											<td>Excedente Mes</td>
+											<td>{{cuenta.valorexcedente}}</td>
+										</tr>
+										
+										<tr>
+											<td>Valores atrasados</td>
+											<td>{{cuenta.valormesesatrasados}}</td>
+										</tr>
+										<tr class="bg-info">
+											<td class="bg-info"><b>Otros valores</b></td>
+											<td></td>	
+										</tr>
+										
 										<tr ng-repeat="rubroVariable in rubrosVariables">
 											<td>{{rubroVariable.nombrerubrovariable}}</td>
 											<td><input type="text" name="" ng-model="costo"></td>	
@@ -133,7 +155,7 @@
 										</tr>
 										<tr>
 											<td><b>Total</b></td>
-											<td>$ 0.40</td>
+											<td>{{cuenta.total}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -141,6 +163,7 @@
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary">Guardar</button>
+						<button class="btn btn-success">Pagar</button>
 					</div>
 				</div>
 			</div>			

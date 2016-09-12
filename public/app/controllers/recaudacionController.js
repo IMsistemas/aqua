@@ -1,9 +1,31 @@
 app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
     
-    $http.get(API_URL + "recaudacion/cobroagua/cuentas")
+    $scope.initLoad = function(){
+        $http.get(API_URL + "recaudacion/cobroagua/cuentas")
             .success(function(response) {
+                $scope.estaVacio = response.length;
                 $scope.cuentas = response;
+        });
+    }
+    
+    $scope.initLoad();
+    
+    $scope.generarFacturasPeriodo = function(){
+       $http.get(API_URL + "recaudacion/cobroagua/generar")
+            .success(function(response) {
+                $scope.seGenero = response;
+                $scope.initLoad();
+        });
+    }
+
+
+     
+    $scope.ingresoValores = function(numeroCuenta){
+        $http.get(API_URL + "recaudacion/cobroagua/cuentas/"+numeroCuenta)
+            .success(function(response) {
+                console.log(response[0]);
+               $scope.cuenta = response[0];
             });
 
      $http.get(API_URL + "recaudacion/cobroagua/rubrosfijos")
@@ -16,13 +38,9 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                 $scope.rubrosVariables = response;
             });
 
-    $scope.generarFacturasPeriodo = function(){
+    
         
-    }
-     
-    $scope.modalIngresoOtrosRubros = function(numeroCuenta){
-        $scope.cuenta = $scope.cuentas[numeroCuenta-1];
-        $('#ingresar-otros-rubros').modal('show');
+        $('#ingresarValores').modal('show');
     };
 
     $scope.modalInformacionCuenta = function(numeroCuenta){

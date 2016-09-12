@@ -74,7 +74,7 @@
 							<td >
 								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false">Editar</a>
 
-                                <a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==true" ng-click="modalVerSolicitud(solicitud.idsolicitud);">Ver</a>
+                                <a href="#" class="btn btn-info" ng-show="solicitud.estaprocesada==true" ng-click="modalVerSolicitud(solicitud.idsolicitud);">Ver</a>
 
 
 								<a href="#" class="btn btn-danger" ng-hide="solicitud.estaprocesada==true" ng-click="modalEliminarSolicitud(solicitud.idsolicitud); ">Eliminar</a>

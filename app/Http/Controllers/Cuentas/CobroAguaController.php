@@ -26,23 +26,37 @@ class CobroAguaController extends Controller
         $suministros = Suministro::all();
         foreach ($suministros as $suministro) {
             $nuevoCobro = new CobroAgua();
-            $nuevoCobro->fechacreacion = date("Y-m-d H:i:s");;
-            $nuevoCobro->numerosuministro = $suministro->numerosuministro;   
+            $nuevoCobro->fechaperiodo = date("Y-m-d H:i:s");;
+            $nuevoCobro->numerosuministro = $suministro->numerosuministro;
+            $nuevoCobro->save();   
         }
+        return [];
     }   
+
+    public function index(){
+        $fechaPrimerDia = $this->fechaPrimerDia();
+        $fechaUltimoDia = $this->fechaUltimoDia();
+        return CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')
+        ->whereBetween('fechaperiodo',[$fechaPrimerDia,$fechaUltimoDia])
+        ->get();
+                /*fechaperiodo between  
+                (cast(date_trunc('month',current_date) as date)+5) and 
+                 cast(date_trunc('month',current_date) +'1month' ::interval -'1sec' ::interval as date*/
+
+    }
 
 	/**
 	*Retorna todas las cuentas con los suministros, los clientes y tarifas del suministro
 	**/
 	public function getCuentas(){
-		return CobroAgua::with('suministro.cliente','suministro.tarifa','lectura')->get();
+		return CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->get();
 	}
 
 	/**
 	*Retorna una cuenta con el suministro, el dueño del suministro y su tarifa
 	**/
 	public function getCuenta($numeroCuenta){
-        return dd( CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->where('idcuenta',$numeroCuenta)->get());
+        return  CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->where('idcuenta',$numeroCuenta)->get();
     }
 
     /**
@@ -81,6 +95,24 @@ class CobroAguaController extends Controller
         return 'Se agregaron los valores de otros rubros con exito';
 
     }
+
+
+
+  /** ultimo dia del mes **/
+  public function fechaUltimoDia() { 
+      $month = date('m');
+      $year = date('Y');
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+ 
+      return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+  }
+ 
+  /** primero dia del mes **/
+  public function fechaPrimerDia() {
+      $month = date('m');
+      $year = date('Y');
+      return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+  }
 
     /**
 	====================================================================================================
