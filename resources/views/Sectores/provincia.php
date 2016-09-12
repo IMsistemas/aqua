@@ -25,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="provincia in provincias|filter:busqueda | orderBy:ordenarColumna:reversa"">
+                            <tr ng-repeat="provincia in provincias|filter:busqueda | orderBy:ordenarColumna:reversa">
                                 <td >{{provincia.idprovincia}}</td>
                                 <td >{{provincia.nombreprovincia}}</td>
                                 <td  >

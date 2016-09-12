@@ -17,25 +17,19 @@
             <table class="table table-responsive table-striped table-hover table-condensed"" >
                 <thead class="bg-primary">
                     <tr>
-                        <th style="width: 90px;">Código Cantón</th>
-                        <th>Código Provincia</th>
-                        <th>Nombre Cantón</th>
-                        <th style="width: 180px;" colspan="3" class="text-center">Acciones</th>
+                        <th style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='idcanton'; reversa=!reversa;" >Código</th>
+                        <th style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='nombrecanton'; reversa=!reversa;" >Nombre</th>
+                        <th style="text-decoration:none; color:white; width: 40%; "  >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="canton in cantones|filter:busqueda">
-                        <td class="text-center">{{canton.idcanton}}</td>
-                        <td class="text-center">{{canton.idprovincia}}</td>
+                    <tr ng-repeat="canton in cantones|filter:busqueda|orderBy:ordenarColumna:reversa"">
+                        <td class="text-center">{{canton.idcanton}}</td>                       
                         <td>{{canton.nombrecanton}}</td>
-                        <td class="text-center">
-                            <button class="btn btn-default" ng-click="toggle('edit', canton.idcanton)">Editar Canton</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger" ng-click="confirmDelete(canton.idcanton)">Borrar Canton</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-default" ng-click="toModuloParroquia(canton.idcanton);">Ver Parroquias</button>
+                        <td >
+                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', canton.idcanton,canton.nombrecanton)">Editar Canton</a> 
+                            <a href="#" class="btn btn-danger" ng-click="confirmDelete(canton.idcanton)">Borrar Canton</a>
+                            <a href="#" class="btn btn-info" ng-click="toModuloParroquia(canton.idcanton);">Ver Parroquias</a>
                         </td>
                     </tr>
 
@@ -59,14 +53,14 @@
                                     <label for="t_codigo_canton" class="col-sm-4 control-label">Código Cantón</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="idcanton" name="idcanton" placeholder="" 
-                                        ng-model="canton.idcanton" disable>                    
+                                        ng-model="idcanton" disable>                    
                                     </div>
                                 </div>
 
                                 <div class="form-group error">
                                     <label for="t_name_canton" class="col-sm-4 control-label">Nombre de Cantón</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="nombrecanton" name="nombrecanton" placeholder=""  ng-model="canton.nombrecanton" ng-required="true" ng-maxlength="32">
+                                        <input type="text" class="form-control" id="nombrecanton" name="nombrecanton" placeholder=""  ng-model="nombrecanton" ng-required="true" ng-maxlength="32">
                                         <span class="help-inline" 
                                         ng-show="frmCanton.nombrecanton.invalid && frmCanton.nombrecanton.touched">El nombre de la provincia es requerido</span>
                                         <span class="help-inline" 

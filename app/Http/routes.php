@@ -75,7 +75,6 @@ Route::get('/provincias/gestion','Sectores\ProvinciaController@index');
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
 Route::get('/provincias/gestion/{idprovincia?}','Sectores\ProvinciaController@show');
 //Ruta página de inicio de gestión de provincias
-Route::get('/provincias/gestion/ultimoidprovincia','Sectores\ProvinciaController@maxId');
 Route::get('/provincias/maxid','Sectores\ProvinciaController@maxId');
 //Ruta página de inicio de gestión de provincias
 Route::post('/provincias/gestion/guardarprovincia','Sectores\ProvinciaController@postCrearProvincia');
@@ -96,7 +95,7 @@ Route::get('/cantones/gestion/{idprovincia?}','Sectores\CantonController@index')
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
 Route::get('/cantones/gestion/{idcanton?}','Sectores\CantonController@show');
 //Ruta página de inicio de gestión de Cantons
-Route::get('/cantones/gestion/ultimocodigocanton','Sectores\CantonController@getUltimoCodigoCanton');
+Route::get('/cantones/maxid','Sectores\CantonController@maxId');
 //Ruta página de inicio de gestión de Cantons
 Route::post('/cantones/gestion/guardarcanton/{idprovincia}','Sectores\CantonController@postCrearCanton');
 //Ruta página de inicio de gestión de Cantons

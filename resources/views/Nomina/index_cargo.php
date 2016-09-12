@@ -4,14 +4,14 @@
 
         <div class="container" style="margin-top: 2%;">
             <fieldset>
-                <legend style="padding-bottom: 20px;">
+                <legend style="padding-bottom: 10px;">
                    
                     <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
                 </legend>
 
                 <div class="col-xs-6">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." ng-pagination-search="cargos">
+                        <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-pagination-search="cargos">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                                 <td class="text-center">{{cargo.idcargo}}</td>
                                 <td>{{cargo.nombrecargo}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-warning" ng-click="toggle('edit', cargo.idcargo)">Editar</button>
+                                    <button type="button" class="btn btn-default" ng-click="toggle('edit', cargo.idcargo)">Editar</button>
                                     <button type="button" class="btn btn-danger" ng-click="showModalConfirm(cargo.idcargo)">Eliminar</button>
                                 </td>
                             </tr>
@@ -59,7 +59,7 @@
                             <div class="form-group error">
                                 <label for="t_name_cargo" class="col-sm-4 control-label">Nombre del Cargo:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="nombrecargo" id="nombrecargo" ng-model="nombrecargo" placeholder=""
+                                    <input type="text" class="form-control" name="nombrecargo" id="nombrecargo" ng-model="nombrecargo" placeholder=""
                                            ng-required="true" ng-maxlength="16">
                                     <span class="help-block error"
                                           ng-show="formCargo.nombrecargo.$invalid && formCargo.nombrecargo.$touched">El nombre del Cargo es requerido</span>

@@ -19,18 +19,16 @@ class CantonController extends Controller
 		return $canton=DB::table('canton')->where('idcanton',$idcanton)->get();
 	}
 
-	public function getUltimoCodigoCanton(Request $request)
+	public function maxId()
 	{
 		
-		$canton=DB::table('canton')->orderBy('idcanton')->get();
-		$length = count($canton);
+		$canton=Canton::max('idcanton');
 				
 		if($canton==NULL){
-			$idCanton='CAN00001';
+			$canton='CAN00001';
 		}else{
-			$idCanton=$canton[$length-1]->idcanton;
-			$identificadorLetras=substr($idCanton, 0,-5);//obtiene las tetras del idcanton de canton
-			$identificadorNumero=substr($idCanton, 3); //obtiene las tetras del idcanton de canton
+			$identificadorLetras=substr($canton, 0,-5);//obtiene las tetras del canton de canton
+			$identificadorNumero=substr($canton, 3); //obtiene las tetras del canton de canton
 			$identificadorNumero=$identificadorNumero+1;
 			$longitudNumero =strlen($identificadorNumero);//obtiene el número de caracteres existentes
 			//asigna el identificador numerico del siguiente registro
@@ -49,16 +47,10 @@ class CantonController extends Controller
              	break;
 			}
 			
-			$idCanton=$identificadorLetras.$identificadorNumero;
+			$canton=$identificadorLetras.$identificadorNumero;
+			return $canton;
 			
 		}
-		
-		$idcanton=$request->get('idcanton');
-		$canton=canton::Select('nombrecanton')->where('idcanton',$request->get('idcanton'))->get();
-		$nombrecanton=$canton[0]->nombrecanton;
-		
-
-		return view('cantones.crear-canton', ['idCanton' => $idCanton,'nombrecanton' => $nombrecanton,'idcanton' => $idcanton]);
 	}
 
 	public function postCrearCanton(Request $request, $idprovincia)
@@ -82,19 +74,11 @@ class CantonController extends Controller
 		return "Se actualizo correctamente".$canton->idcanton;
 	}
 
-	public function postEliminarCanton(EliminarCantonRequest $request)
+	public function destroy($idcanton)
 	{
-		$canton = Canton::find($request->get('idcanton'));
-		$parroquia=DB::table('parroquia')->where('idcanton',$request->get('idcanton'))->get();
-		$idparroquia=$parroquia[0]->idparroquia;
-		$barrios=DB::table('barrio')->where('idparroquia',$idparroquia)->get();
-		$barrio=Barrio::find($barrios[0]->idbarrios);
-		$idcanton=$canton->idcanton;
-		$barrio->calles()->delete();
-		$parroquia->barrios()->delete();
-		$canton->parroquias()->delete();
+		$canton = Canton::find($idcanton);
 		$canton->delete();
-		return redirect("/validado/cantones?idcanton=$idcanton")->with('eliminado', 'el canton fue eliminado');
+		return "Se elimino correctamente".$idcanton;
 	}
 
 	public function missingMethod($parameters = array())

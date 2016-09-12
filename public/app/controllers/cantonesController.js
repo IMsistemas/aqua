@@ -1,33 +1,37 @@
 app.controller('cantonesController', function($scope, $http, API_URL) {
     //retrieve cantones listing from API
     $scope.cantones=[];
-    $http.get(API_URL + "cantones/gestion/"+$scope.idprovincia)
+    $scope.idcanton="";
+    $scope.nombrecanton="";
+    $scope.idcanton_del=0;
+    $scope.initLoad = function(){
+    $http.get(API_URL + "cantones/gestion/"+$scope.idcanton)
         .success(function(response) {
                 console.log(response);
                 $scope.cantones = response;             
 
             });
+    }
+    $scope.initLoad();
+    $scope.ordenarColumna = 'estaprocesada';
     //show modal form
-    $scope.toggle = function(modalstate, idcanton) {
+    $scope.toggle = function(modalstate, idcanton, nombrecanton) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva Canton";
-                $http.get(API_URL + 'cantones/gestion/ultimocodigocanton')
+                $http.get(API_URL + 'cantones/maxid')
                         .success(function(response) {
                             console.log(response);
-                            $scope.idcanton = response.idcanton;
+                            $scope.idcanton = response;
                         });
                 
                 break;
             case 'edit':
                 $scope.form_title = "Editar Canton";
                 $scope.idcanton = idcanton;
-                $http.get(API_URL + 'cantones/gestion/' + idcanton)
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.canton = response;
+                $scope.nombrecanton=nombrecanton.trim();
                         });
                 
                 break;
@@ -50,6 +54,10 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
         }else{
             url += "/guardarcanton/"+$scope.idprovincia ;
         }
+        $scope.canton={
+            idcanton: $scope.idcanton,
+            nombrecanton: $scope.nombrecanton
+        };
         console.log($scope.canton);
         $http({
             method: 'POST',
@@ -57,8 +65,11 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
             data: $.param($scope.canton),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log(response);
-            location.reload();
+            $scope.initLoad();
+            $('#myModal').modal('hide');
+                $scope.message = response;
+             $('#modalMessage').modal('show');
+             setTimeout("$('#modalMessage').modal('hide')",5000);
         }).error(function(response) {
             console.log(response);
             alert('Ha ocurrido un error');
@@ -66,21 +77,20 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
     }
 
     //delete record
-    $scope.confirmDelete = function(idcanton) {
-        var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
-        if (isConfirmDelete) {
-            $http({
-                method: 'POST',
-                url: API_URL + 'cantones/gestion/eliminarprovincia/' + idcanton,
-            }).success(function(data) {
-                    console.log(data);
-                    location.reload();
-            }).error(function(data) {
-                    console.log(data);
-                    alert('Unable to delete');
+    $scope.showModalConfirm = function(idcanton,nombrecanton){
+        $scope.idcanton_del = idcanton;
+        $scope.canton_seleccionado = nombrecanton.trim();
+            $('#modalConfirmDelete').modal('show');
+    }
+
+    $scope.destroyCanton = function(){
+        $http.delete(API_URL + 'cantones/gestion/eliminarcanton/' + $scope.idcanton_del).success(function(response) {
+            $scope.initLoad();
+            $('#modalConfirmDelete').modal('hide');
+            $scope.idcanton_del = 0;
+            $scope.message = response;
+            $('#modalMessage').modal('show')
+            setTimeout("$('#modalMessage').modal('hide')",5000);
             });
-        } else {
-            return false;
-        }
     }
 });
