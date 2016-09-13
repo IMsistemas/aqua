@@ -17,18 +17,22 @@
             <table class="table table-responsive table-striped table-hover table-condensed"" >
                 <thead class="bg-primary">
                     <tr>
-                        <th style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='idcanton'; reversa=!reversa;" >Código</th>
-                        <th style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='nombrecanton'; reversa=!reversa;" >Nombre</th>
+                        <th> 
+                            <a href="" style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='idcanton'; reversa=!reversa;" >Código </a>
+                        </th>
+                        <th >
+                             <a href=""style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='nombrecanton'; reversa=!reversa;" >Nombre</a>
+                        </th>
                         <th style="text-decoration:none; color:white; width: 40%; "  >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="canton in cantones|filter:busqueda|orderBy:ordenarColumna:reversa"">
-                        <td class="text-center">{{canton.idcanton}}</td>                       
+                    <tr ng-repeat="canton in cantones|filter:busqueda|orderBy:ordenarColumna:reversa">
+                        <td>{{canton.idcanton}}</td>                       
                         <td>{{canton.nombrecanton}}</td>
                         <td >
                             <a href="#" class="btn btn-warning" ng-click="toggle('edit', canton.idcanton,canton.nombrecanton)">Editar Canton</a> 
-                            <a href="#" class="btn btn-danger" ng-click="confirmDelete(canton.idcanton)">Borrar Canton</a>
+                            <a href="#" class="btn btn-danger" ng-click="showModalConfirm(canton.idcanton,canton.nombrecanton)">Borrar Canton</a>
                             <a href="#" class="btn btn-info" ng-click="toModuloParroquia(canton.idcanton);">Ver Parroquias</a>
                         </td>
                     </tr>

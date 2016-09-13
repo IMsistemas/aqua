@@ -1,32 +1,34 @@
 app.controller('parroquiasController', function($scope, $http, API_URL) {
     //retrieve parroquia listing from API
     $scope.parroquias=[];
+     $scope.idparroquia="";
+    $scope.nombreparroquia="";
+    $scope.idparroquia_del=0;
+    $scope.initLoad = function(){
     $http.get(API_URL + "parroquias/gestion/"+$scope.idcanton)
         .success(function(response) {
                 $scope.parroquias = response;             
 
             });
+    }
+    $scope.initLoad();
     //show modal form
-    $scope.toggle = function(modalstate, idparroquia) {
+    $scope.toggle = function(modalstate, idparroquia,nombreparroquia) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva Parroquia";
-                $http.get(API_URL + 'parroquias/gestion/ultimocodigoparroquia')
+                $http.get(API_URL + 'parroquias/maxid')
                         .success(function(response) {
                             console.log(response);
-                            //$scope.idparroquia = response.idparroquia;
+                            $scope.idparroquia = response;
                         });        
                 break;
             case 'edit':
                 $scope.form_title = "Editar Parroquia";
-                $scope.idparroquia = idparroquia;
-                $http.get(API_URL + 'parroquias/gestion/' + idparroquia)
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.parroquia = response;
-                        });
+                $scope.idparroquia = idparroquia
+                $scope.nombreparroquia=nombreparroquia.trim();
                 break;
             default:
                 break;
@@ -44,10 +46,14 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
         
         //append parroquia id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
-            url += "/actualizarparroquia/" + idprovincia;
+            url += "/actualizar/" + idparroquia;
         }else{
             url += "/guardarparroquia/"+$scope.idcanton ;
         }
+         $scope.parroquia={
+            idparroquia: $scope.idparroquia,
+            nombreparroquia: $scope.nombreparroquia
+        };
          console.log($scope.parroquia);
         $http({
             method: 'POST',
@@ -55,8 +61,11 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
             data: $.param($scope.parroquia),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log(response);
-            location.reload();
+           $scope.initLoad();
+            $('#myModal').modal('hide');
+                $scope.message = response;
+             $('#modalMessage').modal('show');
+             setTimeout("$('#modalMessage').modal('hide')",5000);
         }).error(function(response) {
             console.log(response);
             alert('Ha ocurrido un error');
@@ -64,21 +73,20 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
     }
 
     //delete record
-    $scope.confirmDelete = function(idparroquia) {
-        var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
-        if (isConfirmDelete) {
-            $http({
-                method: 'POST',
-                url: API_URL + 'parroquias/gestion/eliminarparroquia/' + idprovincia,
-            }).success(function(data) {
-                    console.log(data);
-                    location.reload();
-            }).error(function(data) {
-                    console.log(data);
-                    alert('Unable to delete');
+      $scope.showModalConfirm = function(idparroquia,nombreparroquia){
+        $scope.idparroquia_del = idparroquia;
+        $scope.parroquia_seleccionado = nombreparroquia;
+            $('#modalConfirmDelete').modal('show');
+    }
+
+    $scope.destroyParroquia = function(){
+        $http.delete(API_URL + 'parroquias/gestion/eliminar/' + $scope.idparroquia_del).success(function(response) {
+            $scope.initLoad();
+            $('#modalConfirmDelete').modal('hide');
+            $scope.idparroquia_del = 0;
+            $scope.message = response;
+            $('#modalMessage').modal('show')
+            setTimeout("$('#modalMessage').modal('hide')",5000);
             });
-        } else {
-            return false;
-        }
     }
 });

@@ -1,32 +1,37 @@
 app.controller('callesController', function($scope, $http, API_URL) {
     //retrieve calles listing from API
     $scope.calles=[];
+    $scope.idcalle="";
+    $scope.nombrecalle="";
+    $scope.idcalle_del=0;
+    $scope.initLoad = function(){
     $http.get(API_URL + "calles/gestion/"+$scope.idbarrio)
         .success(function(response) {
                 $scope.calles = response;             
 
             });
+    }
+    $scope.initLoad();
+    $scope.ordenarColumna = 'estaprocesada';
     //show modal form
-    $scope.toggle = function(modalstate, idcalle) {
+    $scope.toggle = function(modalstate, idcalle, nombrecalle) {
         $scope.modalstate = modalstate;
-
+        console.log(nombrecalle);
+        console.log(idcalle);
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Nueva calle";
-                $http.get(API_URL + 'calles/gestion/ultimocodigocalle')
+                $http.get(API_URL + 'calles/maxid')
                         .success(function(response) {
                             console.log(response);
-                            $scope.idcalle = response.idcalle;
+                            $scope.idcalle = response;
+                             $scope.idcalle = ""
                         });
                 break;
             case 'edit':
                 $scope.form_title = "Editar calle";
                 $scope.idcalle = idcalle;
-                $http.get(API_URL + 'calles/gestion/' + idcalle)
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.calle = response;
-                        });
+                $scope.nombrecalle=nombrecalle.trim();
                 break;
             default:
                 break;
@@ -39,7 +44,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
     //save new record / update existing record
     $scope.save = function(modalstate, idcalle) {
         var url = API_URL + "calles/gestion";    
-        console.log(modalstate); 
+        console.log(idcalle); 
         
         //append calle id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
@@ -47,16 +52,21 @@ app.controller('callesController', function($scope, $http, API_URL) {
         }else{
             url += "/guardarcalle/"+$scope.idbarrio ;
         }
-        
+         $scope.calle={
+            idcalle: $scope.idcalle,
+            nombrecalle: $scope.nombrecalle
+        };
         $http({
             method: 'POST',
             url: url,
             data: $.param($scope.calle),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log($scope.calle);
-            console.log(response);
-            location.reload();
+            $scope.initLoad();
+            $('#myModal').modal('hide');
+                $scope.message = response;
+             $('#modalMessage').modal('show');
+             setTimeout("$('#modalMessage').modal('hide')",5000);
         }).error(function(response) {
             console.log($scope.calle);
             console.log(response);
@@ -65,21 +75,20 @@ app.controller('callesController', function($scope, $http, API_URL) {
     }
 
     //delete record
-    $scope.confirmDelete = function(idcalle) {
-        var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
-        if (isConfirmDelete) {
-            $http({
-                method: 'POST',
-                url: API_URL + 'calles/gestion/eliminarcalle/' + idcalle,
-            }).success(function(data) {
-                    console.log(data);
-                    location.reload();
-            }).error(function(data) {
-                    console.log(data);
-                    alert('Unable to delete');
+ $scope.showModalConfirm = function(idcalle,nombrecalle){
+        $scope.idcalle_del = idcalle;
+        $scope.calle_seleccionado = nombrecalle.trim();
+            $('#modalConfirmDelete').modal('show');
+    }
+
+    $scope.destroyCalle = function(){
+        $http.delete(API_URL + 'calles/gestion/eliminarcalle/' + $scope.idcalle_del).success(function(response) {
+            $scope.initLoad();
+            $('#modalConfirmDelete').modal('hide');
+            $scope.idcalle_del = 0;
+            $scope.message = response;
+            $('#modalMessage').modal('show')
+            setTimeout("$('#modalMessage').modal('hide')",5000);
             });
-        } else {
-            return false;
-        }
     }
 });

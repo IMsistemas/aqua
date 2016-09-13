@@ -16,27 +16,25 @@
             </div>
             <div class="col-xs-12">
             <table class="table table-responsive table-striped table-hover table-condensed" >
-                <thead>
-                    <tr class="bg-primary">
-                        <th style="width: 90px;">Código del Barrio</th>
-                        <th style="width: 90px;">Código del Parroquia</th>
-                        <th>Nombre del Barrio</th>
-                        <th style="width: 180px;" colspan="3" class="text-center">Acciones</th>
+                <thead class="bg-primary">
+                    <tr >
+                         <th> 
+                            <a href="" style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='idbarrio'; reversa=!reversa;" >Código </a>
+                        </th>
+                        <th >
+                             <a href="" style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='nombrebarrio'; reversa=!reversa;" >Nombre</a>
+                        </th>
+                        <th style="text-decoration:none; color:white; width: 40%; "  >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="barrio in barrios|filter:busqueda">
-                        <td class="text-center">{{barrio.idbarrio}}</td>
-                        <td class="text-center">{{barrio.idparroquia}}</td>
+                    <tr ng-repeat="barrio in barrios|filter:busqueda|orderBy:ordenarColumna:reversa"">
+                        <td >{{barrio.idbarrio}}</td>
                         <td>{{barrio.nombrebarrio}}</td>
-                        <td class="text-center">
-                            <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', barrio.idbarrio)">Editar Barrio</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(barrio.idbarrio)">Borrar Barrio</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-default" ng-click="toModuloCalle(barrio.idbarrio);">Ver Calles</button>
+                        <td>
+                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', barrio.idbarrio,barrio.nombrebarrio)">Editar Barrio</a>
+                            <a href="#" class="btn btn-danger" ng-click="showModalConfirm(barrio.idbarrio,barrio.nombrebarrio)">Borrar Barrio</a>
+                            <a href="#"  class="btn btn-info" ng-click="toModuloCalle(barrio.idbarrio);">Ver Calles</a>
                         </td>
                     </tr>
 
@@ -60,7 +58,7 @@
                                     <label for="t_codigo_provincia" class="col-sm-4 control-label">Código Barrio</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="idbarrio" name="idbarrio" placeholder=""  
-                                        ng-model="barrio.idbarrio" disable>
+                                        ng-model="idbarrio" disable>
                                         <span class="help-inline" 
                                     </div>
                                 </div>
@@ -68,7 +66,7 @@
                                 <div class="form-group">
                                     <label for="t_nombre_provincia" class="col-sm-3 control-label">Nombre de Barrio</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nombrebarrio" name="nombrebarrio" placeholder="" ng-model="barrio.nombrebarrio" ng-required="true" ng-maxlength="32">
+                                        <input type="text" class="form-control" id="nombrebarrio" name="nombrebarrio" placeholder="" ng-model="nombrebarrio" ng-required="true" ng-maxlength="32">
                                         <span class="help-inline" 
                                         ng-show="frmBarrio.nombrebarrio.invalid && frmBarrio.nombrebarrio.touched">El nombre del barrio es requerido</span>
                                         <span class="help-inline" 
@@ -84,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+         <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header modal-header-success">
@@ -106,7 +104,7 @@
                         <h4 class="modal-title">Confirmación</h4>
                     </div>
                     <div class="modal-body">
-                        <span>Realmente desea eliminar el Barrio: <span style="font-weight: bold;">{{barrio_seleccionado}}</span></span>
+                        <span>Realmente desea eliminar el barrio: <span style="font-weight: bold;">{{barrio_seleccionado}}</span></span>
 
                     </div>
                     <div class="modal-footer">

@@ -66,9 +66,6 @@ class CantonController extends Controller
 	public function postActualizarCanton(Request $request,$idcanton)
 	{
 		$canton = Canton::find($idcanton);
-		
-		//$canton->idcanton = $request->input('idcanton');
-		//$canton->idprovincia = $request->input('idprovincia');
 		$canton->nombrecanton = $request->input('nombrecanton');
 		$canton->save();
 		return "Se actualizo correctamente".$canton->idcanton;

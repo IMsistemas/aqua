@@ -8,6 +8,7 @@ use App\Modelos\Sectores\Provincia;
 use App\Modelos\Sectores\Canton;
 use App\Modelos\Sectores\Parroquia;
 use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 
 class CalleController extends Controller
 {
@@ -21,18 +22,15 @@ class CalleController extends Controller
 		return $calle=DB::table('calle')->where('idcalle',$idcalle)->get();
 	}
 
-	public function getCrearCalle(Request $request)
+	public function maxId()
 	{
-		$calle=DB::table('calle')->orderBy('idcalle')->get();
-
-		$length = count($calle);
+		$calle=Calle::max('idcalle');
 				
 		if($calle==NULL){
-			$idCalle='CAL00001';
+			$calle='CAL00001';
 		}else{
-			$idCalle=$calle[$length-1]->idcalle;
-			$identificadorLetras=substr($idCalle, 0,-5);//obtiene las tetras del idCalle de Provincia
-			$identificadorNumero=substr($idCalle, 3); //obtiene las tetras del idCalle de Provincia
+			$identificadorLetras=substr($calle, 0,-5);//obtiene las tetras del calle de Provincia
+			$identificadorNumero=substr($calle, 3); //obtiene las tetras del calle de Provincia
 			$identificadorNumero=$identificadorNumero+1;
 			$longitudNumero =strlen($identificadorNumero);//obtiene el número de caracteres existentes
 			//asigna el identificador numerico del siguiente registro
@@ -51,15 +49,10 @@ class CalleController extends Controller
              	break;
 			}
 			
-			$idCalle=$identificadorLetras.$identificadorNumero;
-			
-		}
+			$calle=$identificadorLetras.$identificadorNumero;
+			return $calle;
+		}	
 		
-		$idBarrio=$request->get('idbarrio');
-		$barrio=Barrio::Select('nombrebarrio')->where('idbarrio',$idBarrio)->get();
-		$nombreBarrio=$barrio[0]->nombrebarrio;
-		
-		return view('calles.crear-calle', ['idBarrio' => $idBarrio,'nombreBarrio' => $nombreBarrio,'idCalle' => $idCalle]);
 	}
 
 	public function postCrearCalle(Request $request,$idbarrio)
@@ -72,31 +65,24 @@ class CalleController extends Controller
 		return 'El calle fue creada correctamente con su documento de identidad'.$calle->idcalle;
 	}
 
-	public function getActualizarCalle($idcalle)
+	public function postActualizarCalle(Request $request,$idcalle)
 	{
 		$calle = Calle::find($idcalle);
-		$barrio=Barrio::Select('nombrebarrio')->where('idbarrio',$calle->idbarrio)->get();
-		$nombreBarrio=$barrio[0]->nombrebarrio;
-		return view('calles.actualizar-calle', ['calle' => $calle,'nombreBarrio' => $nombreBarrio]);
-	}
-
-	public function postActualizarCalle(Request $request,$calle)
-	{
-		$calle = Calle::find($request->get('idcalle'));
-		$calle->nombrecalle = $request->get('nombrecalle');
-		$calle->referencia = $request->get('referencia');
+		$calle->nombrecalle = $request->input('nombrecalle');
 		$calle->save();
-		return redirect("/validado/calles?idbarrio=$calle->idbarrio")->with('actualizado', 'El barrio se actualizó');
+		return "Se actualizo correctamente".$calle->idcalle;
 
 	}
 
-	public function postEliminarCalle(EliminarCalleRequest $request)
+	public function destroy($idcalle)
 	{
-
-		$calle = Calle::find($request->get('idcalle'));
+		$calle = Calle::find($idcalle);
+		$calle->delete();
+		return "Se elimino correctamente".$idcalle;	
+		/*$calle = Calle::find($request->get('idcalle'));
 		$idbarrio=$calle->idbarrio;
 		$calle->delete();
-		return redirect("/validado/calles?idbarrio=$idbarrio")->with('eliminado', 'la calle fue eliminado');
+		return redirect("/validado/calles?idbarrio=$idbarrio")->with('eliminado', 'la calle fue eliminado');*/
 	}
 
 	public function missingMethod($parameters = array())

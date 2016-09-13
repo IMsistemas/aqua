@@ -12,19 +12,20 @@ class ParroquiaController extends Controller
 	{
 		return $parroquias=DB::table('parroquia')->where('idcanton',$idcanton)->orderBy('idparroquia')->get();
 	}
-
-	public function getCrearParroquia(Request $request)
+	public function show($idparroquia)
+	{
+		return $parroquia=DB::table('parroquia')->where('idparroquia',$idparroquia)->get();
+	}
+	public function maxId()
 	{
 		
-		$parroquia=DB::table('parroquia')->orderBy('idparroquia')->get();
-		$length = count($parroquia);
+		$parroquia=Parroquia::max('idparroquia');
 				
 		if($parroquia==NULL){
-			$idParroquia='PAR00001';
+			$parroquia='PAR00001';
 		}else{
-			$idParroquia=$parroquia[$length-1]->idparroquia;
-			$identificadorLetras=substr($idParroquia, 0,-5);//obtiene las tetras del idParroquia de Provincia
-			$identificadorNumero=substr($idParroquia, 3); //obtiene las tetras del idParroquia de Provincia
+			$identificadorLetras=substr($parroquia, 0,-5);//obtiene las tetras del parroquia de Provincia
+			$identificadorNumero=substr($parroquia, 3); //obtiene las tetras del parroquia de Provincia
 			$identificadorNumero=$identificadorNumero+1;
 			$longitudNumero =strlen($identificadorNumero);//obtiene el número de caracteres existentes
 			//asigna el identificador numerico del siguiente registro
@@ -43,16 +44,10 @@ class ParroquiaController extends Controller
              	break;
 			}
 			
-			$idParroquia=$identificadorLetras.$identificadorNumero;
+			$parroquia=$identificadorLetras.$identificadorNumero;
+			return $parroquia;
 			
 		}
-		
-		$idCanton=$request->get('idcanton');
-		$canton=Canton::Select('nombrecanton')->where('idcanton',$request->get('idcanton'))->get();
-		$nombreCanton=$canton[0]->nombrecanton;
-		
-
-		return view('parroquias.crear-parroquia', ['idCanton' => $idCanton,'nombreCanton' => $nombreCanton,'idParroquia' => $idParroquia]);
 	}
 
 	public function postCrearParroquia(Request $request,$idcanton)
@@ -62,24 +57,24 @@ class ParroquiaController extends Controller
 		$parroquia->idcanton = $idcanton;
 		$parroquia->nombreparroquia = $request->input('nombreparroquia');
 		$parroquia->save();
-		return 'La Parroquia fue creada correctamente con su documento de identidad'.$parroquia->idparroquia;
+		return 'La Parroquia fue creada correctamente con su código '.$parroquia->idparroquia;
 	}
 
 	public function postActualizarParroquia(Request $request,$idparroquia)
 	{
 		$parroquia = Parroquia::find($idparroquia);
-		$parroquia->nombreparroquia = $request->get('nombreparroquia');
+		$parroquia->nombreparroquia = $request->input('nombreparroquia');
 		$parroquia->save();
-		return 'La Parroquia fue actualizada correctamente con su documento de identidad'.$parroquia->idparroquia;
+		return "Se actualizo correctamente".$parroquia->idparroquia;
 	}
 
-	public function postEliminarParroquia(EliminarParroquiaRequest $request)
+	public function destroy($idparroquia)
 	{
-		$parroquia = Parroquia::find($request->get('idparroquia'));
-		$idcanton=$parroquia->idcanton;
-		$parroquia->barrios()->delete();
+		$parroquia = Parroquia::find($idparroquia);
+		//$idcanton=$parroquia->idcanton;
+		//$parroquia->barrios()->delete();
 		$parroquia->delete();
-		return redirect("/validado/parroquias?idcanton=$idcanton")->with('eliminado', 'el parroquia fue eliminado');
+		return "Se elimino correctamente".$idparroquia;
 	}
 
 	public function missingMethod($parameters = array())

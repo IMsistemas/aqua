@@ -5,7 +5,7 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
     $scope.nombrecanton="";
     $scope.idcanton_del=0;
     $scope.initLoad = function(){
-    $http.get(API_URL + "cantones/gestion/"+$scope.idcanton)
+    $http.get(API_URL + "cantones/gestion/"+$scope.idprovincia)
         .success(function(response) {
                 console.log(response);
                 $scope.cantones = response;             
@@ -25,15 +25,12 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idcanton = response;
-                        });
-                
+                        });                
                 break;
             case 'edit':
                 $scope.form_title = "Editar Canton";
                 $scope.idcanton = idcanton;
-                $scope.nombrecanton=nombrecanton.trim();
-                        });
-                
+                $scope.nombrecanton=nombrecanton.trim();                
                 break;
             default:
                 break;

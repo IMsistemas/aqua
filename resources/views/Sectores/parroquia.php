@@ -15,25 +15,23 @@
                     <table class="table table-responsive table-striped table-hover table-condensed" >
                         <thead class="bg-primary">
                             <tr>
-                                <th style="width: 90px;">Código del Parroquia</th>
-                                <th>Código del Cantón</th>
-                                <th>Nombre del Parroquia</th>
-                                <th style="width: 180px;" colspan="3" class="text-center">Acciones</th>
+                                <th>
+                                    <a  href="#" style="text-decoration:none; color:white; width: 10%;" ng-click="ordenarColumna='idparroquia'; reversa=!reversa;">Código</a>
+                                </th>
+                                <th>
+                                    <a  href="#" style="text-decoration:none; color:white; width: 10%;" ng-click="ordenarColumna='nombreparroquia'; reversa=!reversa;">Nombre</a>
+                                </th>
+                                <th  href="#" style="text-decoration:none; color:white; width: 40%;" class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="parroquia in parroquias|filter:busqueda">
-                                <td class="text-center">{{parroquia.idparroquia}}</td>
-                                <td class="text-center">{{parroquia.idcanton}}</td>
+                            <tr ng-repeat="parroquia in parroquias|filter:busqueda| orderBy:ordenarColumna:reversa">
+                                <td >{{parroquia.idparroquia}}</td>
                                 <td>{{parroquia.nombreparroquia}}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-default" ng-click="toggle('edit', parroquia.idparroquia)">Editar Parroquias</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-danger" ng-click="confirmDelete(parroquia.idparroquia)">Borrar Parroquias</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-default" ng-click="toModuloBarrio(parroquia.idparroquia);">Ver Barrios</button>
+                                <td >
+                                    <a class="btn btn-warning" ng-click="toggle('edit', parroquia.idparroquia,parroquia.nombreparroquia)">Editar Parroquias</a>
+                                    <a class="btn btn-danger" ng-click="showModalConfirm(parroquia.idparroquia,parroquia.nombreparroquia.trim())">Borrar Parroquias</a>
+                                    <a class="btn btn-info" ng-click="toModuloBarrio(parroquia.idparroquia);">Ver Barrios</a>
                                 </td>
                             </tr>
 
@@ -57,14 +55,14 @@
                                     <label for="t_codigo_parroquia" class="col-sm-4 control-label">Código de la Parroquia</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control " id="idparroquia" name="idparroquia" placeholder=""  
-                                        ng-model="parroquia.idparroquia" disable>
+                                        ng-model="idparroquia" disable>
                                     </div>
                                 </div>
 
                                 <div class="form-group error">
                                     <label for="t_nombre_parroquia" class="col-sm-4 control-label">Nombre de la Parroquia</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="nombreparroquia" name="nombreparroquia" placeholder="" ng-model="parroquia.nombreparroquia" ng-required="true" ng-maxlength="16">
+                                        <input type="text" class="form-control" id="nombreparroquia" name="nombreparroquia" placeholder="" ng-model="nombreparroquia" ng-required="true" ng-maxlength="16">
                                         <span class="help-inline" 
                                         ng-show="frmParroquia.nombreparroquia.invalid && frmParroquia.nombreparroquia.touched">El nombre del parroquia es requerido</span>
                                         <span class="help-inline" 
@@ -102,7 +100,7 @@
                         <h4 class="modal-title">Confirmación</h4>
                     </div>
                     <div class="modal-body">
-                        <span>Realmente desea eliminar el Parroquia: <span style="font-weight: bold;">{{parroquia_seleccionado}}</span></span>
+                        <span>Realmente desea eliminar la Parroquia: <span style="font-weight: bold;">{{parroquia_seleccionado}}</span></span>
 
                     </div>
                     <div class="modal-footer">

@@ -4,7 +4,7 @@
              <div class="container" style="margin-top: 2%;">
             <fieldset>
                 <legend style="padding-bottom: 10px;">
-                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
+                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0, 0)">Agregar</button>
                 </legend>
             <div class="col-xs-6">
                 <div class="form-group has-feedback">
@@ -17,22 +17,22 @@
             <table class="table table-responsive table-striped table-hover table-condensed" >
                 <thead class="bg-primary">
                     <tr>
-                        <th style="width: 90px;">Código de Calle</th>
-                        <th style="width: 90px;">Código de Barrio</th>
-                        <th>Nombre de Calle</th>
-                        <th style="width: 180px;" colspan="2" class="text-center">Acciones</th>
+                         <th> 
+                            <a href="" style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='idcalle'; reversa=!reversa;" >Código </a>
+                        </th>
+                        <th >
+                             <a href="" style="text-decoration:none; color:white; width: 10%; " ng-click="ordenarColumna='nombrecalle'; reversa=!reversa;" >Nombre</a>
+                        </th>
+                        <th style="text-decoration:none; color:white; width: 40%; "  >Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="calle in calles|filter:busqueda">
-                        <td class="text-center">{{calle.idcalle}}</td>
-                        <td class="text-center">{{calle.idbarrio}}</td>
+                    <tr ng-repeat="calle in calles|filter:busqueda|orderBy:ordenarColumna:reversa">
+                        <td>{{calle.idcalle}}</td>
                         <td>{{calle.nombrecalle}}</td>
-                        <td class="text-center">
-                            <button class="btn btn-default " ng-click="toggle('edit', calle.idcalle)">Editar Calle</button>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger " ng-click="confirmDelete(calle.idcalle)">Borrar Calle</button>
+                        <td >
+                            <a href="#" class="btn btn-warning " ng-click="toggle('edit', calle.idcalle, calle.nombrecalle)">Editar Calle</a>
+                            <a href="#" class="btn btn-danger " ng-click="showModalConfirm(calle.idcalle, calle.nombrecalle)">Borrar Calle</a>
                         </td>
                         </td>
                     </tr>
@@ -57,14 +57,14 @@
                                     <label for="t_codigo_calle" class="col-sm-4 control-label">Codigo de la Calle</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="idcalle" name="idcalle" placeholder="Código calle"  
-                                        ng-model="calle.idcalle" disable>
+                                        ng-model="idcalle" disable>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="t_nombre_calle" class="col-sm-4 control-label">Nombre de la Calle</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="nombrecalle" name="nombrecalle" placeholder=""  ng-model="calle.nombrecalle" ng-required="true" ng-maxlength="32">
+                                        <input type="text" class="form-control" id="nombrecalle" name="nombrecalle" placeholder=""  ng-model="nombrecalle" ng-required="true" ng-maxlength="32">
                                         <span class="help-inline" 
                                         ng-show="frmCalle.nombrecalle.invalid && frmCalle.nombrecalle.touched">La fecha de ingreso del cliente es requerida</span>
                                         <span class="help-inline" 
