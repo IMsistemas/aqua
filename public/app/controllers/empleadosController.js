@@ -140,7 +140,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
             direccion: $scope.direccion,
             correo: $scope.correo,
         };
-
+ 
         if (modalstate === 'add'){
 
             $http.post(url,$scope.empleado ).success(function (data) {

@@ -113,7 +113,7 @@
 
 
         <script type="text/javascript">
-         $(function() {
+        /* $(function() {
            $(document).keydown(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 116) {
@@ -121,7 +121,7 @@
              alert('no puedes we');
             }
            });
-        });
+        });*/
         </script>
   </body>
 

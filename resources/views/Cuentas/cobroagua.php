@@ -147,11 +147,11 @@
 										
 										<tr ng-repeat="rubroVariableCuenta in rubrosVariablesCuenta track by $index">
 											<td>{{rubroVariableCuenta.nombrerubrovariable}}</td>
-											<td><input type="text" id="prueba" class="form-control rubrosVariables" ng-model="rubroVariableCuenta.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
+											<td><input type="text" id="{{rubroVariableCuenta.nombrerubrovariable}}" class="form-control rubrosVariables" ng-model="rubroVariableCuenta.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
 										</tr>
 										<tr ng-repeat="rubroFijoCuenta in rubrosFijosCuenta">
 											<td>{{rubroFijoCuenta.nombrerubrofijo}}</td>
-											<td><input type="text" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.costorubro" ng-value="rubroFijoCuenta.costorubro | currency"></td>	
+											<td><input type="text" id="{{rubroFijoCuenta.nombrerubrofijo}}" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.costorubro " ng-value="rubroFijoCuenta.costorubro | currency"></td>	
 										</tr>
 										<tr>
 											<td><b>Total</b></td>
@@ -162,8 +162,10 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary" ng-click="guardarOtrosRubros();">Guardar</button>
-						<button class="btn btn-success">Pagar</button>
+						<button class="btn btn-primary" ng-click="guardarOtrosRubros(cuenta.idcuenta);">Guardar</button>
+						<button class="btn btn-success" ng-hide="cuenta.estapagada" ng-click="pagarFactura(cuenta.idcuenta);">
+						Pagar</button>
+						<button class="btn btn-success" ng-show="cuenta.estapagada" ><i class="fa fa-print" aria-hidden="true"></i>Imprimir</button>
 					</div>
 				</div>
 			</div>			

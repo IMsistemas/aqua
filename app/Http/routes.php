@@ -31,12 +31,14 @@ Route::get('/recaudacion', function (){
 Route::get('/recaudacion/cobroagua/cuentas','Cuentas\CobroAguaController@index');
 //Ruta devuelve un arreglo de un solo suministro a AngularJS 
 Route::get('/recaudacion/cobroagua/cuentas/{numerocuenta}','Cuentas\CobroAguaController@getCuenta');
+//
+Route::get('/recaudacion/cobroagua/cuentas/pagar/{numeroCuenta}','Cuentas\CobroAguaController@pagarCuenta');
 //Ruta devuelve un arreglo de todos los rubros variables a AngularJS
 Route::get('/recaudacion/cobroagua/rubrosvariables','Cuentas\CobroAguaController@getRubrosVariables');
 //Ruta devuelve un arreglo de todos los rubros fijos a AngularJS
 Route::get('/recaudacion/cobroagua/rubrosfijos','Cuentas\CobroAguaController@getRubrosFijos');
 //Ruta para guardar los valores de los rubros variables y fijos
-Route::post('/recaudacion/cobroagua/guardarrubros{numerocuenta}','Cuentas\CobroAguaController@guardarRubros');
+Route::post('/recaudacion/cobroagua/guardarrubros/{numerocuenta}','Cuentas\CobroAguaController@guardarRubros');
 //
 Route::get('/recaudacion/cobroagua/generar','Cuentas\CobroAguaController@generarFacturas');
 

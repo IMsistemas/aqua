@@ -33,7 +33,6 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         var valorExcedente = 0;
         var valorMesesAtrasados = 0;
 
-        
         $http.get(API_URL + "recaudacion/cobroagua/cuentas/"+numeroCuenta)
             .success(function(response) {
                $scope.cuenta = response[0];
@@ -51,8 +50,6 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                 valorExcedente = parseFloat($scope.cuenta.valorexcedente == null ?  0 : $scope.cuenta.valorexcedente);
                 valorMesesAtrasados = parseFloat($scope.cuenta.valormesesatrasados == null ?  0 : $scope.cuenta.valormesesatrasados);
 
-               
-
                 $scope.totalCuenta = totalRubrosFijos + totalRubrosVariables + valorConsumo + valorExcedente + valorMesesAtrasados;
 
                $('#ingresarValores').modal('show');
@@ -61,13 +58,53 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         
     };
 
-    $scope.guardarOtrosRubros = function(){
-        var inputsRV = $(".rubrosVariables");
-        var inputsRF = $(".rubrosFijos");
-        for(var i = 0; i<inputsRV.length; i++){
-            console.log($(inputsRV[i]).val());
-        }
+    $scope.guardarOtrosRubros = function(numeroCuenta){
+
+        $http.get(API_URL + "recaudacion/cobroagua/cuentas/"+numeroCuenta)
+            .success(function(response) {
+               $scope.cuenta = response[0];
+               var inputsRV = $(".rubrosVariables");
+               var inputsRF = $(".rubrosFijos");
+               
+               $scope.rubrosFijosCuenta = $scope.cuenta.rubrosfijos;
+               $scope.rubrosVariablesCuenta = $scope.cuenta.rubrosvariables;
+
+               angular.forEach($scope.rubrosFijosCuenta, function(rubroFijo,key){
+                    for(var i = 0; i<inputsRF.length; i++){
+                        var nombreActual = $(inputsRF[i]).attr('id');
+                        if(rubroFijo.nombrerubrovariable == nombreActual){
+                            $scope.rubrosFijosCuenta[key].costorubro = $(inputsRV[i]).val();
+                        }
+                    }
+               });
+
+               angular.forEach($scope.rubrosVariablesCuenta, function(rubroVariable, key){
+                    for(var i = 0; i<inputsRV.length; i++){
+                        var nombreActual = $(inputsRV[i]).attr('id');
+                        if(rubroVariable.nombrerubrovariable == nombreActual){
+                            $scope.rubrosVariablesCuenta[key].costorubro = $(inputsRV[i]).val();
+                        }
+
+                    }
+               });
+
+               $http({
+                    method: 'POST',
+                    url: API_URL+'recaudacion/cobroagua/guardarrubros/'+numeroCuenta,
+                    data: $.param($scope.cuenta),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                });
+               
         
+            });    
+    }
+
+    $scope.pagarFactura = function(numeroCuenta){
+        console.log(API_URL + "recaudacion/cobroagua/cuentas/pagar/"+numeroCuenta);
+        $http.get(API_URL + "recaudacion/cobroagua/cuentas/pagar/"+numeroCuenta)
+            .success(function(response) {
+
+        });
 
     }
 

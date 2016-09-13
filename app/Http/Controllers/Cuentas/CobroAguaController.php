@@ -22,33 +22,9 @@ class CobroAguaController extends Controller
 	=========================================Kevin======================================================
 	**/ 
 
-    public function generarFacturas(){
-        $suministros = Suministro::all();
-        foreach ($suministros as $suministro) {
-            $nuevoCobro = new CobroAgua();
-            $nuevoCobro->fechaperiodo = date("Y-m-d H:i:s");;
-            $nuevoCobro->numerosuministro = $suministro->numerosuministro;
-            $nuevoCobro->save();   
-        }
-        $this->agregarOtrosRubros();
-        return [];
-    }
-
-    private function agregarOtrosRubros(){
-      $rubrosVariables = RubroVariable::all();
-      $rubrosFijos = RubroFijo::all();
-      $cobrosAgua = CobroAgua::all();
-      foreach ($cobrosAgua as $cobroAgua) {
-        foreach ($rubrosVariables as $rubroVariable) {
-          $cobroAgua->rubrosvariables()->attach($rubroVariable->idrubrovariable,['costorubro' => 0]);
-        }
-        foreach ($rubrosFijos as $rubroFijo) {
-          $cobroAgua->rubrosfijos()->attach($rubroFijo->idrubrofijo,['costorubro' => $rubroFijo->costorubro]);
-        }
-        
-      }
-    }   
-
+  /**
+  *Retorna las cuentas dependiendo del la fecha solicitada
+  **/
     public function index(){
         $fechaPrimerDia = $this->fechaPrimerDia();
         $fechaUltimoDia = $this->fechaUltimoDia();
@@ -58,30 +34,85 @@ class CobroAguaController extends Controller
         ->get();
     }
 
-	/**
-	*Retorna todas las cuentas con los suministros, los clientes y tarifas del suministro
-	**/
-	public function getCuentas(){
-		return dd(CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura')->get());
-	}
+    /**
+    *Genera las facuras del presente periodo, solo si aun no se han generado las facturas para el presente periodo
+    **/
+    public function generarFacturas(){
+        $suministros = Suministro::all();
+        foreach ($suministros as $suministro) {
+            $nuevoCobro = new CobroAgua();
+            $nuevoCobro->fechaperiodo = date("Y-m-d H:i:s");;
+            $nuevoCobro->numerosuministro = $suministro->numerosuministro;
+            $nuevoCobro->estapagada = false;
+            $nuevoCobro->save();   
+        }
+        $this->agregarOtrosRubros();
+        return [];
+     }
 
-	/**
-	*Retorna una cuenta con el suministro, el dueño del suministro y su tarifa
-	**/
-	public function getCuenta($numeroCuenta){
-    return CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura','rubrosfijos','rubrosvariables')->where('idcuenta',$numeroCuenta)->get(); 
-  }
+     /**
+     *Genera campos de costo 0 para la tabla debiles RubrosVariablesCuenta, en el caso de RubrosFijosCuenta se carga el costo de la tabla RubroFijo
+     **/
+      private function agregarOtrosRubros(){
+        $rubrosVariables = RubroVariable::all();
+        $rubrosFijos = RubroFijo::all();
+        $cobrosAgua = CobroAgua::all();
+        foreach ($cobrosAgua as $cobroAgua) {
+          foreach ($rubrosVariables as $rubroVariable) {
+            $cobroAgua->rubrosvariables()->attach($rubroVariable->idrubrovariable,['costorubro' => 0]);
+          }
+          foreach ($rubrosFijos as $rubroFijo) {
+            $cobroAgua->rubrosfijos()->attach($rubroFijo->idrubrofijo,['costorubro' => $rubroFijo->costorubro]);
+          }
+        }
+      }
 
-  public function getRubrosVariablesCuenta(){
+    /**
+    *Guarda los rubros fijos y variables para antes de la toma de lecturas
+    **/
+    public function guardarRubros(Request $request,$idcuenta){
+        $cobroAgua = CobroAgua::find($idcuenta);
 
-  }
+        $rubrosVariablesNuevos = $request->input('rubrosvariables');
+        $rubrosFijosNuevos = $request->input('rubrosfijos');
+
+        $rubrosFijosCuenta = $cobroAgua->rubrosfijos();
+        $rubrosVariablesCuenta = $cobroAgua->rubrosvariables();
+
+        
+
+        foreach ($rubrosVariablesNuevos as $rubroVariable) {
+          $rubrosVariablesCuenta->updateExistingPivot(
+            $rubroVariable['idrubrovariable'],['costorubro' => $rubroVariable['costorubro'] ]
+          );     
+        }
+    }
+
+
+    public function pagarCuenta($idcuenta){
+      $cobroAgua = CobroAgua::find($idcuenta);
+      $cobroAgua->estapagada = true;
+      $cobroAgua->save();
+      return[];
+
+    }
+   
+
+  	/**
+  	*Retorna una cuenta con el suministro, el dueño del suministro su tarifa y sus rubros variables
+  	**/
+  	public function getCuenta($numeroCuenta){
+      return CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura','rubrosfijos','rubrosvariables')->where('idcuenta',$numeroCuenta)->get(); 
+    }
+
+ 
     /**
   }
 	*Retorna los rubros variables de la junta
 	**/
     public function getRubrosVariables(){
     	return RubroVariable::all();
-    }
+   }
 
     /**
 	*Retorna los rubros fijos de la junta
@@ -90,46 +121,22 @@ class CobroAguaController extends Controller
     	return RubroFijo::all();
     }
 
-    /**
-	*Guarda los rubros fijos y variables para antes de la toma de lecturas
-	**/
-    public function guardarRubros(Request $request,$numeroCobro){
-        $cobroAgua = CobroAgua::find($numeroCobro);
-        $rubrosFijos = $cobroAgua->rubrosfijos;
-        $rubrosVariables = $cobroAgua->rubrosvariables;
-        
-        $rubrosfijos->idcuenta = $numeroCobro;
-        $rubrosfijos->idrubrofijo = $request->input('');
-        $rubrosfijos->costorubro = $request->input('costoRubroFijo');
-       
-        $rubrosvariables->idcuenta = $numeroCobro;
-        $rubrosvariables->idrubrovariable = $request->input('');
-        $rubrosvariables->idrubrovariable = $request->input('costoRubroFijo');
 
-        $rubrosfijos->save();
-        $rubrosvariables->save();
-
-        return 'Se agregaron los valores de otros rubros con exito';
-
+    /** ultimo dia del mes **/
+    private function fechaUltimoDia() { 
+        $month = date('m');
+        $year = date('Y');
+        $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+   
+        return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
     }
-
-
-
-  /** ultimo dia del mes **/
-  private function fechaUltimoDia() { 
-      $month = date('m');
-      $year = date('Y');
-      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
- 
-      return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-  }
- 
-  /** primero dia del mes **/
-  private function fechaPrimerDia() {
-      $month = date('m');
-      $year = date('Y');
-      return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-  }
+   
+    /** primero dia del mes **/
+    private function fechaPrimerDia() {
+        $month = date('m');
+        $year = date('Y');
+        return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+    }
 
     /**
 	====================================================================================================
