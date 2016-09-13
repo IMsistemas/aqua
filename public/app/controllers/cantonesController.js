@@ -32,7 +32,7 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
                 $scope.form_title = "Editar Canton";
                 $scope.idcanton = idcanton;
                 $scope.nombrecanton=nombrecanton.trim();
-                        });
+                        //});
                 
                 break;
             default:

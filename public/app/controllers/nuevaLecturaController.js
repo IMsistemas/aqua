@@ -67,6 +67,8 @@
                               
                     }
 
+                    $('#btn_export_pdf').prop('disabled', false);
+
                 }
 
             });
@@ -151,6 +153,10 @@
 
             $scope.lectura_data = {
                 fechalectura: convertDatetoDB($scope.t_fecha_ing),
+
+                anno: $scope.s_anno,
+                mes: $scope.s_mes,
+
                 numerosuministro: $scope.t_no_suministro,
                 lecturaanterior: $scope.lectura_anterior,
                 lecturaactual: $scope.lectura_actual,
@@ -176,6 +182,52 @@
                 console.log(res);
             });
 
+        }
+
+        $scope.exportToPDF = function () {
+
+            var longitud = ($scope.rubros).length;
+
+            var array_rubros = [];
+
+            for (var i = 0; i < longitud; i++) {
+                var object = {
+                    nombrerubrofijo: (($scope.rubros)[i].nombrerubrofijo).trim(),
+                    valorrubro: ($scope.rubros)[i].valorrubro,
+                }
+                array_rubros.push(object);
+            }
+
+
+            var filters = {
+                fecha: convertDatetoDB($scope.t_fecha_ing),
+                no_lectura: $scope.t_no_lectura,
+                anno: $scope.s_anno,
+                mes: $scope.s_mes,
+                suministro: $scope.t_no_suministro,
+                lectura: $scope.t_lectura,
+                nombre_cliente: $scope.nombre_cliente,
+                barrio: $scope.barrio,
+                calle: $scope.calle,
+                tarifa: $scope.tarifa,
+
+                lectura_anterior: $scope.lectura_anterior,
+                lectura_actual: $scope.lectura_actual,
+                consumo: $scope.consumo,
+                meses_atrasados: $scope.meses_atrasados,
+                total: $scope.total,
+                rubros: array_rubros
+            }
+
+           window.open('nuevaLectura/exportToPDF/' + JSON.stringify(filters));
+
+            /*$http.get(API_URL + 'nuevaLectura/exportToPDF/' + JSON.stringify(filters)).success(function(response){
+                //window.open('data:application/pdf;base64, ' + btoa(escape(encodeURIComponent( response ))));
+            });*/
+
+            /*$http.get(API_URL + 'verLectura/getByFilter/' + JSON.stringify(filters)).success(function(response){
+                $scope.lecturas = response;
+            });*/
         }
 
         $scope.initData();

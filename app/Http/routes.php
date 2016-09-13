@@ -169,6 +169,8 @@ Route::post('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleController@
 
 /*===================================Módulo Lectura===========================================*/
 
+Route::get('nuevaLectura/exportToPDF/{data}', 'Lecturas\LecturaController@exportToPDF');
+
 //Ruta devuelve el ultimo ID + 1
 Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
 //Ruta devuelve todos los rubros

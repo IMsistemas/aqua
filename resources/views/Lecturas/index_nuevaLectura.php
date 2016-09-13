@@ -10,7 +10,7 @@
         <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
-        <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+
 
         <style>
             .dataclient{
@@ -26,13 +26,13 @@
 
                 <legend style="padding-bottom: 10px;">
                     <span style="font-weight: bold;">NUEVA LECTURA</span>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-default" style="float: right;" ng-click="" disabled>
                         <i class="fa fa-print fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" id="btn_export_pdf" class="btn btn-default" style="float: right;" ng-click="exportToPDF()" disabled>
                         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-default" style="float: right;" ng-click="" disabled>
                         <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
                     </button>
                 </legend>
@@ -251,7 +251,9 @@
     </body>
 
 
-    <script src="<?= asset('app/lib/angular/angular-pagination.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
     <script src="<?= asset('js/moment.min.js') ?>"></script>
