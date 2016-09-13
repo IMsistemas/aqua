@@ -8,10 +8,12 @@ use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Suministros\Suministro;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class LecturaController extends Controller
@@ -174,8 +176,7 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
-        //$lectura = Lectura::create($request->all());
-        
+
         $lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
@@ -185,8 +186,11 @@ class LecturaController extends Controller
 
         $lectura->save();
 
-        $cobroagua = new CobroAgua();
-        $cobroagua->numerosuministro = $request->input('numerosuministro');
+        $cobroagua = CobroAgua::where('numerosuministro', '=', $request->input('numerosuministro'))
+                                ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = ' . $request->input('mes'))
+                                ->whereRaw('EXTRACT( YEAR FROM fechaperiodo) = ' . $request->input('anno'))
+                                ->get()->first();
+
         $cobroagua->idlectura =  $lectura->idlectura;
         $cobroagua->valorconsumo = $request->input('consumo');
 
@@ -204,4 +208,24 @@ class LecturaController extends Controller
 
     }
 
+
+    public function exportToPDF($data)
+    {
+
+        $data = json_decode($data);
+        $data1 = [];
+
+        //$no_lectura = $data->no_lectura;
+        //$pdf = \PDF::loadView('Lecturas.pdf_newLectura', $data);
+
+
+        $view = \View::make('Lecturas.pdf_newLectura', compact('data1', 'data'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        //$pdf->loadView('Lecturas.pdf_newLectura', $data1);
+        //$pdf = \PDF::loadHTML('<h1>Test</h1>');
+        return $pdf->stream('test.pdf');
+    }
 }

@@ -80,5 +80,5 @@ insert into lectura values(1,1);
 /*-----Ingreso de cobros--------*/
 insert into cobroagua values(1,1,1);
 insert into cobroagua values(2,2,1);
-insert into cobroagua values(3,3,1)
+insert into cobroagua values(3,3,1);
 

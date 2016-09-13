@@ -1,5 +1,7 @@
 app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
+
+    $scope.ahora = new Date();
     
     $scope.initLoad = function(){
         $http.get(API_URL + "recaudacion/cobroagua/cuentas")
@@ -10,6 +12,7 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
     }
     
     $scope.initLoad();
+
     
     $scope.generarFacturasPeriodo = function(){
        $http.get(API_URL + "recaudacion/cobroagua/generar")
@@ -20,34 +23,53 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
     }
 
 
+
+
      
     $scope.ingresoValores = function(numeroCuenta){
+        var totalRubrosFijos = 0;
+        var totalRubrosVariables = 0;
+        var valorConsumo = 0;
+        var valorExcedente = 0;
+        var valorMesesAtrasados = 0;
+
+        
         $http.get(API_URL + "recaudacion/cobroagua/cuentas/"+numeroCuenta)
             .success(function(response) {
-                console.log(response[0]);
                $scope.cuenta = response[0];
-            });
+               $scope.rubrosFijosCuenta = response[0].rubrosfijos;
+               $scope.rubrosVariablesCuenta = response[0].rubrosvariables;
+                angular.forEach($scope.rubrosFijosCuenta, function(rubroFijo,key){
+                    totalRubrosFijos += parseFloat(rubroFijo.costorubro == null ?  0 : rubroFijo.costorubro);
+                });
 
-     $http.get(API_URL + "recaudacion/cobroagua/rubrosfijos")
-            .success(function(response) {
-                $scope.rubrosFijos = response;
-            });
+                angular.forEach($scope.rubrosVariablesCuenta, function(rubroVariable,key){
+                    totalRubrosVariables += parseFloat(rubroVariable.costorubro  == null ?  0 : rubroVariable.costorubro);
+                });
 
-      $http.get(API_URL + "recaudacion/cobroagua/rubrosvariables")
-            .success(function(response) {
-                $scope.rubrosVariables = response;
-            });
+                valorConsumo = parseFloat($scope.cuenta.valorconsumo == null ?  0 : $scope.cuenta.valorconsumo);
+                valorExcedente = parseFloat($scope.cuenta.valorexcedente == null ?  0 : $scope.cuenta.valorexcedente);
+                valorMesesAtrasados = parseFloat($scope.cuenta.valormesesatrasados == null ?  0 : $scope.cuenta.valormesesatrasados);
 
-    
+               
+
+                $scope.totalCuenta = totalRubrosFijos + totalRubrosVariables + valorConsumo + valorExcedente + valorMesesAtrasados;
+
+               $('#ingresarValores').modal('show');
+            });    
         
-        $('#ingresarValores').modal('show');
+        
     };
 
-    $scope.modalInformacionCuenta = function(numeroCuenta){
-        $scope.cuenta = $scope.cuentas[numeroCuenta-1];
-        $('#modalInfoCuenta').modal('show');
+    $scope.guardarOtrosRubros = function(){
+        var inputsRV = $(".rubrosVariables");
+        var inputsRF = $(".rubrosFijos");
+        for(var i = 0; i<inputsRV.length; i++){
+            console.log($(inputsRV[i]).val());
+        }
+        
 
-    };
+    }
 
     $scope.fechasPeriodo = function(){
 
@@ -57,7 +79,27 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         alert(fechasCuenta);
     }
 
-/*
+
+});
+
+
+
+/*$scope.onKeyDown = function ($event) {
+      $scope.onKeyDownResult = getKeyboardEventResult($event, "Key down");
+    };
+
+    var getKeyboardEventResult = function (keyEvent, keyEventDesc)
+    {
+      return keyEventDesc + " (keyCode: " + (window.event ? keyEvent.keyCode : keyEvent.which) + ")";
+    };*/
+
+    /*$scope.modalInformacionCuenta = function(numeroCuenta){
+        $scope.cuenta = $scope.cuentas[numeroCuenta-1];
+        $('#modalInfoCuenta').modal('show');
+
+    };*/
+
+    /*
     //save new record / update existing record
     $scope.save = function(modalstate, id) {
         var url = API_URL + "employees";
@@ -101,4 +143,3 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
             return false;
         }
     } */
-});

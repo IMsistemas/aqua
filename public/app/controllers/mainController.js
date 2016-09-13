@@ -1,9 +1,10 @@
 (function(){
 
-app.controller('mainController', function($scope, $http, API_URL) {
+app.controller('mainController',['$scope','$route', function($scope, $http, API_URL,$route) {
 
 	$scope.titulo = "Inicio";
 	$scope.toModulo = "";
+
 
 
 	$scope.toModuloEmpleado = function(){		
@@ -71,5 +72,5 @@ app.controller('mainController', function($scope, $http, API_URL) {
 		$scope.toModulo = "suministros";
 	}
 	
-});
+}]);
 })();
