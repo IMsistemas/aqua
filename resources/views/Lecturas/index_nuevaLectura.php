@@ -133,7 +133,7 @@
                         
                         <fieldset>
                             <legend>Datos Suministro:</legend>
-                            <div class="col-xs-6">
+                            <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
                                 <div class="col-xs-12" style="background: #e3f2fd; border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
                                     <p>
                                         <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
@@ -145,12 +145,12 @@
                                         <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Calle:</span> </span>{{calle}}
                                     </p>
                                     
-                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
+                                    <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
                                     
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="col-xs-12" ng-cloak>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="col-xs-12" style="padding: 0;" ng-cloak>
                                     <table class="table table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
@@ -189,7 +189,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="rubro in rubros" ng-cloak>
-                                            <td>{{rubro.nombrerubrofijo}}</td>
+                                            <td>{{rubro.nombrerubro}}</td>
                                             <td class="text-right">{{rubro.valorrubro}}</td>
                                         </tr>
                                     </tbody>

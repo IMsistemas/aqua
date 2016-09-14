@@ -93,7 +93,19 @@ class LecturaController extends Controller
 
         $result = array_merge($rubrofijo, $rubrovariable);
 
-        return $result;
+
+        $tarifabasica = ['nombrerubro' => 'Consumo Tarifa Básica', 'valorrubro' => '0.00'];
+        $excedente = ['nombrerubro' => 'Excedente', 'valorrubro' => '0.00'];
+        $mesesatrasados = ['nombrerubro' => 'Valores Atrasados', 'valorrubro' => '0.00'];
+
+        $return = [$tarifabasica, $excedente, $mesesatrasados];
+
+        foreach ( $result as $item){
+            $return[] = ['nombrerubro' => $item->nombrerubrofijo, 'valorrubro' => '0.00'];
+        }
+
+        //return $result;
+        return $return;
     }
 
 
@@ -107,11 +119,15 @@ class LecturaController extends Controller
      */
     public function getRubrosValue($consumo, $tarifa, $numerosuministro)
     {
+
+        $rubros = $this->getRubros();
+
         $tarifabasica = DB::table('costotarifa')
                                 ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
                                 ->where([
                                     ['idtarifa', '=', $tarifa], ['apartirdenm3', '<', $consumo]
                                 ])->get();
+
 
         $value_tarifa_excedente = DB::table('excedentetarifa')
                                 ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
@@ -129,22 +145,39 @@ class LecturaController extends Controller
             $excedente = ($consumo - 15) * $value_tarifa_excedente[0]->valorconsumo;
         }
 
-        $medioambiente = RubroFijo::find(1)->valorrubro;
-
-        $object_alcantarillado = RubroFijo::find(2)->valorrubro;
-        $alcantarillado = ($tarifabasica[0]->valorconsumo + $excedente) * $object_alcantarillado;
-
-        $object_ddss = RubroFijo::find(3)->valorrubro;
-        $ddss = ($tarifabasica[0]->valorconsumo + $excedente) * $object_ddss;
-
-
         $estaPaga = CobroAgua::where([
-                                ['numerosuministro', '=', $numerosuministro],
-                                ['estapagada', '=', false]
-                            ])->count();
+            ['numerosuministro', '=', $numerosuministro],
+            ['estapagada', '=', false]
+        ])->count();
 
-        $rubrovariable = DB::select('
-                                    
+        //-------------------------------------------------------------------------------------------------------------
+
+        $rubrofijo = DB::select('SELECT * FROM rubrofijo');
+
+        $longitud = count($rubrofijo);
+
+        if ($longitud > 0){
+            for ($i = 0; $i < $longitud; $i++){
+                if($rubrofijo[$i]->idrubrofijo == 1){
+
+                    if ($rubrofijo[$i]->valorrubro != null && $rubrofijo[$i]->valorrubro != ''){
+                        $rubros[$i + 3]['valorrubro'] = $rubrofijo[$i]->valorrubro;
+                    }
+
+                } else {
+
+                    if ($rubrofijo[$i]->valorrubro != null && $rubrofijo[$i]->valorrubro != ''){
+                        $value = ($tarifabasica[0]->valorconsumo + $excedente) * $rubrofijo[$i]->valorrubro;
+                        $rubros[$i + 3]['valorrubro'] = $value;
+                    }
+
+                }
+            }
+        }
+
+        //-------------------------------------------------------------------------------------------------------------
+
+        $rubrovariable = DB::select('                                    
                                 SELECT idrubrovariable AS idrubrofijo, nombrerubrovariable AS nombrerubrofijo,
                                 (
                                 SELECT costorubro FROM rubrosvariablescuenta, cobroagua 
@@ -153,20 +186,25 @@ class LecturaController extends Controller
                                     AND cobroagua.numerosuministro = ' . $numerosuministro . '
                                 ) AS valorrubro
                                 FROM rubrovariable
-
-
                             ');
 
+        $longitud_variable = count($rubrovariable);
 
+        if ($longitud_variable > 0){
+            for ($i = 0; $i < $longitud_variable; $i++){
 
-        return response()->json([
-            'tarifabasica' => $tarifabasica[0]->valorconsumo,
-            'excedente' => $excedente,
-            'medioambiente' => $medioambiente,
-            'alcantarillado' => $alcantarillado,
-            'mesesatrasados' => $estaPaga,
-            'ddss' => $ddss
-        ]);
+                if ($rubrofijo[$i]->valorrubro != null && $rubrovariable[$i]->valorrubro != ''){
+                    $rubros[$i + ($longitud + 3)]['valorrubro'] = $rubrovariable[$i]->valorrubro;
+                }
+
+            }
+        }
+
+        $rubros[0]['valorrubro'] = $tarifabasica[0]->valorconsumo;
+        $rubros[1]['valorrubro'] = $excedente;
+        $rubros[2]['valorrubro'] = $estaPaga;
+
+        return response()->json([$rubros, ['mesesatrasados' => $estaPaga] ]);
     }
 
 

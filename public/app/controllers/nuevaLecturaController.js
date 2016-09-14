@@ -78,7 +78,7 @@
 
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
 
-                var object_basico = {
+                /*var object_basico = {
                     idrubrofijo: 0,
                     nombrerubrofijo: "Consumo Tarifa Básica",
                     valorrubro: 0.00
@@ -104,9 +104,33 @@
                     ($scope.rubros)[i].valorrubro = 0;
                 }
 
-                ($scope.rubros).unshift(object_mesesatrasados);    
+                ($scope.rubros).unshift(object_mesesatrasados);
                 ($scope.rubros).unshift(object_excedente);
-                ($scope.rubros).unshift(object_basico);
+                ($scope.rubros).unshift(object_basico);*/
+
+                /*var object_basico = {
+                    idrubrofijo: 0,
+                    nombrerubro: "Consumo Tarifa Básica",
+                    valorrubro: '0.00'
+                }
+
+                var object_excedente = {
+                    idrubrofijo: 0,
+                    nombrerubro: "Excedente",
+                    valorrubro: '0.00'
+                }
+
+                var object_mesesatrasados = {
+                    idrubrofijo: 0,
+                    nombrerubro: "Valores Atrasados",
+                    valorrubro: 0
+                }*/
+
+                $scope.rubros = response;
+
+                /*($scope.rubros).unshift(object_mesesatrasados);
+                ($scope.rubros).unshift(object_excedente);
+                ($scope.rubros).unshift(object_basico);*/
 
                 $scope.total = '$ 0.00';
 
@@ -121,16 +145,8 @@
 
             $http.get(url).success(function(response) {
 
-                console.log(response);
-
-                $scope.rubros[0].valorrubro = parseFloat(response.tarifabasica).toFixed(2);
-                $scope.rubros[1].valorrubro = (response.excedente).toFixed(2);
-                $scope.rubros[2].valorrubro = response.mesesatrasados;
-                $scope.rubros[3].valorrubro = parseFloat(response.medioambiente).toFixed(2);
-                $scope.rubros[4].valorrubro = (response.alcantarillado).toFixed(2);
-                $scope.rubros[5].valorrubro = (response.ddss).toFixed(2);
-
-                $scope.meses_atrasados =  response.mesesatrasados;   
+                $scope.rubros = response[0];
+                $scope.meses_atrasados =  response[1].mesesatrasados;
 
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
