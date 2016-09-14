@@ -30,13 +30,8 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
             case 'edit':
                 $scope.form_title = "Editar Canton";
                 $scope.idcanton = idcanton;
-<<<<<<< HEAD
-                $scope.nombrecanton=nombrecanton.trim();                
-=======
                 $scope.nombrecanton=nombrecanton.trim();
                         //});
-                
->>>>>>> f8809deb3d71cf481ca37900241215372548b671
                 break;
             default:
                 break;

@@ -71,8 +71,6 @@ class ParroquiaController extends Controller
 	public function destroy($idparroquia)
 	{
 		$parroquia = Parroquia::find($idparroquia);
-		//$idcanton=$parroquia->idcanton;
-		//$parroquia->barrios()->delete();
 		$parroquia->delete();
 		return "Se elimino correctamente".$idparroquia;
 	}
