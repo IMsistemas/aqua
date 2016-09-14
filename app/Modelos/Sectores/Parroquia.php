@@ -12,7 +12,7 @@ class Parroquia extends Model
     public $incrementing = false;
 
     public function canton(){
-    	return $this->belongsTo('App\Modelos\Sectores\Canton');
+    	return $this->belongsTo('App\Modelos\Sectores\Canton','idcanton');
     }
 
     public function barrio(){
