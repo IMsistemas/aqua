@@ -35,15 +35,16 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
 
         $http.get(API_URL + "recaudacion/cobroagua/cuentas/"+numeroCuenta)
             .success(function(response) {
+                console.log(response[0]);
                $scope.cuenta = response[0];
                $scope.rubrosFijosCuenta = response[0].rubrosfijos;
                $scope.rubrosVariablesCuenta = response[0].rubrosvariables;
                 angular.forEach($scope.rubrosFijosCuenta, function(rubroFijo,key){
-                    totalRubrosFijos += parseFloat(rubroFijo.costorubro == null ?  0 : rubroFijo.costorubro);
+                    totalRubrosFijos += parseFloat(rubroFijo.pivot.costorubro == null ?  0 : rubroFijo.costorubro);
                 });
 
                 angular.forEach($scope.rubrosVariablesCuenta, function(rubroVariable,key){
-                    totalRubrosVariables += parseFloat(rubroVariable.costorubro  == null ?  0 : rubroVariable.costorubro);
+                    totalRubrosVariables += parseFloat(rubroVariable.pivot.costorubro  == null ?  0 : rubroVariable.costorubro);
                 });
 
                 valorConsumo = parseFloat($scope.cuenta.valorconsumo == null ?  0 : $scope.cuenta.valorconsumo);
@@ -103,6 +104,7 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         console.log(API_URL + "recaudacion/cobroagua/cuentas/pagar/"+numeroCuenta);
         $http.get(API_URL + "recaudacion/cobroagua/cuentas/pagar/"+numeroCuenta)
             .success(function(response) {
+                $scope.ingresoValores(numeroCuenta);
 
         });
 

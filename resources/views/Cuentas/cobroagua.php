@@ -147,11 +147,11 @@
 										
 										<tr ng-repeat="rubroVariableCuenta in rubrosVariablesCuenta track by $index">
 											<td>{{rubroVariableCuenta.nombrerubrovariable}}</td>
-											<td><input type="text" id="{{rubroVariableCuenta.nombrerubrovariable}}" class="form-control rubrosVariables" ng-model="rubroVariableCuenta.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
+											<td><input type="text" id="{{rubroVariableCuenta.nombrerubrovariable}}" class="form-control rubrosVariables" ng-model="rubroVariableCuenta.pivot.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
 										</tr>
 										<tr ng-repeat="rubroFijoCuenta in rubrosFijosCuenta">
 											<td>{{rubroFijoCuenta.nombrerubrofijo}}</td>
-											<td><input type="text" id="{{rubroFijoCuenta.nombrerubrofijo}}" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.costorubro " ng-value="rubroFijoCuenta.costorubro | currency"></td>	
+											<td><input type="text" id="{{rubroFijoCuenta.nombrerubrofijo}}" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.pivot.costorubro " ng-value="rubroFijoCuenta.costorubro | currency"></td>	
 										</tr>
 										<tr>
 											<td><b>Total</b></td>

@@ -102,7 +102,8 @@ class CobroAguaController extends Controller
   	*Retorna una cuenta con el suministro, el dueño del suministro su tarifa y sus rubros variables
   	**/
   	public function getCuenta($numeroCuenta){
-      return CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura','rubrosfijos','rubrosvariables')->where('idcuenta',$numeroCuenta)->get(); 
+      $elCobro = CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura','rubrosvariables','rubrosfijos')->where('idcuenta',$numeroCuenta)->get(); 
+      return $elCobro;
     }
 
  
