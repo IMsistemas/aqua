@@ -25,13 +25,13 @@
 
                 <legend style="padding-bottom: 10px;">
                     <span style="font-weight: bold;">CONSULTA DE LECTURAS</span>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
                         <i class="fa fa-print fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
                         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="">
+                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
                         <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
                     </button>
                 </legend>
