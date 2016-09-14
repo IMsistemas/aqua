@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Lecturas;
 
+use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Lecturas\Lectura;
@@ -15,6 +16,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class LecturaController extends Controller
 {
@@ -169,7 +171,7 @@ class LecturaController extends Controller
 
 
     /**
-     * Almacena el recurso de Lectura
+     * Almacena el recurso de Lectura y envia correo adjuntando la misma en formato pdf
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -200,32 +202,54 @@ class LecturaController extends Controller
 
         $cobroagua->save();
 
+        $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+                            ->select('cliente.correo')
+                            ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
+                            ->get();
 
-        //return ($lectura) ? response()->json(['success' => true, 'lastID' => $lectura->idlectura]) : response()->json(['success' => false]);
+        $correo_cliente = $cliente[0]->correo;
+        $correo_cliente = 'raidelbg84@gmail.com';
+
+        $data = json_decode($request->input('pdf'));
+        $data1 = [];
+
+        $view = \View::make('Lecturas.pdf_email_newLectura', compact('data1', 'data'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->save(storage_path('app/public') . '/myfile.pdf');
+
+        Mail::send('Lecturas.email',['correo_cliente' => $correo_cliente] , function($message) use ($correo_cliente)
+        {
+
+            $message->from('raidelbg84@gmail.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+
+            $message->to($correo_cliente)->subject('Factura Lectura!');
+
+            $message->attach(storage_path('app/public') . '/myfile.pdf');
+
+        });
 
         return response()->json(['success' => true]);
-
-
     }
 
 
+    /**
+     * Exportar la nueva Lectura a PDF
+     *
+     * @param $data
+     * @return mixed
+     */
     public function exportToPDF($data)
     {
-
         $data = json_decode($data);
         $data1 = [];
-
-        //$no_lectura = $data->no_lectura;
-        //$pdf = \PDF::loadView('Lecturas.pdf_newLectura', $data);
-
 
         $view = \View::make('Lecturas.pdf_newLectura', compact('data1', 'data'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
 
-        //$pdf->loadView('Lecturas.pdf_newLectura', $data1);
-        //$pdf = \PDF::loadHTML('<h1>Test</h1>');
         return $pdf->stream('test.pdf');
     }
+
 }

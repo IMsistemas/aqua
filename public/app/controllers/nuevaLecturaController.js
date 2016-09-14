@@ -68,7 +68,7 @@
                     }
 
                     $('#btn_export_pdf').prop('disabled', false);
-
+                    $('#btn_save').prop('disabled', false);
                 }
 
             });
@@ -150,6 +150,40 @@
         }
 
         $scope.save = function(){
+            $('#modalConfirm').modal('hide');
+            $('#myModalProgressBar').modal('show');
+
+            var longitud = ($scope.rubros).length;
+
+            var array_rubros = [];
+
+            for (var i = 0; i < longitud; i++) {
+                var object = {
+                    nombrerubrofijo: (($scope.rubros)[i].nombrerubrofijo).trim(),
+                    valorrubro: ($scope.rubros)[i].valorrubro,
+                }
+                array_rubros.push(object);
+            }
+
+            var filters = {
+                fecha: $scope.t_fecha_ing,
+                no_lectura: $scope.t_no_lectura,
+                anno: $scope.s_anno,
+                mes: $scope.s_mes,
+                suministro: $scope.t_no_suministro,
+                lectura: $scope.t_lectura,
+                nombre_cliente: $scope.nombre_cliente,
+                barrio: $scope.barrio,
+                calle: $scope.calle,
+                tarifa: $scope.tarifa,
+
+                lectura_anterior: $scope.lectura_anterior,
+                lectura_actual: $scope.lectura_actual,
+                consumo: $scope.consumo,
+                meses_atrasados: $scope.meses_atrasados,
+                total: $scope.total,
+                rubros: array_rubros
+            }
 
             $scope.lectura_data = {
                 fechalectura: convertDatetoDB($scope.t_fecha_ing),
@@ -165,6 +199,9 @@
                 excedente: $scope.rubros[1].valorrubro,
                 mesesatrasados: $scope.rubros[2].valorrubro,
                 total: $scope.total,
+
+                pdf: JSON.stringify(filters),
+
             };
 
             var url = API_URL + "nuevaLectura";
@@ -173,10 +210,27 @@
 
                 console.log(response);
 
-                //$scope.initLoad();
-                $('#modalConfirm').modal('hide');
-                //$scope.message = 'Se inserto correctamente el Empleado';
-                //$('#modalMessage').modal('show');
+                $('#myModalProgressBar').modal('hide');
+                $('#btn_save').prop('disabled', true);
+                $('#btn_export_pdf').prop('disabled', true);
+
+
+                $scope.t_no_suministro = '';
+                $scope.t_lectura = '';
+                $scope.nombre_cliente = '';
+                $scope.barrio = '';
+                $scope.calle = '';
+                $scope.tarifa = '';
+                $scope.lectura_anterior = '';
+                $scope.lectura_actual = '';
+                $scope.consumo = '';
+                $scope.meses_atrasados = 0;
+                $scope.total = '$0.00';
+
+                $scope.initData();
+
+                $scope.message = 'Se guardó y envio el correo como adjunto satisfactoriamente la Lectura nueva...';
+                $('#modalMessage').modal('show');
 
             }).error(function (res) {
                 console.log(res);

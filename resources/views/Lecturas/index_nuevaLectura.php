@@ -32,7 +32,7 @@
                     <button type="button" id="btn_export_pdf" class="btn btn-default" style="float: right;" ng-click="exportToPDF()" disabled>
                         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-default" style="float: right;" ng-click="" disabled>
+                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="" disabled>
                         <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
                     </button>
                 </legend>
@@ -201,7 +201,7 @@
 
                     <div class="col-xs-12" style="margin-bottom: 15px;">
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" ng-click="confirmSave()">
+                            <button type="button" id="btn_save" class="btn btn-success" ng-click="confirmSave()" disabled>
                                 Guardar
                             </button>
                         </div>
@@ -247,6 +247,27 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL PARA LA ACCION DE MOSTRAR MENSAJE DE CARGA -->
+        <div class="modal fade" id="myModalProgressBar" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" style="margin-top: 200px;">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p style="font-size: 12px !important; font-weight: bold;" id="text-demo-load">
+                            ESPERE POR FAVOR!, ESTAMOS GUARDANDO LA LECTURA, CREANDO ADJUNTO A ENVIAR POR CORREO.....
+                        </p>
+                        <div class="row" style="padding: 5px;">
+                            <div class="progress">
+                                <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
 
     </body>
 
