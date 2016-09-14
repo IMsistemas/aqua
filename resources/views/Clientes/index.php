@@ -102,7 +102,7 @@
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">CI | RUC:</label>
+                                            <label class="col-sm-4 control-label">CI/RUC:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control has-error" name="documentoidentidad" id="documentoidentidad"
                                                        ng-model="cliente.documentoidentidad" ng-required="true" ng-minlength ="10" ng-maxlength ="32" ng-pattern="/^[0-9]+$/">
@@ -124,8 +124,9 @@
                                             <label class="col-sm-4 control-label">Correo:</label>
                                             <div class="col-sm-8">
                                                 <input type="email" class="form-control" name="correo" id="correro"
-                                                       ng-model="cliente.correo" ng-required="true" >
+                                                       ng-model="cliente.correo" ng-required="true" ng-maxlength="32">
                                                        <span class="help-inline" ng-show="frmClientes.correo.$invalid">El el correo del cliente es requerido <br></span>
+                                                       <span class="help-inline" ng-show="frmClientes.correo.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
                                                         <span class="help-inline" ng-show="frmClientes.correo.$error.email">No es un correo valido <br></span>                                                        
                                             </div>
                                         </div>

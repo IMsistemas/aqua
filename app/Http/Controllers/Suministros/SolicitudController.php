@@ -13,11 +13,14 @@ class SolicitudController extends Controller
 {
 
 	public function index(){
-		return Solicitud::with('cliente')->get();
+			return Solicitud::with('cliente')->get();
 	}
 
 	public function getSolicitud($idSolicitud){
 		return Solicitud::with('cliente')->where('idsolicitud',$idSolicitud)->get();
+	}
+	public function getSolicitudEspera(){
+		return Solicitud::with('cliente')->where('estaprocesada','false')->get();
 	}
 
 	public function ingresarSolicitud(Request $request){
