@@ -11,25 +11,25 @@
 			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="modalNuevaSolicitud();">Nueva</button>
 			 
 				<div class="form-group">
-				    <label for="comboYear">Año</label>
-				    <select class="form-control" id="comboYear"  >
+				    <label for="comboYear" ng-show="false">Año</label>
+				    <select ng-show="false" class="form-control" id="comboYear"  >
 				    	<option value="">Seleccione año</option>
 				    	<option  value="" ></option>
 				    </select>
 				</div>
 				<div class="form-group">
-				    <label for="comboMes">Mes</label>
-				    <select class="form-control" id="comboMes" >
+				    <label for="comboMes" ng-show="false">Mes</label>
+				    <select ng-show="false" class="form-control" id="comboMes" >
 				    	<option value="">Seleccione mes</option>
 				    	<option  value="" ></option>
 				    </select>
 				</div>
 				<div class="form-group">
-				    <label for="comboEstado">Estado:</label>
-				    <select class="form-control" ng-model="busqueda.estaprocesada" >
+				    <label for="comboEstado" ng-show="{{estado}}">Estado:</label>
+				    <select ng-show="{{estado}}" class="form-control" ng-model="busqueda.estaprocesada" >
 				    	<option value="">Todos</option>
-                        <option value="false">En espera</option>
-				    	<option  value="true" >Procesada</option>
+                        <option value="false" selected>En espera</option>
+				    	<option value="true" >Procesada</option>
 				    </select>
 				</div>
 				
@@ -201,10 +201,17 @@
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <label class="col-sm-4 control-label">CI/RUC:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="documentoidentidad" id="documentoidentidad"
-                                                       ng-model="solicitud.cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.documentoidentidad" ng-required="true" ng-minlength ="10" ng-maxlength ="32" ng-pattern="/^[0-9]+$/">
+                                                        <span class="help-inline" ng-show="formNuevaSolicitud.documentoidentidad.$invalid">El documento del cliente es requerido <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.documentoidentidad.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show=" formNuevaSolicitud.documentoidentidad.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show=" formNuevaSolicitud.documentoidentidad.$error.maxlength">La longitud máxima es de 32 caracteres</span>
                                             </div>
                                         </div>
                                     </div>
@@ -214,8 +221,11 @@
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Correo:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="correo" id="correro"
+                                                <input type="amail" class="form-control" name="correo" id="correro"
                                                        ng-model="solicitud.cliente.correo" ng-required="true" ng-maxlength="32" >
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.correo.$invalid">El el correo del cliente es requerido <br></span>
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.correo.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+                                                        <span class="help-inline" ng-show="formNuevaSolicitud.correo.$error.email">No es un correo valido <br></span>
                                             </div>
                                         </div>
                                      </div>
@@ -228,7 +238,12 @@
                                             <label class="col-sm-4 control-label">Apellidos:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="apellido" id="apellido"
-                                                       ng-model="solicitud.cliente.apellido" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.apellido" ng-required="true" ng-maxlength="32" ng-pattern="/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/">
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.apellido.$invalid">El apellido del cliente es requerido <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.apellido.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.apellido.$error.pattern">Sólo se aceptan caracteres alfabeticos <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +252,13 @@
                                             <label class="col-sm-4 control-label">Nombres:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="nombre" id="nombre"
-                                                       ng-model="solicitud.cliente.nombre" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.nombre" ng-required="true" ng-maxlength ="32" ng-pattern="/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/" >
+                                                        <span class="help-inline" ng-show="formNuevaSolicitud.nombre.$invalid">El nombre del cliente es requerido <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.nombre.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.nombre.$error.pattern">Sólo se aceptan caracteres alfanumericos <br></span>
+
                                             </div>
                                         </div>
                                     </div>
@@ -249,7 +270,12 @@
                                             <label class="col-sm-4 control-label">Telf. Principal:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
-                                                       ng-model="solicitud.cliente.telefonoprincipal" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.telefonoprincipal" ng-maxlength ="16" ng-pattern="/^[0-9]+$/" >
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.telefonoprincipal.$invalid">El teléfono principal del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonoprincipal.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonoprincipal.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +284,13 @@
                                             <label class="col-sm-4 control-label">Telf. Secundario:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
-                                                       ng-model="solicitud.cliente.telefonosecundario" ng-required="true" ng-maxlength="32"  >
+                                                       ng-model="solicitud.cliente.telefonosecundario" ng-required="true" ng-maxlength ="16"  ng-pattern="/^[0-9]+$/"  >
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.telefonosecundario.$invalid">El teléfono secundario del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosecundario.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosecundario.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
+
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +302,12 @@
                                             <label class="col-sm-4 control-label">Celular:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="celular" id="celular"
-                                                       ng-model="solicitud.cliente.celular" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="solicitud.cliente.celular" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
+                                                       <span class="help-inline" ng-show=" formNuevaSolicitud.celular.$invalid">El celular del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.celular.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show=" formNuevaSolicitud.celular.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -280,6 +317,9 @@
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
                                                        ng-model="solicitud.cliente.direccion" ng-required="true" ng-maxlength="32"  >
+                                                       <span class="help-inline" ng-show="formNuevaSolicitud.direccion.$invalid">El dirección del cliente es requerido <br></span>                         
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.direccion.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
                                             </div>
                                         </div>
                                     </div>
@@ -295,6 +335,10 @@
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="direccionsolicitud" id="direccionsolicitud"
 	                                                       ng-model="solicitud.direccionsuministro" ng-required="true" ng-maxlength="32" >
+                                                           <span class="help-inline" ng-show="formNuevaSolicitud.direccionsolicitud.$invalid">El dirección del cliente es requerido <br></span>                         
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.direccionsolicitud.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
+
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -303,7 +347,12 @@
 	                                            <label class="col-sm-4 control-label">Telefono:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
-	                                                       ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength="32"  >
+	                                                       ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
+                                                           <span class="help-inline" ng-show="formNuevaSolicitud.telefonosolicitud.$invalid">El teléfono principal del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -443,8 +492,11 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Derecho acometida:</label>
 	                                            <div class="col-sm-8">
-	                                                <input type="text" class="form-control" name="" id=""
-	                                                       ng-model="acometida" ng-required="true" ng-maxlength="32">
+	                                                <input type="text" class="form-control" name="acometida" id="acometida"
+	                                                       ng-model="acometida" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+                                                            <span class="help-inline" ng-show="formProcesarSolicitud.acometida.$invalid">El costo del medidor es requerido <br></span>
+                                                            <span class="help-inline" 
+                                                            ng-show="formProcesarSolicitud.acometida.$error.pattern">Sólo se permiten números <br></span>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -452,8 +504,11 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Costo Medidor:</label>
 	                                            <div class="col-sm-8">
-	                                                <input type="text" class="form-control" name="" id=""
-	                                                       ng-model="producto.costoproducto" ng-required="true" ng-maxlength="32"  >
+	                                                <input type="text" class="form-control" name="costoproducto" id="costoproducto"
+	                                                       ng-model="producto.costoproducto" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+                                                            <span class="help-inline" ng-show="formProcesarSolicitud.costoproducto.$invalid">El costo del medidor es requerido <br></span>
+                                                            <span class="help-inline" 
+                                                            ng-show="formProcesarSolicitud.costoproducto.$error.pattern">Sólo se permiten números <br></span>                                    
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -464,8 +519,11 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Cuota inicial:</label>
 	                                            <div class="col-sm-8">
-	                                                <input type="text" class="form-control" name="" id=""
-	                                                       ng-model="cuotainicial" ng-required="true" ng-maxlength="32" >
+	                                                <input type="text" class="form-control" name="cuotainicial" id="cuotainicial"
+	                                                       ng-model="cuotainicial" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+                                                            <span class="help-inline" ng-show="formProcesarSolicitud.cuotainicial.$invalid">El costo del medidor es requerido <br></span>
+                                                            <span class="help-inline" 
+                                                            ng-show="formProcesarSolicitud.cuotainicial.$error.pattern">Sólo se permiten números <br></span>
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -487,8 +545,11 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Garantia apertura calle:</label>
 	                                            <div class="col-sm-8">
-	                                                <input type="text" class="form-control" name="" id=""
-	                                                       ng-model="configuracion.garantiaaperturacalle" ng-required="true" ng-maxlength="32" >
+	                                                <input type="text" class="form-control" name="garantiaaperturacalle" id="garantiaaperturacalle"
+	                                                       ng-model="configuracion.garantiaaperturacalle" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+                                                            <span class="help-inline" ng-show="frmClientes.garantiaaperturacalle.$invalid">El costo del medidor es requerido <br></span>
+                                                            <span class="help-inline" 
+                                                            ng-show="frmClientes.garantiaaperturacalle.$error.pattern">Sólo se permiten números <br></span>
 	                                            </div>
 	                                        </div>
 	                                    </div>

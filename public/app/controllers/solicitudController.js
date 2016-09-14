@@ -1,17 +1,32 @@
 app.controller('solicitudController',function ($scope,$http,API_URL) {
-
+    $scope.solicitudes=[];
     $scope.ahora = new Date();
-
-   
     $scope.initLoad = function(){
+        if($scope.estado=='todas'){
         $http.get(API_URL+"suministros/solicitudes/solicitudes")
         .success(function (response) {
+            $scope.estado="";
+            $scope.estado="true";
             $scope.solicitudes = response;
             $scope.cantidadSolicitudes = $scope.solicitudes.length;
             var fecha = $scope.solicitudes.sort(function(a,b){
                 return (new Date(a.fechasolicitud) - new Date(b.fechasolicitud));
             });
         });
+        }else{
+            $http.get(API_URL+"suministros/solicitudes/espera")
+            .success(function (response) {
+            $scope.estado="";
+            $scope.estado="false";
+            $scope.solicitudes=[];
+            $scope.solicitudes = response;
+            console.log($scope.solicitudes);
+            $scope.cantidadSolicitudes = $scope.solicitudes.length;
+            var fecha = $scope.solicitudes.sort(function(a,b){
+                return (new Date(a.fechasolicitud) - new Date(b.fechasolicitud));
+            });
+        });
+        }
     }
     $scope.initLoad();
 

@@ -43,8 +43,8 @@
         </li>
         <li class="padre"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Solicitudes<i class=" der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
-            <li><a href="#" ng-click="toModuloSolicitud();">Solicitudes</a></li>
-            <li><a href="#" ng-click="">Solicitudes en espera</a></li>
+            <li><a href="#" ng-click="toModuloSolicitud('todas');">Solicitudes</a></li>
+            <li><a href="#" ng-click="toModuloSolicitud('espera');">Solicitudes en espera</a></li>
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>Clientes<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>

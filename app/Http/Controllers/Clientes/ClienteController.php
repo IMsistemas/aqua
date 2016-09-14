@@ -26,7 +26,7 @@ class ClienteController extends Controller
 		$cliente->direccion = $request->input('direccion');
 		$cliente->correo = $request->input('correo');
 		$cliente->save();
-		return 'El Cliente fue creado correctamente con su documento de identidad'.$cliente->documentoidentidad;
+		return 'El Cliente fue creado exitosamente';
 	}
 
 	public function show($documentoidentidad)

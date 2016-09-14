@@ -225,6 +225,7 @@ Route::resource('empleado', 'Nomina\EmpleadoController');
 Route::get('/suministros/solicitudes', function (){
 	return view('Suministros/Solicitudes/index');
 });
+Route::get('suministros/solicitudes/espera','Suministros\SolicitudController@getSolicitudEspera');
 
 Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
 
