@@ -120,9 +120,9 @@ Route::get('/parroquias/maxid','Sectores\ParroquiaController@maxId');
 //Ruta página de inicio de gestión de parroquias
 Route::post('/parroquias/gestion/guardarparroquia/{idcanton}','Sectores\ParroquiaController@postCrearParroquia');
 //Ruta página de inicio de gestión de parroquias
-Route::post('/parroquias/gestion/actualizar/{idparroquia}','Sectores\ParroquiaController@postActualizarParroquia');
+Route::post('/parroquias/gestion/actualizarparroquia/{idparroquia}','Sectores\ParroquiaController@postActualizarParroquia');
 //Ruta página de inicio de gestión de parroquias
-Route::Delete('/parroquias/gestion/eliminar/{idparroquia}','Sectores\ParroquiaController@destroy');
+Route::Delete('/parroquias/gestion/eliminarparroquia/{idparroquia}','Sectores\ParroquiaController@destroy');
 
 
 /*===================================Módulo Barrio===========================================*/

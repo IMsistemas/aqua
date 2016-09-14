@@ -25,6 +25,7 @@ app.controller('cantonesController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idcanton = response;
+                            $scope.nombrecanton = "";
                         });                
                 break;
             case 'edit':

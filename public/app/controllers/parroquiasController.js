@@ -23,6 +23,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idparroquia = response;
+                            $scope.nombreparroquia = "";
                         });        
                 break;
             case 'edit':
@@ -46,7 +47,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
         
         //append parroquia id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
-            url += "/actualizar/" + idparroquia;
+            url += "/actualizarparroquia/" + idparroquia;
         }else{
             url += "/guardarparroquia/"+$scope.idcanton ;
         }
@@ -80,7 +81,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
     }
 
     $scope.destroyParroquia = function(){
-        $http.delete(API_URL + 'parroquias/gestion/eliminar/' + $scope.idparroquia_del).success(function(response) {
+        $http.delete(API_URL + 'parroquias/gestion/eliminarparroquia/' + $scope.idparroquia_del).success(function(response) {
             $scope.initLoad();
             $('#modalConfirmDelete').modal('hide');
             $scope.idparroquia_del = 0;

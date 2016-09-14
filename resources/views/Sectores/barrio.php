@@ -33,7 +33,7 @@
                         <td>{{barrio.nombrebarrio}}</td>
                         <td>
                             <a href="#" class="btn btn-warning" ng-click="toggle('edit', barrio.idbarrio,barrio.nombrebarrio)">Editar Barrio</a>
-                            <a href="#" class="btn btn-danger" ng-click="showModalConfirm(barrio.idbarrio,barrio.nombrebarrio)">Borrar Barrio</a>
+                            <a href="#" class="btn btn-danger" ng-click="showModalConfirm(barrio.idbarrio, barrio.nombrebarrio)">Borrar Barrio</a>
                             <a href="#"  class="btn btn-info" ng-click="toModuloCalle(barrio.idbarrio);">Ver Calles</a>
                         </td>
                     </tr>

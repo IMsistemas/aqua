@@ -24,6 +24,7 @@ app.controller('barriosController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idbarrio = response;
+                            $scope.nombrebarrio = "";
                         });
                 
                 break;
@@ -77,10 +78,12 @@ app.controller('barriosController', function($scope, $http, API_URL) {
 
     //delete record
      $scope.showModalConfirm = function(idbarrio,nombrebarrio){
-        console.log(nombrebarrio);
+        console.log(idbarrio);
         $scope.idbarrio_del = idbarrio;
+        console.log($scope.idbarrio_del);
         $scope.barrio_seleccionado = nombrebarrio.trim();
-            $('#modalConfirmDelete').modal('show');
+        console.log($scope.barrio_seleccionado);
+        $('#modalConfirmDelete').modal('show');
     }
 
     $scope.destroyBarrio = function(){

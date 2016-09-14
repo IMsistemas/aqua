@@ -24,6 +24,7 @@ app.controller('provinciasController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idprovincia = response;
+                             $scope.nombreprovincia = "";
                         });
                 break;
             case 'edit':
