@@ -1,7 +1,9 @@
 app.controller('barriosController', function($scope, $http, API_URL) {
     //retrieve barrios listing from API
     $scope.barrios=[];
+    document.getElementById("idbarrio").disabled = true;
     $scope.idbarrio="";
+    $scope.idparroquia=0;
     $scope.nombrebarrio="";
     $scope.idbarrio_del=0;
     $scope.initLoad = function(){
@@ -43,9 +45,9 @@ app.controller('barriosController', function($scope, $http, API_URL) {
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
-    $scope.save = function(modalstate, idbarrio) {
+    $scope.save = function(modalstate, idbarrio,idparroquia) {
         var url = API_URL + "barrios/gestion";    
-        console.log(modalstate); 
+        $scope.idparroquia=idparroquia; 
         
         //append barrio id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
@@ -78,11 +80,8 @@ app.controller('barriosController', function($scope, $http, API_URL) {
 
     //delete record
      $scope.showModalConfirm = function(idbarrio,nombrebarrio){
-        console.log(idbarrio);
         $scope.idbarrio_del = idbarrio;
-        console.log($scope.idbarrio_del);
-        $scope.barrio_seleccionado = nombrebarrio.trim();
-        console.log($scope.barrio_seleccionado);
+        $scope.barrio_seleccionado = nombrebarrio;
         $('#modalConfirmDelete').modal('show');
     }
 

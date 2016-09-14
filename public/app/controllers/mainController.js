@@ -36,13 +36,13 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloBarrio = function(idparroquia){		
 		$scope.idparroquia = idparroquia;	
-		$scope.titulo = "Barrios";
+		$scope.titulo = "Zonas";
 		$scope.toModulo = "barrios";
 
 	}
-	$scope.toModuloCalle = function(idbarrio){		
+	$scope.toModuloCalle = function(idbarrio,nombrebarrio){		
 		$scope.idbarrio = idbarrio;	
-		$scope.titulo = "Calles";
+		$scope.titulo = "Tranversales Barrio: ".concat(nombrebarrio);
 		$scope.toModulo = "calles";
 	}
 

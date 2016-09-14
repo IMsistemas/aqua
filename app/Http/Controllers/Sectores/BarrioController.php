@@ -13,7 +13,13 @@ class BarrioController extends Controller
 {
 	public function index($idparroquia)
 	{
-		return $barrios=DB::table('barrio')->where('idparroquia',$idparroquia)->get();
+		if($idparroquia==0)
+		{
+			return $barrios=DB::table('barrio')->orderby('idbarrio')->get();
+		}else
+		{
+			return $barrios=DB::table('barrio')->where('idparroquia',$idparroquia)->get();
+		}
 	}
 	public function show($idbarrio)
 	{
@@ -61,22 +67,23 @@ class BarrioController extends Controller
 		$barrio->idparroquia = $idparroquia;
 		$barrio->nombrebarrio = $request->input('nombrebarrio');
 		$barrio->save();
-		return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
+		return 'El barrio fue creado exitosamente';
 	}
 	public function postActualizarBarrio(Request $request,$idbarrio)
 	{
 		$barrio = Barrio::find($idbarrio);
 		$barrio->nombrebarrio = $request->input('nombrebarrio');
 		$barrio->save();
-		//return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
+		return 'El barrio fue actualizado exitosamente';
 
 	}
 
-	public function postEliminarBarrio($idbarrio)
+	public function destroy($idbarrio)
 	{
-		$barrio = Canton::find($idbarrio);
+		$barrio = Barrio::find($idbarrio);
+		$barrio->calle()->delete();
 		$barrio->delete();
-		return "Se elimino correctamente".$idbarrio;
+		return "Se elimino exitosamente";
 	}
 
 	public function missingMethod($parameters = array())

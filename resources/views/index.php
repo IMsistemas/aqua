@@ -38,7 +38,7 @@
         <li class="padre"><a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i></i>Suministros<i class="der fa fa-chevron-down" aria-hidden="true"></i></a>
           <ul class="hijos">
             <li><a href="#" ng-click="toModuloSuministro();">Suministros</a></li>
-            <li><a href="#" ng-click="toModuloProvincia();">Sectores</a></li>            
+            <li><a href="#" ng-click="toModuloBarrio();">Sectores</a></li>            
           </ul>
         </li>
         <li class="padre"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Solicitudes<i class=" der fa fa-chevron-down" aria-hidden="true"></i></a>

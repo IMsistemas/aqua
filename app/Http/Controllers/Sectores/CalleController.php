@@ -62,7 +62,7 @@ class CalleController extends Controller
 		$calle->idbarrio = $idbarrio;
 		$calle->nombrecalle = $request->input('nombrecalle');
 		$calle->save();
-		return 'El calle fue creada correctamente con su documento de identidad'.$calle->idcalle;
+		return 'El calle fue creada exitosamente';
 	}
 
 	public function postActualizarCalle(Request $request,$idcalle)
@@ -70,7 +70,7 @@ class CalleController extends Controller
 		$calle = Calle::find($idcalle);
 		$calle->nombrecalle = $request->input('nombrecalle');
 		$calle->save();
-		return "Se actualizo correctamente".$calle->idcalle;
+		return "Se actualizo exitosamente";
 
 	}
 
@@ -78,7 +78,7 @@ class CalleController extends Controller
 	{
 		$calle = Calle::find($idcalle);
 		$calle->delete();
-		return "Se elimino correctamente".$idcalle;	
+		return "Se elimino exitosamente";	
 		/*$calle = Calle::find($request->get('idcalle'));
 		$idbarrio=$calle->idbarrio;
 		$calle->delete();

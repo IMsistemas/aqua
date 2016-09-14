@@ -33,6 +33,7 @@
                         <td >
                             <a href="#" class="btn btn-warning " ng-click="toggle('edit', calle.idcalle, calle.nombrecalle)">Editar Calle</a>
                             <a href="#" class="btn btn-danger " ng-click="showModalConfirm(calle.idcalle, calle.nombrecalle)">Borrar Calle</a>
+                            <a href="#" class="btn btn-info " ng-click="toModuloBarrio(calle.idbarrio)">Ver Barrios</a>
                         </td>
                         </td>
                     </tr>
@@ -56,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="t_codigo_calle" class="col-sm-4 control-label">Codigo de la Calle</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="idcalle" name="idcalle" placeholder="Código calle"  
+                                        <input type="text" class="form-control" id="idcalle" name="idcalle" placeholder=""  
                                         ng-model="idcalle" disable>
                                     </div>
                                 </div>
@@ -64,11 +65,13 @@
                                 <div class="form-group">
                                     <label for="t_nombre_calle" class="col-sm-4 control-label">Nombre de la Calle</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="nombrecalle" name="nombrecalle" placeholder=""  ng-model="nombrecalle" ng-required="true" ng-maxlength="32">
+                                        <input type="text" class="form-control" id="nombrecalle" name="nombrecalle" placeholder=""  ng-model="nombrecalle" ng-required="true" ng-maxlength="32" ng-pattern="/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/">
                                         <span class="help-inline" 
-                                        ng-show="frmCalle.nombrecalle.invalid && frmCalle.nombrecalle.touched">La fecha de ingreso del cliente es requerida</span>
+                                        ng-show="frmCalle.nombrecalle.$invalid">El nombre del Cliente es requerida<br></span>
                                         <span class="help-inline" 
-                                        ng-show="frmCalle.nombrecalle.invalid && frmCalle.nombrecalle.$error.maxlength">La longitud máxima es de 16 caracteres</span>
+                                        ng-show="frmCalle.nombrecalle.$error.maxlength">La longitud máxima es de 32 caracteres<br></span>
+                                        <span class="help-inline" ng-show="frmBarrio.nombrebarrio.$error.pattern">Sólo se aceptan caracteres alfabeticos <br></span>
+
                                     </div>
                                 </div>
                             </form>

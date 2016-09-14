@@ -1,5 +1,6 @@
 app.controller('callesController', function($scope, $http, API_URL) {
     //retrieve calles listing from API
+    document.getElementById("idcalle").disabled = true;
     $scope.calles=[];
     $scope.idcalle="";
     $scope.nombrecalle="";
@@ -25,7 +26,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
                         .success(function(response) {
                             console.log(response);
                             $scope.idcalle = response;
-                             $scope.idcalle = ""
+                             $scope.nombrecalle = ""
                         });
                 break;
             case 'edit':

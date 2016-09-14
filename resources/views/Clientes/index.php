@@ -139,7 +139,7 @@
                                             <label class="col-sm-4 control-label">Apellidos:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="apellido" id="apellido"
-                                                       ng-model="cliente.apellido" ng-required="true" ng-maxlength ="32" ng-pattern="/^[a-zA-Z]+(?[a-zA-Z])+$/" >
+                                                       ng-model="cliente.apellido" ng-required="true" ng-maxlength ="32" ng-pattern="/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/" >
                                                        <span class="help-inline" ng-show="frmClientes.apellido.$invalid">El apellido del cliente es requerido <br></span>
                                                         <span class="help-inline" 
                                                         ng-show="frmClientes.apellido.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
@@ -154,7 +154,7 @@
                                             <label class="col-sm-4 control-label">Nombres:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="nombre" id="nombre"
-                                                       ng-model="cliente.nombre" ng-required="true" ng-maxlength ="32"   ng-pattern="/^[a-zA-Z]+(?[a-zA-Z])+$/">
+                                                       ng-model="cliente.nombre" ng-required="true" ng-maxlength ="32"   ng-pattern="/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/">
                                                         <span class="help-inline" ng-show="frmClientes.nombre.$invalid">El nombre del cliente es requerido <br></span>
                                                         <span class="help-inline" 
                                                         ng-show="frmClientes.nombre.$error.maxlength">La longitud máxima es de 32 caracteres <br></span>
