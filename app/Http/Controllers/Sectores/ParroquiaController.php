@@ -62,16 +62,18 @@ class ParroquiaController extends Controller
 
 	public function postActualizarParroquia(Request $request,$idparroquia)
 	{
-		$parroquia = Parroquia::find($idparroquia);
-		$parroquia->nombreparroquia = $request->input('nombreparroquia');
-		$parroquia->save();
-		return "Se actualizo correctamente".$parroquia->idparroquia;
+
+		$parroquia=DB::table('parroquia')->where('idparroquia',$idparroquia)->get();
+		$nombreparroquiaupdate=$parroquia[0]->nombreparroquia =$request->input('nombreparroquia');
+		$result = DB::table('parroquia')->where('idparroquia', $idparroquia)->update(array('nombreparroquia' => $nombreparroquiaupdate));
+		//return $result;
+		return "Se actualizo correctamente".$parroquia[0]->idparroquia;
 	}
 
 	public function destroy($idparroquia)
 	{
-		$parroquia = Parroquia::find($idparroquia);
-		$parroquia->delete();
+		$parroquia=DB::table('parroquia')->where('idparroquia',$idparroquia)->get();
+		$result = DB::table('parroquia')->where('idparroquia', $idparroquia)->delete();
 		return "Se elimino correctamente".$idparroquia;
 	}
 

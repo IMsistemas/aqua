@@ -68,7 +68,7 @@ class BarrioController extends Controller
 		$barrio = Barrio::find($idbarrio);
 		$barrio->nombrebarrio = $request->input('nombrebarrio');
 		$barrio->save();
-		return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
+		//return 'El barrio fue creado correctamente con su documento de identidad'.$barrio->idbarrio;
 
 	}
 

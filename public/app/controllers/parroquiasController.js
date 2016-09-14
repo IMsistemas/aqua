@@ -63,6 +63,7 @@ app.controller('parroquiasController', function($scope, $http, API_URL) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
            $scope.initLoad();
+           console.log(response);
             $('#myModal').modal('hide');
                 $scope.message = response;
              $('#modalMessage').modal('show');
