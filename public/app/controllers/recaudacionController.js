@@ -23,9 +23,6 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
     }
 
 
-
-
-     
     $scope.ingresoValores = function(numeroCuenta){
         var totalRubrosFijos = 0;
         var totalRubrosVariables = 0;
@@ -40,11 +37,11 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                $scope.rubrosFijosCuenta = response[0].rubrosfijos;
                $scope.rubrosVariablesCuenta = response[0].rubrosvariables;
                 angular.forEach($scope.rubrosFijosCuenta, function(rubroFijo,key){
-                    totalRubrosFijos += parseFloat(rubroFijo.pivot.costorubro == null ?  0 : rubroFijo.costorubro);
+                    totalRubrosFijos += parseFloat(rubroFijo.pivot.costorubro == null ?  0 : rubroFijo.pivot.costorubro);
                 });
 
                 angular.forEach($scope.rubrosVariablesCuenta, function(rubroVariable,key){
-                    totalRubrosVariables += parseFloat(rubroVariable.pivot.costorubro  == null ?  0 : rubroVariable.costorubro);
+                    totalRubrosVariables += parseFloat(rubroVariable.pivot.costorubro  == null ?  0 : rubroVariable.pivot.costorubro);
                 });
 
                 valorConsumo = parseFloat($scope.cuenta.valorconsumo == null ?  0 : $scope.cuenta.valorconsumo);
@@ -54,9 +51,11 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                 $scope.totalCuenta = totalRubrosFijos + totalRubrosVariables + valorConsumo + valorExcedente + valorMesesAtrasados;
 
                $('#ingresarValores').modal('show');
+            }).error(function(response){
+                $scope.errorMessage = "Error al cargar la cuenta";
+                $('#modalError').modal('show');
+                setTimeout("$('#modalError').modal('hide')",3000);
             });    
-        
-        
     };
 
     $scope.guardarOtrosRubros = function(numeroCuenta){
@@ -94,6 +93,15 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                     url: API_URL+'recaudacion/cobroagua/guardarrubros/'+numeroCuenta,
                     data: $.param($scope.cuenta),
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(response){
+                    $scope.message = "Se guardaron los rubros de la cuenta";
+                    $('#ingresarValores').modal('hide');
+                    $('#modalConfirmacion').modal('show');
+                    setTimeout("$('#modalConfirmacion').modal('hide')",3000);
+                }).error(function(response){
+                    $scope.ErrorMessage = "Error al guardar los rubros";
+                    $('#modalError').modal('show');
+                    setTimeout("$('#modalError').modal('hide')",3000);
                 });
                
         
@@ -105,7 +113,15 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         $http.get(API_URL + "recaudacion/cobroagua/cuentas/pagar/"+numeroCuenta)
             .success(function(response) {
                 $scope.ingresoValores(numeroCuenta);
+                $scope.message = "Se pagó la factura";
+                $('#ingresarValores').modal('hide');
+                $('#modalConfirmacion').modal('show');
+                setTimeout("$('#modalConfirmacion').modal('hide')",3000);
 
+        }).error(function(response){
+            $scope.ErrorMessage = "Error al pagar la factura";
+            $('#modalError').modal('show');
+            setTimeout("$('#modalError').modal('hide')",3000);
         });
 
     }
@@ -116,6 +132,7 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         yearActual = fechaActual.getFullYear();
         fechasCuenta = $scope.cuentas;
         alert(fechasCuenta);
+
     }
 
 
