@@ -117,6 +117,18 @@
 
     });
 
+    $(function(){
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'DD/MM/YYYY'
+        });
+
+        $('.datepicker_a').datetimepicker({
+            locale: 'es',
+            format: 'YYYY'
+        });
+    })
+
     function convertDatetoDB(now, revert){
         if (revert == undefined){
             var t = now.split('/');

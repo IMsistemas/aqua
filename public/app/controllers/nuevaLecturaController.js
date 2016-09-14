@@ -110,7 +110,6 @@
 
                 $scope.total = suma;
 
-                console.log($scope.rubros);
 
             });
         }
@@ -177,8 +176,6 @@
             var url = API_URL + "nuevaLectura";
 
             $http.post(url, $scope.lectura_data ).success(function (response) {
-
-                console.log(response);
 
                 $('#myModalProgressBar').modal('hide');
                 $('#btn_save').prop('disabled', true);

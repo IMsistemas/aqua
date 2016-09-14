@@ -129,7 +129,7 @@
                         <tbody>
                             <tr ng-repeat="lectura in lecturas" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
-                                <td>{{lectura.apellido + ' ' + lectura.nombre}}</td>
+                                <td><i class="fa fa-user" ></i> {{lectura.apellido + ' ' + lectura.nombre}}</td>
                                 <td class="text-right">{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
@@ -185,6 +185,8 @@
     <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+
+
     <script src="<?= asset('js/moment.min.js') ?>"></script>
     <script src="<?= asset('js/es.js') ?>"></script>
     <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
@@ -193,18 +195,5 @@
     <script src="<?= asset('app/app.js') ?>"></script>
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
 
-    <script>
-        $(function(){
-            $('.datepicker').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY'
-            });
-
-            $('.datepicker_a').datetimepicker({
-                locale: 'es',
-                format: 'YYYY'
-            });
-        })
-    </script>
 
 </html>

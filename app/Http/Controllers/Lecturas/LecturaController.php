@@ -217,7 +217,7 @@ class LecturaController extends Controller
     public function store(Request $request)
     {
 
-        $lectura = new Lectura();
+        /*$lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
@@ -246,6 +246,8 @@ class LecturaController extends Controller
                             ->get();
 
         $correo_cliente = $cliente[0]->correo;
+        */
+
         $correo_cliente = 'raidelbg84@gmail.com';
 
         $data = json_decode($request->input('pdf'));
@@ -259,7 +261,7 @@ class LecturaController extends Controller
         Mail::send('Lecturas.email',['correo_cliente' => $correo_cliente] , function($message) use ($correo_cliente)
         {
 
-            $message->from('raidelbg84@gmail.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+            $message->from('aguapotable.ip-zone.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
 
             $message->to($correo_cliente)->subject('Factura Lectura!');
 
