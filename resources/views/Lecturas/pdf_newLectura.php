@@ -209,7 +209,7 @@
                 <?php foreach ($data->rubros as $item){ ?>
 
                     <tr>
-                        <td><?= $item->nombrerubrofijo ?></td>
+                        <td><?= $item->nombrerubro ?></td>
                         <td style="text-align: right;"><?= $item->valorrubro ?></td>
                     </tr>
 

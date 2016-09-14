@@ -22,6 +22,12 @@
                 $scope.s_mes = mm;
                 $scope.t_no_lectura = response.lastID;
 
+                $scope.lectura_anterior = 0;
+                $scope.lectura_actual = 0;
+                $scope.consumo = 0;
+
+                $scope.meses_atrasados = 0;
+
             });
 
         }
@@ -78,59 +84,7 @@
 
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
 
-                /*var object_basico = {
-                    idrubrofijo: 0,
-                    nombrerubrofijo: "Consumo Tarifa Básica",
-                    valorrubro: 0.00
-                }
-
-                var object_excedente = {
-                    idrubrofijo: 0,
-                    nombrerubrofijo: "Excedente",
-                    valorrubro: 0.00
-                }
-
-                var object_mesesatrasados = {
-                    idrubrofijo: 0,
-                    nombrerubrofijo: "Valores Atrasados",
-                    valorrubro: 0.00
-                }
-
                 $scope.rubros = response;
-
-                var longitud = ($scope.rubros).length;
-
-                for(var i = 0; i < longitud; i++){
-                    ($scope.rubros)[i].valorrubro = 0;
-                }
-
-                ($scope.rubros).unshift(object_mesesatrasados);
-                ($scope.rubros).unshift(object_excedente);
-                ($scope.rubros).unshift(object_basico);*/
-
-                /*var object_basico = {
-                    idrubrofijo: 0,
-                    nombrerubro: "Consumo Tarifa Básica",
-                    valorrubro: '0.00'
-                }
-
-                var object_excedente = {
-                    idrubrofijo: 0,
-                    nombrerubro: "Excedente",
-                    valorrubro: '0.00'
-                }
-
-                var object_mesesatrasados = {
-                    idrubrofijo: 0,
-                    nombrerubro: "Valores Atrasados",
-                    valorrubro: 0
-                }*/
-
-                $scope.rubros = response;
-
-                /*($scope.rubros).unshift(object_mesesatrasados);
-                ($scope.rubros).unshift(object_excedente);
-                ($scope.rubros).unshift(object_basico);*/
 
                 $scope.total = '$ 0.00';
 
@@ -175,7 +129,7 @@
 
             for (var i = 0; i < longitud; i++) {
                 var object = {
-                    nombrerubrofijo: (($scope.rubros)[i].nombrerubrofijo).trim(),
+                    nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
                     valorrubro: ($scope.rubros)[i].valorrubro,
                 }
                 array_rubros.push(object);
@@ -303,6 +257,18 @@
         $scope.initData();
 
     });
+
+    $(function(){
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'DD/MM/YYYY'
+        });
+
+        $('.datepicker_a').datetimepicker({
+            locale: 'es',
+            format: 'YYYY'
+        });
+    })
 
     function convertDatetoDB(now, revert){
         if (revert == undefined){

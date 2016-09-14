@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-        <p>Estamiado Cliente, se adjunta la Factura de la Lectura.</p>
+        <p>Estimado Cliente, se adjunta la Factura de la Lectura.</p>
 
         <p>Saludos</p>
 </body>

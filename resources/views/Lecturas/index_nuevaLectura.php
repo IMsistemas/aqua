@@ -10,14 +10,6 @@
         <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
-
-
-        <style>
-            .dataclient{
-                font-weight: bold;
-            }
-        </style>
-
     </head>
     <body ng-controller="nuevaLecturaController">
 
@@ -136,16 +128,16 @@
                             <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
                                 <div class="col-xs-12" style="background: #e3f2fd; border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
                                     <p>
-                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
+                                        <span><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
                                     </p>
                                     <p>
-                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Barrio:</span> </span>{{barrio}}
+                                        <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Barrio:</span> </span>{{barrio}}
                                     </p>
                                     <p>
-                                        <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Calle:</span> </span>{{calle}}
+                                        <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Calle:</span> </span>{{calle}}
                                     </p>
                                     
-                                    <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
+                                    <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
                                     
                                 </div>
                             </div>
@@ -274,9 +266,11 @@
 
     <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
     <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+
+
+
     <script src="<?= asset('js/moment.min.js') ?>"></script>
     <script src="<?= asset('js/es.js') ?>"></script>
     <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
@@ -284,19 +278,5 @@
     <!-- AngularJS Application Scripts -->
     <script src="<?= asset('app/app.js') ?>"></script>
     <script src="<?= asset('app/controllers/nuevaLecturaController.js') ?>"></script>
-
-    <script>
-        $(function(){
-            $('.datepicker').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY'
-            });
-
-            $('.datepicker_a').datetimepicker({
-                locale: 'es',
-                format: 'YYYY'
-            });
-        })
-    </script>
 
 </html>
