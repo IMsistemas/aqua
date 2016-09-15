@@ -233,7 +233,10 @@ Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroContr
 Route::get('/suministros/solicitudes', function (){
 	return view('Suministros/Solicitudes/index');
 });
-Route::get('suministros/solicitudes/espera','Suministros\SolicitudController@getSolicitudEspera');
+Route::get('suministros/espera',function (){
+	return view('Suministros/Solicitudes/solicitudespera');
+});
+Route::get('suministros/espera','Suministros\SolicitudController@getSolicitudEspera');
 
 Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
 

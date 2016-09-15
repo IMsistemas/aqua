@@ -62,10 +62,13 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "recaudacion";
 	}
 
-	$scope.toModuloSolicitud = function(estado){	
-		$scope.estado=estado;	
+	$scope.toModuloSolicitud = function(){	
 		$scope.titulo = "Solicitudes";
 		$scope.toModulo = "suministros/solicitudes";
+	}
+	$scope.toModuloSolicitudEspera = function(){	
+		$scope.titulo = "Solicitudes";
+		$scope.toModulo = "suministros/espera";
 	}
 
 	$scope.toModuloSuministro = function(){		

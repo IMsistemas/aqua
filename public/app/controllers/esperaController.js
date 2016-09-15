@@ -1,18 +1,17 @@
-app.controller('solicitudController',function ($scope,$http,API_URL) {
+app.controller('esperaController',function ($scope,$http,API_URL) {
     $scope.solicitudes=[];
     $scope.ahora = new Date();
     $scope.initLoad = function(){
-        $http.get(API_URL+"suministros/solicitudes/solicitudes")
-        .success(function (response) {
-            $estado="true";
-            $scope.estado=$estado;
+            $http.get(API_URL+"suministros/espera")
+            .success(function (response) {
             $scope.solicitudes = response;
+            console.log($scope.solicitudes);
             $scope.cantidadSolicitudes = $scope.solicitudes.length;
             var fecha = $scope.solicitudes.sort(function(a,b){
                 return (new Date(a.fechasolicitud) - new Date(b.fechasolicitud));
             });
         });
-        }
+    }
     $scope.initLoad();
 
     $scope.ordenarColumna = 'estaprocesada';
