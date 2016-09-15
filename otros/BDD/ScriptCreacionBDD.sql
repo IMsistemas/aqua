@@ -1,5 +1,3 @@
-
-
 drop index PARROQUIAABARIIO_FK;
 
 drop index BARRIO_PK;
@@ -72,8 +70,6 @@ drop index PARROQUIA_PK;
 
 drop table PARROQUIA;
 
-drop index PRODUCTOASUMINISTRO_FK;
-
 drop index PRODUCTO_PK;
 
 drop table PRODUCTO;
@@ -112,7 +108,7 @@ drop index SOLICITUD_PK;
 
 drop table SOLICITUD;
 
-drop index PRODUCTOASUMINISTRO2_FK;
+drop index PRODUCTOASUMINISTRO_FK;
 
 drop index CLIENTEASUMINISTRO_FK;
 
@@ -245,15 +241,15 @@ DOCUMENTOIDENTIDAD
 create table COBROAGUA (
    IDCUENTA             SERIAL                 not null,
    NUMEROSUMINISTRO     INT8                 not null,
-   IDLECTURA            INT8                 not null,
-   FECHA                DATE                 null,
-   CONSUMOM3            INT4                 null,
+   IDLECTURA            INT8                 null,
+   FECHAPERIODO         DATE                 null,
    VALORCONSUMO         DECIMAL(9,2)         null,
    VALOREXCEDENTE       DECIMAL(9,2)         null,
    MESESATRASADOS       INT4                 null,
-   VALORMESESATRASADOS  DECIMAL(9,1)         null,
+   VALORMESESATRASADOS  DECIMAL(9,2)         null,
    TOTAL                DECIMAL(9,2)         null,
-   ESTAPAGADA           BOOL                 null,
+   ESTAPAGADA           BOOL                 not null default false,
+   CONSUMOM3            INT8                 null,
    constraint PK_COBROAGUA primary key (IDCUENTA)
 );
 
@@ -282,11 +278,14 @@ IDLECTURA
 /* Table: CONFIGURACION                                         */
 /*==============================================================*/
 create table CONFIGURACION (
-   PROCENTAJEINTERES    DECIMAL(9,2)         null,
+   PORCENTAJEINTERES    DECIMAL(9,2)         null,
    DIVIDENDOS           INT4                 null,
    AAGUAPOTABLE         DECIMAL(9,2)         null,
    ALCANTARILLADO       DECIMAL(9,2)         null,
-   GARANTIAAPERTURACALLE DECIMAL(9,2)         null
+   GARANTIAAPERTURACALLE DECIMAL(9,2)         null,
+   NOMBREJUNTA          VARCHAR(1512)        null,
+   LOGOJUNTA            VARCHAR(1024)        null,
+   ESTAENPRODUCCION     BOOL                 null
 );
 
 /*==============================================================*/
@@ -311,7 +310,7 @@ IDTARIFA
 create table CUENTAPORCOBRARSUMINISTRO (
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
    NUMEROSUMINISTRO     INT8                 not null,
-   FECHA                DATE                 null,
+   FECHAPERIODO         DATE                 null,
    DIVIDENDOS           INT4                 null,
    PAGOTOTAL            DECIMAL(9,2)         null,
    PAGOPORCADADIVIDENDO DECIMAL(9,2)         null
@@ -336,7 +335,7 @@ NUMEROSUMINISTRO
 /*==============================================================*/
 create table CUENTASPORPAGARCLIENTES (
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
-   FECHA                DATE                 null,
+   FECHAPERIODO         DATE                 null,
    VALOR                DECIMAL(9,2)         null
 );
 
@@ -384,7 +383,7 @@ IDCARGO
 /* Table: EXCEDENTETARIFA                                       */
 /*==============================================================*/
 create table EXCEDENTETARIFA (
-   IDTARIFA             INT4                 not null,
+   IDTARIFA             SERIAL                 not null,
    DESDENM3             INT4                 null,
    VALORCONSUMO         DECIMAL(9,2)         null
 );
@@ -403,9 +402,10 @@ create table LECTURA (
    IDLECTURA            SERIAL                 not null,
    NUMEROSUMINISTRO     INT8                 not null,
    FECHALECTURA         DATE                 null,
-   LECTURAANTERIOR      VARCHAR(64)          null,
-   LECTURAACTUAL        VARCHAR(64)          null,
-   CONSUMO              VARCHAR(64)          null,
+   LECTURAANTERIOR      INT8                 null,
+   LECTURAACTUAL        INT8                 null,
+   CONSUMO              INT8                 null,
+   OBSERVACION          VARCHAR(512)         null,
    constraint PK_LECTURA primary key (IDLECTURA)
 );
 
@@ -456,7 +456,7 @@ create table PRODUCTO (
    COSTOPRODUCTO        DECIMAL(9,2)         null,
    PRECIOPRODUCTO       DECIMAL(9,2)         null,
    CANTIDADPRODUCTO     INT4                 null,
-  primary key (IDPRODUCTO)
+   constraint PK_PRODUCTO primary key (IDPRODUCTO)
 );
 
 /*==============================================================*/
@@ -464,13 +464,6 @@ create table PRODUCTO (
 /*==============================================================*/
 create unique index PRODUCTO_PK on PRODUCTO (
 IDPRODUCTO
-);
-
-/*==============================================================*/
-/* Index: PRODUCTOASUMINISTRO_FK                                */
-/*==============================================================*/
-create  index PRODUCTOASUMINISTRO_FK on PRODUCTO (
-NUMEROSUMINISTRO
 );
 
 /*==============================================================*/
@@ -495,7 +488,7 @@ IDPROVINCIA
 create table RUBROFIJO (
    IDRUBROFIJO          SERIAL                 not null,
    NOMBRERUBROFIJO      VARCHAR(32)          null,
-   VALORRUBRO           DECIMAL(9,2)         null,
+   COSTORUBRO           DECIMAL(9,2)         null,
    constraint PK_RUBROFIJO primary key (IDRUBROFIJO)
 );
 
@@ -512,6 +505,7 @@ IDRUBROFIJO
 create table RUBROSFIJOSCUENTA (
    IDRUBROFIJO          INT4                 not null,
    IDCUENTA             INT4                 not null,
+   COSTORUBRO           DECIMAL(9,2)         not null default 0.00,
    constraint PK_RUBROSFIJOSCUENTA primary key (IDRUBROFIJO, IDCUENTA)
 );
 
@@ -543,7 +537,7 @@ IDRUBROFIJO
 create table RUBROSVARIABLESCUENTA (
    IDRUBROVARIABLE      INT4                 not null,
    IDCUENTA             INT4                 not null,
-   COSTORUBRO			DECIMAL(9,2),
+   COSTORUBRO           DECIMAL(9,2)         not null default 0.00,
    constraint PK_RUBROSVARIABLESCUENTA primary key (IDRUBROVARIABLE, IDCUENTA)
 );
 
@@ -589,7 +583,7 @@ IDRUBROVARIABLE
 /* Table: SOLICITUD                                             */
 /*==============================================================*/
 create table SOLICITUD (
-   IDSOLICITUD          SERIAL              not null,
+   IDSOLICITUD          SERIAL                 not null,
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
    FECHASOLICITUD       DATE                 null,
    DIRECCIONSUMINISTRO  VARCHAR(32)          null,
@@ -623,6 +617,7 @@ create table SUMINISTRO (
    IDPRODUCTO           CHAR(8)              not null,
    DIRECCIONSUMNISTRO   VARCHAR(32)          null,
    TELEFONOSUMINISTRO   CHAR(256)            null,
+   FECHAINSTALACIONSUMINISTRO DATE                 null,
    constraint PK_SUMINISTRO primary key (NUMEROSUMINISTRO)
 );
 
@@ -655,9 +650,9 @@ DOCUMENTOIDENTIDAD
 );
 
 /*==============================================================*/
-/* Index: PRODUCTOASUMINISTRO2_FK                               */
+/* Index: PRODUCTOASUMINISTRO_FK                                */
 /*==============================================================*/
-create  index PRODUCTOASUMINISTRO2_FK on SUMINISTRO (
+create  index PRODUCTOASUMINISTRO_FK on SUMINISTRO (
 IDPRODUCTO
 );
 
@@ -665,7 +660,7 @@ IDPRODUCTO
 /* Table: TARIFA                                                */
 /*==============================================================*/
 create table TARIFA (
-   IDTARIFA             INT4                 not null,
+   IDTARIFA             SERIAL                 not null,
    NOMBRETARIFA         VARCHAR(32)          null,
    constraint PK_TARIFA primary key (IDTARIFA)
 );
@@ -741,7 +736,6 @@ alter table PARROQUIA
    add constraint FK_PARROQUI_CANTONAPA_CANTON foreign key (IDCANTON)
       references CANTON (IDCANTON)
       on delete restrict on update restrict;
-
 
 alter table RUBROSFIJOSCUENTA
    add constraint FK_RUBROSFI_RUBROSFIJ_RUBROFIJ foreign key (IDRUBROFIJO)

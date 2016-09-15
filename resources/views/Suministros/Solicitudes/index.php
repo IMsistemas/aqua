@@ -90,84 +90,7 @@
 	</div>
 
 
-	<!--================Modal Nueva Solicitud Cliente=================================================================--> 
-
-	  <!-- <div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud-cliente">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <div class="col-md-6 col-xs-12">
-                            <h4 class="modal-title">Ingresar Solicitud Nro. 0001</h4>
-                        </div>
-                        <div class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
-                                <div class="col-sm-6" style="padding: 0;">
-                                   {{ahora | date : fromat : 'fullDate'}}
-                                </div>
-                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
-
-                                <div class="col-xs-12">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Documento:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="documentoidentidadcliente" id="documentoidentidadempleado"
-                                                       ng-model="documentoidentidadcliente" ng-required="true" ng-maxlength="32"  >
-                                                       {{documentoidentidadcliente}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">Cliente:</label>
-                                            <div class="col-sm-8">
-                                                {{clienteActual.apellido+" "+clienteActual.nombre | uppercase}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Dirección:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Teléfono:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="telefono" id="telefono"
-                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="" ng-disabled="">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
- -->
+	
 
 
         <!--================Modal Nueva Solicitud======================================================================--> 
@@ -370,6 +293,101 @@
                 </div>
             </div>
         </div>
+
+<!--====================================Modal Editar Solicitud============================-->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="eidtarSolicitud">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
+                            <h4 class="modal-title">Editar Solicitud Nro. {{cantidadSolicitudes+1}} </h4>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   <label ng-model="solicitud.cliente.fechaingreso">{{solicitud.fechaingreso | date : format : 'fullDate'}}</label>
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
+
+                            <fieldset>
+                            <legend style="padding-bottom: 5px; padding-left: 20px">Datos Cliente</legend>
+
+
+                             <div class="col-xs-12">
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="form-group error">
+                                                <label class="col-sm-4 control-label">Cliente:</label>
+                                                <div class="col-sm-8">
+                                                    {{solicitud.cliente.apellido+" "+solicitud.cliente.nombre}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="form-group error">
+                                                <label class="col-sm-4 control-label">Telefono:</label>
+                                                <div class="col-sm-8">
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                                </fieldset>
+                                    
+                                <fieldset>
+                                    <legend style="padding-bottom: 5px; padding-left: 20px">Datos Instalacion</legend>
+                                    <div class="col-xs-12">
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="form-group error">
+                                                <label class="col-sm-4 control-label">Dirección:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="direccionsolicitud" id="direccionsolicitud"
+                                                           ng-model="solicitud.direccionsuministro" ng-required="true" ng-maxlength="32" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="form-group error">
+                                                <label class="col-sm-4 control-label">Telefono:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
+                                                           ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
+                                                           <span class="help-inline" ng-show="formNuevaSolicitud.telefonosolicitud.$invalid">El teléfono principal del cliente es requerido <br></span>
+                                                       <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.pattern">Sólo se permiten números <br></span>
+                                                        <span class="help-inline" 
+                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSolicitud();" ng-disabled="">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
 <!--=====================================Modal Procesar===================================-->
 
@@ -662,3 +680,87 @@
         </div>
 
 </div>
+
+
+
+
+
+
+<!--================Modal Nueva Solicitud Cliente=================================================================--> 
+
+      <!-- <div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud-cliente">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <div class="col-md-6 col-xs-12">
+                            <h4 class="modal-title">Ingresar Solicitud Nro. 0001</h4>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
+                                <div class="col-sm-6" style="padding: 0;">
+                                   {{ahora | date : fromat : 'fullDate'}}
+                                </div>
+                                <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
+
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="documentoidentidadcliente" id="documentoidentidadempleado"
+                                                       ng-model="documentoidentidadcliente" ng-required="true" ng-maxlength="32"  >
+                                                       {{documentoidentidadcliente}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Cliente:</label>
+                                            <div class="col-sm-8">
+                                                {{clienteActual.apellido+" "+clienteActual.nombre | uppercase}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Dirección:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="direccion" id="direccion"
+                                                       ng-model="apellido" ng-required="true" ng-maxlength="32" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="form-group error">
+                                            <label class="col-sm-4 control-label">Teléfono:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"
+                                                       ng-model="telefono" ng-required="true" ng-maxlength="32"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="" ng-disabled="">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+ -->
