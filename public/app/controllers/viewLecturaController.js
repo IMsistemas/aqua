@@ -74,7 +74,6 @@
             });
         }
 
-        
         $scope.searchByFilter = function(){
 
             if($scope.s_anno == undefined){

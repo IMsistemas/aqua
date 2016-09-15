@@ -59,11 +59,10 @@
                         <fieldset>
                             <legend>Periodo:</legend>
                             <div class="row">
-                                <div class="col-xs-3">
+                                <div class="col-md-3 col-xs-6">
                                     <div class="form-group error">
                                         <label class="col-sm-4 control-label">Año:</label>
                                         <div class="col-sm-8">
-                                            <!--<select class="form-control" name="s_anno" id="s_anno" ng-model=""></select>-->
                                             <input type="text" class="form-control datepicker_a" name="s_anno" id="s_anno" 
                                                 ng-model="s_anno" ng-required="true" >
                                             <span class="help-block error"
@@ -71,28 +70,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-md-3 col-xs-6">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Mes:</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes">
-                                                <option value="01">Enero</option>
-                                                <option value="02">Febrero</option>
-                                                <option value="03">Marzo</option>
-                                                <option value="04">Abril</option>
-                                                <option value="05">Mayo</option>
-                                                <option value="06">Junio</option>
-                                                <option value="07">Julio</option>
-                                                <option value="08">Agosto</option>
-                                                <option value="09">Septiembre</option>
-                                                <option value="10">Octubre</option>
-                                                <option value="11">Noviembre</option>
-                                                <option value="12">Diciembre</option>
+                                            <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes"
+                                                    ng-options="value.id as value.name for value in meses">
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-md-3 col-xs-6">
                                     <div class="form-group error">
                                         <label class="col-sm-6 control-label" >Suministro Nro:</label>
                                         <div class="col-sm-6">
@@ -104,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-md-3 col-xs-6">
                                     <div class="form-group error">
                                         <label class="col-sm-4 control-label">Lectura:</label>
                                         <div class="col-sm-8">
@@ -259,7 +247,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
 
     </body>
 

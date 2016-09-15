@@ -2,6 +2,21 @@
 
     app.controller('nuevaLecturaController', function($scope, $http, API_URL) {
 
+        $scope.meses = [
+            { id: '01', name: 'Enero' },
+            { id: '02', name: 'Febrero' },
+            { id: '03', name: 'Marzo' },
+            { id: '04', name: 'Abril' },
+            { id: '05', name: 'Mayo' },
+            { id: '06', name: 'Junio' },
+            { id: '07', name: 'Julio' },
+            { id: '08', name: 'Agosto' },
+            { id: '09', name: 'Septiembre' },
+            { id: '10', name: 'Octubre' },
+            { id: '11', name: 'Noviembre' },
+            { id: '12', name: 'Diciembre' }
+        ];
+
         $scope.rubros = [];
 
         $scope.initData = function(){
@@ -33,6 +48,7 @@
         }
 
         $scope.loadInfo = function(){
+
             var id = $scope.t_no_suministro;
 
             $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
@@ -134,11 +150,19 @@
                 array_rubros.push(object);
             }
 
+            var text_mes = '';
+            for (var i = 0; i < 12; i++){
+                if ($scope.meses[i].id == $scope.s_mes) {
+                    text_mes = $scope.meses[i].name;
+                }
+            }
+
+
             var filters = {
                 fecha: $scope.t_fecha_ing,
                 no_lectura: $scope.t_no_lectura,
                 anno: $scope.s_anno,
-                mes: $scope.s_mes,
+                mes: text_mes,
                 suministro: $scope.t_no_suministro,
                 lectura: $scope.t_lectura,
                 nombre_cliente: $scope.nombre_cliente,
@@ -213,18 +237,24 @@
 
             for (var i = 0; i < longitud; i++) {
                 var object = {
-                    nombrerubrofijo: (($scope.rubros)[i].nombrerubrofijo).trim(),
+                    nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
                     valorrubro: ($scope.rubros)[i].valorrubro,
                 }
                 array_rubros.push(object);
             }
 
+            var text_mes = '';
+            for (var i = 0; i < 12; i++){
+                if ($scope.meses[i].id == $scope.s_mes) {
+                    text_mes = $scope.meses[i].name;
+                }
+            }
 
             var filters = {
                 fecha: convertDatetoDB($scope.t_fecha_ing),
                 no_lectura: $scope.t_no_lectura,
                 anno: $scope.s_anno,
-                mes: $scope.s_mes,
+                mes: text_mes,
                 suministro: $scope.t_no_suministro,
                 lectura: $scope.t_lectura,
                 nombre_cliente: $scope.nombre_cliente,
