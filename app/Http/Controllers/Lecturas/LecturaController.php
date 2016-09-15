@@ -240,14 +240,18 @@ class LecturaController extends Controller
 
         $cobroagua->save();
 
-        /*$cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
-                            ->select('cliente.correo')
+        $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+                            ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
 
         $correo_cliente = $cliente[0]->correo;
+        $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
         $correo_cliente = 'raidelbg84@gmail.com';
+        $nombre_cliente = 'Berrillo Gonzalez Raidel';
+
+        /*$correo_cliente = 'raidelbg84@gmail.com';
 
         $data = json_decode($request->input('pdf'));
         $data1 = [];
@@ -267,6 +271,62 @@ class LecturaController extends Controller
             $message->attach(storage_path('app/public') . '/myfile.pdf');
 
         });*/
+
+        $data = json_decode($request->input('pdf'));
+        $data1 = [];
+
+        $view = \View::make('Lecturas.pdf_email_newLectura', compact('data1', 'data'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->save(storage_path('app/public') . '/myfile.pdf');
+
+        $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
+
+        // Create rcpt array to send emails to 2 rcpts
+        $rcpt = array(
+            /*array(
+                'name' => 'Agua Potable',
+                'email' => 'aguapotable@aguapotable.org'
+            ),*/
+            array(
+                'name' => $nombre_cliente,
+                'email' => $correo_cliente
+            )
+        );
+
+        $postData = array(
+            'function' => 'sendMail',
+            'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
+            'subject' => 'Subject 1',
+            'html' => '<html><head><title>Title</title></head><body><h1>My Email</h1></body></html>',
+            'mailboxFromId' => 1,
+            'mailboxReplyId' => 1,
+            'mailboxReportId' => 1,
+            'packageId' => 6,
+            'emails' => $rcpt,
+            'attachments' => [[storage_path('app/public') . '/myfile.pdf']]
+        );
+
+        $post = http_build_query($postData);
+
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $json = curl_exec($curl);
+        if ($json === false) {
+            die('Request failed with error: '. curl_error($curl));
+        }
+
+        $result = json_decode($json);
+        if ($result->status == 0) {
+            die('Bad status returned. Error: '. $result->error);
+        }
+
+        //var_dump($result->data);
+
+
 
         return response()->json(['success' => true]);
     }
