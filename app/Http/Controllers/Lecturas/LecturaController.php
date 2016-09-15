@@ -240,6 +240,7 @@ class LecturaController extends Controller
 
         $cobroagua->save();
 
+
         $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
                             ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
@@ -248,8 +249,8 @@ class LecturaController extends Controller
         $correo_cliente = $cliente[0]->correo;
         $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
-        $correo_cliente = 'raidelbg84@gmail.com';
-        $nombre_cliente = 'Berrillo Gonzalez Raidel';
+        /*$correo_cliente = 'raidelbg84@gmail.com';
+        $nombre_cliente = 'Berrillo Gonzalez Raidel';*/
 
         /*$correo_cliente = 'raidelbg84@gmail.com';
 
@@ -275,19 +276,11 @@ class LecturaController extends Controller
         $data = json_decode($request->input('pdf'));
         $data1 = [];
 
-        $view = \View::make('Lecturas.pdf_email_newLectura', compact('data1', 'data'))->render();
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view)->save(storage_path('app/public') . '/myfile.pdf');
+        $view = \View::make('Lecturas.pdf_body_email_newLectura', compact('data1', 'data'))->render();
 
         $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
 
-        // Create rcpt array to send emails to 2 rcpts
         $rcpt = array(
-            /*array(
-                'name' => 'Agua Potable',
-                'email' => 'aguapotable@aguapotable.org'
-            ),*/
             array(
                 'name' => $nombre_cliente,
                 'email' => $correo_cliente
@@ -297,14 +290,13 @@ class LecturaController extends Controller
         $postData = array(
             'function' => 'sendMail',
             'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
-            'subject' => 'Subject 1',
-            'html' => '<html><head><title>Title</title></head><body><h1>My Email</h1></body></html>',
+            'subject' => 'Factura Agua',
+            'html' => $view,
             'mailboxFromId' => 1,
             'mailboxReplyId' => 1,
             'mailboxReportId' => 1,
             'packageId' => 6,
             'emails' => $rcpt,
-            'attachments' => [[storage_path('app/public') . '/myfile.pdf']]
         );
 
         $post = http_build_query($postData);
@@ -323,10 +315,6 @@ class LecturaController extends Controller
         if ($result->status == 0) {
             die('Bad status returned. Error: '. $result->error);
         }
-
-        //var_dump($result->data);
-
-
 
         return response()->json(['success' => true]);
     }

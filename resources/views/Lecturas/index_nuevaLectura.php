@@ -238,7 +238,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <p style="font-size: 12px !important; font-weight: bold;" id="text-demo-load">
-                            ESPERE POR FAVOR!, ESTAMOS GUARDANDO LA LECTURA, CREANDO ADJUNTO A ENVIAR POR CORREO.....
+                            ESPERE POR FAVOR!, ESTAMOS GUARDANDO LA LECTURA, CREANDO CORREO A ENVIAR.....
                         </p>
                         <div class="row" style="padding: 5px;">
                             <div class="progress">

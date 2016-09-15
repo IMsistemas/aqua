@@ -232,62 +232,51 @@
 
         $scope.exportToPDF = function(type) {
 
-            /*if (type == 2){
-                window.print();
-            } else {*/
-                var longitud = ($scope.rubros).length;
+            var longitud = ($scope.rubros).length;
 
-                var array_rubros = [];
+            var array_rubros = [];
 
-                for (var i = 0; i < longitud; i++) {
-                    var object = {
-                        nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
-                        valorrubro: ($scope.rubros)[i].valorrubro,
-                    }
-                    array_rubros.push(object);
+            for (var i = 0; i < longitud; i++) {
+                var object = {
+                    nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
+                    valorrubro: ($scope.rubros)[i].valorrubro,
                 }
+                array_rubros.push(object);
+            }
 
-                var text_mes = '';
-                for (var i = 0; i < 12; i++){
-                    if ($scope.meses[i].id == $scope.s_mes) {
-                        text_mes = $scope.meses[i].name;
-                    }
+            var text_mes = '';
+            for (var i = 0; i < 12; i++){
+                if ($scope.meses[i].id == $scope.s_mes) {
+                    text_mes = $scope.meses[i].name;
                 }
+            }
 
-                var filters = {
-                    fecha: convertDatetoDB($scope.t_fecha_ing),
-                    no_lectura: $scope.t_no_lectura,
-                    anno: $scope.s_anno,
-                    mes: text_mes,
-                    suministro: $scope.t_no_suministro,
-                    lectura: $scope.t_lectura,
-                    nombre_cliente: $scope.nombre_cliente,
-                    barrio: $scope.barrio,
-                    calle: $scope.calle,
-                    tarifa: $scope.tarifa,
+            var filters = {
+                fecha: convertDatetoDB($scope.t_fecha_ing),
+                no_lectura: $scope.t_no_lectura,
+                anno: $scope.s_anno,
+                mes: text_mes,
+                suministro: $scope.t_no_suministro,
+                lectura: $scope.t_lectura,
+                nombre_cliente: $scope.nombre_cliente,
+                barrio: $scope.barrio,
+                calle: $scope.calle,
+                tarifa: $scope.tarifa,
 
-                    lectura_anterior: $scope.lectura_anterior,
-                    lectura_actual: $scope.lectura_actual,
-                    consumo: $scope.consumo,
-                    meses_atrasados: $scope.meses_atrasados,
-                    total: $scope.total,
-                    rubros: array_rubros,
-                    script: 'window.print()'
-                }
+                lectura_anterior: $scope.lectura_anterior,
+                lectura_actual: $scope.lectura_actual,
+                consumo: $scope.consumo,
+                meses_atrasados: $scope.meses_atrasados,
+                total: $scope.total,
+                rubros: array_rubros,
+                script: 'window.print()'
+            }
 
                 var ventana = window.open('nuevaLectura/exportToPDF/' + type + '/' + JSON.stringify(filters));
 
                 if (type == 2){
                     setTimeout(function(){ ventana.print(); }, 2000);
                 }
-
-
-
-                //window.open('nuevaLectura/exportToPDF/' + type + '/' + JSON.stringify(filters));
-
-            //}
-
-
 
 
         }
