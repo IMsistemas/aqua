@@ -160,14 +160,14 @@ class LecturaController extends Controller
             for ($i = 0; $i < $longitud; $i++){
                 if($rubrofijo[$i]->idrubrofijo == 1){
 
-                    if ($rubrofijo[$i]->valorrubro != null && $rubrofijo[$i]->valorrubro != ''){
-                        $rubros[$i + 3]['valorrubro'] = $rubrofijo[$i]->valorrubro;
+                    if ($rubrofijo[$i]->costorubro != null && $rubrofijo[$i]->costorubro != ''){
+                        $rubros[$i + 3]['valorrubro'] = $rubrofijo[$i]->costorubro;
                     }
 
                 } else {
 
-                    if ($rubrofijo[$i]->valorrubro != null && $rubrofijo[$i]->valorrubro != ''){
-                        $value = ($tarifabasica[0]->valorconsumo + $excedente) * $rubrofijo[$i]->valorrubro;
+                    if ($rubrofijo[$i]->costorubro != null && $rubrofijo[$i]->costorubro != ''){
+                        $value = ($tarifabasica[0]->valorconsumo + $excedente) * $rubrofijo[$i]->costorubro;
                         $rubros[$i + 3]['valorrubro'] = $value;
                     }
 
@@ -193,7 +193,7 @@ class LecturaController extends Controller
         if ($longitud_variable > 0){
             for ($i = 0; $i < $longitud_variable; $i++){
 
-                if ($rubrofijo[$i]->valorrubro != null && $rubrovariable[$i]->valorrubro != ''){
+                if ($rubrovariable[$i]->valorrubro != null && $rubrovariable[$i]->valorrubro != ''){
                     $rubros[$i + ($longitud + 3)]['valorrubro'] = $rubrovariable[$i]->valorrubro;
                 }
 
@@ -217,7 +217,7 @@ class LecturaController extends Controller
     public function store(Request $request)
     {
 
-        /*$lectura = new Lectura();
+        $lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
@@ -240,13 +240,12 @@ class LecturaController extends Controller
 
         $cobroagua->save();
 
-        $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+        /*$cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
                             ->select('cliente.correo')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
 
         $correo_cliente = $cliente[0]->correo;
-        */
 
         $correo_cliente = 'raidelbg84@gmail.com';
 
@@ -267,7 +266,7 @@ class LecturaController extends Controller
 
             $message->attach(storage_path('app/public') . '/myfile.pdf');
 
-        });
+        });*/
 
         return response()->json(['success' => true]);
     }
