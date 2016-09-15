@@ -278,12 +278,14 @@ class LecturaController extends Controller
      * @param $data
      * @return mixed
      */
-    public function exportToPDF($data)
+    public function exportToPDF($type, $data)
     {
         $data = json_decode($data);
         $data1 = [];
 
-        $view = \View::make('Lecturas.pdf_newLectura', compact('data1', 'data'))->render();
+        ($type == 1) ? $plantilla = 'Lecturas.pdf_newLectura' : $plantilla = 'Lecturas.pdf_email_newLectura';
+
+        $view = \View::make($plantilla, compact('data1', 'data'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);

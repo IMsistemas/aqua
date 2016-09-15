@@ -90,6 +90,7 @@
                     }
 
                     $('#btn_export_pdf').prop('disabled', false);
+                    $('#btn_print_pdf').prop('disabled', false);
                     $('#btn_save').prop('disabled', false);
                 }
 
@@ -124,7 +125,7 @@
                     suma += parseFloat(($scope.rubros)[i].valorrubro);
                 }
 
-                $scope.total = suma;
+                $scope.total = suma.toFixed(2);
 
 
             });
@@ -204,7 +205,7 @@
                 $('#myModalProgressBar').modal('hide');
                 $('#btn_save').prop('disabled', true);
                 $('#btn_export_pdf').prop('disabled', true);
-
+                $('#btn_print_pdf').prop('disabled', true);
 
                 $scope.t_no_suministro = '';
                 $scope.t_lectura = '';
@@ -229,56 +230,66 @@
 
         }
 
-        $scope.exportToPDF = function () {
+        $scope.exportToPDF = function(type) {
 
-            var longitud = ($scope.rubros).length;
+            /*if (type == 2){
+                window.print();
+            } else {*/
+                var longitud = ($scope.rubros).length;
 
-            var array_rubros = [];
+                var array_rubros = [];
 
-            for (var i = 0; i < longitud; i++) {
-                var object = {
-                    nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
-                    valorrubro: ($scope.rubros)[i].valorrubro,
+                for (var i = 0; i < longitud; i++) {
+                    var object = {
+                        nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
+                        valorrubro: ($scope.rubros)[i].valorrubro,
+                    }
+                    array_rubros.push(object);
                 }
-                array_rubros.push(object);
-            }
 
-            var text_mes = '';
-            for (var i = 0; i < 12; i++){
-                if ($scope.meses[i].id == $scope.s_mes) {
-                    text_mes = $scope.meses[i].name;
+                var text_mes = '';
+                for (var i = 0; i < 12; i++){
+                    if ($scope.meses[i].id == $scope.s_mes) {
+                        text_mes = $scope.meses[i].name;
+                    }
                 }
-            }
 
-            var filters = {
-                fecha: convertDatetoDB($scope.t_fecha_ing),
-                no_lectura: $scope.t_no_lectura,
-                anno: $scope.s_anno,
-                mes: text_mes,
-                suministro: $scope.t_no_suministro,
-                lectura: $scope.t_lectura,
-                nombre_cliente: $scope.nombre_cliente,
-                barrio: $scope.barrio,
-                calle: $scope.calle,
-                tarifa: $scope.tarifa,
+                var filters = {
+                    fecha: convertDatetoDB($scope.t_fecha_ing),
+                    no_lectura: $scope.t_no_lectura,
+                    anno: $scope.s_anno,
+                    mes: text_mes,
+                    suministro: $scope.t_no_suministro,
+                    lectura: $scope.t_lectura,
+                    nombre_cliente: $scope.nombre_cliente,
+                    barrio: $scope.barrio,
+                    calle: $scope.calle,
+                    tarifa: $scope.tarifa,
 
-                lectura_anterior: $scope.lectura_anterior,
-                lectura_actual: $scope.lectura_actual,
-                consumo: $scope.consumo,
-                meses_atrasados: $scope.meses_atrasados,
-                total: $scope.total,
-                rubros: array_rubros
-            }
+                    lectura_anterior: $scope.lectura_anterior,
+                    lectura_actual: $scope.lectura_actual,
+                    consumo: $scope.consumo,
+                    meses_atrasados: $scope.meses_atrasados,
+                    total: $scope.total,
+                    rubros: array_rubros,
+                    script: 'window.print()'
+                }
 
-           window.open('nuevaLectura/exportToPDF/' + JSON.stringify(filters));
+                var ventana = window.open('nuevaLectura/exportToPDF/' + type + '/' + JSON.stringify(filters));
 
-            /*$http.get(API_URL + 'nuevaLectura/exportToPDF/' + JSON.stringify(filters)).success(function(response){
-                //window.open('data:application/pdf;base64, ' + btoa(escape(encodeURIComponent( response ))));
-            });*/
+                if (type == 2){
+                    setTimeout(function(){ ventana.print(); }, 2000);
+                }
 
-            /*$http.get(API_URL + 'verLectura/getByFilter/' + JSON.stringify(filters)).success(function(response){
-                $scope.lecturas = response;
-            });*/
+
+
+                //window.open('nuevaLectura/exportToPDF/' + type + '/' + JSON.stringify(filters));
+
+            //}
+
+
+
+
         }
 
         $scope.initData();
@@ -286,6 +297,9 @@
     });
 
     $(function(){
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         $('.datepicker').datetimepicker({
             locale: 'es',
             format: 'DD/MM/YYYY'

@@ -171,7 +171,7 @@ Route::Delete('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleControlle
 
 /*===================================Módulo Lectura===========================================*/
 
-Route::get('nuevaLectura/exportToPDF/{data}', 'Lecturas\LecturaController@exportToPDF');
+Route::get('nuevaLectura/exportToPDF/{type}/{data}', 'Lecturas\LecturaController@exportToPDF');
 
 //Ruta devuelve el ultimo ID + 1
 Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
