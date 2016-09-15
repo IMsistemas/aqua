@@ -216,6 +216,14 @@ Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPosition
 Route::resource('empleado', 'Nomina\EmpleadoController');
 
 
+Route::get('cuentaspagarcliente/getAll', 'Cuentas\CuentasPorPagarClientesController@getAll');
+Route::get('cuentaspagarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorPagarClientesController@getByFilter');
+Route::resource('cuentaspagarcliente', 'Cuentas\CuentasPorPagarClientesController');
+
+Route::get('cuentascobrarcliente/getAll', 'Cuentas\CuentasPorCobrarSuministroController@getAll');
+Route::get('cuentascobrarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorCobrarSuministroController@getByFilter');
+Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroController');
+
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 
 /*=============================Módulo Solicitud Suministro====================================*/
