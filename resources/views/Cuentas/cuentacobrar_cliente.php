@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Aqua-Cuentas Pagar Cliente</title>
+    <title>Aqua-Cuentas Cobrar Cliente</title>
 
     <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
