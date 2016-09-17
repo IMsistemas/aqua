@@ -77,7 +77,7 @@
 		</div>
 
 		<footer>
-			<a href="https://www.imnegocios.com/"><img src="img/logotipo-imnegocios.png" style="width: 200px;"></a>
+			<a href="https://www.imnegocios.com/" target="_blank"><img src="img/logotipo-imnegocios.png" style="width: 200px;"></a>
 		</footer>
 
 
