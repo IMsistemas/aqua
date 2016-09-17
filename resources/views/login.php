@@ -1,46 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Aqua-Inicio Sesión</title>
-	<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-	<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-	<link href="<?= asset('css/login.css') ?>" rel="stylesheet">
-</head>
-<body>
+	<head>
 
-<header>
-	<img src="img/logotipo-interno.png">
-</header>
-<hr>
-<section>
-	<form>
-		<label>INICIO DE SESIÓN</label>
-		<br>
-		Por favor ingresar nombre de usuario y contraseña
-		<br>
-		<input type="text" name="nombreUsuario" id="nombreUsuario" placeholder="usuario" class=user""><br> 
-		
-		<input type="text" name="passUsuario" id="passUsuario" placeholder="clave">
-		<br>
-		<a href="" onclick="pantallaCompleta();">Ingresar</a>
-		
-		
-	</form>
-</section>
+		<title>Aqua-Inicio Sesión</title>
+		<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
+		<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
+		<link href="<?= asset('css/login.css') ?>" rel="stylesheet">
 
-<footer>
-<hr>
+	</head>
+	<body>
 
-	<a href="https://www.imnegocios.com/"><img src="img/logotipo-imnegocios.png"></a>
-</footer>
-<script type="text/javascript">
-	pantallaCompleta = function(){
-		javascript:window.open("http://localhost:88/aqua/public/inicio", "_blank", "resizable=yes,scrollbars=yes,status=no, directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=yes")
+		<div class="container" style="border-bottom: solid 1px #9e9e9e ;">
+			<img src="img/logotipo-interno.png">
+		</div>
 
-		
-		window.close();
-	}
-	
-</script>
-</body>
+		<div class="container" style="border-bottom: solid 1px #9e9e9e ; padding-bottom: 5%;">
+
+			<div class="col-xs-12" style="margin-top: 30px;">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4 text-center">
+					<span style="color: #01579b; font-weight: bold; font-size: 14px; margin-bottom: 5px;">INICIO DE SESION</span><br>
+					<span>Por favor, ingrese nombre de usuario y clave</span>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+			<div class="col-xs-12" style="margin-top: 15px;">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4">
+					<div class="form-group has-feedback has-feedback-left">
+						<i class="fa fa-user fa-lg form-control-feedback"></i>
+						<input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" placeholder="Usuario">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4">
+					<div class="form-group has-feedback has-feedback-left">
+						<i class="fa fa-unlock-alt fa-lg form-control-feedback"></i>
+						<input type="password" name="passUsuario" id="passUsuario" class="form-control" placeholder="Clave">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4 text-center">
+					<span>Código de Verificación</span>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+			<div class="col-xs-12" style="margin-top: 15px;">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4">
+					<div class="form-group has-feedback has-feedback-left">
+						<i class="fa fa-unlock-alt fa-lg form-control-feedback"></i>
+						<input type="text" class="form-control" placeholder="Código de Verificación">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4">
+					<button type="button" class="btn btn-block btn-info" onclick="pantallaCompleta();">Ingresar</button>
+				</div>
+				<div class="col-xs-12 col-sm-4"></div>
+			</div>
+
+		</div>
+
+		<footer>
+			<a href="https://www.imnegocios.com/"><img src="img/logotipo-imnegocios.png" style="width: 200px;"></a>
+		</footer>
+
+
+		<script type="text/javascript">
+			pantallaCompleta = function(){
+				javascript:window.open("http://localhost:88/aqua/public/inicio", "_blank", "resizable=yes,scrollbars=yes,status=no, directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=yes")
+				window.close();
+			}
+		</script>
+
+	</body>
 </html>

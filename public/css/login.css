@@ -1,62 +1,69 @@
-* {
-	margin:0;
-	padding:0;
-}
- 
+
 body {
 	background-image: url("../img/background-inicio.jpg");
 	width: 100%;
 	height: 100%;
+	margin:0;
+	padding:0;
 }
 
 img{
 	display: block;
-    margin: auto;
-    width: 10%;
-    margin-top: 15px;
-    margin-bottom: 40px;
+	margin: auto;
+	width: 15%;
+	margin-top: 15px;
+	margin-bottom: 30px;
 }
 
-section{
-	text-align: center;
+.has-feedback-left input.form-control {
+	padding-left: 34px; /* @input-height-base; */
+	padding-right: 12px; /* @padding-base-horizontal */
+}
+
+.has-feedback-left .form-control-feedback {
+	left: 0;
+}
+.form-horizontal .has-feedback-left .form-control-feedback {
+	left: 12px; /* @grid-gutter-width / 2 */
+}
+
+.has-feedback-left input.input-sm {
+	padding-left: 30px;  @input-height-small;
+}
+.has-feedback-left input.input-lg {
+	padding-left: 46px;  @input-height-large;
+}
+
+.fa{
+	margin-top: 10px;
+	color: #337ab7;
 }
 
 input{
-	
-	background: rgb(50,152,190);
-    border: 0px solid ;
-    border-radius: 10px;
-    color: rgb(0,0,0);
-    padding: 5px 5px 5px 25px;
-    width: 230px;
-    margin-bottom: 5px;
-}
-input .nombreUsuario{
-	background-image: url("../icon/ico-usuario.png");
-	background-position: left center;
-
+	background: #90caf9   !important;
+	border: none !important;
+	color: black !important;
+	border-radius: 10px !important;
 }
 
+.form-control::-webkit-input-placeholder { color: #01579b; }
+.form-control:-moz-placeholder { color: #01579b; }
+.form-control::-moz-placeholder { color: #01579b; }
+.form-control:-ms-input-placeholder { color: #01579b; }
 
-
-form a{
-	
-	padding: 5px 80px 5px 80px;
-	border: 1px solid ;
-    border-radius: 10px;
-    text-align: center;
+.btn{
+	border-radius: 10px !important;
+	border: 3px solid white !important;
+	color: black !important;
+	font-weight: bold;
+	background: transparent;
 }
 
-form a:hover{
-	background: rgb(26,117,188);
-}
-
-
-label{
-	color: rgb(26,117,188);
-}
-
-footer{
-	margin-bottom: 1px;
-	margin-top: 315px;
+footer {
+	width: 100%;
+	bottom: 1px;
+	position: absolute;
+	height: 110px;
+	display: table-row;
+	margin:0 auto auto auto;
 }
