@@ -14,7 +14,7 @@
 			<img src="img/logotipo-interno.png">
 		</div>
 
-		<div class="container" style="border-bottom: solid 1px #9e9e9e ; padding-bottom: 5%;">
+		<div class="container" style="border-bottom: solid 1px #9e9e9e ; padding-bottom: 4%;">
 
 			<div class="col-xs-12" style="margin-top: 30px;">
 				<div class="col-xs-12 col-sm-4"></div>
@@ -77,7 +77,7 @@
 		</div>
 
 		<footer>
-			<a href="https://www.imnegocios.com/" target="_blank"><img src="img/logotipo-imnegocios.png" style="width: 200px;"></a>
+			<a href="https://www.imnegocios.com/" target="_blank"><img src="img/logotipo-imnegocios.png" style="width: 180px;"></a>
 		</footer>
 
 
