@@ -39,6 +39,28 @@ class EmpleadoController extends Controller
     }
 
     /**
+     * Obtener los cargos filtrados
+     *
+     * @param $filter
+     * @return mixed
+     */
+    public function getByFilter($filter)
+    {
+        $filter = json_decode($filter);
+
+        return Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
+                        ->select('empleado.nombre', 'empleado.apellido', 'empleado.telefonoprincipal',
+                            'empleado.celular', 'empleado.documentoidentidadempleado',
+                            'cargo.nombrecargo')
+                        ->orderBy('empleado.apellido', 'asc')
+                        ->whereRaw(
+                                "empleado.documentoidentidadempleado LIKE '%" . $filter->text .
+                                "%' OR empleado.nombre LIKE '%" . $filter->text .
+                                "%' OR empleado.apellido LIKE '%" . $filter->text . "%' ")
+                        ->get();
+    }
+
+    /**
      * Obtener todos los cargos
      *
      * @return mixed

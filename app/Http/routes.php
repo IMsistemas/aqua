@@ -214,6 +214,8 @@ Route::resource('cargo', 'Nomina\CargoController');
 Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
 //Ruta devuelve todos los cargos
 Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
+//Ruta devuelve los cargos por filtro
+Route::get('empleado/getByFilter/{filters}', 'Nomina\EmpleadoController@getByFilter');
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia empleado
 Route::resource('empleado', 'Nomina\EmpleadoController');
 

@@ -3,7 +3,8 @@
 
             <div class="col-sm-6 col-xs-8">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." >
+                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..."
+                           ng-model="search" ng-change="searchByFilter()">
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>

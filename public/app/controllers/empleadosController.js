@@ -168,6 +168,23 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
 
     }
 
+    $scope.searchByFilter = function(){
+
+        var t_search = null;
+
+        if($scope.search != undefined && $scope.search != ''){
+            t_search = $scope.search;
+        }
+
+        var filter = {
+            text: t_search
+        };
+
+        $http.get(API_URL + 'empleado/getByFilter/' + JSON.stringify(filter)).success(function(response){
+            $scope.empleados = response;
+        });
+    }
+
     $scope.showModalConfirm = function(id){
         $scope.empleado_del = id;
         $http.get(API_URL + 'empleado/' + id).success(function(response) {
