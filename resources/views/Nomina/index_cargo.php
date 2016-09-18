@@ -2,43 +2,46 @@
 
     <div ng-controller="cargosController">
 
-        <div class="container" style="margin-top: 2%;">
-            <fieldset>
-                <legend style="padding-bottom: 10px;">
-                   
-                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
-                </legend>
+        <div class="col-xs-12" style="margin-top: 2%;">
 
-                <div class="col-xs-6">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-pagination-search="cargos">
-                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-                    </div>
+            <div class="col-sm-6 col-xs-8">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR...">
+                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
+            </div>
 
-                <div class="col-xs-12">
-                    <table class="table table-responsive table-striped table-hover table-condensed">
-                        <thead class="bg-primary">
-                            <tr>
-                                <th style="width: 90px;">Código</th>
-                                <th>Nombre</th>
-                                <th style="width: 180px;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-pagination="cargo in cargos" ng-pagination-size="10">
-                                <td class="text-center">{{cargo.idcargo}}</td>
-                                <td>{{cargo.nombrecargo}}</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-default" ng-click="toggle('edit', cargo.idcargo)">Editar</button>
-                                    <button type="button" class="btn btn-danger" ng-click="showModalConfirm(cargo.idcargo)">Eliminar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <ng-pagination-control pagination-id="cargos"></ng-pagination-control>
-                </div>
-            </fieldset>
+            <div class="col-sm-6 col-xs-4">
+                <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">
+                    Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="col-xs-12">
+                <table class="table table-responsive table-striped table-hover table-condensed">
+                    <thead class="bg-primary">
+                    <tr>
+                        <th style="width: 90px;">Código</th>
+                        <th>Nombre</th>
+                        <th style="width: 200px;">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="cargo in cargos">
+                        <td class="text-center">{{cargo.idcargo}}</td>
+                        <td>{{cargo.nombrecargo}}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', cargo.idcargo)">
+                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(cargo.idcargo)">
+                                Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalActionCargo">
@@ -70,7 +73,12 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formCargo.$invalid">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formCargo.$invalid">
+                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -102,7 +110,12 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCargo()">Eliminar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCargo()">
+                            Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>

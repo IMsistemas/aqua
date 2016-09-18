@@ -12,6 +12,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'empleado/getEmployees').success(function(response){
             $scope.empleados = response;
+            $('[data-toggle="tooltip"]').tooltip();
         });
     }
 
@@ -186,6 +187,9 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
     }
 });
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
 function fecha(){
     var f = new Date();

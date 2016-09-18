@@ -1,58 +1,66 @@
     <div ng-controller="empleadosController">
         <div class="container" style="margin-top: 2%;">
-            <fieldset>
-                <legend style="padding-bottom: 10px;">
-                  
-                    <button type="button" id="btnAgregar" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Agregar</button>
-                </legend>
 
-                <div class="col-xs-12">
-                    <div class="alert alert-info" role="alert" id="message-positions" style="display: none;">
-                        <span style="font-weight: bold;">INFORMACION: </span>
-                        Para Administrar Empleados, se necesita crear Cargos primeramente...
-                    </div>
+            <div class="col-sm-6 col-xs-8">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." >
+                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
+            </div>
 
-                <div class="col-xs-6">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-pagination-search="empleados">
-                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-                    </div>
+            <div class="col-sm-6 col-xs-4">
+                <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">
+                    Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="alert alert-info" role="alert" id="message-positions" style="display: none;">
+                    <span style="font-weight: bold;">INFORMACION: </span>
+                    Para Administrar Empleados, se necesita crear Cargos primeramente...
                 </div>
+            </div>
 
-                <div class="col-xs-12">
+            <div class="col-xs-12">
 
-                    <table class="table table-responsive table-striped table-hover table-condensed">
-                        <thead class="bg-primary">
-                            <tr>
-                                <th>Doc ID</th>
-                                <th>Razon Social</th>
-                                <th>Cargo</th>
-                                <th>Telefono</th>
-                                <th>Cel.</th>
-                                <th style="width: 20%;">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="empleado in empleados" >
-                                <td>{{empleado.documentoidentidadempleado}}</td>
-                                <td>{{empleado.apellido + ' ' + empleado.nombre}}</td>
-                                <td>{{empleado.nombrecargo}}</td>
-                                <td>{{empleado.telefonoprincipal}}</td>
-                                <td>{{empleado.celular}}</td>
-                                <td>
-                                    <a href="#" class="btn btn-warning" ng-click="toggle('edit', empleado.documentoidentidadempleado)">Editar</a>
-                                    <a href="#" class="btn btn-danger" ng-click="showModalConfirm(empleado.documentoidentidadempleado)">Eliminar</a>
-                                    <a href="#" class="btn btn-info" ng-click="toggle('info', empleado.documentoidentidadempleado)">Ver</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                </div>
+                <table class="table table-responsive table-striped table-hover table-condensed">
+                    <thead class="bg-primary">
+                    <tr>
+                        <th>Doc ID</th>
+                        <th>Razon Social</th>
+                        <th>Cargo</th>
+                        <th>Telefono</th>
+                        <th>Cel.</th>
+                        <th style="width: 160px;">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="empleado in empleados" >
+                        <td>{{empleado.documentoidentidadempleado}}</td>
+                        <td>{{empleado.apellido + ' ' + empleado.nombre}}</td>
+                        <td>{{empleado.nombrecargo}}</td>
+                        <td>{{empleado.telefonoprincipal}}</td>
+                        <td>{{empleado.celular}}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado.documentoidentidadempleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Editar" >
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado.documentoidentidadempleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-info" ng-click="toggle('info', empleado.documentoidentidadempleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Información">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
+            </div>
 
-            </fieldset>
         </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
@@ -219,7 +227,12 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formEmployee.$invalid">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formEmployee.$invalid">
+                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>

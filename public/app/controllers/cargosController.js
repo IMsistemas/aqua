@@ -25,7 +25,6 @@ app.controller('cargosController', function($scope, $http, API_URL) {
                     $scope.form_title = "Ingresar nuevo Cargo";
                     $scope.nombrecargo = '';
                     $('#modalActionCargo').modal('show');
-
                 });
 
                 break;
