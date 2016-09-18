@@ -83,6 +83,24 @@ app.controller('cargosController', function($scope, $http, API_URL) {
 
     }
 
+    $scope.searchByFilter = function(){
+
+        var t_search = null;
+
+        if($scope.search != undefined && $scope.search != ''){
+            t_search = $scope.search;
+        }
+
+        var filter = {
+            text: t_search
+        };
+
+        $http.get(API_URL + 'cargo/getByFilter/' + JSON.stringify(filter)).success(function(response){
+            $scope.cargos = response;
+        });
+    }
+
+
     $scope.showModalConfirm = function(id){
         $scope.idcargo_del = id;
         $http.get(API_URL + 'cargo/' + id).success(function(response) {

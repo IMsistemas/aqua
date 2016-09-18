@@ -205,6 +205,8 @@ Route::get('cargo/lastId', 'Nomina\CargoController@getLastID');
 Route::get('cargo/getCargos', 'Nomina\CargoController@getCargos');
 //Ruta devuelve la informacion del cargo solicitado
 Route::get('cargo/{id}', 'Nomina\CargoController@show');
+//Ruta devuelve los cargos por filtro
+Route::get('cargo/getByFilter/{filters}', 'Nomina\CargoController@getByFilter');
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia cargo
 Route::resource('cargo', 'Nomina\CargoController');
 

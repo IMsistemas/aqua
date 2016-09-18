@@ -55,6 +55,20 @@ class CargoController extends Controller
         return response()->json(['lastId' => $lastID]);
     }
 
+    /**
+     * Obtener los cargos filtrados
+     *
+     * @param $filter
+     * @return mixed
+     */
+    public function getByFilter($filter)
+    {
+        $filter = json_decode($filter);
+
+        return Cargo::orderBy('idcargo', 'asc')
+                      ->whereRaw("cargo.idcargo LIKE '%" . $filter->text . "%' OR cargo.nombrecargo LIKE '%" . $filter->text . "%' ")
+                      ->get();
+    }
 
     /**
      * Almacenar un recurso cargo recién creado.
