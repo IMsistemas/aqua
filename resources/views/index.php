@@ -118,13 +118,10 @@
                 <span style="font-weight: bold; font-size: 16px;" ng-bind="titulo | uppercase"></span>
             </div>
 
-            <div class="col-xs-12" style="padding: 0;" ng-include="toModulo"></div>
+            <div class="col-xs-12" style="padding: 0; overflow-y: auto;" ng-include="toModulo"></div>
         </div>
 
     </div>
-
-
-    </body>
 
     <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
     <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
@@ -161,5 +158,6 @@
          });*/
     </script>
 
+    </body>
 </html>
 
