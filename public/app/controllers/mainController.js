@@ -5,16 +5,32 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	$scope.titulo = "Inicio";
 	$scope.toModulo = "";
 
+	$scope.username = 'Administrator System';
 
+	$scope.list_breadcrumb = [];
 
 	$scope.toModuloEmpleado = function(){		
 		$scope.titulo = "Colaboradores";
 		$scope.toModulo = "empleado";
+
+		var list = [
+			'<li>Personal</li>',
+			'<li>Colaboradores</li>'
+		];
+
+		$scope.prepareListBreadcrumb(list);
 	}
 
 	$scope.toModuloCliente = function(){		
 		$scope.titulo = "Clientes";
 		$scope.toModulo = "clientes";
+
+		var list = [
+			'<li>Clientes</li>',
+			'<li>Clientes</li>'
+		];
+
+		$scope.prepareListBreadcrumb(list);
 	}
 
 	$scope.toModuloProvincia = function(){		
@@ -49,6 +65,13 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	$scope.toModuloCargo = function(){
 		$scope.titulo = "Cargos";
 		$scope.toModulo = "cargo";
+
+		var list = [
+			'<li>Personal</li>',
+			'<li>Cargos</li>'
+		];
+
+		$scope.prepareListBreadcrumb(list);
 	}
 
 
@@ -75,6 +98,22 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.titulo = "suministros";
 		$scope.toModulo = "suministros";
 	}
+
+
+	$scope.prepareListBreadcrumb = function (list_module) {
+		$scope.list_breadcrumb = [
+			"<li><img src='img/ico-aqua.png'></li>",
+			"<li>Inicio</li>"
+		];
+
+		var breadcrumb = ($scope.list_breadcrumb).concat(list_module);
+
+		$('#list_breadcrumb').html(breadcrumb);
+
+	}
+
+	$scope.prepareListBreadcrumb();
 	
 }]);
 })();
+
