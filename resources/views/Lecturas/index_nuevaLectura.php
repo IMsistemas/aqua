@@ -110,7 +110,7 @@
                             </div>
                             <div class="col-xs-12 text-center">
                                 <button type="button" class="btn btn-primary" ng-click="loadInfo();" ng-disabled="formNewLectura.$invalid">
-                                    Ingresar
+                                    Ingresar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                 </button>
                             </div>
                         </fieldset>
@@ -186,7 +186,7 @@
                     <div class="col-xs-12" style="margin-bottom: 15px;">
                         <div class="col-xs-6">
                             <button type="button" id="btn_save" class="btn btn-success" ng-click="confirmSave()" disabled>
-                                Guardar
+                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="col-xs-6 text-right" ng-cloak>
@@ -212,7 +212,12 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save()">Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save()">
+                            Aceptar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>

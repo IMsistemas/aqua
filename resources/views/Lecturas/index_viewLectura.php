@@ -20,7 +20,7 @@
     </head>
     <body ng-controller="viewLecturaController">
 
-        <div class="container" style="margin-top: 2%;">
+        <div class="col-xs-12" style="margin-top: 2%;">
             <fieldset>
 
                 <legend style="padding-bottom: 10px;">
@@ -36,7 +36,7 @@
                     </button>
                 </legend>
 
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <fieldset>
                         <legend>Periodo:</legend>
                         <div class="row">
@@ -75,7 +75,7 @@
                     </fieldset>
                 </div>
                 
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <fieldset>
                         <legend>Sector:</legend>
                         <div class="row">
@@ -151,7 +151,7 @@
 
                 <div class="col-xs-12">
                     <button type="button" class="btn btn-success" style="float: right;" ng-click="save()">
-                        Guardar
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
 
