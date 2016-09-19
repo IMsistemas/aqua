@@ -26,7 +26,7 @@
 				</div>
 				<div class="form-group">
 				    <label for="comboEstado">Estado:</label>
-				    <select  class="form-control" ng-model="busqueda.estaprocesada" >
+				    <select class="form-control" ng-model="busqueda.estaprocesada" >
 				    	<option value="">Todos</option>
                         <option value="false" selected>En espera</option>
 				    	<option value="true" >Procesada</option>

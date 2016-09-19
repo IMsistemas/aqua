@@ -136,8 +136,8 @@
                                 <td  class="text-right">
                                    <!-- <input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"
                                         ng-model="lectura.lecturaactual">-->
-                                         <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;" 
-                                        ng-model="lectura.lecturaactual">
+                                         <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                                string-to-number ng-model="lectura.lecturaactual">
                                 </td>
                                 <td class="text-right">{{lectura.consumo}}</td>
                                 <td>

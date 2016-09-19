@@ -24,14 +24,13 @@ class SuministroController extends Controller
 
 	public function editarSuministro(Request $request, $numeroSuministro){
 		$suministro = Suministro::find($numeroSuministro);
-
 		$suministro->idtarifa = $request->input('tarifa.idtarifa');
 		$suministro->idcalle = $request->input('calle.idcalle');
-		$suministro->documentoidentidad = $request->input('cliente.documentoidentidad');
+		$suministro->documentoidentidad = $request->input('documentoidentidad');
 		$suministro->direccionsuministro = $request->input('direccionsuministro');
 		$suministro->telefonosuministro = $request->input('telefonosuministro');
-
 		$suministro->save();
+		return "El Suministro fue actualizado exitosamente";
 
 	}
 

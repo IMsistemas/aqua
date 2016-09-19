@@ -53,7 +53,6 @@ Route::get('/recaudacion/cobroagua/generar','Cuentas\CobroAguaController@generar
 Route::get('/clientes', function (){
 	return view('clientes/index');
 });
-
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
 Route::get('/clientes/gestion/','Clientes\ClienteController@index');
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
@@ -157,7 +156,7 @@ Route::get('/calles', function (){
 //Ruta devuelve un arreglo de todos los provincias a AngularJS 
 Route::get('/calles/gestion/{idbarrio?}','Sectores\CalleController@index');
 //Ruta devuelve un arreglo de todos los Cantons a AngularJS 
-Route::get('/calles/gestion/{idcalle?}','Sectores\CalleController@show');
+Route::get('/calles/gestion/{idcalle?}','Sectores\CalleController@mostrar');
 //Ruta página de inicio de gestión de calles
 Route::get('/calles/maxid','Sectores\CalleController@maxId');
 //Ruta página de inicio de gestión de calles
@@ -243,7 +242,7 @@ Route::get('/suministros/solicitudes', function (){
 Route::get('suministros/espera',function (){
 	return view('Suministros/Solicitudes/solicitudespera');
 });
-Route::get('suministros/espera','Suministros\SolicitudController@getSolicitudEspera');
+Route::get('suministros/espera/espera','Suministros\SolicitudController@getSolicitudEspera');
 
 Route::get('suministros/solicitudes/solicitudes','Suministros\SolicitudController@index');
 
@@ -265,11 +264,15 @@ Route::get('/suministros', function (){
 
 Route::get('suministros/suministros/{numeroSuministro}','Suministros\SuministroController@getSuministro');
 
+Route::get('suministros/suministros/{numeroSuministro}','Suministros\SuministroController@getSuministro');
+
 Route::get('suministros/suministros','Suministros\SuministroController@index');
 
 Route::get('tarifas/tarifas','Tarifas\TarifaController@index');
 
 Route::get('suministros/productos','Suministros\ProductoController@index');
+
+Route::post('suministros/editar/{idsuministro}','Suministros\SuministroController@editarSuministro');
 
 Route::post('suministros/nuevo','Suministros\SuministroController@ingresarSuministro');
 
