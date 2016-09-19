@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Suministros;
 
@@ -35,6 +35,7 @@ class SolicitudController extends Controller
 	}
 
 	public function modificarSolicitud(Request $request, $idSolicitud){
+		dd($request);
 		$solicitud = Solicitud::find($idSolicitud);
 		$solicitud->fechasolicitud = date("Y-m-d H:i:s");
 		$solicitud->direccionsuministro = $request->input('direccionsuministro');	

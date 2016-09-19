@@ -222,10 +222,13 @@ Route::resource('empleado', 'Nomina\EmpleadoController');
 
 Route::get('cuentaspagarcliente/getAll', 'Cuentas\CuentasPorPagarClientesController@getAll');
 Route::get('cuentaspagarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorPagarClientesController@getByFilter');
+
+Route::post('cuentaspagarcliente/ingresarcuenta', 'Cuentas\CuentasPorPagarClientesController@ingresarCuenta');
 Route::resource('cuentaspagarcliente', 'Cuentas\CuentasPorPagarClientesController');
 
 Route::get('cuentascobrarcliente/getAll', 'Cuentas\CuentasPorCobrarSuministroController@getAll');
 Route::get('cuentascobrarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorCobrarSuministroController@getByFilter');
+Route::post('cuentascobrarcliente/ingresarcuenta', 'Cuentas\CuentasPorCobrarSuministroController@ingresarCuenta');
 Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroController');
 
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/

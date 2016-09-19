@@ -11,7 +11,14 @@
         <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
+
+        <style>
+            .dataclient{
+                font-weight: bold;
+            }
+        </style>
 
     </head>
     <body ng-controller="mainController">
@@ -38,7 +45,7 @@
                         </li>
                         <ul class="sub-menu collapse" id="recaudacion">
                             <li><a href="#" ng-click="toModuloRecaudacion();">Cobro Agua</a></li>
-                            <li><a href="#" ng-click="">Lecturas</a></li>
+                            <li><a href="#" ng-click="toModuloLectura();">Lecturas</a></li>
                         </ul>
                         <li data-toggle="collapse" data-target="#suministro" class="collapsed">
                             <a href="#"><i class="fa fa-tachometer fa-lg"></i> Suministros <span class="arrow"></span></a>
@@ -59,8 +66,8 @@
                         </li>
                         <ul class="sub-menu collapse" id="cliente">
                             <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
-                            <li><a href="#" ng-click="toModuloCliente();">Cuentas por cobrar clientes</a></li>
-                            <li><a href="#" ng-click="toModuloCliente();">Cuentas por pagar clientes</a></li>
+                            <li><a href="#" ng-click="">Cuentas por cobrar clientes</a></li>
+                            <li><a href="#" ng-click="">Cuentas por pagar clientes</a></li>
                         </ul>
                         <li data-toggle="collapse" data-target="#personal" class="collapsed">
                             <a href="#"><i class="fa fa-male fa-lg"></i> Personal <span class="arrow"></span></a>
@@ -69,20 +76,20 @@
                             <li><a href="#" ng-click="toModuloCargo();">Cargos</a></li>
                             <li><a href="#" ng-click="toModuloEmpleado();">Colaboradores</a></li>
                         </ul>
-                        <li data-toggle="collapse" data-target="#perfil" class="collapsed">
+                        <li data-toggle="collapse" data-target="#perfil" class="collapsed" ng-show='false'>
                             <a href="#"><i class="fa fa-user-plus fa-lg"></i> Perfil <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="perfil">
                             <li><a href="perfil" ng-click="">Editar Perfil</a></li>
                         </ul>
-                        <li data-toggle="collapse" data-target="#usuarios" class="collapsed">
+                        <li data-toggle="collapse" data-target="#usuarios" class="collapsed" ng-show='false'>
                             <a href="#"><i class="fa fa-users fa-lg"></i> Usuarios <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="usuarios">
                             <li><a href="#" ng-click="">Usuarios</a></li>
                             <li><a href="#" ng-click="">Roles</a></li>
                         </ul>
-                        <li data-toggle="collapse" data-target="#configuracion" class="collapsed">
+                        <li data-toggle="collapse" data-target="#configuracion" class="collapsed" ng-show='false'>
                             <a href="#"><i class="fa fa-cog fa-spin fa-lg"></i> Configuración <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="configuracion">
@@ -118,7 +125,9 @@
                 <span style="font-weight: bold; font-size: 16px;" ng-bind="titulo | uppercase"></span>
             </div>
 
-            <div class="col-xs-12" style="padding: 0; overflow-y: auto;" ng-include="toModulo"></div>
+            <div class="col-xs-12" style="padding: 0; overflow-y: auto;" ng-include="toModulo">
+                
+            </div>
         </div>
 
     </div>
@@ -128,6 +137,9 @@
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
     <script src="<?= asset('js/menuLateral.js') ?>"></script>
+    <script src="<?= asset('js/moment.min.js') ?>"></script>
+    <script src="<?= asset('js/es.js') ?>"></script>
+    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
 
     <script src="<?= asset('app/app.js') ?>"></script>
 
@@ -144,6 +156,11 @@
     <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
     <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/esperaController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
+
+    
+
+    
 
 
     <script type="text/javascript">

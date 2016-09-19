@@ -77,7 +77,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloLectura = function(){		
 		$scope.titulo = "Lecturas";
-		$scope.toModulo = "lecturas";
+		$scope.toModulo = "verLectura";
 	}
 
 	$scope.toModuloRecaudacion = function(){		

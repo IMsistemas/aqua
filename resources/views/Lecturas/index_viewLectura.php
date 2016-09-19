@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
     <html lang="es-ES" ng-app="softver-aqua">
     <head>
         <meta charset="UTF-8">
@@ -17,8 +17,8 @@
             }
         </style>
 
-    </head>
-    <body ng-controller="viewLecturaController">
+    </head> -->
+    <div ng-controller="viewLecturaController">
 
         <div class="col-xs-12" style="margin-top: 2%;">
             <fieldset>
@@ -178,22 +178,22 @@
         </div>
 
 
-    </body>
+    </div>
 
 
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-
-
-    <script src="<?= asset('js/moment.min.js') ?>"></script>
-    <script src="<?= asset('js/es.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-    <!-- AngularJS Application Scripts -->
-    <script src="<?= asset('app/app.js') ?>"></script>
-    <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
-
-
-</html>
+  <!--   <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+  <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+  <script src="<?= asset('js/jquery.min.js') ?>"></script>
+  <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+  
+  
+  <script src="<?= asset('js/moment.min.js') ?>"></script>
+  <script src="<?= asset('js/es.js') ?>"></script>
+  <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
+  
+  AngularJS Application Scripts
+  <script src="<?= asset('app/app.js') ?>"></script>
+  <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
+  
+  
+  </html> -->

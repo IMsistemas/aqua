@@ -72,7 +72,7 @@
 							<td ng-show="solicitud.estaprocesada==true"><span>Procesada</span></td>
 							<td ng-show="solicitud.estaprocesada==false"><span>En espera</span></td>
 							<td >
-								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false">Editar</a>
+								<a href="#" class="btn btn-warning" ng-show="solicitud.estaprocesada==false" ng-click="modalEditarSolicitud(solicitud.idsolicitud);">Editar</a>
 
                                 <a href="#" class="btn btn-info" ng-show="solicitud.estaprocesada==true" ng-click="modalVerSolicitud(solicitud.idsolicitud);">Ver</a>
 
@@ -296,12 +296,12 @@
 
 <!--====================================Modal Editar Solicitud============================-->
 
-<div class="modal fade" tabindex="-1" role="dialog" id="eidtarSolicitud">
+<div class="modal fade" tabindex="-1" role="dialog" id="editarSolicitud">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <div class="col-md-6 col-xs-12">
-                            <h4 class="modal-title">Editar Solicitud Nro. {{cantidadSolicitudes+1}} </h4>
+                            <h4 class="modal-title">Editar Solicitud Nro. {{solicitud.idsolicitud}} </h4>
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
@@ -337,6 +337,7 @@
                                             <div class="form-group error">
                                                 <label class="col-sm-4 control-label">Telefono:</label>
                                                 <div class="col-sm-8">
+                                                {{solicitud.cliente.telefono}}
                                                 </div>
                                             </div>
                                         </div>
@@ -362,11 +363,6 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
                                                            ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength ="16" ng-pattern="/^[0-9]+$/">
-                                                           <span class="help-inline" ng-show="formNuevaSolicitud.telefonosolicitud.$invalid">El teléfono principal del cliente es requerido <br></span>
-                                                       <span class="help-inline" 
-                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.pattern">Sólo se permiten números <br></span>
-                                                        <span class="help-inline" 
-                                                        ng-show="formNuevaSolicitud.telefonosolicitud.$error.maxlength">La longitud máxima es de 16 caracteres <br></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -379,7 +375,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSolicitud();" ng-disabled="">Guardar</button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSolicitud(solicitud.idsolicitud);" ng-disabled="">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -523,7 +519,7 @@
 	                                            <label class="col-sm-4 control-label">Costo Medidor:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="costoproducto" id="costoproducto"
-	                                                       ng-model="producto.costoproducto" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+	                                                       ng-value="producto.costoproducto" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.costomedidor">
                                                             <span class="help-inline" ng-show="formProcesarSolicitud.costoproducto.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="formProcesarSolicitud.costoproducto.$error.pattern">Sólo se permiten números <br></span>                                    
@@ -538,7 +534,7 @@
 	                                            <label class="col-sm-4 control-label">Cuota inicial:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="cuotainicial" id="cuotainicial"
-	                                                       ng-model="cuotainicial" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+	                                                       ng-model="cuenta.cuotainicial" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
                                                             <span class="help-inline" ng-show="formProcesarSolicitud.cuotainicial.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="formProcesarSolicitud.cuotainicial.$error.pattern">Sólo se permiten números <br></span>
@@ -551,7 +547,7 @@
 	                                            <div class="col-sm-8">
 	                                                <select class="form-control">
 	                                                	
-	                                                	<option ng-repeat="meses in nDividendos">{{meses}}</option>
+	                                                	<option ng-repeat="meses in nDividendos" >{{meses}}</option>
 	                                                </select>
 	                                            </div>
 	                                        </div>
@@ -564,7 +560,7 @@
 	                                            <label class="col-sm-4 control-label">Garantia apertura calle:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="garantiaaperturacalle" id="garantiaaperturacalle"
-	                                                       ng-model="configuracion.garantiaaperturacalle" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+	                                                       ng-value="configuracion.garantiaaperturacalle" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.garantiaapertura">
                                                             <span class="help-inline" ng-show="frmClientes.garantiaaperturacalle.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="frmClientes.garantiaaperturacalle.$error.pattern">Sólo se permiten números <br></span>

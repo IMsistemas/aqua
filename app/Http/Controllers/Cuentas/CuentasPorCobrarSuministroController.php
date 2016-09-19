@@ -16,9 +16,21 @@ class CuentasPorCobrarSuministroController extends Controller
         return view('Cuentas.cuentacobrar_cliente');
     }
 
+    public function ingresarCuenta(Request $request){
+        cuentaPorCobrar = new CuentasPorCobrarSuministro();
+        $cuentaPorCobrar->documentoidentidad = $request->input('cliente.documentoidentidad');
+        $cuentaPorCobrar->numerosuministro = $request->input('suministro.numerosuministro');
+        $cuentaPorCobrar->fechaperiodo = date("Y-m-d H:i:s");
+        $cuentaPorCobrar->dividendos = $request->input('dividendos');
+        $cuentaPorCobrar->pagototal = $request->input('pagototal');
+        $cuentaPorCobrar->pagoporcadadividendo = $request->input('pagorpordividendo');
+        $cuentaPorCobrar->save();
+    }
+
     public function getAll()
     {
-        $cuentas = CuentasPorCobrarSuministro::join('cliente', 'cuentaporcobrarsuministro.documentoidentidad', '=',
+        $cuentas = CuentasPorCobrarSuministro::join(
+            'cliente', 'cuentaporcobrarsuministro.documentoidentidad', '=',
             'cliente.documentoidentidad')
             ->select('cliente.apellido', 'cliente.nombre', 'cliente.documentoidentidad',
                 'cuentaporcobrarsuministro.fecha', 'cuentaporcobrarsuministro.dividendos',

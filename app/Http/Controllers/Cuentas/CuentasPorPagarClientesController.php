@@ -19,6 +19,14 @@ class CuentasPorPagarClientesController extends Controller
         return view('Cuentas.cuentapagar_cliente');
     }
 
+     public function ingresarCuenta(Request $request){
+        cuentaPorPagar = new CuentasPorPagarClientes();
+        $cuentaPorPagar->documentoidentidad = $request->input('cliente.documentoidentidad');
+        $cuentaPorPagar->fechaperiodo = date("Y-m-d H:i:s");
+        $cuentaPorPagar->valor = $request->input('valor');
+        $cuentaPorPagar->save();
+    }
+
     public function getAll()
     {
         $cuentas = CuentasPorPagarClientes::join('cliente', 'cuentasporpagarclientes.documentoidentidad', '=',
