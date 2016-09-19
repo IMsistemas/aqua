@@ -1,17 +1,4 @@
-<!doctype html>
-<html lang="es-ES" ng-app="softver-aqua">
-<head>
-    <meta charset="UTF-8">
 
-    <title>Aqua-Cuentas Cobrar Cliente</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-</head>
-<body>
 
 <div ng-controller="ccClienteController">
 
@@ -64,18 +51,3 @@
 
 </div>
 
-
-</body>
-
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-
-
-<!-- AngularJS Application Scripts -->
-<script src="<?= asset('app/app.js') ?>"></script>
-<script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
-
-</html>

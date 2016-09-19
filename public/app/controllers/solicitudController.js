@@ -207,12 +207,17 @@ app.controller('solicitudController',
                  $('#modalMessageError').modal('show');       
              });
         } 
-        ingresarCuentaPagar = function(){
+        ingresarCuentaPorPagar = function(){
+            
+            if($scope.cuenta.valor === undefined){
+                $scope.cuenta.valor = $scope.configuracion.garantiaaperturacalle;
+            } 
+            
             var url = API_URL + "cuentaspagarcliente/ingresarcuenta";   
             $http({
                 method: 'POST',
                 url: url,
-                data: $.param($scope.solicitud),
+                data: $.param($scope.cuenta),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function(response){
                 $scope.message = 'Solicitud procesada con exito';

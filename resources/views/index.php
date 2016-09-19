@@ -66,8 +66,8 @@
                         </li>
                         <ul class="sub-menu collapse" id="cliente">
                             <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
-                            <li ng-show='false'><a href="#" ng-click="">Cuentas por cobrar clientes</a></li>
-                            <li ng-show='false'><a href="#" ng-click="">Cuentas por pagar clientes</a></li>
+                            <li ><a href="#" ng-click="toModuloCXC();">Cuentas por cobrar clientes</a></li>
+                            <li ><a href="#" ng-click="toModuloCXP();">Cuentas por pagar clientes</a></li>
                         </ul>
                         <li data-toggle="collapse" data-target="#personal" class="collapsed">
                             <a href="#"><i class="fa fa-male fa-lg"></i> Personal <span class="arrow"></span></a>
@@ -157,6 +157,9 @@
     <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/esperaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
+
 
     
 

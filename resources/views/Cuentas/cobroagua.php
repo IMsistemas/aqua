@@ -75,7 +75,7 @@
 						<td>{{cuenta.total | currency}}</td>
 						
 						<td>
-							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);">Agregar</a>
+							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);" ng-hide="cuenta.estapagada">Agregar</a>
                            <a href="#" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
                             
 						</td>

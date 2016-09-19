@@ -560,7 +560,7 @@
 	                                            <label class="col-sm-4 control-label">Garantia apertura calle:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="garantiaaperturacalle" id="garantiaaperturacalle"
-	                                                       ng-value="configuracion.garantiaaperturacalle" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.garantiaapertura">
+	                                                       ng-value="configuracion.garantiaaperturacalle" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.valor">
                                                             <span class="help-inline" ng-show="frmClientes.garantiaaperturacalle.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="frmClientes.garantiaaperturacalle.$error.pattern">Sólo se permiten números <br></span>

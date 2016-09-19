@@ -99,6 +99,15 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "suministros";
 	}
 
+	$scope.toModuloCXP = function(){		
+		$scope.titulo = "Cuentas por pagar al cliente";
+		$scope.toModulo = "cuentaspagarcliente";
+	}
+
+	$scope.toModuloCXC = function(){		
+		$scope.titulo = "Cuentas por cobrar al cliente";
+		$scope.toModulo = "cuentascobrarcliente";
+	}
 
 	$scope.prepareListBreadcrumb = function (list_module) {
 		$scope.list_breadcrumb = [
