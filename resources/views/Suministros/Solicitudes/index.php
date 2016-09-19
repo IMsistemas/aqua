@@ -480,7 +480,7 @@
                                             <label class="col-sm-4 control-label">Zona:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" ng-model="barrio" ng-options="barrio as barrio.nombrebarrio for barrio in barrios track by barrio.idbarrio">
-                                                	<option>Seleccione Zona</option>
+                                                	<option value="">Seleccione Zona</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -491,7 +491,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-control" ng-model="suministro.calle" 
                                                 ng-options="calle as calle.nombrecalle for calle in barrio.calle track by calle.idcalle" >
-                                                	<option>Seleccione transversal</option>
+                                                	<option value="">Seleccione transversal</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -584,8 +584,6 @@
                 </div>
             </div>
         </div>
-
-
 
 <!--=================================Modal Confirmacion====================================-->
 		 <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">

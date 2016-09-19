@@ -17,8 +17,7 @@ class CalleController extends Controller
 		return $calles=DB::table('calle')->where('idbarrio',$idbarrio)->get();
 	}
 
-	public function show($idcalle)
-	{
+	public function mostrar($idcalle){
 		return $calle=DB::table('calle')->where('idcalle',$idcalle)->get();
 	}
 

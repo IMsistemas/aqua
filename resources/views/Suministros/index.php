@@ -41,11 +41,11 @@
 							<td>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}</td>
 							<td>{{suministro.tarifa.nombretarifa}}</td>
 							<td>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}</td>
-							<td>{{suministro.direccionsuministro}}</td>
+							<td>{{suministro.direccionsumnistro}}</td>
 							<td>{{suministro.telefonosuministro}}</td>
 							<td >
 								<a href="#" class="btn btn-info" ng-click="getSuministro(suministro.numerosuministro);">Ver</a>
-								<a href="#" class="btn btn-warning" ng-click="modalEditarSuministro();">Editar</a>
+								<a href="#" class="btn btn-warning" ng-click="modalEditarSuministro(suministro.numerosuministro);">Editar</a>
 							</td>
 						</tr>
 					</tbody>
@@ -56,7 +56,7 @@
 <!--====================================MODALES===================================================================-->
 
 <!--====================================MODAL EDITAR SUMINISTROS==================================================-->
-<div class="modal fade" tabindex="-1" role="dialog" id="nueva-solicitud">
+<div class="modal fade" tabindex="-1" role="dialog" id="editar-suministro">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
@@ -85,7 +85,7 @@
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Documento:</label>
+                                            <label class="col-sm-4 control-label">CI/Ruc:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="documentoidentidad" id="documentoidentidad"
                                                        ng-model="suministro.cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
@@ -94,8 +94,9 @@
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">{{cliente.apellido+" "+cliente.nombre}}</label>
+                                            <label class="col-sm-4 control-label">Cliente</label>
                                             <div class="col-sm-8">
+                                                {{suministro.cliente.apellido+" "+suministro.cliente.nombre}}
                                             </div>
                                         </div>
                                      </div>
@@ -123,12 +124,12 @@
 	                                            <div class="col-sm-8">
 
 	                                               <select class="form-control" ng-model="barrio" ng-options="barrio as barrio.nombrebarrio for barrio in barrios track by barrio.idbarrio">
-                                                	<option>Seleccione Zona</option>
+                                                	<option value="">Seleccione Zona</option>
                                                	   </select>
 
                                                	   <select class="form-control" ng-model="suministro.calle" 
                                                  	ng-options="calle as calle.nombrecalle for calle in barrio.calle track by calle.idcalle" >
-                                                	<option>Seleccione transversal</option>
+                                                	<option value="">{{suministro.calle.nombrecalle}}</option>
                                                 	</select>
 
 	                                            </div>
@@ -141,8 +142,8 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Dirección:</label>
 	                                            <div class="col-sm-8">
-	                                                <input type="text" class="form-control" name="direccionsolicitud" id="direccionsolicitud"
-	                                                       ng-model="solicitud.direccionsuministro" ng-required="true" ng-maxlength="32" >
+	                                                <input type="text" class="form-control" name="direccionsuministro" id="direccionsuministro"
+	                                                       ng-model="suministro.direccionsumnistro" ng-required="true" ng-maxlength="32" >
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -151,7 +152,7 @@
 	                                            <label class="col-sm-4 control-label">Telefono:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
-	                                                       ng-model="solicitud.telefonosuministro" ng-required="true" ng-maxlength="32"  >
+	                                                       ng-model="suministro.telefonosuministro" ng-required="true" ng-maxlength="32"  >
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -164,7 +165,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="guardarNuevoCliente();" ng-disabled="">Guardar</button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSuministro(suministro.numerosuministro);" ng-disabled="">Guardar</button>
                     </div>
                 </div>
             </div>

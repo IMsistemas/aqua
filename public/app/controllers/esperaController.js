@@ -2,7 +2,7 @@ app.controller('esperaController',function ($scope,$http,API_URL) {
     $scope.solicitudes=[];
     $scope.ahora = new Date();
     $scope.initLoad = function(){
-            $http.get(API_URL+"suministros/espera")
+            $http.get(API_URL+"suministros/espera/espera")
             .success(function (response) {
             $scope.solicitudes = response;
             console.log($scope.solicitudes);
