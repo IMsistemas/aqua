@@ -41,7 +41,7 @@
 							<td>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}</td>
 							<td>{{suministro.tarifa.nombretarifa}}</td>
 							<td>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}</td>
-							<td>{{suministro.direccionsumnistro}}</td>
+							<td>{{suministro.direccionsuministro}}</td>
 							<td>{{suministro.telefonosuministro}}</td>
 							<td >
 								<a href="#" class="btn btn-info" ng-click="getSuministro(suministro.numerosuministro);">Ver</a>
@@ -143,7 +143,7 @@
 	                                            <label class="col-sm-4 control-label">Dirección:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="direccionsuministro" id="direccionsuministro"
-	                                                       ng-model="suministro.direccionsumnistro" ng-required="true" ng-maxlength="32" >
+	                                                       ng-model="suministro.direccionsuministro" ng-required="true" ng-maxlength="32" >
 	                                            </div>
 	                                        </div>
 	                                    </div>
