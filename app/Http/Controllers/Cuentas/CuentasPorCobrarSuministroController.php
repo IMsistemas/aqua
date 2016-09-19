@@ -17,13 +17,12 @@ class CuentasPorCobrarSuministroController extends Controller
     }
 
     public function ingresarCuenta(Request $request){
-        cuentaPorCobrar = new CuentasPorCobrarSuministro();
-        $cuentaPorCobrar->documentoidentidad = $request->input('cliente.documentoidentidad');
-        $cuentaPorCobrar->numerosuministro = $request->input('suministro.numerosuministro');
-        $cuentaPorCobrar->fechaperiodo = date("Y-m-d H:i:s");
+        $cuentaPorCobrar = new CuentasPorCobrarSuministro();
+        $cuentaPorCobrar->documentoidentidad = $request->input('documentoidentidad');
+        $cuentaPorCobrar->fecha = date("Y-m-d H:i:s");
         $cuentaPorCobrar->dividendos = $request->input('dividendos');
         $cuentaPorCobrar->pagototal = $request->input('pagototal');
-        $cuentaPorCobrar->pagoporcadadividendo = $request->input('pagorpordividendo');
+        $cuentaPorCobrar->pagoporcadadividendo = $request->input('pagoporcadadividendo');
         $cuentaPorCobrar->save();
     }
 

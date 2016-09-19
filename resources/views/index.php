@@ -66,8 +66,8 @@
                         </li>
                         <ul class="sub-menu collapse" id="cliente">
                             <li><a href="#" ng-click="toModuloCliente();">Clientes</a></li>
-                            <li><a href="#" ng-click="">Cuentas por cobrar clientes</a></li>
-                            <li><a href="#" ng-click="">Cuentas por pagar clientes</a></li>
+                            <li ng-show='false'><a href="#" ng-click="">Cuentas por cobrar clientes</a></li>
+                            <li ng-show='false'><a href="#" ng-click="">Cuentas por pagar clientes</a></li>
                         </ul>
                         <li data-toggle="collapse" data-target="#personal" class="collapsed">
                             <a href="#"><i class="fa fa-male fa-lg"></i> Personal <span class="arrow"></span></a>
@@ -111,7 +111,7 @@
                         </a>
                         <ul class="dropdown-menu pull-right" style="float: right !important;">
                             <li role="separator" class="divider"></li>
-                            <li><a href="#" ng-click=""><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>
+                            <li><a href="#"  onclick="window.close();"><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>
                         </ul>
                     </li>
                 </ul>

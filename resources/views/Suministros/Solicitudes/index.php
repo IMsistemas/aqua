@@ -507,7 +507,7 @@
 	                                            <label class="col-sm-4 control-label">Derecho acometida:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="acometida" id="acometida"
-	                                                       ng-model="acometida" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
+	                                                       ng-value="acometida" ng-click="cuenta.acometida" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/">
                                                             <span class="help-inline" ng-show="formProcesarSolicitud.acometida.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="formProcesarSolicitud.acometida.$error.pattern">Sólo se permiten números <br></span>
@@ -545,7 +545,7 @@
 	                                        <div class="form-group error">
 	                                            <label class="col-sm-4 control-label">Crédito:</label>
 	                                            <div class="col-sm-8">
-	                                                <select class="form-control">
+	                                                <select class="form-control" ng-model="meses">
 	                                                	
 	                                                	<option ng-repeat="meses in nDividendos" >{{meses}}</option>
 	                                                </select>

@@ -30,7 +30,7 @@
 				<div class="col-xs-12 col-sm-4">
 					<div class="form-group has-feedback has-feedback-left">
 						<i class="fa fa-user fa-lg form-control-feedback"></i>
-						<input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" placeholder="Usuario">
+						<input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" placeholder="Usuario" value="secretaria">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4"></div>
@@ -47,7 +47,7 @@
 				<div class="col-xs-12 col-sm-4"></div>
 			</div>
 
-			<div class="col-xs-12">
+			<div class="col-xs-12" style="display: none;">
 				<div class="col-xs-12 col-sm-4"></div>
 				<div class="col-xs-12 col-sm-4 text-center">
 					<span>Código de Verificación</span>
@@ -55,12 +55,12 @@
 				<div class="col-xs-12 col-sm-4"></div>
 			</div>
 
-			<div class="col-xs-12" style="margin-top: 15px;">
+			<div class="col-xs-12" style="margin-top: 15px;" style="display: none;">
 				<div class="col-xs-12 col-sm-4"></div>
 				<div class="col-xs-12 col-sm-4">
-					<div class="form-group has-feedback has-feedback-left">
+					<div class="form-group has-feedback has-feedback-left" style="display: none;">
 						<i class="fa fa-unlock-alt fa-lg form-control-feedback"></i>
-						<input type="text" class="form-control" placeholder="Código de Verificación">
+						<input type="text" class="form-control" placeholder="Código de Verificación" >
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4"></div>

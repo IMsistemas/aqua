@@ -166,9 +166,8 @@ app.controller('solicitudController',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function(response) {
                  $scope.initLoad();
-                 $scope.message = 'Solicitud procesada con exito';
-                 $('#procesar-solicitud').modal('hide');
-                 $('#modalMessage').modal('show');
+                 ingresarCuentaPorCobrar();
+                 ingresarCuentaPorPagar();
             }).error(function(response) {
                 $scope.messageError = 'Error al ingresar el suministro';
                 $('#modalMessage').modal('hide');
@@ -176,24 +175,72 @@ app.controller('solicitudController',
             }); 
         }
 
-        ingresarCuentaPorPagar = function(){
+        ingresarCuentaPorCobrar = function(){
+            
+            $http.get(API_URL+"configuracion/configuracion")
+                .success(function (response) {
+                    $scope.interes = response[0];
+                });
+            if($scope.cuenta.costomedidor === undefined){
+                $scope.cuenta.costomedidor = $scope.producto.costoproducto;
+            }if($scope.cuenta.acometida === undefined){
+                $scope.cuenta.acometida = $scope.acometida;
+            }
+            $scope.cuenta.documentoidentidad = $scope.suministro.cliente.documentoidentidad;
+            console.info($scope.interes);
+            $scope.cuenta.dividendos = $scope.meses;
+            calcularCostoSolicitud($scope.cuenta.cuotainicial,$scope.cuenta.costomedidor,$scope.cuenta.acometida,$scope.cuenta.dividendos,0.10);
+
+            
+            var url = API_URL + "cuentascobrarcliente/ingresarcuenta";   
+             $http({
+                 method: 'POST',
+                 url: url,
+                 data: $.param($scope.cuenta),
+                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+             }).success(function(response){
+                
+
+             }).error(function(response){
+                 $scope.messageError = 'Error al ingresar cuenta por pagar';
+                 $('#modalMessage').modal('hide');
+                 $('#modalMessageError').modal('show');       
+             });
+        } 
+        ingresarCuentaPagar = function(){
             var url = API_URL + "cuentaspagarcliente/ingresarcuenta";   
             $http({
                 method: 'POST',
                 url: url,
                 data: $.param($scope.solicitud),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-        } 
-        ingresarCuentaPorCobrar = function(){
-            var url = API_URL + "cuentascobrarcliente/ingresarcuenta";   
-            $http({
-                method: 'POST',
-                url: url,
-                data: $.param($scope.solicitud),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function(response){
+                $scope.message = 'Solicitud procesada con exito';
+                $('#procesar-solicitud').modal('hide');
+                $('#modalMessage').modal('show');
+            }).error(function(response){
+                $scope.messageError = 'Error al ingresar cuenta por cobrar';
+                $('#modalMessage').modal('hide');
+                $('#modalMessageError').modal('show');       
             });
         }
+
+
+            calcularCostoSolicitud = function(cuotaInicial, costomedidor,acometida, dividendos, interes){
+                console.log(cuotaInicial,costomedidor,acometida,dividendos,interes);
+                    cuotaInicial = parseFloat(cuotaInicial);
+                    costomedidor = parseFloat(costomedidor);
+                    acometida = parseFloat(acometida);
+                    dividendos = parseInt(dividendos);
+                    interes = parseFloat(interes);
+                    console.log(cuotaInicial,costomedidor,acometida,dividendos,interes);
+                    subTotal = (costomedidor + acometida) - cuotaInicial;
+                    totalInteres = subTotal*interes;
+                    total = subTotal+totalInteres;
+                    cuota = total/dividendos;
+                    $scope.cuenta.pagototal = total;
+                    $scope.cuenta.pagoporcadadividendo = cuota;
+            }
 
 
          

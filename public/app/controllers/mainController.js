@@ -5,7 +5,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	$scope.titulo = "Inicio";
 	$scope.toModulo = "";
 
-	$scope.username = 'Administrator System';
+	$scope.username = 'Secretaría';
 
 	$scope.list_breadcrumb = [];
 

@@ -20,7 +20,7 @@ class CuentasPorPagarClientesController extends Controller
     }
 
      public function ingresarCuenta(Request $request){
-        cuentaPorPagar = new CuentasPorPagarClientes();
+        $cuentaPorPagar = new CuentasPorPagarClientes();
         $cuentaPorPagar->documentoidentidad = $request->input('cliente.documentoidentidad');
         $cuentaPorPagar->fechaperiodo = date("Y-m-d H:i:s");
         $cuentaPorPagar->valor = $request->input('valor');
