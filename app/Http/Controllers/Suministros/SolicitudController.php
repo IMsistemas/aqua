@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Modelos\Suministros\Suministro;
 use App\Modelos\Suministros\Solicitud;
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Tarifas\Tarifa;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Modelos\Cuentas\CuentasPorCobrarSuministro;
 
 class SolicitudController extends Controller
 {
@@ -54,5 +56,62 @@ class SolicitudController extends Controller
 		$solicitud = Solicitud::find($idsolicitud);
 		$solicitud->delete();
 	}
+
+
+	/*==========================================================================================================*/
+	/*    PDF SOLICITUD                                                                                         */
+	/*==========================================================================================================*/
+
+	public function generarPDF($idSolicitud){
+		$solicitud = Solicitud::find($idSolicitud);
+		$documentoidentidad = $solicitud->documentoidentidad;
+		$idSolicitud = $solicitud->idsolicitud;
+
+		$cuentaPorCobrar = CuentasPorCobrarSuministro::where('idsolicitud','=',$idSolicitud)->get();
+
+		$numeroSuministro = $cuentaPorCobrar[0]->numerosuministro;
+
+		$suministro = Suministro::find($numeroSuministro);
+		$idTarifa = $suministro->idtarifa;
+		$tarifa = Tarifa::find($idTarifa);
+
+		$cliente = Cliente::find($documentoidentidad);
+
+		$data =  [
+            'idsolicitud'           => $solicitud->idsolicitud ,
+        	'fechasolicitud'        => $solicitud->fechasolicitud,
+        	'direccionsuministro'   => $solicitud->direccionsuministro,
+        	'telefonosuministro'    => $solicitud->telefonosuministro,
+
+        	'documentoidentidad'    => $solicitud->documentoidentidad,
+        	'cliente'               => $cliente->apellido." ".$cliente->nombre,
+
+        	'numerosuministro'      => $suministro->numerosuministro,
+        	'tarifa'                => $tarifa->nombretarifa,[0],
+
+        	'dividendos'            => $cuentaPorCobrar[0]->dividendos,
+			'pagototal'             => $cuentaPorCobrar[0]->pagototal,
+			'pagoporcadadividendo'  => $cuentaPorCobrar[0]->pagoporcadadividendo,
+			'cuotainicial'          => $cuentaPorCobrar[0]->cuotainicial
+        	
+
+        
+
+        ];
+
+           //dd($cuentaPorCobrar);
+        $view =  \View::make('invoice', compact('data'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice');
+
+    }
+ 
+    public function getData(){
+
+    	$solicitud = Solicitud::with('cliente')->where('idsolicitud',6)->get();
+
+       dd($solicitud);
+    }
     
 }

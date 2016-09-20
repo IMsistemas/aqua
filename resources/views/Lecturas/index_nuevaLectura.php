@@ -2,7 +2,7 @@
     <html lang="es-ES" ng-app="softver-aqua">
     <head>
         <meta charset="UTF-8">
-
+ 
         <title>Aqua-Nueva Lectura</title>
 
         <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">

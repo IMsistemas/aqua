@@ -17,6 +17,67 @@ insert into provincia values('PRO00001','Pichincha');
 insert into canton values ('CAN00001','PRO00001','Cayambe');
 insert into parroquia values ('PAR00001','CAN00001','Ayora');
 
+insert into barrio values ('BAR00001','PAR00001','Imbabura');
+insert into calle values ('CAL00001','BAR00001','Imbabura');
+
+insert into barrio values ('BAR00002','PAR00001','Galapagos');
+insert into calle values ('CAL00002','BAR00002','Galapagos y Carchi');
+
+insert into barrio values ('BAR00003','PAR00001','Ayora Nuevo');
+insert into calle values ('CAL00003','BAR00003','Neptali Bonifaz');
+
+insert into barrio values ('BAR00004','PAR00001','Esmeraldas');
+insert into calle values ('CAL00004','BAR00004','Esmeraldas');
+
+insert into barrio values ('BAR00005','PAR00001','Oriente');
+insert into calle values ('CAL00005','BAR00005','Guayas');
+
+insert into barrio values ('BAR00006','PAR00001','Central ');
+insert into calle values ('CAL00006','BAR00006','Pichincha');
+
+insert into barrio values ('BAR00007','PAR00001','Residencial');
+insert into calle values ('CAL00007','BAR00007','Pichincha ');
+
+insert into barrio values ('BAR00008','PAR00001','Segundo Duran');
+insert into calle values ('CAL00008','BAR00008','Segundo Duran y UNOPAC');
+
+insert into barrio values ('BAR00009','PAR00001','Los Lotes');
+insert into calle values ('CAL00009','BAR00009','Tungurahua');
+insert into calle values ('CAL00010','BAR00009','Latacunga');
+insert into calle values ('CAL00011','BAR00009','Otavalo');
+insert into calle values ('CAL00012','BAR00009','Bolivar');
+insert into calle values ('CAL00013','BAR00009','Cotopaxi y Sucumbios');
+
+
+/*
+Barrio Imbabura 
+Calle : Imbabura 
+
+Barrio Galapagos
+Calles: Galapagos y Carchi
+
+Barrio Ayora Nuevo
+Calle : Neptali Bonifaz
+
+Barrio Esmeraldas 
+Calle : Esmeraldas 
+
+Barrio Oriente 
+Calle: Guayas 
+
+Barrio Central 
+Calle Pichincha 
+
+Barrio Residencial
+Calle Pichincha 
+
+Barrio Segundo Duran 
+Calles: Segundo Duran y UNOPAC
+
+Barrio Los Lotes
+Calles: Latacunga, Tungurahua, Otavalo, Bolivar, Cotopaxi y Sucumbios 
+*/
+
 /*==============================================================*/
 /* MEDIDORES                                                    */
 /*==============================================================*/

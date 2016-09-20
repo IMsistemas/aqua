@@ -280,3 +280,10 @@ Route::post('suministros/nuevo','Suministros\SuministroController@ingresarSumini
 //-----CONFIGURACION--------------------------------------------------------------------------
 
 Route::get('configuracion/configuracion','Configuraciones\ConfiguracionController@index');
+
+
+/*=======================================================*/
+/* GENERACIÓN PDF                                        */
+/*=======================================================*/
+
+Route::get('suministros/solicitudes/solicitudes/pdf/{idSolicitud}', 'Suministros\SolicitudController@generarPDF');

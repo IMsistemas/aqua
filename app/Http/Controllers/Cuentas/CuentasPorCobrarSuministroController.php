@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Cuentas\CuentasPorCobrarSuministro;
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,11 +19,16 @@ class CuentasPorCobrarSuministroController extends Controller
 
     public function ingresarCuenta(Request $request){
         $cuentaPorCobrar = new CuentasPorCobrarSuministro();
-        $cuentaPorCobrar->documentoidentidad = $request->input('documentoidentidad');
-        $cuentaPorCobrar->fecha = date("Y-m-d H:i:s");
-        $cuentaPorCobrar->dividendos = $request->input('dividendos');
-        $cuentaPorCobrar->pagototal = $request->input('pagototal');
-        $cuentaPorCobrar->pagoporcadadividendo = $request->input('pagoporcadadividendo');
+        $suministros = Suministro::all();
+
+        $cuentaPorCobrar->cuotainicial =            $request->input('cuotainicial');
+        $cuentaPorCobrar->numerosuministro =        count($suministros);  
+        $cuentaPorCobrar->idsolicitud =             $request->input('idsolicitud');
+        $cuentaPorCobrar->documentoidentidad =      $request->input('documentoidentidad');
+        $cuentaPorCobrar->fecha =                   date("Y-m-d H:i:s");
+        $cuentaPorCobrar->dividendos =              $request->input('dividendos');
+        $cuentaPorCobrar->pagototal =               $request->input('pagototal');
+        $cuentaPorCobrar->pagoporcadadividendo =    $request->input('pagoporcadadividendo');
         $cuentaPorCobrar->save();
     }
 

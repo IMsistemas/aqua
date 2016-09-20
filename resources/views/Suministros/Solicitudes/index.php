@@ -81,7 +81,7 @@
 
                                 <a id="procesar" href="#" class="btn btn-success" ng-show="solicitud.estaprocesada==false" ng-click="modalProcesaSolicitud(solicitud.idsolicitud);"><i class="fa fa-check fa-lg" aria-hidden="true" ></i></a>
 
-                                <a id="pdf" href="#" class="btn btn-danger" ng-show="solicitud.estaprocesada==true"><i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i></a>
+                                <a id="pdf" href="#" class="btn btn-danger" ng-show="solicitud.estaprocesada==true" ng-click="generarPDF(solicitud.idsolicitud)"><i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" ></i></a>
 							</td>
 						</tr>
 					</tbody>
@@ -519,7 +519,7 @@
 	                                            <label class="col-sm-4 control-label">Costo Medidor:</label>
 	                                            <div class="col-sm-8">
 	                                                <input type="text" class="form-control" name="costoproducto" id="costoproducto"
-	                                                       ng-value="producto.costoproducto" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.costomedidor">
+	                                                       ng-value="producto.costoproducto" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" ng-model="cuenta.costomedidor" ng-disabled="true">
                                                             <span class="help-inline" ng-show="formProcesarSolicitud.costoproducto.$invalid">El costo del medidor es requerido <br></span>
                                                             <span class="help-inline" 
                                                             ng-show="formProcesarSolicitud.costoproducto.$error.pattern">Sólo se permiten números <br></span>                                    

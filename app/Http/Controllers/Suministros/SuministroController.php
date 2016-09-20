@@ -39,7 +39,7 @@ class SuministroController extends Controller
 		$suministro->idtarifa = $request->input('tarifa.idtarifa');
 		$suministro->idcalle = $request->input('calle.idcalle');
 		$suministro->documentoidentidad = $request->input('cliente.documentoidentidad');
-		$suministro->idproducto = $request->input('producto.idproducto');
+		$suministro->idproducto = 'PRO00001';
 		$suministro->direccionsuministro = $request->input('direccionsuministro');
 		$suministro->telefonosuministro = $request->input('telefonosuministro');
 		$suministro->save();

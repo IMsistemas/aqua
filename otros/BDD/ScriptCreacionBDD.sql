@@ -308,9 +308,10 @@ IDTARIFA
 /* Table: CUENTAPORCOBRARSUMINISTRO                             */
 /*==============================================================*/
 create table CUENTAPORCOBRARSUMINISTRO (
+   id 					SERIAL				 NOT NULL,	
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
-   NUMEROSUMINISTRO     INT8                 not null,
-   FECHAPERIODO         DATE                 null,
+   NUMEROSUMINISTRO     INT8                 null,
+   FECHA         DATE                 null,
    DIVIDENDOS           INT4                 null,
    PAGOTOTAL            DECIMAL(9,2)         null,
    PAGOPORCADADIVIDENDO DECIMAL(9,2)         null
@@ -334,8 +335,9 @@ NUMEROSUMINISTRO
 /* Table: CUENTASPORPAGARCLIENTES                               */
 /*==============================================================*/
 create table CUENTASPORPAGARCLIENTES (
+   id 					SERIAL				 NOT NULL, 	
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
-   FECHAPERIODO         DATE                 null,
+   FECHA         		DATE                 null,
    VALOR                DECIMAL(9,2)         null
 );
 
@@ -350,7 +352,7 @@ DOCUMENTOIDENTIDAD
 /* Table: EMPLEADO                                              */
 /*==============================================================*/
 create table EMPLEADO (
-   DOCUMENTOIDENTIDADEMPLEADO VARCHAR(32)          not null,
+   DOCUMENTOIDENTIDADEMPLEADO VARCHAR(32)    not null,
    IDCARGO              CHAR(8)              not null,
    FECHAINGRESO         DATE                 null,
    APELLIDO             VARCHAR(32)          null,
@@ -383,7 +385,7 @@ IDCARGO
 /* Table: EXCEDENTETARIFA                                       */
 /*==============================================================*/
 create table EXCEDENTETARIFA (
-   IDTARIFA             SERIAL                 not null,
+   IDTARIFA             SERIAL               not null,
    DESDENM3             INT4                 null,
    VALORCONSUMO         DECIMAL(9,2)         null
 );
@@ -399,7 +401,7 @@ IDTARIFA
 /* Table: LECTURA                                               */
 /*==============================================================*/
 create table LECTURA (
-   IDLECTURA            SERIAL                 not null,
+   IDLECTURA            SERIAL               not null,
    NUMEROSUMINISTRO     INT8                 not null,
    FECHALECTURA         DATE                 null,
    LECTURAANTERIOR      INT8                 null,
@@ -486,7 +488,7 @@ IDPROVINCIA
 /* Table: RUBROFIJO                                             */
 /*==============================================================*/
 create table RUBROFIJO (
-   IDRUBROFIJO          SERIAL                 not null,
+   IDRUBROFIJO          SERIAL               not null,
    NOMBRERUBROFIJO      VARCHAR(32)          null,
    COSTORUBRO           DECIMAL(9,2)         null,
    constraint PK_RUBROFIJO primary key (IDRUBROFIJO)

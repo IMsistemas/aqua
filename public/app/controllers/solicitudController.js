@@ -34,7 +34,7 @@ app.controller('solicitudController',
 
    */
         
-
+         
         $scope.solicitudes=[];
         $scope.ahora = new Date();
         $scope.initLoad = function(){
@@ -91,6 +91,12 @@ app.controller('solicitudController',
                $('#modalMessageError').modal('show');           
             });   
         }
+
+        $scope.generarPDF = function(idSolicitud){
+            
+            window.open(API_URL+"suministros/solicitudes/solicitudes/pdf/"+idSolicitud);
+        }
+
 
 
         $scope.modalProcesaSolicitud = function(id){
@@ -150,14 +156,14 @@ app.controller('solicitudController',
                 data: $.param($scope.suministro),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function(response) {
-                 ingresarSuministro();
+                 ingresarSuministro(id);
             }).error(function(response) {
                 $scope.messageError = 'Error al procesar solicitud';
                $('#modalMessageError').modal('show');           
             });        
         }
 
-        ingresarSuministro = function(){
+        ingresarSuministro = function(id){
             var url = API_URL +"suministros/nuevo";    
              $http({
                 method: 'POST',
@@ -166,7 +172,7 @@ app.controller('solicitudController',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function(response) {
                  $scope.initLoad();
-                 ingresarCuentaPorCobrar();
+                 ingresarCuentaPorCobrar(id);
                  ingresarCuentaPorPagar();
             }).error(function(response) {
                 $scope.messageError = 'Error al ingresar el suministro';
@@ -175,23 +181,34 @@ app.controller('solicitudController',
             }); 
         }
 
-        ingresarCuentaPorCobrar = function(){
+        ingresarCuentaPorCobrar = function(id){
+
+           
             
             $http.get(API_URL+"configuracion/configuracion")
                 .success(function (response) {
                     $scope.interes = response[0];
                 });
+
+            $http.get(API_URL+"suministros/suministros")
+            .success(function (response) {
+                 $scope.cuenta.numerosuministro = parseInt(response.length)+1;
+
+            });
+
             if($scope.cuenta.costomedidor === undefined){
                 $scope.cuenta.costomedidor = $scope.producto.costoproducto;
             }if($scope.cuenta.acometida === undefined){
                 $scope.cuenta.acometida = $scope.acometida;
             }
+
+            $scope.cuenta.idsolicitud = id 
             $scope.cuenta.documentoidentidad = $scope.suministro.cliente.documentoidentidad;
             console.info($scope.interes);
             $scope.cuenta.dividendos = $scope.meses;
             calcularCostoSolicitud($scope.cuenta.cuotainicial,$scope.cuenta.costomedidor,$scope.cuenta.acometida,$scope.cuenta.dividendos,0.10);
 
-            
+            console.log($scope.cuenta);
             var url = API_URL + "cuentascobrarcliente/ingresarcuenta";   
              $http({
                  method: 'POST',
@@ -311,7 +328,59 @@ app.controller('solicitudController',
                     $('#modalMessageError').modal('show'); 
                       
                 });
-    }
+        }
+
+
+        $scope.exportToPDF = function(type) {
+
+            var longitud = ($scope.rubros).length;
+
+            var array_rubros = [];
+
+            for (var i = 0; i < longitud; i++) {
+                var object = {
+                    nombrerubro: (($scope.rubros)[i].nombrerubro).trim(),
+                    valorrubro: ($scope.rubros)[i].valorrubro,
+                }
+                array_rubros.push(object);
+            }
+
+            var text_mes = '';
+            for (var i = 0; i < 12; i++){
+                if ($scope.meses[i].id == $scope.s_mes) {
+                    text_mes = $scope.meses[i].name;
+                }
+            }
+
+            var filters = {
+                fecha: convertDatetoDB($scope.t_fecha_ing),
+                no_lectura: $scope.t_no_lectura,
+                anno: $scope.s_anno,
+                mes: text_mes,
+                suministro: $scope.t_no_suministro,
+                lectura: $scope.t_lectura,
+                nombre_cliente: $scope.nombre_cliente,
+                barrio: $scope.barrio,
+                calle: $scope.calle,
+                tarifa: $scope.tarifa,
+
+                lectura_anterior: $scope.lectura_anterior,
+                lectura_actual: $scope.lectura_actual,
+                consumo: $scope.consumo,
+                meses_atrasados: $scope.meses_atrasados,
+                total: $scope.total,
+                rubros: array_rubros,
+                script: 'window.print()'
+            }
+
+                var ventana = window.open('nuevaLectura/exportToPDF/' + type + '/' + JSON.stringify(filters));
+
+                if (type == 2){
+                    setTimeout(function(){ ventana.print(); }, 2000);
+                }
+
+
+        }
 
 });
 
