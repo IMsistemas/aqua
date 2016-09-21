@@ -9,6 +9,7 @@ class CuentasPorPagarClientes extends Model
 {
     protected $table = "cuentasporpagarclientes";
     public $timestamps = false;
+    protected $primaryKey = "idcxp";
 
     public function cliente (){
     	return $this->belongsTo('App\Modelos\Clientes\cliente');

@@ -42,9 +42,15 @@ drop index SUMINISTROACXCSUMINISTRO_FK;
 
 drop index CLIENTEACUENTASPORCOBRAR_FK;
 
+drop index SOLICITUDACUENTAPORCOBRAR_FK;
+
+drop index CUENTAPORCOBRARSUMINISTRO_PK;
+
 drop table CUENTAPORCOBRARSUMINISTRO;
 
 drop index CLIENTEACUENTAS_FK;
+
+drop index CUENTASPORPAGARCLIENTES_PK;
 
 drop table CUENTASPORPAGARCLIENTES;
 
@@ -239,7 +245,7 @@ DOCUMENTOIDENTIDAD
 /* Table: COBROAGUA                                             */
 /*==============================================================*/
 create table COBROAGUA (
-   IDCUENTA             SERIAL                 not null,
+   IDCUENTA             Serial               not null,
    NUMEROSUMINISTRO     INT8                 not null,
    IDLECTURA            INT8                 null,
    FECHAPERIODO         DATE                 null,
@@ -292,7 +298,7 @@ create table CONFIGURACION (
 /* Table: COSTOTARIFA                                           */
 /*==============================================================*/
 create table COSTOTARIFA (
-   IDTARIFA             SERIAL                 not null,
+   IDTARIFA             SERIAL               not null,
    APARTIRDENM3         INT4                 null,
    VALORCONSUMO         DECIMAL(9,2)         null
 );
@@ -308,13 +314,30 @@ IDTARIFA
 /* Table: CUENTAPORCOBRARSUMINISTRO                             */
 /*==============================================================*/
 create table CUENTAPORCOBRARSUMINISTRO (
-   id 					SERIAL				 NOT NULL,	
-   DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
-   NUMEROSUMINISTRO     INT8                 null,
-   FECHA         DATE                 null,
    DIVIDENDOS           INT4                 null,
    PAGOTOTAL            DECIMAL(9,2)         null,
-   PAGOPORCADADIVIDENDO DECIMAL(9,2)         null
+   PAGOPORCADADIVIDENDO DECIMAL(9,2)         null,
+   IDCXC                SERIAL                 not null,
+   DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
+   NUMEROSUMINISTRO     INT8                 not null,
+   IDSOLICITUD          INT8                 not null,
+   CUOTAINICIAL			DECIMAL(9,2)         NULL,
+   FECHA                DATE                 null,
+   constraint PK_CUENTAPORCOBRARSUMINISTRO primary key (IDCXC)
+);
+
+/*==============================================================*/
+/* Index: CUENTAPORCOBRARSUMINISTRO_PK                          */
+/*==============================================================*/
+create unique index CUENTAPORCOBRARSUMINISTRO_PK on CUENTAPORCOBRARSUMINISTRO (
+IDCXC
+);
+
+/*==============================================================*/
+/* Index: SOLICITUDACUENTAPORCOBRAR_FK                          */
+/*==============================================================*/
+create  index SOLICITUDACUENTAPORCOBRAR_FK on CUENTAPORCOBRARSUMINISTRO (
+IDSOLICITUD
 );
 
 /*==============================================================*/
@@ -335,10 +358,18 @@ NUMEROSUMINISTRO
 /* Table: CUENTASPORPAGARCLIENTES                               */
 /*==============================================================*/
 create table CUENTASPORPAGARCLIENTES (
-   id 					SERIAL				 NOT NULL, 	
+   VALOR                DECIMAL(9,2)         null,
+   IDCXP                SERIAL                 not null,
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
-   FECHA         		DATE                 null,
-   VALOR                DECIMAL(9,2)         null
+   FECHA                DATE                 null,
+   constraint PK_CUENTASPORPAGARCLIENTES primary key (IDCXP)
+);
+
+/*==============================================================*/
+/* Index: CUENTASPORPAGARCLIENTES_PK                            */
+/*==============================================================*/
+create unique index CUENTASPORPAGARCLIENTES_PK on CUENTASPORPAGARCLIENTES (
+IDCXP
 );
 
 /*==============================================================*/
@@ -352,7 +383,7 @@ DOCUMENTOIDENTIDAD
 /* Table: EMPLEADO                                              */
 /*==============================================================*/
 create table EMPLEADO (
-   DOCUMENTOIDENTIDADEMPLEADO VARCHAR(32)    not null,
+   DOCUMENTOIDENTIDADEMPLEADO VARCHAR(32)          not null,
    IDCARGO              CHAR(8)              not null,
    FECHAINGRESO         DATE                 null,
    APELLIDO             VARCHAR(32)          null,
@@ -385,7 +416,7 @@ IDCARGO
 /* Table: EXCEDENTETARIFA                                       */
 /*==============================================================*/
 create table EXCEDENTETARIFA (
-   IDTARIFA             SERIAL               not null,
+   IDTARIFA             INT4                 not null,
    DESDENM3             INT4                 null,
    VALORCONSUMO         DECIMAL(9,2)         null
 );
@@ -401,7 +432,7 @@ IDTARIFA
 /* Table: LECTURA                                               */
 /*==============================================================*/
 create table LECTURA (
-   IDLECTURA            SERIAL               not null,
+   IDLECTURA            SERIAL                 not null,
    NUMEROSUMINISTRO     INT8                 not null,
    FECHALECTURA         DATE                 null,
    LECTURAANTERIOR      INT8                 null,
@@ -488,7 +519,7 @@ IDPROVINCIA
 /* Table: RUBROFIJO                                             */
 /*==============================================================*/
 create table RUBROFIJO (
-   IDRUBROFIJO          SERIAL               not null,
+   IDRUBROFIJO          SERIAL                 not null,
    NOMBRERUBROFIJO      VARCHAR(32)          null,
    COSTORUBRO           DECIMAL(9,2)         null,
    constraint PK_RUBROFIJO primary key (IDRUBROFIJO)
@@ -507,7 +538,7 @@ IDRUBROFIJO
 create table RUBROSFIJOSCUENTA (
    IDRUBROFIJO          INT4                 not null,
    IDCUENTA             INT4                 not null,
-   COSTORUBRO           DECIMAL(9,2)         not null default 0.00,
+   COSTORUBRO           DECIMAL(9,2)         null,
    constraint PK_RUBROSFIJOSCUENTA primary key (IDRUBROFIJO, IDCUENTA)
 );
 
@@ -539,7 +570,7 @@ IDRUBROFIJO
 create table RUBROSVARIABLESCUENTA (
    IDRUBROVARIABLE      INT4                 not null,
    IDCUENTA             INT4                 not null,
-   COSTORUBRO           DECIMAL(9,2)         not null default 0.00,
+   COSTORUBRO           DECIMAL(9,2)         null,
    constraint PK_RUBROSVARIABLESCUENTA primary key (IDRUBROVARIABLE, IDCUENTA)
 );
 
@@ -617,7 +648,7 @@ create table SUMINISTRO (
    IDCALLE              CHAR(8)              not null,
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
    IDPRODUCTO           CHAR(8)              not null,
-   DIRECCIONSUMNISTRO   VARCHAR(32)          null,
+   DIRECCIONSUMINISTRO   VARCHAR(32)          null,
    TELEFONOSUMINISTRO   CHAR(256)            null,
    FECHAINSTALACIONSUMINISTRO DATE                 null,
    constraint PK_SUMINISTRO primary key (NUMEROSUMINISTRO)
@@ -707,6 +738,11 @@ alter table COSTOTARIFA
 alter table CUENTAPORCOBRARSUMINISTRO
    add constraint FK_CUENTAPO_CLIENTEAC_CLIENTE foreign key (DOCUMENTOIDENTIDAD)
       references CLIENTE (DOCUMENTOIDENTIDAD)
+      on delete restrict on update restrict;
+
+alter table CUENTAPORCOBRARSUMINISTRO
+   add constraint FK_CUENTAPO_SOLICITUD_SOLICITU foreign key (IDSOLICITUD)
+      references SOLICITUD (IDSOLICITUD)
       on delete restrict on update restrict;
 
 alter table CUENTAPORCOBRARSUMINISTRO
