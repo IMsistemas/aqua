@@ -159,6 +159,14 @@ class LecturaController extends Controller
                             ->take(1)
                             ->get();
 
+        if (count($atraso) == 0){
+            $valormesesatrasados = 0;
+            $mesesatrasados = 0;
+        } else {
+            $valormesesatrasados = $atraso[0]->valormesesatrasados;
+            $mesesatrasados = $atraso[0]->mesesatrasados;
+        }
+
         //-------------------------------------------------------------------------------------------------------------
 
         $rubrofijo = DB::select('SELECT * FROM rubrofijo');
@@ -211,12 +219,12 @@ class LecturaController extends Controller
 
         $rubros[0]['valorrubro'] = $tarifabasica[0]->valorconsumo;
         $rubros[1]['valorrubro'] = $excedente;
-        $rubros[2]['valorrubro'] = $atraso[0]->valormesesatrasados;
+        $rubros[2]['valorrubro'] = $valormesesatrasados;
 
         return response()->json([
             $rubros,
             [
-                'mesesatrasados' => $atraso[0]->mesesatrasados,
+                'mesesatrasados' => $mesesatrasados,
             ]
         ]);
     }
