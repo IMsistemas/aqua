@@ -19,19 +19,19 @@ class Suministro extends Model
     }
 
     public function producto(){
-    	return $this->belongsTo('App\Modelos\Suministros\producto','idproducto');
+    	return $this->belongsTo('App\Modelos\Suministros\Producto','idproducto');
     }
 
     public function tarifa(){
-    	return $this->belongsTo('App\Modelos\Tarifas\tarifa','idtarifa');
+    	return $this->belongsTo('App\Modelos\Tarifas\Tarifa','idtarifa');
     }
 
     public function lectura(){
-    	return $this->hasMany('App\Modelos\Lecturas\lectura','numerosuministro');
+    	return $this->hasMany('App\Modelos\Lecturas\Lectura','numerosuministro');
     }
 
     public function cobroagua(){
-    	return $this->hasMany('App\Modelos\Cuentas\cobroagua','numerosuministro');
+    	return $this->hasMany('App\Modelos\Cuentas\CobroAgua','numerosuministro');
     }
 
 }

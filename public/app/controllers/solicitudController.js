@@ -182,9 +182,6 @@ app.controller('solicitudController',
         }
 
         ingresarCuentaPorCobrar = function(id){
-
-           
-            
             $http.get(API_URL+"configuracion/configuracion")
                 .success(function (response) {
                     $scope.interes = response[0];

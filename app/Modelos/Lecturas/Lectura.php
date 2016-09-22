@@ -15,10 +15,10 @@ class Lectura extends Model
     ];
 
     public function suministro(){
-    	return $this->belongsTo('App\Modelos\Suministros\suministro');
+    	return $this->belongsTo('App\Modelos\Suministros\Suministro');
     }
 
     public function cobroagua(){
-    	return $this->hasMany('App\Modelos\Cuentas\cobroagua','idlectura');
+    	return $this->hasMany('App\Modelos\Cuentas\CobroAgua','idlectura');
     }
 }

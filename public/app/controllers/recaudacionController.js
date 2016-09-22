@@ -1,6 +1,6 @@
 app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
-
+ 
     $scope.ahora = new Date();
     
     $scope.initLoad = function(){
@@ -49,7 +49,7 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                 valorMesesAtrasados = parseFloat($scope.cuenta.valormesesatrasados == null ?  0 : $scope.cuenta.valormesesatrasados);
 
                 $scope.totalCuenta = totalRubrosFijos + totalRubrosVariables + valorConsumo + valorExcedente + valorMesesAtrasados;
-
+                $scope.initLoad();
                $('#ingresarValores').modal('show');
             }).error(function(response){
                 $scope.errorMessage = "Error al cargar la cuenta";
@@ -95,6 +95,7 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(response){
                     $scope.message = "Se guardaron los rubros de la cuenta";
+                    $scope.initLoad();
                     $('#ingresarValores').modal('hide');
                     $('#modalConfirmacion').modal('show');
                     setTimeout("$('#modalConfirmacion').modal('hide')",3000);
@@ -116,12 +117,13 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
                 $scope.message = "Se pagó la factura";
                 $('#ingresarValores').modal('hide');
                 $('#modalConfirmacion').modal('show');
-                setTimeout("$('#modalConfirmacion').modal('hide')",3000);
+                $scope.initLoad();
+               // setTimeout("$('#modalConfirmacion').modal('hide')",3000);
 
         }).error(function(response){
             $scope.ErrorMessage = "Error al pagar la factura";
             $('#modalError').modal('show');
-            setTimeout("$('#modalError').modal('hide')",3000);
+           // setTimeout("$('#modalError').modal('hide')",3000);
         });
 
     }

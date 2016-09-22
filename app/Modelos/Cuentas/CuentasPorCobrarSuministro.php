@@ -11,7 +11,7 @@ class CuentasPorCobrarSuministro extends Model
     protected $primaryKey = "idcxc";
     
     public function cliente (){
-    	return $this->belongsTo('App\Modelos\Clientes\cliente');
+    	return $this->belongsTo('App\Modelos\Clientes\Cliente');
     }
 }
    
