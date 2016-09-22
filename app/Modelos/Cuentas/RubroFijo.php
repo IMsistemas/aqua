@@ -11,7 +11,7 @@ class RubroFijo extends Model
     public $timestamps = false;
 
     public function cobrosagua(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\cobroagua','rubrosfijoscuentas','idcuenta','idrubrovariable');
+    	return $this->belongsToMany('App\Modelos\Cuentas\CobroAgua','rubrosfijoscuentas','idcuenta','idrubrovariable');
     }
 }
  

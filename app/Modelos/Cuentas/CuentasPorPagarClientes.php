@@ -12,7 +12,7 @@ class CuentasPorPagarClientes extends Model
     protected $primaryKey = "idcxp";
 
     public function cliente (){
-    	return $this->belongsTo('App\Modelos\Clientes\cliente');
+    	return $this->belongsTo('App\Modelos\Clientes\Cliente');
     }
 }
  

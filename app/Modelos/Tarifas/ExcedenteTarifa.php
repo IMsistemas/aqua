@@ -10,6 +10,6 @@ class ExcedenteTarifa extends Model
     public $timestamps = false;
 
     public function tarifa (){
-    	return $this->belongsTo('App\Modelos\Tarifas\tarifa');
+    	return $this->belongsTo('App\Modelos\Tarifas\Tarifa');
     }
 }

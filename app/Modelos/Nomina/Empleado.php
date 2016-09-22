@@ -22,6 +22,6 @@ class Empleado extends Model
     ];
 
     public function cargo(){
-    	return $this->belongsTo('App\Modelos\Nomina\cargo');
+    	return $this->belongsTo('App\Modelos\Nomina\Cargo');
     }
 }
