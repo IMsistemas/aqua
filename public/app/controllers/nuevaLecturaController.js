@@ -191,7 +191,8 @@
                 consumo: $scope.consumo,
 
                 excedente: $scope.rubros[1].valorrubro,
-                mesesatrasados: $scope.rubros[2].valorrubro,
+                valormesesatrasados: parseFloat($scope.rubros[2].valorrubro) + parseFloat($scope.total),
+                mesesatrasados: parseInt($scope.meses_atrasados) + 1,
                 total: $scope.total,
 
                 pdf: JSON.stringify(filters),

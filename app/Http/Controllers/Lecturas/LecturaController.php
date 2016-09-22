@@ -150,6 +150,15 @@ class LecturaController extends Controller
             ['estapagada', '=', false]
         ])->count();
 
+
+        $atraso = CobroAgua::where('estapagada', false)
+                            ->whereRaw('mesesatrasados IS NOT NULL')
+                            ->whereRaw('valormesesatrasados IS NOT NULL')
+                            ->where('numerosuministro', $numerosuministro)
+                            ->orderBy('idcuenta', 'desc')
+                            ->take(1)
+                            ->get();
+
         //-------------------------------------------------------------------------------------------------------------
 
         $rubrofijo = DB::select('SELECT * FROM rubrofijo');
@@ -202,9 +211,14 @@ class LecturaController extends Controller
 
         $rubros[0]['valorrubro'] = $tarifabasica[0]->valorconsumo;
         $rubros[1]['valorrubro'] = $excedente;
-        $rubros[2]['valorrubro'] = $estaPaga;
+        $rubros[2]['valorrubro'] = $atraso[0]->valormesesatrasados;
 
-        return response()->json([$rubros, ['mesesatrasados' => $estaPaga] ]);
+        return response()->json([
+            $rubros,
+            [
+                'mesesatrasados' => $atraso[0]->mesesatrasados,
+            ]
+        ]);
     }
 
 
@@ -233,10 +247,11 @@ class LecturaController extends Controller
 
         $cobroagua->idlectura =  $lectura->idlectura;
         $cobroagua->valorconsumo = $request->input('consumo');
-
         $cobroagua->valorexcedente = $request->input('excedente');
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
+        $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
         $cobroagua->total = $request->input('total');
+        $cobroagua->estapagada = false;
 
         $cobroagua->save();
 
