@@ -40,7 +40,9 @@ class LecturaController extends Controller
     public function getLastID()
     {
         $last_id = Lectura::max('idlectura');
+
         ($last_id == 0) ? $last_id = 1 : $last_id += 1;
+
         return response()->json(['lastID' => $last_id]);
     }
 
@@ -53,19 +55,16 @@ class LecturaController extends Controller
      */
     public function show($id)
     {
+        $suministro = Suministro::with('cliente', 'tarifa', 'calle.barrio')
+                                    ->where('suministro.numerosuministro', $id)
+                                    ->get();
 
-        $lectura = Suministro::join('tarifa', 'suministro.idtarifa', '=', 'tarifa.idtarifa')
-                            ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
-                            ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-                            ->join('barrio', 'calle.idbarrio', '=', 'barrio.idbarrio')
-                            ->select('tarifa.nombretarifa', 'calle.nombrecalle', 'barrio.nombrebarrio',
-                                        'cliente.apellido', 'cliente.nombre', 'tarifa.idtarifa', 
-                                        DB::raw('(SELECT lecturaactual FROM lectura WHERE lectura.numerosuministro = suministro.numerosuministro LIMIT 1)'))
-                            ->where('suministro.numerosuministro', '=', $id)
+        $lectura = Lectura::where('numerosuministro', $id)
+                            ->orderBy('idlectura', 'desc')
+                            ->take(1)
                             ->get();
 
-
-        return response()->json($lectura);
+        return response()->json(['suministro' => $suministro, 'lectura' => $lectura]);
     }
 
 
@@ -122,6 +121,13 @@ class LecturaController extends Controller
 
         $rubros = $this->getRubros();
 
+
+        $cuenta = CobroAgua::where('numerosuministro', $numerosuministro)
+                            ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = EXTRACT( MONTH FROM now())')
+                            ->get();
+
+
+
         $tarifabasica = DB::table('costotarifa')
                                 ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
                                 ->where([
@@ -145,18 +151,11 @@ class LecturaController extends Controller
             $excedente = ($consumo - 15) * $value_tarifa_excedente[0]->valorconsumo;
         }
 
-        $estaPaga = CobroAgua::where([
-            ['numerosuministro', '=', $numerosuministro],
-            ['estapagada', '=', false]
-        ])->count();
-
-
         $atraso = CobroAgua::where('estapagada', false)
                             ->whereRaw('mesesatrasados IS NOT NULL')
                             ->whereRaw('valormesesatrasados IS NOT NULL')
                             ->where('numerosuministro', $numerosuministro)
-                            ->orderBy('idcuenta', 'desc')
-                            ->take(1)
+                            ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = (EXTRACT( MONTH FROM now()) - 1)')
                             ->get();
 
         if (count($atraso) == 0){
@@ -170,6 +169,9 @@ class LecturaController extends Controller
         //-------------------------------------------------------------------------------------------------------------
 
         $rubrofijo = DB::select('SELECT * FROM rubrofijo');
+
+        //$rubrofijo = DB::select('SELECT rubrosfijoscuenta.costorubro  FROM rubrosfijoscuenta INNER JOIN rubrofijo ON rubrosfijoscuenta.idrubrofijo = rubrofijo.idrubrofijo
+          //                        WHERE rubrosfijoscuenta.idcuenta = ' + $cuenta->idcuenta);
 
         $longitud = count($rubrofijo);
 
@@ -254,7 +256,8 @@ class LecturaController extends Controller
                                 ->get()->first();
 
         $cobroagua->idlectura =  $lectura->idlectura;
-        $cobroagua->valorconsumo = $request->input('consumo');
+        $cobroagua->consumom3 = $request->input('consumo');
+        $cobroagua->valorconsumo = $request->input('valorconsumo');
         $cobroagua->valorexcedente = $request->input('excedente');
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
@@ -272,8 +275,8 @@ class LecturaController extends Controller
         $correo_cliente = $cliente[0]->correo;
         $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
-        /*$correo_cliente = 'raidelbg84@gmail.com';
-        $nombre_cliente = 'Berrillo Gonzalez Raidel';*/
+        $correo_cliente = 'raidelbg84@gmail.com';
+        $nombre_cliente = 'Berrillo Gonzalez Raidel';
 
         /*$correo_cliente = 'raidelbg84@gmail.com';
 
