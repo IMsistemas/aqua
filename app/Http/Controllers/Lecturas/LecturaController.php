@@ -271,9 +271,6 @@ class LecturaController extends Controller
         $correo_cliente = $cliente[0]->correo;
         $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
-        $correo_cliente = 'raidelbg84@gmail.com';
-        $nombre_cliente = 'Raidel Berrillo Gonzalez';
-
         $data = json_decode($request->input('pdf'));
         $data1 = [];
 
