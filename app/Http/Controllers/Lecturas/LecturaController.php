@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lecturas;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\RubroFijo;
+use App\Modelos\Cuentas\RubroVariable;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
@@ -75,36 +76,50 @@ class LecturaController extends Controller
      */
     public function getRubros()
     {
-        $rubrofijo = DB::select('SELECT * FROM rubrofijo');
+        $rubrofijo = RubroFijo::all();
+        $rubrovariable = RubroVariable::all();
 
-        $rubrovariable = DB::select('
-                                    
-                                SELECT idrubrovariable AS idrubrofijo, nombrerubrovariable AS nombrerubrofijo,
-                                (
-                                SELECT costorubro FROM rubrosvariablescuenta, cobroagua 
-                                    WHERE rubrovariable.idrubrovariable = rubrosvariablescuenta.idrubrovariable
-                                    AND cobroagua.idcuenta = rubrosvariablescuenta.idcuenta
-                                ) AS valorrubro
-                                FROM rubrovariable
+        $tarifabasica = new \stdClass();
+        $tarifabasica->id = 1;
+        $tarifabasica->type = 'tarifa_basica';
+        $tarifabasica->nombrerubro = 'Consumo Tarifa Básica';
+        $tarifabasica->valorrubro = '0.00';
 
+        $excedente = new \stdClass();
+        $excedente->id = 1;
+        $excedente->type = 'excedente';
+        $excedente->nombrerubro = 'Excedente';
+        $excedente->valorrubro = '0.00';
 
-                            ');
+        $mesesatrasados = new \stdClass();
+        $mesesatrasados->id = 1;
+        $mesesatrasados->type = 'mesesatrasados';
+        $mesesatrasados->nombrerubro = 'Valores Atrasados';
+        $mesesatrasados->valorrubro = '0.00';
 
-        $result = array_merge($rubrofijo, $rubrovariable);
+        $list_rubros = [$tarifabasica, $excedente, $mesesatrasados];
 
+        foreach ($rubrofijo as $rubro){
+            $object = new \stdClass();
+            $object->id = $rubro->idrubrofijo;
+            $object->type = 'rubrofijo';
+            $object->nombrerubro = $rubro->nombrerubrofijo;
+            $object->valorrubro = '0.00';
 
-        $tarifabasica = ['nombrerubro' => 'Consumo Tarifa Básica', 'valorrubro' => '0.00'];
-        $excedente = ['nombrerubro' => 'Excedente', 'valorrubro' => '0.00'];
-        $mesesatrasados = ['nombrerubro' => 'Valores Atrasados', 'valorrubro' => '0.00'];
-
-        $return = [$tarifabasica, $excedente, $mesesatrasados];
-
-        foreach ( $result as $item){
-            $return[] = ['nombrerubro' => $item->nombrerubrofijo, 'valorrubro' => '0.00'];
+            $list_rubros[] = $object;
         }
 
-        //return $result;
-        return $return;
+        foreach ($rubrovariable as $rubro){
+            $object = new \stdClass();
+            $object->id = $rubro->idrubrovariable;
+            $object->type = 'rubrovariable';
+            $object->nombrerubro = $rubro->nombrerubrovariable;
+            $object->valorrubro = '0.00';
+
+            $list_rubros[] = $object;
+        }
+
+        return $list_rubros;
     }
 
 
@@ -121,35 +136,31 @@ class LecturaController extends Controller
 
         $rubros = $this->getRubros();
 
+        //-------------------Valor Consumo: Tarifa Basica----------------------------------------------
 
-        $cuenta = CobroAgua::where('numerosuministro', $numerosuministro)
-                            ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = EXTRACT( MONTH FROM now())')
-                            ->get();
+        $tarifa_basica = CostoTarifa::where('apartirdenm3', '<=', $consumo)
+                                        ->where('idtarifa', $tarifa)
+                                        ->orderBy('apartirdenm3', 'desc')
+                                        ->take(1)
+                                        ->get();
 
+        $rubros[0]->valorrubro = $tarifa_basica[0]->valorconsumo;
 
+        //-------------------Excedente: 0 || (consumo - 15) * % ---------------------------------------
 
-        $tarifabasica = DB::table('costotarifa')
-                                ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
-                                ->where([
-                                    ['idtarifa', '=', $tarifa], ['apartirdenm3', '<', $consumo]
-                                ])->get();
+        $excedente = ExcedenteTarifa::where('desdenm3', '<=', $consumo)
+                                        ->where('idtarifa', $tarifa)
+                                        ->orderBy('desdenm3', 'desc')
+                                        ->take(1)
+                                        ->get();
 
-
-        $value_tarifa_excedente = DB::table('excedentetarifa')
-                                ->select(DB::raw('MAX(valorconsumo) AS valorconsumo'))
-                                ->where([
-                                    ['idtarifa', '=', $tarifa], ['desdenm3', '<=', $consumo]
-                                ])->get();
-
-        if($tarifabasica[0]->valorconsumo == null || $tarifabasica[0]->valorconsumo == ''){
-            $tarifabasica[0]->valorconsumo = 0;
-        }
-
-        if ($value_tarifa_excedente == null || $value_tarifa_excedente == 0){
-            $excedente = 0;
+        if (count($excedente) == 0) {
+            $rubros[1]->valorrubro = 0;
         } else {
-            $excedente = ($consumo - 15) * $value_tarifa_excedente[0]->valorconsumo;
+            $rubros[1]->valorrubro = ($consumo - 15) * $excedente[0]->valorconsumo;
         }
+
+        //-------------------Valores Atrasados--------------------------------------------------------
 
         $atraso = CobroAgua::where('estapagada', false)
                             ->whereRaw('mesesatrasados IS NOT NULL')
@@ -166,62 +177,41 @@ class LecturaController extends Controller
             $mesesatrasados = $atraso[0]->mesesatrasados;
         }
 
-        //-------------------------------------------------------------------------------------------------------------
+        $rubros[2]->valorrubro = $valormesesatrasados;
 
-        $rubrofijo = DB::select('SELECT * FROM rubrofijo');
+        //------Rubros Fijos, variables para el calculo-------------------------------------------------
 
-        //$rubrofijo = DB::select('SELECT rubrosfijoscuenta.costorubro  FROM rubrosfijoscuenta INNER JOIN rubrofijo ON rubrosfijoscuenta.idrubrofijo = rubrofijo.idrubrofijo
-          //                        WHERE rubrosfijoscuenta.idcuenta = ' + $cuenta->idcuenta);
+        $costo_tarifa_basica = $rubros[0]->valorrubro;
+        $costo_excedente = $rubros[1]->valorrubro;
+        $rubrofijo = RubroFijo::all();
 
-        $longitud = count($rubrofijo);
+        //------Rubros Fijos: Alcantarillado = (Tarifa Basica + Excedente) * 30% ----------------------
 
-        if ($longitud > 0){
-            for ($i = 0; $i < $longitud; $i++){
-                if($rubrofijo[$i]->idrubrofijo == 1){
+        $alcantarillado = ($costo_tarifa_basica + $costo_excedente) * $rubrofijo[0]->costorubro;
+        $rubros[3]->valorrubro = $alcantarillado;
 
-                    if ($rubrofijo[$i]->costorubro != null && $rubrofijo[$i]->costorubro != ''){
-                        $rubros[$i + 3]['valorrubro'] = $rubrofijo[$i]->costorubro;
-                    }
+        //------Rubros Fijos: DDSS = (Tarifa Basica + Excedente) * 20% -------------------------------
 
-                } else {
+        $ddss = ($costo_tarifa_basica + $costo_excedente) * $rubrofijo[1]->costorubro;
+        $rubros[4]->valorrubro = $ddss;
 
-                    if ($rubrofijo[$i]->costorubro != null && $rubrofijo[$i]->costorubro != ''){
-                        $value = ($tarifabasica[0]->valorconsumo + $excedente) * $rubrofijo[$i]->costorubro;
-                        $rubros[$i + 3]['valorrubro'] = $value;
-                    }
+        //------Rubros Variables, variables para el calculo-------------------------------------------
 
-                }
-            }
+        $cobroagua = CobroAgua::with('rubrosvariables')
+                                ->where('numerosuministro', '=', $numerosuministro)
+                                ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = ' . date('m'))
+                                ->whereRaw('EXTRACT( YEAR FROM fechaperiodo) = ' . date('Y'))
+                                ->get()->first();
+
+        $list_rubrovariable = $cobroagua->rubrosvariables;
+
+        $length_list = count($list_rubrovariable);
+        $length_rubro = count($rubros);
+
+        for($i = $length_list - 1; $i >= 0; $i--){
+            $rubros[$length_rubro - 1]->valorrubro = $list_rubrovariable[$i]->pivot->costorubro;
+            $length_rubro--;
         }
-
-        //-------------------------------------------------------------------------------------------------------------
-
-        $rubrovariable = DB::select('                                    
-                                SELECT idrubrovariable AS idrubrofijo, nombrerubrovariable AS nombrerubrofijo,
-                                (
-                                SELECT costorubro FROM rubrosvariablescuenta, cobroagua 
-                                    WHERE rubrovariable.idrubrovariable = rubrosvariablescuenta.idrubrovariable
-                                    AND cobroagua.idcuenta = rubrosvariablescuenta.idcuenta
-                                    AND cobroagua.numerosuministro = ' . $numerosuministro . '
-                                ) AS valorrubro
-                                FROM rubrovariable
-                            ');
-
-        $longitud_variable = count($rubrovariable);
-
-        if ($longitud_variable > 0){
-            for ($i = 0; $i < $longitud_variable; $i++){
-
-                if ($rubrovariable[$i]->valorrubro != null && $rubrovariable[$i]->valorrubro != ''){
-                    $rubros[$i + ($longitud + 3)]['valorrubro'] = $rubrovariable[$i]->valorrubro;
-                }
-
-            }
-        }
-
-        $rubros[0]['valorrubro'] = $tarifabasica[0]->valorconsumo;
-        $rubros[1]['valorrubro'] = $excedente;
-        $rubros[2]['valorrubro'] = $valormesesatrasados;
 
         return response()->json([
             $rubros,
@@ -229,6 +219,7 @@ class LecturaController extends Controller
                 'mesesatrasados' => $mesesatrasados,
             ]
         ]);
+
     }
 
 
@@ -266,6 +257,11 @@ class LecturaController extends Controller
 
         $cobroagua->save();
 
+        foreach ($request->input('rubros') as $rubro) {
+            if ($rubro['type'] == 'rubrofijo') {
+                $cobroagua->rubrosfijos()->attach($rubro['id'],['costorubro' => $rubro['valorrubro']]);
+            }
+        }
 
         $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
                             ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
@@ -276,28 +272,7 @@ class LecturaController extends Controller
         $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
         $correo_cliente = 'raidelbg84@gmail.com';
-        $nombre_cliente = 'Berrillo Gonzalez Raidel';
-
-        /*$correo_cliente = 'raidelbg84@gmail.com';
-
-        $data = json_decode($request->input('pdf'));
-        $data1 = [];
-
-        $view = \View::make('Lecturas.pdf_email_newLectura', compact('data1', 'data'))->render();
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view)->save(storage_path('app/public') . '/myfile.pdf');
-
-        Mail::send('Lecturas.email',['correo_cliente' => $correo_cliente] , function($message) use ($correo_cliente)
-        {
-
-            $message->from('aguapotable.ip-zone.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
-
-            $message->to($correo_cliente)->subject('Factura Lectura!');
-
-            $message->attach(storage_path('app/public') . '/myfile.pdf');
-
-        });*/
+        $nombre_cliente = 'Raidel Berrillo Gonzalez';
 
         $data = json_decode($request->input('pdf'));
         $data1 = [];
@@ -306,14 +281,11 @@ class LecturaController extends Controller
 
         $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
 
-        $rcpt = array(
-            array(
-                'name' => $nombre_cliente,
-                'email' => $correo_cliente
-            )
-        );
+        $rcpt = [
+            [ 'name' => $nombre_cliente, 'email' => $correo_cliente ]
+        ];
 
-        $postData = array(
+        $postData = [
             'function' => 'sendMail',
             'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
             'subject' => 'Factura Agua',
@@ -323,7 +295,7 @@ class LecturaController extends Controller
             'mailboxReportId' => 1,
             'packageId' => 6,
             'emails' => $rcpt,
-        );
+        ];
 
         $post = http_build_query($postData);
 
@@ -333,6 +305,7 @@ class LecturaController extends Controller
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
         $json = curl_exec($curl);
+
         if ($json === false) {
             die('Request failed with error: '. curl_error($curl));
         }
@@ -366,5 +339,6 @@ class LecturaController extends Controller
 
         return $pdf->stream('test.pdf');
     }
+
 
 }

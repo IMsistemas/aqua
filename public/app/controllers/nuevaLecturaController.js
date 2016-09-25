@@ -138,6 +138,8 @@
 
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
 
+                //console.log(response);
+
                 $scope.rubros = response;
 
                 $scope.total = '$ 0.00';
@@ -152,6 +154,8 @@
             var url = API_URL + 'nuevaLectura/getRubros/' + consumo + '/' + tarifa + '/' + id;
 
             $http.get(url).success(function(response) {
+
+                //console.log(response);
 
                 $scope.rubros = response[0];
                 $scope.meses_atrasados =  response[1].mesesatrasados;
@@ -234,6 +238,8 @@
                 valormesesatrasados: parseFloat($scope.rubros[2].valorrubro),
                 mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
+
+                rubros: $scope.rubros,
 
                 pdf: JSON.stringify(filters),
 
