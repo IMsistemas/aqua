@@ -55,6 +55,7 @@
 
                 console.log(response);
 
+
                 if (response.length == 0){
 
                     $scope.message = 'No exite registro del Número de Suministro Insertado...';
@@ -62,49 +63,18 @@
 
                 } else {
 
+                    var lectura_anterior = 0;
+                    var lectura_actual = 0;
+
                     if ((response.lectura).length == 0){
-
-                        var lectura_anterior = 0;
-                        var lectura_actual = $scope.t_lectura;
-
+                        lectura_actual = $scope.t_lectura;
                     } else {
-
-
-
+                        lectura_anterior = response.lectura[0].lecturaactual;
+                        lectura_actual = $scope.t_lectura;
                     }
-                    $scope.lectura_anterior = lectura_anterior;
-                    $scope.lectura_actual = lectura_actual;
-                    $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
-
-                    $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
-
-                    $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
-                    $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
-                    $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
-                    $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
-
-                    $('#btn_export_pdf').prop('disabled', false);
-                    $('#btn_print_pdf').prop('disabled', false);
-                    $('#btn_save').prop('disabled', false);
-
-                }
-
-
-                /*if (response.length == 0){
-
-                    $scope.message = 'No exite registro del Número de Suministro Insertado...';
-                    $('#modalMessage').modal('show');
-
-                } else {
-
-                    if(response[0].lecturaactual == null || response[0].lecturaactual == undefined){
-                        response[0].lecturaactual = 0;
-                    }
-
-                    var lectura_anterior = parseFloat(response[0].lecturaactual);
-                    var lectura_actual = parseFloat($scope.t_lectura);
 
                     if(lectura_anterior > lectura_actual){
+
                         $scope.lectura_anterior = lectura_anterior;
                         $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
                         $('#modalMessage').modal('show');
@@ -113,23 +83,22 @@
 
                         $scope.lectura_anterior = lectura_anterior;
                         $scope.lectura_actual = lectura_actual;
+                        $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
 
-                        $scope.consumo = lectura_actual - lectura_anterior;
+                        $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
 
+                        $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
+                        $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
+                        $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
+                        $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
 
-                        $scope.getValueRublos($scope.consumo, response[0].idtarifa);
+                        $('#btn_export_pdf').prop('disabled', false);
+                        $('#btn_print_pdf').prop('disabled', false);
+                        $('#btn_save').prop('disabled', false);
 
-                        $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
-                        $scope.barrio = response[0].nombrebarrio;
-                        $scope.calle = response[0].nombrecalle;
-                        $scope.tarifa = response[0].nombretarifa;  
-                              
                     }
 
-                    $('#btn_export_pdf').prop('disabled', false);
-                    $('#btn_print_pdf').prop('disabled', false);
-                    $('#btn_save').prop('disabled', false);
-                }*/
+                }
 
             });
         };
@@ -137,8 +106,6 @@
         $scope.createTableRubros = function(){
 
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
-
-                //console.log(response);
 
                 $scope.rubros = response;
 
@@ -155,8 +122,6 @@
 
             $http.get(url).success(function(response) {
 
-                //console.log(response);
-
                 $scope.rubros = response[0];
                 $scope.meses_atrasados =  response[1].mesesatrasados;
 
@@ -166,10 +131,7 @@
                     suma += parseFloat(($scope.rubros)[i].valorrubro);
                 }
 
-                //var total = suma + $scope.consumo;
-
                 $scope.total = suma.toFixed(2);
-
 
             });
         }
