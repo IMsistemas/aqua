@@ -45,13 +45,16 @@
 
             });
 
-        }
+        };
 
         $scope.loadInfo = function(){
 
             var id = $scope.t_no_suministro;
 
             $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
+
+                console.log(response);
+
 
                 if (response.length == 0){
 
@@ -60,14 +63,18 @@
 
                 } else {
 
-                    if(response[0].lecturaactual == null || response[0].lecturaactual == undefined){
-                        response[0].lecturaactual = 0;
+                    var lectura_anterior = 0;
+                    var lectura_actual = 0;
+
+                    if ((response.lectura).length == 0){
+                        lectura_actual = $scope.t_lectura;
+                    } else {
+                        lectura_anterior = response.lectura[0].lecturaactual;
+                        lectura_actual = $scope.t_lectura;
                     }
 
-                    var lectura_anterior = parseFloat(response[0].lecturaactual);
-                    var lectura_actual = parseFloat($scope.t_lectura);
-
                     if(lectura_anterior > lectura_actual){
+
                         $scope.lectura_anterior = lectura_anterior;
                         $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
                         $('#modalMessage').modal('show');
@@ -76,26 +83,25 @@
 
                         $scope.lectura_anterior = lectura_anterior;
                         $scope.lectura_actual = lectura_actual;
+                        $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
 
-                        $scope.consumo = lectura_actual - lectura_anterior;
+                        $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
 
+                        $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
+                        $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
+                        $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
+                        $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
 
-                        $scope.getValueRublos($scope.consumo, response[0].idtarifa);
+                        $('#btn_export_pdf').prop('disabled', false);
+                        $('#btn_print_pdf').prop('disabled', false);
+                        $('#btn_save').prop('disabled', false);
 
-                        $scope.nombre_cliente = response[0].apellido + ' ' + response[0].nombre;
-                        $scope.barrio = response[0].nombrebarrio;
-                        $scope.calle = response[0].nombrecalle;
-                        $scope.tarifa = response[0].nombretarifa;  
-                              
                     }
 
-                    $('#btn_export_pdf').prop('disabled', false);
-                    $('#btn_print_pdf').prop('disabled', false);
-                    $('#btn_save').prop('disabled', false);
                 }
 
             });
-        }
+        };
 
         $scope.createTableRubros = function(){
 
@@ -127,7 +133,6 @@
 
                 $scope.total = suma.toFixed(2);
 
-
             });
         }
 
@@ -138,6 +143,13 @@
         $scope.save = function(){
             $('#modalConfirm').modal('hide');
             $('#myModalProgressBar').modal('show');
+
+            var text_mes = '';
+            for (var i = 0; i < 12; i++){
+                if ($scope.meses[i].id == $scope.s_mes) {
+                    text_mes = $scope.meses[i].name;
+                }
+            }
 
             var longitud = ($scope.rubros).length;
 
@@ -151,33 +163,26 @@
                 array_rubros.push(object);
             }
 
-            var text_mes = '';
-            for (var i = 0; i < 12; i++){
-                if ($scope.meses[i].id == $scope.s_mes) {
-                    text_mes = $scope.meses[i].name;
-                }
-            }
-
-
             var filters = {
-                fecha: $scope.t_fecha_ing,
-                no_lectura: $scope.t_no_lectura,
-                anno: $scope.s_anno,
-                mes: text_mes,
-                suministro: $scope.t_no_suministro,
-                lectura: $scope.t_lectura,
-                nombre_cliente: $scope.nombre_cliente,
-                barrio: $scope.barrio,
-                calle: $scope.calle,
-                tarifa: $scope.tarifa,
+                 fecha: $scope.t_fecha_ing,
+                 no_lectura: $scope.t_no_lectura,
+                 anno: $scope.s_anno,
+                 mes: text_mes,
+                 suministro: $scope.t_no_suministro,
+                 lectura: $scope.t_lectura,
+                 nombre_cliente: $scope.nombre_cliente,
+                 barrio: $scope.barrio,
+                 calle: $scope.calle,
+                 tarifa: $scope.tarifa,
 
-                lectura_anterior: $scope.lectura_anterior,
-                lectura_actual: $scope.lectura_actual,
-                consumo: $scope.consumo,
-                meses_atrasados: $scope.meses_atrasados,
-                total: $scope.total,
-                rubros: array_rubros
-            }
+                 lectura_anterior: $scope.lectura_anterior,
+                 lectura_actual: $scope.lectura_actual,
+                 consumo: $scope.consumo,
+                 meses_atrasados: $scope.meses_atrasados,
+                 total: $scope.total,
+                 rubros: array_rubros
+             };
+
 
             $scope.lectura_data = {
                 fechalectura: convertDatetoDB($scope.t_fecha_ing),
@@ -190,9 +195,13 @@
                 lecturaactual: $scope.lectura_actual,
                 consumo: $scope.consumo,
 
+                valorconsumo: $scope.rubros[0].valorrubro,
                 excedente: $scope.rubros[1].valorrubro,
-                mesesatrasados: $scope.rubros[2].valorrubro,
+                valormesesatrasados: parseFloat($scope.rubros[2].valorrubro),
+                mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
+
+                rubros: $scope.rubros,
 
                 pdf: JSON.stringify(filters),
 
@@ -228,7 +237,7 @@
                 console.log(res);
             });
 
-        }
+        };
 
         $scope.exportToPDF = function(type) {
 
