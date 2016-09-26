@@ -83,8 +83,14 @@
 
 		<script type="text/javascript">
 			pantallaCompleta = function(){
-				javascript:window.open("http://localhost:88/aqua/public/inicio", "_blank", "resizable=yes,scrollbars=yes,status=no, directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=yes")
-				window.close();
+				var usuario = document.getElementById('nombreUsuario');
+				pass = document.getElementById('password');
+				if(usuario == "admin"){
+					if(pass == "ayora2016"){
+						javascript:window.open("http://localhost:88/aqua/public/inicio", "_blank", "resizable=yes,scrollbars=yes,status=no, directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=yes")
+						window.close();
+					}
+				}
 			}
 		</script>
 

@@ -7,33 +7,6 @@
 
 app.controller('solicitudController',
     function ($scope,$http,API_URL) {
-
-        /*$scope.ManejoSolicitudes = function() {
-            this.solicitud = {
-
-            }
-
-            this.solicitudes = "mickey mouse";
-
-            this.cargarDatos = function(){
-                 self = this;
-                $http.get(API_URL+"suministros/solicitudes/solicitudes")
-                    .success(
-                        function (response) {
-                            $scope.ManejoSolicitudes.solicitudes = response;
-                           // console.log(self.solicitudes)
-                        })
-
-                    .error(
-                        function(response){
-                            
-                        });
-                    return self.solicitudes;
-            }
-        }
-
-   */
-        
          
         $scope.solicitudes=[];
         $scope.ahora = new Date();
