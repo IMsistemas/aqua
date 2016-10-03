@@ -19,11 +19,11 @@
                 <legend style="padding-bottom: 10px;">
                     <span style="font-weight: bold;">NUEVA LECTURA</span>
 
-                    <button type="button" id="btn_print_pdf" class="btn btn-primary" style="float: right; margin-top: -10px;" ng-click="exportToPDF(2)"
+                    <button type="button" id="btn_print_pdf" class="btn btn-primary" style="float: right; display: none; margin-top: -10px;" ng-click="exportToPDF(2)"
                             data-toggle="tooltip" data-placement="bottom" title="Imprimir Lectura" disabled>
                         <i class="fa fa-print fa-2x" aria-hidden="true"></i>
                     </button>
-                    <button type="button" id="btn_export_pdf" class="btn btn-primary" style="float: right; margin-top: -10px; margin-right: 2px;" ng-click="exportToPDF(1)"
+                    <button type="button" id="btn_export_pdf" class="btn btn-primary" style="float: right; display: none; margin-top: -10px; margin-right: 2px;" ng-click="exportToPDF(1)"
                             data-toggle="tooltip" data-placement="bottom" title="Exportar a PDF la Lectura"  disabled>
                         <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
                     </button>
@@ -51,9 +51,9 @@
                                 <label class="col-sm-4 control-label">Fecha Ingreso:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control datepicker" name="t_fecha_ing"
-                                           id="t_fecha_ing" ng-model="t_fecha_ing" ng-required="true" />
+                                           id="t_fecha_ing" ng-model="t_fecha_ing" ng-required="true"  />
                                     <span class="help-block error"
-                                                      ng-show="formNewLectura.t_fecha_ing.$invalid && formNewLectura.t_fecha_ing.$touched">La fecha de ingreso es requerida</span>
+                                          ng-show="formNewLectura.t_fecha_ing.$invalid && formNewLectura.t_fecha_ing.$touched">La fecha de ingreso es requerida</span>
                                 </div>
                             </div>
                         </div>
