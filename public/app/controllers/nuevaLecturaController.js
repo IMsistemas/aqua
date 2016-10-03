@@ -290,10 +290,6 @@
 
         }
 
-        $scope.notKeyPress = function(event) {
-            return false;
-        }
-
         $scope.initData();
 
     });
