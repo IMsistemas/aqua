@@ -287,3 +287,5 @@ Route::get('configuracion/configuracion','Configuraciones\ConfiguracionControlle
 /*=======================================================*/
 
 Route::get('suministros/solicitudes/solicitudes/pdf/{idSolicitud}', 'Suministros\SolicitudController@generarPDF');
+
+Route::get('recaudacion/cobroagua/cuentas/pdf/{numerocuenta}', 'Cuentas\CobroAguaController@generarPDF');

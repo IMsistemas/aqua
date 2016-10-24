@@ -142,5 +142,50 @@ class CobroAguaController extends Controller
     /**
 	====================================================================================================
 	**/
+
+  public function generarPDF($numeroCuenta){
+
+    $elCobro = CobroAgua::with('suministro.cliente','suministro.tarifa','suministro.calle.barrio','lectura','rubrosvariables','rubrosfijos')->where('idcuenta',$numeroCuenta)->get(); 
+    $rubrosfijos=$elCobro->rubrosfijos;
+    $totalRubrosFijos=0;
+    foreach ($rubrosfijos as $rubrosfijo) {
+        $totalRubrosFijos=$totalRubrosFijos+$rubrosfijo->pivot->costorubro;
+    }
+    $rubrosvariables=$elCobro->rubrosvariables;
+    $totalRubrosVariables=0;
+    foreach ($rubrosvariables as $rubrosvariable) {
+        $totalRubrosVariables=$totalRubrosVariables+$rubrosvariable->pivot->costorubro;
+    }
+    $totalcuenta=$elCobro->valorconsumo+$elCobro->valorexedente+$elCobro->valorconsumo+$elCobro->valormesesatrasados+$totalRubrosFijos+$totalRubrosVariables;
+    
+
+    $data =  [
+          'razonsocial'=>$elCobro->cliente->apellido." ".$elCobro->cliente->nombre,
+          'documentoidentidad'    => $elCobro->cliente->documentoidentidad,
+          'numerosuministro'        => $elCobro->suministro->numerosuministro,
+          'direccionsuministro'   => $elCobro->suministro->direccionsuministro,
+          'telefonosuministro'   => $elCobro->suministro->telefonosuministro,
+          'fechaactual'    => $solicitud->telefonosuministro,
+
+          'periodo'    => $elCobro->fechaperiodo,
+          'lecturaanterior'               => $elCobro->lectura->lecturaanterior,
+
+          'lecturaactual'      => $elCobro->lectura->lecturaactual,
+          'consumo'                => $elCobro->lectura->consumo, 
+          'subrosfijos'=>$elCobro->rubrosfijos;
+          'subrosvariables'=>$elCobro->rubrosvariables;  
+
+          'totalcuenta' =>$totalcuenta, 
+
+
+        ];
+
+           //dd($cuentaPorCobrar);
+        $view =  \View::make('factura', compact('data'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('factura');
+
+    }
     
 }

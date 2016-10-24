@@ -1,4 +1,4 @@
-drop index PARROQUIAABARIIO_FK;
+﻿drop index PARROQUIAABARIIO_FK;
 
 drop index BARRIO_PK;
 
@@ -222,23 +222,24 @@ IDCARGO
 /* Table: CLIENTE                                               */
 /*==============================================================*/
 create table CLIENTE (
+   CODIGOCLIENTE        SERIAL               not null,
    DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
    FECHAINGRESO         DATE                 null,
    APELLIDO             VARCHAR(32)          null,
-   NOMBRE               VARCHAR(32)          null,
+   NOMBRE               VARCHAR(50)          null,
    TELEFONOPRINCIPAL    CHAR(16)             null,
    TELEFONOSECUNDARIO   CHAR(16)             null,
    CELULAR              CHAR(16)             null,
-   DIRECCION            VARCHAR(32)          null,
+   DIRECCION            VARCHAR(50)          null,
    CORREO               VARCHAR(32)          null,
-   constraint PK_CLIENTE primary key (DOCUMENTOIDENTIDAD)
+   constraint PK_CLIENTE primary key (CODIGOCLIENTE)
 );
 
 /*==============================================================*/
 /* Index: CLIENTE_PK                                            */
 /*==============================================================*/
 create unique index CLIENTE_PK on CLIENTE (
-DOCUMENTOIDENTIDAD
+CODIGOCLIENTE
 );
 
 /*==============================================================*/
@@ -376,7 +377,7 @@ IDCXP
 /* Index: CLIENTEACUENTAS_FK                                    */
 /*==============================================================*/
 create  index CLIENTEACUENTAS_FK on CUENTASPORPAGARCLIENTES (
-DOCUMENTOIDENTIDAD
+CODIGOCLIENTE
 );
 
 /*==============================================================*/
@@ -646,7 +647,7 @@ create table SUMINISTRO (
    NUMEROSUMINISTRO     SERIAL                 not null,
    IDTARIFA             INT4                 not null,
    IDCALLE              CHAR(8)              not null,
-   DOCUMENTOIDENTIDAD   VARCHAR(32)          not null,
+   CODIGOCLIENTE        VARCHAR(32)          not null,
    IDPRODUCTO           CHAR(8)              not null,
    DIRECCIONSUMINISTRO   VARCHAR(32)          null,
    TELEFONOSUMINISTRO   CHAR(256)            null,
@@ -679,7 +680,7 @@ IDCALLE
 /* Index: CLIENTEASUMINISTRO_FK                                 */
 /*==============================================================*/
 create  index CLIENTEASUMINISTRO_FK on SUMINISTRO (
-DOCUMENTOIDENTIDAD
+CODIGOCLIENTE
 );
 
 /*==============================================================*/

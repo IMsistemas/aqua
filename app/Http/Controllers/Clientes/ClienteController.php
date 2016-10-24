@@ -28,14 +28,16 @@ class ClienteController extends Controller
 		$cliente->save();
 		return 'El Cliente fue creado exitosamente';
 	}
-
+	//public function show($codigocliente)
 	public function show($documentoidentidad)
 	{
+		//return Cliente::find($codigocliente);
 		return Cliente::find($documentoidentidad);
 	}
-
+	//public function update(Request $request,$codigocliente)
 	public function update(Request $request,$documentoidentidad)
 	{
+		//$cliente =Cliente::find($codigocliente);
 		$cliente = Cliente::find($documentoidentidad);
 		$cliente->documentoidentidad = $request->input('documentoidentidad');
 		$cliente->fechaingreso = $request->input('fechaingreso');
@@ -52,6 +54,7 @@ class ClienteController extends Controller
 	}
 	public function destroy(Request $request)
 	{
+		//$cliente = Cliente::find($request->input('codigocliente'));
 		$cliente = Cliente::find($request->input('documentoidentidad'));
 		$cliente->delete();
 		return "Cliente borrado correctamente".$request->input('documentoidentidad');

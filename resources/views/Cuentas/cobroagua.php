@@ -76,7 +76,7 @@
 						
 						<td>
 							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);" ng-hide="cuenta.estapagada">Agregar</a>
-                           <a href="#" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i></a>
+                           <a href="#" class="btn btn-success" ng-click="generarPDF(cuenta.idcuenta);"><i class="fa fa-print" aria-hidden="true"></i></a>
                             
 						</td>
 					</tr>
@@ -169,7 +169,7 @@
 						<button class="btn btn-primary" ng-click="guardarOtrosRubros(cuenta.idcuenta);">Guardar</button>
 						<button class="btn btn-success" ng-hide="cuenta.estapagada" ng-click="pagarFactura(cuenta.idcuenta);">
 						Pagar</button>
-						<button class="btn btn-success" ng-show="cuenta.estapagada" ><i class="fa fa-print" aria-hidden="true"></i>Imprimir</button>
+						<button class="btn btn-success" ng-show="cuenta.estapagada" ><i class="fa fa-print" aria-hidden="true" ng-click="generarPDF(cuenta.numerocuenta);"></i>Imprimir</button>
 					</div>
 				</div>
 			</div>			
