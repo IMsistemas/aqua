@@ -8,24 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table = "cliente";
-    protected $primaryKey = "documentoidentidad";
+    protected $primaryKey = "codigocliente";
     public $timestamps = false;
     public $incrementing = false;
 
     public function solicitud(){
-    	return $this->hasMany('App\Modelos\Suministros\Solicitud','documentoidentidad');
+    	return $this->hasMany('App\Modelos\Suministros\Solicitud','codigocliente');
     }
 
     public function suministro(){
-    	return $this->hasMany('App\Modelos\Suministros\Suministro','documentoidentidad');
+    	return $this->hasMany('App\Modelos\Suministros\Suministro','codigocliente');
     }
 
     public function cuentasporpagarclientes(){
-    	return $this->hasMany('App\Modelos\Cuentas\Cuentas\Cuentasporpagarclientes','documentoidentidad');
+    	return $this->hasMany('App\Modelos\Cuentas\Cuentas\Cuentasporpagarclientes','codigocliente');
     }
 
     public function cuentasporcobrarsuministro(){
-    	return $this->hasMany('App\Modelos\Cuentas\Cuentas\Cuentasporcobrarsuministro','documentoidentidad');
+    	return $this->hasMany('App\Modelos\Cuentas\Cuentas\Cuentasporcobrarsuministro','codigocliente');
     }
 }
  
