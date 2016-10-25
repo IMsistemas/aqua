@@ -135,7 +135,6 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
         fechasCuenta = $scope.cuentas;
         alert(fechasCuenta);
 
-<<<<<<< HEAD
     }
 
     $scope.generarPDF = function(numerocuenta){              
@@ -144,9 +143,8 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
 });
 
 
-=======
     };
->>>>>>> origin/master
+
 
     $scope.generarPDF = function (numerocuenta) {
         window.open(API_URL + "recaudacion/cobroagua/cuentas/pdf/" + numerocuenta);
