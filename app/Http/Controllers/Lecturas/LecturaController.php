@@ -41,9 +41,7 @@ class LecturaController extends Controller
     public function getLastID()
     {
         $last_id = Lectura::max('idlectura');
-
         ($last_id == 0) ? $last_id = 1 : $last_id += 1;
-
         return response()->json(['lastID' => $last_id]);
     }
 
@@ -61,7 +59,6 @@ class LecturaController extends Controller
             $suministro = Suministro::with('cliente', 'tarifa', 'calle.barrio')
                                         ->where('suministro.numerosuministro', $filter->id)
                                         ->get();
-
             $lectura = Lectura::where('numerosuministro', $filter->id)
                                 ->orderBy('idlectura', 'desc')
                                 ->take(1)
@@ -269,7 +266,7 @@ class LecturaController extends Controller
             }
         }
 
-        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
@@ -318,7 +315,7 @@ class LecturaController extends Controller
             die('Bad status returned. Error: '. $result->error);
         }
 
-        */
+
 
         return response()->json(['success' => true]);
     }

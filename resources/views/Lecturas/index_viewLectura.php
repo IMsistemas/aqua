@@ -53,20 +53,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Mes:</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes" ng-change="searchByFilter();">
-                                            <option value="01">Enero</option>
-                                            <option value="02">Febrero</option>
-                                            <option value="03">Marzo</option>
-                                            <option value="04">Abril</option>
-                                            <option value="05">Mayo</option>
-                                            <option value="06">Junio</option>
-                                            <option value="07">Julio</option>
-                                            <option value="08">Agosto</option>
-                                            <option value="09">Septiembre</option>
-                                            <option value="10">Octubre</option>
-                                            <option value="11">Noviembre</option>
-                                            <option value="12">Diciembre</option>
-                                        </select>
+                                        <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes" ng-change="searchByFilter();"
+                                                    ng-options="value.id as value.name for value in meses">
+                                           </select>
                                     </div>
                                 </div>
                             </div>

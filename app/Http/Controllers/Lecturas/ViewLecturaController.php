@@ -38,7 +38,7 @@ class ViewLecturaController extends Controller
     {
     	return Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-    						->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+    						->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion',
                                         'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
                                         'cliente.apellido')
@@ -70,7 +70,7 @@ class ViewLecturaController extends Controller
 
         $lecturas = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
                             ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-                            ->join('cliente', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+                            ->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
                             ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion',
                                         'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
