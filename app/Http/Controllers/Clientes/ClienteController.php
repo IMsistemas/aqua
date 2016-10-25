@@ -28,17 +28,17 @@ class ClienteController extends Controller
 		$cliente->save();
 		return 'El Cliente fue creado exitosamente';
 	}
-	//public function show($codigocliente)
-	public function show($documentoidentidad)
+	public function show($codigocliente)
+	//public function show($documentoidentidad)
 	{
-		//return Cliente::find($codigocliente);
-		return Cliente::find($documentoidentidad);
+		return Cliente::find($codigocliente);
+		//return Cliente::find($documentoidentidad);
 	}
-	//public function update(Request $request,$codigocliente)
-	public function update(Request $request,$documentoidentidad)
+	public function update(Request $request,$codigocliente)
+	//public function update(Request $request,$documentoidentidad)
 	{
-		//$cliente =Cliente::find($codigocliente);
-		$cliente = Cliente::find($documentoidentidad);
+		$cliente =Cliente::find($codigocliente);
+		//$cliente = Cliente::find($documentoidentidad);
 		$cliente->documentoidentidad = $request->input('documentoidentidad');
 		$cliente->fechaingreso = $request->input('fechaingreso');
 		$cliente->nombre = $request->input('nombre');
@@ -50,14 +50,14 @@ class ClienteController extends Controller
 		$cliente->correo = $request->input('correo');
 
 		$cliente->save();
-		return "Se actualizo correctamente el cliente con CI || RUC ".$cliente->documentoidentidad;
+		return "Se actualizo correctamente el cliente";
 	}
 	public function destroy(Request $request)
 	{
-		//$cliente = Cliente::find($request->input('codigocliente'));
-		$cliente = Cliente::find($request->input('documentoidentidad'));
+		$cliente = Cliente::find($request->input('codigocliente'));
+		//$cliente = Cliente::find($request->input('documentoidentidad'));
 		$cliente->delete();
-		return "Cliente borrado correctamente".$request->input('documentoidentidad');
+		return "Cliente borrado correctamente";
 	}
 
 	public function missingMethod($parameters = array())

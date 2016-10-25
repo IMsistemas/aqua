@@ -15,7 +15,7 @@
     $scope.initLoad();
     $scope.ordenarColumna = 'estaprocesada';
     //show modal form
-    $scope.toggle = function(modalstate, documentoidentidad) {
+    $scope.toggle = function(modalstate, codigocliente) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
@@ -24,8 +24,8 @@
                 break;
             case 'edit':
                 $scope.form_title = "Editar Cliente";
-                $scope.documentoidentidad = documentoidentidad;
-                $http.get(API_URL + 'clientes/gestion/' + documentoidentidad)
+                $scope.codigocliente = codigocliente;
+                $http.get(API_URL + 'clientes/gestion/' + codigocliente)
                         .success(function(response) {
                             $scope.cliente = response;
                             $scope.telprincipal=$scope.cliente.telefonoprincipal.trim();
@@ -43,13 +43,13 @@
     //al mo mento que le den click al ng-click getInfo() ejecutamos la funcion
 
     //save new record / update existing record
-    $scope.save = function(modalstate, documentoidentidad) {
+    $scope.save = function(modalstate, codigocliente) {
         var url = API_URL + "clientes/gestion";    
         console.log(modalstate); 
         
         //append cliente id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
-            url += "/actualizarcliente/" + documentoidentidad;
+            url += "/actualizarcliente/" + codigocliente;
             $scope.cliente.telefonoprincipal=$scope.telprincipal;
             $scope.cliente.telefonosecundario= $scope.telsecundario;
             $scope.cliente.celular=$scope.celular;
@@ -77,12 +77,12 @@
     }
 
     //delete record
-    $scope.confirmDelete = function(documentoidentidad) {
+    $scope.confirmDelete = function(codigocliente) {
         var isConfirmDelete = confirm('¿Seguro que decea guardar el registro?');
         if (isConfirmDelete) {
             $http({
                 method: 'POST',
-                url: API_URL + 'clientes/gestion/eliminarcliente/' + documentoidentidad,
+                url: API_URL + 'clientes/gestion/eliminarcliente/' + codigocliente,
             }).success(function(data) {
                     console.log(data);
                     location.reload();

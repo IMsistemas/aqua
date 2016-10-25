@@ -644,10 +644,10 @@ DOCUMENTOIDENTIDAD
 /* Table: SUMINISTRO                                            */
 /*==============================================================*/
 create table SUMINISTRO (
-   NUMEROSUMINISTRO     SERIAL                 not null,
+   NUMEROSUMINISTRO     SERIAL               not null,
    IDTARIFA             INT4                 not null,
    IDCALLE              CHAR(8)              not null,
-   CODIGOCLIENTE        VARCHAR(32)          not null,
+   CODIGOCLIENTE        INT4                 not null,
    IDPRODUCTO           CHAR(8)              not null,
    DIRECCIONSUMINISTRO   VARCHAR(32)          null,
    TELEFONOSUMINISTRO   CHAR(256)            null,

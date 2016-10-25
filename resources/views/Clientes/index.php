@@ -18,6 +18,9 @@
                 <thead class="bg-primary">
                     <tr>
                         <th> 
+                            <a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='codigocliente'; reversa=!reversa;">Código Cliente</a>
+                        </th>
+                        <th> 
                             <a href="#" style="text-decoration:none; color:white;" ng-click="ordenarColumna='documentoidentidad'; reversa=!reversa;">CI |RUC</a>
                         </th>
                         <th> 
@@ -45,7 +48,8 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="cliente in clientes|filter:busqueda| orderBy:ordenarColumna:reversa">
-                        <td class="text-center">{{cliente.documentoidentidad}}</td>
+                        <td>{{cliente.codigocliente}}</td>
+                        <td>{{cliente.documentoidentidad}}</td>
                         <td>{{cliente.fechaingreso|date}}</td>
                         <td>{{cliente.apellido+' '+cliente.nombre}}</td>                    
                         <td>{{cliente.telefonoprincipal}}</td>   
@@ -54,7 +58,7 @@
                         <td>{{cliente.direccion}}</td>
                         <td>{{cliente.correo}}</td>
                         <td >
-                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', cliente.documentoidentidad)">Editar</a>                          
+                            <a href="#" class="btn btn-warning" ng-click="toggle('edit', cliente.codigocliente)">Editar</a>                          
                         </td>
                         <!--<td >
                             <a href="#" class="btn btn-danger" ng-click="confirmDelete(cliente.documentoidentidad)">Borrar</a>
@@ -234,7 +238,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, documentoidentidad)" ng-disabled="frmClientes.$invalid">Guardar</button>
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(modalstate, cliente.codigocliente)" ng-disabled="frmClientes.$invalid">Guardar</button>
                         </div>
                     </div>
                 </div>

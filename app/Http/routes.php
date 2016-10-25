@@ -56,7 +56,7 @@ Route::get('/clientes', function (){
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
 Route::get('/clientes/gestion/','Clientes\ClienteController@index');
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
-Route::get('/clientes/gestion/{documentoidentidad}','Clientes\ClienteController@show');
+Route::get('/clientes/gestion/{codigocliente?}','Clientes\ClienteController@show');
 //Ruta página de inicio de gestión de clientes
 Route::post('/clientes/gestion/guardarcliente','Clientes\ClienteController@store');
 //Ruta página de inicio de gestión de clientes
