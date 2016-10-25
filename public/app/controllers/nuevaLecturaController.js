@@ -3,19 +3,21 @@
     app.controller('nuevaLecturaController', function($scope, $http, API_URL) {
 
         $scope.meses = [
-            { id: '01', name: 'Enero' },
-            { id: '02', name: 'Febrero' },
-            { id: '03', name: 'Marzo' },
-            { id: '04', name: 'Abril' },
-            { id: '05', name: 'Mayo' },
-            { id: '06', name: 'Junio' },
-            { id: '07', name: 'Julio' },
-            { id: '08', name: 'Agosto' },
-            { id: '09', name: 'Septiembre' },
-            { id: '10', name: 'Octubre' },
-            { id: '11', name: 'Noviembre' },
-            { id: '12', name: 'Diciembre' }
+            { id: 0, name: '-- Seleccione --' },
+            { id: 1, name: 'Enero' },
+            { id: 2, name: 'Febrero' },
+            { id: 3, name: 'Marzo' },
+            { id: 4, name: 'Abril' },
+            { id: 5, name: 'Mayo' },
+            { id: 6, name: 'Junio' },
+            { id: 7, name: 'Julio' },
+            { id: 8, name: 'Agosto' },
+            { id: 9, name: 'Septiembre' },
+            { id: 10, name: 'Octubre' },
+            { id: 11, name: 'Noviembre' },
+            { id: 12, name: 'Diciembre' }
         ];
+
 
         $scope.rubros = [];
 
@@ -29,7 +31,7 @@
                 var dd = now.getDate();
                 if (dd < 10) dd = '0' + dd;
                 var mm = now.getMonth() + 1;
-                if (mm < 10) mm = '0' + mm;
+                //if (mm < 10) mm = '0' + mm;
                 var yyyy = now.getFullYear();
 
                 $scope.t_fecha_ing = dd + "\/" + mm + "\/" + yyyy;
@@ -49,55 +51,62 @@
 
         $scope.loadInfo = function(){
 
-            var id = $scope.t_no_suministro;
+            var filter = {
+                id: $scope.t_no_suministro,
+                month: $scope.s_mes,
+                year: $scope.s_anno
+            };
 
-            $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
-
+            $http.get(API_URL + 'nuevaLectura/getInfo/' + JSON.stringify(filter)).success(function(response) {
                 console.log(response);
 
+                if (response.success == true){
+                    if (response.length == 0){
 
-                if (response.length == 0){
-
-                    $scope.message = 'No exite registro del Número de Suministro Insertado...';
-                    $('#modalMessage').modal('show');
-
-                } else {
-
-                    var lectura_anterior = 0;
-                    var lectura_actual = 0;
-
-                    if ((response.lectura).length == 0){
-                        lectura_actual = $scope.t_lectura;
-                    } else {
-                        lectura_anterior = response.lectura[0].lecturaactual;
-                        lectura_actual = $scope.t_lectura;
-                    }
-
-                    if(lectura_anterior > lectura_actual){
-
-                        $scope.lectura_anterior = lectura_anterior;
-                        $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
+                        $scope.message = 'No exite registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
 
                     } else {
 
-                        $scope.lectura_anterior = lectura_anterior;
-                        $scope.lectura_actual = lectura_actual;
-                        $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
+                        var lectura_anterior = 0;
+                        var lectura_actual = 0;
 
-                        $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
+                        if ((response.lectura).length == 0){
+                            lectura_actual = $scope.t_lectura;
+                        } else {
+                            lectura_anterior = response.lectura[0].lecturaactual;
+                            lectura_actual = $scope.t_lectura;
+                        }
 
-                        $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
-                        $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
-                        $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
-                        $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
+                        if(lectura_anterior > lectura_actual){
 
-                        $('#btn_export_pdf').prop('disabled', false);
-                        $('#btn_print_pdf').prop('disabled', false);
-                        $('#btn_save').prop('disabled', false);
+                            $scope.lectura_anterior = lectura_anterior;
+                            $scope.message = 'La Lectura Actual debe ser superior a la Anterior...';
+                            $('#modalMessage').modal('show');
+
+                        } else {
+
+                            $scope.lectura_anterior = lectura_anterior;
+                            $scope.lectura_actual = lectura_actual;
+                            $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
+
+                            $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
+
+                            $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
+                            $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
+                            $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
+                            $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
+
+                            $('#btn_export_pdf').prop('disabled', false);
+                            $('#btn_print_pdf').prop('disabled', false);
+                            $('#btn_save').prop('disabled', false);
+
+                        }
 
                     }
-
+                } else {
+                    $scope.message = 'Ya se ha realizado lectura al Nro. de Suministro seleccionado en el periodo...';
+                    $('#modalMessage').modal('show');
                 }
 
             });

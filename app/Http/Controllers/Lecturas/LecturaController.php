@@ -41,31 +41,34 @@ class LecturaController extends Controller
     public function getLastID()
     {
         $last_id = Lectura::max('idlectura');
-
         ($last_id == 0) ? $last_id = 1 : $last_id += 1;
-
         return response()->json(['lastID' => $last_id]);
     }
 
 
-    /**
-     * Retorna los datos del recurso mediante el id entrado por parametro
-     *
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show($id)
+    public function getInfo($filter)
     {
-        $suministro = Suministro::with('cliente', 'tarifa', 'calle.barrio')
-                                    ->where('suministro.numerosuministro', $id)
-                                    ->get();
+        $filter = json_decode($filter);
 
-        $lectura = Lectura::where('numerosuministro', $id)
-                            ->orderBy('idlectura', 'desc')
-                            ->take(1)
-                            ->get();
+        $count = Lectura::where('numerosuministro', $filter->id)
+                            ->whereRaw('EXTRACT( MONTH FROM fechalectura) =' . $filter->month)
+                            ->whereRaw('EXTRACT( YEAR FROM fechalectura) =' . $filter->year)
+                            ->count();
 
-        return response()->json(['suministro' => $suministro, 'lectura' => $lectura]);
+        if ($count == 0) {
+            $suministro = Suministro::with('cliente', 'tarifa', 'calle.barrio')
+                                        ->where('suministro.numerosuministro', $filter->id)
+                                        ->get();
+            $lectura = Lectura::where('numerosuministro', $filter->id)
+                                ->orderBy('idlectura', 'desc')
+                                ->take(1)
+                                ->get();
+            $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
+        } else {
+            $result_array = ['success' => false];
+        }
+
+        return response()->json($result_array);
     }
 
 
@@ -263,7 +266,7 @@ class LecturaController extends Controller
             }
         }
 
-        $cliente = Cliente::join('suministro', 'suministro.documentoidentidad', '=', 'cliente.documentoidentidad')
+        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
@@ -312,6 +315,8 @@ class LecturaController extends Controller
             die('Bad status returned. Error: '. $result->error);
         }
 
+
+
         return response()->json(['success' => true]);
     }
 
@@ -336,6 +341,5 @@ class LecturaController extends Controller
 
         return $pdf->stream('test.pdf');
     }
-
 
 }

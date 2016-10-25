@@ -11,7 +11,7 @@ class Solicitud extends Model
     public $timestamps = false; 
 
     public function cliente(){
-    	return $this->belongsTo('App\Modelos\Clientes\Cliente','documentoidentidad');
+    	return $this->belongsTo('App\Modelos\Clientes\Cliente','codigocliente');
     }
 }
   
