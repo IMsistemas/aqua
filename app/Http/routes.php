@@ -51,7 +51,7 @@ Route::get('/recaudacion/cobroagua/generar','Cuentas\CobroAguaController@generar
 /*===================================Módulo Clientes===========================================*/
 //Ruta página de inicio de gestión de clientes
 Route::get('/clientes', function (){
-	return view('clientes/index');
+	return view('Clientes/index');
 });
 //Ruta devuelve un arreglo de todos los clientes a AngularJS 
 Route::get('/clientes/gestion/','Clientes\ClienteController@index');
