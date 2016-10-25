@@ -3,6 +3,7 @@
     app.controller('nuevaLecturaController', function($scope, $http, API_URL) {
 
         $scope.meses = [
+            { id: '00', name: '-- Seleccione --' },
             { id: '01', name: 'Enero' },
             { id: '02', name: 'Febrero' },
             { id: '03', name: 'Marzo' },
@@ -16,6 +17,8 @@
             { id: '11', name: 'Noviembre' },
             { id: '12', name: 'Diciembre' }
         ];
+
+
 
         $scope.rubros = [];
 
@@ -54,7 +57,6 @@
             $http.get(API_URL + 'nuevaLectura/' + id).success(function(response) {
 
                 console.log(response);
-
 
                 if (response.length == 0){
 

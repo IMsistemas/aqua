@@ -47,7 +47,6 @@ class LecturaController extends Controller
         return response()->json(['lastID' => $last_id]);
     }
 
-
     /**
      * Retorna los datos del recurso mediante el id entrado por parametro
      *
@@ -336,6 +335,5 @@ class LecturaController extends Controller
 
         return $pdf->stream('test.pdf');
     }
-
 
 }
