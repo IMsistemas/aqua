@@ -133,6 +133,10 @@
                 $scope.rubros = response[0];
                 $scope.meses_atrasados =  response[1].mesesatrasados;
 
+
+                console.log(response);
+
+
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
                 for(var i = 0; i < longitud; i++){
