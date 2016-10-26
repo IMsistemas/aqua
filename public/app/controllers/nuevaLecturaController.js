@@ -18,7 +18,6 @@
             { id: 12, name: 'Diciembre' }
         ];
 
-
         $scope.rubros = [];
 
         $scope.initData = function(){

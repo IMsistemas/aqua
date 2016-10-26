@@ -34,7 +34,7 @@
                 $scope.lecturas = response;
             });
 
-        }        
+        };
         
 
         $scope.save = function() {
@@ -43,7 +43,7 @@
 
             $http.put(API_URL + 'verLectura/update/' + JSON.stringify($scope.lecturasUpdate)).success(function(response){
                 console.log(response);
-
+                $scope.initData();
                 $scope.lecturasUpdate = [];
             });
 
@@ -81,7 +81,7 @@
                 $scope.barrios = array_temp;
                 $scope.s_barrio = 0;
             });
-        }
+        };
 
         $scope.loadCalles = function(){
             var idbarrio = $scope.s_barrio;
@@ -95,7 +95,7 @@
                 $scope.calles = array_temp;
                 $scope.s_calle = 0;
             });
-        }
+        };
 
         $scope.searchByFilter = function(){
 
@@ -133,7 +133,23 @@
             $http.get(API_URL + 'verLectura/getByFilter/' + JSON.stringify(filters)).success(function(response){
                 $scope.lecturas = response;
             });
-        }
+        };
+
+        $scope.verifyDate = function (string_date) {
+            var now = new Date();
+            var dd = now.getDate();
+            if (dd < 10) dd = '0' + dd;
+            var mm = now.getMonth() + 1;
+            if (mm < 10) mm = '0' + mm;
+            var yyyy = now.getFullYear();
+
+            var array_date = string_date.split('-');
+
+            if (array_date[0] == yyyy && array_date[1] == mm){
+                return true;
+            } else return false;
+
+        };
 
         $scope.initData();
 

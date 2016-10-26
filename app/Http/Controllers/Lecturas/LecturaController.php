@@ -234,7 +234,6 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
-
         $lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
@@ -271,51 +270,52 @@ class LecturaController extends Controller
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
 
-        $correo_cliente = $cliente[0]->correo;
-        $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
-        $data = json_decode($request->input('pdf'));
-        $data1 = [];
+        if ($cliente[0]->correo != '' && $cliente[0]->correo != null) {
+            $correo_cliente = $cliente[0]->correo;
+            $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
 
-        $view = \View::make('Lecturas.pdf_body_email_newLectura', compact('data1', 'data'))->render();
+            $data = json_decode($request->input('pdf'));
+            $data1 = [];
 
-        $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
+            $view = \View::make('Lecturas.pdf_body_email_newLectura', compact('data1', 'data'))->render();
 
-        $rcpt = [
-            [ 'name' => $nombre_cliente, 'email' => $correo_cliente ]
-        ];
+            $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
 
-        $postData = [
-            'function' => 'sendMail',
-            'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
-            'subject' => 'Factura Agua',
-            'html' => $view,
-            'mailboxFromId' => 1,
-            'mailboxReplyId' => 1,
-            'mailboxReportId' => 1,
-            'packageId' => 6,
-            'emails' => $rcpt,
-        ];
+            $rcpt = [
+                [ 'name' => $nombre_cliente, 'email' => $correo_cliente ]
+            ];
 
-        $post = http_build_query($postData);
+            $postData = [
+                'function' => 'sendMail',
+                'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
+                'subject' => 'Factura Agua',
+                'html' => $view,
+                'mailboxFromId' => 1,
+                'mailboxReplyId' => 1,
+                'mailboxReportId' => 1,
+                'packageId' => 6,
+                'emails' => $rcpt,
+            ];
 
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $post = http_build_query($postData);
 
-        $json = curl_exec($curl);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-        if ($json === false) {
-            die('Request failed with error: '. curl_error($curl));
+            $json = curl_exec($curl);
+
+            if ($json === false) {
+                die('Request failed with error: '. curl_error($curl));
+            }
+
+            $result = json_decode($json);
+            if ($result->status == 0) {
+                die('Bad status returned. Error: '. $result->error);
+            }
         }
-
-        $result = json_decode($json);
-        if ($result->status == 0) {
-            die('Bad status returned. Error: '. $result->error);
-        }
-
-
 
         return response()->json(['success' => true]);
     }

@@ -123,10 +123,14 @@
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
                                 <td  class="text-right">
-                                   <!-- <input type="text" class="form-control" style="width: 100%;" value="{{lectura.lecturaactual}}"
-                                        ng-model="lectura.lecturaactual">-->
-                                         <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
-                                                string-to-number ng-model="lectura.lecturaactual">
+                                   <span ng-if="verifyDate(lectura.fechalectura) == true">
+                                       <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                              string-to-number ng-model="lectura.lecturaactual">
+                                   </span>
+                                    <span ng-if="verifyDate(lectura.fechalectura) == false">
+                                       <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                              string-to-number ng-model="lectura.lecturaactual" disabled>
+                                   </span>
                                 </td>
                                 <td class="text-right">{{lectura.consumo}}</td>
                                 <td>
