@@ -165,15 +165,15 @@ class CobroAguaController extends Controller
           'numerosuministro'        => $elCobro->suministro->numerosuministro,
           'direccionsuministro'   => $elCobro->suministro->direccionsuministro,
           'telefonosuministro'   => $elCobro->suministro->telefonosuministro,
-          'fechaactual'    => $solicitud->telefonosuministro,
+          'fechaactual'    => $elCobro->telefonosuministro,
 
           'periodo'    => $elCobro->fechaperiodo,
           'lecturaanterior'               => $elCobro->lectura->lecturaanterior,
 
           'lecturaactual'      => $elCobro->lectura->lecturaactual,
           'consumo'                => $elCobro->lectura->consumo, 
-          'subrosfijos'=>$elCobro->rubrosfijos;
-          'subrosvariables'=>$elCobro->rubrosvariables;  
+          'subrosfijos'=>$elCobro->rubrosfijos,
+          'subrosvariables'=>$elCobro->rubrosvariables,
 
           'totalcuenta' =>$totalcuenta, 
 

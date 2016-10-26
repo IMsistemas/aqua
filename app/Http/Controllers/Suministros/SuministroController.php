@@ -26,7 +26,6 @@ class SuministroController extends Controller
 		$suministro = Suministro::find($numeroSuministro);
 		$suministro->idtarifa = $request->input('tarifa.idtarifa');
 		$suministro->idcalle = $request->input('calle.idcalle');
-		$suministro->documentoidentidad = $request->input('documentoidentidad');
 		$suministro->direccionsuministro = $request->input('direccionsuministro');
 		$suministro->telefonosuministro = $request->input('telefonosuministro');
 		$suministro->save();
@@ -38,7 +37,7 @@ class SuministroController extends Controller
 		$suministro = new Suministro();
 		$suministro->idtarifa = $request->input('tarifa.idtarifa');
 		$suministro->idcalle = $request->input('calle.idcalle');
-		$suministro->documentoidentidad = $request->input('cliente.documentoidentidad');
+		$suministro->codigocliente = $request->input('cliente.codigocliente');
 		$suministro->idproducto = 'PRO00001';
 		$suministro->direccionsuministro = $request->input('direccionsuministro');
 		$suministro->telefonosuministro = $request->input('telefonosuministro');
