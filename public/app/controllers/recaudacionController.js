@@ -139,11 +139,8 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
 
     $scope.generarPDF = function(numerocuenta){              
             window.open(API_URL+"recaudacion/cobroagua/cuentas/pdf/"+numerocuenta);
-        }
-});
-
-
     };
+
 
 
     $scope.generarPDF = function (numerocuenta) {
