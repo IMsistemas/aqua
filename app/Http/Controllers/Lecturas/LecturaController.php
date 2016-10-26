@@ -198,6 +198,10 @@ class LecturaController extends Controller
         $ddss = ($costo_tarifa_basica + $costo_excedente) * $rubrofijo[1]->costorubro;
         $rubros[4]->valorrubro = $ddss;
 
+        //------Rubros Fijos: Medio Ambiente 0.28---------------------- -------------------------------
+
+        $rubros[5]->valorrubro = $rubrofijo[2]->costorubro;
+
         //------Rubros Variables, variables para el calculo-------------------------------------------
 
         $cobroagua = CobroAgua::with('rubrosvariables')
