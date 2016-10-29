@@ -141,7 +141,7 @@
             });
         };
 
-        $scope.showModalAddCliente = function ()            {
+        $scope.showModalAddCliente = function () {
             $scope.t_codigocliente = 0;
             $scope.t_fecha_ingreso = $scope.nowDate();
             $scope.t_doc_id = '';
@@ -209,6 +209,87 @@
 
         $scope.initLoad();
 
+
+        /*
+         *  SHOW MODAL ACTION-------------------------------------------------------------------
+         */
+
+        $scope.showModalAction = function (item) {
+            $scope.objectAction = item;
+            $('#modalAction').modal('show');
+        };
+
+        $scope.actionOtro = function () {
+            //$scope.getLastIDOtros();
+
+            $scope.t_fecha_otro = $scope.nowDate();
+            $scope.h_codigocliente_otro = $scope.objectAction.codigocliente;
+            $scope.documentoidentidad_cliente_otro = $scope.objectAction.documentoidentidad;
+            $scope.nom_cliente_otro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.direcc_cliente_otro = $scope.objectAction.direcciondomicilio;
+            $scope.telf_cliente_otro = $scope.objectAction.telefonoprincipaldomicilio;
+            $scope.celular_cliente_otro = $scope.objectAction.celular;
+            $scope.telf_trab_cliente_otro = $scope.objectAction.telefonoprincipaltrabajo;
+
+            $scope.t_observacion_otro = '';
+            $('#btn-process-otro').prop('disabled', true);
+
+            $('#modalActionOtro').modal('show');
+        };
+
+        $scope.actionSetName = function () {
+            /*$scope.getTerrenosByCliente();
+            $scope.getIdentifyClientes();
+            $scope.getLastIDSetNombre();*/
+
+            $scope.t_fecha_setnombre = $scope.nowDate();
+            $scope.h_codigocliente_setnombre = $scope.objectAction.codigocliente;
+            $scope.documentoidentidad_cliente_setnombre = $scope.objectAction.documentoidentidad;
+            $scope.nom_cliente_setnombre = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.direcc_cliente_setnombre = $scope.objectAction.direcciondomicilio;
+            $scope.telf_cliente_setnombre = $scope.objectAction.telefonoprincipaldomicilio;
+            $scope.celular_cliente_setnombre = $scope.objectAction.celular;
+            $scope.telf_trab_cliente_setnombre = $scope.objectAction.telefonoprincipaltrabajo;
+
+            $scope.junta_setnombre = '';
+            $scope.toma_setnombre = '';
+            $scope.canal_setnombre = '';
+            $scope.derivacion_setnombre = '';
+            $scope.cultivo_setnombre = '';
+            $scope.area_setnombre = '';
+            $scope.caudal_setnombre = '';
+            $scope.nom_new_cliente_setnombre = '';
+            $scope.direcc_new_cliente_setnombre = '';
+            $scope.telf_new_cliente_setnombre = '';
+            $scope.celular_new_cliente_setnombre = '';
+            $scope.telf_trab_new_cliente_setnombre = '';
+
+            $scope.t_observacion_setnombre = '';
+
+
+            $('#btn-process-setnombre').prop('disabled', false);
+            $('#modalActionSetNombre').modal('show');
+        };
+
+        $scope.actionFraccion = function () {
+            /*$scope.getLastIDFraccion();
+            $scope.getTerrenosFraccionByCliente();
+            $scope.getIdentifyClientesFraccion();*/
+
+            $scope.t_fecha_fraccion = $scope.nowDate();
+            $scope.h_codigocliente_fraccion = $scope.objectAction.codigocliente;
+            $scope.documentoidentidad_cliente_fraccion = $scope.objectAction.documentoidentidad;
+            $scope.nom_cliente_fraccion = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.direcc_cliente_fraccion = $scope.objectAction.direcciondomicilio;
+            $scope.telf_cliente_fraccion = $scope.objectAction.telefonoprincipaldomicilio;
+            $scope.celular_cliente_fraccion = $scope.objectAction.celular;
+            $scope.telf_trab_cliente_fraccion = $scope.objectAction.telefonoprincipaltrabajo;
+
+            $scope.t_observacion_fraccion = '';
+
+            $('#btn-process-fraccion').prop('disabled', true);
+            $('#modalActionFraccion').modal('show');
+        };
 
     });
 

@@ -129,7 +129,6 @@ class ClienteController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
