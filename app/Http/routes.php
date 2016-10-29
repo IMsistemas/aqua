@@ -168,6 +168,38 @@ Route::Delete('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleControlle
 
 /*------------------------------------Raidel------------------------------------------------*/
 
+/*===================================Solicitud=================================================*/
+
+//Peticion para obtener el listado de solicitudes
+/*Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicitudes');
+
+Route::get('solicitud/getSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudOtro');
+
+Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');
+
+Route::get('solicitud/getSolicitudSetN/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudSetN');
+
+Route::get('solicitud/getSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudFraccion');
+
+Route::get('solicitud/getIdentifyCliente/{idcliente}', 'Solicitud\SolicitudController@getIdentifyCliente');
+
+Route::get('solicitud/getByFilter/{filter}', 'Solicitud\SolicitudController@getByFilter');
+
+Route::put('solicitud/processSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@processSolicitudSetName');
+
+Route::put('solicitud/processSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@processSolicitudFraccion');
+
+Route::put('solicitud/updateSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudOtro');
+
+Route::put('solicitud/updateSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudRiego');
+
+Route::put('solicitud/updateSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudSetName');
+
+Route::put('solicitud/updateSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudFraccion');*/
+
+//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Solicitud
+Route::resource('/solicitud', 'Solicitud\SolicitudController');
+
 /*===================================Módulo Lectura===========================================*/
 
 Route::get('nuevaLectura/getInfo/{filter}', 'Lecturas\LecturaController@getInfo');
