@@ -12,81 +12,150 @@ use App\Modelos\Sectores\Calle;
 
 class CalleController extends Controller
 {
-	public function index($idbarrio)
-	{
-		return $calles=DB::table('calle')->where('idbarrio',$idbarrio)->get();
-	}
+    public function index()
+    {
+        return view('Sectores/calle');
+    }
 
-	public function mostrar($idcalle){
-		return $calle=DB::table('calle')->where('idcalle',$idcalle)->get();
-	}
+    public function getCalles()
+    {
+        return Calle::with('canal')->orderBy('nombrecalle', 'asc')->get();
+    }
 
-	public function maxId()
-	{
-		$calle=Calle::max('idcalle');
-				
-		if($calle==NULL){
-			$calle='CAL00001';
-		}else{
-			$identificadorLetras=substr($calle, 0,-5);//obtiene las tetras del calle de Provincia
-			$identificadorNumero=substr($calle, 3); //obtiene las tetras del calle de Provincia
-			$identificadorNumero=$identificadorNumero+1;
-			$longitudNumero =strlen($identificadorNumero);//obtiene el número de caracteres existentes
-			//asigna el identificador numerico del siguiente registro
-			switch ($longitudNumero) {
-    	     	case 1:
-        		$identificadorNumero='0000'.$identificadorNumero;
-             	break;
-    	    	case 2:
-        		$identificadorNumero='000'.$identificadorNumero;
-             	break;
-             	case 3:
-        		$identificadorNumero='00'.$identificadorNumero;
-             	break;
-             	case 4:
-        		$identificadorNumero='0'.$identificadorNumero;
-             	break;
-			}
-			
-			$calle=$identificadorLetras.$identificadorNumero;
-			return $calle;
-		}	
-		
-	}
+    public function getCalle()
+    {
+        return Calle::orderBy('nombrecalle', 'asc')->get();
+    }
 
-	public function postCrearCalle(Request $request,$idbarrio)
-	{
-		$calle= new Calle;
-		$calle->idcalle = $request->input('idcalle');
-		$calle->idbarrio = $idbarrio;
-		$calle->nombrecalle = $request->input('nombrecalle');
-		$calle->save();
-		return 'El calle fue creada exitosamente';
-	}
+    public function getCallesById($id){
+        return Calle::with('canal')->where('idbarrio', $id)->orderBy('nombrecalle')->get();
+    }
 
-	public function postActualizarCalle(Request $request,$idcalle)
-	{
-		$calle = Calle::find($idcalle);
-		$calle->nombrecalle = $request->input('nombrecalle');
-		$calle->save();
-		return "Se actualizo exitosamente";
+    public function getCalleByBarrio($id){
+        return Calle::where('idbarrio', $id)->orderBy('nombrecalle')->get();
+    }
 
-	}
 
-	public function destroy($idcalle)
-	{
-		$calle = Calle::find($idcalle);
-		$calle->delete();
-		return "Se elimino exitosamente";	
-		/*$calle = Calle::find($request->get('idcalle'));
-		$idbarrio=$calle->idbarrio;
-		$calle->delete();
-		return redirect("/validado/calles?idbarrio=$idbarrio")->with('eliminado', 'la calle fue eliminado');*/
-	}
+    public function getBarrios()
+    {
+        return Barrio::orderBy('nombrebarrio', 'asc')->get();
+    }
 
-	public function missingMethod($parameters = array())
-	{
-		abort(404);
-	}
+
+    public function getLastID()
+    {
+        $max_calle = Calle::max('idcalle');
+
+        if ($max_calle != null){
+            $max_calle += 1;
+        } else {
+            $max_calle = 1;
+        }
+        return response()->json(['id' => $max_calle]);
+    }
+
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $calle = new Calle();
+
+        $calle->idbarrio = $request->input('idbarrio');
+        $calle->nombrecalle = $request->input('nombrecalle');
+
+        $calle->save();
+
+        return response()->json(['success' => true]);
+
+    }
+
+
+    public function editar_calle(Request $request)
+    {
+        $callea = $request->input('arr_calle');
+
+        foreach ($callea as $item) {
+            $calle1 = Calle::find($item['idcalle']);
+
+            $calle1->nombrecalle = $item['nombrecalle'];
+
+            $calle1->save();
+        }
+        return response()->json(['success' => true]);
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        /* $calle = Calle::find($id);
+         $calle->delete();
+         return response()->json(['success' => true]);*/
+
+        $aux =  Canal::where ('idcalle',$id)->count('idcanal');
+
+        if ($aux > 0){
+            return response()->json(['success' => false, 'msg' => 'exist_canales']);
+        } else {
+            $calle = Calle::find($id);
+            $calle->delete();
+            return response()->json(['success' => true]);
+        }
+    }
 
 }

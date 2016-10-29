@@ -50,19 +50,19 @@ Route::get('/recaudacion/cobroagua/generar','Cuentas\CobroAguaController@generar
 
 /*===================================Módulo Clientes===========================================*/
 //Ruta página de inicio de gestión de clientes
-Route::get('/clientes', function (){
-	return view('Clientes/index');
-});
-//Ruta devuelve un arreglo de todos los clientes a AngularJS 
-Route::get('/clientes/gestion/','Clientes\ClienteController@index');
-//Ruta devuelve un arreglo de todos los clientes a AngularJS 
-Route::get('/clientes/gestion/{codigocliente?}','Clientes\ClienteController@show');
+//Route::get('/clientes', function (){
+//	return view('Clientes/index');
+//});
+//Ruta devuelve un arreglo de todos los clientes a AngularJS
+//Route::get('/clientes/gestion/','Clientes\ClienteController@index');
+//Ruta devuelve un arreglo de todos los clientes a AngularJS
+//Route::get('/clientes/gestion/{codigocliente?}','Clientes\ClienteController@show');
 //Ruta página de inicio de gestión de clientes
-Route::post('/clientes/gestion/guardarcliente','Clientes\ClienteController@store');
+//Route::post('/clientes/gestion/guardarcliente','Clientes\ClienteController@store');
 //Ruta página de inicio de gestión de clientes
-Route::post('/clientes/gestion/actualizarcliente/{documentoidentidad}','Clientes\ClienteController@update');
+//Route::post('/clientes/gestion/actualizarcliente/{documentoidentidad}','Clientes\ClienteController@update');
 //Ruta página de inicio de gestión de clientes
-Route::post('/clientes/gestion/eliminarcliente/{documentoidentidad}','Clientes\ClienteController@destroy');
+//Route::post('/clientes/gestion/eliminarcliente/{documentoidentidad}','Clientes\ClienteController@destroy');
 
 
 /*===================================Módulo Provincia===========================================*/
@@ -263,6 +263,27 @@ Route::get('cuentascobrarcliente/getAll', 'Cuentas\CuentasPorCobrarSuministroCon
 Route::get('cuentascobrarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorCobrarSuministroController@getByFilter');
 Route::post('cuentascobrarcliente/ingresarcuenta', 'Cuentas\CuentasPorCobrarSuministroController@ingresarCuenta');
 Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroController');
+
+
+/*===================================Módulo Cliente===========================================*/
+
+Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');
+Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
+
+Route::resource('/cliente', 'Clientes\ClienteController');
+
+/*===================================Módulo Sectorizacion===========================================*/
+
+Route::get('barrio/getBarrios', 'Sectores\BarrioController@getBarrios');
+Route::get('barrio/getParroquias', 'Sectores\BarrioController@getParroquias');
+Route::get('barrio/getLastID', 'Sectores\BarrioController@getLastID');
+Route::get('barrio/getBarrio', 'Sectores\BarrioController@getBarrios');
+Route::get('calle/getLastID', 'Sectores\CalleController@getLastID');
+Route::get('barrio/calles/{id}', 'Sectores\CalleController@getCallesById');
+
+
+Route::resource('/barrio', 'Sectores\BarrioController');
+Route::resource('/calle', 'Sectores\CalleController');
 
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 
