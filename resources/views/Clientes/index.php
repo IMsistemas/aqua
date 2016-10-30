@@ -453,9 +453,8 @@
                             ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-process-riego"
-                            ng-click="procesarSolicitud('btn-process-riego')" disabled>
-                        Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-info" id="btn-next" ng-click="" >
+                        Siguiente <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
