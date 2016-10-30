@@ -303,17 +303,15 @@ Route::resource('/barrio', 'Sectores\BarrioController');
 Route::resource('/calle', 'Sectores\CalleController');
 
 /*=============================Módulo Suministro====================================*/
+
 Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsuministros');
-
-
-
+Route::get('suministros/suministroById/{id}','Suministros\SuministroController@suministroById');
+Route::get('suministros/getAguapotable', 'Suministros\SuministroController@getAguapotable');
+Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
 
 
 
 Route::resource('/suministros', 'Suministros\SuministroController');
-
-
-
 
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 

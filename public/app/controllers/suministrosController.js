@@ -1,7 +1,5 @@
 app.controller('suministrosController', function($scope, $http, API_URL) {
 
-	var existeSuministro = false;
-	
 	$scope.initLoad = function(){	
 		$http.get(API_URL + 'suministros/getsuministros').success(function(response) {
 		    console.log(response);
@@ -10,14 +8,8 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 	}
 
 
-
-
-	$scope.initLoad();
-	
-
 	$scope.getSuministro = function(numeroSuministro){
-		$http.get(API_URL + "suministros/suministros/"+numeroSuministro)
-            .success(function(response) {
+		$http.get(API_URL + 'suministros/suministroById/'+numeroSuministro).success(function(response) {
                 $scope.suministro = response[0];
                 $('#modalVerSuministro').modal('show');	
     	}).error(function(response){
@@ -27,54 +19,57 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 	}
 
     $scope.modalEditarSuministro = function(id){
-        $http.get(API_URL+"suministros/suministros/"+id)
-        .success(function (response) {
-            $scope.suministro = response[0];  
-       
-        $http.get(API_URL+"tarifas/tarifas")
-            .success(function (response) {
-                $scope.tarifas = response;
+        $http.get(API_URL+ 'suministros/suministroById/' +id).success(function (response) {
+
+            console.log(response);
+
+            $scope.suministro = response[0];
+
+            $scope.telefonosuministro = response[0].telefonosuministro;
+            $scope.direccionsuministro = response[0].direccionsuministro;
+
+            $http.get(API_URL+ 'suministros/getAguapotable').success(function (response) {
+                var longitud = response.length;
+                //var array_temp = [{label: '--Seleccione--', id: 0}];
+                var array_temp = [];
+                for (var i = 0; i < longitud; i++) {
+                    array_temp.push({label: response[i].nombreservicio, id: response[i].idaguapotable});
+                }
+                $scope.agua_potable = array_temp;
+                $scope.aguapotable = $scope.suministro.servicioaguapotable.idaguapotable;
             });
 
-         $http.get(API_URL+"barrios/gestion/concalles")
-            .success(function (response) {
-                $scope.barrios = response;
+            $http.get(API_URL+ 'suministros/getCalle').success(function (response) {
+                var longitud = response.length;
+                //var array_temp = [{label: '--Seleccione--', id: 0}];
+                var array_temp = [];
+                for (var i = 0; i < longitud; i++) {
+                    array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle});
+                }
+                $scope.calles = array_temp;
+                $scope.calle = $scope.suministro.calle.idcalle;
             });
-
-        $http.get(API_URL+"barrios/gestion/"+$scope.suministro.calle.idbarrio)
-            .success(function (response) {
-                $scope.barrio = response[0];
-            });
-
-        $http.get(API_URL+"calles/gestion/"+$scope.suministro.calle.idcalle)
-            .success(function (response) {
-                $scope.calle = response[0];
-                console.log($scope.calle);
-            });
-
-           //$scope.editarSuministro = response[0];
             $('#editar-suministro').modal('show');
         });
+
+
     }
 
-    $scope.editarSuministro = function(idsuministro){
-    	var url = API_URL +"suministros/editar/"+idsuministro;
-        console.log($scope.suministro);
-        $http({
-            method: 'POST',
-            url: url,
-            data: $.param($scope.suministro),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response) {
+    $scope.editarSuministro = function(){
+        var data = {
+            idaguapotable: $scope.aguapotable,
+            idcalle: $scope.calle,
+            direccionsuministro: $scope.direccionsuministro,
+            telefonosuministro: $scope.telefonosuministro
+        };
+
+        $http.put(API_URL + 'suministros/' + $scope.suministro.numerosuministro , data).success(function (response) {
             $scope.initLoad();
-             $('#editar-suministro').modal('hide');
-            $scope.message = response;
-             $('#modalConfirmacion').modal('show');
-             setTimeout("$('#modalConfirmacion').modal('hide')",5000);
-        }).error(function(response) {
-            $scope.messageError = 'Error al procesar solicitud';
-           $('#modalMessageError').modal('show');           
+            $('#editar-suministro').modal('hide');
+            $scope.message = 'Se edito correctamente el Cliente seleccionado...';
+            $('#modalConfirmacion').modal('show');
         });
-    
-    }
+};
+
+    $scope.initLoad();
 });

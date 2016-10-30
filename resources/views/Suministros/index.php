@@ -37,9 +37,6 @@
                         <a href="#" style="text-decoration:none; color:white;" >Cliente</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Tarifa</a>
-                    </th>
-                    <th>
                         <a href="#" style="text-decoration:none; color:white;" >Zona</a>
                     </th>
                     <th>
@@ -54,11 +51,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="suministro in suministros" >
+                <tr ng-repeat="suministro in suministros|filter:busqueda" ng-cloak>
                     <td>{{suministro.numerosuministro}}</td>
-                    <td>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}</td>
-                    <td>{{suministro.tarifa.nombretarifa}}</td>
-                    <td>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}</td>
+                    <td>{{suministro.cliente.apellidos+" "+suministro.cliente.nombres}}</td>
+                    <td>{{suministro.calle.nombrecalle}}</td>
                     <td>{{suministro.direccionsuministro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td >
@@ -69,6 +65,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <!--====================================MODALES===================================================================-->
@@ -85,7 +82,7 @@
                         <div class="form-group">
                             <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
                             <div class="col-sm-6" style="padding: 0;">
-                                <label >{{12/02/2016 | date : format : 'fullDate'}}</label>
+                                <label >{{suministro.fechainstalacionsuministro}}</label>
                             </div>
                             <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -97,24 +94,22 @@
 
                     <div class="row">
                         <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
-
                             <fieldset>
-                                <legend style="padding-bottom: 5px; padding-left: 20px">Datos Cliente</legend>
-                                <div class="col-xs-12">
+                                <legend style="padding-bottom: 0px; padding-left: 20px">Datos del Cliente</legend>
+                                <div class="col-xs-12" style="margin-top: -20px;">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">CI/Ruc:</label>
+                                            <h3><span class="col-sm-4 label label-default">CI/Ruc:</span></h3>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="documentoidentidad" id="documentoidentidad"
-                                                       ng-model="suministro.cliente.documentoidentidad" ng-required="true" ng-maxlength="32"  >
+                                                <label class="control-label">{{suministro.cliente.documentoidentidad}}</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Cliente</label>
+                                            <h3><span class="col-sm-4 label label-default">Cliente:</span></h3>
                                             <div class="col-sm-8">
-                                                {{suministro.cliente.apellido+" "+suministro.cliente.nombre}}
+                                                <label class="control-label">{{suministro.cliente.nombres+" "+suministro.cliente.apellidos}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -126,13 +121,10 @@
                                 <div class="col-xs-12">
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Tarifa:</label>
+                                            <label class="col-sm-4 control-label">Servicio Agua Potable:</label>
                                             <div class="col-sm-8">
-
-                                                <select class="form-control" ng-model="suministro.tarifa" ng-options="tarifa as tarifa.nombretarifa for tarifa in tarifas track by tarifa.idtarifa">
-                                                    <option>Elige tarifa</option>
-                                                    `		                                            </select>
-
+                                                <select id="aguapotable" class="form-control" ng-model="aguapotable"
+                                                        ng-options="value.id as value.label for value in agua_potable" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -140,16 +132,8 @@
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Zona:</label>
                                             <div class="col-sm-8">
-
-                                                <select class="form-control" ng-model="barrio" ng-options="barrio as barrio.nombrebarrio for barrio in barrios track by barrio.idbarrio">
-                                                    <option value="">Seleccione Zona</option>
-                                                </select>
-
-                                                <select class="form-control" ng-model="suministro.calle"
-                                                        ng-options="calle as calle.nombrecalle for calle in barrio.calle track by calle.idcalle" >
-                                                    <option value="">{{suministro.calle.nombrecalle}}</option>
-                                                </select>
-
+                                                <select id="calle" class="form-control" ng-model="calle"
+                                                        ng-options="value.id as value.label for value in calles" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +145,8 @@
                                             <label class="col-sm-4 control-label">Dirección:</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="direccionsuministro" id="direccionsuministro"
-                                                       ng-model="suministro.direccionsuministro" ng-required="true" ng-maxlength="32" >
+                                                       ng-model="direccionsuministro" ng-required="true" ng-maxlength="128" >
+
                                             </div>
                                         </div>
                                     </div>
@@ -169,8 +154,8 @@
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Telefono:</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="telefonosolicitud" id="telefonosolicitud"
-                                                       ng-model="suministro.telefonosuministro" ng-required="true" ng-maxlength="32"  >
+                                                <input type="text" class="form-control" name="telefonosuministro" id="telefonosuministro"
+                                                       ng-model="telefonosuministro" ng-required="true" ng-maxlength="16"  >
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +168,12 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSuministro(suministro.numerosuministro);" ng-disabled="">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSuministro();" ng-disabled="">Guardar</button>
+
                 </div>
             </div>
         </div>
@@ -193,26 +183,23 @@
 
     <!--====================================MODAL VER SUMINISTROS=====================================================-->
     <div class="modal fade" tabindex="-1" role="dialog" id="modalVerSuministro">
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-info">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Suministro No.{{suministro.numerosuministro}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="col-xs-12 text-center">
-                        <img class="img-thumbnail" src="<?= asset('img/suministro.png') ?>" alt="">
-                    </div>
                     <div class="row text-center">
-                        <div class="col-xs-12 text-center" style="font-size: 18px;">Instalado el: 17/02/1991</div>
+                        <div class="col-xs-12 text-center" style="font-size: 18px;">Instalado el: {{suministro.fechainstalacionsuministro}}</div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Cliente:</span>{{suministro.cliente.apellido+" "+suministro.cliente.nombre}}
+                            <span style="font-weight: bold">Cliente:</span>{{suministro.cliente.apellidos+" "+suministro.cliente.nombres}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Tarifa:</span>{{suministro.tarifa.nombretarifa}}
+                            <span style="font-weight: bold">Servicio Agua Potable:</span>{{suministro.servicioaguapotable.nombreservicio}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Zona: </span>{{suministro.calle.barrio.nombrebarrio+" - "+suministro.calle.nombrecalle}}
+                            <span style="font-weight: bold">Zona: </span>{{suministro.calle.nombrecalle}}
                         </div>
                         <div class="col-xs-12">
                             <span style="font-weight: bold">Dirección Suministro: </span>{{suministro.direccionsuministro}}
@@ -257,10 +244,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
 
 </div>

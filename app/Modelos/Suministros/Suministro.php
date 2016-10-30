@@ -23,6 +23,6 @@ class Suministro extends Model
     }
 
     public function servicioaguapotable(){
-    	return $this->belongsTo('','idaguapotable');
+    	return $this->belongsTo('App\Modelos\Servicios\ServicioAguaPotable','idaguapotable');
     }
 }

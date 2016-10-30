@@ -7,8 +7,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Modelos\Clientes\Cliente;
-use App\Modelos\Tarifas\Tarifa;
 use App\Modelos\Sectores\Calle;
+use App\Modelos\Servicios\ServicioAguaPotable;
+use App\Modelos\Suministros\Producto;
+
 use App\Modelos\Suministros\Suministro;
 
 
@@ -22,6 +24,24 @@ class SuministroController extends Controller
     {
        return Suministro::with('cliente', 'calle', 'producto', 'servicioaguapotable')->orderBy('numerosuministro', 'asc')->get();
     }
+
+    public function getAguapotable()
+    {
+        return ServicioAguaPotable::orderBy('nombreservicio', 'asc')->get();
+    }
+
+    public function getCalle()
+    {
+        return Calle::orderBy('nombrecalle', 'asc')->get();
+    }
+
+    public function suministroById($id)
+    {
+        return Suministro::with('cliente', 'calle', 'producto', 'servicioaguapotable')->where('numerosuministro', $id)->orderBy('numerosuministro')->get();
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,21 +75,6 @@ class SuministroController extends Controller
     }
 
 
-    public function editar_calle(Request $request)
-    {
-        $callea = $request->input('arr_calle');
-
-        foreach ($callea as $item) {
-            $calle1 = Calle::find($item['idcalle']);
-
-            $calle1->nombrecalle = $item['nombrecalle'];
-
-            $calle1->save();
-        }
-        return response()->json(['success' => true]);
-    }
-
-
     /**
      * Display the specified resource.
      *
@@ -99,10 +104,22 @@ class SuministroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        //
+        $suministro = Suministro::find($id);
+
+        $suministro->idaguapotable = $request->input('idaguapotable');
+        $suministro->idcalle = $request->input('idcalle');
+        $suministro->direccionsuministro = $request->input('direccionsuministro');
+        $suministro->telefonosuministro = $request->input('telefonosuministro');
+        $suministro->save();
+
+        return response()->json(['success' => true]);
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
