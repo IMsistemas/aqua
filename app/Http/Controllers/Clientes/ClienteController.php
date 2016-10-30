@@ -71,6 +71,12 @@ class ClienteController extends Controller
         return Cliente::where('codigocliente', $cliente->codigocliente)->get();
     }
 
+    public function getServicios()
+    {
+
+    }
+
+
     public function store(Request $request)
     {
         $cliente = new Cliente();

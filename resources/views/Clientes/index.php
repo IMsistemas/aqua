@@ -376,7 +376,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Solicitud de Riego Nro: {{num_solicitud_riego}}</h4>
+                        <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_riego}}</h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
@@ -404,7 +404,7 @@
                                             <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Cliente:</span> {{nom_cliente}}
+                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente}}
                                             <input type="hidden" ng-model="h_codigocliente">
                                         </div>
                                     </div>
@@ -429,108 +429,16 @@
 
                             <div class="col-xs-12" style="padding: 2%; margin-top: -25px !important;">
                                 <fieldset>
-                                    <legend style="font-size: 16px; font-weight: bold;">Datos de Terreno</legend>
+                                    <legend style="font-size: 16px; font-weight: bold;">Datos Solicitud</legend>
 
-                                    <div class="col-xs-12" style="padding: 0; margin-top: -15px;">
-                                        <div class="col-sm-6 col-xs-12 form-group error">
-                                            <label for="t_terreno" class="col-sm-4 col-xs-12 control-label">Nro. Terreno:</label>
-                                            <div class="col-sm-8 col-xs-12" style="padding-top: 10px;">
-                                                {{nro_terreno}}
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="col-xs-12">
 
-                                    <div class="col-xs-12" style="padding: 0;">
-                                        <div class="col-sm-6 col-xs-12 form-group error">
-                                            <label for="t_tarifa" class="col-sm-4 col-xs-12 control-label">Tipo Cultivo:</label>
-                                            <div class="col-sm-8 col-xs-12">
-                                                <select class="form-control" name="t_tarifa" id="t_tarifa"
-                                                        ng-model="t_tarifa" ng-options="value.id as value.label for value in tarifas"
-                                                        ng-change="getCultivos()"></select><!--ng-change="showAddCultivo()"-->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 col-xs-12 form-group error">
-                                            <label for="t_cultivo" class="col-sm-4 col-xs-12 control-label">Cultivo:</label>
-                                            <div class="col-sm-8 col-xs-12">
-                                                <select class="form-control" name="t_cultivo" id="t_cultivo"
-                                                        ng-model="t_cultivo" ng-options="value.id as value.label for value in cultivos">
-                                                </select><!--ng-change="showAddCultivo()"-->
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xs-12" style="padding: 0;">
-                                        <div class="col-sm-6 col-xs-12 form-group error">
-                                            <label for="t_area" class="col-sm-4 col-xs-12 control-label" >Area (m2):</label>
-                                            <div class="col-sm-8 col-xs-12">
-                                                <input type="text" class="form-control" name="t_area" id="t_area" ng-keypress="onlyNumber($event)"
-                                                       ng-model="t_area" ng-required="true" ng-pattern="/^([0-9]+)$/" ng-blur="calculate()">
-                                                <span class="help-block error"
-                                                      ng-show="formProcess.t_area.$invalid && formProcess.t_area.$touched">El Area es requerido</span>
-                                                <span class="help-block error"
-                                                      ng-show="formProcess.t_area.$invalid && formProcess.t_area.$error.pattern">El Area debe ser solo números</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-xs-12 form-group error" style="margin-top: 5px;">
-                                            <div class="col-sm-6 col-xs-12" ng-cloak>
-                                                <span class="label label-primary" style="font-size: 12px !important;">Caudal:</span>
-                                                <span style="font-size: 14px !important; font-weight: bold;">{{calculate_caudal}}</span>
-                                            </div>
-                                            <div class="col-sm-6 col-xs-12" ng-cloak>
-                                                <span class="label label-primary" style="font-size: 12px !important;">Valor Anual:</span>
-                                                <span style="font-size: 14px !important; font-weight: bold;">{{valor_total}}</span>
-                                            </div>
-                                        </div>
                                     </div>
 
                                 </fieldset>
                             </div>
 
-                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px !important;">
-                                <fieldset>
-                                    <legend style="font-size: 16px; font-weight: bold;">Datos de Ubicación</legend>
-                                    <div class="col-sm-6 col-xs-12 form-group error">
-                                        <label for="t_junta" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Junta Modular:</label>
-                                        <div class="col-sm-8 col-xs-12">
-                                            <select class="form-control" name="t_junta" id="t_junta"
-                                                    ng-model="t_junta" ng-options="value.id as value.label for value in barrios"
-                                                    ng-change="getTomas()" ></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12 form-group error">
-                                        <label for="t_toma" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Toma:</label>
-                                        <div class="col-sm-8 col-xs-12">
-                                            <select class="form-control" name="t_toma" id="t_toma"
-                                                    ng-model="t_toma" ng-options="value.id as value.label for value in tomas"
-                                                    ng-change="getCanales()"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12 form-group error">
-                                        <label for="t_canal" class="col-sm-4 col-xs-12 control-label">Canal:</label>
-                                        <div class="col-sm-8 col-xs-12">
-                                            <select class="form-control" name="t_canal" id="t_canal"
-                                                    ng-model="t_canal" ng-options="value.id as value.label for value in canales"
-                                                    ng-change="getDerivaciones()"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12 form-group error">
-                                        <label for="t_derivacion" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Derivación:</label>
-                                        <div class="col-sm-8 col-xs-12">
-                                            <select class="form-control" name="t_derivacion" id="t_derivacion"
-                                                    ng-model="t_derivacion" ng-options="value.id as value.label for value in derivaciones"></select>
-                                        </div>
-                                    </div>
 
-                                </fieldset>
-                            </div>
-
-                            <div class="col-xs-12 form-group" style="margin-top: -15px;">
-                                <label for="t_derivacion" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
-                                <div class="col-sm-10 col-xs-12">
-                                    <textarea class="form-control" id="t_observacion_riego" ng-model="t_observacion_riego" rows="2"></textarea>
-                                </div>
-                            </div>
                         </div>
 
                     </form>
