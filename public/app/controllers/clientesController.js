@@ -9,6 +9,9 @@
         $scope.clientes = [];
         $scope.codigocliente_del = 0;
 
+        $scope.idsolicitud_to_process = 0;
+        $scope.objectAction = null;
+
         $scope.initLoad = function () {
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
                 console.log(response);
@@ -210,6 +213,77 @@
         $scope.initLoad();
 
 
+
+
+        /*
+         *  ACTIONS FOR SOLICITUD OTROS-------------------------------------------------------------------
+         */
+
+        $scope.getLastIDOtros = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudotro').success(function(response){
+                $scope.num_solicitud_otro = response.id;
+            });
+        };
+
+        $scope.saveSolicitudOtro = function () {
+            var solicitud = {
+                codigocliente: $scope.h_codigocliente_otro,
+                observacion: $scope.t_observacion_otro
+            };
+            $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-otro').prop('disabled', true);
+                    $('#btn-process-otro').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                }
+            });
+        };
+
+        /*
+         *  FUNCTION TO PROCESS---------------------------------------------------------------------
+         */
+
+        $scope.procesarSolicitud = function (id_btn) {
+            var url = '';
+
+            if (id_btn == 'btn-process-setnombre'){
+                url = API_URL + 'cliente/processSolicitudSetName/' + $scope.idsolicitud_to_process;
+            } else if (id_btn == 'btn-process-fraccion') {
+                url = API_URL + 'cliente/processSolicitudFraccion/' + $scope.idsolicitud_to_process;
+            } else {
+                url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
+            }
+
+            var data = {
+                idsolicitud: $scope.idsolicitud_to_process
+            };
+
+            $http.put(url, data ).success(function (response) {
+                $scope.idsolicitud_to_process = 0;
+
+                $('#' + id_btn).prop('disabled', true);
+
+                $('#modalActionRiego').modal('hide');
+                $('#modalActionOtro').modal('hide');
+                $('#modalActionSetNombre').modal('hide');
+                $('#modalActionFraccion').modal('hide');
+
+                $('#modalAction').modal('hide');
+
+                $scope.message = 'Se procesó correctamente la solicitud...';
+                $('#modalMessage').modal('show');
+
+            }).error(function (res) {
+
+            });
+        };
+
+
+
+
         /*
          *  SHOW MODAL ACTION-------------------------------------------------------------------
          */
@@ -220,7 +294,7 @@
         };
 
         $scope.actionOtro = function () {
-            //$scope.getLastIDOtros();
+            $scope.getLastIDOtros();
 
             $scope.t_fecha_otro = $scope.nowDate();
             $scope.h_codigocliente_otro = $scope.objectAction.codigocliente;

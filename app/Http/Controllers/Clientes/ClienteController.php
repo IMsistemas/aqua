@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Clientes;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
+use App\Modelos\Solicitud\Solicitud;
+use App\Modelos\Solicitud\SolicitudOtro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -37,25 +39,19 @@ class ClienteController extends Controller
     {
         $max = null;
 
-        $table = json_decode($table);
-
-        if ($table->name == 'solicitudriego') {
+        if ($table == 'solicitudriego') {
             $max = SolicitudRiego::max('idsolicitudriego');
-        } else if ($table->name == 'terreno') {
-            $max = Terreno::max('idterreno');
-        } else if ($table->name == 'solicitudotro') {
+        }  else if ($table == 'solicitudotro') {
             $max = SolicitudOtro::max('idsolicitudotro');
-        } else if ($table->name == 'solicitudcambionombre') {
+        } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
-        } else if ($table->name == 'solicitudreparticion') {
+        } else if ($table == 'solicitudreparticion') {
             $max = SolicitudReparticion::max('idsolicitudreparticion');
         }
 
         if ($max != null){
             $max += 1;
-        } else {
-            $max = 1;
-        }
+        } else $max = 1;
 
         return response()->json(['id' => $max]);
     }
@@ -99,6 +95,25 @@ class ClienteController extends Controller
         return response()->json(['success' => true]);
     }
 
+
+    public function storeSolicitudOtro(Request $request)
+    {
+        $solicitudriego = new SolicitudOtro();
+        $solicitudriego->codigocliente = $request->input('codigocliente');
+        $solicitudriego->fechasolicitud = date('Y-m-d');
+        $solicitudriego->estaprocesada = false;
+        $solicitudriego->descripcion = $request->input('observacion');
+
+        $result = $solicitudriego->save();
+
+        $max_idsolicitud = SolicitudOtro::where('idsolicitudotro', $solicitudriego->idsolicitudotro)->get();
+
+        return ($result) ? response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]) :
+            response()->json(['success' => false]);
+    }
+
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -128,6 +143,20 @@ class ClienteController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+    public function processSolicitud(Request $request, $id)
+    {
+        $solicitud = Solicitud::find($id);
+        $solicitud->estaprocesada = true;
+        $solicitud->fechaprocesada = date('Y-m-d');
+        $solicitud->save();
+
+        return response()->json(['success' => true]);
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

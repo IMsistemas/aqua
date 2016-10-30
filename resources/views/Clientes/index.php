@@ -328,7 +328,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 999999;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-success">
@@ -827,7 +827,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Otro Tipo de Solicitud Solicitud Nro: {{num_solicitud_otro}}</h4>
+                        <h4 class="modal-title">Otro Tipo de Solicitud Solicitud Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_otro}}</span></h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">

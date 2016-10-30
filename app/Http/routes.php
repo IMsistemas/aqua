@@ -267,8 +267,15 @@ Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroContr
 
 /*===================================Módulo Cliente===========================================*/
 
+Route::get('cliente/getLastID/{table}', 'Clientes\ClienteController@getLastID');
+
 Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');
+
 Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
+
+Route::post('cliente/storeSolicitudOtro', 'Clientes\ClienteController@storeSolicitudOtro');
+
+Route::put('cliente/processSolicitud/{idsolicitud}', 'Clientes\ClienteController@processSolicitud');
 
 Route::resource('/cliente', 'Clientes\ClienteController');
 
