@@ -29,13 +29,13 @@ class EmpleadoController extends Controller
      */
     public function getEmployees()
     {
-        return Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
-                            ->select('empleado.nombre', 'empleado.apellido', 'empleado.telefonoprincipal',
+       /* return Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
+                            ->select('empleado.nombre', 'empleado.apellidos', 'empleado.telefonoprincipal',
                                         'empleado.celular', 'empleado.documentoidentidadempleado',
                                         'cargo.nombrecargo')
                             ->orderBy('empleado.apellido', 'asc')
-                            ->get();
-
+                            ->get();*/
+       return Empleado::with('cargo')->orderBy('fechaingreso', 'asc')->get();
     }
 
     /**
@@ -76,11 +76,29 @@ class EmpleadoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+
     public function store(Request $request)
     {
-        $result = Empleado::create($request->all());
-        return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+        $empleado = new Empleado();
+
+        $empleado->fechaingreso = $request->input('fechaingreso');
+        $empleado->documentoidentidadempleado = $request->input('documentoidentidadempleado');
+        $empleado->idcargo = $request->input('idcargo');
+        $empleado->apellidos = $request->input('apellidos');
+        $empleado->nombres = $request->input('nombres');
+        $empleado->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+        $empleado->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
+        $empleado->celular = $request->input('celular');
+        $empleado->direcciondomicilio = $request->input('direcciondomicilio');
+        $empleado->correo = $request->input('correo');
+        $empleado->salario = $request->input('salario');
+
+        $empleado->save();
+
+        return response()->json(['success' => true]);
     }
+
+
 
     /**
      * Mostrar un recurso empleado especifico.
@@ -90,14 +108,7 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-        $empleado = Empleado::join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
-            ->select('empleado.nombre', 'empleado.apellido', 'empleado.telefonoprincipal',
-                'empleado.celular', 'empleado.documentoidentidadempleado', 'empleado.telefonosecundario', 'empleado.fechaingreso',
-                'empleado.direccion', 'empleado.correo', 'empleado.idcargo','cargo.nombrecargo')
-            ->where('empleado.documentoidentidadempleado', '=', $id)
-            ->get();
-
-        return response()->json($empleado);
+       return Empleado::with('cargo')->where('documentoidentidadempleado', $id) ->get();
     }
 
     /**
@@ -110,8 +121,20 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $empleado = Empleado::find($id);
-        $empleado->fill($request->all());
+        //$empleado->fechaingreso = $request->input('fechaingreso');
+        $empleado->documentoidentidadempleado = $request->input('documentoidentidadempleado');
+        $empleado->idcargo = $request->input('idcargo');
+        $empleado->apellidos = $request->input('apellidos');
+        $empleado->nombres = $request->input('nombres');
+        $empleado->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+        $empleado->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
+        $empleado->celular = $request->input('celular');
+        $empleado->direcciondomicilio = $request->input('direcciondomicilio');
+        $empleado->correo = $request->input('correo');
+        $empleado->salario = $request->input('salario');
+
         $empleado->save();
+
         return response()->json(['success' => true]);
     }
 

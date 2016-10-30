@@ -8,6 +8,7 @@ use App\Modelos\Sectores\Provincia;
 use App\Modelos\Sectores\Canton;
 use App\Modelos\Sectores\Parroquia;
 use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 
 class BarrioController extends Controller
 {
@@ -186,7 +187,6 @@ class BarrioController extends Controller
      */
     public function destroy($id)
     {
-
         $aux =  Calle::where ('idbarrio',$id)->count('idcalle');
 
         if ($aux > 0){
@@ -196,10 +196,5 @@ class BarrioController extends Controller
             $barrio->delete();
             return response()->json(['success' => true]);
         }
-
-
-
-
-
     }
 }

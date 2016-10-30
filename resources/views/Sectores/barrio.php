@@ -14,7 +14,6 @@
 
 </head>
 
-
 <body>
 <div ng-controller="barrioController">
 
@@ -274,23 +273,15 @@
                                 <thead class="bg-primary">
                                 <tr>
                                     <th style="width: 15%;">Nombre de la Toma</th>
-                                    <th style="">Canales</th>
                                     <th style="width: 15%;">Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="item in aux_calles|filter:busquedaa" ng-cloak>
                                     <td><input type="text" class="form-control" ng-model="item.nombrecalle"></td>
-
-                                    <td>
-                                        <span ng-repeat="canal in item.canal">{{canal.nombrecanal}}; </span>
-                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDeleteCalle(item)">
                                             <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary btn-sm" ng-click="showModalActionCanal(item)">
-                                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>

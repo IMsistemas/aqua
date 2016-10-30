@@ -19,16 +19,11 @@ class CalleController extends Controller
 
     public function getCalles()
     {
-        return Calle::with('canal')->orderBy('nombrecalle', 'asc')->get();
-    }
-
-    public function getCalle()
-    {
         return Calle::orderBy('nombrecalle', 'asc')->get();
     }
 
     public function getCallesById($id){
-        return Calle::with('canal')->where('idbarrio', $id)->orderBy('nombrecalle')->get();
+        return Calle::where('idbarrio', $id)->orderBy('nombrecalle')->get();
     }
 
     public function getCalleByBarrio($id){
@@ -143,19 +138,10 @@ class CalleController extends Controller
      */
     public function destroy($id)
     {
-        /* $calle = Calle::find($id);
-         $calle->delete();
-         return response()->json(['success' => true]);*/
+        $calle = Calle::find($id);
+        $calle->delete();
+        return response()->json(['success' => true]);
 
-        $aux =  Canal::where ('idcalle',$id)->count('idcanal');
-
-        if ($aux > 0){
-            return response()->json(['success' => false, 'msg' => 'exist_canales']);
-        } else {
-            $calle = Calle::find($id);
-            $calle->delete();
-            return response()->json(['success' => true]);
-        }
     }
 
 }

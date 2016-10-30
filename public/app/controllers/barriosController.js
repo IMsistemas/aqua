@@ -100,7 +100,6 @@ app.controller('barrioController', function($scope, $http, API_URL) {
     };
 
     $scope.showModalAction = function (item) {
-        //console.log(item);
         $scope.junta_n = item.nombrebarrio;
         $scope.calless = item.calle ;
         $scope.barrio_actual = item.idbarrio;
@@ -109,8 +108,6 @@ app.controller('barrioController', function($scope, $http, API_URL) {
         var data = {
             calles: item.calle
         };
-        // console.log(data);
-
         $http.get(API_URL + 'barrio/calles/' + item.idbarrio).success(function(response) {
             $scope.aux_calles = response;
 
@@ -134,14 +131,6 @@ app.controller('barrioController', function($scope, $http, API_URL) {
         $('#modalInfo').modal('show');
     };
 
-
-
-
-
-
-
-
-
     $scope.showModalDelete = function (item) {
         $scope.idbarrio_del = item.idbarrio;
         $scope.nom_junta_modular = item.nombrebarrio;
@@ -149,7 +138,6 @@ app.controller('barrioController', function($scope, $http, API_URL) {
     };
 
     $scope.delete = function(){
-
         $http.delete(API_URL + 'barrio/' + $scope.idbarrio_del).success(function(response) {
             $('#modalDelete').modal('hide');
             if(response.success == true){
@@ -165,29 +153,57 @@ app.controller('barrioController', function($scope, $http, API_URL) {
         });
     };
 
-    $scope.saveCalle = function () {
-        var data = {
-            nombrecalle: $scope.nombrecalle,
-            idbarrio: $scope.id_barrio,
-            observacion: $scope.observacionCalle
-        };
-        $http.post(API_URL + 'calle', data ).success(function (response) {
-            $scope.initLoad();
-            // $('#modalNuevaToma2').modal('hide');
-            $('#modalNuevaToma').modal('hide');
-            $scope.message = 'Se insertó correctamente la Toma';
-            $('#modalMessage').modal('show');
-            if( $scope.aux1==1) {
-                /*setTimeout(function () {
-                 $('#modalMessage').modal('hide');
-                 }, 500);*/
-                $scope.showModalAction($scope.barrio);
-            }
+    $scope.showModalDeleteCalle = function (item) {
+        $scope.idcalle_delete = item.idcalle;
+        $scope.nom_calle_delete = item.nombrecalle;
+        $('#modalDeleteCalle').modal('show');
+    };
 
-        }).error(function (res) {
+    $scope.deleteCalleEnBarrio = function(){
+        $http.delete(API_URL + 'calle/' + $scope.idcalle_delete).success(function(response) {
+            $('#modalDeleteCalle').modal('hide');
+            if(response.success == true){
+                $scope.initLoad();
+                $scope.idcalle_delete = 0;
+                $scope.message = 'Se elimino correctamente la Toma seleccionada...';
+                $('#modalMessage').modal('show');
+
+                $scope.showModalAction($scope.barrio);
+
+            } else {
+                $scope.message_error = 'La Toma no puede ser eliminada...';
+                $('#modalMessageError').modal('show');
+            }
         });
     };
 
+    $scope.editarCalles = function() {
+        var c = 0;
+        for (var i = 0; i <  $scope.aux_calles.length; i++)
+        {
+            if( $scope.aux_calles[i].nombrecalle == ""){
+                c ++ ;
+            }
+        }
+        if(c > 0 )
+        {
+            $scope.message_error  = 'Existen Calles con nombres en blanco, por favor llene ese campo... ';
+            $('#modalMessageError').modal('show');
+        } else {
+            var arr_calle = {arr_calle: $scope.aux_calles};
+            $http.post(API_URL + 'barrio/editar_calle', arr_calle).success(function (response) {
+                console.log(response);
+                $scope.initLoad();
+                $scope.message = 'Se editaron correctamente las Tomas';
+                $('#modalMessage').modal('show');
+
+                /*setTimeout(function(){
+                 $('#modalMessage').modal('hide');
+                 }, 500);*/
+                $scope.showModalAction($scope.barrio);
+            });
+        }
+    }
 
     $scope.editar = function ()  {
         var c = 0;
@@ -214,62 +230,6 @@ app.controller('barrioController', function($scope, $http, API_URL) {
         }
 
     };
-
-       $scope.showModalDeleteCalle = function (item) {
-        console.log(item);
-        $scope.idcalle_delete = item.idcalle;
-        $scope.nom_calle_delete = item.nombrecalle;
-        $('#modalDeleteCalle').modal('show');
-    };
-
-    $scope.deleteCalleEnBarrio = function(){
-        $http.delete(API_URL + 'calle/' + $scope.idcalle_delete).success(function(response) {
-            $('#modalDeleteCalle').modal('hide');
-            if(response.success == true){
-                $scope.initLoad();
-                $scope.idcalle_delete = 0;
-                $scope.message = 'Se elimino correctamente la Toma seleccionada...';
-                $('#modalMessage').modal('show');
-                /*setTimeout(function(){
-                 $('#modalMessage').modal('hide');
-                 }, 500);*/
-                $scope.showModalAction($scope.barrio);
-
-            } else if(response.success == false && response.msg == 'exist_canales') {
-                $scope.message_error = 'La Toma no puede ser eliminada porque contiene Canales...';
-                $('#modalMessageError').modal('show');
-            }
-        });
-    };
-
-    $scope.editarCalles = function() {
-        var c = 0;
-        for (var i = 0; i <  $scope.aux_calles.length; i++)
-        {
-            if( $scope.aux_calles[i].nombrecalle == ""){
-                c ++ ;
-            }
-        }
-        if(c > 0 )
-        {
-            $scope.message_error  = 'Existen Calles con nombres en blanco, por favor llene ese campo... ';
-            $('#modalMessageError').modal('show');
-        } else {
-
-            var arr_calle = {arr_calle: $scope.aux_calles};
-            $http.post(API_URL + 'barrio/editar_calle', arr_calle).success(function (response) {
-                console.log(response);
-                $scope.initLoad();
-                $scope.message = 'Se editaron correctamente las Tomas';
-                $('#modalMessage').modal('show');
-
-                /*setTimeout(function(){
-                 $('#modalMessage').modal('hide');
-                 }, 500);*/
-                $scope.showModalAction($scope.barrio);
-            });
-        }
-    }
 
 
     $scope.initLoad();

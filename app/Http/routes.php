@@ -287,7 +287,15 @@ Route::get('barrio/getLastID', 'Sectores\BarrioController@getLastID');
 Route::get('barrio/getBarrio', 'Sectores\BarrioController@getBarrios');
 Route::get('calle/getLastID', 'Sectores\CalleController@getLastID');
 Route::get('barrio/calles/{id}', 'Sectores\CalleController@getCallesById');
+Route::get('barrio/calles/{id}', 'Sectores\CalleController@getCallesById');
+Route::post('barrio/editar_calle', 'Sectores\CalleController@editar_calle');
+Route::post('barrio/editar_Barrio', 'Sectores\BarrioController@editar_barrio');
 
+Route::get('calle/getCalles', 'Sectores\CalleController@getCalles');
+Route::get('calle/getBarrio', 'Sectores\CalleController@getBarrios');
+Route::get('calle/getCallesByBarrio/{id}','Sectores\CalleController@getCallesById');
+Route::get('calle/getLastID', 'Sectores\CalleController@getLastID');
+Route::post('calle/editar_calle', 'Sectores\CalleController@editar_calle');
 
 Route::resource('/barrio', 'Sectores\BarrioController');
 Route::resource('/calle', 'Sectores\CalleController');

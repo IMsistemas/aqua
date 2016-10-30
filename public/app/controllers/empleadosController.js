@@ -11,8 +11,9 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
         }
 
         $http.get(API_URL + 'empleado/getEmployees').success(function(response){
+            console.log(response);
             $scope.empleados = response;
-            $('[data-toggle="tooltip"]').tooltip();
+            //$('[data-toggle="tooltip"]').tooltip();
         });
     }
 
@@ -29,15 +30,10 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
         });
     }
 
- 
-    $scope.initLoad(true);
-
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;
-
         switch (modalstate) {
             case 'add':
-
                 $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
                     var longitud = response.length;
                     var array_temp = [];
@@ -45,7 +41,6 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                         array_temp.push({label: response[i].nombrecargo, id: response[i].idcargo})
                     }
                     $scope.idcargos = array_temp;
-
                     $scope.documentoidentidadempleado = '';
                     $scope.apellido = '';
                     $scope.nombre = '';
@@ -54,6 +49,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                     $scope.celular = '';
                     $scope.direccion = '';
                     $scope.correo = '';
+                    $scope.salario = '';
 
                     $scope.fechaingreso = fecha();
 
@@ -80,13 +76,14 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                             $scope.fechaingreso = convertDatetoDB(response[0].fechaingreso, true);
                             $scope.documentoidentidadempleado = response[0].documentoidentidadempleado;
                             $scope.idcargo = response[0].idcargo;
-                            $scope.apellido = response[0].apellido;
-                            $scope.nombre = response[0].nombre;
-                            $scope.telefonoprincipal = response[0].telefonoprincipal;
-                            $scope.telefonosecundario = response[0].telefonosecundario;
+                            $scope.apellido = response[0].apellidos;
+                            $scope.nombre = response[0].nombres;
+                            $scope.telefonoprincipal = response[0].telefonoprincipaldomicilio;
+                            $scope.telefonosecundario = response[0].telefonosecundariodomicilio;
                             $scope.celular = response[0].celular;
-                            $scope.direccion = response[0].direccion;
+                            $scope.direccion = response[0].direcciondomicilio;
                             $scope.correo = response[0].correo;
+                            $scope.salario = response[0].salario;
 
                             $('#modalAction').modal('show');
 
@@ -100,13 +97,16 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
 
                 $http.get(API_URL + 'empleado/' + id)
                     .success(function(response) {
-                        $scope.name_employee = response[0].apellido + ' ' + response[0].nombre;
+
+                        $scope.name_employee = response[0].apellidos + ' ' + response[0].nombres;
                         $scope.cargo_employee = response[0].nombrecargo;
                         $scope.date_registry_employee = convertDatetoDB(response[0].fechaingreso, true);
-                        $scope.phones_employee = response[0].telefonoprincipal + '/' + response[0].telefonosecundario;
+                        //$scope.date_registry_employee = response[0].fechaingreso;
+                        $scope.phones_employee = response[0].telefonoprincipaldomicilio + '/' + response[0].telefonosecundariodomicilio;
                         $scope.cel_employee = response[0].celular;
-                        $scope.address_employee = response[0].direccion;
+                        $scope.address_employee = response[0].direcciondomicilio;
                         $scope.email_employee = response[0].correo;
+                        $scope.salario_employee = response[0].salario;
 
                         $('#modalInfoEmpleado').modal('show');
                     });
@@ -130,29 +130,27 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
         }
 
         $scope.empleado={
-            fechaingreso: convertDatetoDB($scope.fechaingreso),
+            //fechaingreso: convertDatetoDB($scope.fechaingreso),
             documentoidentidadempleado: $scope.documentoidentidadempleado,
             idcargo: $scope.idcargo,
-            apellido: $scope.apellido,
-            nombre: $scope.nombre,
-            telefonoprincipal: $scope.telefonoprincipal,
-            telefonosecundario: $scope.telefonosecundario,
+            apellidos: $scope.apellido,
+            nombres: $scope.nombre,
+            telefonoprincipaldomicilio: $scope.telefonoprincipal,
+            telefonosecundariodomicilio: $scope.telefonosecundario,
             celular: $scope.celular,
-            direccion: $scope.direccion,
+            direcciondomicilio: $scope.direccion,
             correo: $scope.correo,
+            salario: $scope.salario
         };
  
         if (modalstate === 'add'){
-
             $http.post(url,$scope.empleado ).success(function (data) {
                 $scope.initLoad();
                 $('#modalAction').modal('hide');
                 $scope.message = 'Se inserto correctamente el Empleado';
                 $('#modalMessage').modal('show');
             }).error(function (res) {
-
                 console.log(res);
-
             });
 
         } else {
@@ -188,7 +186,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
     $scope.showModalConfirm = function(id){
         $scope.empleado_del = id;
         $http.get(API_URL + 'empleado/' + id).success(function(response) {
-            $scope.empleado_seleccionado = response[0].apellido + ' ' + response[0].nombre;
+            $scope.empleado_seleccionado = response[0].apellidos + ' ' + response[0].nombres;
             $('#modalConfirmDelete').modal('show');
         });
     }
@@ -202,6 +200,12 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
             $('#modalMessage').modal('show');
         });
     }
+
+
+    $scope.initLoad(true);
+
+
+
 });
 
 $(function () {
