@@ -22,16 +22,7 @@ class Suministro extends Model
     	return $this->belongsTo('App\Modelos\Suministros\Producto','idproducto');
     }
 
-    public function tarifa(){
-    	return $this->belongsTo('App\Modelos\Tarifas\Tarifa','idtarifa');
+    public function servicioaguapotable(){
+    	return $this->belongsTo('','idaguapotable');
     }
-
-    public function lectura(){
-    	return $this->hasMany('App\Modelos\Lecturas\Lectura','numerosuministro');
-    }
-
-    public function cobroagua(){
-    	return $this->hasMany('App\Modelos\Cuentas\CobroAgua','numerosuministro');
-    }
-
 }

@@ -300,11 +300,24 @@ Route::post('calle/editar_calle', 'Sectores\CalleController@editar_calle');
 Route::resource('/barrio', 'Sectores\BarrioController');
 Route::resource('/calle', 'Sectores\CalleController');
 
+/*=============================Módulo Suministro====================================*/
+Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsuministros');
+
+
+
+
+
+
+Route::resource('/suministros', 'Suministros\SuministroController');
+
+
+
+
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 
 /*=============================Módulo Solicitud Suministro====================================*/
 
-
+/*
 //---------SOLICITUDES-----------------------------------------------------------------------
 Route::get('/suministros/solicitudes', function (){
 	return view('Suministros/Solicitudes/index');
@@ -346,7 +359,7 @@ Route::post('suministros/editar/{idsuministro}','Suministros\SuministroControlle
 
 Route::post('suministros/nuevo','Suministros\SuministroController@ingresarSuministro');
 
-
+*/
 //-----CONFIGURACION--------------------------------------------------------------------------
 
 Route::get('configuracion/configuracion','Configuraciones\ConfiguracionController@index');

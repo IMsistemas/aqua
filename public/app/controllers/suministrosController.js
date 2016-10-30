@@ -3,11 +3,14 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 	var existeSuministro = false;
 	
 	$scope.initLoad = function(){	
-		$http.get(API_URL + "suministros/suministros")
-            .success(function(response) {
+		$http.get(API_URL + 'suministros/getsuministros').success(function(response) {
+		    console.log(response);
                 $scope.suministros = response;
     	});
 	}
+
+
+
 
 	$scope.initLoad();
 	
