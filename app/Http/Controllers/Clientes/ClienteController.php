@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Clientes;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
+use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudOtro;
+use App\Modelos\Solicitud\SolicitudServicio;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -39,8 +41,8 @@ class ClienteController extends Controller
     {
         $max = null;
 
-        if ($table == 'solicitudriego') {
-            $max = SolicitudRiego::max('idsolicitudriego');
+        if ($table == 'solicitudservicio') {
+            $max = SolicitudServicio::max('idsolicitudservicio');
         }  else if ($table == 'solicitudotro') {
             $max = SolicitudOtro::max('idsolicitudotro');
         } else if ($table == 'solicitudcambionombre') {
@@ -73,7 +75,7 @@ class ClienteController extends Controller
 
     public function getServicios()
     {
-
+        return ServicioJunta::orderBy('nombreservicio')->get();
     }
 
 

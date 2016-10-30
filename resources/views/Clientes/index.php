@@ -353,7 +353,7 @@
                     <h4 class="modal-title">Tipo de Solicitud</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-info btn-block" ng-click="actionRiego()">
+                    <button type="button" class="btn btn-info btn-block" ng-click="actionServicio()">
                         Servicios Junta
                     </button>
                     <button type="button" class="btn btn-warning btn-block" ng-click="actionSetName()">
@@ -376,7 +376,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_riego}}</h4>
+                        <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_servicio}}</span></h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
@@ -427,13 +427,15 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-xs-12" style="padding: 2%; margin-top: -25px !important;">
+                            <div class="col-xs-12" style="padding: 2%;">
                                 <fieldset>
                                     <legend style="font-size: 16px; font-weight: bold;">Datos Solicitud</legend>
 
-                                    <div class="col-xs-12">
-
+                                    <div class="col-xs-12" style="font-weight: bold; margin-bottom: 10px;">
+                                        Seleccione los Servicios:
                                     </div>
+
+                                    <div class="col-xs-12" id="list_servicios"></div>
 
                                 </fieldset>
                             </div>

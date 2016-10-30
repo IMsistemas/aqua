@@ -213,7 +213,36 @@
         $scope.initLoad();
 
 
+        /*
+         *  ACTIONS FOR SOLICITUD SERVICIOS-------------------------------------------------------------------
+         */
 
+        $scope.getServicios = function () {
+            $http.get(API_URL + 'cliente/getServicios').success(function(response){
+                console.log(response);
+
+                var html_servicios = '';
+
+                var longitud = response.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    var temp = '<div class="col-sm-4 col-xs-12">';
+                    temp += '<input type="checkbox" id="idserviciojunta_' + response[i].idserviciojunta + '"> ' + response[i].nombreservicio;
+                    temp += '</div>';
+
+                    html_servicios += temp;
+                }
+
+                $('#list_servicios').html(html_servicios);
+
+            });
+        };
+
+        $scope.getLastIDSolicServicio = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudservicio').success(function(response){
+                $scope.num_solicitud_servicio = response.id;
+            });
+        };
 
         /*
          *  ACTIONS FOR SOLICITUD OTROS-------------------------------------------------------------------
@@ -282,8 +311,6 @@
         };
 
 
-
-
         /*
          *  SHOW MODAL ACTION-------------------------------------------------------------------
          */
@@ -291,6 +318,25 @@
         $scope.showModalAction = function (item) {
             $scope.objectAction = item;
             $('#modalAction').modal('show');
+        };
+
+        $scope.actionServicio = function () {
+
+            $scope.getLastIDSolicServicio();
+            $scope.getServicios();
+
+            $scope.t_fecha_process = $scope.nowDate();
+            $scope.h_codigocliente = $scope.objectAction.codigocliente;
+            $scope.documentoidentidad_cliente = $scope.objectAction.documentoidentidad;
+            $scope.nom_cliente = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.direcc_cliente = $scope.objectAction.direcciondomicilio;
+            $scope.telf_cliente = $scope.objectAction.telefonoprincipaldomicilio;
+            $scope.celular_cliente = $scope.objectAction.celular;
+            $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
+
+            $('#btn-process-riego').prop('disabled', true);
+
+            $('#modalActionRiego').modal('show');
         };
 
         $scope.actionOtro = function () {
