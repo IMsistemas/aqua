@@ -27,7 +27,7 @@
         </div>
 
         <div class="col-sm-6 col-xs-4">
-            <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">Nuevo  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
+            <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add')">Nuevo  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
 
         <div class="col-xs-12">
@@ -54,20 +54,20 @@
                 <tr ng-repeat="empleado in empleados |filter:busqueda" ng-cloak >
                     <td>{{empleado.documentoidentidadempleado}}</td>
                     <td>{{empleado.apellidos + ' ' + empleado.nombres}}</td>
-                    <td>{{empleado.idcargo}}</td>
+                    <td>{{empleado.cargo.nombrecargo}}</td>
                     <td>{{empleado.telefonoprincipaldomicilio}}</td>
                     <td>{{empleado.celular}}</td>
                     <td>
 
-                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado.documentoidentidadempleado)"
+                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Información">
                             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado.documentoidentidadempleado)"
+                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Editar" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado.documentoidentidadempleado)"
+                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
@@ -251,7 +251,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formEmployee.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="save()" ng-disabled="formEmployee.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -285,7 +285,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCargo()">Eliminar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroy()">Eliminar</button>
                 </div>
             </div>
         </div>

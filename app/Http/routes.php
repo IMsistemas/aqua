@@ -232,25 +232,21 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 /*------------------------------------Yamilka------------------------------------------------*/
 
 /*===================================Módulo Nomina===========================================*/
-//Ruta devuelve el ultimo ID + 1 de cargos
-Route::get('cargo/lastId', 'Nomina\CargoController@getLastID');
-//Ruta devuelve todos los cargos
+
 Route::get('cargo/getCargos', 'Nomina\CargoController@getCargos');
-//Ruta devuelve la informacion del cargo solicitado
-Route::get('cargo/{id}', 'Nomina\CargoController@show');
-//Ruta devuelve los cargos por filtro
-Route::get('cargo/getByFilter/{filters}', 'Nomina\CargoController@getByFilter');
-//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia cargo
-Route::resource('cargo', 'Nomina\CargoController');
+Route::get('cargo/getCargoByID/{id}', 'Nomina\CargoController@getCargoByID');
+Route::resource('/cargo', 'Nomina\CargoController');
+
+
+
+
 
 //Ruta devuelve todos los empleados
 Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
 //Ruta devuelve todos los cargos
 Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
-//Ruta devuelve los cargos por filtro
-Route::get('empleado/getByFilter/{filters}', 'Nomina\EmpleadoController@getByFilter');
-//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia empleado
-Route::resource('empleado', 'Nomina\EmpleadoController');
+
+Route::resource('/empleado', 'Nomina\EmpleadoController');
 
 
 Route::get('cuentaspagarcliente/getAll', 'Cuentas\CuentasPorPagarClientesController@getAll');
