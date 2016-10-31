@@ -23,7 +23,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloCliente = function(){		
 		$scope.titulo = "Clientes";
-		$scope.toModulo = "clientes";
+		$scope.toModulo = "cliente";
 
 		var list = [
 			'<li>Clientes</li>',
@@ -53,13 +53,18 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	$scope.toModuloBarrio = function(idparroquia){		
 		$scope.idparroquia = idparroquia;	
 		$scope.titulo = "Zonas";
-		$scope.toModulo = "barrios";
+		$scope.toModulo = "barrio";
 
 	}
-	$scope.toModuloCalle = function(idbarrio,nombrebarrio){		
+	/*$scope.toModuloCalle = function(idbarrio,nombrebarrio){		
 		$scope.idbarrio = idbarrio;	
 		$scope.titulo = "Tranversales Barrio: ".concat(nombrebarrio);
 		$scope.toModulo = "calles";
+	}*/
+
+	$scope.toModuloCalle = function(){		
+		$scope.titulo = "Tranversales";
+		$scope.toModulo = "calle";
 	}
 
 	$scope.toModuloCargo = function(){

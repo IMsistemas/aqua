@@ -649,7 +649,7 @@ create table SUMINISTRO (
    IDCALLE              CHAR(8)              not null,
    CODIGOCLIENTE        INT4                 not null,
    IDPRODUCTO           CHAR(8)              not null,
-   DIRECCIONSUMINISTRO   VARCHAR(32)          null,
+   DIRECCIONSUMINISTRO   VARCHAR(50)          null,
    TELEFONOSUMINISTRO   CHAR(256)            null,
    FECHAINSTALACIONSUMINISTRO DATE                 null,
    constraint PK_SUMINISTRO primary key (NUMEROSUMINISTRO)

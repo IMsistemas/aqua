@@ -1,4 +1,4 @@
-<!doctype html>
+<!Doctype html>
     <html lang="es-ES" ng-app="softver-aqua">
     <head>
         <meta charset="UTF-8">
