@@ -223,7 +223,10 @@
                                     <div class="form-group">
                                         <label for="correo" class="col-sm-4 control-label">E-mail:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="correo" id="correopersona" ng-model="correo" placeholder="" >
+                                            <input type="text" class="form-control" name="correo" id="correopersona" ng-model="correo" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" placeholder="" >
+                                            <span class="help-block error"
+                                                  ng-show="formEmployee.correo.$invalid && formEmployee.correo.$error.pattern">Formato de email no es correcto</span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -234,11 +237,11 @@
                                         <input class="form-control" type="file" ngf-select ng-model="file" name="file" id="file"
                                                accept="image/*" ngf-max-size="2MB"  ng-required="false" ngf-pattern="image/*">
                                         <span class="help-block error"
-                                              ng-show="formProducto.foto.$error.required">La Foto del Empleado es requerida</span>
+                                              ng-show="formEmployee.file.$error.required">La Foto del Empleado es requerida</span>
                                         <span class="help-block error"
-                                              ng-show="formProducto.foto.$error.pattern">El archivo debe ser Imagen</span>
+                                              ng-show="formEmployee.file.$error.pattern">El archivo debe ser Imagen</span>
                                         <span class="help-block error"
-                                              ng-show="formProducto.foto.$error.maxSize">El tamaño máximo es de 2 MB </span>
+                                              ng-show="formEmployee.file.$error.maxSize">El tamaño máximo es de 2 MB </span>
                                     </div>
 
                                 </div>
@@ -246,7 +249,11 @@
                             <div class="col-md-6 col-xs-12">
                                 <label for="salario" class="col-sm-4 control-label">Salario:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="salario" id="salario" ng-model="salario" placeholder="" >
+                                    <input type="text" class="form-control" name="salario" id="salario" ng-model="salario" placeholder="" ng-maxlength="12" ng-pattern="/^([0-9]{1,9}\.[0-9]{2})$/">
+                                    <span class="help-block error"
+                                          ng-show="formEmployee.salario.$invalid && formEmployee.salario.$error.maxlength">La longitud máxima es de 12 caracteres</span>
+                                    <span class="help-block error"
+                                          ng-show="formEmployee.salario.$invalid && formEmployee.salario.$error.pattern">El Salario debe ser solo números y punto</span>
                                 </div>
                             </div>
                         </form>
