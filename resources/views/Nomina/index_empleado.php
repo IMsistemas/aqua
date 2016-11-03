@@ -233,9 +233,8 @@
 
                                     <label for="foto" class="col-sm-4 control-label">Foto del Empleado:</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="file" ngf-select name="foto" id="foto"  ng-model="empleado.rutafoto"
-                                               accept="image/*" ngf-max-size="2MB"  ng-required="false" ngf-pattern="image/*"
-                                        >
+                                        <input class="form-control" type="file" ngf-select ng-model="file" name="file" id="file"
+                                               accept="image/*" ngf-max-size="2MB"  ng-required="false" ngf-pattern="image/*">
                                         <span class="help-block error"
                                               ng-show="formProducto.foto.$error.required">La Foto del producto es requerida</span>
                                         <span class="help-block error"
@@ -308,7 +307,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-xs-12 text-center">
-                        <img class="img-thumbnail" src="<?= asset('img/empleado.png') ?>" alt="">
+                        <img class="img-thumbnail" src="{{url_foto}}" alt="">
                     </div>
                     <div class="row text-center">
                         <div class="col-xs-12 text-center" style="font-size: 18px;">{{name_employee}}</div>
@@ -344,6 +343,12 @@
 
 <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
 <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+
+
+<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
+
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
 <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
 

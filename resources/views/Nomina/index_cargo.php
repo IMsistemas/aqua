@@ -145,6 +145,10 @@
 
 <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
 <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+
+<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
 <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
 

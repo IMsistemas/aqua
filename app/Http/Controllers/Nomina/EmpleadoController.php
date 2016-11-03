@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Nomina;
 
 use App\Modelos\Nomina\Cargo;
 use App\Modelos\Nomina\Empleado;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class EmpleadoController extends Controller
 {
@@ -52,6 +54,22 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
+
+        $url_file = null;
+
+        if ($request->hasFile('file')) {
+
+            $image = $request->file('file');
+            $destinationPath = storage_path() . '/app/empleados';
+            $name = rand(0, 9999).'_'.$image->getClientOriginalName();
+            if(!$image->move($destinationPath, $name)) {
+                return response()->json(['success' => false]);
+            } else {
+                $url_file = '/app/empleados/' . $name;
+            }
+
+        }
+
         $empleado = new Empleado();
 
         $empleado->fechaingreso = $request->input('fechaingreso');
@@ -66,9 +84,14 @@ class EmpleadoController extends Controller
         $empleado->correo = $request->input('correo');
         $empleado->salario = $request->input('salario');
 
+        if ($url_file != null) {
+            $empleado->foto = $url_file;
+        }
+
         $empleado->save();
 
         return response()->json(['success' => true]);
+
     }
 
 
@@ -93,8 +116,27 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+    }
+
+
+    public function updateEmpleado(Request $request, $id)
+    {
+        $url_file = null;
+
+        if ($request->hasFile('file')) {
+
+            $image = $request->file('file');
+            $destinationPath = public_path() . '/uploads/empleados';
+            $name = rand(0, 9999).'_'.$image->getClientOriginalName();
+            if(!$image->move($destinationPath, $name)) {
+                return response()->json(['success' => false]);
+            } else {
+                $url_file = '/uploads/empleados/' . $name;
+            }
+        }
+
         $empleado = Empleado::find($id);
-        //$empleado->fechaingreso = $request->input('fechaingreso');
         $empleado->documentoidentidadempleado = $request->input('documentoidentidadempleado');
         $empleado->idcargo = $request->input('idcargo');
         $empleado->apellidos = $request->input('apellidos');
@@ -106,9 +148,13 @@ class EmpleadoController extends Controller
         $empleado->correo = $request->input('correo');
         $empleado->salario = $request->input('salario');
 
+        if ($url_file != null) {
+            $empleado->foto = $url_file;
+        }
+
         $empleado->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'request' => $request]);
     }
 
     /**

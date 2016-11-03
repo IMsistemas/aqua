@@ -1,5 +1,5 @@
 
-app.controller('empleadosController', function($scope, $http, API_URL) {
+app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     $scope.empleados = [];
     $scope.empleado_del = 0;
@@ -16,7 +16,8 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
             $scope.empleados = response;
             //$('[data-toggle="tooltip"]').tooltip();
         });
-    }
+
+    };
 
     $scope.searchPosition = function(){
         $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
@@ -41,6 +42,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                     for(var i = 0; i < longitud; i++){
                         array_temp.push({label: response[i].nombrecargo, id: response[i].idcargo})
                     }
+
                     $scope.idcargos = array_temp;
                     $scope.documentoidentidadempleado = '';
                     $scope.apellido = '';
@@ -102,8 +104,13 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                         $scope.email_employee = item.correo;
                         $scope.salario_employee = item.salario;
 
-                        $('#modalInfoEmpleado').modal('show');
+                        if (item.foto != null && item.foto != ''){
+                            $scope.url_foto = item.foto;
+                        } else {
+                            $scope.url_foto = 'img/empleado.png';
+                        }
 
+                        $('#modalInfoEmpleado').modal('show');
 
                 break;
 
@@ -112,13 +119,15 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
         }
 
 
-    }
+    };
 
     $scope.save = function() {
         var url = API_URL + "empleado";
-        //append employee id to the URL if the form is in edit mode
-        if ($scope.modalstate === 'edit'){
-            url += "/" + $scope.id;
+        var method = 'POST';
+
+        if ($scope.modalstate == 'edit'){
+            url += "/updateEmpleado/" + $scope.id;
+            //method = 'PUT';
         }
         var data ={
             fechaingreso: convertDatetoDB($scope.fechaingreso),
@@ -131,38 +140,28 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
             celular: $scope.celular,
             direcciondomicilio: $scope.direccion,
             correo: $scope.correo,
-            salario: $scope.salario
+            salario: $scope.salario,
+            file: $scope.file
         };
 
-        if ($scope.modalstate === 'add'){
-            $http.post(url,data ).success(function (response) {
-                $scope.initLoad();
-                $('#modalAction').modal('hide');
-                $scope.message = 'Se inserto correctamente el Empleado';
-                $('#modalMessage').modal('show');
-            }).error(function (res) {
-                console.log(res);
-            });
+        Upload.upload({
+            url: url,
+            method: method,
+            data: data
+        }).success(function(data, status, headers, config) {
+            $scope.initLoad();
+            $scope.message = 'Se actualizó correctamente el empleado seleccionado...';
+            $('#modalAction').modal('hide');
+            $('#modalMessage').modal('show');
+        });
 
-        } else {
-
-            $http.put(url, data ).success(function (response) {
-                $scope.initLoad();
-                $('#modalAction').modal('hide');
-                $scope.message = 'Se edito correctamente el Empleado seleccionado';
-                $('#modalMessage').modal('show');
-            }).error(function (res) {
-
-            });
-        }
-
-    }
+    };
 
     $scope.showModalConfirm = function(item){
         $scope.empleado_del = item.idempleado;
         $scope.empleado_seleccionado = item.apellidos + ' ' + item.nombres;
             $('#modalConfirmDelete').modal('show');
-    }
+    };
 
     $scope.destroy = function(){
         $http.delete(API_URL + 'empleado/' + $scope.empleado_del).success(function(response) {
@@ -172,7 +171,7 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
             $scope.message = 'Se elimino correctamente el Empleado seleccionado';
             $('#modalMessage').modal('show');
         });
-    }
+    };
 
     $scope.initLoad(true);
 

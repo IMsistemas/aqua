@@ -45,7 +45,7 @@ app.controller('cargosController', function($scope, $http, API_URL) {
                     $scope.initLoad();
 
                     $('#modalActionCargo').modal('hide');
-                    $scope.message = 'Se insertó correctamente la Toma';
+                    $scope.message = 'Se insertó correctamente el Cargo...';
                     $('#modalMessage').modal('show');
 
                 }).error(function (res) {

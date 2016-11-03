@@ -246,6 +246,8 @@ Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
 //Ruta devuelve todos los cargos
 Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
 
+Route::post('empleado/updateEmpleado/{id}', 'Nomina\EmpleadoController@updateEmpleado');
+
 Route::resource('/empleado', 'Nomina\EmpleadoController');
 
 
@@ -258,6 +260,7 @@ Route::resource('cuentaspagarcliente', 'Cuentas\CuentasPorPagarClientesControlle
 Route::get('cuentascobrarcliente/getAll', 'Cuentas\CuentasPorCobrarSuministroController@getAll');
 Route::get('cuentascobrarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorCobrarSuministroController@getByFilter');
 Route::post('cuentascobrarcliente/ingresarcuenta', 'Cuentas\CuentasPorCobrarSuministroController@ingresarCuenta');
+
 Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroController');
 
 
