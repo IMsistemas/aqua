@@ -72,6 +72,10 @@ app.controller('empleadosController', function($scope, $http, API_URL) {
                     }
                     $scope.idcargos = array_temp;
 
+                    console.log(item.fechaingreso);
+
+                           // $scope.fechaingreso = item.fechaingreso;
+
                             $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
                             $scope.documentoidentidadempleado = item.documentoidentidadempleado;
                             $scope.idcargo = item.idcargo;

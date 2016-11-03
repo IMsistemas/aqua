@@ -59,11 +59,11 @@
                     <td>{{empleado.celular}}</td>
                     <td>
 
-                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado.idempleado)"
+                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Información">
                             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado.idempleado)"
+                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Editar" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
@@ -234,7 +234,7 @@
                                     <label for="foto" class="col-sm-4 control-label">Foto del Empleado:</label>
                                     <div class="col-sm-8">
                                         <input class="form-control" type="file" ngf-select name="foto" id="foto"  ng-model="empleado.rutafoto"
-                                               accept="image/*" ngf-max-size="2MB"  ng-required="true" ngf-pattern="image/*"
+                                               accept="image/*" ngf-max-size="2MB"  ng-required="false" ngf-pattern="image/*"
                                         >
                                         <span class="help-block error"
                                               ng-show="formProducto.foto.$error.required">La Foto del producto es requerida</span>
