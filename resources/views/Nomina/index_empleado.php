@@ -27,7 +27,7 @@
         </div>
 
         <div class="col-sm-6 col-xs-4">
-            <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add')">Nuevo  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
+            <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="toggle('add', 0)">Nuevo  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
 
         <div class="col-xs-12">
@@ -59,11 +59,11 @@
                     <td>{{empleado.celular}}</td>
                     <td>
 
-                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado)"
+                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado.idempleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Información">
                             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
+                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado.idempleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Editar" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
@@ -230,12 +230,20 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="foto" class="col-sm-4 control-label">Foto:</label>
-                                        <div class="col-sm-8">
-                                            <input type="file" class="form-control" name="foto" id="foto" ng-model="foto" placeholder="" >
-                                        </div>
+
+                                    <label for="foto" class="col-sm-4 control-label">Foto del Empleado:</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" ngf-select name="foto" id="foto"  ng-model="empleado.rutafoto"
+                                               accept="image/*" ngf-max-size="2MB"  ng-required="true" ngf-pattern="image/*"
+                                        >
+                                        <span class="help-block error"
+                                              ng-show="formProducto.foto.$error.required">La Foto del producto es requerida</span>
+                                        <span class="help-block error"
+                                              ng-show="formProducto.foto.$error.pattern">El archivo debe ser Imagen</span>
+                                        <span class="help-block error"
+                                              ng-show="formProducto.foto.$error.maxSize">El tamaño máximo es de 2 MB </span>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-12">
@@ -251,7 +259,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="save()" ng-disabled="formEmployee.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate)" ng-disabled="formEmployee.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -285,10 +293,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroy()">Eliminar</button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCargo()">Eliminar</button>
                 </div>
             </div>
         </div>

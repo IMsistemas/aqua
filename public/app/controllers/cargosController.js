@@ -18,6 +18,7 @@ app.controller('cargosController', function($scope, $http, API_URL) {
             case 'add':
                 $scope.form_title = "Adicionar Cargo";
                 $scope.nombrecargo = '';
+
                 $('#modalActionCargo').modal('show');
                 break;
             case 'edit':

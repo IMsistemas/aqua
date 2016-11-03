@@ -25,7 +25,7 @@
         </div>
 
         <div class="col-sm-6 col-xs-4">
-            <button type="button" class="btn btn-primary" style="float: right;" ng-click="Add('add,0')">
+            <button type="button" class="btn btn-primary" style="float: right;" ng-click="Add('add',0)">
                 Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
         </div>
