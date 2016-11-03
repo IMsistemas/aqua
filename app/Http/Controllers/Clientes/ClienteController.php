@@ -63,7 +63,7 @@ class ClienteController extends Controller
         $cliente = json_decode($idcliente);
 
         return Cliente::where('codigocliente', '!=', $cliente->codigocliente)
-            ->orderBy('documentoidentidad', 'asc')->get();
+                        ->orderBy('documentoidentidad', 'asc')->get();
     }
 
     public function getClienteByIdentify($idcliente)

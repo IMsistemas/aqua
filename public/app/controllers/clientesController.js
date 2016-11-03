@@ -310,9 +310,8 @@
             });
         };
 
-
         /*
-         *  SHOW MODAL ACTION-------------------------------------------------------------------
+         *  SHOW MODAL ACTION-----------------------------------------------------------------------
          */
 
         $scope.showModalAction = function (item) {
@@ -334,9 +333,7 @@
             $scope.celular_cliente = $scope.objectAction.celular;
             $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
 
-            $('#btn-process-riego').prop('disabled', true);
-
-            $('#modalActionRiego').modal('show');
+            $('#modalActionServicio').modal('show');
         };
 
         $scope.actionOtro = function () {

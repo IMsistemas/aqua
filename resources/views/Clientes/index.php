@@ -370,7 +370,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalActionRiego">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalActionServicio">
         <div class="modal-dialog" role="document" style="width: 60%;">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
