@@ -33,8 +33,8 @@
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 15%;">Nombre de la Junta</th>
-                <th style="">Tomas</th>
+                <th style="width: 15%;">Nombre Zona</th>
+                <th style="">Transversales</th>
                 <th style="width: 15%;">Acciones</th>
             </tr>
             </thead>
@@ -76,7 +76,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-sm-5 col-xs-12">
-                        <h4 class="modal-title">Nueva Junta Modular</h4>
+                        <h4 class="modal-title">Nueva Zona</h4>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -97,12 +97,12 @@
                         </div>
 
                         <div class="form-group error">
-                            <label for="t_name" class="col-sm-4 control-label">Nombre de la Junta:</label>
+                            <label for="t_name" class="col-sm-4 control-label">Nombre de la Zona:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control"  name ="nombrebarrio" id="nombrebarrio" ng-model="nombrebarrio" placeholder=""
                                        ng-required="true" ng-maxlength="64">
                                 <span class="help-block error"
-                                      ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$touched">El nombre de la Junta es requerido</span>
+                                      ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$touched">El nombre de la Zona es requerido</span>
                                 <span class="help-block error"
                                       ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$error.maxlength">La longitud máxima es de 64 caracteres</span>
                             </div>
@@ -126,7 +126,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-sm-5 col-xs-12">
-                        <h4 class="modal-title">Nueva Toma</h4>
+                        <h4 class="modal-title">Nueva Transversal</h4>
                     </div>
                 </div>
 
@@ -140,7 +140,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_barrio" class="col-sm-4 control-label">Junta Modular:</label>
+                            <label for="id_barrio" class="col-sm-4 control-label">Zona:</label>
                             <div class="col-sm-8">
                                 <select disabled id="id_barrio" class="form-control" ng-model="id_barrio"
                                         ng-options="value.id as value.label for value in barrios2"></select>
@@ -148,12 +148,12 @@
                         </div>
 
                         <div class="form-group error">
-                            <label for="nombrecalle" class="col-sm-4 control-label">Nombre de la Toma:</label>
+                            <label for="nombrecalle" class="col-sm-4 control-label">Nombre Transversal:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="nombrecalle" id="nombrecalle" ng-model="nombrecalle" placeholder=""
                                        ng-required="true" ng-maxlength="64">
                                 <span class="help-block error"
-                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$touched">El nombre de la Toma es requerido</span>
+                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$touched">El nombre de la Transversal es requerido</span>
                                 <span class="help-block error"
                                       ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$error.maxlength">La longitud máxima es de 64 caracteres</span>
                             </div>
@@ -177,7 +177,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-info">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Junta Modular: {{name_junta}}</h4>
+                    <h4 class="modal-title">Zona: {{name_junta}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col-xs-12 text-center">
@@ -185,7 +185,7 @@
                     </div>
                     <div class="row text-center">
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Tomas en la Junta: </span>{{junta_tomas}}
+                            <span style="font-weight: bold">Transversales en la Zona: </span>{{junta_tomas}}
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Realmente desea eliminar la Junta Modular: <strong>"{{nom_junta_modular}}"</strong>...</span>
+                    <span>Realmente desea eliminar la Zona: <strong>"{{nom_junta_modular}}"</strong>...</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -248,7 +248,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-sm-11 col-xs-12">
-                        <h4 class="modal-title">Tomas de la Junta Modular: {{junta_n}} </h4>
+                        <h4 class="modal-title">Transversales de la Zona: {{junta_n}} </h4>
                     </div>
                     <div class="col-sm-1 col-xs-12 text-right">
                         <div class="col-xs-2"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -272,7 +272,7 @@
                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                 <thead class="bg-primary">
                                 <tr>
-                                    <th style="width: 15%;">Nombre de la Toma</th>
+                                    <th style="width: 15%;">Nombre Transversal</th>
                                     <th style="width: 15%;">Acciones</th>
                                 </tr>
                                 </thead>
@@ -311,7 +311,7 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Realmente desea eliminar la Toma: <strong>"{{nom_calle_delete}}"</strong>?</span>
+                    <span>Realmente desea eliminar la Transversal: <strong>"{{nom_calle_delete}}"</strong>?</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">

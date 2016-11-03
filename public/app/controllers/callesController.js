@@ -14,7 +14,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
     $scope.FiltroCalle = function () {
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
-            var array_temp = [{label: '--JUNTAS MODULARES--', id: 0}];
+            var array_temp = [{label: '--Zonas --', id: 0}];
             for (var i = 0; i < longitud; i++) {
                 array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
             }
@@ -73,7 +73,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
             $scope.initLoad();
 
             $('#modalNueva').modal('hide');
-            $scope.message = 'Se insertó correctamente la Toma';
+            $scope.message = 'Se insertó correctamente la Transversal';
             $('#modalMessage').modal('show');
 
         }).error(function (res) {
@@ -119,10 +119,10 @@ app.controller('callesController', function($scope, $http, API_URL) {
             if(response.success == true){
                 $scope.initLoad();
                 $scope.idcalle_del = 0;
-                $scope.message = 'Se elimino correctamente la Toma seleccionada...';
+                $scope.message = 'Se elimino correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
             } else {
-                $scope.message_error = 'La Toma no puede ser eliminada...';
+                $scope.message_error = 'La Transversal no puede ser eliminada...';
                 $('#modalMessageError').modal('show');
             }
         });
@@ -141,7 +141,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
 
         if(c > 0 )
         {
-            $scope.message_error  = 'Existen Tomas con nombres en blanco, por favor llene ese campo... ';
+            $scope.message_error  = 'Existen Transversales con nombres en blanco, por favor llene ese campo... ';
             $('#modalMessageError').modal('show');
         } else
         {
@@ -150,7 +150,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
             $http.post(API_URL + 'calle/editar_calle', arr_calle).success(function(response){
                 console.log(response);
                 $scope.initLoad();
-                $scope.message = 'Se editaron correctamente las Tomas';
+                $scope.message = 'Se editaron correctamente las Transversales';
                 $('#modalMessage').modal('show');
             });
         }

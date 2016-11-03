@@ -48,7 +48,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $scope.initLoad();
 
             $('#modalNueva').modal('hide');
-            $scope.message = 'Se insertó correctamente la Junta Modular';
+            $scope.message = 'Se insertó correctamente la Zona';
             $('#modalMessage').modal('show');
 
         }).error(function (res) {
@@ -89,7 +89,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $scope.initLoad();
 
             $('#modalNuevaToma').modal('hide');
-            $scope.message = 'Se insertó correctamente la Toma';
+            $scope.message = 'Se insertó correctamente la Transversal';
             $('#modalMessage').modal('show');
             if( $scope.aux1==1) {
                 $scope.showModalAction($scope.barrio);
@@ -144,10 +144,10 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 console.log(response);
                 $scope.initLoad();
                 $scope.idbarrio_del = 0;
-                $scope.message = 'Se elimino correctamente la Junta Modular seleccionada...';
+                $scope.message = 'Se elimino correctamente la Zona seleccionada...';
                 $('#modalMessage').modal('show');
             } else if(response.success == false && response.msg == 'exist_calle') {
-                $scope.message_error = 'La Junta no puede ser eliminada porque contiene Tomas...';
+                $scope.message_error = 'La Zona no puede ser eliminada porque contiene Transversales...';
                 $('#modalMessageError').modal('show');
             }
         });
@@ -165,13 +165,13 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             if(response.success == true){
                 $scope.initLoad();
                 $scope.idcalle_delete = 0;
-                $scope.message = 'Se elimino correctamente la Toma seleccionada...';
+                $scope.message = 'Se elimino correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
 
                 $scope.showModalAction($scope.barrio);
 
             } else {
-                $scope.message_error = 'La Toma no puede ser eliminada...';
+                $scope.message_error = 'La Transversal no puede ser eliminada...';
                 $('#modalMessageError').modal('show');
             }
         });
@@ -194,7 +194,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $http.post(API_URL + 'barrio/editar_calle', arr_calle).success(function (response) {
                 console.log(response);
                 $scope.initLoad();
-                $scope.message = 'Se editaron correctamente las Tomas';
+                $scope.message = 'Se editaron correctamente las Transversales';
                 $('#modalMessage').modal('show');
 
                 /*setTimeout(function(){
@@ -216,7 +216,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
 
         if(c > 0 )
         {
-            $scope.message_error  = 'Existen Juntas Modulares con nombres en blanco, por favor llene ese campo... ';
+            $scope.message_error  = 'Existen Zonas con nombres en blanco, por favor llene ese campo... ';
             $('#modalMessageError').modal('show');
         } else
         {
@@ -224,7 +224,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $http.post(API_URL + 'barrio/editar_Barrio', arr_barrio).success(function(response){
                 //  console.log(response);
                 $scope.initLoad();
-                $scope.message= 'Se editaron correctamente las Juntas Modulares';
+                $scope.message= 'Se editaron correctamente las Zonas';
                 $('#modalMessage').modal('show');
             });
         }

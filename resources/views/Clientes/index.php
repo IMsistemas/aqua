@@ -151,18 +151,24 @@
                                         <label for="t_apellidos" class="col-sm-4 col-xs-12 control-label">Apellidos:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_apellidos" id="t_apellidos"
-                                                   ng-model="t_apellidos" ng-required="true" ng-keypress="onlyCharasterAndSpace($event);">
+                                                   ng-model="t_apellidos" ng-required="true" ng-keypress="onlyCharasterAndSpace($event);" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/">
                                             <span class="help-block error"
                                                   ng-show="formCliente.t_apellidos.$invalid && formCliente.t_apellidos.$touched" >El Apellido es requerido</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_apellidos.$invalid && formCliente.t_apellidos.$error.pattern">Solo letras y espacios</span>
+
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
                                         <label for="t_nombres" class="col-sm-4 col-xs-12 control-label">Nombre(s):</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_nombres" id="t_nombres"
-                                                   ng-model="t_nombres" ng-required="true" ng-keypress="onlyCharasterAndSpace($event);">
+                                                   ng-model="t_nombres" ng-required="true" ng-keypress="onlyCharasterAndSpace($event);" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/">
                                             <span class="help-block error"
                                                   ng-show="formCliente.t_nombres.$invalid && formCliente.t_nombres.$touched">El Nombre(s) es requerido</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_nombres.$invalid && formCliente.t_nombres.$error.pattern">Solo letras y espacios</span>
+
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
@@ -341,9 +347,6 @@
             </div>
         </div>
     </div>
-
-
-
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
         <div class="modal-dialog modal-sm" role="document">

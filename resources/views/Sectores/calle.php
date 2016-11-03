@@ -37,7 +37,7 @@
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 15%;">Nombre de la Toma</th>
+                <th style="width: 15%;">Nombre Transversal</th>
                 <th style="width: 15%;">Acciones</th>
             </tr>
             </thead>
@@ -64,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-sm-5 col-xs-12">
-                        <h4 class="modal-title">Nueva Toma</h4>
+                        <h4 class="modal-title">Nueva Transversal</h4>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="t_barrio" class="col-sm-4 control-label">Junta Modular:</label>
+                            <label for="t_barrio" class="col-sm-4 control-label">Zona:</label>
                             <div class="col-sm-8">
                                 <select id="t_barrio" class="form-control" ng-model="t_barrio"
                                         ng-options="value.id as value.label for value in barrios" required></select>
@@ -87,12 +87,12 @@
                         </div>
 
                         <div class="form-group error">
-                            <label for="nombrecalle" class="col-sm-4 control-label">Nombre de la Toma:</label>
+                            <label for="nombrecalle" class="col-sm-4 control-label">Nombre de la Transversal:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="nombrecalle" id="nombrecalle" ng-model="nombrecalle" placeholder=""
                                        ng-required="true" ng-maxlength="64">
                                 <span class="help-block error"
-                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$touched">El nombre de la Toma es requerido</span>
+                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$touched">El nombre de la Transversal es requerido</span>
                                 <span class="help-block error"
                                       ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$error.maxlength">La longitud máxima es de 64 caracteres</span>
                             </div>
@@ -119,7 +119,7 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Realmente desea eliminar la Toma: <strong>"{{nom_calle}}"</strong>?</span>
+                    <span>Realmente desea eliminar la Transversal: <strong>"{{nom_calle}}"</strong>?</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
