@@ -356,13 +356,16 @@
                     <h4 class="modal-title">Tipo de Solicitud</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn btn-info btn-block" ng-click="actionServicio()">
-                        Servicios Junta
+                    <button type="button" class="btn btn-primary btn-block" ng-click="actionSuministro()">
+                        Suministros
                     </button>
-                    <button type="button" class="btn btn-warning btn-block" ng-click="actionSetName()">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="actionServicio()">
+                        Servicios
+                    </button>
+                    <button type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
                         Cambio de Nombre
                     </button>
-                    <button type="button" class="btn btn-danger btn-block" ng-click="actionFraccion()">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="actionFraccion()">
                         Mantenimiento
                     </button>
                     <button type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
@@ -815,6 +818,110 @@
                     <button type="button" class="btn btn-primary" id="btn-process-otro"
                             ng-click="procesarSolicitud('btn-process-otro')" disabled>
                         Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalActionSuministro">
+        <div class="modal-dialog" role="document" style="width: 60%;">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+
+                    <div class="col-md-6 col-xs-12">
+                        <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_suministro}}</span></h4>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <h4 class="modal-title"><label for="t_fecha_process" class="col-sm-6" style="font-weight: normal !important;">{{nom_cliente_suministro}}</label></h4>
+                            <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formProcess" novalidate="">
+
+                        <div class="row">
+                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                <fieldset ng-cloak>
+                                    <legend style="font-size: 16px; font-weight: bold;">Datos Suministro</legend>
+
+
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xs-12" style="padding: 2%;">
+                                <fieldset>
+                                    <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
+
+                                    <div class="col-xs-12" style="padding: 2%;">
+                                        <fieldset>
+                                            <legend style="font-size: 14px; font-weight: bold;">Acometida</legend>
+                                            <div class="col-sm-6 col-xs-12 form-group">
+                                                <label for="t_suministro_aguapotable" class="col-sm-5 col-xs-12 control-label">Agua Potable:</label>
+                                                <div class="col-sm-7 col-xs-12" style="">
+                                                    <input type="text" class="form-control" id="t_suministro_aguapotable" ng-model="t_suministro_aguapotable">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12 form-group">
+                                                <label for="t_suministro_alcantarillado" class="col-sm-5 col-xs-12 control-label">Alcantarillado:</label>
+                                                <div class="col-sm-7 col-xs-12" style="">
+                                                    <input type="text" class="form-control" id="t_suministro_alcantarillado" ng-model="t_suministro_alcantarillado">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12 form-group">
+                                                <label for="t_suministro_garantia" class="col-sm-8 col-xs-12 control-label">Garantía Apertura de Calle:</label>
+                                                <div class="col-sm-4 col-xs-12" style="">
+                                                    <input type="text" class="form-control" id="t_suministro_garantia" ng-model="t_suministro_garantia">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%;">
+                                        <fieldset>
+                                            <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
+
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%;">
+                                        <fieldset>
+                                            <legend style="font-size: 14px; font-weight: bold;">Total</legend>
+                                            <div class="col-sm-6 col-xs-12 form-group">
+                                                <label for="t_suministro_cuota" class="col-sm-5 col-xs-12 control-label">Cuota Inicial:</label>
+                                                <div class="col-sm-7 col-xs-12" style="">
+                                                    <input type="text" class="form-control" id="t_suministro_cuota" ng-model="t_suministro_cuota">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12 form-group">
+                                                <label for="s_suministro_credito" class="col-sm-5 col-xs-12 control-label">Crédito:</label>
+                                                <div class="col-sm-7 col-xs-12" style="">
+                                                    <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"></select>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-success" id="btn-save-riego"
+                            ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>

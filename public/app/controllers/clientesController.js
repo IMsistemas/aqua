@@ -319,6 +319,10 @@
             $('#modalAction').modal('show');
         };
 
+        $scope.actionSuministro = function () {
+            $('#modalActionSuministro').modal('show');
+        };
+
         $scope.actionServicio = function () {
 
             $scope.getLastIDSolicServicio();
