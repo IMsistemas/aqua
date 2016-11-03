@@ -937,6 +937,10 @@
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
 <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
 
+
+<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
 <script src="<?= asset('app/app.js') ?>"></script>
 <script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
 

@@ -138,11 +138,11 @@
                                         <label class="col-sm-4 control-label">Apellidos:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="apellido" id="apellido"
-                                                   ng-model="apellido" ng-required="true" ng-maxlength="32" ng-pattern="/[a-zA-ZáéíóúñÑ ]+/" >
+                                                   ng-model="apellido" ng-required="true" ng-maxlength="128" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/" >
                                             <span class="help-block error"
                                                   ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$touched">El Apellido es requerido</span>
                                             <span class="help-block error"
-                                                  ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.maxlength">La longitud máxima es de 32 caracteres</span>
+                                                  ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.maxlength">La longitud máxima es de 128 caracteres</span>
                                             <span class="help-block error"
                                                   ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.pattern">El Apellido debe ser solo letras y espacios</span>
                                         </div>
@@ -153,11 +153,11 @@
                                         <label class="col-sm-4 control-label">Nombres:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="nombre" id="nombre"
-                                                   ng-model="nombre" ng-required="true" ng-maxlength="32" ng-pattern="/[a-zA-ZáéíóúñÑ ]+/" >
+                                                   ng-model="nombre" ng-required="true" ng-maxlength="128" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/" >
                                             <span class="help-block error"
                                                   ng-show="formEmployee.nombre.$invalid && formEmployee.nombre.$touched">El Nombre es requerido</span>
                                             <span class="help-block error"
-                                                  ng-show="formEmployee.nombre.$invalid && formEmployee.nombre.$error.maxlength">La longitud máxima es de 32 caracteres</span>
+                                                  ng-show="formEmployee.nombre.$invalid && formEmployee.nombre.$error.maxlength">La longitud máxima es de 128 caracteres</span>
                                             <span class="help-block error"
                                                   ng-show="formEmployee.nombre.$invalid && formEmployee.nombre.$error.pattern">El Nombre debe ser solo letras y espacios</span>
                                         </div>
@@ -170,7 +170,7 @@
                                         <label class="col-sm-4 control-label">Teléfono Principal:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
-                                                   ng-model="telefonoprincipal" ng-maxlength="16" ng-pattern="/[0-9- ]+/" >
+                                                   ng-model="telefonoprincipal" ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/" >
                                             <span class="help-block error"
                                                   ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.maxlength">La longitud máxima es de 16 números</span>
                                             <span class="help-block error"
@@ -183,7 +183,7 @@
                                         <label class="col-sm-4 control-label">Teléfono Secundario:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
-                                                   ng-model="telefonosecundario" ng-maxlength="16" ng-pattern="/[0-9- ]+/" >
+                                                   ng-model="telefonosecundario" ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/" >
                                             <span class="help-block error"
                                                   ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.maxlength">La longitud máxima es de 16 números</span>
                                             <span class="help-block error"
@@ -198,7 +198,7 @@
                                         <label class="col-sm-4 control-label">Celular:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="celular" id="celular"
-                                                   ng-model="celular" ng-maxlength="16" ng-pattern="/[0-9- ]+/" >
+                                                   ng-model="celular" ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/">
                                             <span class="help-block error"
                                                   ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.maxlength">La longitud máxima es de 16 números</span>
                                             <span class="help-block error"
@@ -211,11 +211,9 @@
                                         <label class="col-sm-4 control-label">Dirección:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="direccion" id="direccion"
-                                                   ng-model="direccion" ng-maxlength="256" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/">
+                                                   ng-model="direccion" ng-maxlength="256">
                                             <span class="help-block error"
-                                                  ng-show="formEmployee.direccion.$invalid && formEmployee.direccion.$error.maxlength">La longitud máxima es de 32 caracteres</span>
-                                            <span class="help-block error"
-                                                  ng-show="formEmployee.direccion.$invalid && formEmployee.direccion.$error.pattern">La Dirección debe ser solo letras, puntos, números, guion y espacios</span>
+                                                  ng-show="formEmployee.direccion.$invalid && formEmployee.direccion.$error.maxlength">La longitud máxima es de 256 caracteres</span>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +234,7 @@
                                         <input class="form-control" type="file" ngf-select ng-model="file" name="file" id="file"
                                                accept="image/*" ngf-max-size="2MB"  ng-required="false" ngf-pattern="image/*">
                                         <span class="help-block error"
-                                              ng-show="formProducto.foto.$error.required">La Foto del producto es requerida</span>
+                                              ng-show="formProducto.foto.$error.required">La Foto del Empleado es requerida</span>
                                         <span class="help-block error"
                                               ng-show="formProducto.foto.$error.pattern">El archivo debe ser Imagen</span>
                                         <span class="help-block error"
