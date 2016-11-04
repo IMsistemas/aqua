@@ -360,7 +360,7 @@
             $scope.getDividendo();
 
             $scope.t_suministro_medidor = false;
-
+            $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
             $('#modalActionSuministro').modal('show');
         };
 

@@ -833,8 +833,12 @@
                         <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_suministro}}</span></h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
-                        <div class="form-group">
-                            <h4 class="modal-title"><label for="t_fecha_process" class="col-sm-6" style="font-weight: normal !important;">{{nom_cliente_suministro}}</label></h4>
+                        <div class="form-group text-right">
+                            <h4 class="modal-title">
+                                <label for="t_fecha_process" class="col-sm-11" style="font-weight: normal !important;">
+                                    <i class="fa fa-user fa-lg" aria-hidden="true"></i> {{nom_cliente_suministro}}
+                                </label>
+                            </h4>
                             <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
