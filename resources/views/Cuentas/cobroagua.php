@@ -6,9 +6,9 @@
 	             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
 	         </div>
 		</div>
- 
+
 		<form class="form-inline">
-		
+
 			<button type="button" id="btnNuevaSol" class="btn btn-primary" style="float: right;" ng-click="generarFacturasPeriodo();" ng-hide="estaVacio">Generar</button>
 
 			<div class="form-group">
@@ -28,10 +28,10 @@
 
 
 		</form>
-	   
-	    
-           
-        
+
+
+
+
 		<div class="col-xs-12">
 			<table class="table table-responsive table-striped table-hover table-condensed">
 				<thead class="bg-primary">
@@ -73,11 +73,11 @@
 						<td>{{cuenta.suministro.telefonosuministro}}</td>
 						<td>{{cuenta.consumom3}}</td>
 						<td>{{cuenta.total | currency}}</td>
-						
+
 						<td>
 							<a href="#" class="btn btn-primary" ng-click="ingresoValores(cuenta.idcuenta);" ng-hide="cuenta.estapagada">Agregar</a>
                            <a href="#" class="btn btn-success" ng-click="generarPDF(cuenta.idcuenta);"><i class="fa fa-print" aria-hidden="true"></i></a>
-                            
+
 						</td>
 					</tr>
 				</tbody>
@@ -102,22 +102,22 @@
 							<fieldset>
 								<legend>Datos suministro</legend>
 								<div class="col-xs-12">
-		                                <span style="font-weight: bold">No. suministro: </span>{{cuenta.suministro.numerosuministro}} 
+		                                <span style="font-weight: bold">No. suministro: </span>{{cuenta.suministro.numerosuministro}}
 		                        </div>
 		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Cliente: </span>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}} 
+		                                <span style="font-weight: bold">Cliente: </span>{{cuenta.suministro.cliente.apellido+" "+suministro.cliente.nombre}}
 		                        </div>
 		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Barrio: </span>{{cuenta.suministro.calle.barrio.nombrebarrio}} 
+		                                <span style="font-weight: bold">Barrio: </span>{{cuenta.suministro.calle.barrio.nombrebarrio}}
 		                        </div>
 		                        <div class="col-xs-12">
-		                                <span style="font-weight: bold">Dirección: </span>{{cuenta.suministro.direccionsuministro}} 
+		                                <span style="font-weight: bold">Dirección: </span>{{cuenta.suministro.direccionsuministro}}
 		                        </div>
 							</fieldset>
 							<br>
 							<fieldset>
 								<legend>Rubros</legend>
-							</fieldset>	
+							</fieldset>
 								<table class="table table-bordered table-hover">
 									<thead class="bg-primary">
 										<tr>
@@ -130,7 +130,7 @@
 											<td><b>Valores Mes</b></td>
 											<td></td>
 										</tr>
-										
+
 										<tr>
 											<td>Consumo mes</td>
 											<td>{{cuenta.valorconsumo}}</td>
@@ -139,23 +139,23 @@
 											<td>Excedente Mes</td>
 											<td>{{cuenta.valorexcedente}}</td>
 										</tr>
-										
+
 										<tr>
 											<td>Valores atrasados</td>
 											<td>{{cuenta.valormesesatrasados}}</td>
 										</tr>
 										<tr class="bg-info">
 											<td class="bg-info"><b>Otros valores</b></td>
-											<td></td>	
+											<td></td>
 										</tr>
-										
+
 										<tr ng-repeat="rubroVariableCuenta in rubrosVariablesCuenta track by $index">
 											<td>{{rubroVariableCuenta.nombrerubrovariable}}</td>
 											<td><input type="text" id="{{rubroVariableCuenta.nombrerubrovariable}}" class="form-control rubrosVariables" ng-model="rubroVariableCuenta.pivot.costorubro" ng-value="rubroVariableCuenta.costorubro | currency"></td>
 										</tr>
 										<tr ng-repeat="rubroFijoCuenta in rubrosFijosCuenta">
 											<td>{{rubroFijoCuenta.nombrerubrofijo}}</td>
-											<td><input type="text" id="{{rubroFijoCuenta.nombrerubrofijo}}" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.pivot.costorubro " ng-value="rubroFijoCuenta.costorubro | currency"></td>	
+											<td><input type="text" id="{{rubroFijoCuenta.nombrerubrofijo}}" class="form-control rubrosFijos" ng-model="rubroFijoCuenta.pivot.costorubro " ng-value="rubroFijoCuenta.costorubro | currency"></td>
 										</tr>
 										<tr>
 											<td><b>Total</b></td>
@@ -172,12 +172,12 @@
 						<button class="btn btn-success" ng-show="cuenta.estapagada" ><i class="fa fa-print" aria-hidden="true" ng-click="generarPDF(cuenta.numerocuenta);"></i>Imprimir</button>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 
 <!-- ==============================================MODAL CONFIRMACION ==================================================================== -->
 
-	
+
 		 <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmacion">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -207,10 +207,10 @@
                 </div>
             </div>
         </div>
-	
 
 
-		 
+
+
 </div>
 
 <!-- <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoCuenta">
@@ -227,9 +227,9 @@
                         <div class="row text-center">
                             <div class="col-xs-12 text-center" style="font-size: 18px;">{{cuenta.suministro.cliente.apellido+" "+cuenta.suministro.cliente.nombre}}</div>
                             <div class="col-xs-12 text-center" style="font-size: 16px;">{{}}</div>
-                      
+
                             <div class="col-xs-12">
-                                <span style="font-weight: bold">No. suministro:</span>{{cuenta.suministro.numerosuministro}} 
+                                <span style="font-weight: bold">No. suministro:</span>{{cuenta.suministro.numerosuministro}}
                             </div>
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">m<sup>3</sup> consumidos: </span>{{}}
@@ -252,6 +252,6 @@
             </div>
         </div>
 
-		
+
 	</div> -->
 

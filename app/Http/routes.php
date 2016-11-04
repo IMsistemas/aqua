@@ -238,9 +238,6 @@ Route::get('cargo/getCargoByID/{id}', 'Nomina\CargoController@getCargoByID');
 Route::resource('/cargo', 'Nomina\CargoController');
 
 
-
-
-
 //Ruta devuelve todos los empleados
 Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
 //Ruta devuelve todos los cargos
@@ -318,9 +315,19 @@ Route::get('suministros/suministroById/{id}','Suministros\SuministroController@s
 Route::get('suministros/getAguapotable', 'Suministros\SuministroController@getAguapotable');
 Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
 
-
-
 Route::resource('/suministros', 'Suministros\SuministroController');
+
+/*=============================Módulo Facturacion====================================*/
+
+Route::get('factura/getFacturas', 'Facturas\FacturaController@getFacturas');
+
+
+
+
+
+
+
+Route::resource('/factura', 'Facturas\FacturaController');
 
 /*------------------------------------Kevin Tambien :-( ------------------------------------------------*/
 

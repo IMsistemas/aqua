@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class CobroAgua extends Model
 {
      protected $table = "cobroagua";
-     protected $primaryKey = "idcuenta";
+     protected $primaryKey = "idcobroagua";
      public $timestamps = false;
 
-     public function suministro(){
-    	return $this->belongsTo('App\Modelos\Suministros\Suministro','numerosuministro');
+    public function lectura()
+    {
+        return $this->belongsTo('App\Modelos\Lecturas\Lectura','idlectura');
     }
 
-    public function lectura(){
-    	return $this->belongsTo('App\Modelos\Lecturas\Lectura','idlectura');
+    public function suministro()
+    {
+        return $this->belongsTo('App\Modelos\Suministros\Suministro','numerosuministro');
     }
 
-    public function rubrosvariables(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\RubroVariable','rubrosvariablescuenta','idcuenta','idrubrovariable')->withPivot('costorubro');
-    }
-
-    public function rubrosfijos(){
-    	return $this->belongsToMany('App\Modelos\Cuentas\RubroFijo','rubrosfijoscuenta','idcuenta','idrubrofijo')->withPivot('costorubro');
+    public function factura()
+    {
+        return $this->belongsTo('App\Modelos\Facturas\Factura','numerofactura');
     }
 
 }
