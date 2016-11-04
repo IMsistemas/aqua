@@ -362,10 +362,13 @@
             $scope.getDividendo();
 
             $scope.t_suministro_medidor = false;
-            $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+
+            $('#btn-save-solsuministro').prop('disabled', false);
+            $('#btn-process-solsuministro').prop('disabled', true);
+
             $('#modalActionSuministro').modal('show');
         };
-
 
         $scope.saveSolicitudSuministro = function () {
             var data = {
@@ -379,14 +382,15 @@
                 valor: $scope.total_suministro,
             };
 
-            console.log(data);
-
             $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
                 if(response.success == true){
+
+                    console.log(response);
+
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    //$('#btn-save-otro').prop('disabled', true);
-                    //$('#btn-process-otro').prop('disabled', false);
+                    $('#btn-save-solsuministro').prop('disabled', true);
+                    $('#btn-process-solsuministro').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
                 }
@@ -399,7 +403,6 @@
 
         $scope.getServicios = function () {
             $http.get(API_URL + 'cliente/getServicios').success(function(response){
-                console.log(response);
 
                 var html_servicios = '';
 
@@ -475,7 +478,7 @@
 
                 $('#' + id_btn).prop('disabled', true);
 
-                $('#modalActionRiego').modal('hide');
+                $('#modalActionSuministro').modal('hide');
                 $('#modalActionOtro').modal('hide');
                 $('#modalActionSetNombre').modal('hide');
                 $('#modalActionFraccion').modal('hide');
@@ -498,8 +501,6 @@
             $scope.objectAction = item;
             $('#modalAction').modal('show');
         };
-
-
 
         $scope.actionServicio = function () {
 

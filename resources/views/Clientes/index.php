@@ -1000,12 +1000,12 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save-riego"
+                    <button type="button" class="btn btn-success" id="btn-save-solsuministro"
                             ng-click="saveSolicitudSuministro()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-process-otro"
-                            ng-click="" disabled>
+                    <button type="button" class="btn btn-primary" id="btn-process-solsuministro"
+                            ng-click="procesarSolicitud('btn-process-solsuministro')" disabled>
                         Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                 </div>

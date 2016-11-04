@@ -149,9 +149,9 @@ class ClienteController extends Controller
                     $cxp_cliente->valor = $request->input('garantia');
                     $cxp_cliente->fecha = date('Y-m-d');
                     if ($cxp_cliente->save() != false) {
-                        return response()->json(['success' => true]);
+                        return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
                     } else return response()->json(['success' => false]);
-                } else return response()->json(['success' => true]);
+                } else return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
 
             } else return response()->json(['success' => false]);
 
