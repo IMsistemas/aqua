@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Facturas;
 
+use App\Modelos\Servicios\ServicioJunta;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,6 +19,23 @@ class FacturaController extends Controller
     {
         return view('Factura/factura');
     }
+
+    public function getServicios()
+    {
+        return ServicioJunta::orderBy('nombreservicio', 'asc')->get();
+    }
+
+
+
+    public function getFacturas()
+    {
+
+    }
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

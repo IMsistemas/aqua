@@ -11,4 +11,9 @@ class ServicioJunta extends Model
     public $timestamps = false;
 
 
+    public function serviciosenfactura(){
+        return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','idserviciojunta');
+    }
+
+
 }

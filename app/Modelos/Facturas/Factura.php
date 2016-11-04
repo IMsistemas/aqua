@@ -22,4 +22,9 @@ class Factura extends Model
     {
         return $this->belongsTo('App\Modelos\Clientes\Cliente','codigocliente');
     }
+
+    public function serviciosenfactura(){
+        return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','numerofactura');
+    }
+
 }

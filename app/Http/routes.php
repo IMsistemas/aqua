@@ -320,8 +320,7 @@ Route::resource('/suministros', 'Suministros\SuministroController');
 /*=============================Módulo Facturacion====================================*/
 
 Route::get('factura/getFacturas', 'Facturas\FacturaController@getFacturas');
-
-
+Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
 
 
 
