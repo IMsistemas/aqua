@@ -14,6 +14,7 @@
 
         $scope.marcaproducto = '';
         $scope.precioproducto = '';
+        $scope.idproducto = '';
 
         $scope.initLoad = function () {
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
@@ -296,6 +297,7 @@
             $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
                 $scope.marcaproducto = response[0].marca;
                 $scope.precioproducto = response[0].precioproducto;
+                $scope.idproducto = response[0].idproducto;
 
                 $scope.t_suministro_marca = $scope.marcaproducto;
                 $scope.t_suministro_costomedidor = $scope.precioproducto;
@@ -362,6 +364,33 @@
             $scope.t_suministro_medidor = false;
             $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
             $('#modalActionSuministro').modal('show');
+        };
+
+
+        $scope.saveSolicitudSuministro = function () {
+            var data = {
+                idtarifa: $scope.s_suministro_tarifa,
+                idcalle: $scope.s_suministro_transversal,
+                garantia: $scope.t_suministro_garantia,
+                codigocliente: $scope.objectAction.codigocliente,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+                idproducto: $scope.idproducto,
+                valor: $scope.total_suministro,
+            };
+
+            console.log(data);
+
+            $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    //$('#btn-save-otro').prop('disabled', true);
+                    //$('#btn-process-otro').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                }
+            });
         };
 
         /*

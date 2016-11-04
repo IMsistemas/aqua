@@ -281,6 +281,8 @@ Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente'
 
 Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
+Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');
+
 Route::post('cliente/storeSolicitudOtro', 'Clientes\ClienteController@storeSolicitudOtro');
 
 Route::put('cliente/processSolicitud/{idsolicitud}', 'Clientes\ClienteController@processSolicitud');

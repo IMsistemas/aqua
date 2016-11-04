@@ -6,6 +6,7 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
 use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Cuentas\CuentasPorPagarClientes;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
@@ -118,6 +119,44 @@ class ClienteController extends Controller
     public function getInfoMedidor()
     {
         return Producto::where('idproducto', 1)->get();
+    }
+
+    public function storeSolicitudSuministro(Request $request)
+    {
+        $suministro = new Suministro();
+        $suministro->idcalle = $request->input('idcalle');
+        $suministro->codigocliente = $request->input('codigocliente');
+        $suministro->idtarifaaguapotable = $request->input('idtarifa');
+        $suministro->direccionsumnistro = $request->input('direccionsuministro');
+        $suministro->telefonosuministro = $request->input('telefonosuministro');
+        $suministro->fechainstalacionsuministro = date('Y-m-d');
+        $suministro->idproducto = $request->input('idproducto');
+
+        if ($suministro->save() != false) {
+            $solicitudsuministro = new SolicitudSuministro();
+            $solicitudsuministro->codigocliente = $request->input('codigocliente');
+            $solicitudsuministro->fechasolicitud = date('Y-m-d');
+            $solicitudsuministro->estaprocesada = false;
+            $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
+            $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
+            $solicitudsuministro->numerosuministro = $suministro->numerosuministro;
+
+            if ($solicitudsuministro->save() != false) {
+
+                if ($request->input('garantia') != '' && $request->input('garantia') != 0) {
+                    $cxp_cliente = new CuentasPorPagarClientes();
+                    $cxp_cliente->codigocliente = $request->input('codigocliente');
+                    $cxp_cliente->valor = $request->input('garantia');
+                    $cxp_cliente->fecha = date('Y-m-d');
+                    if ($cxp_cliente->save() != false) {
+                        return response()->json(['success' => true]);
+                    } else return response()->json(['success' => false]);
+                } else return response()->json(['success' => true]);
+
+            } else return response()->json(['success' => false]);
+
+        } else return response()->json(['success' => false]);
+
     }
 
     public function store(Request $request)

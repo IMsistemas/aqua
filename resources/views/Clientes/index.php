@@ -1001,7 +1001,7 @@
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-save-riego"
-                            ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
+                            ng-click="saveSolicitudSuministro()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-process-otro"
