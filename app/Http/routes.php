@@ -274,6 +274,8 @@ Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles
 
 Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 
+Route::get('cliente/getInfoMedidor', 'Clientes\ClienteController@getInfoMedidor');
+
 Route::get('cliente/getLastID/{table}', 'Clientes\ClienteController@getLastID');
 
 Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');

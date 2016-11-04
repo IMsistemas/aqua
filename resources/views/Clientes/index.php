@@ -852,7 +852,7 @@
                                     <div class="col-sm-6 col-xs-12 form-group">
                                         <label for="t_suministro_nro" class="col-sm-5 col-xs-12 control-label">Nro Suministro:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <input type="text" class="form-control" id="t_suministro_nro" ng-model="t_suministro_nro">
+                                            <input type="text" class="form-control" id="t_suministro_nro" ng-model="t_suministro_nro" disabled>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group">
@@ -905,13 +905,15 @@
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="t_suministro_aguapotable" class="col-sm-5 col-xs-12 control-label">Agua Potable:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_aguapotable" ng-model="t_suministro_aguapotable">
+                                                    <input type="text" class="form-control" id="t_suministro_aguapotable" ng-model="t_suministro_aguapotable"
+                                                           ng-blur="calculateTotalSuministro()">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="t_suministro_alcantarillado" class="col-sm-5 col-xs-12 control-label">Alcantarillado:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_alcantarillado" ng-model="t_suministro_alcantarillado">
+                                                    <input type="text" class="form-control" id="t_suministro_alcantarillado" ng-model="t_suministro_alcantarillado"
+                                                           ng-blur="calculateTotalSuministro()">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12 form-group">
@@ -931,7 +933,8 @@
                                                 <div class="col-xs-12 form-group">
                                                     <label for="t_suministro_medidor" class="col-sm-10 col-xs-12 control-label">¿Cliente tiene Medidor?</label>
                                                     <div class="col-sm-2 col-xs-12" style="">
-                                                        <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor">
+                                                        <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor"
+                                                            ng-click="deshabilitarMedidor()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -943,9 +946,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 form-group">
-                                                    <label for="s_suministro_costomedidor" class="col-sm-5 col-xs-12 control-label">Costo Medidor:</label>
+                                                    <label for="t_suministro_costomedidor" class="col-sm-5 col-xs-12 control-label">Costo Medidor:</label>
                                                     <div class="col-sm-7 col-xs-12" style="">
-                                                        <input type="text" class="form-control" id="s_suministro_costomedidor" ng-model="s_suministro_costomedidor">
+                                                        <input type="text" class="form-control" id="t_suministro_costomedidor" ng-model="t_suministro_costomedidor"
+                                                               ng-blur="calculateTotalSuministro()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -959,17 +963,25 @@
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="t_suministro_cuota" class="col-sm-5 col-xs-12 control-label">Cuota Inicial:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_cuota" ng-model="t_suministro_cuota">
+                                                    <input type="text" class="form-control" id="t_suministro_cuota" ng-model="t_suministro_cuota"
+                                                        ng-blur="calculateTotalSuministro()">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="s_suministro_credito" class="col-sm-5 col-xs-12 control-label">Crédito:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
                                                     <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
-                                                            ng-options="value.id as value.label for value in creditos"></select>
+                                                            ng-options="value.id as value.label for value in creditos" ng-change="calculateTotalSuministro()"></select>
                                                 </div>
                                             </div>
                                         </fieldset>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12 text-center" id="info_partial" style="display: none;">
+                                        <span>Total: </span>{{total_partial}} a <span>{{credit_cant}}</span> meses plazo
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 text-center" id="info_total" style="display: none;">
+                                        <span>Cuotas de: $ </span>{{total_suministro}} mensuales
                                     </div>
 
                                 </fieldset>
@@ -987,6 +999,10 @@
                     <button type="button" class="btn btn-success" id="btn-save-riego"
                             ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-process-otro"
+                            ng-click="" disabled>
+                        Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>

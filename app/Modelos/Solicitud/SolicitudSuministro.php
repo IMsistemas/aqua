@@ -4,9 +4,9 @@ namespace App\Modelos\Solicitud;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SolSuministro extends Model
+class SolicitudSuministro extends Model
 {
-    protected $table = 'solsuministro';
+    protected $table = 'solicitudsuministro';
     protected $primaryKey = 'idsolicitudsuministro';
     public $timestamps = false;
 }

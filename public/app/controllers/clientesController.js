@@ -12,6 +12,9 @@
         $scope.idsolicitud_to_process = 0;
         $scope.objectAction = null;
 
+        $scope.marcaproducto = '';
+        $scope.precioproducto = '';
+
         $scope.initLoad = function () {
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
                 console.log(response);
@@ -289,13 +292,74 @@
             });
         };
 
+        $scope.getInfoMedidor = function () {
+            $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
+                $scope.marcaproducto = response[0].marca;
+                $scope.precioproducto = response[0].precioproducto;
+
+                $scope.t_suministro_marca = $scope.marcaproducto;
+                $scope.t_suministro_costomedidor = $scope.precioproducto;
+
+            });
+        };
+
+        $scope.deshabilitarMedidor = function () {
+            if ($scope.t_suministro_medidor == true) {
+                $scope.t_suministro_marca = '';
+                $scope.t_suministro_costomedidor = '';
+
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
+            } else {
+                $('#t_suministro_marca').prop('disabled', false);
+                $('#t_suministro_costomedidor').prop('disabled', false);
+
+                $scope.t_suministro_marca = $scope.marcaproducto;
+                $scope.t_suministro_costomedidor = $scope.precioproducto;
+            }
+
+            $scope.calculateTotalSuministro();
+        };
+
+        $scope.calculateTotalSuministro = function () {
+
+            if ($scope.t_suministro_aguapotable != '' && $scope.t_suministro_alcantarillado != '' &&
+                $scope.t_suministro_cuota != '' && $scope.s_suministro_credito != 0 && $scope.s_suministro_credito != '') {
+
+                var total_partial = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+
+                if ($scope.t_suministro_costomedidor != ''){
+                    total_partial += parseFloat($scope.t_suministro_costomedidor);
+                }
+
+                total_partial -= parseFloat($scope.t_suministro_cuota);
+
+                var total = total_partial / $scope.s_suministro_credito;
+
+                $scope.total_partial = total_partial;
+                $scope.credit_cant = $scope.s_suministro_credito;
+                $scope.total_suministro = total;
+
+                $('#info_partial').show();
+                $('#info_total').show();
+            } else {
+                $scope.total_partial = 0;
+                $scope.credit_cant = 0;
+                $scope.total_suministro = 0;
+                $('#info_partial').hide();
+                $('#info_total').hide();
+            }
+        };
+
         $scope.actionSuministro = function () {
+            $scope.getInfoMedidor();
             $scope.getLastIDSolSuministro();
             $scope.getLastIDSuministro();
             $scope.getTarifas();
             $scope.getBarrios();
             $scope.getDividendo();
-            $scope.getDividendo();
+
+            $scope.t_suministro_medidor = false;
 
             $('#modalActionSuministro').modal('show');
         };

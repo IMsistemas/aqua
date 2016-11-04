@@ -12,7 +12,8 @@ use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
-use App\Modelos\Solicitud\SolSuministro;
+use App\Modelos\Solicitud\SolicitudSuministro;
+use App\Modelos\Suministros\Producto;
 use App\Modelos\Suministros\Suministro;
 use App\Modelos\Tarifas\Tarifa;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class ClienteController extends Controller
         }  else if ($table == 'solicitudotro') {
             $max = SolicitudOtro::max('idsolicitudotro');
         } else if ($table == 'solsuministro') {
-            $max = SolSuministro::max('idsolicitudsuministro');
+            $max = SolicitudSuministro::max('idsolicitudsuministro');
         } else if ($table == 'suministro') {
             $max = Suministro::max('numerosuministro');
         } else if ($table == 'solicitudcambionombre') {
@@ -112,6 +113,11 @@ class ClienteController extends Controller
     public function getDividendos()
     {
         return Configuracion::all();
+    }
+
+    public function getInfoMedidor()
+    {
+        return Producto::where('idproducto', 1)->get();
     }
 
     public function store(Request $request)
