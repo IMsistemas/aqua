@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tarifa extends Model
 {
-    protected $table = "tarifa";
-    protected $primaryKey = "idtarifa";
+    protected $table = "aguapotable";
+    protected $primaryKey = "idtarifaaguapotable";
     public $timestamps = false;
 
     public function suministro(){

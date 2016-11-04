@@ -212,6 +212,93 @@
 
         $scope.initLoad();
 
+        /*
+         *  ACTIONS FOR SOLICITUD SUMINISTRO-------------------------------------------------------------------
+         */
+
+        $scope.getLastIDSolSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
+                $scope.num_solicitud_suministro = response.id;
+            });
+        };
+
+        $scope.getLastIDSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/suministro').success(function(response){
+                $scope.t_suministro_nro = response.id;
+            });
+        };
+
+        $scope.getTarifas = function () {
+            $http.get(API_URL + 'cliente/getTarifas').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nombretarifaaguapotable, id: response[i].idtarifaaguapotable})
+                }
+                $scope.tarifas = array_temp;
+                $scope.s_suministro_tarifa = 0;
+            });
+        };
+
+        $scope.getBarrios = function () {
+            $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                }
+                $scope.barrios = array_temp;
+                $scope.s_suministro_zona = 0;
+
+                $scope.calles = [{label: '-- Seleccione --', id: 0}];
+                $scope.s_suministro_transversal = 0;
+            });
+        };
+
+        $scope.getCalles = function(){
+            var idbarrio = $scope.s_suministro_zona;
+
+            if (idbarrio != 0) {
+                $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: 0}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
+                    }
+                    $scope.calles = array_temp;
+                    $scope.s_suministro_transversal = 0;
+                });
+            } else {
+                $scope.calles = [{label: '-- Seleccione --', id: 0}];
+                $scope.s_suministro_transversal = 0;
+            }
+        };
+
+        $scope.getDividendo = function () {
+            $http.get(API_URL + 'cliente/getDividendos').success(function(response){
+                var dividendos = response[0].dividendo;
+
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+
+                for (var i = 1; i <= dividendos; i++) {
+                    array_temp.push({label: i, id: i})
+                }
+
+                $scope.creditos = array_temp;
+                $scope.s_suministro_credito = 0;
+            });
+        };
+
+        $scope.actionSuministro = function () {
+            $scope.getLastIDSolSuministro();
+            $scope.getLastIDSuministro();
+            $scope.getTarifas();
+            $scope.getBarrios();
+            $scope.getDividendo();
+            $scope.getDividendo();
+
+            $('#modalActionSuministro').modal('show');
+        };
 
         /*
          *  ACTIONS FOR SOLICITUD SERVICIOS-------------------------------------------------------------------
@@ -319,9 +406,7 @@
             $('#modalAction').modal('show');
         };
 
-        $scope.actionSuministro = function () {
-            $('#modalActionSuministro').modal('show');
-        };
+
 
         $scope.actionServicio = function () {
 

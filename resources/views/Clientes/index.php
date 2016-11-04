@@ -849,16 +849,57 @@
                                 <fieldset ng-cloak>
                                     <legend style="font-size: 16px; font-weight: bold;">Datos Suministro</legend>
 
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="t_suministro_nro" class="col-sm-5 col-xs-12 control-label">Nro Suministro:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <input type="text" class="form-control" id="t_suministro_nro" ng-model="t_suministro_nro">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="s_suministro_tarifa" class="col-sm-5 col-xs-12 control-label">Tarifa:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <select id="s_suministro_tarifa" class="form-control" ng-model="s_suministro_tarifa"
+                                                    ng-options="value.id as value.label for value in tarifas"></select>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="t_suministro_zona" class="col-sm-5 col-xs-12 control-label">Zona:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <select id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
+                                                    ng-options="value.id as value.label for value in barrios"
+                                                    ng-change="getCalles()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="s_suministro_transversal" class="col-sm-5 col-xs-12 control-label">Transversal:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <select id="s_suministro_transversal" class="form-control" ng-model="s_suministro_transversal"
+                                                    ng-options="value.id as value.label for value in calles"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="t_suministro_direccion" class="col-sm-5 col-xs-12 control-label">Dirección Instalac.:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <input type="text" class="form-control" id="t_suministro_direccion" ng-model="t_suministro_direccion">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 form-group">
+                                        <label for="t_suministro_telf" class="col-sm-5 col-xs-12 control-label">Telefono Instalac.:</label>
+                                        <div class="col-sm-7 col-xs-12" style="">
+                                            <input type="text" class="form-control" id="t_suministro_telf" ng-model="t_suministro_telf">
+                                        </div>
+                                    </div>
 
                                 </fieldset>
                             </div>
 
-                            <div class="col-xs-12" style="padding: 2%;">
+                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                 <fieldset>
                                     <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
 
-                                    <div class="col-xs-12" style="padding: 2%;">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -15px;">
                                         <fieldset>
                                             <legend style="font-size: 14px; font-weight: bold;">Acometida</legend>
                                             <div class="col-sm-6 col-xs-12 form-group">
@@ -882,14 +923,37 @@
                                         </fieldset>
                                     </div>
 
-                                    <div class="col-xs-12" style="padding: 2%;">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                         <fieldset>
                                             <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
+
+                                            <div class="col-sm-5 col-xs-12" style="padding: 0;">
+                                                <div class="col-xs-12 form-group">
+                                                    <label for="t_suministro_medidor" class="col-sm-10 col-xs-12 control-label">¿Cliente tiene Medidor?</label>
+                                                    <div class="col-sm-2 col-xs-12" style="">
+                                                        <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-7 col-xs-12"  style="padding: 0;">
+                                                <div class="col-xs-12 form-group">
+                                                    <label for="t_suministro_marca" class="col-sm-5 col-xs-12 control-label">Marca:</label>
+                                                    <div class="col-sm-7 col-xs-12" style="">
+                                                        <input type="text" class="form-control" id="t_suministro_marca" ng-model="t_suministro_marca">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 form-group">
+                                                    <label for="s_suministro_costomedidor" class="col-sm-5 col-xs-12 control-label">Costo Medidor:</label>
+                                                    <div class="col-sm-7 col-xs-12" style="">
+                                                        <input type="text" class="form-control" id="s_suministro_costomedidor" ng-model="s_suministro_costomedidor">
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </fieldset>
                                     </div>
 
-                                    <div class="col-xs-12" style="padding: 2%;">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                         <fieldset>
                                             <legend style="font-size: 14px; font-weight: bold;">Total</legend>
                                             <div class="col-sm-6 col-xs-12 form-group">
@@ -901,7 +965,8 @@
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="s_suministro_credito" class="col-sm-5 col-xs-12 control-label">Crédito:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"></select>
+                                                    <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
+                                                            ng-options="value.id as value.label for value in creditos"></select>
                                                 </div>
                                             </div>
                                         </fieldset>

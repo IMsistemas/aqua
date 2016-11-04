@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Clientes;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
+use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
+use App\Modelos\Solicitud\SolSuministro;
+use App\Modelos\Suministros\Suministro;
+use App\Modelos\Tarifas\Tarifa;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -45,6 +51,10 @@ class ClienteController extends Controller
             $max = SolicitudServicio::max('idsolicitudservicio');
         }  else if ($table == 'solicitudotro') {
             $max = SolicitudOtro::max('idsolicitudotro');
+        } else if ($table == 'solsuministro') {
+            $max = SolSuministro::max('idsolicitudsuministro');
+        } else if ($table == 'suministro') {
+            $max = Suministro::max('numerosuministro');
         } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
         } else if ($table == 'solicitudreparticion') {
@@ -78,6 +88,31 @@ class ClienteController extends Controller
         return ServicioJunta::orderBy('nombreservicio')->get();
     }
 
+    public function getTarifas()
+    {
+        return Tarifa::orderBy('nombretarifaaguapotable', 'asc')->get();
+    }
+
+    public function getBarrios()
+    {
+        return Barrio::orderBy('nombrebarrio', 'asc')->get();
+    }
+
+    /**
+     * Obtener las calles de un barrio ordenadas ascendentemente
+     *
+     * @param $idbarrio
+     * @return mixed
+     */
+    public function getCalles($idbarrio)
+    {
+        return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get();
+    }
+
+    public function getDividendos()
+    {
+        return Configuracion::all();
+    }
 
     public function store(Request $request)
     {
@@ -103,7 +138,6 @@ class ClienteController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     public function storeSolicitudOtro(Request $request)
     {
         $solicitudriego = new SolicitudOtro();
@@ -119,8 +153,6 @@ class ClienteController extends Controller
         return ($result) ? response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]) :
             response()->json(['success' => false]);
     }
-
-
 
     /**
      * Update the specified resource in storage.
