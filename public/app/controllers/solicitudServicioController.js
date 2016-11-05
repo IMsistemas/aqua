@@ -15,18 +15,17 @@
             { id: 2, name: 'En Espera' },
             { id: 1, name: 'Procesado' }
         ];
-
         $scope.t_estado = 3;
 
         $scope.tipo = [
-            { id: 5, name: '-- Todos --' },
-            { id: 4, name: 'Riego' },
+            { id: 6, name: '-- Todos --' },
+            { id: 5, name: 'Suministro' },
+            { id: 4, name: 'Servicios' },
             { id: 3, name: 'Cambio de Nombre' },
-            { id: 2, name: 'Fraccionamiento' },
+            { id: 2, name: 'Mantenimiento' },
             { id: 1, name: 'Otros' }
         ];
-
-        $scope.t_tipo_solicitud = 5;
+        $scope.t_tipo_solicitud = 6;
 
         $scope.initLoad = function () {
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
@@ -176,30 +175,29 @@
 
             $http.get(API_URL + 'solicitud/getByFilter/' + JSON.stringify(filter)).success(function(response){
 
-                console.log(response);
-
                 var list = [];
 
-                var riego = response.riego;
+                var suministro = response.suministro;
 
-                if (riego.length > 0) {
+                if (suministro.length > 0) {
 
-                    var length_riego = riego.length;
+                    var length_suministro = suministro.length;
 
-                    for (var i = 0; i < length_riego; i++) {
-                        var object_riego = {
-                            no_solicitud : riego[i].idsolicitud,
-                            fecha: riego[i].fechasolicitud,
-                            cliente: riego[i].cliente.apellido + ' ' + riego[i].cliente.nombre,
-                            direccion: riego[i].cliente.direcciondomicilio,
-                            telefono: riego[i].cliente.telefonoprincipaldomicilio,
-                            tipo: 'Riego',
-                            estado: riego[i].estaprocesada,
-                            fechaprocesada: riego[i].fechaprocesada,
-                            terreno: riego[i].terreno
+                    for (var i = 0; i < length_suministro; i++) {
+                        var object_suministro = {
+                            no_solicitud : suministro[i].idsolicitud,
+                            fecha: suministro[i].fechasolicitud,
+                            cliente: suministro[i].cliente.apellidos + ', ' + suministro[i].cliente.nombres,
+                            direccion: suministro[i].cliente.direcciondomicilio,
+                            telefono: suministro[i].cliente.telefonoprincipaldomicilio,
+                            tipo: 'Suministro',
+                            estado: suministro[i].estaprocesada,
+                            fechaprocesada: suministro[i].fechaprocesada,
+                            terreno: suministro[i].terreno,
+                            no_solicitudsuministro: suministro[i].idsolicitudsuministro
                         };
 
-                        list.push(object_riego);
+                        list.push(object_suministro);
                     }
 
                 }
@@ -239,14 +237,16 @@
                         var object_setnombre = {
                             no_solicitud : setnombre[i].idsolicitud,
                             fecha: setnombre[i].fechasolicitud,
-                            cliente: setnombre[i].cliente.apellido + ' ' + setnombre[i].cliente.nombre,
+                            cliente: setnombre[i].cliente.apellidos + ' ' + setnombre[i].cliente.nombres,
+                            othercliente: setnombre[i].codigonuevocliente,
                             direccion: setnombre[i].cliente.direcciondomicilio,
                             telefono: setnombre[i].cliente.telefonoprincipaldomicilio,
                             tipo: 'Cambio de Nombre',
                             estado: setnombre[i].estaprocesada,
 
                             fechaprocesada: setnombre[i].fechaprocesada,
-                            terreno: setnombre[i].terreno
+                            terreno: setnombre[i].terreno,
+                            no_solicitudsetnombre: setnombre[i].idsolicitudcambionombre
                         };
 
                         list.push(object_setnombre);
@@ -254,27 +254,54 @@
 
                 }
 
-                var reparticion = response.reparticion;
+                var servicio = response.servicio;
 
-                if (reparticion.length > 0) {
+                if (servicio.length > 0) {
 
-                    var length_reparticion = reparticion.length;
+                    var length_servicio = servicio.length;
 
-                    for (var i = 0; i < length_reparticion; i++) {
-                        var object_reparticion = {
-                            no_solicitud : reparticion[i].idsolicitud,
-                            fecha: reparticion[i].fechasolicitud,
-                            cliente: reparticion[i].cliente.apellido + ' ' + reparticion[i].cliente.nombre,
-                            direccion: reparticion[i].cliente.direcciondomicilio,
-                            telefono: reparticion[i].cliente.telefonoprincipaldomicilio,
-                            tipo: 'Repartición',
-                            estado: reparticion[i].estaprocesada,
-                            areanueva: reparticion[i].nuevaarea,
-                            fechaprocesada: reparticion[i].fechaprocesada
-
+                    for (var i = 0; i < length_servicio; i++) {
+                        var object_servicio = {
+                            no_solicitud : servicio[i].idsolicitud,
+                            fecha: servicio[i].fechasolicitud,
+                            cliente: servicio[i].cliente.apellidos + ' ' + servicio[i].cliente.nombres,
+                            //othercliente: servicio[i].codigonuevocliente,
+                            direccion: servicio[i].cliente.direcciondomicilio,
+                            telefono: servicio[i].cliente.telefonoprincipaldomicilio,
+                            tipo: 'Servicio',
+                            estado: servicio[i].estaprocesada,
+                            areanueva: servicio[i].nuevaarea,
+                            fechaprocesada: servicio[i].fechaprocesada,
+                            no_solicitudservicio: servicio[i].idsolicitudservicio
                         };
 
-                        list.push(object_reparticion);
+                        list.push(object_servicio);
+                    }
+
+                }
+
+                var mantenimiento = response.mantenimiento;
+
+                if (mantenimiento.length > 0) {
+
+                    var length_mantenimiento = mantenimiento.length;
+
+                    for (var i = 0; i < length_mantenimiento; i++) {
+                        var object_mantenimiento = {
+                            no_solicitud : mantenimiento[i].idsolicitud,
+                            fecha: mantenimiento[i].fechasolicitud,
+                            cliente: mantenimiento[i].cliente.apellidos + ' ' + mantenimiento[i].cliente.nombres,
+                            //othercliente: servicio[i].codigonuevocliente,
+                            direccion: mantenimiento[i].cliente.direcciondomicilio,
+                            telefono: mantenimiento[i].cliente.telefonoprincipaldomicilio,
+                            tipo: 'Mantenimiento',
+                            estado: mantenimiento[i].estaprocesada,
+                            areanueva: mantenimiento[i].nuevaarea,
+                            fechaprocesada: mantenimiento[i].fechaprocesada,
+                            no_solicitudservicio: mantenimiento[i].idsolicitudservicio
+                        };
+
+                        list.push(object_mantenimiento);
                     }
 
                 }

@@ -40,75 +40,87 @@ class SolicitudController extends Controller
         ]);
     }
 
-    /*
+
     public function getByFilter($filter)
     {
         $filter_view = json_decode($filter);
 
-        $solicitudriego = [];
+        $solicitudsuministro = [];
         $solicitudsetname = [];
-        $solicitudreparticion = [];
+        $solicitudservicio = [];
         $solicitudotro = [];
+        $solicitudmantenim = [];
 
         if ($filter_view->estado != 3) {
 
             $estado = true;
             if ($filter_view->estado == 2) $estado = false;
 
-            if ($filter_view->tipo == 4){
-                $solicitudriego = SolicitudRiego::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+            if ($filter_view->tipo == 5){
+                $solicitudsuministro = SolicitudSuministro::with('cliente')
+                                        ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
+            } else if ($filter_view->tipo == 4){
+                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 2){
-                $solicitudreparticion = SolicitudReparticion::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 1){
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudriego = SolicitudRiego::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudreparticion = SolicitudReparticion::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
+                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             }
 
         } else {
-            if ($filter_view->tipo == 4){
-                $solicitudriego = SolicitudRiego::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+            if ($filter_view->tipo == 5){
+                $solicitudsuministro = SolicitudSuministro::with('cliente')
+                    ->orderBy('fechasolicitud', 'desc')->get();
+            } else if ($filter_view->tipo == 4){
+                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 2){
-                $solicitudreparticion = SolicitudReparticion::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudsetname = SolicitudMantenimiento::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 1){
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudriego = SolicitudRiego::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudotro = SolicitudOtro::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'terreno.derivacion.canal.calle.barrio')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudreparticion = SolicitudReparticion::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudservicio = SolicitudServicio::with('cliente')
+                    ->orderBy('fechasolicitud', 'desc')->get();
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
             }
         }
 
         return response()->json([
-            'riego' => $solicitudriego, 'otro' => $solicitudotro,
-            'setname' => $solicitudsetname, 'reparticion' => $solicitudreparticion
+            'suministro' => $solicitudsuministro, 'otro' => $solicitudotro,
+            'setname' => $solicitudsetname, 'servicio' => $solicitudservicio,
+            'mantenimiento' => $solicitudmantenim
         ]);
     }
-
+/*
     public function getIdentifyCliente($idcliente)
     {
         return Cliente::where('codigocliente', $idcliente)->get();
