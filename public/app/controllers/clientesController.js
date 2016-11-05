@@ -19,6 +19,8 @@
         $scope.list_suministros = [];
         $scope.list_clientes = [];
 
+        $scope.services = [];
+
         $scope.initLoad = function () {
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
                 console.log(response);
@@ -405,21 +407,17 @@
 
         $scope.getServicios = function () {
             $http.get(API_URL + 'cliente/getServicios').success(function(response){
-
-                var html_servicios = '';
-
                 var longitud = response.length;
-
+                var array_temp = [];
                 for (var i = 0; i < longitud; i++) {
-                    var temp = '<div class="col-sm-4 col-xs-12">';
-                    temp += '<input type="checkbox" id="idserviciojunta_' + response[i].idserviciojunta + '"> ' + response[i].nombreservicio;
-                    temp += '</div>';
-
-                    html_servicios += temp;
+                    var object_service = {
+                        idserviciojunta: response[i].idserviciojunta,
+                        nombreservicio: response[i].nombreservicio,
+                        valor: 0
+                    };
+                    array_temp.push(object_service);
                 }
-
-                $('#list_servicios').html(html_servicios);
-
+                $scope.services = array_temp;
             });
         };
 
@@ -442,8 +440,26 @@
             $scope.telf_cliente = $scope.objectAction.telefonoprincipaldomicilio;
             $scope.celular_cliente = $scope.objectAction.celular;
             $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
+            $scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;
 
             $('#modalActionServicio').modal('show');
+        };
+
+        $scope.saveSolicitudServicio = function () {
+            var solicitud = {
+                codigocliente: $scope.objectAction.codigocliente,
+                servicios: $scope.services
+            };
+            $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-servicio').prop('disabled', true);
+                    $('#btn-process-servicio').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                }
+            });
         };
 
         /*

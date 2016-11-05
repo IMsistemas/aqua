@@ -11,6 +11,7 @@ use App\Modelos\Cuentas\CuentasPorPagarClientes;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
+use App\Modelos\Servicios\ServiciosCliente;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
 use App\Modelos\Solicitud\SolicitudMantenimiento;
@@ -314,6 +315,39 @@ class ClienteController extends Controller
 
         } else return response()->json(['success' => false]);
 
+    }
+
+    /**
+     * Almacenar los datos de solicitud de Servicios
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeSolicitudServicios(Request $request)
+    {
+        $solicitud = new SolicitudServicio();
+        $solicitud->codigocliente = $request->input('codigocliente');
+        $solicitud->fechasolicitud = date('Y-m-d');
+        $solicitud->estaprocesada = false;
+
+        if ($solicitud->save() != false) {
+
+            $list_services = $request->input('servicios');
+
+            foreach ($list_services as $item) {
+                if ($item['valor'] != 0 && $item['valor'] =! '') {
+                    $object = new ServiciosCliente();
+                    $object->idserviciojunta = $item['idserviciojunta'];
+                    $object->valor = $item['valor'];
+                    $object->codigocliente = $request->input('codigocliente');
+                    $object->save();
+                }
+            }
+
+            $max_idsolicitud = SolicitudServicio::where('idsolicitudservicio', $solicitud->idsolicitudservicio)
+                                                    ->get();
+            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+        } else return response()->json(['success' => false]);
     }
 
     /**

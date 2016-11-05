@@ -377,14 +377,14 @@
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalActionServicio">
-        <div class="modal-dialog" role="document" style="width: 60%;">
+        <div class="modal-dialog" role="document" style="width: 45%;">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
 
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-5 col-xs-12">
                         <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_servicio}}</span></h4>
                     </div>
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-7 col-xs-12">
                         <div class="form-group">
                             <h4 class="modal-title"><label for="t_fecha_process" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
                             <div class="col-sm-5" style="padding: 0;">
@@ -430,23 +430,37 @@
                                             <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente}}
                                         </div>
                                     </div>
+                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 12px !important;">Tipo Cliente:</span> {{tipo_tipo_cliente}}
+                                        </div>
+                                    </div>
                                 </fieldset>
                             </div>
 
                             <div class="col-xs-12" style="padding: 2%;">
                                 <fieldset>
-                                    <legend style="font-size: 16px; font-weight: bold;">Datos Solicitud</legend>
+                                    <legend style="font-size: 16px; font-weight: bold;">Solicitud Servicios</legend>
 
-                                    <div class="col-xs-12" style="font-weight: bold; margin-bottom: 10px;">
-                                        Seleccione los Servicios:
-                                    </div>
-
-                                    <div class="col-xs-12" id="list_servicios"></div>
+                                    <table class="table table-responsive table-striped table-hover table-condensed">
+                                        <thead class="bg-primary">
+                                            <tr>
+                                                <th class="text-center">SERVICIOS</th>
+                                                <th class="text-center" style="width: 30%;">PRECIO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in services" ng-cloak>
+                                                <td>{{item.nombreservicio}}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="item.valor">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
                                 </fieldset>
                             </div>
-
-
                         </div>
 
                     </form>
@@ -455,12 +469,13 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save-riego"
-                            ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-save-servicio"
+                            ng-click="saveSolicitudServicio()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-info" id="btn-next" ng-click="" >
-                        Siguiente <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-primary" id="btn-process-servicio"
+                            ng-click="procesarSolicitud('btn-process-servicio')" disabled>
+                        Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>

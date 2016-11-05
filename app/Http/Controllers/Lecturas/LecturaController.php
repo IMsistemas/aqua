@@ -46,6 +46,12 @@ class LecturaController extends Controller
     }
 
 
+    /**
+     * Obtener la informacion
+     *
+     * @param $filter
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getInfo($filter)
     {
         $filter = json_decode($filter);
