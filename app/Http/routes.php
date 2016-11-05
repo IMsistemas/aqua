@@ -273,6 +273,8 @@ Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 
 Route::get('cliente/getInfoMedidor', 'Clientes\ClienteController@getInfoMedidor');
 
+Route::get('cliente/getSuministros/{codigocliente}', 'Clientes\ClienteController@getSuministros');
+
 Route::get('cliente/getLastID/{table}', 'Clientes\ClienteController@getLastID');
 
 Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');
@@ -282,6 +284,8 @@ Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente'
 Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
 Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');
+
+Route::post('cliente/storeSolicitudMantenimiento', 'Clientes\ClienteController@storeSolicitudMantenimiento');
 
 Route::post('cliente/storeSolicitudOtro', 'Clientes\ClienteController@storeSolicitudOtro');
 

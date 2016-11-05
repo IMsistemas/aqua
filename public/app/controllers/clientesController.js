@@ -16,6 +16,8 @@
         $scope.precioproducto = '';
         $scope.idproducto = '';
 
+        $scope.list_suministros = [];
+
         $scope.initLoad = function () {
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
                 console.log(response);
@@ -380,6 +382,8 @@
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
                 valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial
             };
 
             $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
@@ -452,12 +456,60 @@
         };
 
         /*
-         *  ACTIONS FOR SOLICITUD OTROS-------------------------------------------------------------------
+         *  ACTIONS FOR SOLICITUD MANTENIMIENTO-------------------------------------------------------------
          */
 
         $scope.getLastIDMantenimiento = function () {
             $http.get(API_URL + 'cliente/getLastID/solicitudmantenimiento').success(function(response){
                 $scope.num_solicitud_mant = response.id;
+            });
+        };
+
+        $scope.getSuministros = function () {
+            var codigocliente = $scope.objectAction.codigocliente;
+            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_mant = array_temp;
+                $scope.s_suministro_mant = 0;
+            });
+        };
+
+        $scope.showInfoSuministro = function () {
+            var numerosuministro = $scope.s_suministro_mant;
+            var longitud = $scope.list_suministros.length;
+
+            for (var i = 0; i < longitud; i++) {
+                if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
+                    $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
+                    $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
+                    $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+
+                    break;
+                }
+            }
+
+        };
+
+        $scope.saveSolicitudMantenimiento = function () {
+            var solicitud = {
+                codigocliente: $scope.objectAction.codigocliente,
+                numerosuministro: $scope.s_suministro_mant,
+                observacion: $scope.t_observacion_mant
+            };
+            $http.post(API_URL + 'cliente/storeSolicitudMantenimiento', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-mant').prop('disabled', true);
+                    $('#btn-process-mant').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                }
             });
         };
 
@@ -488,7 +540,7 @@
                 $('#modalActionSuministro').modal('hide');
                 $('#modalActionOtro').modal('hide');
                 $('#modalActionSetNombre').modal('hide');
-                $('#modalActionFraccion').modal('hide');
+                $('#modalActionMantenimiento').modal('hide');
 
                 $('#modalAction').modal('hide');
 
@@ -580,8 +632,7 @@
 
         $scope.actionMantenimiento = function () {
             $scope.getLastIDMantenimiento();
-            /*$scope.getTerrenosFraccionByCliente();
-            $scope.getIdentifyClientesFraccion();*/
+            $scope.getSuministros();
 
             $scope.t_fecha_mant = $scope.nowDate();
             $scope.h_codigocliente_mant = $scope.objectAction.codigocliente;
@@ -592,9 +643,18 @@
             $scope.celular_cliente_mant = $scope.objectAction.celular;
             $scope.telf_trab_cliente_mant = $scope.objectAction.telefonoprincipaltrabajo;
 
+            $scope.zona_mant = '';
+            $scope.transversal_mant = '';
+            $scope.tarifa_mant = '';
+
+            var array_temp = [{label: '-- Seleccione --', id: 0}];
+            $scope.suministro_mant = array_temp;
+            $scope.s_suministro_mant = 0;
+
             $scope.t_observacion_mant = '';
 
             $('#btn-process-mant').prop('disabled', true);
+            $('#btn-save-mant').prop('disabled', false);
             $('#modalActionMantenimiento').modal('show');
         };
 

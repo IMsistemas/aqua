@@ -6,11 +6,13 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
 use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Cuentas\CuentasPorCobrarSuministro;
 use App\Modelos\Cuentas\CuentasPorPagarClientes;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Solicitud\Solicitud;
+use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
@@ -45,6 +47,93 @@ class ClienteController extends Controller
         return TipoCliente::orderBy('nombretipo', 'asc')->get();
     }
 
+    public function getIdentifyClientes($idcliente)
+    {
+        $cliente = json_decode($idcliente);
+
+        return Cliente::where('codigocliente', '!=', $cliente->codigocliente)
+                        ->orderBy('documentoidentidad', 'asc')->get();
+    }
+
+    public function getClienteByIdentify($idcliente)
+    {
+        $cliente = json_decode($idcliente);
+
+        return Cliente::where('codigocliente', $cliente->codigocliente)->get();
+    }
+
+    public function store(Request $request)
+    {
+        $cliente = new Cliente();
+
+        $cliente->documentoidentidad = $request->input('codigocliente');
+        $cliente->fechaingreso = $request->input('fechaingreso');
+        $cliente->apellidos = $request->input('apellido');
+        $cliente->nombres = $request->input('nombre');
+        $cliente->celular = $request->input('celular');
+        $cliente->correo = $request->input('email');
+        $cliente->direcciondomicilio = $request->input('direccion');
+        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
+        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
+        $cliente->direcciontrabajo = $request->input('direccionemp');
+        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
+        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
+        $cliente->id = $request->input('tipocliente');
+        $cliente->estaactivo = true;
+
+        $cliente->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $cliente = Cliente::find($id);
+
+        $cliente->documentoidentidad = $request->input('codigocliente');
+        $cliente->fechaingreso = $request->input('fechaingreso');
+        $cliente->apellidos = $request->input('apellido');
+        $cliente->nombres = $request->input('nombre');
+        $cliente->celular = $request->input('celular');
+        $cliente->correo = $request->input('email');
+        $cliente->direcciondomicilio = $request->input('direccion');
+        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
+        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
+        $cliente->direcciontrabajo = $request->input('direccionemp');
+        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
+        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
+        $cliente->id = $request->input('tipocliente');
+
+        $cliente->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+        return response()->json(['success' => true]);
+    }
+
+
+    /*
+     * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES---------------------------------------
+     */
+
     public function getLastID($table)
     {
         $max = null;
@@ -60,7 +149,7 @@ class ClienteController extends Controller
         } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
         } else if ($table == 'solicitudmantenimiento') {
-            $max = SolicitudReparticion::max('idsolicitudreparticion');
+            $max = SolicitudMantenimiento::max('idsolicitudmantenimiento');
         }
 
         if ($max != null){
@@ -68,21 +157,6 @@ class ClienteController extends Controller
         } else $max = 1;
 
         return response()->json(['id' => $max]);
-    }
-
-    public function getIdentifyClientes($idcliente)
-    {
-        $cliente = json_decode($idcliente);
-
-        return Cliente::where('codigocliente', '!=', $cliente->codigocliente)
-                        ->orderBy('documentoidentidad', 'asc')->get();
-    }
-
-    public function getClienteByIdentify($idcliente)
-    {
-        $cliente = json_decode($idcliente);
-
-        return Cliente::where('codigocliente', $cliente->codigocliente)->get();
     }
 
     public function getServicios()
@@ -121,6 +195,14 @@ class ClienteController extends Controller
         return Producto::where('idproducto', 1)->get();
     }
 
+    public function getSuministros($codigocliente)
+    {
+        return Suministro::with('calle.barrio', 'aguapotable')
+            ->where('codigocliente', $codigocliente)
+            ->orderBy('direccionsumnistro', 'asc')->get();
+    }
+
+
     public function storeSolicitudSuministro(Request $request)
     {
         $suministro = new Suministro();
@@ -143,15 +225,31 @@ class ClienteController extends Controller
 
             if ($solicitudsuministro->save() != false) {
 
-                if ($request->input('garantia') != '' && $request->input('garantia') != 0) {
-                    $cxp_cliente = new CuentasPorPagarClientes();
-                    $cxp_cliente->codigocliente = $request->input('codigocliente');
-                    $cxp_cliente->valor = $request->input('garantia');
-                    $cxp_cliente->fecha = date('Y-m-d');
-                    if ($cxp_cliente->save() != false) {
-                        return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
-                    } else return response()->json(['success' => false]);
-                } else return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+                $cxc = new CuentasPorCobrarSuministro();
+                $cxc->codigocliente = $request->input('codigocliente');
+                $cxc->numerosuministro = $suministro->numerosuministro;
+                $cxc->fecha = date('Y-m-d');
+                $cxc->dividendos = $request->input('dividendos');
+                $cxc->pagoporcadadividendo = $request->input('valor');
+                $cxc->pagototal = $request->input('valor_partial');
+
+                if ($cxc->save() != false) {
+
+                    if ($request->input('garantia') != '' && $request->input('garantia') != 0) {
+
+                        $cxp_cliente = new CuentasPorPagarClientes();
+                        $cxp_cliente->codigocliente = $request->input('codigocliente');
+                        $cxp_cliente->valor = $request->input('garantia');
+                        $cxp_cliente->fecha = date('Y-m-d');
+                        if ($cxp_cliente->save() != false) {
+
+                            return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+
+                        } else return response()->json(['success' => false]);
+
+                    } else return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+
+                } else return response()->json(['success' => false]);
 
             } else return response()->json(['success' => false]);
 
@@ -159,28 +257,20 @@ class ClienteController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function storeSolicitudMantenimiento(Request $request)
     {
-        $cliente = new Cliente();
+        $solicitudMant = new SolicitudMantenimiento();
+        $solicitudMant->numerosuministro = $request->input('numerosuministro');
+        $solicitudMant->observacion = $request->input('observacion');
+        $solicitudMant->codigocliente = $request->input('codigocliente');
+        $solicitudMant->fechasolicitud = date('Y-m-d');
+        $solicitudMant->estaprocesada = false;
 
-        $cliente->documentoidentidad = $request->input('codigocliente');
-        $cliente->fechaingreso = $request->input('fechaingreso');
-        $cliente->apellidos = $request->input('apellido');
-        $cliente->nombres = $request->input('nombre');
-        $cliente->celular = $request->input('celular');
-        $cliente->correo = $request->input('email');
-        $cliente->direcciondomicilio = $request->input('direccion');
-        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
-        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
-        $cliente->direcciontrabajo = $request->input('direccionemp');
-        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
-        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
-        $cliente->id = $request->input('tipocliente');
-        $cliente->estaactivo = true;
-
-        $cliente->save();
-
-        return response()->json(['success' => true]);
+        if ($solicitudMant->save() != false) {
+            $max_idsolicitud = SolicitudMantenimiento::where('idsolicitudmantenimiento', $solicitudMant->idsolicitudmantenimiento)
+                ->get();
+            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+        } else return response()->json(['success' => false]);
     }
 
     public function storeSolicitudOtro(Request $request)
@@ -199,38 +289,6 @@ class ClienteController extends Controller
             response()->json(['success' => false]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $cliente = Cliente::find($id);
-
-        $cliente->documentoidentidad = $request->input('codigocliente');
-        $cliente->fechaingreso = $request->input('fechaingreso');
-        $cliente->apellidos = $request->input('apellido');
-        $cliente->nombres = $request->input('nombre');
-        $cliente->celular = $request->input('celular');
-        $cliente->correo = $request->input('email');
-        $cliente->direcciondomicilio = $request->input('direccion');
-        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
-        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
-        $cliente->direcciontrabajo = $request->input('direccionemp');
-        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
-        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
-        $cliente->id = $request->input('tipocliente');
-
-        $cliente->save();
-
-        return response()->json(['success' => true]);
-    }
-
-
-
     public function processSolicitud(Request $request, $id)
     {
         $solicitud = Solicitud::find($id);
@@ -241,18 +299,7 @@ class ClienteController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    /*
+     * FIN SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES------------------------------------------
      */
-    public function destroy($id)
-    {
-        $cliente = Cliente::find($id);
-        $cliente->delete();
-        return response()->json(['success' => true]);
-    }
 }

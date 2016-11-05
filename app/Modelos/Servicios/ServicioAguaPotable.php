@@ -8,10 +8,7 @@ class ServicioAguaPotable extends Model
 {
 
     protected $table = "servicioaguapotable";
-    protected $primaryKey = "idaguapotable";
+    //protected $primaryKey = "idaguapotable";
     public $timestamps = false;
 
-    public function suministros(){
-        return $this->hasMany('App\Modelos\Suministros\Sumministro','idaguapotable');
-    }
 }

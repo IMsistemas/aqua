@@ -684,11 +684,11 @@
 
                                     <div class="col-xs-12" style="">
                                         <div class="col-sm-6 col-xs-12 form-group">
-                                            <label for="t_terreno" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
+                                            <label for="s_suministro_mant" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
-                                                <select class="form-control" name="t_suministro_mant" id="t_suministro_mant"
-                                                        ng-model="t_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
-                                                        ng-change=""></select>
+                                                <select class="form-control" name="s_suministro_mant" id="s_suministro_mant"
+                                                        ng-model="s_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
+                                                        ng-change="showInfoSuministro()"></select>
                                             </div>
                                         </div>
 
@@ -724,7 +724,7 @@
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-save-mant"
-                            ng-click="saveSolicitudFraccion()" ng-disabled="formMant.$invalid">
+                            ng-click="saveSolicitudMantenimiento()" ng-disabled="formMant.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-process-mant"
