@@ -12,6 +12,7 @@ use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Solicitud\Solicitud;
+use App\Modelos\Solicitud\SolicitudCambioNombre;
 use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
@@ -38,7 +39,6 @@ class ClienteController extends Controller
 
     public function getClientes()
     {
-        //return Cliente::orderBy('fechaingreso', 'asc')->get();
         return Cliente::with('tipocliente')->orderBy('fechaingreso', 'asc')->get();
     }
 
@@ -47,13 +47,7 @@ class ClienteController extends Controller
         return TipoCliente::orderBy('nombretipo', 'asc')->get();
     }
 
-    public function getIdentifyClientes($idcliente)
-    {
-        $cliente = json_decode($idcliente);
 
-        return Cliente::where('codigocliente', '!=', $cliente->codigocliente)
-                        ->orderBy('documentoidentidad', 'asc')->get();
-    }
 
     public function getClienteByIdentify($idcliente)
     {
@@ -131,8 +125,14 @@ class ClienteController extends Controller
 
 
     /*
-     * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES---------------------------------------
+     * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES-----------------------------------------
      */
+
+    public function getIdentifyClientes($idcliente)
+    {
+        return Cliente::where('codigocliente', '!=', $idcliente)
+                                ->orderBy('documentoidentidad', 'asc')->get();
+    }
 
     /**
      * Obtener el ultimo id insertado y devolver el proximo de la tabla pasada por parametro
@@ -296,6 +296,22 @@ class ClienteController extends Controller
 
     }
 
+    public function storeSolicitudCambioNombre(Request $request)
+    {
+        $solicitud = new SolicitudCambioNombre();
+        $solicitud->numerosuministro = $request->input('numerosuministro');
+        $solicitud->codigocliente = $request->input('codigocliente');
+        $solicitud->codigoclientenuevo = $request->input('codigoclientenuevo');
+        $solicitud->fechasolicitud = date('Y-m-d');
+        $solicitud->estaprocesada = false;
+
+        if ($solicitud->save() != false) {
+            $max_idsolicitud = SolicitudCambioNombre::where('idsolicitudcambionombre', $solicitud->idsolicitudcambionombre)
+                ->get();
+            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+        } else return response()->json(['success' => false]);
+    }
+
     public function storeSolicitudMantenimiento(Request $request)
     {
         $solicitudMant = new SolicitudMantenimiento();
@@ -346,6 +362,6 @@ class ClienteController extends Controller
     }
 
     /*
-     * FIN SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES------------------------------------------
+     * FIN SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES--------------------------------------------
      */
 }

@@ -283,7 +283,11 @@ Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente'
 
 Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
+Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
+
 Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');
+
+Route::post('cliente/storeSolicitudCambioNombre', 'Clientes\ClienteController@storeSolicitudCambioNombre');
 
 Route::post('cliente/storeSolicitudMantenimiento', 'Clientes\ClienteController@storeSolicitudMantenimiento');
 

@@ -530,11 +530,11 @@
 
                                     <div class="col-xs-12" style="">
                                         <div class="col-sm-6 col-xs-12 form-group">
-                                            <label for="t_terreno" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
+                                            <label for="s_suministro_setnombre" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
-                                                <select class="form-control" name="t_suministro_setnombre" id="t_suministro_setnombre"
-                                                        ng-model="t_suministro_setnombre" ng-options="value.id as value.label for value in suministro_setN"
-                                                        ng-change="searchInfoTerreno()"></select>
+                                                <select class="form-control" name="s_suministro_setnombre" id="s_suministro_setnombre"
+                                                        ng-model="s_suministro_setnombre" ng-options="value.id as value.label for value in suministro_setN"
+                                                        ng-change="showInfoSuministroForSetName()"></select>
                                             </div>
                                         </div>
 
@@ -562,12 +562,12 @@
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12 form-group">
 
-                                            <label for="t_terreno" class="col-sm-4 col-xs-12 control-label">RUC/CI:</label>
+                                            <label for="s_ident_new_client_setnombre" class="col-sm-4 col-xs-12 control-label">RUC/CI:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
                                                 <select class="form-control"
-                                                        name="t_ident_new_client_setnombre" id="t_ident_new_client_setnombre"
-                                                        ng-model="t_ident_new_client_setnombre" ng-options="value.id as value.label for value in clientes_setN"
-                                                        ng-change="getClienteByIdentify()"></select>
+                                                        name="s_ident_new_client_setnombre" id="s_ident_new_client_setnombre"
+                                                        ng-model="s_ident_new_client_setnombre" ng-options="value.id as value.label for value in clientes_setN"
+                                                        ng-change="showInfoClienteForSetName()"></select>
                                             </div>
 
                                         </div>
@@ -595,12 +595,6 @@
 
                                 </fieldset>
                             </div>
-                            <div class="col-xs-12 form-group" style="">
-                                <label for="t_derivacion" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
-                                <div class="col-sm-10 col-xs-12">
-                                    <textarea class="form-control" id="t_observacion_setnombre" ng-model="t_observacion_setnombre" rows="2"></textarea>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -609,7 +603,7 @@
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-save-setnombre"
-                            ng-click="saveSolicitudSetName()" ng-disabled="formSetNombre.$invalid">
+                            ng-click="saveSolicitudCambioNombre()" ng-disabled="formSetNombre.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-process-setnombre"
