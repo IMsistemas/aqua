@@ -331,11 +331,10 @@ class ClienteController extends Controller
         $solicitud->estaprocesada = false;
 
         if ($solicitud->save() != false) {
-
             $list_services = $request->input('servicios');
 
             foreach ($list_services as $item) {
-                if ($item['valor'] != 0 && $item['valor'] =! '') {
+                if ($item['valor'] != 0 && $item['valor'] != '') {
                     $object = new ServiciosCliente();
                     $object->idserviciojunta = $item['idserviciojunta'];
                     $object->valor = $item['valor'];

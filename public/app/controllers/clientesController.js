@@ -450,6 +450,7 @@
                 codigocliente: $scope.objectAction.codigocliente,
                 servicios: $scope.services
             };
+
             $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
