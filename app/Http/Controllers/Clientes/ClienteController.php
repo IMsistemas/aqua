@@ -134,6 +134,12 @@ class ClienteController extends Controller
      * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES---------------------------------------
      */
 
+    /**
+     * Obtener el ultimo id insertado y devolver el proximo de la tabla pasada por parametro
+     *
+     * @param $table
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getLastID($table)
     {
         $max = null;
@@ -159,16 +165,31 @@ class ClienteController extends Controller
         return response()->json(['id' => $max]);
     }
 
+    /**
+     * Obtener todos los servicios ordenados ascendentemente
+     *
+     * @return mixed
+     */
     public function getServicios()
     {
         return ServicioJunta::orderBy('nombreservicio')->get();
     }
 
+    /**
+     * Obtener todas las tarifas
+     *
+     * @return mixed
+     */
     public function getTarifas()
     {
         return Tarifa::orderBy('nombretarifaaguapotable', 'asc')->get();
     }
 
+    /**
+     * Obtener todos los barrios ordenadados ascedentemente
+     *
+     * @return mixed
+     */
     public function getBarrios()
     {
         return Barrio::orderBy('nombrebarrio', 'asc')->get();
@@ -185,39 +206,57 @@ class ClienteController extends Controller
         return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get();
     }
 
+    /**
+     * Obtener la configuracion del sistema
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getDividendos()
     {
         return Configuracion::all();
     }
 
+    /**
+     * Obtener la informacion del producto con ID 1
+     *
+     * @return mixed
+     */
     public function getInfoMedidor()
     {
         return Producto::where('idproducto', 1)->get();
     }
 
+    /**
+     * Obtener los suministros de un cliente en especifico
+     *
+     * @param $codigocliente
+     * @return mixed
+     */
     public function getSuministros($codigocliente)
     {
         return Suministro::with('calle.barrio', 'aguapotable')
-            ->where('codigocliente', $codigocliente)
-            ->orderBy('direccionsumnistro', 'asc')->get();
+                            ->where('codigocliente', $codigocliente)
+                            ->orderBy('direccionsumnistro', 'asc')->get();
     }
 
 
     public function storeSolicitudSuministro(Request $request)
     {
+        $fecha_actual = date('Y-m-d');
+
         $suministro = new Suministro();
         $suministro->idcalle = $request->input('idcalle');
         $suministro->codigocliente = $request->input('codigocliente');
         $suministro->idtarifaaguapotable = $request->input('idtarifa');
         $suministro->direccionsumnistro = $request->input('direccionsuministro');
         $suministro->telefonosuministro = $request->input('telefonosuministro');
-        $suministro->fechainstalacionsuministro = date('Y-m-d');
+        $suministro->fechainstalacionsuministro = $fecha_actual;
         $suministro->idproducto = $request->input('idproducto');
 
         if ($suministro->save() != false) {
             $solicitudsuministro = new SolicitudSuministro();
             $solicitudsuministro->codigocliente = $request->input('codigocliente');
-            $solicitudsuministro->fechasolicitud = date('Y-m-d');
+            $solicitudsuministro->fechasolicitud = $fecha_actual;
             $solicitudsuministro->estaprocesada = false;
             $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
             $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
@@ -228,7 +267,7 @@ class ClienteController extends Controller
                 $cxc = new CuentasPorCobrarSuministro();
                 $cxc->codigocliente = $request->input('codigocliente');
                 $cxc->numerosuministro = $suministro->numerosuministro;
-                $cxc->fecha = date('Y-m-d');
+                $cxc->fecha = $fecha_actual;
                 $cxc->dividendos = $request->input('dividendos');
                 $cxc->pagoporcadadividendo = $request->input('valor');
                 $cxc->pagototal = $request->input('valor_partial');
@@ -240,7 +279,7 @@ class ClienteController extends Controller
                         $cxp_cliente = new CuentasPorPagarClientes();
                         $cxp_cliente->codigocliente = $request->input('codigocliente');
                         $cxp_cliente->valor = $request->input('garantia');
-                        $cxp_cliente->fecha = date('Y-m-d');
+                        $cxp_cliente->fecha = $fecha_actual;
                         if ($cxp_cliente->save() != false) {
 
                             return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
@@ -289,6 +328,13 @@ class ClienteController extends Controller
             response()->json(['success' => false]);
     }
 
+    /**
+     * Procesar las solicitudes
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function processSolicitud(Request $request, $id)
     {
         $solicitud = Solicitud::find($id);
