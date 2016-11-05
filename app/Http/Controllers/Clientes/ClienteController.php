@@ -37,25 +37,32 @@ class ClienteController extends Controller
         return view('Clientes/index');
     }
 
+    /**
+     * Obtener el Listado de todos los Clientes
+     *
+     * @return mixed
+     */
     public function getClientes()
     {
         return Cliente::with('tipocliente')->orderBy('fechaingreso', 'asc')->get();
     }
 
+    /**
+     * Obtener el listado de todos los Tipos de Clientes
+     *
+     * @return mixed
+     */
     public function getTipoCliente()
     {
         return TipoCliente::orderBy('nombretipo', 'asc')->get();
     }
 
-
-
-    public function getClienteByIdentify($idcliente)
-    {
-        $cliente = json_decode($idcliente);
-
-        return Cliente::where('codigocliente', $cliente->codigocliente)->get();
-    }
-
+    /**
+     * Almacenar el recurso
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $cliente = new Cliente();
@@ -81,7 +88,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar el recurso especificado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -111,7 +118,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar el recurso especificado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -128,6 +135,12 @@ class ClienteController extends Controller
      * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES-----------------------------------------
      */
 
+    /**
+     * Obtener todos los clientes diferentes al id por parametro
+     *
+     * @param $idcliente
+     * @return mixed
+     */
     public function getIdentifyClientes($idcliente)
     {
         return Cliente::where('codigocliente', '!=', $idcliente)
@@ -239,7 +252,12 @@ class ClienteController extends Controller
                             ->orderBy('direccionsumnistro', 'asc')->get();
     }
 
-
+    /**
+     * Almacenar los datos de solicitud de suministro
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeSolicitudSuministro(Request $request)
     {
         $fecha_actual = date('Y-m-d');
@@ -264,6 +282,8 @@ class ClienteController extends Controller
 
             if ($solicitudsuministro->save() != false) {
 
+                $max_idsolicitud = SolicitudSuministro::where('idsolicitudsuministro', $solicitudsuministro->idsolicitudsuministro)
+                                                            ->get();
                 $cxc = new CuentasPorCobrarSuministro();
                 $cxc->codigocliente = $request->input('codigocliente');
                 $cxc->numerosuministro = $suministro->numerosuministro;
@@ -282,11 +302,11 @@ class ClienteController extends Controller
                         $cxp_cliente->fecha = $fecha_actual;
                         if ($cxp_cliente->save() != false) {
 
-                            return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+                            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
 
                         } else return response()->json(['success' => false]);
 
-                    } else return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+                    } else return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
 
                 } else return response()->json(['success' => false]);
 
@@ -296,6 +316,12 @@ class ClienteController extends Controller
 
     }
 
+    /**
+     * Almacenar los datos de solicitud de Cambio de Nombre
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeSolicitudCambioNombre(Request $request)
     {
         $solicitud = new SolicitudCambioNombre();
@@ -312,6 +338,12 @@ class ClienteController extends Controller
         } else return response()->json(['success' => false]);
     }
 
+    /**
+     * Almacenar los datos de solicitud de Mantenimiento
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeSolicitudMantenimiento(Request $request)
     {
         $solicitudMant = new SolicitudMantenimiento();
@@ -328,6 +360,12 @@ class ClienteController extends Controller
         } else return response()->json(['success' => false]);
     }
 
+    /**
+     * Almacenar los datos de Otras Solicitudes
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeSolicitudOtro(Request $request)
     {
         $solicitudriego = new SolicitudOtro();
