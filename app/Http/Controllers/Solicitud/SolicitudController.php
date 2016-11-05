@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Solicitud;
 
-use App\Modelos\Clientes\Cliente;
-//use App\Modelos\Clientes\ClienteArriendo;
-use App\Modelos\Solicitud\Solicitud;
+
 use App\Modelos\Solicitud\SolicitudCambioNombre;
+use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
-use App\Modelos\Solicitud\SolicitudReparticion;
-use App\Modelos\Solicitud\SolicitudRiego;
-//use App\Modelos\Terreno\Terreno;
+use App\Modelos\Solicitud\SolicitudServicio;
+use App\Modelos\Solicitud\SolicitudSuministro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -27,26 +25,22 @@ class SolicitudController extends Controller
         return view('Solicitud/index');
     }
 
-
-    /*
     public function getSolicitudes()
     {
-        $solicitudriego = SolicitudRiego::with('cliente', 'terreno.derivacion.canal.calle.barrio')
-                                            ->orderBy('fechasolicitud', 'desc')
-                                            ->get();
-        $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
-                                            ->get();
-        $solicitudsetname = SolicitudCambioNombre::with('cliente', 'terreno.derivacion.canal.calle.barrio')
-                                            ->orderBy('fechasolicitud', 'desc')
-                                            ->get();
-        $solicitudreparticion = SolicitudReparticion::with('cliente')->orderBy('fechasolicitud', 'desc')
-                                            ->get();
+        $solicitudsuministro = SolicitudSuministro::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+        $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+        $solicitudsetname = SolicitudCambioNombre::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+        $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+        $solicitudmantenim = SolicitudMantenimiento::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+
         return response()->json([
-            'riego' => $solicitudriego, 'otro' => $solicitudotro,
-            'setname' => $solicitudsetname, 'reparticion' => $solicitudreparticion
+            'suministro' => $solicitudsuministro, 'otro' => $solicitudotro,
+            'setname' => $solicitudsetname, 'servicio' => $solicitudservicio,
+            'mantenimiento' => $solicitudmantenim
         ]);
     }
 
+    /*
     public function getByFilter($filter)
     {
         $filter_view = json_decode($filter);

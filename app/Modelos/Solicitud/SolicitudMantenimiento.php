@@ -10,5 +10,8 @@ class SolicitudMantenimiento extends Model
     protected $primaryKey = 'idsolicitudmantenimiento';
     public $timestamps = false;
 
-
+    public function cliente()
+    {
+        return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigocliente');
+    }
 }
