@@ -59,7 +59,7 @@ class ClienteController extends Controller
             $max = Suministro::max('numerosuministro');
         } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
-        } else if ($table == 'solicitudreparticion') {
+        } else if ($table == 'solicitudmantenimiento') {
             $max = SolicitudReparticion::max('idsolicitudreparticion');
         }
 

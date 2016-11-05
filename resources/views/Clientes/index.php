@@ -365,7 +365,7 @@
                     <button type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
                         Cambio de Nombre
                     </button>
-                    <button type="button" class="btn btn-primary btn-block" ng-click="actionFraccion()">
+                    <button type="button" class="btn btn-primary btn-block" ng-click="actionMantenimiento()">
                         Mantenimiento
                     </button>
                     <button type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
@@ -621,20 +621,20 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalActionFraccion">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalActionMantenimiento">
         <div class="modal-dialog" role="document" style="width: 60%;">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Solicitud de Mantenimiento Nro: {{num_solicitud_fraccion}}</h4>
+                        <h4 class="modal-title">Solicitud de Mantenimiento Nro: {{num_solicitud_mant}}</h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
-                            <h4 class="modal-title"><label for="t_fecha_fraccion" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
+                            <h4 class="modal-title"><label for="t_fecha_mant" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
                             <div class="col-sm-5" style="padding: 0;">
-                                <input type="text" class="form-control input-sm datepicker" name="t_fecha_fraccion"
-                                       id="t_fecha_fraccion" ng-model="t_fecha_fraccion" style="color: black !important;" disabled>
+                                <input type="text" class="form-control input-sm datepicker" name="t_fecha_mant"
+                                       id="t_fecha_mant" ng-model="t_fecha_mant" style="color: black !important;" disabled>
                             </div>
                             <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -643,7 +643,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" name="formFraccion" novalidate="">
+                    <form class="form-horizontal" name="formMant" novalidate="">
 
                         <div class="row">
                             <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
@@ -652,27 +652,27 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente_fraccion}}
+                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente_fraccion}}
-                                            <input type="hidden" ng-model="h_codigocliente_fraccion">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
-                                        <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente_fraccion}}
-                                        </div>
-                                        <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente_fraccion}}
+                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente_mant}}
+                                            <input type="hidden" ng-model="h_codigocliente_mant">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente_fraccion}}
+                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente_fraccion}}
+                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente_mant}}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente_mant}}
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente_mant}}
                                         </div>
                                     </div>
                                 </fieldset>
@@ -688,7 +688,7 @@
                                             <div class="col-sm-8 col-xs-12" style="">
                                                 <select class="form-control" name="t_suministro_mant" id="t_suministro_mant"
                                                         ng-model="t_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
-                                                        ng-change="searchInfoTerreno()"></select>
+                                                        ng-change=""></select>
                                             </div>
                                         </div>
 
@@ -723,12 +723,12 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save-fraccion"
-                            ng-click="saveSolicitudFraccion()" ng-disabled="formFraccion.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-save-mant"
+                            ng-click="saveSolicitudFraccion()" ng-disabled="formMant.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-process-fraccion"
-                            ng-click="procesarSolicitud('btn-process-fraccion')" disabled>
+                    <button type="button" class="btn btn-primary" id="btn-process-mant"
+                            ng-click="procesarSolicitud('btn-process-mant')" disabled>
                         Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -802,9 +802,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </form>
                 </div>
                 <div class="modal-footer">

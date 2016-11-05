@@ -384,9 +384,6 @@
 
             $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
                 if(response.success == true){
-
-                    console.log(response);
-
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
                     $('#btn-save-solsuministro').prop('disabled', true);
@@ -451,6 +448,16 @@
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
                 }
+            });
+        };
+
+        /*
+         *  ACTIONS FOR SOLICITUD OTROS-------------------------------------------------------------------
+         */
+
+        $scope.getLastIDMantenimiento = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudmantenimiento').success(function(response){
+                $scope.num_solicitud_mant = response.id;
             });
         };
 
@@ -571,24 +578,24 @@
             $('#modalActionSetNombre').modal('show');
         };
 
-        $scope.actionFraccion = function () {
-            /*$scope.getLastIDFraccion();
-            $scope.getTerrenosFraccionByCliente();
+        $scope.actionMantenimiento = function () {
+            $scope.getLastIDMantenimiento();
+            /*$scope.getTerrenosFraccionByCliente();
             $scope.getIdentifyClientesFraccion();*/
 
-            $scope.t_fecha_fraccion = $scope.nowDate();
-            $scope.h_codigocliente_fraccion = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_fraccion = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_fraccion = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_fraccion = $scope.objectAction.direcciondomicilio;
-            $scope.telf_cliente_fraccion = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_fraccion = $scope.objectAction.celular;
-            $scope.telf_trab_cliente_fraccion = $scope.objectAction.telefonoprincipaltrabajo;
+            $scope.t_fecha_mant = $scope.nowDate();
+            $scope.h_codigocliente_mant = $scope.objectAction.codigocliente;
+            $scope.documentoidentidad_cliente_mant = $scope.objectAction.documentoidentidad;
+            $scope.nom_cliente_mant = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.direcc_cliente_mant = $scope.objectAction.direcciondomicilio;
+            $scope.telf_cliente_mant = $scope.objectAction.telefonoprincipaldomicilio;
+            $scope.celular_cliente_mant = $scope.objectAction.celular;
+            $scope.telf_trab_cliente_mant = $scope.objectAction.telefonoprincipaltrabajo;
 
-            $scope.t_observacion_fraccion = '';
+            $scope.t_observacion_mant = '';
 
-            $('#btn-process-fraccion').prop('disabled', true);
-            $('#modalActionFraccion').modal('show');
+            $('#btn-process-mant').prop('disabled', true);
+            $('#modalActionMantenimiento').modal('show');
         };
 
     });
