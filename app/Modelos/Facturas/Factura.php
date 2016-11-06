@@ -8,7 +8,7 @@ class Factura extends Model
 {
 
     protected $table = "factura";
-    protected $primaryKey = "numerofactura";
+    protected $primaryKey = "idfactura";
     public $timestamps = false;
 
 
@@ -24,7 +24,7 @@ class Factura extends Model
     }
 
     public function serviciosenfactura(){
-        return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','numerofactura');
+        return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','idfactura');
     }
 
 }

@@ -13,4 +13,9 @@ class TipoCliente extends Model
     public function cliente(){
         return $this->hasMany('App\Modelos\Clientes\Cliente','id');
     }
+
+
+    public function serviciojunta(){
+        return $this->belongsToMany('App\Modelos\Servicios\ServicioJunta');
+    }
 }

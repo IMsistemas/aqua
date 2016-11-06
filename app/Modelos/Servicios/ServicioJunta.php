@@ -16,4 +16,9 @@ class ServicioJunta extends Model
     }
 
 
+    public function tipocliente(){
+        return $this->belongsToMany('App\Modelos\Clientes\TipoCliente');
+    }
+
+
 }

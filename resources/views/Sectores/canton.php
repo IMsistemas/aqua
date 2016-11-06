@@ -36,6 +36,7 @@
                             <a href="#" class="btn btn-info" ng-click="toModuloParroquia(canton.idcanton);">Ver Parroquias</a>
                         </td>
                     </tr>
+            </div>
 
                 </tbody>
                     
