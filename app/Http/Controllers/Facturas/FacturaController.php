@@ -7,6 +7,8 @@ use App\Modelos\Clientes\TipoCliente;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Facturas\Factura;
 use App\Modelos\Servicios\ServicioJunta;
+use App\Modelos\Servicios\ServicioAguaPotable;
+use App\Modelos\Servicios\AguaPotable;
 use App\Modelos\Servicios\ServiciosTipoCliente;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
@@ -33,7 +35,7 @@ class FacturaController extends Controller
 
     public function getCobroAgua()
     {
-        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta','factura')
+        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta.serviciosaguapotable.aguapotable','factura')
                                 ->orderBy('fecha','asc')->get();
     }
 

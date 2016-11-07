@@ -7,16 +7,17 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
             (response.count == 0) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
         });
+
         $scope.array_temp = [];
+        $scope.aux = [];
+        $scope.servicio='';
+        $scope.tarifa = '';
+        $scope.a = '';
+
         $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
-           console.log(response);
+             console.log(response);
 
-
-            // $scope.cobroagua = response;
-
-          /*   $scope.aux = [];
              $scope.array_temp = response;
-
               for(var i = 0; i < $scope.array_temp.length; i++){
                   if($scope.array_temp[i].estapagado == false)
                   {
@@ -24,21 +25,20 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                   }
                   else {
                       $scope.array_temp[i].estapagado = 'PAGADA';
-                    //  $scope.array_temp[i].fecha =  yearmonth ($scope.array_temp[i].fecha);
                   }
-                  $scope.id = $scope.array_temp[i].factura.codigocliente;
 
-                  $http.get(API_URL + 'factura/getServiciosXCobro/' + $scope.id).success(function(response) {
-                      $scope.servicio='';
+                  $scope.temp = $scope.array_temp[i].suministro.cliente.tipocliente.serviciostipocliente;
 
-                      for(var e = 0; e < response.length; e++)
-                      {
-                          $scope.servicio = $scope.servicio + '/' + response[e].serviciojunta.nombreservicio;
+                  for(var j = 0; j < $scope.temp.length; j++) {
+                        $scope.servicio = $scope.servicio + '/' + $scope.temp[j].serviciojunta.nombreservicio;
+                        $scope.a =  $scope.temp[j].serviciojunta.serviciosaguapotable;
+                      for(var a = 0; a < $scope.a.length; a++) {
+                          $scope.tarifa = $scope.tarifa + '/' + $scope.a[a].aguapotable.nombretarifaaguapotable;
                       }
+                  }
 
-                  });
-
-                      var data = {
+                  var data = {
+                          tarifas :  $scope.tarifa,
                           servicios : $scope.servicio,
                           factura:  $scope.array_temp[i].idfactura,
                           fecha: $scope.array_temp[i].fecha,
@@ -49,11 +49,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           estado: $scope.array_temp[i].estapagado,
                           total: $scope.array_temp[i].valor
                       }
-                  console.log(data);
 
                   $scope.aux.push(data);
               }
-              $scope.cobroagua = $scope.aux;*/
+              $scope.cobroagua = $scope.aux;
 
         });
     };
@@ -107,11 +106,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         });
 
     };
-
-
-
-
-
 
     $scope.initLoad();
     $scope.Servicio();

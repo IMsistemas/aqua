@@ -87,7 +87,7 @@
                 <td>{{item.periodo}}</td>
                 <td>{{item.servicios}}</td>
                 <td>{{item.suministro}}</td>
-                <td>{{item.tarifa}}</td>
+                <td>{{item.tarifas}}</td>
                 <td>{{item.direccion}}</td>
                 <td>{{item.telefono}}</td>
                 <td>{{item.m3}}</td>

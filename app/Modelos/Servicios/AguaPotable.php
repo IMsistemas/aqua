@@ -13,4 +13,9 @@ class AguaPotable extends Model
     public function suministros(){
         return $this->hasMany('App\Modelos\Suministros\Sumministro','idtarifaaguapotable');
     }
+
+    public function serviciosaguapotable()
+    {
+        return $this->hasMany('App\Modelos\Servicios\ServicioAguaPotable', 'idtarifaaguapotable');
+    }
 }

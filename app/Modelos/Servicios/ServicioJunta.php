@@ -20,4 +20,13 @@ class ServicioJunta extends Model
         return $this->hasMany('App\Modelos\Servicios\ServiciosTipoCliente', 'idserviciojunta');
     }
 
+
+
+    public function serviciosaguapotable()
+    {
+        return $this->hasMany('App\Modelos\Servicios\ServicioAguaPotable', 'idserviciojunta');
+    }
+
+
+
 }
