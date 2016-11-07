@@ -40,7 +40,6 @@ class SolicitudController extends Controller
         ]);
     }
 
-
     public function getByFilter($filter)
     {
         $filter_view = json_decode($filter);

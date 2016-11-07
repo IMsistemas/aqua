@@ -67,7 +67,7 @@
                         var object_otro = {
                             no_solicitud : otro[i].idsolicitud,
                             fecha: otro[i].fechasolicitud,
-                            cliente: otro[i].cliente.apellido + ' ' + otro[i].cliente.nombre,
+                            cliente: otro[i].cliente.apellidos + ' ' + otro[i].cliente.nombres,
                             direccion: otro[i].cliente.direcciondomicilio,
                             telefono: otro[i].cliente.telefonoprincipaldomicilio,
                             tipo: 'Otra Solicitud',
@@ -212,7 +212,7 @@
                         var object_otro = {
                             no_solicitud : otro[i].idsolicitud,
                             fecha: otro[i].fechasolicitud,
-                            cliente: otro[i].cliente.apellido + ' ' + otro[i].cliente.nombre,
+                            cliente: otro[i].cliente.apellidos + ' ' + otro[i].cliente.nombres,
                             direccion: otro[i].cliente.direcciondomicilio,
                             telefono: otro[i].cliente.telefonoprincipaldomicilio,
                             tipo: 'Otra Solicitud',

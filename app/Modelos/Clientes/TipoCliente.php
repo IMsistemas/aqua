@@ -10,12 +10,14 @@ class TipoCliente extends Model
     protected $primaryKey = "id";
     public $timestamps = false;
 
-    public function cliente(){
+    public function cliente()
+    {
         return $this->hasMany('App\Modelos\Clientes\Cliente','id');
     }
 
-
-    public function serviciojunta(){
-        return $this->belongsToMany('App\Modelos\Servicios\ServicioJunta');
+    public function serviciostipocliente()
+    {
+        return $this->hasMany('App\Modelos\Servicios\ServiciosTipoCliente', 'id');
     }
+
 }

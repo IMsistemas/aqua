@@ -10,15 +10,14 @@ class ServicioJunta extends Model
     protected $primaryKey = "idserviciojunta";
     public $timestamps = false;
 
-
-    public function serviciosenfactura(){
+    public function serviciosenfactura()
+    {
         return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','idserviciojunta');
     }
 
-
-    public function tipocliente(){
-        return $this->belongsToMany('App\Modelos\Clientes\TipoCliente');
+    public function serviciostipocliente()
+    {
+        return $this->hasMany('App\Modelos\Servicios\ServiciosTipoCliente', 'idserviciojunta');
     }
-
 
 }

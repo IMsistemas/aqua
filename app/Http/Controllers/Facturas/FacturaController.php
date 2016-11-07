@@ -33,28 +33,8 @@ class FacturaController extends Controller
 
     public function getCobroAgua()
     {
-       // return CobroAgua::with('suministro','factura') ->orderBy('fecha','asc')->get();
-
-        return  CobroAgua::join('suministro', 'suministro.numerosuministro', '=', 'cobroagua.numerosuministro')
-            ->join('factura', 'factura.idcobroagua', '=', 'cobroagua.idcobroagua')
-            ->join('cliente', 'factura.codigocliente', '=', 'cliente.codigocliente')
-            ->join('tipocliente', 'cliente.id', '=', 'tipocliente.id')
-            ->orderBy('fecha', 'desc')
-            ->get();
-
-
-
-
-       // return TipoCliente::find($cobro->id) -> serviciojunta() -> get ();
-
-
-       /* foreach ($cobro as $item)
-        {
-            $roles = App\User::find(1)->roles()->orderBy('name')->get();
-            $roles = App\User::find(1)->roles()->orderBy('name')->get();
-
-        }*/
-
+        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta','factura')
+                                ->orderBy('fecha','asc')->get();
     }
 
     public function getServiciosXCobro($id)

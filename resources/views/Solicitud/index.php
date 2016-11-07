@@ -88,11 +88,10 @@
                                 <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
                                     <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-primary" id="btn_process" ng-click="" disabled>
+                                <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="" disabled>
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
-                                </button>
-
-                                <span ng-if="solicitud.tipo == 'Riego'">
+                                </button>-->
+                                <span ng-if="solicitud.tipo == 'Suministro'">
                                     <button type="button" class="btn btn-default" id="btn_pdf" ng-click="" >
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>
@@ -103,10 +102,10 @@
                                 <button type="button" class="btn btn-info" id="btn_inform" disabled>
                                     <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-primary" id="btn_process" ng-click="showModalProcesar(solicitud)" >
+                                <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="showModalProcesar(solicitud)" >
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
-                                </button>
-                                <span ng-if="solicitud.tipo == 'Riego'">
+                                </button>-->
+                                <span ng-if="solicitud.tipo == 'Suministro'">
                                     <button type="button" class="btn btn-default" id="btn_pdf" disabled>
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>

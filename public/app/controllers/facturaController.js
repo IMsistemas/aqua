@@ -10,7 +10,9 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.array_temp = [];
         $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
            console.log(response);
-           // $scope.cobroagua = response;
+
+
+            // $scope.cobroagua = response;
 
           /*   $scope.aux = [];
              $scope.array_temp = response;
