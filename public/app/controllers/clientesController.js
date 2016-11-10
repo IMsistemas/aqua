@@ -459,6 +459,7 @@
                     $('#btn-process-servicio').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
                 }
             });
         };
@@ -764,6 +765,7 @@
                 $('#' + id_btn).prop('disabled', true);
 
                 $('#modalActionSuministro').modal('hide');
+                $('#modalActionServicio').modal('hide');
                 $('#modalActionOtro').modal('hide');
                 $('#modalActionSetNombre').modal('hide');
                 $('#modalActionMantenimiento').modal('hide');
@@ -791,6 +793,22 @@
         $scope.hideModalMessage = function () {
             setTimeout("$('#modalMessage').modal('hide')", 3000);
         };
+
+        $scope.onlyDecimal = function ($event) {
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+            if (n == ".") {
+                return true;
+            } else {
+                if(patron.test(n) == false){
+                    $event.preventDefault();
+                }
+                else return true;
+            }
+        };
+
 
     });
 

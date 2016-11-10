@@ -382,7 +382,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-5 col-xs-12">
-                        <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_servicio}}</span></h4>
+                        <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_servicio}}</h4>
                     </div>
                     <div class="col-md-7 col-xs-12">
                         <div class="form-group">
@@ -407,32 +407,39 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente}}
                                             <input type="hidden" ng-model="h_codigocliente">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente}}
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
-                                        <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente}}
-                                        </div>
-                                        <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente}}
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Tipo Cliente:</span> {{tipo_tipo_cliente}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente}}
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente}}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-users" aria-hidden="true"></i> Tipo Cliente:</span> {{tipo_tipo_cliente}}
                                         </div>
                                     </div>
                                 </fieldset>
@@ -453,7 +460,7 @@
                                             <tr ng-repeat="item in services" ng-cloak>
                                                 <td>{{item.nombreservicio}}</td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="item.valor">
+                                                    <input type="text" class="form-control" ng-model="item.valor" ng-keypress="onlyDecimal($event)">
                                                 </td>
                                             </tr>
                                         </tbody>
