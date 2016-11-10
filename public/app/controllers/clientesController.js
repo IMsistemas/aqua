@@ -369,7 +369,16 @@
             $scope.t_suministro_medidor = false;
             $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
 
-            $('#btn-save-solsuministro').prop('disabled', false);
+            $scope.t_suministro_direccion = '';
+            $scope.t_suministro_telf = '';
+            $scope.t_suministro_aguapotable = '';
+            $scope.t_suministro_alcantarillado = '';
+            $scope.t_suministro_garantia = '';
+            $scope.t_suministro_cuota = '';
+
+            $('#info_partial').hide();
+            $('#info_total').hide();
+
             $('#btn-process-solsuministro').prop('disabled', true);
 
             $('#modalActionSuministro').modal('show');
@@ -397,6 +406,7 @@
                     $('#btn-process-solsuministro').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
                 }
             });
         };
@@ -412,7 +422,7 @@
                     $scope.actionServicioShow();
                 } else {
                     var msg = 'El cliente: "' + $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
-                    msg += '"; ya presenta la Solicitud de Servicios Nro: ' + response[0].idsolicitudservicio;
+                    msg += '"; ya presenta una Solicitud de Servicios';
                     $scope.message_info = msg;
                     $('#modalMessageInfo').modal('show');
                 }

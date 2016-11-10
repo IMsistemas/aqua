@@ -904,7 +904,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Solicitud de Servicio Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_suministro}}</span></h4>
+                        <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_suministro}} - Agua Potable</h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group text-right">
@@ -920,8 +920,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" name="formProcess" novalidate="">
-
+                    <form class="form-horizontal" name="formProcessSuministro" novalidate="">
                         <div class="row">
                             <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
                                 <fieldset ng-cloak>
@@ -942,7 +941,7 @@
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12 form-group">
-                                        <label for="t_suministro_zona" class="col-sm-5 col-xs-12 control-label">Zona:</label>
+                                        <label for="s_suministro_zona" class="col-sm-5 col-xs-12 control-label">Zona:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
                                             <select id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
                                                     ng-options="value.id as value.label for value in barrios"
@@ -957,16 +956,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12 form-group">
+                                    <div class="col-sm-6 col-xs-12 form-group error">
                                         <label for="t_suministro_direccion" class="col-sm-5 col-xs-12 control-label">Dirección Instalac.:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <input type="text" class="form-control" id="t_suministro_direccion" ng-model="t_suministro_direccion">
+                                            <input type="text" class="form-control" name="t_suministro_direccion" id="t_suministro_direccion" ng-model="t_suministro_direccion" ng-required="true">
+                                            <span class="help-block error"
+                                                  ng-show="formProcessSuministro.t_suministro_direccion.$invalid && formProcessSuministro.t_suministro_direccion.$touched">
+                                                        La Dirección es requerida</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-xs-12 form-group">
-                                        <label for="t_suministro_telf" class="col-sm-5 col-xs-12 control-label">Telefono Instalac.:</label>
+                                    <div class="col-sm-6 col-xs-12 form-group error">
+                                        <label for="t_suministro_telf" class="col-sm-5 col-xs-12 control-label">Teléfono Instalac.:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <input type="text" class="form-control" id="t_suministro_telf" ng-model="t_suministro_telf">
+                                            <input type="text" class="form-control" name="t_suministro_telf" id="t_suministro_telf"
+                                                   ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                            <span class="help-block error"
+                                                  ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$touched">
+                                                        El Teléfono es requerido</span>
                                         </div>
                                     </div>
 
@@ -983,21 +989,31 @@
                                             <div class="col-sm-6 col-xs-12 form-group">
                                                 <label for="t_suministro_aguapotable" class="col-sm-5 col-xs-12 control-label">Agua Potable:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_aguapotable" ng-model="t_suministro_aguapotable"
-                                                           ng-blur="calculateTotalSuministro()">
+                                                    <input type="text" class="form-control" name="t_suministro_aguapotable" id="t_suministro_aguapotable" ng-model="t_suministro_aguapotable"
+                                                           ng-blur="calculateTotalSuministro()" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.t_suministro_aguapotable.$invalid && formProcessSuministro.t_suministro_aguapotable.$touched">
+                                                        El Agua Potable es requerido</span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-xs-12 form-group">
+                                            <div class="col-sm-6 col-xs-12 form-group error">
                                                 <label for="t_suministro_alcantarillado" class="col-sm-5 col-xs-12 control-label">Alcantarillado:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_alcantarillado" ng-model="t_suministro_alcantarillado"
-                                                           ng-blur="calculateTotalSuministro()">
+                                                    <input type="text" class="form-control" name="t_suministro_alcantarillado" id="t_suministro_alcantarillado" ng-model="t_suministro_alcantarillado"
+                                                           ng-blur="calculateTotalSuministro()" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.t_suministro_alcantarillado.$invalid && formProcessSuministro.t_suministro_alcantarillado.$touched">
+                                                        El Alcantarillado es requerido</span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-xs-12 form-group">
+                                            <div class="col-sm-6 col-xs-12 form-group error">
                                                 <label for="t_suministro_garantia" class="col-sm-8 col-xs-12 control-label">Garantía Apertura de Calle:</label>
                                                 <div class="col-sm-4 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_garantia" ng-model="t_suministro_garantia">
+                                                    <input type="text" class="form-control" name="t_suministro_garantia" id="t_suministro_garantia"
+                                                           ng-model="t_suministro_garantia" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.t_suministro_garantia.$invalid && formProcessSuministro.t_suministro_garantia.$touched">
+                                                        La Garantía es requerida</span>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -1007,28 +1023,26 @@
                                         <fieldset>
                                             <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
 
-                                            <div class="col-sm-5 col-xs-12" style="padding: 0;">
-                                                <div class="col-xs-12 form-group">
-                                                    <label for="t_suministro_medidor" class="col-sm-10 col-xs-12 control-label">¿Cliente tiene Medidor?</label>
-                                                    <div class="col-sm-2 col-xs-12" style="">
-                                                        <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor"
-                                                            ng-click="deshabilitarMedidor()">
-                                                    </div>
+                                            <div class="col-sm-4 col-xs-12 form-group">
+                                                <label for="t_suministro_medidor" class="col-sm-10 col-xs-12 control-label">¿Cliente tiene Medidor?</label>
+                                                <div class="col-sm-2 col-xs-12" style="">
+                                                    <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor"
+                                                           ng-click="deshabilitarMedidor()">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-7 col-xs-12"  style="padding: 0;">
+                                            <div class="col-sm-4 col-xs-12"  style="padding: 0;">
                                                 <div class="col-xs-12 form-group">
                                                     <label for="t_suministro_marca" class="col-sm-5 col-xs-12 control-label">Marca:</label>
                                                     <div class="col-sm-7 col-xs-12" style="">
                                                         <input type="text" class="form-control" id="t_suministro_marca" ng-model="t_suministro_marca">
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12 form-group">
-                                                    <label for="t_suministro_costomedidor" class="col-sm-5 col-xs-12 control-label">Costo Medidor:</label>
-                                                    <div class="col-sm-7 col-xs-12" style="">
-                                                        <input type="text" class="form-control" id="t_suministro_costomedidor" ng-model="t_suministro_costomedidor"
-                                                               ng-blur="calculateTotalSuministro()">
-                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4 col-xs-12 form-group">
+                                                <label for="t_suministro_costomedidor" class="col-sm-6 col-xs-12 control-label">Costo:</label>
+                                                <div class="col-sm-6 col-xs-12" style="">
+                                                    <input type="text" class="form-control" id="t_suministro_costomedidor" ng-model="t_suministro_costomedidor"
+                                                           ng-blur="calculateTotalSuministro()" ng-keypress="onlyDecimal($event)">
                                                 </div>
                                             </div>
 
@@ -1038,14 +1052,17 @@
                                     <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                         <fieldset>
                                             <legend style="font-size: 14px; font-weight: bold;">Total</legend>
-                                            <div class="col-sm-6 col-xs-12 form-group">
+                                            <div class="col-sm-6 col-xs-12 form-group error">
                                                 <label for="t_suministro_cuota" class="col-sm-5 col-xs-12 control-label">Cuota Inicial:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <input type="text" class="form-control" id="t_suministro_cuota" ng-model="t_suministro_cuota"
-                                                        ng-blur="calculateTotalSuministro()">
+                                                    <input type="text" class="form-control" name="t_suministro_cuota" id="t_suministro_cuota" ng-model="t_suministro_cuota"
+                                                        ng-blur="calculateTotalSuministro()" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.t_suministro_cuota.$invalid && formProcessSuministro.t_suministro_cuota.$touched">
+                                                        La Couta Inicial es requerida</span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-xs-12 form-group">
+                                            <div class="col-sm-6 col-xs-12 form-group error">
                                                 <label for="s_suministro_credito" class="col-sm-5 col-xs-12 control-label">Crédito:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
                                                     <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
@@ -1075,7 +1092,7 @@
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-success" id="btn-save-solsuministro"
-                            ng-click="saveSolicitudSuministro()" ng-disabled="formProcess.$invalid">
+                            ng-click="saveSolicitudSuministro()" ng-disabled="formProcessSuministro.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-process-solsuministro"
