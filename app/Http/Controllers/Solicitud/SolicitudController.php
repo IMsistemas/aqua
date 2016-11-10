@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 
 class SolicitudController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -119,6 +120,9 @@ class SolicitudController extends Controller
             'mantenimiento' => $solicitudmantenim
         ]);
     }
+
+
+
 /*
     public function getIdentifyCliente($idcliente)
     {
