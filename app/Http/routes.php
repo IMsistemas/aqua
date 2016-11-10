@@ -287,6 +287,8 @@ Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
 Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
 
+Route::get('cliente/getExistsSolicitudServicio/{codigocliente}', 'Clientes\ClienteController@getExistsSolicitudServicio');
+
 Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');
 
 Route::post('cliente/storeSolicitudServicios', 'Clientes\ClienteController@storeSolicitudServicios');

@@ -254,6 +254,17 @@ class ClienteController extends Controller
     }
 
     /**
+     * Verificar si existe alguna solicitud de servicio para el cliente solicitado
+     *
+     * @param $codigocliente
+     * @return mixed
+     */
+    public function getExistsSolicitudServicio($codigocliente)
+    {
+        return SolicitudServicio::where('codigocliente', $codigocliente)->get();
+    }
+
+    /**
      * Almacenar los datos de solicitud de suministro
      *
      * @param Request $request

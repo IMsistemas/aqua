@@ -405,6 +405,20 @@
          *  ACTIONS FOR SOLICITUD SERVICIOS-----------------------------------------------------------------------------
          */
 
+        $scope.getExistsSolicitudServicio = function () {
+            var codigocliente = $scope.objectAction.codigocliente;
+            $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
+                if (response.length == 0){
+                    $scope.actionServicioShow();
+                } else {
+                    var msg = 'El cliente: "' + $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+                    msg += '"; ya presenta la Solicitud de Servicios Nro: ' + response[0].idsolicitudservicio;
+                    $scope.message_info = msg;
+                    $('#modalMessageInfo').modal('show');
+                }
+            });
+        };
+
         $scope.getServicios = function () {
             $http.get(API_URL + 'cliente/getServicios').success(function(response){
                 var longitud = response.length;
@@ -428,14 +442,17 @@
         };
 
         $scope.actionServicio = function () {
+            $scope.getExistsSolicitudServicio();
+        };
 
+        $scope.actionServicioShow = function () {
             $scope.getLastIDSolicServicio();
             $scope.getServicios();
 
             $scope.t_fecha_process = $scope.nowDate();
             $scope.h_codigocliente = $scope.objectAction.codigocliente;
             $scope.documentoidentidad_cliente = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
+            $scope.nom_cliente = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
             $scope.direcc_cliente = $scope.objectAction.direcciondomicilio;
             $scope.telf_cliente = $scope.objectAction.telefonoprincipaldomicilio;
             $scope.celular_cliente = $scope.objectAction.celular;
