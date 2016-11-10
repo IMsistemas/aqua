@@ -513,27 +513,33 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente_setnombre}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente_setnombre}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente_setnombre}}
                                             <input type="hidden" ng-model="h_codigocliente_setnombre">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente_setnombre}}
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_setnombre}}
                                         </div>
                                     </div>
                                 </fieldset>
@@ -544,26 +550,32 @@
                                     <legend style="font-size: 16px; font-weight: bold;">Datos de Suministro</legend>
 
                                     <div class="col-xs-12" style="">
-                                        <div class="col-sm-6 col-xs-12 form-group">
+                                        <div class="col-sm-6 col-xs-12 form-group error">
                                             <label for="s_suministro_setnombre" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
                                                 <select class="form-control" name="s_suministro_setnombre" id="s_suministro_setnombre"
                                                         ng-model="s_suministro_setnombre" ng-options="value.id as value.label for value in suministro_setN"
-                                                        ng-change="showInfoSuministroForSetName()"></select>
+                                                        ng-change="showInfoSuministroForSetName()" ng-pattern="/^[1-9]+$/"></select>
+                                                <span class="help-block error"
+                                                      ng-show="formSetNombre.s_suministro_setnombre.$invalid && formSetNombre.s_suministro_setnombre.$error.pattern">
+                                                            Seleccione un Cliente</span>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-6 col-xs-12" style="padding-left: 45px;">
-                                            <span class="label label-default" style="!important; font-size: 12px !important;">Zona:</span> {{zona_setnombre}}
+                                            <span class="label label-default" style="!important; font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Zona:</span> {{zona_setnombre}}
                                         </div>
                                     </div>
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Transversal:</span> {{transversal_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Transversal:</span> {{transversal_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Tarifa:</span> {{tarifa_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-list" aria-hidden="true"></i> Tarifa:</span> {{tarifa_setnombre}}
                                         </div>
                                     </div>
 
@@ -575,36 +587,44 @@
                                     <legend style="font-size: 16px; font-weight: bold;">Datos del nuevo Cliente</legend>
 
                                     <div class="col-xs-12" style="padding: 0;">
-                                        <div class="col-sm-6 col-xs-12 form-group">
+                                        <div class="col-sm-6 col-xs-12 form-group error">
 
                                             <label for="s_ident_new_client_setnombre" class="col-sm-4 col-xs-12 control-label">RUC/CI:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
                                                 <select class="form-control"
                                                         name="s_ident_new_client_setnombre" id="s_ident_new_client_setnombre"
                                                         ng-model="s_ident_new_client_setnombre" ng-options="value.id as value.label for value in clientes_setN"
-                                                        ng-change="showInfoClienteForSetName()"></select>
+                                                        ng-change="showInfoClienteForSetName()" ng-pattern="/^[1-9]+$/"></select>
+                                                <span class="help-block error"
+                                                      ng-show="formSetNombre.s_ident_new_client_setnombre.$invalid && formSetNombre.s_ident_new_client_setnombre.$error.pattern">
+                                                            Seleccione un Cliente</span>
                                             </div>
 
                                         </div>
                                         <div class="col-sm-6 col-xs-12" style="padding-left: 45px;">
-                                            <span class="label label-default" style="font-size: 12px !important;">Cliente:</span> {{nom_new_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> Cliente:</span> {{nom_new_cliente_setnombre}}
                                             <input type="hidden" ng-model="h_new_codigocliente_setnombre">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_new_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_new_cliente_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_new_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_new_cliente_setnombre}}
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_new_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_new_cliente_setnombre}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_new_cliente_setnombre}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_new_cliente_setnombre}}
                                         </div>
                                     </div>
 
@@ -653,7 +673,6 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" name="formMant" novalidate="">
-
                         <div class="row">
                             <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
                                 <fieldset ng-cloak>
@@ -661,27 +680,33 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente_mant}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente_mant}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente_mant}}
                                             <input type="hidden" ng-model="h_codigocliente_mant">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente_mant}}
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_mant}}
                                         </div>
                                     </div>
                                 </fieldset>
@@ -692,36 +717,46 @@
                                     <legend style="font-size: 16px; font-weight: bold;">Datos de Suministro</legend>
 
                                     <div class="col-xs-12" style="">
-                                        <div class="col-sm-6 col-xs-12 form-group">
+                                        <div class="col-sm-6 col-xs-12 form-group error text-left">
                                             <label for="s_suministro_mant" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
                                                 <select class="form-control" name="s_suministro_mant" id="s_suministro_mant"
                                                         ng-model="s_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
-                                                        ng-change="showInfoSuministro()"></select>
+                                                        ng-change="showInfoSuministro()" ng-pattern="/^[1-9]+$/"></select>
+                                                <!--<span class="help-block error"
+                                                      ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$touched">Suministro es requerida</span>-->
+                                                <span class="help-block error"
+                                                      ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$error.pattern">
+                                                            Seleccione un Suministro</span>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-6 col-xs-12" style="padding-left: 45px;">
-                                            <span class="label label-default" style="!important; font-size: 12px !important;">Zona:</span> {{zona_mant}}
+                                            <span class="label label-default" style="!important; font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Zona:</span> {{zona_mant}}
                                         </div>
                                     </div>
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Transversal:</span> {{transversal_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Transversal:</span> {{transversal_mant}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Tarifa:</span> {{tarifa_mant}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-list" aria-hidden="true"></i> Tarifa:</span> {{tarifa_mant}}
                                         </div>
                                     </div>
 
                                 </fieldset>
                             </div>
 
-                            <div class="col-xs-12 form-group" style="">
-                                <label for="t_derivacion" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
+                            <div class="col-xs-12 form-group error" style="">
+                                <label for="t_observacion_mant" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
                                 <div class="col-sm-10 col-xs-12">
-                                    <textarea class="form-control" id="t_observacion_mant" ng-model="t_observacion_mant" rows="2"></textarea>
+                                    <textarea class="form-control" name="t_observacion_mant" id="t_observacion_mant" ng-model="t_observacion_mant" rows="2" ng-required="true"></textarea>
+                                    <span class="help-block error"
+                                          ng-show="formMant.t_observacion_mant.$invalid && formMant.t_observacion_mant.$touched">La Observación es requerida</span>
                                 </div>
                             </div>
                         </div>
@@ -736,6 +771,12 @@
                             ng-click="saveSolicitudMantenimiento()" ng-disabled="formMant.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
+
+                    <!--<button type="button" class="btn btn-success" id="btn-save-otro"
+                            ng-click="saveSolicitudOtro();" ng-disabled="formMant.$invalid">
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>-->
+
                     <button type="button" class="btn btn-primary" id="btn-process-mant"
                             ng-click="procesarSolicitud('btn-process-mant')" disabled>
                         Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -751,7 +792,7 @@
                 <div class="modal-header modal-header-primary">
 
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Otro Tipo de Solicitud Solicitud Nro: <span class="badge" style="font-size: 14px;">{{num_solicitud_otro}}</span></h4>
+                        <h4 class="modal-title">Otro Tipo de Solicitud Solicitud Nro: {{num_solicitud_otro}}</h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
@@ -776,34 +817,40 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">RUC/CI:</span> {{documentoidentidad_cliente_otro}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_otro}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">CLIENTE:</span> {{nom_cliente_otro}}
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente_otro}}
                                             <input type="hidden" ng-model="h_codigocliente_otro">
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente_otro}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente_otro}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Domicilio:</span> {{telf_cliente_otro}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente_otro}}
                                         </div>
                                     </div>
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Celular:</span> {{celular_cliente_otro}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente_otro}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono Trabajo:</span> {{telf_trab_cliente_otro}}
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_otro}}
                                         </div>
                                     </div>
                                 </fieldset>
                             </div>
 
                             <div class="col-xs-12 form-group" style="">
-                                <label for="t_derivacion" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Descripción:</label>
+                                <label for="t_observacion_otro" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Descripción:</label>
                                 <div class="col-sm-10 col-xs-12">
                                     <textarea class="form-control" id="t_observacion_otro" ng-model="t_observacion_otro" rows="2" ng-required="true"></textarea>
                                     <span class="help-block error"

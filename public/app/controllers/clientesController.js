@@ -486,6 +486,8 @@
                     $('#btn-process-otro').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
+
+                    $scope.hideModalMessage();
                 }
             });
         };
@@ -535,18 +537,23 @@
 
         $scope.showInfoSuministro = function () {
             var numerosuministro = $scope.s_suministro_mant;
-            var longitud = $scope.list_suministros.length;
+            if (numerosuministro != 0 && numerosuministro != undefined) {
+                var longitud = $scope.list_suministros.length;
 
-            for (var i = 0; i < longitud; i++) {
-                if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                    $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                    $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
-                    $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+                for (var i = 0; i < longitud; i++) {
+                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
+                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
+                        $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
+                        $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
 
-                    break;
+                        break;
+                    }
                 }
+            } else {
+                $scope.zona_mant = '';
+                $scope.transversal_mant = '';
+                $scope.tarifa_mant = '';
             }
-
         };
 
         $scope.saveSolicitudMantenimiento = function () {
@@ -563,6 +570,7 @@
                     $('#btn-process-mant').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
                 }
             });
         };
@@ -591,13 +599,18 @@
             $scope.t_observacion_mant = '';
 
             $('#btn-process-mant').prop('disabled', true);
-            $('#btn-save-mant').prop('disabled', false);
             $('#modalActionMantenimiento').modal('show');
         };
 
         /*
          *  ACTIONS FOR SOLICITUD CAMBIO NOMBRE-------------------------------------------------------------------------
          */
+
+        $scope.getLastSetName = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudcambionombre').success(function(response){
+                $scope.num_solicitud_setnombre = response.id;
+            });
+        };
 
         $scope.getIdentifyClientes = function () {
             var idcliente = $scope.objectAction.codigocliente;
@@ -616,18 +629,27 @@
 
         $scope.showInfoClienteForSetName = function () {
             var codigocliente = $scope.s_ident_new_client_setnombre;
-            var longitud = $scope.list_clientes.length;
 
-            for (var i = 0; i < longitud; i++) {
-                if (codigocliente == $scope.list_clientes[i].codigocliente) {
-                    $scope.nom_new_cliente_setnombre = $scope.list_clientes[i].apellidos + ', ' + $scope.list_clientes[i].nombres;
-                    $scope.direcc_new_cliente_setnombre = $scope.list_clientes[i].direcciondomicilio;
-                    $scope.telf_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaldomicilio;
-                    $scope.celular_new_cliente_setnombre = $scope.list_clientes[i].celular;
-                    $scope.telf_trab_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaltrabajo;
+            if (codigocliente != 0 && codigocliente != undefined) {
+                var longitud = $scope.list_clientes.length;
 
-                    break;
+                for (var i = 0; i < longitud; i++) {
+                    if (codigocliente == $scope.list_clientes[i].codigocliente) {
+                        $scope.nom_new_cliente_setnombre = $scope.list_clientes[i].apellidos + ', ' + $scope.list_clientes[i].nombres;
+                        $scope.direcc_new_cliente_setnombre = $scope.list_clientes[i].direcciondomicilio;
+                        $scope.telf_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaldomicilio;
+                        $scope.celular_new_cliente_setnombre = $scope.list_clientes[i].celular;
+                        $scope.telf_trab_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaltrabajo;
+
+                        break;
+                    }
                 }
+            } else {
+                $scope.nom_new_cliente_setnombre = '';
+                $scope.direcc_new_cliente_setnombre = '';
+                $scope.telf_new_cliente_setnombre = '';
+                $scope.celular_new_cliente_setnombre = '';
+                $scope.telf_trab_new_cliente_setnombre = '';
             }
         };
 
@@ -648,18 +670,24 @@
 
         $scope.showInfoSuministroForSetName = function () {
             var numerosuministro = $scope.s_suministro_setnombre;
-            var longitud = $scope.list_suministros.length;
 
-            for (var i = 0; i < longitud; i++) {
-                if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                    $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                    $scope.transversal_setnombre = $scope.list_suministros[i].calle.nombrecalle;
-                    $scope.tarifa_setnombre = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+            if (numerosuministro != 0 && numerosuministro != undefined) {
+                var longitud = $scope.list_suministros.length;
 
-                    break;
+                for (var i = 0; i < longitud; i++) {
+                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
+                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.nombrebarrio;
+                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.nombrecalle;
+                        $scope.tarifa_setnombre = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+
+                        break;
+                    }
                 }
+            } else {
+                $scope.zona_setnombre = '';
+                $scope.transversal_setnombre = '';
+                $scope.tarifa_setnombre = '';
             }
-
         };
 
         $scope.saveSolicitudCambioNombre = function () {
@@ -676,11 +704,13 @@
                     $('#btn-process-setnombre').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
                 }
             });
         };
 
         $scope.actionSetName = function () {
+            $scope.getLastSetName();
             $scope.getSuministrosForSetName();
             $scope.getIdentifyClientes();
 
@@ -706,10 +736,14 @@
             $scope.celular_new_cliente_setnombre = '';
             $scope.telf_trab_new_cliente_setnombre = '';
 
+            $scope.zona_setnombre = '';
+            $scope.transversal_setnombre = '';
+            $scope.tarifa_setnombre = '';
+
             $scope.t_observacion_setnombre = '';
 
 
-            $('#btn-process-setnombre').prop('disabled', false);
+            $('#btn-process-setnombre').prop('disabled', true);
             $('#modalActionSetNombre').modal('show');
         };
 
@@ -733,11 +767,12 @@
                 $('#modalActionOtro').modal('hide');
                 $('#modalActionSetNombre').modal('hide');
                 $('#modalActionMantenimiento').modal('hide');
-
                 $('#modalAction').modal('hide');
 
                 $scope.message = 'Se procesó correctamente la solicitud...';
                 $('#modalMessage').modal('show');
+
+                $scope.hideModalMessage();
 
             }).error(function (res) {
 
@@ -751,6 +786,10 @@
         $scope.showModalAction = function (item) {
             $scope.objectAction = item;
             $('#modalAction').modal('show');
+        };
+
+        $scope.hideModalMessage = function () {
+            setTimeout("$('#modalMessage').modal('hide')", 3000);
         };
 
     });
