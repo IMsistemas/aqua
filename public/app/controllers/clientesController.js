@@ -836,7 +836,6 @@
             }
         };
 
-
     });
 
     function convertDatetoDB(now, revert){
