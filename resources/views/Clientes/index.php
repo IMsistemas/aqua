@@ -1072,11 +1072,12 @@
                                         </fieldset>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12 text-center" id="info_partial" style="display: none;">
-                                        <span>Total: </span>{{total_partial}} a <span>{{credit_cant}}</span> meses plazo
+                                    <div class="col-sm-6 col-xs-12 text-center" id="info_partial" style="font-size: 14px; display: none;">
+                                        Total: <span style="font-weight: bold;">$ {{total_partial}}</span> a
+                                        <span style="font-weight: bold;">{{credit_cant}}</span> meses plazo
                                     </div>
-                                    <div class="col-sm-6 col-xs-12 text-center" id="info_total" style="display: none;">
-                                        <span>Cuotas de: $ </span>{{total_suministro}} mensuales
+                                    <div class="col-sm-6 col-xs-12 text-center" id="info_total" style="font-size: 14px; display: none;">
+                                        Cuotas de: <span style="font-weight: bold;">$ {{total_suministro}}</span> mensuales
                                     </div>
 
                                 </fieldset>

@@ -343,9 +343,9 @@
 
                 var total = total_partial / $scope.s_suministro_credito;
 
-                $scope.total_partial = total_partial;
+                $scope.total_partial = total_partial.toFixed(2);
                 $scope.credit_cant = $scope.s_suministro_credito;
-                $scope.total_suministro = total;
+                $scope.total_suministro = total.toFixed(2);
 
                 $('#info_partial').show();
                 $('#info_total').show();
