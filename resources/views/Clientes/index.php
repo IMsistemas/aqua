@@ -935,24 +935,33 @@
                                     <div class="col-sm-6 col-xs-12 form-group">
                                         <label for="s_suministro_tarifa" class="col-sm-5 col-xs-12 control-label">Tarifa:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <select id="s_suministro_tarifa" class="form-control" ng-model="s_suministro_tarifa"
-                                                    ng-options="value.id as value.label for value in tarifas"></select>
+                                            <select name="s_suministro_tarifa" id="s_suministro_tarifa" class="form-control" ng-model="s_suministro_tarifa"
+                                                    ng-options="value.id as value.label for value in tarifas" ng-pattern="/^[1-9]+$/"></select>
+                                            <span class="help-block error"
+                                                  ng-show="formProcessSuministro.s_suministro_tarifa.$invalid && formProcessSuministro.s_suministro_tarifa.$error.pattern">
+                                                            Seleccione una Tarifa</span>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12 form-group">
                                         <label for="s_suministro_zona" class="col-sm-5 col-xs-12 control-label">Zona:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <select id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
+                                            <select name="s_suministro_zona" id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
                                                     ng-options="value.id as value.label for value in barrios"
-                                                    ng-change="getCalles()"></select>
+                                                    ng-change="getCalles()" ng-pattern="/^[1-9]+$/"></select>
+                                            <span class="help-block error"
+                                                  ng-show="formProcessSuministro.s_suministro_zona.$invalid && formProcessSuministro.s_suministro_zona.$error.pattern">
+                                                            Seleccione una Zona</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group">
                                         <label for="s_suministro_transversal" class="col-sm-5 col-xs-12 control-label">Transversal:</label>
                                         <div class="col-sm-7 col-xs-12" style="">
-                                            <select id="s_suministro_transversal" class="form-control" ng-model="s_suministro_transversal"
-                                                    ng-options="value.id as value.label for value in calles"></select>
+                                            <select name="s_suministro_transversal" id="s_suministro_transversal" class="form-control" ng-model="s_suministro_transversal"
+                                                    ng-options="value.id as value.label for value in calles" ng-pattern="/^[1-9]+$/"></select>
+                                            <span class="help-block error"
+                                                  ng-show="formProcessSuministro.s_suministro_transversal.$invalid && formProcessSuministro.s_suministro_transversal.$error.pattern">
+                                                            Seleccione una Transversal</span>
                                         </div>
                                     </div>
 
@@ -1065,8 +1074,12 @@
                                             <div class="col-sm-6 col-xs-12 form-group error">
                                                 <label for="s_suministro_credito" class="col-sm-5 col-xs-12 control-label">Crédito:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
-                                                    <select id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
-                                                            ng-options="value.id as value.label for value in creditos" ng-change="calculateTotalSuministro()"></select>
+                                                    <select name="s_suministro_credito" id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
+                                                            ng-options="value.id as value.label for value in creditos"
+                                                            ng-change="calculateTotalSuministro()"  ng-pattern="/^[1-9]+$/"></select>
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.s_suministro_credito.$invalid && formProcessSuministro.s_suministro_credito.$error.pattern">
+                                                            Seleccione un Crédito</span>
                                                 </div>
                                             </div>
                                         </fieldset>
