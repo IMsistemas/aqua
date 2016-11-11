@@ -15,4 +15,9 @@ class SolicitudSuministro extends Model
         return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigocliente');
     }
 
+    public function suministro()
+    {
+        return $this->belongsTo('App\Modelos\Suministros\Suministro', 'numerosuministro');
+    }
+
 }
