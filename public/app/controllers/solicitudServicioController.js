@@ -302,10 +302,103 @@
             $('#modalActionOtro').modal('show');
         };
 
+        /*
+         *  ACTIONS FOR SOLICITUD MANTENIMIENTO-------------------------------------------------------------------------
+         */
+
+        $scope.getLastIDMantenimiento = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudmantenimiento').success(function(response){
+                $scope.num_solicitud_mant = response.id;
+            });
+        };
+
+        $scope.getSuministros = function (codigocliente, numsuministro) {
+            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_mant = array_temp;
+                $scope.s_suministro_mant = numsuministro;
+            });
+        };
+
+        $scope.showInfoSuministro = function () {
+            var numerosuministro = $scope.s_suministro_mant;
+            if (numerosuministro != 0 && numerosuministro != undefined) {
+                var longitud = $scope.list_suministros.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
+                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
+                        $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
+                        $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+
+                        break;
+                    }
+                }
+            } else {
+                $scope.zona_mant = '';
+                $scope.transversal_mant = '';
+                $scope.tarifa_mant = '';
+            }
+        };
+
+        $scope.saveSolicitudMantenimiento = function () {
+            var solicitud = {
+                codigocliente: $scope.objectAction.codigocliente,
+                numerosuministro: $scope.s_suministro_mant,
+                observacion: $scope.t_observacion_mant
+            };
+            $http.post(API_URL + 'cliente/storeSolicitudMantenimiento', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-mant').prop('disabled', true);
+                    $('#btn-process-mant').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+            });
+        };
+
+        $scope.actionMantenimiento = function (solicitud) {
+            //$scope.getLastIDMantenimiento();
+            $scope.getSuministros(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
+
+            $scope.num_solicitud_mant = solicitud.data.idsolicitudmantenimiento;
+            $scope.t_fecha_mant = solicitud.data.fechasolicitud;
+            $scope.h_codigocliente_mant = solicitud.data.cliente.codigocliente;
+            $scope.documentoidentidad_cliente_mant = solicitud.data.cliente.documentoidentidad;
+            $scope.nom_cliente_mant = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
+            $scope.direcc_cliente_mant = solicitud.data.cliente.direcciondomicilio;
+            $scope.telf_cliente_mant = solicitud.data.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente_mant = solicitud.data.cliente.celular;
+            $scope.telf_trab_cliente_mant = solicitud.data.cliente.telefonoprincipaltrabajo;
+
+            $scope.zona_mant = solicitud.data.suministro.calle.barrio.nombrebarrio;
+            $scope.transversal_mant = solicitud.data.suministro.calle.nombrecalle;
+            $scope.tarifa_mant = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+
+            $scope.t_observacion_mant = solicitud.data.observacion;
+
+            //$('#btn-process-mant').prop('disabled', true);
+            $('#modalActionMantenimiento').modal('show');
+        };
+
+
+
+
 
         $scope.info = function (solicitud) {
             if(solicitud.tipo == 'Otra Solicitud') {
                 $scope.actionOtro(solicitud);
+            } else if(solicitud.tipo == 'Mantenimiento') {
+                $scope.actionMantenimiento(solicitud);
             }
         };
 

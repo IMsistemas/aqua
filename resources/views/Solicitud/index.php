@@ -135,6 +135,142 @@
 
 
 
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalActionMantenimiento">
+                <div class="modal-dialog" role="document" style="width: 60%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+
+                            <div class="col-md-6 col-xs-12">
+                                <h4 class="modal-title">Solicitud de Mantenimiento Nro: {{num_solicitud_mant}}</h4>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <h4 class="modal-title"><label for="t_fecha_mant" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
+                                    <div class="col-sm-5" style="padding: 0;">
+                                        <input type="text" class="form-control input-sm datepicker" name="t_fecha_mant"
+                                               id="t_fecha_mant" ng-model="t_fecha_mant" style="color: black !important;" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="formMant" novalidate="">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                        <fieldset ng-cloak>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente</legend>
+
+                                            <div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_mant}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente_mant}}
+                                                    <input type="hidden" ng-model="h_codigocliente_mant">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente_mant}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente_mant}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente_mant}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_mant}}
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -25px !important;">
+                                        <fieldset>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos de Suministro</legend>
+
+                                            <div class="col-xs-12" style="">
+                                                <div class="col-sm-6 col-xs-12 form-group error text-left">
+                                                    <label for="s_suministro_mant" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
+                                                    <div class="col-sm-8 col-xs-12" style="">
+                                                        <select class="form-control" name="s_suministro_mant" id="s_suministro_mant"
+                                                                ng-model="s_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
+                                                                ng-change="showInfoSuministro()" ng-pattern="/^[1-9]+$/"></select>
+                                                        <!--<span class="help-block error"
+                                                              ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$touched">Suministro es requerida</span>-->
+                                                        <span class="help-block error"
+                                                              ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$error.pattern">
+                                                            Seleccione un Suministro</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-xs-12" style="padding-left: 45px;">
+                                            <span class="label label-default" style="!important; font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Zona:</span> {{zona_mant}}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Transversal:</span> {{transversal_mant}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-list" aria-hidden="true"></i> Tarifa:</span> {{tarifa_mant}}
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12 form-group error" style="">
+                                        <label for="t_observacion_mant" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
+                                        <div class="col-sm-10 col-xs-12">
+                                            <textarea class="form-control" name="t_observacion_mant" id="t_observacion_mant" ng-model="t_observacion_mant" rows="2" ng-required="true"></textarea>
+                                            <span class="help-block error"
+                                                  ng-show="formMant.t_observacion_mant.$invalid && formMant.t_observacion_mant.$touched">La Observación es requerida</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-success" id="btn-save-mant"
+                                    ng-click="saveSolicitudMantenimiento()" ng-disabled="formMant.$invalid">
+                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                            </button>
+
+                            <!--<button type="button" class="btn btn-success" id="btn-save-otro"
+                                    ng-click="saveSolicitudOtro();" ng-disabled="formMant.$invalid">
+                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                            </button>-->
+
+                            <button type="button" class="btn btn-primary" id="btn-process-mant"
+                                    ng-click="procesarSolicitud('btn-process-mant')" disabled>
+                                Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" tabindex="-1" role="dialog" id="modalActionOtro">
                 <div class="modal-dialog" role="document" style="width: 60%;">
                     <div class="modal-content">
