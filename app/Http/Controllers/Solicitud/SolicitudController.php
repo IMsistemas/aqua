@@ -35,7 +35,8 @@ class SolicitudController extends Controller
         $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                                                         ->orderBy('fechasolicitud', 'desc')->get();
 
-        $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
+        $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
+                                                        ->orderBy('fechasolicitud', 'desc')->get();
 
         $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                                                         ->orderBy('fechasolicitud', 'desc')->get();

@@ -16,4 +16,10 @@ class Cliente extends Model
     {
         return $this->belongsTo('App\Modelos\Clientes\TipoCliente','id');
     }
+
+    public function servicioscliente()
+    {
+        return $this->hasMany('App\Modelos\Servicios\ServiciosCliente', 'codigocliente');
+    }
+
 }

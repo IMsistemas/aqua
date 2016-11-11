@@ -134,6 +134,119 @@
             </div>
 
 
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalActionServicio">
+                <div class="modal-dialog" role="document" style="width: 45%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+
+                            <div class="col-md-5 col-xs-12">
+                                <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_servicio}}</h4>
+                            </div>
+                            <div class="col-md-7 col-xs-12">
+                                <div class="form-group">
+                                    <h4 class="modal-title"><label for="t_fecha_process" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
+                                    <div class="col-sm-5" style="padding: 0;">
+                                        <input type="text" class="form-control input-sm datepicker" name="t_fecha_process"
+                                               id="t_fecha_process" ng-model="t_fecha_process" style="color: black !important;" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="formProcess" novalidate="">
+
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                        <fieldset ng-cloak>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente</legend>
+
+                                            <div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-info" style="font-size: 14px !important;">
+                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente}}
+                                                    <input type="hidden" ng-model="h_codigocliente">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                            <span class="label label-default" style="font-size: 14px !important;">
+                                                <i class="fa fa-users" aria-hidden="true"></i> Tipo Cliente:</span> {{tipo_tipo_cliente}}
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%;">
+                                        <fieldset>
+                                            <legend style="font-size: 16px; font-weight: bold;">Solicitud Servicios</legend>
+
+                                            <table class="table table-responsive table-striped table-hover table-condensed">
+                                                <thead class="bg-primary">
+                                                <tr>
+                                                    <th class="text-center">SERVICIOS</th>
+                                                    <th class="text-center" style="width: 30%;">PRECIO</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="item in services" ng-cloak>
+                                                    <td>{{item.nombreservicio}}</td>
+                                                    <td>
+                                                        <input type="text" class="form-control" ng-model="item.valor" ng-keypress="onlyDecimal($event)">
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-success" id="btn-save-servicio"
+                                    ng-click="saveSolicitudServicio()" ng-disabled="formProcess.$invalid">
+                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btn-process-servicio"
+                                    ng-click="procesarSolicitud('btn-process-servicio')" >
+                                Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" tabindex="-1" role="dialog" id="modalActionSetNombre">
                 <div class="modal-dialog" role="document" style="width: 60%;">
                     <div class="modal-content">
@@ -294,7 +407,7 @@
                                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-primary" id="btn-process-setnombre"
-                                    ng-click="procesarSolicitud('btn-process-setnombre')" disabled>
+                                    ng-click="procesarSolicitud('btn-process-setnombre')" >
                                 Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </button>
                         </div>

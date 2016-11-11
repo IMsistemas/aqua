@@ -411,6 +411,7 @@
                 }
                 $scope.clientes_setN = array_temp;
                 $scope.s_ident_new_client_setnombre = codigoclientenuevo;
+                $scope.showInfoClienteForSetName();
             });
         };
 
@@ -441,6 +442,9 @@
         };
 
         $scope.getSuministrosForSetName = function (codigocliente, numerosuministro) {
+
+            console.log(numerosuministro);
+
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
@@ -497,8 +501,8 @@
 
         $scope.actionSetName = function (solicitud) {
             //$scope.getLastSetName();
-            $scope.getSuministrosForSetName(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
-            $scope.getIdentifyClientes(solicitud.data.cliente.codigocliente, solicitud.data.codigoclientenuevo);
+            $scope.getSuministrosForSetName(solicitud.data.codigocliente, solicitud.data.numerosuministro);
+            $scope.getIdentifyClientes(solicitud.data.codigocliente, solicitud.data.codigoclientenuevo);
 
             $scope.num_solicitud_setnombre = solicitud.data.idsolicitudcambionombre;
             $scope.t_fecha_setnombre = solicitud.data.fechasolicitud;
@@ -533,6 +537,100 @@
             $('#modalActionSetNombre').modal('show');
         };
 
+        /*
+         *  ACTIONS FOR SOLICITUD SERVICIOS-----------------------------------------------------------------------------
+         */
+
+        $scope.getExistsSolicitudServicio = function () {
+            var codigocliente = $scope.objectAction.codigocliente;
+            $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
+                if (response.length == 0){
+                    $scope.actionServicioShow();
+                } else {
+                    var msg = 'El cliente: "' + $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+                    msg += '"; ya presenta una Solicitud de Servicios';
+                    $scope.message_info = msg;
+                    $('#modalMessageInfo').modal('show');
+                }
+            });
+        };
+
+        $scope.getServicios = function () {
+            $http.get(API_URL + 'cliente/getServicios').success(function(response){
+                var longitud = response.length;
+                var array_temp = [];
+                for (var i = 0; i < longitud; i++) {
+                    var object_service = {
+                        idserviciojunta: response[i].idserviciojunta,
+                        nombreservicio: response[i].nombreservicio,
+                        valor: 0
+                    };
+                    array_temp.push(object_service);
+                }
+                $scope.services = array_temp;
+            });
+        };
+
+        $scope.getLastIDSolicServicio = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudservicio').success(function(response){
+                $scope.num_solicitud_servicio = response.id;
+            });
+        };
+
+        $scope.actionServicio = function () {
+            $scope.getExistsSolicitudServicio();
+        };
+
+        $scope.saveSolicitudServicio = function () {
+            var solicitud = {
+                codigocliente: $scope.objectAction.codigocliente,
+                servicios: $scope.services
+            };
+
+            $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-servicio').prop('disabled', true);
+                    $('#btn-process-servicio').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+            });
+        };
+
+        $scope.actionServicioShow = function (solicitud) {
+            //$scope.getLastIDSolicServicio();
+            //$scope.getServicios();
+
+            $scope.num_solicitud_servicio = solicitud.data.idsolicitudservicio;
+            $scope.t_fecha_process = solicitud.data.fechasolicitud;
+            $scope.h_codigocliente = solicitud.data.cliente.codigocliente;
+            $scope.documentoidentidad_cliente = solicitud.data.cliente.documentoidentidad;
+            $scope.nom_cliente = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
+            $scope.direcc_cliente = solicitud.data.cliente.direcciondomicilio;
+            $scope.telf_cliente = solicitud.data.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente = solicitud.data.cliente.celular;
+            $scope.telf_trab_cliente = solicitud.data.cliente.telefonoprincipaltrabajo;
+            $scope.tipo_tipo_cliente = solicitud.data.cliente.tipocliente.nombretipo;
+
+            var servicios = solicitud.data.cliente.servicioscliente;
+            var longitud = servicios.length;
+            var array_temp = [];
+            for (var i = 0; i < longitud; i++) {
+                var object_service = {
+                    idserviciojunta: servicios[i].idserviciojunta,
+                    nombreservicio: servicios[i].serviciojunta.nombreservicio,
+                    valor: servicios[i].valor
+                };
+                array_temp.push(object_service);
+            }
+            $scope.services = array_temp;
+
+            $('#modalActionServicio').modal('show');
+        };
+
 
 
 
@@ -544,6 +642,8 @@
                 $scope.actionMantenimiento(solicitud);
             } else if(solicitud.tipo == 'Cambio de Nombre') {
                 $scope.actionSetName(solicitud);
+            } else if(solicitud.tipo == 'Servicio') {
+                $scope.actionServicioShow(solicitud);
             }
         };
 
