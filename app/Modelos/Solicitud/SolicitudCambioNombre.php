@@ -15,4 +15,9 @@ class SolicitudCambioNombre extends Model
         return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigoclientenuevo');
     }
 
+    public function suministro()
+    {
+        return $this->belongsTo('App\Modelos\Suministros\Suministro', 'numerosuministro');
+    }
+
 }

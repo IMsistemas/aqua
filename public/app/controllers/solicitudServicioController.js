@@ -390,6 +390,149 @@
             $('#modalActionMantenimiento').modal('show');
         };
 
+        /*
+         *  ACTIONS FOR SOLICITUD CAMBIO NOMBRE-------------------------------------------------------------------------
+         */
+
+        $scope.getLastSetName = function () {
+            $http.get(API_URL + 'cliente/getLastID/solicitudcambionombre').success(function(response){
+                $scope.num_solicitud_setnombre = response.id;
+            });
+        };
+
+        $scope.getIdentifyClientes = function (idcliente, codigoclientenuevo) {
+            $http.get(API_URL + 'cliente/getIdentifyClientes/' + idcliente).success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                $scope.list_clientes = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].documentoidentidad, id: response[i].codigocliente});
+                    $scope.list_clientes.push(response[i]);
+                }
+                $scope.clientes_setN = array_temp;
+                $scope.s_ident_new_client_setnombre = codigoclientenuevo;
+            });
+        };
+
+        $scope.showInfoClienteForSetName = function () {
+            var codigocliente = $scope.s_ident_new_client_setnombre;
+
+            if (codigocliente != 0 && codigocliente != undefined) {
+                var longitud = $scope.list_clientes.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (codigocliente == $scope.list_clientes[i].codigocliente) {
+                        $scope.nom_new_cliente_setnombre = $scope.list_clientes[i].apellidos + ', ' + $scope.list_clientes[i].nombres;
+                        $scope.direcc_new_cliente_setnombre = $scope.list_clientes[i].direcciondomicilio;
+                        $scope.telf_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaldomicilio;
+                        $scope.celular_new_cliente_setnombre = $scope.list_clientes[i].celular;
+                        $scope.telf_trab_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaltrabajo;
+
+                        break;
+                    }
+                }
+            } else {
+                $scope.nom_new_cliente_setnombre = '';
+                $scope.direcc_new_cliente_setnombre = '';
+                $scope.telf_new_cliente_setnombre = '';
+                $scope.celular_new_cliente_setnombre = '';
+                $scope.telf_trab_new_cliente_setnombre = '';
+            }
+        };
+
+        $scope.getSuministrosForSetName = function (codigocliente, numerosuministro) {
+            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_setN = array_temp;
+                $scope.s_suministro_setnombre = numerosuministro;
+            });
+        };
+
+        $scope.showInfoSuministroForSetName = function () {
+            var numerosuministro = $scope.s_suministro_setnombre;
+
+            if (numerosuministro != 0 && numerosuministro != undefined) {
+                var longitud = $scope.list_suministros.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
+                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.nombrebarrio;
+                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.nombrecalle;
+                        $scope.tarifa_setnombre = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+
+                        break;
+                    }
+                }
+            } else {
+                $scope.zona_setnombre = '';
+                $scope.transversal_setnombre = '';
+                $scope.tarifa_setnombre = '';
+            }
+        };
+
+        $scope.saveSolicitudCambioNombre = function () {
+            var solicitud = {
+                codigocliente: $scope.objectAction.codigocliente,
+                codigoclientenuevo: $scope.s_ident_new_client_setnombre,
+                numerosuministro: $scope.s_suministro_setnombre
+            };
+            $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+                    $('#btn-save-setnombre').prop('disabled', true);
+                    $('#btn-process-setnombre').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+            });
+        };
+
+        $scope.actionSetName = function (solicitud) {
+            //$scope.getLastSetName();
+            $scope.getSuministrosForSetName(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
+            $scope.getIdentifyClientes(solicitud.data.cliente.codigocliente, solicitud.data.codigoclientenuevo);
+
+            $scope.num_solicitud_setnombre = solicitud.data.idsolicitudcambionombre;
+            $scope.t_fecha_setnombre = solicitud.data.fechasolicitud;
+            $scope.h_codigocliente_setnombre = solicitud.data.cliente.codigocliente;
+            $scope.documentoidentidad_cliente_setnombre = solicitud.data.cliente.documentoidentidad;
+            $scope.nom_cliente_setnombre = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
+            $scope.direcc_cliente_setnombre = solicitud.data.cliente.direcciondomicilio;
+            $scope.telf_cliente_setnombre = solicitud.data.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente_setnombre = solicitud.data.cliente.celular;
+            $scope.telf_trab_cliente_setnombre = solicitud.data.cliente.telefonoprincipaltrabajo;
+
+            $scope.junta_setnombre = '';
+            $scope.toma_setnombre = '';
+            $scope.canal_setnombre = '';
+            $scope.derivacion_setnombre = '';
+            $scope.cultivo_setnombre = '';
+            $scope.area_setnombre = '';
+            $scope.caudal_setnombre = '';
+            $scope.nom_new_cliente_setnombre = '';
+            $scope.direcc_new_cliente_setnombre = '';
+            $scope.telf_new_cliente_setnombre = '';
+            $scope.celular_new_cliente_setnombre = '';
+            $scope.telf_trab_new_cliente_setnombre = '';
+
+            $scope.zona_setnombre = solicitud.data.suministro.calle.barrio.nombrebarrio;
+            $scope.transversal_setnombre = solicitud.data.suministro.calle.nombrecalle;
+            $scope.tarifa_setnombre = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+
+            //$scope.t_observacion_setnombre = '';
+
+            //$('#btn-process-setnombre').prop('disabled', true);
+            $('#modalActionSetNombre').modal('show');
+        };
+
 
 
 
@@ -399,6 +542,8 @@
                 $scope.actionOtro(solicitud);
             } else if(solicitud.tipo == 'Mantenimiento') {
                 $scope.actionMantenimiento(solicitud);
+            } else if(solicitud.tipo == 'Cambio de Nombre') {
+                $scope.actionSetName(solicitud);
             }
         };
 
