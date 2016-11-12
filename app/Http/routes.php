@@ -183,30 +183,6 @@ Route::put('solicitud/updateSolicitudSetName/{idsolicitud}', 'Solicitud\Solicitu
 
 Route::put('solicitud/updateSolicitudServicio/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudServicio');
 
-/*Route::get('solicitud/getSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudOtro');
-
-Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');
-
-Route::get('solicitud/getSolicitudSetN/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudSetN');
-
-Route::get('solicitud/getSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudFraccion');
-
-Route::get('solicitud/getIdentifyCliente/{idcliente}', 'Solicitud\SolicitudController@getIdentifyCliente');
-
-
-
-Route::put('solicitud/processSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@processSolicitudSetName');
-
-Route::put('solicitud/processSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@processSolicitudFraccion');
-
-
-
-Route::put('solicitud/updateSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudRiego');
-
-Route::put('solicitud/updateSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudSetName');
-
-Route::put('solicitud/updateSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudFraccion');*/
-
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Solicitud
 Route::resource('/solicitud', 'Solicitud\SolicitudController');
 
