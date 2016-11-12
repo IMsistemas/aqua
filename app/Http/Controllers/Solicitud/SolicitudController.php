@@ -66,59 +66,59 @@ class SolicitudController extends Controller
             if ($filter_view->estado == 2) $estado = false;
 
             if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
                                         ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 4){
-                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 2){
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 1){
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             }
 
         } else {
             if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 4){
-                $solicitudservicio = SolicitudServicio::with('cliente')->orderBy('fechasolicitud', 'desc')
+                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 2){
-                $solicitudsetname = SolicitudMantenimiento::with('cliente')
+                $solicitudsetname = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 1){
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente')
-                    ->orderBy('fechasolicitud', 'desc')->get();
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
+                                                                ->orderBy('fechasolicitud', 'desc')->get();
                 $solicitudotro = SolicitudOtro::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente')
+                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudservicio = SolicitudServicio::with('cliente')
+                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
                     ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente')
+                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
                     ->orderBy('fechasolicitud', 'desc')->get();
             }
         }
