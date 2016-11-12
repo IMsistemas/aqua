@@ -271,6 +271,8 @@ Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
 Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
 
+Route::get('cliente/getIsFreeCliente/{codigocliente}', 'Clientes\ClienteController@getIsFreeCliente');
+
 Route::get('cliente/getExistsSolicitudServicio/{codigocliente}', 'Clientes\ClienteController@getExistsSolicitudServicio');
 
 Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');

@@ -129,12 +129,15 @@
                     $http.put(url, data).success(function (response) {
                         $scope.initLoad();
                         $('#modalAddCliente').modal('hide');
-                        $scope.message = 'Se edito correctamente el Cliente seleccionado...';
+                        $scope.message = 'Se editó correctamente el Cliente seleccionado...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
 
                     });
                 }
+
+                $scope.hideModalMessage();
+
             }else {
                 $scope.message_error = 'Debe seleccionar el tipo de cliente...';
                 $('#modalMessageError').modal('show');
@@ -150,6 +153,8 @@
                 $scope.codigocliente_del = 0;
                 $scope.message = 'Se eliminó correctamente el Cliente seleccionado...';
                 $('#modalMessage').modal('show');
+
+                $scope.hideModalMessage();
             });
         };
 
@@ -186,8 +191,18 @@
 
         $scope.showModalDeleteCliente = function (item) {
             $scope.codigocliente_del = item.codigocliente;
-            $scope.nom_cliente = item.apellidos + ' ' + item.nombres;
-            $('#modalDeleteCliente').modal('show');
+            $http.get(API_URL + 'cliente/getIsFreeCliente/' + $scope.codigocliente_del).success(function(response){
+                if (response == 0) {
+                    $http.delete(API_URL + 'cliente/' + $scope.codigocliente_del).success(function(response) {
+
+                        $scope.nom_cliente = item.apellidos + ' ' + item.nombres;
+                        $('#modalDeleteCliente').modal('show');
+                    });
+                } else {
+                    $scope.message_info = 'No se puede eliminar el cliente seleccionado, ya presenta solicitudes a su nombre...';
+                    $('#modalMessageInfo').modal('show');
+                }
+            });
         };
 
         $scope.showModalInfoCliente = function (item) {

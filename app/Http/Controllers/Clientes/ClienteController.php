@@ -58,6 +58,11 @@ class ClienteController extends Controller
         return TipoCliente::orderBy('nombretipo', 'asc')->get();
     }
 
+    public function getIsFreeCliente($codigocliente)
+    {
+        return Solicitud::where('codigocliente', $codigocliente)->count();
+    }
+
     /**
      * Almacenar el recurso
      *
