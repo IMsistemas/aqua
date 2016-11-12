@@ -179,6 +179,8 @@ Route::put('solicitud/updateSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudCo
 
 Route::put('solicitud/updateSolicitudMantenimiento/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudMantenimiento');
 
+Route::put('solicitud/updateSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudSetName');
+
 /*Route::get('solicitud/getSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudOtro');
 
 Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');

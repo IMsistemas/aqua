@@ -493,25 +493,40 @@
 
         $scope.saveSolicitudCambioNombre = function () {
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre,
                 numerosuministro: $scope.s_suministro_setnombre
             };
-            $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
+            var idsolicitud = $scope.num_solicitud_setnombre;
+            $http.put(API_URL + 'solicitud/updateSolicitudSetName/' + idsolicitud, solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-setnombre').prop('disabled', true);
-                    $('#btn-process-setnombre').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $scope.message = 'Se ha actualizado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
             });
         };
 
+        $scope.procesarSolicitudSetName = function () {
+            var data = {
+                codigoclientenuevo: $scope.s_ident_new_client_setnombre
+            };
+            var numerosuministro = $scope.s_suministro_setnombre;
+            var url = API_URL + 'cliente/updateSetNameSuministro/' + numerosuministro;
+
+            $http.put(url, data).success(function (response) {
+                if (response.success == true){
+                    $scope.procesarSolicitud('btn-process-setnombre');
+                }
+            }).error(function (res) {
+
+            });
+        };
+
         $scope.actionSetName = function (solicitud) {
-            //$scope.getLastSetName();
+
+            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+
             $scope.getSuministrosForSetName(solicitud.data.codigocliente, solicitud.data.numerosuministro);
             $scope.getIdentifyClientes(solicitud.data.codigocliente, solicitud.data.codigoclientenuevo);
 
@@ -542,9 +557,16 @@
             $scope.transversal_setnombre = solicitud.data.suministro.calle.nombrecalle;
             $scope.tarifa_setnombre = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
 
-            //$scope.t_observacion_setnombre = '';
+            if(solicitud.data.estaprocesada == true) {
+                $('#btn-save-setnombre').prop('disabled', true);
+                $('#btn-process-setnombre').prop('disabled', true);
+                $('#modal-footer-setnombre').hide();
+            } else {
+                $('#btn-save-setnombre').prop('disabled', false);
+                $('#btn-process-setnombre').prop('disabled', false);
+                $('#modal-footer-setnombre').show();
+            }
 
-            //$('#btn-process-setnombre').prop('disabled', true);
             $('#modalActionSetNombre').modal('show');
         };
 

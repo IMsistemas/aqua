@@ -69,9 +69,9 @@
                             <th>Cliente</th>
                             <th>Dirección</th>
                             <th style="width: 10%;">Teléfono</th>
-                            <th style="width: 10%;">Tipo Solicitud</th>
+                            <th style="width: 12%;">Tipo Solicitud</th>
                             <th style="width: 10%;">Estado</th>
-                            <th style="width: 14%;">Acciones</th>
+                            <th style="width: 12%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -398,7 +398,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="modal-footer-setnombre">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
@@ -407,7 +407,7 @@
                                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-primary" id="btn-process-setnombre"
-                                    ng-click="procesarSolicitud('btn-process-setnombre')" >
+                                    ng-click="procesarSolicitudSetName()" ng-disabled="formSetNombre.$invalid" >
                                 Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </button>
                         </div>

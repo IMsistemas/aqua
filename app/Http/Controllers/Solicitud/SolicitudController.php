@@ -146,4 +146,13 @@ class SolicitudController extends Controller
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
+    public function updateSolicitudSetName(Request $request, $id)
+    {
+        $solicitud = SolicitudCambioNombre::find($id);
+        $solicitud->numerosuministro = $request->input('numerosuministro');
+        $solicitud->codigoclientenuevo = $request->input('codigoclientenuevo');
+        $result = $solicitud->save();
+        return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+    }
+
 }
