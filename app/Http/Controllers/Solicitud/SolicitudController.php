@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Solicitud;
 
 
+use App\Modelos\Servicios\ServiciosCliente;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
 use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
@@ -153,6 +154,22 @@ class SolicitudController extends Controller
         $solicitud->codigoclientenuevo = $request->input('codigoclientenuevo');
         $result = $solicitud->save();
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+    }
+
+    public function updateSolicitudServicio(Request $request, $id)
+    {
+        $solicitud = SolicitudServicio::find($id);
+        $list_services = $request->input('servicios');
+        foreach ($list_services as $item) {
+            if ($item['valor'] != 0 && $item['valor'] != '') {
+                $object = ServiciosCliente::where('codigocliente', $solicitud->codigocliente)
+                                            ->where('idserviciojunta', $item['idserviciojunta']);
+                if ($object->update(['valor' => $item['valor']]) == false){
+                    return response()->json(['success' => false]);
+                }
+            }
+        }
+        return response()->json(['success' => true]);
     }
 
 }

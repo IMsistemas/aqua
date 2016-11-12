@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiciosCliente extends Model
 {
     protected $table = "servicioscliente";
+    protected $primary_key = null;
     public $incrementing = false;
     public $timestamps = false;
 

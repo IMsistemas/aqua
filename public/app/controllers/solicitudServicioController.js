@@ -29,6 +29,7 @@
 
         $scope.idsolicitud_to_process = 0;
         $scope.objectAction = null;
+        $scope.services = [];
 
         $scope.initLoad = function () {
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
@@ -616,17 +617,13 @@
 
         $scope.saveSolicitudServicio = function () {
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
                 servicios: $scope.services
             };
-
-            $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
+            var idsolicitud = $scope.num_solicitud_servicio;
+            $http.put(API_URL + 'solicitud/updateSolicitudServicio/' + idsolicitud, solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-servicio').prop('disabled', true);
-                    $('#btn-process-servicio').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $scope.message = 'Se ha actualizado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
@@ -634,8 +631,8 @@
         };
 
         $scope.actionServicioShow = function (solicitud) {
-            //$scope.getLastIDSolicServicio();
-            //$scope.getServicios();
+
+            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
 
             $scope.num_solicitud_servicio = solicitud.data.idsolicitudservicio;
             $scope.t_fecha_process = solicitud.data.fechasolicitud;
@@ -660,6 +657,16 @@
                 array_temp.push(object_service);
             }
             $scope.services = array_temp;
+
+            if(solicitud.data.estaprocesada == true) {
+                $('#btn-save-servicio').prop('disabled', true);
+                $('#btn-process-servicio').prop('disabled', true);
+                $('#modal-footer-servicio').hide();
+            } else {
+                $('#btn-save-servicio').prop('disabled', false);
+                $('#btn-process-servicio').prop('disabled', false);
+                $('#modal-footer-servicio').show();
+            }
 
             $('#modalActionServicio').modal('show');
         };
