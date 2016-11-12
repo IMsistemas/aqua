@@ -301,6 +301,8 @@ Route::post('cliente/storeSolicitudOtro', 'Clientes\ClienteController@storeSolic
 
 Route::put('cliente/processSolicitud/{idsolicitud}', 'Clientes\ClienteController@processSolicitud');
 
+Route::put('cliente/updateSetNameSuministro/{numerosuministro}', 'Clientes\ClienteController@updateSetNameSuministro');
+
 Route::resource('/cliente', 'Clientes\ClienteController');
 
 /*===================================Módulo Sectorizacion===========================================*/

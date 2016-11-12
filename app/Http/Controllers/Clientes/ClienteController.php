@@ -384,6 +384,25 @@ class ClienteController extends Controller
     }
 
     /**
+     * Actualizar cambio de cliente de suministro
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateSetNameSuministro(Request $request, $id)
+    {
+        $suministro = Suministro::find($id);
+        $suministro->codigocliente = $request->input('codigoclientenuevo');
+
+        if ($suministro->save()){
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+
+    /**
      * Almacenar los datos de solicitud de Mantenimiento
      *
      * @param Request $request

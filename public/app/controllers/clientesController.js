@@ -737,6 +737,22 @@
             });
         };
 
+        $scope.procesarSolicitudSetName = function () {
+            var data = {
+                codigoclientenuevo: $scope.s_ident_new_client_setnombre
+            };
+            var numerosuministro = $scope.s_suministro_setnombre;
+            var url = API_URL + 'cliente/updateSetNameSuministro/' + numerosuministro;
+
+            $http.put(url, data).success(function (response) {
+                if (response.success == true){
+                    $scope.procesarSolicitud('btn-process-setnombre');
+                }
+            }).error(function (res) {
+
+            });
+        };
+
         $scope.actionSetName = function () {
             $scope.getLastSetName();
             $scope.getSuministrosForSetName();

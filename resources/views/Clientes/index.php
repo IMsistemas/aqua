@@ -579,7 +579,7 @@
                                                         ng-change="showInfoSuministroForSetName()" ng-pattern="/^[1-9]+$/"></select>
                                                 <span class="help-block error"
                                                       ng-show="formSetNombre.s_suministro_setnombre.$invalid && formSetNombre.s_suministro_setnombre.$error.pattern">
-                                                            Seleccione un Cliente</span>
+                                                            Seleccione un Suministro</span>
                                             </div>
                                         </div>
 
@@ -663,7 +663,7 @@
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-process-setnombre"
-                            ng-click="procesarSolicitud('btn-process-setnombre')" disabled>
+                            ng-click="procesarSolicitudSetName()" disabled>
                         Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                 </div>
