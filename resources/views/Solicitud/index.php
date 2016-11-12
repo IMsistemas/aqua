@@ -119,7 +119,7 @@
 
 
 
-            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage"  style="z-index: 999999;">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header modal-header-success">
@@ -528,7 +528,7 @@
 
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="modal-footer-mant">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
@@ -536,14 +536,8 @@
                                     ng-click="saveSolicitudMantenimiento()" ng-disabled="formMant.$invalid">
                                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
-
-                            <!--<button type="button" class="btn btn-success" id="btn-save-otro"
-                                    ng-click="saveSolicitudOtro();" ng-disabled="formMant.$invalid">
-                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-                            </button>-->
-
                             <button type="button" class="btn btn-primary" id="btn-process-mant"
-                                    ng-click="procesarSolicitud('btn-process-mant')" disabled>
+                                    ng-click="procesarSolicitud('btn-process-mant')" >
                                 Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </button>
                         </div>
@@ -625,7 +619,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="modal-footer-otro">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
@@ -634,7 +628,7 @@
                                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-primary" id="btn-process-otro"
-                                    ng-click="procesarSolicitud('btn-process-otro')" disabled>
+                                    ng-click="procesarSolicitud('btn-process-otro')" >
                                 Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </button>
                         </div>

@@ -27,6 +27,9 @@
         ];
         $scope.t_tipo_solicitud = 6;
 
+        $scope.idsolicitud_to_process = 0;
+        $scope.objectAction = null;
+
         $scope.initLoad = function () {
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
 
@@ -259,16 +262,13 @@
 
         $scope.saveSolicitudOtro = function () {
             var solicitud = {
-                codigocliente: $scope.h_codigocliente_otro,
                 observacion: $scope.t_observacion_otro
             };
-            $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
+            var idsolicitud = $scope.num_solicitud_otro;
+            $http.put(API_URL + 'solicitud/updateSolicitudOtro/' + idsolicitud, solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-otro').prop('disabled', true);
-                    $('#btn-process-otro').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $scope.message = 'Se ha actualizado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
 
                     $scope.hideModalMessage();
@@ -277,6 +277,8 @@
         };
 
         $scope.actionOtro = function (solicitud) {
+
+            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
 
             $scope.num_solicitud_otro = solicitud.data.idsolicitudotro;
 
@@ -294,9 +296,11 @@
             if(solicitud.data.estaprocesada == true) {
                 $('#btn-save-otro').prop('disabled', true);
                 $('#btn-process-otro').prop('disabled', true);
+                $('#modal-footer-otro').hide();
             } else {
                 $('#btn-save-otro').prop('disabled', false);
                 $('#btn-process-otro').prop('disabled', false);
+                $('#modal-footer-otro').show();
             }
 
             $('#modalActionOtro').modal('show');
@@ -349,17 +353,14 @@
 
         $scope.saveSolicitudMantenimiento = function () {
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
                 numerosuministro: $scope.s_suministro_mant,
                 observacion: $scope.t_observacion_mant
             };
-            $http.post(API_URL + 'cliente/storeSolicitudMantenimiento', solicitud).success(function(response){
+            var idsolicitud = $scope.num_solicitud_mant;
+            $http.put(API_URL + 'solicitud/updateSolicitudMantenimiento/' + idsolicitud, solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-mant').prop('disabled', true);
-                    $('#btn-process-mant').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $scope.message = 'Se ha actualizado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
@@ -367,7 +368,8 @@
         };
 
         $scope.actionMantenimiento = function (solicitud) {
-            //$scope.getLastIDMantenimiento();
+
+            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
             $scope.getSuministros(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
 
             $scope.num_solicitud_mant = solicitud.data.idsolicitudmantenimiento;
@@ -386,7 +388,16 @@
 
             $scope.t_observacion_mant = solicitud.data.observacion;
 
-            //$('#btn-process-mant').prop('disabled', true);
+            if(solicitud.data.estaprocesada == true) {
+                $('#btn-save-mant').prop('disabled', true);
+                $('#btn-process-mant').prop('disabled', true);
+                $('#modal-footer-mant').hide();
+            } else {
+                $('#btn-save-mant').prop('disabled', false);
+                $('#btn-process-mant').prop('disabled', false);
+                $('#modal-footer-mant').show();
+            }
+
             $('#modalActionMantenimiento').modal('show');
         };
 
@@ -824,7 +835,40 @@
             });
         };
 
+        /*
+         *  FUNCTION TO PROCESS-----------------------------------------------------------------------------------------
+         */
 
+        $scope.procesarSolicitud = function (id_btn) {
+            var url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
+
+            var data = {
+                idsolicitud: $scope.idsolicitud_to_process
+            };
+
+            $http.put(url, data ).success(function (response) {
+                $scope.idsolicitud_to_process = 0;
+
+                $scope.initLoad();
+
+                $('#' + id_btn).prop('disabled', true);
+
+                $('#modalActionSuministro').modal('hide');
+                $('#modalActionServicio').modal('hide');
+                $('#modalActionOtro').modal('hide');
+                $('#modalActionSetNombre').modal('hide');
+                $('#modalActionMantenimiento').modal('hide');
+                $('#modalAction').modal('hide');
+
+                $scope.message = 'Se procesó correctamente la solicitud...';
+                $('#modalMessage').modal('show');
+
+                $scope.hideModalMessage();
+
+            }).error(function (res) {
+
+            });
+        };
 
         $scope.info = function (solicitud) {
             if(solicitud.tipo == 'Otra Solicitud') {
@@ -838,6 +882,10 @@
             } else if(solicitud.tipo == 'Suministro') {
                 $scope.actionSuministro(solicitud);
             }
+        };
+
+        $scope.hideModalMessage = function () {
+            setTimeout("$('#modalMessage').modal('hide')", 3000);
         };
 
         $scope.initLoad();
