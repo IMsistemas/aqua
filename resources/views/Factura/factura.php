@@ -40,13 +40,13 @@
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
+            <select  id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
                     ng-options="value.id as value.label for value in anios"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_mes" class="form-control" ng-model="s_mes" ng-change="FiltrarPorMes()"
-                    ng-options="value.id as value.label for value in mesess"></select>
+            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="FiltrarPorMes()"
+                    ng-options="value.id as value.label for value in meses"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
@@ -94,11 +94,11 @@
                 <td>{{item.estado}}</td>
                 <td>{{item.total}}</td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDelete(item)">
-                        <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                    <button type="button" class="btn btn-success btn-sm" ng-click="showModalDelete(item)">
+                        <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfo(item)">
-                        <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                    <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
+                        <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                     </button>
 
                 </td>
@@ -111,16 +111,12 @@
         <div class="modal-dialog" role="document" style="width: 60%;">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-11 col-xs-12">
                         <h4 class="modal-title">Factura</h4>
                     </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="form-group">
-                            <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <div class="col-sm-1 col-xs-12 text-right">
+                                <div class="col-xs-2"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="modal-body">
@@ -153,7 +149,7 @@
                                             <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Teléfono:</span> {{telf_cliente}}
+                                            <span class="label label-default" style="font-size: 12px !important;">Telef. Celular:</span> {{telf_cliente}}
                                         </div>
                                     </div>
                                    </fieldset>
@@ -172,10 +168,41 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="item in facturas|filter:busqueda" ng-cloak>
-                                                <td></td>
-                                                <td></td>
+                                            <tr>
+                                                <td> Consumo Agua {{mes}}</td>
+                                                <td> {{consumo_agua}}</td>
                                             </tr>
+                                            <tr>
+                                                <td> Excedente Agua {{mes}}</td>
+                                                <td> {{excedente_agua}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Valores Atrasados </td>
+                                                <td> {{valores_atrasados}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Desechos Sólidos</td>
+                                                <td> {{desechos_solidos}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Alcantarillado</td>
+                                                <td> {{consumo_agua}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Tarifa Ambiente</td>
+                                                <td> {{tarifa_ambiente}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Otros</td>
+                                                <td> {{otros}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Multa Asamblea
+                                                </td>
+                                                <td> {{multa_asamblea}}</td>
+                                            </tr>
+
+
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -205,7 +232,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 99999;">
         <div class="modal-dialog" role="document">

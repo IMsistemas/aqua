@@ -206,7 +206,8 @@ class ClienteController extends Controller
      */
     public function getBarrios()
     {
-        return Barrio::orderBy('nombrebarrio', 'asc')->get();
+
+       return Barrio::orderBy('nombrebarrio', 'asc')->get();
     }
 
     /**
