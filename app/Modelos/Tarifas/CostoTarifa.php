@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CostoTarifa extends Model
 {
-    protected $table = "costotarifa";
+
+    protected $table = 'costotarifa';
+    protected $primaryKey = 'idcosto';
     public $timestamps = false;
 
-    public function tarifa (){
-    	return $this->belongsTo('App\Modelos\Tarifas\tarifa');
-    }
+
 }

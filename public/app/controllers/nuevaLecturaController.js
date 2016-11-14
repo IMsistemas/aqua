@@ -22,7 +22,7 @@
 
         $scope.initData = function(){
 
-            $scope.createTableRubros();
+            //$scope.createTableRubros();
 
             $http.get(API_URL + 'nuevaLectura/lastId').success(function(response){
 
@@ -89,12 +89,12 @@
                             $scope.lectura_actual = lectura_actual;
                             $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
 
-                            $scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
+                            //$scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
 
-                            $scope.nombre_cliente = response.suministro[0].cliente.apellido + ' ' + response.suministro[0].cliente.nombre;
+                            $scope.nombre_cliente = response.suministro[0].cliente.apellidos + ', ' + response.suministro[0].cliente.nombres;
                             $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
                             $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
-                            $scope.tarifa = response.suministro[0].tarifa.nombretarifa;
+                            $scope.tarifa = response.suministro[0].aguapotable.nombretarifaaguapotable;
 
                             $('#btn_export_pdf').prop('disabled', false);
                             $('#btn_print_pdf').prop('disabled', false);

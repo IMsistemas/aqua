@@ -120,16 +120,28 @@
                             <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
                                 <div class="col-xs-12" style="background: #e3f2fd; border: solid 1px #e0e0e0; border-radius: 5px; padding: 10px;" ng-cloak>
                                     <p>
-                                        <span><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Cliente:</span> </span>{{nombre_cliente}}
+                                        <span style="font-weight: bold; font-size: 14px !important;" class="label label-default">
+                                            <i class="fa fa-user" aria-hidden="true"></i> Cliente:
+                                        </span>
+                                        {{nombre_cliente}}
                                     </p>
                                     <p>
-                                        <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Barrio:</span> </span>{{barrio}}
+                                        <span style="font-weight: bold; font-size: 14px !important;" class="label label-default">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i> Barrio:
+                                        </span>
+                                        {{barrio}}
                                     </p>
                                     <p>
-                                        <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Calle:</span> </span>{{calle}}
+                                        <span style="font-weight: bold; font-size: 14px !important;" class="label label-default">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i> Calle:
+                                        </span>
+                                        {{calle}}
                                     </p>
                                     
-                                    <span class=""><span style="font-weight: bold; font-size: 14px !important;" class="label label-default">Tarifa:</span> </span>{{tarifa}}
+                                    <span style="font-weight: bold; font-size: 14px !important;" class="label label-default">
+                                        <i class="fa fa-list" aria-hidden="true"></i> Tarifa:
+                                    </span>
+                                    {{tarifa}}
                                     
                                 </div>
                             </div>
@@ -138,8 +150,8 @@
                                     <table class="table table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
-                                                <th>L. Anterior</th>
-                                                <th>L. Actual</th>
+                                                <th><i class="fa fa-search" aria-hidden="true"></i> Lectura Anterior</th>
+                                                <th><i class="fa fa-search" aria-hidden="true"></i> Lectura Actual</th>
                                                 <th>Consumo (m3)</th>
                                             </tr>
                                         </thead>
@@ -161,7 +173,8 @@
                             <legend>Detalle de Consumo:</legend>
 
                             <div class="col-xs-12" ng-cloak>
-                                <span style="font-size: 14px !important;" class="label label-default">Meses Atrasados: {{meses_atrasados}}</span>
+                                <span style="font-weight: bold; font-size: 14px !important;" class="label label-default">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i> Meses Atrasados: {{meses_atrasados}}</span>
                             </div>
                             <div class="col-xs-12" style="margin-top: 15px;">
                                 <table class="table table-bordered table-striped table-hover">
@@ -265,7 +278,8 @@
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
 
-
+    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
 
     <script src="<?= asset('js/moment.min.js') ?>"></script>
     <script src="<?= asset('js/es.js') ?>"></script>

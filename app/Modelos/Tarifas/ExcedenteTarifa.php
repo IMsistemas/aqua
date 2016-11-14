@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExcedenteTarifa extends Model
 {
+
     protected $table = "excedentetarifa";
+    protected $primaryKey = 'idexcedente';
     public $timestamps = false;
 
-    public function tarifa (){
-    	return $this->belongsTo('App\Modelos\Tarifas\Tarifa');
-    }
+
 }

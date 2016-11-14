@@ -62,7 +62,7 @@ class LecturaController extends Controller
                             ->count();
 
         if ($count == 0) {
-            $suministro = Suministro::with('cliente', 'tarifa', 'calle.barrio')
+            $suministro = Suministro::with('cliente', 'aguapotable', 'calle.barrio')
                                         ->where('suministro.numerosuministro', $filter->id)
                                         ->get();
             $lectura = Lectura::where('numerosuministro', $filter->id)
