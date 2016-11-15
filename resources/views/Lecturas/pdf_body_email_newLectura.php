@@ -115,7 +115,7 @@
 
 
 
-<div class="container" style="margin-top: 5%;">
+<div class="container" style="margin-top: 2%;">
 
     <table style="width: 100%;">
         <tr>
@@ -204,8 +204,8 @@
         <?php foreach ($data->rubros as $item){ ?>
 
             <tr>
-                <td><?= $item->nombrerubro ?></td>
-                <td style="text-align: right;"><?= $item->valorrubro ?></td>
+                <td><?= $item->nombreservicio ?></td>
+                <td style="text-align: right;"><?= $item->valor ?></td>
             </tr>
 
         <?php } ?>

@@ -51,7 +51,7 @@
                                 <label class="col-sm-4 control-label">Fecha Ingreso:</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control datepicker" name="t_fecha_ing"
-                                           id="t_fecha_ing" ng-model="t_fecha_ing" ng-required="true"  />
+                                           id="t_fecha_ing" ng-model="t_fecha_ing" ng-required="true" disabled />
                                     <span class="help-block error"
                                           ng-show="formNewLectura.t_fecha_ing.$invalid && formNewLectura.t_fecha_ing.$touched">La fecha de ingreso es requerida</span>
                                 </div>

@@ -149,12 +149,12 @@
             $('#modalConfirm').modal('hide');
             $('#myModalProgressBar').modal('show');
 
-            /*var text_mes = '';
+            var text_mes = '';
             for (var i = 0; i < 12; i++){
                 if ($scope.meses[i].id == $scope.s_mes) {
                     text_mes = $scope.meses[i].name;
                 }
-            }*/
+            }
 
             /*var longitud = ($scope.rubros).length;
 
@@ -168,7 +168,7 @@
                 array_rubros.push(object);
             }*/
 
-            /*var filters = {
+            var filters = {
                  fecha: $scope.t_fecha_ing,
                  no_lectura: $scope.t_no_lectura,
                  anno: $scope.s_anno,
@@ -185,8 +185,8 @@
                  consumo: $scope.consumo,
                  meses_atrasados: $scope.meses_atrasados,
                  total: $scope.total,
-                 rubros: array_rubros
-             };*/
+                 rubros: $scope.rubros
+             };
 
 
             var lectura_data = {
@@ -202,9 +202,9 @@
                 mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
 
-                /*rubros: $scope.rubros,
+                /*rubros: $scope.rubros,*/
 
-                pdf: JSON.stringify(filters),*/
+                pdf: JSON.stringify(filters)
 
             };
 
