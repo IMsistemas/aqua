@@ -66,7 +66,7 @@ class SolicitudController extends Controller
             if ($filter_view->estado == 2) $estado = false;
 
             if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                                         ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 4){
                 $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')->orderBy('fechasolicitud', 'desc')
@@ -81,7 +81,7 @@ class SolicitudController extends Controller
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
@@ -95,7 +95,7 @@ class SolicitudController extends Controller
 
         } else {
             if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else if ($filter_view->tipo == 4){
                 $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
@@ -110,7 +110,7 @@ class SolicitudController extends Controller
                 $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
                     ->orderBy('fechasolicitud', 'desc')->get();
             } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio')
+                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                                                                 ->orderBy('fechasolicitud', 'desc')->get();
                 $solicitudotro = SolicitudOtro::with('cliente')
                     ->orderBy('fechasolicitud', 'desc')->get();
@@ -170,6 +170,15 @@ class SolicitudController extends Controller
             }
         }
         return response()->json(['success' => true]);
+    }
+
+    public function updateSolicitudSuministro(Request $request, $id)
+    {
+        $solicitud = SolicitudSuministro::find($id);
+        $solicitud->direccioninstalacion = $request->input('direccionsuministro');
+        $solicitud->telefonosuminstro = $request->input('telefonosuministro');
+        $result = $solicitud->save();
+        return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
 }

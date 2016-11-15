@@ -30,6 +30,7 @@
         $scope.idsolicitud_to_process = 0;
         $scope.objectAction = null;
         $scope.services = [];
+        $scope.codigoclienteSuministro = 0;
 
         $scope.initLoad = function () {
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
@@ -752,6 +753,8 @@
             //$scope.getLastIDSolSuministro();
             //$scope.getLastIDSuministro();
 
+            $scope.codigoclienteSuministro = solicitud.data.codigocliente;
+
             if (solicitud.data.suministro != null) {
                 $scope.getTarifas(solicitud.data.suministro.idtarifaaguapotable);
                 $scope.getBarrios(solicitud.data.suministro.calle.idbarrio);
@@ -797,29 +800,55 @@
         };
 
         $scope.saveSolicitudSuministro = function () {
+
+            var data = {
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+            };
+            var idsolicitud = $scope.num_solicitud_suministro;
+            $http.put(API_URL + 'solicitud/updateSolicitudSuministro/' + idsolicitud, data).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $('#btn-process-solsuministro').prop('disabled', false);
+                    $scope.message = 'Se ha actualizado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+            });
+        };
+
+        $scope.procesarSolicitudSuministro = function () {
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.codigoclienteSuministro,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
                 valor: $scope.total_suministro,
                 dividendos: $scope.s_suministro_credito,
-                valor_partial: $scope.total_partial
+                valor_partial: $scope.total_partial,
+                idsolicitud: $scope.num_solicitud_suministro
             };
 
-            $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
-                if(response.success == true){
-                    $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-solsuministro').prop('disabled', true);
-                    $('#btn-process-solsuministro').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
-                    $('#modalMessage').modal('show');
-                    $scope.hideModalMessage();
-                }
+            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
+
+            $http.put(url, data ).success(function (response) {
+                $scope.initLoad();
+                $scope.codigoclienteSuministro = 0;
+                //$('#btn-process-solsuministro').prop('disabled', true);
+
+                $('#modalActionSuministro').modal('hide');
+                //$('#modalAction').modal('hide');
+
+                $scope.message = 'Se procesó correctamente la solicitud...';
+                $('#modalMessage').modal('show');
+
+                $scope.hideModalMessage();
+
+            }).error(function (res) {
+
             });
         };
 
