@@ -19,6 +19,8 @@
         ];
 
         $scope.rubros = [];
+        $scope.excedente = 0;
+        $scope.valormesesatrasados = 0;
 
         $scope.initData = function(){
 
@@ -60,13 +62,10 @@
                 console.log(response);
 
                 if (response.success == true){
-                    if (response.length == 0){
-
+                    if (response.suministro.length == 0){
                         $scope.message = 'No exite registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
-
                     } else {
-
                         var lectura_anterior = 0;
                         var lectura_actual = 0;
 
@@ -111,7 +110,7 @@
             });
         };
 
-        $scope.createTableRubros = function(){
+        /*$scope.createTableRubros = function(){
 
             $http.get(API_URL + 'nuevaLectura/getRubros').success(function(response) {
 
@@ -120,7 +119,7 @@
                 $scope.total = '$ 0.00';
 
             });
-        }
+        }*/
 
         $scope.getValueRublos = function(consumo, tarifa){
             var id = $scope.t_no_suministro;
@@ -130,6 +129,8 @@
                 console.log(response);
                 $scope.meses_atrasados =  response.cant_meses_atrasados;
                 $scope.rubros = response.value_tarifas;
+                $scope.excedente = response.excedente;
+                $scope.valormesesatrasados = response.valor_meses_atrasados;
 
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
@@ -142,20 +143,20 @@
 
         $scope.confirmSave = function(){
             $('#modalConfirm').modal('show');
-        }
+        };
 
         $scope.save = function(){
             $('#modalConfirm').modal('hide');
             $('#myModalProgressBar').modal('show');
 
-            var text_mes = '';
+            /*var text_mes = '';
             for (var i = 0; i < 12; i++){
                 if ($scope.meses[i].id == $scope.s_mes) {
                     text_mes = $scope.meses[i].name;
                 }
-            }
+            }*/
 
-            var longitud = ($scope.rubros).length;
+            /*var longitud = ($scope.rubros).length;
 
             var array_rubros = [];
 
@@ -165,9 +166,9 @@
                     valorrubro: ($scope.rubros)[i].valorrubro,
                 }
                 array_rubros.push(object);
-            }
+            }*/
 
-            var filters = {
+            /*var filters = {
                  fecha: $scope.t_fecha_ing,
                  no_lectura: $scope.t_no_lectura,
                  anno: $scope.s_anno,
@@ -185,35 +186,31 @@
                  meses_atrasados: $scope.meses_atrasados,
                  total: $scope.total,
                  rubros: array_rubros
-             };
+             };*/
 
 
-            $scope.lectura_data = {
+            var lectura_data = {
                 fechalectura: convertDatetoDB($scope.t_fecha_ing),
-
                 anno: $scope.s_anno,
                 mes: $scope.s_mes,
-
                 numerosuministro: $scope.t_no_suministro,
                 lecturaanterior: $scope.lectura_anterior,
                 lecturaactual: $scope.lectura_actual,
                 consumo: $scope.consumo,
-
-                valorconsumo: $scope.rubros[0].valorrubro,
-                excedente: $scope.rubros[1].valorrubro,
-                valormesesatrasados: parseFloat($scope.rubros[2].valorrubro),
+                excedente: $scope.excedente,
+                valormesesatrasados: $scope.valormesesatrasados,
                 mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
 
-                rubros: $scope.rubros,
+                /*rubros: $scope.rubros,
 
-                pdf: JSON.stringify(filters),
+                pdf: JSON.stringify(filters),*/
 
             };
 
             var url = API_URL + "nuevaLectura";
 
-            $http.post(url, $scope.lectura_data ).success(function (response) {
+            $http.post(url, lectura_data ).success(function (response) {
 
                 $('#myModalProgressBar').modal('hide');
                 $('#btn_save').prop('disabled', true);
@@ -231,6 +228,8 @@
                 $scope.consumo = '';
                 $scope.meses_atrasados = 0;
                 $scope.total = '$0.00';
+
+                $scope.rubros = [];
 
                 $scope.initData();
 

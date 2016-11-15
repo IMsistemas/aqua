@@ -131,8 +131,16 @@ class LecturaController extends Controller
             $valormesesatrasados = 0;
             $mesesatrasados = 0;
         } else {
-            $valormesesatrasados = $atraso[0]->valormesesatrasados;
-            $mesesatrasados = $atraso[0]->mesesatrasados;
+
+            if ($atraso[0]->mesesatrasados == 0){
+                $mesesatrasados = 1;
+            } else {
+                $mesesatrasados = $atraso[0]->mesesatrasados + 1;
+            }
+
+            $valormesesatrasados = $atraso[0]->valor;
+            settype($valormesesatrasados, 'float');
+
         }
 
         return ['cant_meses_atrasados' => $mesesatrasados, 'valor_meses_atrasados' => $valormesesatrasados];
@@ -177,7 +185,10 @@ class LecturaController extends Controller
             $value_return[] = $servicio;
         }
 
-        return ['value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados']];
+        return [
+            'value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados'],
+            'excedente' => $excedente, 'valor_meses_atrasados' => $meses_atrasados['valor_meses_atrasados']
+        ];
     }
 
     /**
@@ -351,33 +362,24 @@ class LecturaController extends Controller
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
         $lectura->lecturaanterior = $request->input('lecturaanterior');
+        $lectura->excedente = $request->input('excedente');
         $lectura->consumo = $request->input('consumo');
-
         $lectura->save();
 
-        $cobroagua = CobroAgua::where('numerosuministro', '=', $request->input('numerosuministro'))
-                                ->whereRaw('EXTRACT( MONTH FROM fechaperiodo) = ' . $request->input('mes'))
-                                ->whereRaw('EXTRACT( YEAR FROM fechaperiodo) = ' . $request->input('anno'))
+        $cobroagua = CobroAgua::where('numerosuministro', $request->input('numerosuministro'))
+                                ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . $request->input('mes'))
+                                ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . $request->input('anno'))
                                 ->get()->first();
 
         $cobroagua->idlectura =  $lectura->idlectura;
-        $cobroagua->consumom3 = $request->input('consumo');
-        $cobroagua->valorconsumo = $request->input('valorconsumo');
         $cobroagua->valorexcedente = $request->input('excedente');
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
-        $cobroagua->total = $request->input('total');
-        $cobroagua->estapagada = false;
-
+        $cobroagua->valor = $request->input('total');
+        $cobroagua->estapagado = false;
         $cobroagua->save();
 
-        foreach ($request->input('rubros') as $rubro) {
-            if ($rubro['type'] == 'rubrofijo') {
-                $cobroagua->rubrosfijos()->attach($rubro['id'],['costorubro' => $rubro['valorrubro']]);
-            }
-        }
-
-        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombre', 'cliente.apellido')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
@@ -427,7 +429,7 @@ class LecturaController extends Controller
             if ($result->status == 0) {
                 die('Bad status returned. Error: '. $result->error);
             }
-        }
+        }*/
 
         return response()->json(['success' => true]);
     }
