@@ -41,8 +41,8 @@ class ViewLecturaController extends Controller
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
     						->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
-                                        'cliente.apellido')
+                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
+                                        'cliente.apellidos')
                             ->whereRaw('EXTRACT( MONTH FROM fechalectura) = ' . date('m'))
                             ->whereRaw('EXTRACT( YEAR FROM fechalectura) = ' . date('Y'))
                             ->get();

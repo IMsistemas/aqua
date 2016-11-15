@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
     <html lang="es-ES" ng-app="softver-aqua">
     <head>
         <meta charset="UTF-8">
@@ -15,9 +15,13 @@
             .dataclient{
                 font-weight: bold;
             }
+
+            td{
+                vertical-align: middle !important;
+            }
         </style>
 
-    </head> -->
+    </head>
     <div ng-controller="viewLecturaController">
 
         <div class="col-xs-12" style="margin-top: 2%;">
@@ -118,18 +122,18 @@
                         <tbody>
                             <tr ng-repeat="lectura in lecturas" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
-                                <td><i class="fa fa-user" ></i> {{lectura.apellido + ' ' + lectura.nombre}}</td>
+                                <td><i class="fa fa-user" ></i> {{lectura.apellidos + ' ' + lectura.nombres}}</td>
                                 <td class="text-right">{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
                                 <td  class="text-right">
                                    <span ng-if="verifyDate(lectura.fechalectura) == true">
-                                       <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
-                                              string-to-number ng-model="lectura.lecturaactual">
+                                       <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                               ng-model="lectura.lecturaactual">
                                    </span>
                                     <span ng-if="verifyDate(lectura.fechalectura) == false">
-                                       <input type="number" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
-                                              string-to-number ng-model="lectura.lecturaactual" disabled>
+                                       <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                              ng-model="lectura.lecturaactual" disabled>
                                    </span>
                                 </td>
                                 <td class="text-right">{{lectura.consumo}}</td>
@@ -174,19 +178,21 @@
     </div>
 
 
-  <!--   <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-  <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-  <script src="<?= asset('js/jquery.min.js') ?>"></script>
-  <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+    <script src="<?= asset('js/jquery.min.js') ?>"></script>
+    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+
+    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
+    <script src="<?= asset('js/moment.min.js') ?>"></script>
+    <script src="<?= asset('js/es.js') ?>"></script>
+    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
+
+    <!-- AngularJS Application Scripts -->
+    <script src="<?= asset('app/app.js') ?>"></script>
+    <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
   
   
-  <script src="<?= asset('js/moment.min.js') ?>"></script>
-  <script src="<?= asset('js/es.js') ?>"></script>
-  <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-  
-  AngularJS Application Scripts
-  <script src="<?= asset('app/app.js') ?>"></script>
-  <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
-  
-  
-  </html> -->
+  </html>

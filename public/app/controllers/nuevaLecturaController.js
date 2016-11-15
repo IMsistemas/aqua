@@ -63,7 +63,7 @@
 
                 if (response.success == true){
                     if (response.suministro.length == 0){
-                        $scope.message = 'No exite registro del Número de Suministro Insertado...';
+                        $scope.message = 'No existe registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
                     } else {
                         var lectura_anterior = 0;
