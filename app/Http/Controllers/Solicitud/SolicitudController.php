@@ -27,6 +27,11 @@ class SolicitudController extends Controller
         return view('Solicitud/index');
     }
 
+    /**
+     * Obtener todas las solicitudes independientemente de su tipo
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getSolicitudes()
     {
         $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
@@ -50,6 +55,12 @@ class SolicitudController extends Controller
         ]);
     }
 
+    /**
+     * Obtener mediante filtros de busqueda, las solicitudes que correspondan
+     *
+     * @param $filter
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getByFilter($filter)
     {
         $filter_view = json_decode($filter);
@@ -130,6 +141,13 @@ class SolicitudController extends Controller
         ]);
     }
 
+    /**
+     * Actualizar Tipo Otras Solicitudes
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateSolicitudOtro(Request $request, $id)
     {
         $solicitud = SolicitudOtro::find($id);
@@ -138,6 +156,13 @@ class SolicitudController extends Controller
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
+    /**
+     * Actualizar Tipo Solicitud de Mantenimiento
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateSolicitudMantenimiento(Request $request, $id)
     {
         $solicitud = SolicitudMantenimiento::find($id);
@@ -147,6 +172,13 @@ class SolicitudController extends Controller
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
+    /**
+     * Actualizar Tipo de Solicitud de Cambio de Nombre
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateSolicitudSetName(Request $request, $id)
     {
         $solicitud = SolicitudCambioNombre::find($id);
@@ -156,6 +188,13 @@ class SolicitudController extends Controller
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
+    /**
+     * Actualizar Tipo de Solicitud de Servicios
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateSolicitudServicio(Request $request, $id)
     {
         $solicitud = SolicitudServicio::find($id);
@@ -172,6 +211,13 @@ class SolicitudController extends Controller
         return response()->json(['success' => true]);
     }
 
+    /**
+     * Actualizar Tipo de Solicitud de Suministros
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateSolicitudSuministro(Request $request, $id)
     {
         $solicitud = SolicitudSuministro::find($id);

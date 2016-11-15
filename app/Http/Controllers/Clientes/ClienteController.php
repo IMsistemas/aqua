@@ -432,6 +432,13 @@ class ClienteController extends Controller
         return response()->json(['success' => true]);
     }
 
+    /**
+     * Procesar especificamente la Solicitud de Suministro
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function processSolicitudSuministro(Request $request, $id)
     {
         $fecha_actual = date('Y-m-d');
@@ -484,6 +491,7 @@ class ClienteController extends Controller
         } else return response()->json(['success' => false]);
 
     }
+
 
     /*
      * FIN SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES--------------------------------------------
