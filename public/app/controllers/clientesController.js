@@ -279,7 +279,7 @@
             });
         };
 
-        $scope.getCalles = function(){
+        $scope.getCalles = function() {
             var idbarrio = $scope.s_suministro_zona;
 
             if (idbarrio != 0) {
@@ -423,6 +423,41 @@
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
+            });
+        };
+
+        $scope.procesarSolicitudSuministro = function () {
+            var data = {
+                idtarifa: $scope.s_suministro_tarifa,
+                idcalle: $scope.s_suministro_transversal,
+                garantia: $scope.t_suministro_garantia,
+                codigocliente: $scope.objectAction.codigocliente,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+                idproducto: $scope.idproducto,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+                idsolicitud: $scope.idsolicitud_to_process
+            };
+
+            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
+
+            $http.put(url, data ).success(function (response) {
+                $scope.idsolicitud_to_process = 0;
+
+                $('#btn-process-solsuministro').prop('disabled', true);
+
+                $('#modalActionSuministro').modal('hide');
+                $('#modalAction').modal('hide');
+
+                $scope.message = 'Se procesó correctamente la solicitud...';
+                $('#modalMessage').modal('show');
+
+                $scope.hideModalMessage();
+
+            }).error(function (res) {
+
             });
         };
 

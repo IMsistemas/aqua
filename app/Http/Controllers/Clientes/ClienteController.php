@@ -286,58 +286,16 @@ class ClienteController extends Controller
     {
         $fecha_actual = date('Y-m-d');
 
-        $suministro = new Suministro();
-        $suministro->idcalle = $request->input('idcalle');
-        $suministro->codigocliente = $request->input('codigocliente');
-        $suministro->idtarifaaguapotable = $request->input('idtarifa');
-        $suministro->direccionsumnistro = $request->input('direccionsuministro');
-        $suministro->telefonosuministro = $request->input('telefonosuministro');
-        $suministro->fechainstalacionsuministro = $fecha_actual;
-        $suministro->idproducto = $request->input('idproducto');
+        $solicitudsuministro = new SolicitudSuministro();
+        $solicitudsuministro->codigocliente = $request->input('codigocliente');
+        $solicitudsuministro->fechasolicitud = $fecha_actual;
+        $solicitudsuministro->estaprocesada = false;
+        $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
+        $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
 
-        if ($suministro->save() != false) {
-            $solicitudsuministro = new SolicitudSuministro();
-            $solicitudsuministro->codigocliente = $request->input('codigocliente');
-            $solicitudsuministro->fechasolicitud = $fecha_actual;
-            $solicitudsuministro->estaprocesada = false;
-            $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
-            $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
-            $solicitudsuministro->numerosuministro = $suministro->numerosuministro;
-
-            if ($solicitudsuministro->save() != false) {
-
-                $max_idsolicitud = SolicitudSuministro::where('idsolicitudsuministro', $solicitudsuministro->idsolicitudsuministro)
-                                                            ->get();
-                $cxc = new CuentasPorCobrarSuministro();
-                $cxc->codigocliente = $request->input('codigocliente');
-                $cxc->numerosuministro = $suministro->numerosuministro;
-                $cxc->fecha = $fecha_actual;
-                $cxc->dividendos = $request->input('dividendos');
-                $cxc->pagoporcadadividendo = $request->input('valor');
-                $cxc->pagototal = $request->input('valor_partial');
-
-                if ($cxc->save() != false) {
-
-                    if ($request->input('garantia') != '' && $request->input('garantia') != 0) {
-
-                        $cxp_cliente = new CuentasPorPagarClientes();
-                        $cxp_cliente->codigocliente = $request->input('codigocliente');
-                        $cxp_cliente->valor = $request->input('garantia');
-                        $cxp_cliente->fecha = $fecha_actual;
-                        if ($cxp_cliente->save() != false) {
-
-                            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
-
-                        } else return response()->json(['success' => false]);
-
-                    } else return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
-
-                } else return response()->json(['success' => false]);
-
-            } else return response()->json(['success' => false]);
-
+        if ($solicitudsuministro->save() != false) {
+            return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
         } else return response()->json(['success' => false]);
-
     }
 
     /**
@@ -472,6 +430,59 @@ class ClienteController extends Controller
         $solicitud->save();
 
         return response()->json(['success' => true]);
+    }
+
+    public function processSolicitudSuministro(Request $request, $id)
+    {
+        $fecha_actual = date('Y-m-d');
+
+        $suministro = new Suministro();
+        $suministro->idcalle = $request->input('idcalle');
+        $suministro->codigocliente = $request->input('codigocliente');
+        $suministro->idtarifaaguapotable = $request->input('idtarifa');
+        $suministro->direccionsumnistro = $request->input('direccionsuministro');
+        $suministro->telefonosuministro = $request->input('telefonosuministro');
+        $suministro->fechainstalacionsuministro = $fecha_actual;
+        $suministro->idproducto = $request->input('idproducto');
+
+        if ($suministro->save() != false) {
+            $solicitudsuministro = SolicitudSuministro::find($id);
+            $solicitudsuministro->estaprocesada = true;
+            $solicitudsuministro->fechaprocesada = date('Y-m-d');
+            $solicitudsuministro->numerosuministro = $suministro->numerosuministro;
+
+            if ($solicitudsuministro->save() != false) {
+
+                $cxc = new CuentasPorCobrarSuministro();
+                $cxc->codigocliente = $request->input('codigocliente');
+                $cxc->numerosuministro = $suministro->numerosuministro;
+                $cxc->fecha = $fecha_actual;
+                $cxc->dividendos = $request->input('dividendos');
+                $cxc->pagoporcadadividendo = $request->input('valor');
+                $cxc->pagototal = $request->input('valor_partial');
+
+                if ($cxc->save() != false) {
+
+                    if ($request->input('garantia') != '' && $request->input('garantia') != 0) {
+
+                        $cxp_cliente = new CuentasPorPagarClientes();
+                        $cxp_cliente->codigocliente = $request->input('codigocliente');
+                        $cxp_cliente->valor = $request->input('garantia');
+                        $cxp_cliente->fecha = $fecha_actual;
+                        if ($cxp_cliente->save() != false) {
+
+                            return response()->json(['success' => true]);
+
+                        } else return response()->json(['success' => false]);
+
+                    } else return response()->json(['success' => true]);
+
+                } else return response()->json(['success' => false]);
+
+            } else return response()->json(['success' => false]);
+
+        } else return response()->json(['success' => false]);
+
     }
 
     /*
