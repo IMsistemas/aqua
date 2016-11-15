@@ -27,7 +27,7 @@
         <div class="col-xs-12" style="margin-top: 2%;">
             <fieldset>
 
-                <legend style="padding-bottom: 10px;">
+                <!--<legend style="padding-bottom: 10px;">
                     <span style="font-weight: bold;">CONSULTA DE LECTURAS</span>
                     <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
                         <i class="fa fa-print fa-2x" aria-hidden="true"></i>
@@ -38,7 +38,7 @@
                     <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
                         <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
                     </button>
-                </legend>
+                </legend>-->
 
                 <div class="col-sm-6 col-xs-12">
                     <fieldset>
@@ -100,18 +100,18 @@
                 <div class="col-xs-12" style="margin-top: 10px;">
                     <div class="form-group has-feedback" style="float: right; width: 50%;">
                         <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." 
-                                ng-model="t_search" ng-change="searchByFilter();" >
+                                ng-model="t_search" >
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
 
                 <div class="col-xs-12">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover table-responsive table-bordered">
                         <thead>
                             <tr class="bg-primary">
                                 <th style="width: 5%;">Código</th>
                                 <th>Cliente</th>
-                                <th>Suministro</th>
+                                <th style="width: 8%;">Suministro</th>
                                 <th>Calle</th>
                                 <th style="width: 10%;">Lectura Anterior</th>
                                 <th style="width: 10%;">Lectura Actual</th>
@@ -120,7 +120,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="lectura in lecturas" ng-cloak>
+                            <tr ng-repeat="lectura in lecturas | filter : t_search" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
                                 <td><i class="fa fa-user" ></i> {{lectura.apellidos + ' ' + lectura.nombres}}</td>
                                 <td class="text-right">{{lectura.numerosuministro}}</td>

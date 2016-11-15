@@ -76,8 +76,8 @@ class ViewLecturaController extends Controller
                             ->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
                             ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombre',
-                                        'cliente.apellido');
+                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
+                                        'cliente.apellidos');
 
         if(count($array_filters) == 1){
             $array_filters[0][2] = "'" . $array_filters[0][2] . "'";
