@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Lecturas;
 
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
-use App\Modelos\Cuentas\RubroFijo;
-use App\Modelos\Cuentas\RubroVariable;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Servicios\ServicioAguaPotable;
 use App\Modelos\Servicios\ServicioJunta;
@@ -17,9 +15,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class LecturaController extends Controller
 {
@@ -34,7 +29,6 @@ class LecturaController extends Controller
         return view('Lecturas.index_nuevaLectura');
     }
 
-
     /**
      * Retorna el ultimo id insertado + 1
      *
@@ -46,7 +40,6 @@ class LecturaController extends Controller
         ($last_id == 0) ? $last_id = 1 : $last_id += 1;
         return response()->json(['lastID' => $last_id]);
     }
-
 
     /**
      * Obtener la informacion
@@ -79,6 +72,13 @@ class LecturaController extends Controller
         return response()->json($result_array);
     }
 
+    /**
+     * Calcular el valor de la Tarifa Basica
+     *
+     * @param $consumo
+     * @param $tarifa
+     * @return mixed
+     */
     private function calculateTarifaBasica($consumo, $tarifa)
     {
         //-------------------Valor Consumo: Tarifa Basica----------------------------------------------
@@ -96,6 +96,13 @@ class LecturaController extends Controller
         return $value;
     }
 
+    /**
+     * Calcular el Excedente
+     *
+     * @param $consumo
+     * @param $tarifa
+     * @return int
+     */
     private function calculateExcedente($consumo, $tarifa)
     {
         //-------------------Excedente: 0 || (consumo - 15) * % ----------------------------------------
@@ -115,6 +122,12 @@ class LecturaController extends Controller
         return $value;
     }
 
+    /**
+     * Calcular valor total y cantidad de meses atrasados
+     *
+     * @param $numerosuministro
+     * @return array
+     */
     private function calculateMonthAtrasados($numerosuministro)
     {
         //-------------------Valores Atrasados--------------------------------------------------------
@@ -142,6 +155,14 @@ class LecturaController extends Controller
         return ['cant_meses_atrasados' => $mesesatrasados, 'valor_meses_atrasados' => $valormesesatrasados];
     }
 
+    /**
+     * Calcular los valores de cada servicio de junta insertados
+     *
+     * @param $idtarifa
+     * @param $valueTarifa
+     * @param $valueExcedente
+     * @return array
+     */
     private function calculateServiciosJunta($idtarifa, $valueTarifa, $valueExcedente)
     {
         $servicios_junta = ServicioJunta::all();
@@ -164,6 +185,14 @@ class LecturaController extends Controller
         return $array_servicios;
     }
 
+    /**
+     * Calculo general de la lectura
+     *
+     * @param $consumo
+     * @param $tarifa
+     * @param $numerosuministro
+     * @return array
+     */
     public function calculate($consumo, $tarifa, $numerosuministro)
     {
         $tarifa_basica = $this->calculateTarifaBasica($consumo, $tarifa);
@@ -274,7 +303,6 @@ class LecturaController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
     /**
      * Exportar la nueva Lectura a PDF

@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\Lecturas;
 
-use App\Http\Controllers\Cuentas\RubroVariable;
-use App\Modelos\Cuentas\CobroAgua;
-use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Lecturas\Lectura;
-use App\Modelos\Tarifas\CostoTarifa;
-use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 
 class ViewLecturaController extends Controller
 {
@@ -29,9 +23,8 @@ class ViewLecturaController extends Controller
         return view('Lecturas.index_viewLectura');
     }
 
-
     /**
-     * Retorna las lecturas insertadas
+     * Obtener las lecturas insertadas
      *
      * @return mixed
      */
@@ -48,9 +41,8 @@ class ViewLecturaController extends Controller
                             ->get();
     }
 
-
     /**
-     * Retorna las lecturas insertadas filtradas
+     * Obtener las lecturas insertadas filtradas
      *
      * @param $filter
      * @return mixed
@@ -102,9 +94,8 @@ class ViewLecturaController extends Controller
 
     }
 
-
     /**
-     * Retorna los barrios insertados
+     * obtener los barrios
      *
      * @return mixed
      */
@@ -113,9 +104,8 @@ class ViewLecturaController extends Controller
         return Barrio::orderBy('nombrebarrio', 'asc')->get(); 
     }
 
-
     /**
-     * Retorna las calles insertadas que pertenecen al barrio entrado por parametro
+     * Obtener las calles insertadas que pertenecen al barrio entrado por parametro
      *
      * @param $idbarrio
      * @return mixed
@@ -124,7 +114,6 @@ class ViewLecturaController extends Controller
     {
         return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get(); 
     }
-
 
     /**
      * Actualiza el recurso de lectura en Lectura Actual y Observacion
@@ -155,7 +144,5 @@ class ViewLecturaController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-
 
 }
