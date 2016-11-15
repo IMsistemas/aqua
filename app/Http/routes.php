@@ -196,8 +196,12 @@ Route::get('nuevaLectura/exportToPDF/{type}/{data}', 'Lecturas\LecturaController
 Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
 //Ruta devuelve todos los rubros
 Route::get('nuevaLectura/getRubros', 'Lecturas\LecturaController@getRubros');
+
 //Ruta devuelve los valores de los rublos en dependencia del suministro, consumo y tarifa
-Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@getRubrosValue');
+//Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@getRubrosValue');
+Route::get('nuevaLectura/calculate/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@calculate');
+
+
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Lectura
 Route::resource('nuevaLectura', 'Lecturas\LecturaController');
 //Ruta devuelve las lecturas

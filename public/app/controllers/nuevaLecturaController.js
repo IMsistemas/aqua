@@ -89,7 +89,7 @@
                             $scope.lectura_actual = lectura_actual;
                             $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
 
-                            //$scope.getValueRublos($scope.consumo, response.suministro[0].idtarifa);
+                            $scope.getValueRublos($scope.consumo, response.suministro[0].aguapotable.idtarifaaguapotable);
 
                             $scope.nombre_cliente = response.suministro[0].cliente.apellidos + ', ' + response.suministro[0].cliente.nombres;
                             $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
@@ -123,28 +123,20 @@
         }
 
         $scope.getValueRublos = function(consumo, tarifa){
-
             var id = $scope.t_no_suministro;
-
-            var url = API_URL + 'nuevaLectura/getRubros/' + consumo + '/' + tarifa + '/' + id;
+            var url = API_URL + 'nuevaLectura/calculate/' + consumo + '/' + tarifa + '/' + id;
 
             $http.get(url).success(function(response) {
-
-                $scope.rubros = response[0];
-                $scope.meses_atrasados =  response[1].mesesatrasados;
-
-
                 console.log(response);
-
+                $scope.meses_atrasados =  response.cant_meses_atrasados;
+                $scope.rubros = response.value_tarifas;
 
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
                 for(var i = 0; i < longitud; i++){
-                    suma += parseFloat(($scope.rubros)[i].valorrubro);
+                    suma += parseFloat(($scope.rubros)[i].valor);
                 }
-
                 $scope.total = suma.toFixed(2);
-
             });
         }
 

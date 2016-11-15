@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class ServicioAguaPotable extends Model
 {
 
-    protected $table = "serviciosaguapotable";
-    //protected $primaryKey = "idaguapotable";
+    protected $table = 'serviciosaguapotable';
+    protected $primaryKey = null;
     public $timestamps = false;
-
-
 
     public function serviciojunta()
     {
@@ -22,8 +20,5 @@ class ServicioAguaPotable extends Model
     {
         return $this->belongsTo('App\Modelos\Servicios\AguaPotable', 'idtarifaaguapotable');
     }
-
-
-
 
 }

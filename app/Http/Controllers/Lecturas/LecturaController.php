@@ -7,6 +7,8 @@ use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\RubroFijo;
 use App\Modelos\Cuentas\RubroVariable;
 use App\Modelos\Lecturas\Lectura;
+use App\Modelos\Servicios\ServicioAguaPotable;
+use App\Modelos\Servicios\ServicioJunta;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Suministros\Suministro;
@@ -77,6 +79,106 @@ class LecturaController extends Controller
         return response()->json($result_array);
     }
 
+
+    private function calculateTarifaBasica($consumo, $tarifa)
+    {
+        //-------------------Valor Consumo: Tarifa Basica----------------------------------------------
+
+        $tarifa = CostoTarifa::where('apartirdenm3', '<=', $consumo)
+                                ->where('idtarifaaguapotable', $tarifa)
+                                ->orderBy('apartirdenm3', 'desc')
+                                ->take(1)
+                                ->get();
+
+        $value = $tarifa[0]->valortarifa;
+
+        settype($value, 'float');
+
+        return $value;
+    }
+
+    private function calculateExcedente($consumo, $tarifa)
+    {
+        //-------------------Excedente: 0 || (consumo - 15) * % ----------------------------------------
+
+        $excedente = ExcedenteTarifa::where('desdenm3', '<=', $consumo)
+                                    ->where('idtarifaaguapotable', $tarifa)
+                                    ->orderBy('desdenm3', 'desc')
+                                    ->take(1)
+                                    ->get();
+
+        if (count($excedente) == 0) {
+            $value = 0;
+        } else {
+            $value = ($consumo - 15) * $excedente[0]->valorexcedente;
+        }
+
+        return $value;
+    }
+
+    private function calculateMonthAtrasados($numerosuministro)
+    {
+        //-------------------Valores Atrasados--------------------------------------------------------
+
+        $atraso = CobroAgua::where('estapagado', false)
+                                ->whereRaw('mesesatrasados IS NOT NULL')
+                                ->whereRaw('valormesesatrasados IS NOT NULL')
+                                ->where('numerosuministro', $numerosuministro)
+                                ->whereRaw('EXTRACT( MONTH FROM fecha) = (EXTRACT( MONTH FROM now()) - 1)')
+                                ->get();
+
+        if (count($atraso) == 0){
+            $valormesesatrasados = 0;
+            $mesesatrasados = 0;
+        } else {
+            $valormesesatrasados = $atraso[0]->valormesesatrasados;
+            $mesesatrasados = $atraso[0]->mesesatrasados;
+        }
+
+        return ['cant_meses_atrasados' => $mesesatrasados, 'valor_meses_atrasados' => $valormesesatrasados];
+    }
+
+    private function calculateServiciosJunta($idtarifa, $valueTarifa, $valueExcedente)
+    {
+        $servicios_junta = ServicioJunta::all();
+
+        $array_servicios = [];
+
+        foreach ($servicios_junta as $servicio) {
+            $object = ServicioAguaPotable::where('idtarifaaguapotable', $idtarifa)
+                                            ->where('idserviciojunta', $servicio->idserviciojunta)
+                                            ->get();
+            if ($object[0]->esporcentaje == true) {
+                $value = ($valueTarifa + $valueExcedente) * $object[0]->valor;
+            } else {
+                $value = $object[0]->valor;
+            }
+            settype($value, 'float');
+            $array_servicios[] = ['nombreservicio' => $servicio->nombreservicio, 'valor' => $value];
+        }
+
+        return $array_servicios;
+    }
+
+    public function calculate($consumo, $tarifa, $numerosuministro)
+    {
+        $tarifa_basica = $this->calculateTarifaBasica($consumo, $tarifa);
+        $excedente = $this->calculateExcedente($consumo, $tarifa);
+        $meses_atrasados = $this->calculateMonthAtrasados($numerosuministro);
+        $servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
+
+        $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica];
+        $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente];
+        $array_valoratrasado = ['nombreservicio' => 'Valores Atrasados', 'valor' => $meses_atrasados['valor_meses_atrasados']];
+
+        $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado];
+
+        foreach ($servicios as $servicio) {
+            $value_return[] = $servicio;
+        }
+
+        return ['value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados']];
+    }
 
     /**
      * Retorna un array de los rubros existentes fijos y variables

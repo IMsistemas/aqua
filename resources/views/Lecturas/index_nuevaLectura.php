@@ -186,8 +186,8 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="rubro in rubros" ng-cloak>
-                                            <td>{{rubro.nombrerubro}}</td>
-                                            <td class="text-right">{{rubro.valorrubro}}</td>
+                                            <td>{{rubro.nombreservicio}}</td>
+                                            <td class="text-right">{{(rubro.valor).toFixed(2)}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
