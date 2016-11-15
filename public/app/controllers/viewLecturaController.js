@@ -148,7 +148,6 @@
             if (array_date[0] == yyyy && array_date[1] == mm){
                 return true;
             } else return false;
-
         };
 
         $scope.initData();
