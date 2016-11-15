@@ -10,8 +10,14 @@ class CuentasPorCobrarSuministro extends Model
     public $timestamps = false;
     protected $primaryKey = "idcxc";
     
-    public function cliente (){
-    	return $this->belongsTo('App\Modelos\Clientes\Cliente');
+    public function cliente ()
+    {
+    	return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigocliente');
+    }
+
+    public function suministro ()
+    {
+        return $this->belongsTo('App\Modelos\Suministros\Suministro', 'numerosuministro');
     }
 }
    

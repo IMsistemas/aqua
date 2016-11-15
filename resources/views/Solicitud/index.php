@@ -727,7 +727,7 @@
                                     </div>
 
                                     <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
-                                        <fieldset>
+                                        <fieldset id="fieldset_suministro_datoscosto">
                                             <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
 
                                             <div class="col-xs-12" style="padding: 2%; margin-top: -15px;">
@@ -823,15 +823,18 @@
                                                 </fieldset>
                                             </div>
 
-                                            <div class="col-sm-6 col-xs-12 text-center" id="info_partial" style="font-size: 14px; display: none;">
-                                                Total: <span style="font-weight: bold;">$ {{total_partial}}</span> a
-                                                <span style="font-weight: bold;">{{credit_cant}}</span> meses plazo
-                                            </div>
-                                            <div class="col-sm-6 col-xs-12 text-center" id="info_total" style="font-size: 14px; display: none;">
-                                                Cuotas de: <span style="font-weight: bold;">$ {{total_suministro}}</span> mensuales
-                                            </div>
+
 
                                         </fieldset>
+
+                                        <div class="col-sm-6 col-xs-12 text-center" id="info_partial" style="font-size: 14px; display: none;">
+                                            Total: <span style="font-weight: bold;">$ {{total_partial}}</span> a
+                                            <span style="font-weight: bold;">{{credit_cant}}</span> meses plazo
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12 text-center" id="info_total" style="font-size: 14px; display: none;">
+                                            Cuotas de: <span style="font-weight: bold;">$ {{total_suministro}}</span> mensuales
+                                        </div>
+
                                     </div>
 
 
@@ -839,7 +842,7 @@
 
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="modal-footer-suministro">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>

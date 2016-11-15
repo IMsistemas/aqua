@@ -10,7 +10,8 @@ class Producto extends Model
     protected $primaryKey = "idproducto";
     public $timestamps = false;
 
-    public function suministro(){
+    public function suministro()
+    {
     	return $this->hasMany('App\Modelos\Suministros\Suministro','idproducto');
     }
 }
