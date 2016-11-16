@@ -786,13 +786,13 @@
                 $scope.getCalles(solicitud.data.suministro.calle.idbarrio, solicitud.data.suministro.calle.idcalle);
                 $scope.t_suministro_nro = solicitud.data.numerosuministro;
 
-
                 $scope.total_partial = solicitud.data.suministro.cuentaporcobrarsuministro[0].pagototal;
                 $scope.credit_cant = solicitud.data.suministro.cuentaporcobrarsuministro[0].dividendos;
                 $scope.total_suministro = solicitud.data.suministro.cuentaporcobrarsuministro[0].pagoporcadadividendo;
 
                 $('#info_partial').show();
                 $('#info_total').show();
+
                 $('#fieldset_suministro_datoscosto').hide();
                 $('#modal-footer-suministro').hide();
 
@@ -803,6 +803,9 @@
 
                 $('#info_partial').hide();
                 $('#info_total').hide();
+
+                $('#fieldset_suministro_datoscosto').show();
+                $('#modal-footer-suministro').show();
             }
 
             $scope.getDividendo();
@@ -816,8 +819,6 @@
             $scope.t_suministro_alcantarillado = '';
             $scope.t_suministro_garantia = '';
             $scope.t_suministro_cuota = '';
-
-
 
             $('#btn-process-solsuministro').prop('disabled', true);
 
