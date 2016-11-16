@@ -9,7 +9,7 @@
 
     <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-
+    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
@@ -40,8 +40,9 @@
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select  id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
-                    ng-options="value.id as value.label for value in anios"></select>
+            <!--<select  id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
+                    ng-options="value.id as value.label for value in anios"></select>-->
+            <input type="text" class="form-control datepicker_a" ng-model="t_anio" id="t_anio" placeholder="-- Año --">
         </div>
 
         <div class="col-sm-2 col-xs-12">
@@ -270,6 +271,10 @@
 <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
 <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+
+<script src="<?= asset('js/moment.min.js') ?>"></script>
+<script src="<?= asset('js/es.js') ?>"></script>
+<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
 
 
 <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>

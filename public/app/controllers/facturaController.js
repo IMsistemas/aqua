@@ -144,6 +144,21 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
 });
 
+$(function(){
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY'
+    });
+
+    $('.datepicker_a').datetimepicker({
+        locale: 'es',
+        format: 'YYYY'
+    });
+});
+
 
 function yearmonth  (fecha)
 {
