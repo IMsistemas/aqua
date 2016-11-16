@@ -92,7 +92,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloSolicitud = function(){	
 		$scope.titulo = "Solicitudes";
-		$scope.toModulo = "suministros/solicitud";
+		$scope.toModulo = "solicitud";
 	}
 	$scope.toModuloSolicitudEspera = function(){	
 		$scope.titulo = "Solicitudes";
