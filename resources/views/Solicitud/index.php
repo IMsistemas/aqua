@@ -525,7 +525,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                         <div class="modal-footer" id="modal-footer-mant">
@@ -568,7 +567,6 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" name="formProcessOtros" novalidate="">
-
                                 <div class="row">
                                     <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
                                         <fieldset ng-cloak>
