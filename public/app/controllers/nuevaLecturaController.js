@@ -61,7 +61,7 @@
             $http.get(API_URL + 'nuevaLectura/getInfo/' + JSON.stringify(filter)).success(function(response) {
                 console.log(response);
 
-                if (response.success == true){
+                if (response.success == true) {
                     if (response.suministro.length == 0){
                         $scope.message = 'No existe registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
@@ -103,8 +103,16 @@
 
                     }
                 } else {
-                    $scope.message = 'Ya se ha realizado lectura al Nro. de Suministro seleccionado en el periodo...';
-                    $('#modalMessage').modal('show');
+
+                    if (response.flag == 'no_exists') {
+                        $scope.message = 'No se ha creado el Cobro para este suministro en el periodo...';
+                        $('#modalMessage').modal('show');
+                    } else {
+                        $scope.message = 'Ya se ha realizado lectura al Nro. de Suministro seleccionado en el periodo...';
+                        $('#modalMessage').modal('show');
+                    }
+
+
                 }
 
             });

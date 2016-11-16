@@ -51,22 +51,27 @@ class LecturaController extends Controller
     {
         $filter = json_decode($filter);
 
-        $count = Lectura::where('numerosuministro', $filter->id)
-                            ->whereRaw('EXTRACT( MONTH FROM fechalectura) =' . $filter->month)
-                            ->whereRaw('EXTRACT( YEAR FROM fechalectura) =' . $filter->year)
-                            ->count();
 
-        if ($count == 0) {
-            $suministro = Suministro::with('cliente', 'aguapotable', 'calle.barrio')
-                                        ->where('suministro.numerosuministro', $filter->id)
-                                        ->get();
-            $lectura = Lectura::where('numerosuministro', $filter->id)
-                                ->orderBy('idlectura', 'desc')
-                                ->take(1)
-                                ->get();
-            $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
+        $count = CobroAgua::where('numerosuministro', $filter->id)
+                            ->whereRaw('EXTRACT( MONTH FROM fecha) =' . $filter->month)
+                            ->whereRaw('EXTRACT( YEAR FROM fecha) =' . $filter->year)
+                            ->get();
+
+        if (count($count) == 0) {
+            $result_array = ['success' => false, 'flag' => 'no_exists'];
         } else {
-            $result_array = ['success' => false];
+            if ($count[0]->idlectura == null) {
+                $suministro = Suministro::with('cliente', 'aguapotable', 'calle.barrio')
+                    ->where('suministro.numerosuministro', $filter->id)
+                    ->get();
+                $lectura = Lectura::where('numerosuministro', $filter->id)
+                    ->orderBy('idlectura', 'desc')
+                    ->take(1)
+                    ->get();
+                $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
+            } else {
+                $result_array = ['success' => false, 'flag' => 'exists'];
+            }
         }
 
         return response()->json($result_array);
