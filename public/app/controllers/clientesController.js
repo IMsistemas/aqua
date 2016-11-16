@@ -193,11 +193,8 @@
             $scope.codigocliente_del = item.codigocliente;
             $http.get(API_URL + 'cliente/getIsFreeCliente/' + $scope.codigocliente_del).success(function(response){
                 if (response == 0) {
-                    $http.delete(API_URL + 'cliente/' + $scope.codigocliente_del).success(function(response) {
-
-                        $scope.nom_cliente = item.apellidos + ' ' + item.nombres;
-                        $('#modalDeleteCliente').modal('show');
-                    });
+                    $scope.nom_cliente = item.apellidos + ' ' + item.nombres;
+                    $('#modalDeleteCliente').modal('show');
                 } else {
                     $scope.message_info = 'No se puede eliminar el cliente seleccionado, ya presenta solicitudes a su nombre...';
                     $('#modalMessageInfo').modal('show');
