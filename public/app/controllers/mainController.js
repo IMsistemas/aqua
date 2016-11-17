@@ -87,7 +87,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloRecaudacion = function(){		
 		$scope.titulo = "Recaudación";
-		$scope.toModulo = "recaudacion";
+		$scope.toModulo = "factura";
 	}
 
 	$scope.toModuloSolicitud = function(){	

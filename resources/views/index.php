@@ -152,13 +152,13 @@
     <script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cargosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/recaudacionController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/facturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/provinciasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cantonesController.js') ?>"></script>
     <script src="<?= asset('app/controllers/parroquiasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/barriosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/callesController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/solicitudController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/solicitudServicioController.js') ?>"></script>
     <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/esperaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
