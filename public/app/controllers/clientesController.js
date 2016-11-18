@@ -33,7 +33,6 @@
                     };
                     Object.defineProperty(response[i], 'complete_name', complete_name);
                 }
-                console.log(response);
                 $scope.clientes = response;
             });
         };
@@ -95,7 +94,7 @@
 
             /*var id =  item.id;
             $http.delete(API_URL + 'cliente/getTipoClienteByID/'+id).success(function(response){
-               console.log(response);
+
                $scope.t_tipocliente = response.id;
             });*/
 
@@ -130,7 +129,7 @@
                         $scope.message = 'Se insertó correctamente el cliente...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
-                        console.log(res);
+
                     });
 
                 } else {
@@ -231,9 +230,9 @@
             }
 
              /*var id =  item.id;
-             console.log(id);
+
              $http.delete(API_URL + 'cliente/getTipoClienteByID/'+id).success(function(response){
-                 console.log(responde);
+
             // $scope.tipo_cliente = response.nombretipo;
              });*/
 

@@ -78,7 +78,7 @@
                         <tr ng-repeat="solicitud in solicitudes | filter : search" ng-cloak>
                             <td>{{solicitud.data.idsolicitud}}</td>
                             <td>{{solicitud.data.fechasolicitud | formatDate}}</td>
-                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres}}</td>
+                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{solicitud.data.cliente.complete_name}}</td>
                             <td>{{solicitud.data.cliente.direcciondomicilio}}</td>
                             <td>{{solicitud.data.cliente.telefonoprincipaldomicilio}}</td>
                             <td>{{solicitud.tipo}}</td>

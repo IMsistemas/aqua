@@ -37,12 +37,19 @@
 
                 var list = [];
 
-                console.log(response);
-
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
                     var length_suministro = suministro.length;
                     for (var i = 0; i < length_suministro; i++) {
+
+                        var complete_name = {
+                            value: suministro[i].cliente.apellidos + ', ' + suministro[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(suministro[i].cliente, 'complete_name', complete_name);
+
                         var object_suministro = {
                             tipo: 'Suministro',
                             data: suministro[i]
@@ -55,6 +62,15 @@
                 if (otro.length > 0) {
                     var length_otro = otro.length;
                     for (var i = 0; i < length_otro; i++) {
+
+                        var complete_name_otro = {
+                            value: otro[i].cliente.apellidos + ', ' + otro[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(otro[i].cliente, 'complete_name', complete_name_otro);
+
                         var object_otro = {
                             tipo: 'Otra Solicitud',
                             data: otro[i]
@@ -67,6 +83,15 @@
                 if (setnombre.length > 0) {
                     var length_setnombre = setnombre.length;
                     for (var i = 0; i < length_setnombre; i++) {
+
+                        var complete_name_setnombre = {
+                            value: setnombre[i].cliente.apellidos + ', ' + setnombre[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(setnombre[i].cliente, 'complete_name', complete_name_setnombre);
+
                         var object_setnombre = {
                             tipo: 'Cambio de Nombre',
                             data : setnombre[i],
@@ -79,6 +104,16 @@
                 if (servicio.length > 0) {
                     var length_servicio = servicio.length;
                     for (var i = 0; i < length_servicio; i++) {
+
+                        var complete_name_servicio = {
+                            value: servicio[i].cliente.apellidos + ', ' + servicio[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(servicio[i].cliente, 'complete_name', complete_name_servicio);
+
+
                         var object_servicio = {
                             tipo: 'Servicio',
                             data: servicio[i]
@@ -91,6 +126,15 @@
                 if (mantenimiento.length > 0) {
                     var length_mantenimiento = mantenimiento.length;
                     for (var i = 0; i < length_mantenimiento; i++) {
+
+                        var complete_name_mantenimiento = {
+                            value: mantenimiento[i].cliente.apellidos + ', ' + mantenimiento[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(mantenimiento[i].cliente, 'complete_name', complete_name_mantenimiento);
+
                         var object_mantenimiento = {
                             tipo: 'Mantenimiento',
                             data: mantenimiento[i]
@@ -100,7 +144,6 @@
                 }
 
                 $scope.solicitudes = list;
-
 
             });
         };
@@ -119,6 +162,15 @@
                 if (suministro.length > 0) {
                     var length_suministro = suministro.length;
                     for (var i = 0; i < length_suministro; i++) {
+
+                        var complete_name = {
+                            value: suministro[i].cliente.apellidos + ', ' + suministro[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(suministro[i].cliente, 'complete_name', complete_name);
+
                         var object_suministro = {
                             tipo: 'Suministro',
                             data: suministro[i]
@@ -131,6 +183,15 @@
                 if (otro.length > 0) {
                     var length_otro = otro.length;
                     for (var i = 0; i < length_otro; i++) {
+
+                        var complete_name_otro = {
+                            value: otro[i].cliente.apellidos + ', ' + otro[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(otro[i].cliente, 'complete_name', complete_name_otro);
+
                         var object_otro = {
                             tipo: 'Otra Solicitud',
                             data: otro[i]
@@ -143,6 +204,15 @@
                 if (setnombre.length > 0) {
                     var length_setnombre = setnombre.length;
                     for (var i = 0; i < length_setnombre; i++) {
+
+                        var complete_name_setnombre = {
+                            value: setnombre[i].cliente.apellidos + ', ' + setnombre[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(setnombre[i].cliente, 'complete_name', complete_name_setnombre);
+
                         var object_setnombre = {
                             tipo: 'Cambio de Nombre',
                             data : setnombre[i],
@@ -155,6 +225,16 @@
                 if (servicio.length > 0) {
                     var length_servicio = servicio.length;
                     for (var i = 0; i < length_servicio; i++) {
+
+                        var complete_name_servicio = {
+                            value: servicio[i].cliente.apellidos + ', ' + servicio[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(servicio[i].cliente, 'complete_name', complete_name_servicio);
+
+
                         var object_servicio = {
                             tipo: 'Servicio',
                             data: servicio[i]
@@ -167,6 +247,15 @@
                 if (mantenimiento.length > 0) {
                     var length_mantenimiento = mantenimiento.length;
                     for (var i = 0; i < length_mantenimiento; i++) {
+
+                        var complete_name_mantenimiento = {
+                            value: mantenimiento[i].cliente.apellidos + ', ' + mantenimiento[i].cliente.nombres,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(mantenimiento[i].cliente, 'complete_name', complete_name_mantenimiento);
+
                         var object_mantenimiento = {
                             tipo: 'Mantenimiento',
                             data: mantenimiento[i]
@@ -176,7 +265,6 @@
                 }
 
                 $scope.solicitudes = list;
-
 
             });
 
@@ -394,9 +482,6 @@
         };
 
         $scope.getSuministrosForSetName = function (codigocliente, numerosuministro) {
-
-            console.log(numerosuministro);
-
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
