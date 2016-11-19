@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class LecturaController extends Controller
 {
@@ -50,7 +51,6 @@ class LecturaController extends Controller
     public function getInfo($filter)
     {
         $filter = json_decode($filter);
-
 
         $count = CobroAgua::where('numerosuministro', $filter->id)
                             ->whereRaw('EXTRACT( MONTH FROM fecha) =' . $filter->month)
@@ -222,7 +222,7 @@ class LecturaController extends Controller
     }
 
     /**
-     * Almacena el recurso de Lectura y envia correo adjuntando la misma en formato pdf
+     * Almacena el recurso de Lectura y envia correo
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -256,54 +256,18 @@ class LecturaController extends Controller
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
 
-
         if ($cliente[0]->correo != '' && $cliente[0]->correo != null) {
             $correo_cliente = $cliente[0]->correo;
-            $nombre_cliente = $cliente[0]->apellido . ' ' . $cliente[0]->nombre;
-
             $data = json_decode($request->input('pdf'));
-            $data1 = [];
 
-            $view = \View::make('Lecturas.pdf_body_email_newLectura', compact('data1', 'data'))->render();
-
-            $curl = curl_init('https://aguapotable.ip-zone.com/ccm/admin/api/version/2/&type=json');
-
-            $rcpt = [
-                [ 'name' => $nombre_cliente, 'email' => $correo_cliente ],
-                [ 'name' => 'Luis Antonio Vinueza', 'email' => 'lvinueza@imnegocios.com' ],
-                [ 'name' => 'Kevin Chicaiza', 'email' => 'kchicaiza@imnegocios.com' ],
-                [ 'name' => 'Christian Rios', 'email' => 'crios@imnegocios.com' ]
-            ];
-
-            $postData = [
-                'function' => 'sendMail',
-                'apiKey' => 'uMntDiD5ZNFl8uBxa5Gl2GOkiuAlbL5LYj4bI7Xh',
-                'subject' => 'Factura Agua - Prueba de Modulo Lectura - Correo Generado desde Modulo',
-                'html' => $view,
-                'mailboxFromId' => 1,
-                'mailboxReplyId' => 1,
-                'mailboxReportId' => 1,
-                'packageId' => 6,
-                'emails' => $rcpt,
-            ];
-
-            $post = http_build_query($postData);
-
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-            $json = curl_exec($curl);
-
-            if ($json === false) {
-                die('Request failed with error: '. curl_error($curl));
-            }
-
-            $result = json_decode($json);
-            if ($result->status == 0) {
-                die('Bad status returned. Error: '. $result->error);
-            }
+            Mail::send('Lecturas.pdf_body_email_newLectura',['data' => $data] , function($message) use ($correo_cliente)
+            {
+                $message->from('emarketing@imnegocios.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+                $message->to($correo_cliente);
+                $message->bcc('crios@imnegocios.com');
+                $message->bcc('kchicaiza@imnegocios.com');
+                $message->bcc('lvinueza@imnegocios.com')->subject('Factura Lectura!');
+            });
         }
 
         return response()->json(['success' => true]);

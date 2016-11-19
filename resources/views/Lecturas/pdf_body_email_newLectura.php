@@ -104,6 +104,34 @@
             background-color: #f9f9f9;
         }
 
+
+
+
+        .table_info_consumo {
+            border-collapse: collapse !important;
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .table_info_consumo td {
+            border: 1px solid #ddd !important;
+        }
+        .table_info_consumo > thead > tr > th,
+        .table_info_consumo > tbody > tr > th,
+        .table_info_consumo > tfoot > tr > th,
+        .table_info_consumo > thead > tr > td,
+        .table_info_consumo > tbody > tr > td,
+        .table_info_consumo > tfoot > tr > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+        .table_info_consumo > thead > tr > th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #ddd;
+        }
+
         .dataclient{
             font-weight: bold;
         }
@@ -113,24 +141,13 @@
 </head>
 <body>
 
-
-
 <div class="container" style="margin-top: 2%;">
-
     <table style="width: 100%;">
         <tr>
             <td style="width: 50%;"><span style="font-size: 24px; font-weight: bold;">PREFACTURA</span></td>
             <td style="width: 50%;"><span style="font-size: 20px;"><?= $data->mes ?> - <?= $data->anno ?></span></td>
         </tr>
     </table>
-
-
-    <!--<div class="col-xs-6">
-        <span style="font-size: 24px; font-weight: bold;">PREFACTURA</span>
-    </div>
-    <div class="col-xs-6">
-        <span style="font-size: 20px;"></span>
-    </div>-->
 </div>
 
 <div class="col-xs-12" style="border-bottom: 1px solid #e5e5e5; margin-top: 15px;">
@@ -143,7 +160,7 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 50%;">
-                <div class="col-xs-6" style="background: #e3f2fd; border: solid 1px #e0e0e0; border-radius: 5px; padding: 5px;">
+                <div class="" style="width: 90%; background: #81d4fa; border: solid 1px #e0e0e0; border-radius: 5px; padding: 5px;">
                     <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default"><strong>Nro. Suministro:</strong></span> </span> <?= $data->suministro ?>
                     <p>
                         <span class="dataclient"><span style="font-size: 14px !important;" class="label label-default"><strong>Cliente:</strong></span> </span> <?= $data->nombre_cliente ?>
@@ -159,9 +176,9 @@
                 </div>
             </td>
             <td style="width: 50%;">
-                <div class="col-xs-6">
-                    <table class="table-bordered table-striped" border="1" style="width: 100%; border-spacing: 0px;">
-                        <thead style="background: #e3f2fd;">
+                <div class="">
+                    <table class="table_info_consumo" style="width: 100%; border-spacing: 0px;">
+                        <thead style="background: #337ab7; color: #FFF;">
                         <tr>
                             <th>Lectura Anterior</th>
                             <th>Lectura Actual</th>
@@ -193,8 +210,8 @@
 </div>
 
 <div class="container" style=" margin-top: 2%;">
-    <table class="table table-bordered table-striped" border="1" style="width: 100%; border-spacing: 0px;">
-        <thead style="background: #e3f2fd !important;">
+    <table class="table_info_consumo" style="width: 100%; border-spacing: 0px;">
+        <thead style="background: #337ab7 !important; color: #FFF;">
         <tr>
             <th>CONCEPTO</th>
             <th>TOTAL</th>
@@ -212,8 +229,8 @@
         </tbody>
         <tfoot>
         <tr>
-            <th><span style="font-weight: bold;">TOTAL</span></th>
-            <th style="text-align: right;"><?= $data->total ?></th>
+            <td style="text-align: center;"><span style="font-weight: bold;">TOTAL</span></td>
+            <td style="text-align: center;"><span style="font-weight: bold;">$ <?= $data->total ?></span></td>
         </tr>
         </tfoot>
     </table>
