@@ -266,6 +266,7 @@ class LecturaController extends Controller
                 $message->to($correo_cliente);
                 $message->bcc('crios@imnegocios.com');
                 $message->bcc('kchicaiza@imnegocios.com');
+                $message->bcc('raidelbg84@gmail.com');
                 $message->bcc('lvinueza@imnegocios.com')->subject('Factura Lectura!');
             });
         }
