@@ -60,12 +60,14 @@ class EmpleadoController extends Controller
         if ($request->hasFile('file')) {
 
             $image = $request->file('file');
-            $destinationPath = storage_path() . '/app/empleados';
+            //$destinationPath = storage_path() . '/app/empleados';
+            $destinationPath = public_path() . '/uploads/empleados';
             $name = rand(0, 9999).'_'.$image->getClientOriginalName();
             if(!$image->move($destinationPath, $name)) {
                 return response()->json(['success' => false]);
             } else {
-                $url_file = '/app/empleados/' . $name;
+               // $url_file = '/app/empleados/' . $name;
+                $url_file = '/uploads/empleados/' . $name;
             }
 
         }

@@ -19,6 +19,10 @@ class OtrosValoresFactura extends Model
 
     public function factura()
     {
-        return $this->belongsTo('App\Modelos\Facturas\Factura','numerofactura');
+        return $this->belongsTo('App\Modelos\Facturas\Factura','idfactura');
     }
+
+
+
+
 }

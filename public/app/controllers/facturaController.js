@@ -32,12 +32,29 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                   $scope.temp = $scope.array_temp[i].suministro.cliente.tipocliente.serviciostipocliente;
 
                   for(var j = 0; j < $scope.temp.length; j++) {
-                        $scope.servicio = $scope.servicio + '/' + $scope.temp[j].serviciojunta.nombreservicio;
+                        $scope.servicio = $scope.servicio + ' / ' + $scope.temp[j].serviciojunta.nombreservicio;
                         $scope.a =  $scope.temp[j].serviciojunta.serviciosaguapotable;
                       for(var a = 0; a < $scope.a.length; a++) {
-                          $scope.tarifa = $scope.tarifa + '/' + $scope.a[a].aguapotable.nombretarifaaguapotable;
+                          $scope.tarifa = $scope.tarifa + ' / ' + $scope.a[a].aguapotable.nombretarifaaguapotable;
                       }
                   }
+                  if($scope.array_temp[i].idlectura == null)
+                  {
+                      var data = {
+                          tarifas :  $scope.tarifa,
+                          servicios : $scope.servicio,
+                          factura:  $scope.array_temp[i].idfactura,
+                          fecha: FormatoFecha ($scope.array_temp[i].fecha),
+                          periodo:  yearmonth ($scope.array_temp[i].fecha),
+                          suministro: $scope.array_temp[i].numerosuministro,
+                          direccion: $scope.array_temp[i].suministro.direccionsumnistro,
+                          telefono: $scope.array_temp[i].suministro.telefonosuministro,
+                          estado: $scope.array_temp[i].estapagado,
+                          total: $scope.array_temp[i].valor,
+                          consumo: null
+                      }
+
+                  }else {
 
                   var data = {
                           tarifas :  $scope.tarifa,
@@ -49,8 +66,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           direccion: $scope.array_temp[i].suministro.direccionsumnistro,
                           telefono: $scope.array_temp[i].suministro.telefonosuministro,
                           estado: $scope.array_temp[i].estapagado,
-                          total: $scope.array_temp[i].valor
+                          total: $scope.array_temp[i].valor,
+                          consumo: $scope.array_temp[i].lectura.consumo
                       }
+                  }
 
                   $scope.aux.push(data);
               }
@@ -106,8 +125,9 @@ app.controller('facturaController', function($scope, $http, API_URL) {
     $scope.ShowModalFactura = function (item) {
         console.log(item);
         $scope.num_factura = item.factura;
-        $scope.mes = Auxiliar(item.periodo)
-
+        $scope.mes = Auxiliar(item.periodo);
+        $scope.multa = '';
+        $scope.multaa = 0,00;
 
         for(var i = 0; i < $scope.cobroagua_aux.length; i++) {
             if($scope.cobroagua_aux[i].suministro.numerosuministro == item.suministro) {
@@ -115,10 +135,39 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 $scope.nom_cliente =  $scope.cobroagua_aux[i].suministro.cliente.nombres  + ' ' +  $scope.cobroagua_aux[0].suministro.cliente.apellidos  ;
                 $scope.direcc_cliente = $scope.cobroagua_aux[i].suministro.cliente.direcciondomicilio;
                 $scope.telf_cliente = $scope.cobroagua_aux[i].suministro.cliente.celular;
+
+                if($scope.cobroagua_aux[i].valorexcedente==null) {
+                    $scope.excedente_agua = 0,00;
+                }else{
+                    $scope.excedente_agua = $scope.cobroagua_aux[i].valorexcedente;
+                }
+                if($scope.cobroagua_aux[i].valormesesatrasados==null) {
+                    $scope.valores_atrasados =  0,00;
+                }else{
+                    $scope.valores_atrasados = $scope.cobroagua_aux[i].valormesesatrasados;                }
+
+                if($scope.cobroagua_aux[i].idlectura==null) {
+                    $scope.consumo_agua = 0,00;
+                }else{
+                    $scope.consumo_agua = $scope.cobroagua_aux[i].lectura.consumo;
+                }
+                if( $scope.cobroagua_aux[i].factura.otrosvaloresfactura.length > 0)
+                {
+                    $scope.multa =  $scope.cobroagua_aux[i].factura.otrosvaloresfactura;
+                    for(var a = 0; a < $scope.multa.length; a++) {
+                        $scope.aux=  $scope.multa[a].valor;
+                        $scope.multaa += parseFloat ($scope.aux);
+                    }
+                    $scope.multa_asamblea =  $scope.multaa;
+                }else
+                {
+                    $scope.multa_asamblea = 0,00;
+                }
             }
         }
+        $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
 
-            $('#modalFactura').modal('show');
+        $('#modalFactura').modal('show');
     };
 
     $scope.generate = function () {
@@ -188,7 +237,7 @@ function FormatoFecha  (fecha)
     mes = elem[1];
     anio = elem[0];
 
-     return dia  + ' - ' + mes + ' - ' + anio;
+     return dia  + '-' + mes + '-' + anio;
 }
 
 

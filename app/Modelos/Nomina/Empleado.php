@@ -14,4 +14,5 @@ class Empleado extends Model
     public function cargo(){
     	return $this->belongsTo('App\Modelos\Nomina\Cargo','idcargo');
     }
+
 }

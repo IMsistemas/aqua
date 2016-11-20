@@ -57,27 +57,55 @@ app.controller('barrioController', function($scope, $http, API_URL) {
     };
 
     $scope.show_toma = function (idbarrio,aux0, barrio)   {
-        if(barrio !== undefined && barrio !== null){
-            $scope.barrio = barrio;}
 
-        $http.get(API_URL + 'barrio/getBarrio').success(function (response) {
-            var longitud = response.length;
-            //var array_temp = [{label: '--Seleccione--', id: 0}];
-            var array_temp = [];
-            for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
-            }
-            $scope.barrios2 = array_temp;
-            $scope.id_barrio = idbarrio;
-        });
-        $http.get(API_URL + 'calle/getLastID').success(function(response){
-            // console.log(response);
-            $scope.codigo_toma = response.id;
-            $scope.nombrecalle = '';
-            $scope.aux1 = aux0 ;
-            $('#modalTomas').modal('hide');
-            $('#modalNuevaToma').modal('show');
-        });
+        if(aux0==2){
+
+            if(barrio !== undefined && barrio !== null){
+                $scope.barrio = barrio;}
+
+            $http.get(API_URL + 'barrio/getBarrio').success(function (response) {
+                var longitud = response.length;
+                //var array_temp = [{label: '--Seleccione--', id: 0}];
+                var array_temp = [];
+                for (var i = 0; i < longitud; i++) {
+                    array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                }
+                $scope.barrios2 = array_temp;
+                $scope.id_barrio = idbarrio;
+            });
+            $http.get(API_URL + 'calle/getLastID').success(function(response){
+                // console.log(response);
+                $scope.codigo_toma = response.id;
+                $scope.nombrecalle = '';
+                $scope.aux1 = aux0 ;
+                $('#modalTomas').modal('hide');
+                $('#modalNuevaToma').modal('show');
+            });
+        }else {
+            if(barrio !== undefined && barrio !== null){
+                $scope.barrio = barrio;}
+
+            $http.get(API_URL + 'barrio/getBarrio').success(function (response) {
+                var longitud = response.length;
+                //var array_temp = [{label: '--Seleccione--', id: 0}];
+                var array_temp = [];
+                for (var i = 0; i < longitud; i++) {
+                    array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                }
+                $scope.barrios2 = array_temp;
+                $scope.id_barrio = idbarrio;
+            });
+            $http.get(API_URL + 'calle/getLastID').success(function(response){
+                // console.log(response);
+                $scope.codigo_toma = response.id;
+                $scope.nombrecalle = '';
+                $scope.aux1 = aux0 ;
+                $('#modalNuevaToma').modal('show');
+                $('#modalTomas').modal('show');
+
+            });
+        }
+
     };
 
     $scope.saveCalle = function () {
@@ -144,7 +172,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 console.log(response);
                 $scope.initLoad();
                 $scope.idbarrio_del = 0;
-                $scope.message = 'Se elimino correctamente la Zona seleccionada...';
+                $scope.message = 'Se eliminó correctamente la Zona seleccionada...';
                 $('#modalMessage').modal('show');
             } else if(response.success == false && response.msg == 'exist_calle') {
                 $scope.message_error = 'La Zona no puede ser eliminada porque contiene Transversales...';
@@ -161,17 +189,18 @@ app.controller('barrioController', function($scope, $http, API_URL) {
 
     $scope.deleteCalleEnBarrio = function(){
         $http.delete(API_URL + 'calle/' + $scope.idcalle_delete).success(function(response) {
+            console.log(response);
             $('#modalDeleteCalle').modal('hide');
             if(response.success == true){
                 $scope.initLoad();
                 $scope.idcalle_delete = 0;
-                $scope.message = 'Se elimino correctamente la Transversal seleccionada...';
+                $scope.message = 'Se eliminó correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
 
                 $scope.showModalAction($scope.barrio);
 
             } else {
-                $scope.message_error = 'La Transversal no puede ser eliminada...';
+                $scope.message_error = 'La Transversal no puede ser eliminada porque esta relacionada con un suministro...';
                 $('#modalMessageError').modal('show');
             }
         });

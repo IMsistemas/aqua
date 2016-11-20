@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es-ES" ng-app="softver-aqua">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -64,25 +65,25 @@
     </div>
 
     <div class="col-xs-12">
-        <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+        <table class="auto table table-responsive table-striped table-hover table-condensed table-bordered ">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 15%;">No. Factura</th>
-                <th style="width: 15%;">Fecha</th>
-                <th style="width: 15%;">Periodo</th>
-                <th style="width: 15%;">Servicios</th>
-                <th style="width: 15%;">Suministro</th>
-                <th style="width: 15%;">Tarifa</th>
+                <th style="width: 5%;">No. Factura</th>
+                <th style="width: 7%;">Fecha</th>
+                <th style="width: 7%;">Periodo</th>
+                <th style="width: 16%;">Servicios</th>
+                <th style="width: 5%;">Suministro</th>
+                <th style="width: 20%;">Tarifa</th>
                 <th style="width: 15%;">Direccion Suministro</th>
-                <th style="width: 15%;">Telefono Suministro</th>
-                <th style="width: 15%;">m3</th>
-                <th style="width: 15%;">Estado</th>
-                <th style="width: 15%;">Total</th>
-                <th style="width: 15%;">Acciones</th>
+                <th style="width: 5%;">Telefono Suministro</th>
+                <th style="width: 5%;">Consumo (m3)</th>
+                <th style="width: 5%;">Estado</th>
+                <th style="width: 5%;">Total</th>
+                <th style="width: 5%;">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in cobroagua|filter:busqueda" ng-cloak>
+            <tr ng-repeat="item in cobroagua|filter:t_busqueda" ng-cloak>
                 <td>{{item.factura}}</td>
                 <td>{{item.fecha}}</td>
                 <td>{{item.periodo}}</td>
@@ -91,7 +92,7 @@
                 <td>{{item.tarifas}}</td>
                 <td>{{item.direccion}}</td>
                 <td>{{item.telefono}}</td>
-                <td>{{item.m3}}</td>
+                <td>{{item.consumo}}</td>
                 <td>{{item.estado}}</td>
                 <td>{{item.total}}</td>
                 <td>
@@ -171,7 +172,7 @@
                                             <tbody>
                                             <tr>
                                                 <td> Consumo Agua {{mes}}</td>
-                                                <td> {{consumo_agua}}</td>
+                                                <td> {{consumo_agua}} m3</td>
                                             </tr>
                                             <tr>
                                                 <td> Excedente Agua {{mes}}</td>
@@ -187,7 +188,7 @@
                                             </tr>
                                             <tr>
                                                 <td> Alcantarillado</td>
-                                                <td> {{consumo_agua}}</td>
+                                                <td> {{alcantarillado}}</td>
                                             </tr>
                                             <tr>
                                                 <td> Tarifa Ambiente</td>
@@ -208,7 +209,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th class="text-right">TOTAL:</th>
-                                                    <th></th>
+                                                    <th> {{total}}</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

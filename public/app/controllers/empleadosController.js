@@ -168,7 +168,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             $scope.initLoad();
             $('#modalConfirmDelete').modal('hide');
             $scope.empleado_del = 0;
-            $scope.message = 'Se elimino correctamente el Empleado seleccionado';
+            $scope.message = 'Se eliminó correctamente el Empleado seleccionado';
             $('#modalMessage').modal('show');
         });
     };

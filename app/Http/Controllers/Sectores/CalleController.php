@@ -1,5 +1,6 @@
 <?php 
 namespace App\Http\Controllers\Sectores;
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -138,9 +139,15 @@ class CalleController extends Controller
      */
     public function destroy($id)
     {
-        $calle = Calle::find($id);
-        $calle->delete();
-        return response()->json(['success' => true]);
+        $suministro = Suministro::where ('idcalle',$id)-> count();
+        if($suministro > 0)
+        {
+            return response()->json(['success' => false]);
+        }else{
+            $calle = Calle::find($id);
+            $calle->delete();
+            return response()->json(['success' => true]);
+        }
 
     }
 

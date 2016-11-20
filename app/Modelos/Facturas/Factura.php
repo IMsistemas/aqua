@@ -27,4 +27,11 @@ class Factura extends Model
         return $this->hasMany('App\Modelos\Servicios\ServiciosEnFactura','idfactura');
     }
 
+    public function otrosvaloresfactura(){
+        return $this->hasMany('App\Modelos\Facturas\OtrosValoresFactura','idfactura');
+    }
+
+
+
+
 }

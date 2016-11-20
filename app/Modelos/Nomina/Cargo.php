@@ -12,6 +12,6 @@ class Cargo extends Model
 
     public function empleado()
     {
-    	return $this->hasMany('App\Modelos\Nomina\Emplado','idcargo');
+    	return $this->hasMany('App\Modelos\Nomina\Empleado','idcargo');
     } 
 }

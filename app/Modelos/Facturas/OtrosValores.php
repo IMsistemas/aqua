@@ -10,4 +10,8 @@ class OtrosValores extends Model
     protected $primaryKey = "idotrosvalores";
     public $timestamps = false;
 
+    public function otrosvaloresfactura()
+    {
+        return $this->hasMany('App\Modelos\Facturas\OtrosValoresFactura', 'idotrosvalores');
+    }
 }

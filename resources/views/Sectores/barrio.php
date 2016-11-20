@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalNuevaToma" >
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalNuevaToma" style="z-index: 99999;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">

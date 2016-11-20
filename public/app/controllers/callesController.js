@@ -122,7 +122,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
                 $scope.message = 'Se elimino correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
             } else {
-                $scope.message_error = 'La Transversal no puede ser eliminada...';
+                $scope.message_error = 'La Transversal no puede ser eliminada  porque esta relacionada con un suministro...';
                 $('#modalMessageError').modal('show');
             }
         });

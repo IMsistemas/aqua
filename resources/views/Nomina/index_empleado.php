@@ -42,7 +42,7 @@
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
-                    <th>Doc ID</th>
+                    <th>CI/RUC</th>
                     <th>Razon Social</th>
                     <th>Cargo</th>
                     <th>Telefono</th>
@@ -107,7 +107,7 @@
                             <div class="col-xs-12">
                                 <div class="col-md-6 col-xs-12">
                                     <div class="form-group error">
-                                        <label class="col-sm-4 control-label">Doc. de Identidad:</label>
+                                        <label class="col-sm-4 control-label">CI/RUC:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="documentoidentidadempleado" id="documentoidentidadempleado"
                                                    ng-model="documentoidentidadempleado" ng-required="true" ng-maxlength="32" ng-pattern="/[0-9]+/" >
@@ -300,7 +300,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroyCargo()">Eliminar</button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="destroy()">Eliminar</button>
                 </div>
             </div>
         </div>
