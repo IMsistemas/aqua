@@ -122,7 +122,7 @@
                         <tbody>
                             <tr ng-repeat="lectura in lecturas | filter : t_search" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
-                                <td><i class="fa fa-user" ></i> {{lectura.apellidos + ' ' + lectura.nombres}}</td>
+                                <td><i class="fa fa-user" ></i> {{lectura.complete_name}}</td>
                                 <td class="text-right">{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>

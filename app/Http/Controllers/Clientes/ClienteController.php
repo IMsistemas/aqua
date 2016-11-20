@@ -138,8 +138,12 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $cliente = Cliente::find($id);
-        $cliente->delete();
-        return response()->json(['success' => true]);
+
+        if ($cliente->delete()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
 

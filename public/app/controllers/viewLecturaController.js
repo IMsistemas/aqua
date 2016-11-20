@@ -31,11 +31,23 @@
             $scope.loadBarrios();
 
             $http.get(API_URL + 'verLectura/getLecturas').success(function(response){
+
+                var longitud = response.length;
+                for (var i = 0; i < longitud; i++) {
+                    var complete_name = {
+                        value: response[i].apellidos + ', ' + response[i].nombres,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'complete_name', complete_name);
+                }
+
+                console.log(response);
                 $scope.lecturas = response;
             });
 
         };
-        
 
         $scope.save = function() {
 
