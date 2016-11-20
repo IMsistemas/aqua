@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Lecturas;
 
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Facturas\Factura;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Servicios\ServicioAguaPotable;
 use App\Modelos\Servicios\ServicioJunta;
+use App\Modelos\Servicios\ServiciosEnFactura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Suministros\Suministro;
@@ -157,7 +159,7 @@ class LecturaController extends Controller
             settype($valormesesatrasados, 'float');
         }
 
-        return ['cant_meses_atrasados' => $mesesatrasados, 'valor_meses_atrasados' => $valormesesatrasados];
+        return ['cant_meses_atrasados' => $mesesatrasados, 'valor_meses_atrasados' => $valormesesatrasados, 'id' => 0];
     }
 
     /**
@@ -184,7 +186,7 @@ class LecturaController extends Controller
                 $value = $object[0]->valor;
             }
             settype($value, 'float');
-            $array_servicios[] = ['nombreservicio' => $servicio->nombreservicio, 'valor' => $value];
+            $array_servicios[] = ['nombreservicio' => $servicio->nombreservicio, 'valor' => $value, 'id' => $object[0]->idserviciojunta];
         }
 
         return $array_servicios;
@@ -205,9 +207,9 @@ class LecturaController extends Controller
         $meses_atrasados = $this->calculateMonthAtrasados($numerosuministro);
         $servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
 
-        $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica];
-        $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente];
-        $array_valoratrasado = ['nombreservicio' => 'Valores Atrasados', 'valor' => $meses_atrasados['valor_meses_atrasados']];
+        $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica, 'id' => 0];
+        $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente, 'id' => 0];
+        $array_valoratrasado = ['nombreservicio' => 'Valores Atrasados', 'valor' => $meses_atrasados['valor_meses_atrasados'], 'id' => 0];
 
         $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado];
 
@@ -217,7 +219,8 @@ class LecturaController extends Controller
 
         return [
             'value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados'],
-            'excedente' => $excedente, 'valor_meses_atrasados' => $meses_atrasados['valor_meses_atrasados']
+            'excedente' => $excedente, 'valor_meses_atrasados' => $meses_atrasados['valor_meses_atrasados'],
+            'tarifa_basica' => $tarifa_basica
         ];
     }
 
@@ -247,9 +250,25 @@ class LecturaController extends Controller
         $cobroagua->valorexcedente = $request->input('excedente');
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
-        $cobroagua->valor = $request->input('total');
+        $cobroagua->valortarifabasica = $request->input('tarifa_basica');
         $cobroagua->estapagado = false;
         $cobroagua->save();
+
+        $factura = Factura::find($cobroagua->idfactura);
+        $factura->totalfactura = $request->input('total');
+        $factura->save();
+
+        $servicios = $request->input('rubros');
+
+        foreach ($servicios as $item) {
+            if ($item['id'] != 0) {
+                $serviciofactura = new ServiciosEnFactura();
+                $serviciofactura->idserviciojunta = $item['id'];
+                $serviciofactura->idfactura = $cobroagua->idfactura;
+                $serviciofactura->valor = $item['valor'];
+                $serviciofactura->save();
+            }
+        }
 
         $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
@@ -267,6 +286,7 @@ class LecturaController extends Controller
                 $message->bcc('crios@imnegocios.com');
                 $message->bcc('kchicaiza@imnegocios.com');
                 $message->bcc('raidelbg84@gmail.com');
+                $message->bcc('yamilkag@gmail.com');
                 $message->bcc('lvinueza@imnegocios.com')->subject('Factura Lectura!');
             });
         }

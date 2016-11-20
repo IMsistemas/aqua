@@ -19,6 +19,7 @@
         ];
 
         $scope.rubros = [];
+        $scope.tarifa_basica = 0;
         $scope.excedente = 0;
         $scope.valormesesatrasados = 0;
 
@@ -134,10 +135,10 @@
             var url = API_URL + 'nuevaLectura/calculate/' + consumo + '/' + tarifa + '/' + id;
 
             $http.get(url).success(function(response) {
-                console.log(response);
-                $scope.meses_atrasados =  response.cant_meses_atrasados;
+                $scope.meses_atrasados = response.cant_meses_atrasados;
                 $scope.rubros = response.value_tarifas;
                 $scope.excedente = response.excedente;
+                $scope.tarifa_basica = response.tarifa_basica;
                 $scope.valormesesatrasados = response.valor_meses_atrasados;
 
                 var longitud = ($scope.rubros).length;
@@ -205,16 +206,18 @@
                 lecturaanterior: $scope.lectura_anterior,
                 lecturaactual: $scope.lectura_actual,
                 consumo: $scope.consumo,
+                tarifa_basica: $scope.tarifa_basica,
                 excedente: $scope.excedente,
                 valormesesatrasados: $scope.valormesesatrasados,
                 mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
-
-                /*rubros: $scope.rubros,*/
+                rubros: $scope.rubros,
 
                 pdf: JSON.stringify(filters)
 
             };
+
+            console.log(lectura_data);
 
             var url = API_URL + "nuevaLectura";
 

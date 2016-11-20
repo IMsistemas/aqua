@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ServiciosEnFactura extends Model
 {
     protected $table = "serviciosenfactura";
+    protected $primaryKey = null;
+    public $incrementing = false;
     public $timestamps = false;
 
 
