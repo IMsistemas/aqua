@@ -164,8 +164,6 @@
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
 
 
     
