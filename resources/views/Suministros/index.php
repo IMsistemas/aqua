@@ -70,8 +70,12 @@
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td >
-                        <a href="#" class="btn btn-info" ng-click="getSuministro(suministro.numerosuministro);">Ver</a>
-                        <a href="#" class="btn btn-warning" ng-click="modalEditarSuministro(suministro.numerosuministro);">Editar</a>
+                        <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.numerosuministro);">
+                            <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro.numerosuministro);">
+                            <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -154,14 +158,17 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Telefono:</label>
-                                            <div class="col-sm-8">
+
+
+                                            <label for="telefonosuministro" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléfono:</label>
+                                            <div class="col-sm-8 col-xs-12">
                                                 <input type="text" class="form-control" name="telefonosuministro" id="telefonosuministro"
-                                                       ng-model="telefonosuministro" ng-required="true" ng-maxlength="16"  >
+                                                       ng-model="telefonosuministro" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                <span class="help-block error"
+                                                      ng-show="formNuevaSolicitud.telefonosuministro.$invalid && formNuevaSolicitud.telefonosuministro.$error.pattern">Solo números, guiones y paréntesis</span>
                                             </div>
+
                                         </div>
-                                    </div>
                                 </div>
 
                             </fieldset>
