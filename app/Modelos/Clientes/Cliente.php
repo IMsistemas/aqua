@@ -22,4 +22,15 @@ class Cliente extends Model
         return $this->hasMany('App\Modelos\Servicios\ServiciosCliente', 'codigocliente');
     }
 
+    public function cuentasporpagarclientes()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CuentasPorPagarClientes', 'codigocliente');
+    }
+
+
+    public function cuentaporcobrarsuministro()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','codigocliente');
+    }
+
 }

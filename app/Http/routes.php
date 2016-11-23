@@ -241,13 +241,10 @@ Route::resource('/empleado', 'Nomina\EmpleadoController');
 
 
 Route::get('cuentaspagarcliente/getAll', 'Cuentas\CuentasPorPagarClientesController@getAll');
-Route::get('cuentaspagarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorPagarClientesController@getByFilter');
-
 Route::post('cuentaspagarcliente/ingresarcuenta', 'Cuentas\CuentasPorPagarClientesController@ingresarCuenta');
 Route::resource('cuentaspagarcliente', 'Cuentas\CuentasPorPagarClientesController');
 
 Route::get('cuentascobrarcliente/getAll', 'Cuentas\CuentasPorCobrarSuministroController@getAll');
-Route::get('cuentascobrarcliente/getByFilter/{filter}', 'Cuentas\CuentasPorCobrarSuministroController@getByFilter');
 Route::post('cuentascobrarcliente/ingresarcuenta', 'Cuentas\CuentasPorCobrarSuministroController@ingresarCuenta');
 
 Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroController');
@@ -324,8 +321,10 @@ Route::resource('/calle', 'Sectores\CalleController');
 
 Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsuministros');
 Route::get('suministros/suministroById/{id}','Suministros\SuministroController@suministroById');
-Route::get('suministros/getAguapotable', 'Suministros\SuministroController@getAguapotable');
 Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
+Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroController@getCalleByBarrio');
+Route::get('suministros/getSuministrosByBarrio/{id}', 'Suministros\SuministroController@getSuministrosByBarrio');
+
 
 Route::resource('/suministros', 'Suministros\SuministroController');
 

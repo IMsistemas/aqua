@@ -34,36 +34,9 @@ class CuentasPorCobrarSuministroController extends Controller
 
     public function getAll()
     {
-        $cuentas = CuentasPorCobrarSuministro::join(
-            'cliente', 'cuentaporcobrarsuministro.documentoidentidad', '=',
-            'cliente.documentoidentidad')
-            ->select('cliente.apellido', 'cliente.nombre', 'cliente.documentoidentidad',
-                'cuentaporcobrarsuministro.fecha', 'cuentaporcobrarsuministro.dividendos',
-                'cuentaporcobrarsuministro.pagototal', 'cuentaporcobrarsuministro.pagoporcadadividendo',
-                'cuentaporcobrarsuministro.numerosuministro')
-            ->get();
 
-        return $cuentas;
+        return CuentasPorCobrarSuministro::with('cliente', 'suministro')->orderBy('fecha', 'asc')->get();
     }
 
-    public function getByFilter($filter)
-    {
 
-        $filter = json_decode($filter);
-
-        $cuentas = CuentasPorCobrarSuministro::join('cliente', 'cuentaporcobrarsuministro.documentoidentidad', '=',
-            'cliente.documentoidentidad')
-            ->select('cliente.apellido', 'cliente.nombre', 'cliente.documentoidentidad',
-                'cuentaporcobrarsuministro.fecha', 'cuentaporcobrarsuministro.dividendos',
-                'cuentaporcobrarsuministro.pagototal', 'cuentaporcobrarsuministro.pagoporcadadividendo',
-                'cuentaporcobrarsuministro.numerosuministro');
-
-
-        if($filter->text != null && $filter->text != ''){
-            $cuentas->whereRaw("cliente.nombre LIKE '%" . $filter->text . "%' OR cliente.apellido LIKE '%" . $filter->text . "%' ");
-        }
-
-        return $cuentas->get();
-
-    }
 }

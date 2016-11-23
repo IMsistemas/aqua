@@ -75,6 +75,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
             $('#modalNueva').modal('hide');
             $scope.message = 'Se insertó correctamente la Transversal';
             $('#modalMessage').modal('show');
+            $scope.hideModalMessage();
 
         }).error(function (res) {
 
@@ -119,8 +120,9 @@ app.controller('callesController', function($scope, $http, API_URL) {
             if(response.success == true){
                 $scope.initLoad();
                 $scope.idcalle_del = 0;
-                $scope.message = 'Se elimino correctamente la Transversal seleccionada...';
+                $scope.message = 'Se eliminó correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
             } else {
                 $scope.message_error = 'La Transversal no puede ser eliminada  porque esta relacionada con un suministro...';
                 $('#modalMessageError').modal('show');
@@ -152,6 +154,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
                 $scope.initLoad();
                 $scope.message = 'Se editaron correctamente las Transversales';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
             });
         }
 
@@ -163,6 +166,11 @@ app.controller('callesController', function($scope, $http, API_URL) {
 
     };
 
+
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
+    };
 
 
     $scope.initLoad();

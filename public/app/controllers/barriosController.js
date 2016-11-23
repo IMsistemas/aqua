@@ -38,6 +38,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
     };
 
     $scope.saveBarrio = function () {
+
         var data = {
             nombrebarrio: $scope.nombrebarrio,
             idparroquia: $scope.t_parroquias,
@@ -50,6 +51,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $('#modalNueva').modal('hide');
             $scope.message = 'Se insertó correctamente la Zona';
             $('#modalMessage').modal('show');
+            $scope.hideModalMessage();
 
         }).error(function (res) {
 
@@ -119,6 +121,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
             $('#modalNuevaToma').modal('hide');
             $scope.message = 'Se insertó correctamente la Transversal';
             $('#modalMessage').modal('show');
+            $scope.hideModalMessage();
             if( $scope.aux1==1) {
                 $scope.showModalAction($scope.barrio);
             }
@@ -174,6 +177,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.idbarrio_del = 0;
                 $scope.message = 'Se eliminó correctamente la Zona seleccionada...';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
             } else if(response.success == false && response.msg == 'exist_calle') {
                 $scope.message_error = 'La Zona no puede ser eliminada porque contiene Transversales...';
                 $('#modalMessageError').modal('show');
@@ -196,6 +200,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.idcalle_delete = 0;
                 $scope.message = 'Se eliminó correctamente la Transversal seleccionada...';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
 
                 $scope.showModalAction($scope.barrio);
 
@@ -225,6 +230,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.initLoad();
                 $scope.message = 'Se editaron correctamente las Transversales';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
 
                 /*setTimeout(function(){
                  $('#modalMessage').modal('hide');
@@ -255,9 +261,15 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.initLoad();
                 $scope.message= 'Se editaron correctamente las Zonas';
                 $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
             });
         }
 
+    };
+
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
 

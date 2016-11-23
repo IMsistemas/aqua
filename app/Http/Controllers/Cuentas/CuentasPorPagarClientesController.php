@@ -29,31 +29,7 @@ class CuentasPorPagarClientesController extends Controller
 
     public function getAll()
     {
-        $cuentas = CuentasPorPagarClientes::join('cliente', 'cuentasporpagarclientes.documentoidentidad', '=',
-                                                    'cliente.documentoidentidad')
-                                        ->select('cliente.apellido', 'cliente.nombre', 'cliente.documentoidentidad',
-                                            'cuentasporpagarclientes.fecha', 'cuentasporpagarclientes.valor')
-                                        ->get();
-
-        return $cuentas;
-    }
-
-    public function getByFilter($filter)
-    {
-
-        $filter = json_decode($filter);
-
-        $cuentas = CuentasPorPagarClientes::join('cliente', 'cuentasporpagarclientes.documentoidentidad', '=',
-                                        'cliente.documentoidentidad')
-                                        ->select('cliente.apellido', 'cliente.nombre', 'cliente.documentoidentidad',
-                                            'cuentasporpagarclientes.fecha', 'cuentasporpagarclientes.valor');
-
-
-        if($filter->text != null && $filter->text != ''){
-            $cuentas->whereRaw("cliente.nombre LIKE '%" . $filter->text . "%' OR cliente.apellido LIKE '%" . $filter->text . "%' ");
-        }
-
-        return $cuentas->get();
+        return CuentasPorPagarClientes::with('cliente')->orderBy('fecha', 'asc')->get();
 
     }
 

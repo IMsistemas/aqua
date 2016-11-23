@@ -53,7 +53,7 @@
                 <tbody>
                 <tr ng-repeat="empleado in empleados |filter:busqueda" ng-cloak >
                     <td>{{empleado.documentoidentidadempleado}}</td>
-                    <td>{{empleado.apellidos + ' ' + empleado.nombres}}</td>
+                    <td>{{empleado.complete_name}}</td>
                     <td>{{empleado.cargo.nombrecargo}}</td>
                     <td>{{empleado.telefonoprincipaldomicilio}}</td>
                     <td>{{empleado.celular}}</td>
@@ -270,6 +270,21 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
         <div class="modal-dialog" role="document">

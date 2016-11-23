@@ -19,14 +19,26 @@
 <div ng-controller="suministrosController">
     <div class="container" style="margin-top: 2%;">
 
-        <div class="col-xs-4">
+        <div class="col-xs-12"  style="margin-top: 15px;">
+        <div class="col-sm-6 col-xs-8">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control input-sm" id="search-list-trans" placeholder="BUSCAR..." ng-model="busqueda">
+                <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
 
-        <div class="cos-xs-12">
+        <div class="col-sm-3">
+            <select id="s_zona" class="form-control" ng-model="s_zona" ng-change="FiltrarPorBarrio()"
+                    ng-options="value.id as value.label for value in zonass"></select>
+        </div>
+
+        <div class="col-sm-3">
+            <select id="s_transversales" class="form-control" ng-model="s_transversales" ng-change="FiltrarPorCalle()"
+                    ng-options="value.id as value.label for value in transversaless"></select>
+        </div>
+
+
+            <div class="cos-xs-12">
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
@@ -51,11 +63,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="suministro in suministros|filter:busqueda" ng-cloak>
+                <tr ng-repeat="suministro in suministros| filter : busqueda" ng-cloak>
                     <td>{{suministro.numerosuministro}}</td>
-                    <td>{{suministro.cliente.apellidos+" "+suministro.cliente.nombres}}</td>
-                    <td>{{suministro.calle.nombrecalle}}</td>
-                    <td>{{suministro.direccionsuministro}}</td>
+                    <td>{{suministro.cliente.complete_name}}</td>
+                    <td>{{suministro.calle.barrio.nombrebarrio}}</td>
+                    <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td >
                         <a href="#" class="btn btn-info" ng-click="getSuministro(suministro.numerosuministro);">Ver</a>
@@ -65,7 +77,7 @@
                 </tbody>
             </table>
         </div>
-
+        </div>
     </div>
 
     <!--====================================MODALES===================================================================-->
@@ -119,15 +131,6 @@
                             <fieldset>
                                 <legend style="padding-bottom: 5px; padding-left: 20px">Datos Suministro</legend>
                                 <div class="col-xs-12">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Servicio Agua Potable:</label>
-                                            <div class="col-sm-8">
-                                                <select id="aguapotable" class="form-control" ng-model="aguapotable"
-                                                        ng-options="value.id as value.label for value in agua_potable" required></select>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="form-group error">
                                             <label class="col-sm-4 control-label">Zona:</label>
@@ -187,25 +190,25 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-info">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Suministro No.{{suministro.numerosuministro}}</h4>
+                    <h4 class="modal-title">Suministro No.{{numerosuministro}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row text-center">
-                        <div class="col-xs-12 text-center" style="font-size: 18px;">Instalado el: {{suministro.fechainstalacionsuministro}}</div>
+                        <div class="col-xs-12 text-center" style="font-size: 18px;">Instalado el: {{fechainstalacionsuministro}}</div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Cliente:</span>{{suministro.cliente.apellidos+" "+suministro.cliente.nombres}}
+                            <span style="font-weight: bold">Cliente:</span>{{nombre_apellido}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Servicio Agua Potable:</span>{{suministro.servicioaguapotable.nombreservicio}}
+                            <span style="font-weight: bold">Zona: </span>{{zona}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Zona: </span>{{suministro.calle.nombrecalle}}
+                            <span style="font-weight: bold">Transversal: </span>{{transversal}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Dirección Suministro: </span>{{suministro.direccionsuministro}}
+                            <span style="font-weight: bold">Dirección Suministro: </span>{{direccionsumnistro}}
                         </div>
                         <div class="col-xs-12">
-                            <span style="font-weight: bold">Teléfono: </span>{{suministro.telefonosuministro}}
+                            <span style="font-weight: bold">Teléfono: </span>{{telefonosuministro}}
                         </div>
                     </div>
                 </div>

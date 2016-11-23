@@ -37,7 +37,7 @@ class FacturaController extends Controller
 
     public function getCobroAgua()
     {
-        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta.serviciosaguapotable.aguapotable','factura.otrosvaloresfactura.otrosvalores','lectura' )
+        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta.serviciosaguapotable.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' )
                                 ->orderBy('fecha','asc')->get();
     }
 

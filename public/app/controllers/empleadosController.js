@@ -12,9 +12,17 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
         }
 
         $http.get(API_URL + 'empleado/getEmployees').success(function(response){
-            console.log(response);
+            var longitud = response.length;
+            for (var i = 0; i < longitud; i++) {
+                var complete_name = {
+                    value: response[i].nombres + ' ' + response[i].apellidos,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i], 'complete_name', complete_name);
+            }
             $scope.empleados = response;
-            //$('[data-toggle="tooltip"]').tooltip();
         });
 
     };
@@ -94,7 +102,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                 break;
 
             case 'info':
-                        $scope.name_employee = item.apellidos + ' ' + item.nombres;
+                        $scope.name_employee = item.nombres + ' ' + item.apellidos;
                         $scope.cargo_employee = item.nombrecargo;
                         $scope.date_registry_employee = convertDatetoDB(item.fechaingreso, true);
                         //$scope.date_registry_employee = response[0].fechaingreso;
@@ -149,17 +157,25 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             method: method,
             data: data
         }).success(function(data, status, headers, config) {
-            $scope.initLoad();
-            $scope.message = 'Se actualizó correctamente el empleado seleccionado...';
-            $('#modalAction').modal('hide');
-            $('#modalMessage').modal('show');
+            if (data.success == true) {
+                $scope.initLoad();
+                $scope.message = 'Se guardó correctamente la información del empleado...';
+                $('#modalAction').modal('hide');
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            }
+            else {
+                $('#modalAction').modal('hide');
+                $scope.message_error = 'Ya existe ese Colaborador...';
+                $('#modalMessageError').modal('show');
+            }
         });
 
     };
 
     $scope.showModalConfirm = function(item){
         $scope.empleado_del = item.idempleado;
-        $scope.empleado_seleccionado = item.apellidos + ' ' + item.nombres;
+        $scope.empleado_seleccionado = item.nombres + ' ' + item.apellidos;
             $('#modalConfirmDelete').modal('show');
     };
 
@@ -170,8 +186,15 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             $scope.empleado_del = 0;
             $scope.message = 'Se eliminó correctamente el Empleado seleccionado';
             $('#modalMessage').modal('show');
+            $scope.hideModalMessage();
         });
     };
+
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
+    };
+
 
     $scope.initLoad(true);
 

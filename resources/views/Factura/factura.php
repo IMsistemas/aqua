@@ -96,7 +96,7 @@
                 <td>{{item.estado}}</td>
                 <td>{{item.total}}</td>
                 <td>
-                    <button type="button" class="btn btn-success btn-sm" ng-click="showModalDelete(item)">
+                    <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">
                         <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                     </button>
                     <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
@@ -170,38 +170,10 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td> Consumo Agua {{mes}}</td>
-                                                <td> {{consumo_agua}} m3</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Excedente Agua {{mes}}</td>
-                                                <td> {{excedente_agua}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Valores Atrasados </td>
-                                                <td> {{valores_atrasados}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Desechos Sólidos</td>
-                                                <td> {{desechos_solidos}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Alcantarillado</td>
-                                                <td> {{alcantarillado}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Tarifa Ambiente</td>
-                                                <td> {{tarifa_ambiente}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Otros</td>
-                                                <td> {{otros}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td> Multa Asamblea
-                                                </td>
-                                                <td> {{multa_asamblea}}</td>
+                                            <tbody>
+                                            <tr ng-repeat="item in aux_modal" ng-cloak >
+                                                <td>{{item.nombre}}</td>
+                                                <td>{{item.valor}}</td>
                                             </tr>
 
 

@@ -8,10 +8,9 @@
 
             </legend>
 
-            <div class="col-xs-6">
+            <div class="col-sm-6 col-xs-12">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..."
-                           ng-model="t_search" ng-change="search();" >
+                    <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="t_busqueda">
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
@@ -21,16 +20,16 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                     <tr>
-                        <th style="width: 15%;">Doc. Identidad</th>
-                        <th>Nombre y Apellidos</th>
+                        <th style="width: 15%;">CI/RUC</th>
+                        <th>Nombres y Apellidos</th>
                         <th style="width: 15%;">Fecha</th>
                         <th style="width: 15%;">Valor</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="cuenta in cuentas" ng-cloak>
-                        <td>{{cuenta.documentoidentidad}}</td>
-                        <td>{{cuenta.apellido + ' ' + cuenta.nombre}}</td>
+                    <tr ng-repeat="cuenta in cuentas | filter : t_busqueda" ng-cloak>
+                        <td>{{cuenta.cliente.documentoidentidad}}</td>
+                        <td>{{cuenta.cliente.complete_name}}</td>
                         <td>{{cuenta.fecha}}</td>
                         <td class="text-right">{{cuenta.valor}}</td>
                     </tr>

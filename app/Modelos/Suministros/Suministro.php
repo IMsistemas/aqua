@@ -34,4 +34,5 @@ class Suministro extends Model
     {
         return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','numerosuministro');
     }
+
 }

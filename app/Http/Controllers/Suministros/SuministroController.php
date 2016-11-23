@@ -22,12 +22,23 @@ class SuministroController extends Controller
 
     public function getsuministros()
     {
-       return Suministro::with('cliente', 'calle', 'producto', 'servicioaguapotable')->orderBy('numerosuministro', 'asc')->get();
+       return Suministro::with('cliente', 'calle.barrio', 'producto')->orderBy('numerosuministro', 'asc')->get();
+    }
+
+    public function getSuministrosByBarrio($id)
+    {
+
+       // return Suministro::with('cliente', 'calle.barrio', 'producto')->where('calle.barrio.idbarrio', $id)->orderBy('numerosuministro', 'asc')->get();
     }
 
     public function getAguapotable()
     {
         return ServicioAguaPotable::orderBy('nombreservicio', 'asc')->get();
+    }
+
+    public function getCalleByBarrio($id)
+    {
+        return Calle::with('barrio')->where('idbarrio', $id)->orderBy('nombrecalle', 'asc')->get();
     }
 
     public function getCalle()
@@ -37,7 +48,7 @@ class SuministroController extends Controller
 
     public function suministroById($id)
     {
-        return Suministro::with('cliente', 'calle', 'producto', 'servicioaguapotable')->where('numerosuministro', $id)->orderBy('numerosuministro')->get();
+        return Suministro::with('cliente', 'calle.barrio', 'producto')->where('numerosuministro', $id)->orderBy('numerosuministro')->get();
     }
 
 
@@ -109,9 +120,8 @@ class SuministroController extends Controller
     {
         $suministro = Suministro::find($id);
 
-        $suministro->idaguapotable = $request->input('idaguapotable');
         $suministro->idcalle = $request->input('idcalle');
-        $suministro->direccionsuministro = $request->input('direccionsuministro');
+        $suministro->direccionsumnistro = $request->input('direccionsuministro');
         $suministro->telefonosuministro = $request->input('telefonosuministro');
         $suministro->save();
 

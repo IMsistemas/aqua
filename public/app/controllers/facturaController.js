@@ -50,7 +50,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           direccion: $scope.array_temp[i].suministro.direccionsumnistro,
                           telefono: $scope.array_temp[i].suministro.telefonosuministro,
                           estado: $scope.array_temp[i].estapagado,
-                          total: $scope.array_temp[i].valor,
+                          total: $scope.array_temp[i].factura.totalfactura,
                           consumo: null
                       }
 
@@ -66,7 +66,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           direccion: $scope.array_temp[i].suministro.direccionsumnistro,
                           telefono: $scope.array_temp[i].suministro.telefonosuministro,
                           estado: $scope.array_temp[i].estapagado,
-                          total: $scope.array_temp[i].valor,
+                          total: $scope.array_temp[i].factura.totalfactura,
                           consumo: $scope.array_temp[i].lectura.consumo
                       }
                   }
@@ -117,7 +117,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
     };
 
     $scope.Estado = function () {
-            var array_temp = [{label: '--Estado --', id: 0}];
+            var array_temp = [{label: '--Estado --', id: 0},{label: 'PAGADA', id: 1},{label: 'NO PAGADA ', id: 2}];
+
             $scope.estadoss = array_temp;
             $scope.s_estado = 0;
     };
@@ -127,48 +128,156 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.num_factura = item.factura;
         $scope.mes = Auxiliar(item.periodo);
         $scope.multa = '';
-        $scope.multaa = 0,00;
+        $scope.multaa = 0, 00;
+        var arreg = [];
 
-        for(var i = 0; i < $scope.cobroagua_aux.length; i++) {
-            if($scope.cobroagua_aux[i].suministro.numerosuministro == item.suministro) {
+        for (var i = 0; i < $scope.cobroagua_aux.length; i++) {
+            if ($scope.cobroagua_aux[i].suministro.numerosuministro == item.suministro) {
                 $scope.documentoidentidad_cliente = $scope.cobroagua_aux[i].suministro.cliente.documentoidentidad;
-                $scope.nom_cliente =  $scope.cobroagua_aux[i].suministro.cliente.nombres  + ' ' +  $scope.cobroagua_aux[0].suministro.cliente.apellidos  ;
+                $scope.nom_cliente = $scope.cobroagua_aux[i].suministro.cliente.nombres + ' ' + $scope.cobroagua_aux[0].suministro.cliente.apellidos;
                 $scope.direcc_cliente = $scope.cobroagua_aux[i].suministro.cliente.direcciondomicilio;
                 $scope.telf_cliente = $scope.cobroagua_aux[i].suministro.cliente.celular;
 
-                if($scope.cobroagua_aux[i].valorexcedente==null) {
-                    $scope.excedente_agua = 0,00;
-                }else{
-                    $scope.excedente_agua = $scope.cobroagua_aux[i].valorexcedente;
-                }
-                if($scope.cobroagua_aux[i].valormesesatrasados==null) {
-                    $scope.valores_atrasados =  0,00;
-                }else{
-                    $scope.valores_atrasados = $scope.cobroagua_aux[i].valormesesatrasados;                }
 
-                if($scope.cobroagua_aux[i].idlectura==null) {
-                    $scope.consumo_agua = 0,00;
-                }else{
-                    $scope.consumo_agua = $scope.cobroagua_aux[i].lectura.consumo;
-                }
-                if( $scope.cobroagua_aux[i].factura.otrosvaloresfactura.length > 0)
-                {
-                    $scope.multa =  $scope.cobroagua_aux[i].factura.otrosvaloresfactura;
-                    for(var a = 0; a < $scope.multa.length; a++) {
-                        $scope.aux=  $scope.multa[a].valor;
-                        $scope.multaa += parseFloat ($scope.aux);
+                if ($scope.cobroagua_aux[i].valorexcedente == null) {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua",
+                        valor:  0.00
                     }
-                    $scope.multa_asamblea =  $scope.multaa;
-                }else
-                {
-                    $scope.multa_asamblea = 0,00;
+
+                } else {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua",
+                        valor: $scope.cobroagua_aux[i].valorexcedente
+                    }
                 }
-            }
+                    arreg.push(excedente_agua);
+
+
+
+                if ($scope.cobroagua_aux[i].valormesesatrasados == null) {
+                    var valores_atrasados = {
+                        nombre: "Valores Atrasados",
+                        valor: 0.00
+                    }
+                }else
+                    {
+                        var valores_atrasados = {
+                            nombre: "Valores Atrasados",
+                            valor: $scope.cobroagua_aux[i].valormesesatrasados
+                        }
+                    }
+                        arreg.push(valores_atrasados);
+
+
+
+
+
+                if ($scope.cobroagua_aux[i].valortarifabasica == null) {
+                    var valores_atrasados = {
+                        nombre: "Consumo Agua",
+                        valor: 0.00
+                    }
+                }else {
+                    var consumo_agua = {
+                        nombre: "Consumo Agua",
+                        valor: $scope.cobroagua_aux[i].valortarifabasica
+                    }
+                }
+                    arreg.push(consumo_agua);
+
+
+
+                if( $scope.cobroagua_aux[i].factura.serviciosenfactura.length > 0) {
+                    $scope.servicios = $scope.cobroagua_aux[i].factura.serviciosenfactura;
+
+                    for (var a = 0; a < $scope.servicios.length; a++) {
+                        var auxiliar = {
+                            nombre: $scope.servicios[a].serviciojunta.nombreservicio,
+                            valor: $scope.servicios[a].valor
+                        }
+                        arreg.push(auxiliar);
+                    }
+                }
+
+
+
+                }
         }
-        $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
+        $scope.aux_modal = $scope.arreg;
+       // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
 
         $('#modalFactura').modal('show');
     };
+
+
+
+
+
+                /* $scope.ShowModalFactura = function (item) {
+                     console.log(item);
+                     $scope.num_factura = item.factura;
+                     $scope.mes = Auxiliar(item.periodo);
+                     $scope.multa = '';
+                     $scope.multaa = 0,00;
+
+                     for(var i = 0; i < $scope.cobroagua_aux.length; i++) {
+                         if($scope.cobroagua_aux[i].suministro.numerosuministro == item.suministro) {
+                             $scope.documentoidentidad_cliente = $scope.cobroagua_aux[i].suministro.cliente.documentoidentidad;
+                             $scope.nom_cliente = $scope.cobroagua_aux[i].suministro.cliente.nombres + ' ' + $scope.cobroagua_aux[0].suministro.cliente.apellidos;
+                             $scope.direcc_cliente = $scope.cobroagua_aux[i].suministro.cliente.direcciondomicilio;
+                             $scope.telf_cliente = $scope.cobroagua_aux[i].suministro.cliente.celular;
+
+                             if ($scope.cobroagua_aux[i].valorexcedente == null) {
+                                 $scope.excedente_agua = 0, 00;
+                             } else {
+                                 $scope.excedente_agua = $scope.cobroagua_aux[i].valorexcedente;
+                             }
+                             if ($scope.cobroagua_aux[i].valormesesatrasados == null) {
+                                 $scope.valores_atrasados = 0, 00;
+                             } else {
+                                 $scope.valores_atrasados = $scope.cobroagua_aux[i].valormesesatrasados;
+                             }
+
+                             $scope.consumo_agua = $scope.cobroagua_aux[i].valortarifabasica;
+
+                             if( $scope.cobroagua_aux[i].factura.otrosvaloresfactura.length > 0)
+                             {
+                                 $scope.multa =  $scope.cobroagua_aux[i].factura.otrosvaloresfactura;
+                                 for(var a = 0; a < $scope.multa.length; a++) {
+                                     $scope.aux=  $scope.multa[a].valor;
+                                     $scope.multaa += parseFloat ($scope.aux);
+                                 }
+                                 $scope.multa_asamblea =  $scope.multaa;
+                             }else
+                             {
+                                 $scope.multa_asamblea = 0,00;
+                             }
+                             if( $scope.cobroagua_aux[i].factura.serviciosenfactura.length > 0) {
+                                 $scope.servicios = $scope.cobroagua_aux[i].factura.serviciosenfactura;
+                                 for (var a = 0; a < $scope.servicios.length; a++) {
+
+                                     if ($scope.servicios[a].serviciojunta.nombreservicio == 'DESECHOS SOLIDOS') {
+                                         $scope.desechos_solidos = $scope.servicios.valor;
+                                     }
+
+                                     if ($scope.servicios[a].serviciojunta.nombreservicio == 'ALCANTARILLADO') {
+                                         $scope.desechos_solidos = $scope.servicios.valor;
+                                     }
+
+                                     if ($scope.servicios[a].serviciojunta.nombreservicio == 'MEDIO AMBIENTE') {
+                                         $scope.desechos_solidos = $scope.servicios.valor;
+                                     }
+
+                                 }
+                             }
+
+                        }
+                     }
+                     $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
+
+                     $('#modalFactura').modal('show');
+                 };*/
 
     $scope.generate = function () {
 

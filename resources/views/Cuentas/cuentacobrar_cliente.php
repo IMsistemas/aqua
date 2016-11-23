@@ -9,10 +9,9 @@
 
             </legend>
 
-            <div class="col-xs-6">
+            <div class="col-sm-6 col-xs-12">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..."
-                           ng-model="t_search" ng-change="search();" >
+                    <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="t_busqueda">
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
@@ -22,9 +21,9 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                     <tr>
-                        <th style="width: 15%;">Doc. Identidad</th>
+                        <th style="width: 15%;">CI/RUC</th>
                         <th style="width: 15%;">Nro Suministro</th>
-                        <th>Nombre y Apellidos</th>
+                        <th>Nombres y Apellidos</th>
                         <th style="width: 10%;">Fecha</th>
                         <th style="width: 10%;">Dividendos</th>
                         <th style="width: 10%;">Pago/Dividendo</th>
@@ -32,10 +31,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="cuenta in cuentascobrar" ng-cloak>
-                        <td>{{cuenta.documentoidentidad}}</td>
+                    <tr ng-repeat="cuenta in cuentascobrar  | filter : t_busqueda" ng-cloak>
+                        <td>{{cuenta.cliente.documentoidentidad}}</td>
                         <td>{{cuenta.numerosuministro}}</td>
-                        <td>{{cuenta.apellido + ' ' + cuenta.nombre}}</td>
+                        <td>{{cuenta.cliente.complete_name}}</td>
                         <td>{{cuenta.fecha}}</td>
                         <td class="text-right">{{cuenta.dividendos}}</td>
                         <td class="text-right">{{cuenta.pagoporcadadividendo}}</td>
