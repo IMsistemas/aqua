@@ -323,7 +323,10 @@ Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsu
 Route::get('suministros/suministroById/{id}','Suministros\SuministroController@suministroById');
 Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
 Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroController@getCalleByBarrio');
+
 Route::get('suministros/getSuministrosByBarrio/{id}', 'Suministros\SuministroController@getSuministrosByBarrio');
+
+Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroController@getSuministrosByCalle');
 
 
 Route::resource('/suministros', 'Suministros\SuministroController');

@@ -3,6 +3,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.cobroagua = [];
     $scope.aux = [];
+    $scope.item = 0;
 
     $scope.initLoad = function () {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
@@ -51,7 +52,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           telefono: $scope.array_temp[i].suministro.telefonosuministro,
                           estado: $scope.array_temp[i].estapagado,
                           total: $scope.array_temp[i].factura.totalfactura,
-                          consumo: null
+                          consumo: null,
+                          idcobroagua: $scope.array_temp[i].idcobroagua
                       }
 
                   }else {
@@ -67,7 +69,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                           telefono: $scope.array_temp[i].suministro.telefonosuministro,
                           estado: $scope.array_temp[i].estapagado,
                           total: $scope.array_temp[i].factura.totalfactura,
-                          consumo: $scope.array_temp[i].lectura.consumo
+                          consumo: $scope.array_temp[i].lectura.consumo,
+                         idcobroagua: $scope.array_temp[i].idcobroagua
                       }
                   }
 
@@ -125,6 +128,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.ShowModalFactura = function (item) {
         console.log(item);
+        $scope.item = item.idcobroagua;
         $scope.num_factura = item.factura;
         $scope.mes = Auxiliar(item.periodo);
         $scope.multa = '';
@@ -210,10 +214,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $('#modalFactura').modal('show');
     };
 
-
-
-
-
                 /* $scope.ShowModalFactura = function (item) {
                      console.log(item);
                      $scope.num_factura = item.factura;
@@ -292,6 +292,22 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             }
         });
 
+    };
+
+    $scope.pagar = function(){
+        $http.put(API_URL + 'factura/'+ $scope.item ).success(function (response) {
+            $scope.initLoad();
+            $('#modalFactura').modal('hide');
+            $scope.message = 'Se efectuo el pago correctamente';
+            $('#modalMessage').modal('show');
+            $scope.hideModalMessage();
+        });
+    }
+
+
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
     $scope.initLoad();

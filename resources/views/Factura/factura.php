@@ -199,7 +199,7 @@
                             ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-next" ng-click="" >
+                    <button type="button" class="btn btn-primary" id="btn-next" ng-click="pagar()" >
                         Pagar <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
                     </button>
                 </div>

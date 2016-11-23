@@ -136,7 +136,13 @@ class FacturaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $cobro = CobroAgua::find($id);
+
+        $cobro->estapagado = true;
+        $cobro->save();
+
+        return response()->json(['success' => true]);
     }
 
     /**
