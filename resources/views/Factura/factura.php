@@ -84,17 +84,20 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in cobroagua|filter:t_busqueda" ng-cloak>
-                <td>{{item.factura}}</td>
-                <td>{{item.fecha}}</td>
-                <td>{{item.periodo}}</td>
-                <td>{{item.servicios}}</td>
-                <td>{{item.suministro}}</td>
-                <td>{{item.tarifas}}</td>
-                <td>{{item.direccion}}</td>
-                <td>{{item.telefono}}</td>
-                <td>{{item.consumo}}</td>
-                <td>{{item.estado}}</td>
-                <td>{{item.total}}</td>
+                <td>{{item.factura.idfactura}}</td>
+                <td>{{ FormatoFecha(item.fecha)}}</td>
+                <td>{{yearmonth (item.fecha)}}</td>
+                <td>
+                    <span ng-repeat="serviciosenfactura in item.factura.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
+
+                </td>
+                <td>{{item.suministro.numerosuministro}}</td>
+                <td>{{item.suministro.aguapotable.nombretarifaaguapotable}}</td>
+                <td>{{item.suministro.direccionsumnistro}}</td>
+                <td>{{item.suministro.telefonosuministro}}</td>
+                <td>{{item.lectura.consumo}}</td>
+                <td>{{item.estapagado}}</td>
+                <td>{{item.factura.totalfactura}}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">
                         <i class="fa fa-lg fa-print" aria-hidden="true"></i>
@@ -102,7 +105,6 @@
                     <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
                         <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                     </button>
-
                 </td>
             </tr>
             </tbody>
@@ -175,8 +177,6 @@
                                                 <td>{{item.nombre}}</td>
                                                 <td>{{item.valor}}</td>
                                             </tr>
-
-
                                             </tbody>
                                             <tfoot>
                                                 <tr>
