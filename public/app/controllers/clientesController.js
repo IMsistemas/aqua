@@ -102,6 +102,10 @@
         };
 
         $scope.saveCliente = function () {
+
+            $('#btn-save').prop('disabled', true);
+
+
             if($scope.t_tipocliente > 0) {
                 var data = {
                     fechaingreso: $scope.convertDatetoDB($scope.t_fecha_ingreso),
@@ -126,10 +130,11 @@
                     $http.post(url, data).success(function (response) {
                         $scope.initLoad();
                         $('#modalAddCliente').modal('hide');
+                        $('#btn-save').prop('disabled', false);
                         $scope.message = 'Se insertó correctamente el cliente...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
-
+                        $('#btn-save').prop('disabled', false);
                     });
 
                 } else {
@@ -138,10 +143,11 @@
                     $http.put(url, data).success(function (response) {
                         $scope.initLoad();
                         $('#modalAddCliente').modal('hide');
+                        $('#btn-save').prop('disabled', false);
                         $scope.message = 'Se editó correctamente el Cliente seleccionado...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
-
+                        $('#btn-save').prop('disabled', false);
                     });
                 }
 
@@ -943,6 +949,38 @@
             }
         };
 
+        $scope.onlyCharasterAndSpace = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /^([a-zA-Záéíóúñ\s]+)$/;
+            var n = String.fromCharCode(k);
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+                return false;
+            }
+            else return true;
+
+        };
+
+        $scope.onlyNumber = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+
+            if (n == ".") {
+                return true;
+            } else {
+
+                if(patron.test(n) == false){
+                    $event.preventDefault();
+                }
+                else return true;
+            }
+        };
     });
 
     function convertDatetoDB(now, revert){
