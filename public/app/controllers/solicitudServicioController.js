@@ -762,7 +762,7 @@
             });
         };
 
-        $scope.getCalles = function(idbarrio, idcalle){
+        $scope.getCalles = function (idbarrio, idcalle) {
 
             if (idbarrio == 0 || idbarrio == undefined) {
                 idbarrio = $scope.s_suministro_zona;
@@ -996,6 +996,10 @@
             }).error(function (res) {
 
             });
+        };
+
+        $scope.viewPDF = function (url) {
+            window.open(url);
         };
 
         /*

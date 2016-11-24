@@ -489,6 +489,7 @@ class ClienteController extends Controller
                         $cxp_cliente->codigocliente = $request->input('codigocliente');
                         $cxp_cliente->valor = $request->input('garantia');
                         $cxp_cliente->fecha = $fecha_actual;
+
                         if ($cxp_cliente->save() != false) {
 
                             return response()->json(['success' => true]);
