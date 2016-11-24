@@ -133,7 +133,7 @@
                                                 <span class="help-block error"
                                                       ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.pattern">La Identificación debe ser solo números</span>
                                                 <span class="help-block error"
-                                                      ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.minlength">La Identificación debe ser mayor a 10 digitos</span>
+                                                      ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.minlength">La Identificación debe ser mayor a 10 dígito</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-xs-12 form-group error">

@@ -41,6 +41,30 @@ class FacturaController extends Controller
                                 ->orderBy('fecha','asc')->get();
     }
 
+    public function Filtrar($filter)
+    {
+        $filter = json_decode($filter);
+
+
+        $cobro = CobroAgua::with('suministro.cliente','suministro.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' );
+        $cobro->whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->mes);
+        $cobro ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->anio);
+        if($filter->estado == 1)
+        {
+            $cobro ->where('estapagado', true);
+        }
+
+        if($filter->estado == 2)
+        {
+            $cobro ->where('estapagado', false);
+        }
+
+        return $cobro->get();
+
+    }
+
+
+
     public function getServiciosXCobro($id)
     {
         $cliente = Cliente::find($id);

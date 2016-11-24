@@ -334,6 +334,7 @@ Route::resource('/suministros', 'Suministros\SuministroController');
 /*=============================Módulo Facturacion====================================*/
 
 Route::get('factura/getCobroAgua', 'Facturas\FacturaController@getCobroAgua');
+Route::get('factura/Filtrar/{filtros}', 'Facturas\FacturaController@Filtrar');
 Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
 Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
 Route::get('factura/generate', 'Facturas\FacturaController@generate');

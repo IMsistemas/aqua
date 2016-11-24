@@ -213,6 +213,45 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         }
     }
 
+
+    $scope.Filtrar= function  () {
+
+        if ($scope.t_anio == undefined) {
+            var a = null;
+        } else var a = $scope.t_anio;
+
+        if ($scope.s_mes == undefined) {
+            var m = null;
+        } else var m = $scope.s_mes;
+
+        if ($scope.s_servicio == undefined) {
+            var s = null;
+        } else var s = $scope.s_servicio;
+
+
+        var filtros = {
+            servicio: s,
+            estado: $scope.s_estado,
+            mes: m,
+            anio: 2016
+        }
+
+        console.log(filtros);
+        $http.get(API_URL + 'factura/Filtrar/' + JSON.stringify(filtros)).success(function(response){
+            console.log(response);
+            $scope.cobroagua = response;
+
+
+        });
+
+        }
+
+
+
+
+
+
+
     $scope.initLoad();
     $scope.Servicio();
     $scope.Anio();
@@ -237,8 +276,7 @@ $(function(){
 });
 
 
-function Auxiliar  (mes_anio)
-{
+function Auxiliar  (mes_anio) {
     var mes = mes_anio;
     var elem = mes.split('-');
     anio = elem[1];
@@ -248,8 +286,7 @@ function Auxiliar  (mes_anio)
 }
 
 
-function yearmonth  (fecha)
-{
+function yearmonth  (fecha) {
     var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     var Date = fecha;
     var elem = Date.split('-');

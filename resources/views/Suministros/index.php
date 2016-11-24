@@ -163,9 +163,12 @@
                                             <label for="telefonosuministro" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléfono:</label>
                                             <div class="col-sm-8 col-xs-12">
                                                 <input type="text" class="form-control" name="telefonosuministro" id="telefonosuministro"
-                                                       ng-model="telefonosuministro" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                       ng-model="telefonosuministro" ng-minlength="9" ng-pattern="/^([0-9-\(\)]+)$/">
                                                 <span class="help-block error"
                                                       ng-show="formNuevaSolicitud.telefonosuministro.$invalid && formNuevaSolicitud.telefonosuministro.$error.pattern">Solo números, guiones y paréntesis</span>
+                                                <span class="help-block error"
+                                                      ng-show="formNuevaSolicitud.telefonosuministro.$invalid && formNuevaSolicitud.telefonosuministro.$error.minlength">El Teléfono debe ser mayor a 9 dígitos</span>
+
                                             </div>
 
                                         </div>

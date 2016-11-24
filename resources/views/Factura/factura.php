@@ -36,23 +36,25 @@
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_servicio" class="form-control" ng-model="s_servicio" ng-change="FiltrarPorServicio()"
+            <select id="s_servicio" class="form-control" ng-model="s_servicio" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in servicioss"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <!--<select  id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
-                    ng-options="value.id as value.label for value in anios"></select>-->
-            <input type="text" class="form-control datepicker_a" ng-model="t_anio" id="t_anio" placeholder="-- Año --">
+
+            <input type="text" class="form-control datepicker_a" name="t_anio"
+                   id="t_anio" ng-model="t_anio"  ng-change="Filtrar()" placeholder="-- Año --">
+
+
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="FiltrarPorMes()"
+            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in meses"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="FiltrarPorEstado()"
+            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in estadoss"></select>
         </div>
 
@@ -70,10 +72,10 @@
             <tr>
                 <th style="width: 5%;">No. Factura</th>
                 <th style="width: 7%;">Fecha</th>
-                <th style="width: 7%;">Periodo</th>
+                <th style="width: 12%;">Periodo</th>
                 <th style="width: 16%;">Servicios</th>
                 <th style="width: 5%;">Suministro</th>
-                <th style="width: 20%;">Tarifa</th>
+                <th style="width: 15%;">Tarifa</th>
                 <th style="width: 15%;">Direccion Suministro</th>
                 <th style="width: 5%;">Telefono Suministro</th>
                 <th style="width: 5%;">Consumo (m3)</th>

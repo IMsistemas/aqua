@@ -33,11 +33,13 @@ app.controller('barrioController', function($scope, $http, API_URL) {
         $http.get(API_URL + 'barrio/getLastID').success(function(response){
             $scope.codigo = response.id;
             $scope.nombrebarrio = '';
+            $('#btn-savebarrio').prop('disabled', false)
             $('#modalNueva').modal('show');
         });
     };
 
     $scope.saveBarrio = function () {
+        $('#btn-savebarrio').prop('disabled', true)
 
         var data = {
             nombrebarrio: $scope.nombrebarrio,
@@ -81,6 +83,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.nombrecalle = '';
                 $scope.aux1 = aux0 ;
                 $('#modalTomas').modal('hide');
+                $('#btn-savebarrio').prop('disabled', false)
                 $('#modalNuevaToma').modal('show');
             });
         }else {
@@ -102,6 +105,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.codigo_toma = response.id;
                 $scope.nombrecalle = '';
                 $scope.aux1 = aux0 ;
+                $('#btn-savecalle').prop('disabled', false)
                 $('#modalNuevaToma').modal('show');
                 $('#modalTomas').modal('show');
 
@@ -111,6 +115,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
     };
 
     $scope.saveCalle = function () {
+        $('#btn-savecalle').prop('disabled', true)
         var data = {
             nombrecalle: $scope.nombrecalle,
             idbarrio: $scope.id_barrio
