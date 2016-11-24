@@ -96,7 +96,7 @@
                 <td>{{item.suministro.direccionsumnistro}}</td>
                 <td>{{item.suministro.telefonosuministro}}</td>
                 <td>{{item.lectura.consumo}}</td>
-                <td>{{item.estapagado}}</td>
+                <td>{{Pagada(item.estapagado)}}</td>
                 <td>{{item.factura.totalfactura}}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">

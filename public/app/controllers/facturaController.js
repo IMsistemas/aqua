@@ -149,7 +149,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
     };
 
-
     $scope.generate = function () {
 
         $http.get(API_URL + 'factura/generate').success(function(response){
@@ -175,15 +174,11 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         });
     }
 
-
-
     $scope.hideModalMessage = function () {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
-
-    $scope.FormatoFecha = function  (fecha)
-    {
+    $scope.FormatoFecha = function  (fecha) {
         var Date = fecha;
         var elem = Date.split('-');
         dia = elem[2];
@@ -193,11 +188,14 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         return dia  + '-' + mes + '-' + anio;
     }
 
+    $scope.Pagada = function  (aux) {
+       if(aux == true)
+           return "PAGADA";
+        else
+            return "NO PAGADA";
+    }
 
-
-
-     $scope.yearmonth  = function (fecha)
-    {
+    $scope.yearmonth  = function (fecha) {
         var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         var Date = fecha;
         var elem = Date.split('-');
