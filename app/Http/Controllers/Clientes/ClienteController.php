@@ -445,6 +445,7 @@ class ClienteController extends Controller
      */
     public function processSolicitudSuministro(Request $request, $id)
     {
+
         $fecha_actual = date('Y-m-d');
 
         $suministro = new Suministro();
@@ -457,10 +458,18 @@ class ClienteController extends Controller
         $suministro->idproducto = $request->input('idproducto');
 
         if ($suministro->save() != false) {
+
+            $name = date('Ymd') . '_' . $suministro->numerosuministro . '.pdf';
+
+            $url_pdf = '/uploads/pdf_suministros/' . $name;
+
+            $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+
             $solicitudsuministro = SolicitudSuministro::find($id);
             $solicitudsuministro->estaprocesada = true;
             $solicitudsuministro->fechaprocesada = date('Y-m-d');
             $solicitudsuministro->numerosuministro = $suministro->numerosuministro;
+            $solicitudsuministro->rutapdf = $url_pdf;
 
             if ($solicitudsuministro->save() != false) {
 
@@ -494,6 +503,26 @@ class ClienteController extends Controller
 
         } else return response()->json(['success' => false]);
 
+    }
+
+
+    private function createPDF($data0, $url_pdf)
+    {
+        $data = json_decode($data0);
+        $plantilla = 'Solicitud.index_createpdf';
+        $view = \View::make($plantilla, compact('data'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        if (! is_dir(public_path().'/uploads/')){
+            mkdir(public_path().'/uploads/');
+        }
+
+        if (! is_dir(public_path().'/uploads/pdf_suministros/')){
+            mkdir(public_path().'/uploads/pdf_suministros/');
+        }
+
+        return $pdf->save(public_path().$url_pdf);
     }
 
 

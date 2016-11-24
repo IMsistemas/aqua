@@ -929,6 +929,39 @@
         };
 
         $scope.procesarSolicitudSuministro = function () {
+
+            if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
+                var tiene = 'NO'
+            } else {
+                var tiene = 'SI'
+            }
+
+            var tarifa = $('#s_suministro_tarifa option:selected').text();
+            var zona = $('#s_suministro_zona option:selected').text();
+            var transversal = $('#s_suministro_transversal option:selected').text();
+
+            var data_to_pdf = {
+                tarifa: tarifa,
+                zona: zona,
+                transversal: transversal,
+                no_suministro: $scope.t_suministro_nro,
+                nomcliente: $scope.nom_cliente_suministro,
+                telefono: $scope.t_suministro_telf,
+                direccion: $scope.t_suministro_direccion,
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+                total_suministro: $scope.total_suministro,
+
+                tiene_medidor: tiene,
+                marca_medidor: $scope.t_suministro_marca,
+                costo_medidor: $scope.t_suministro_costomedidor,
+            };
+
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
@@ -940,7 +973,9 @@
                 valor: $scope.total_suministro,
                 dividendos: $scope.s_suministro_credito,
                 valor_partial: $scope.total_partial,
-                idsolicitud: $scope.num_solicitud_suministro
+                idsolicitud: $scope.num_solicitud_suministro,
+
+                data_to_pdf: JSON.stringify(data_to_pdf)
             };
 
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
