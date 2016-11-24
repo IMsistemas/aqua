@@ -412,6 +412,7 @@
         };
 
         $scope.saveSolicitudSuministro = function () {
+            $('#btn-save-solsuministro').prop('disabled', true);
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
@@ -429,7 +430,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-solsuministro').prop('disabled', true);
+
                     $('#btn-process-solsuministro').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -439,6 +440,8 @@
         };
 
         $scope.procesarSolicitudSuministro = function () {
+
+            $('#btn-process-solsuministro').prop('disabled', true);
 
             if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
                 var tiene = 'NO'
@@ -476,7 +479,7 @@
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.codigoclienteSuministro,
+                codigocliente: $scope.objectAction.codigocliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
@@ -492,8 +495,6 @@
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
-
-                $('#btn-process-solsuministro').prop('disabled', true);
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalAction').modal('hide');
@@ -570,6 +571,8 @@
         };
 
         $scope.saveSolicitudServicio = function () {
+            $('#btn-save-servicio').prop('disabled', true);
+
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 servicios: $scope.services
@@ -579,7 +582,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-servicio').prop('disabled', true);
+
                     $('#btn-process-servicio').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -599,11 +602,13 @@
         };
 
         $scope.saveSolicitudOtro = function () {
+            $('#btn-save-otro').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.h_codigocliente_otro,
                 observacion: $scope.t_observacion_otro
             };
             $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
+
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -682,6 +687,7 @@
         };
 
         $scope.saveSolicitudMantenimiento = function () {
+            $('#btn-save-mant').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 numerosuministro: $scope.s_suministro_mant,
@@ -691,7 +697,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-mant').prop('disabled', true);
+
                     $('#btn-process-mant').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -816,6 +822,7 @@
         };
 
         $scope.saveSolicitudCambioNombre = function () {
+            $('#btn-save-setnombre').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre,
@@ -825,7 +832,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-setnombre').prop('disabled', true);
+
                     $('#btn-process-setnombre').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -835,6 +842,7 @@
         };
 
         $scope.procesarSolicitudSetName = function () {
+            $('#btn-process-setnombre').prop('disabled', true);
             var data = {
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre
             };
@@ -893,6 +901,9 @@
          */
 
         $scope.procesarSolicitud = function (id_btn) {
+
+            $('#' + id_btn).prop('disabled', true);
+
             var url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
 
             var data = {
@@ -901,8 +912,6 @@
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
-
-                $('#' + id_btn).prop('disabled', true);
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalActionServicio').modal('hide');
