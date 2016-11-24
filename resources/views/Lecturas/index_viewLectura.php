@@ -147,7 +147,7 @@
                 </div>
 
                 <div class="col-xs-12">
-                    <button type="button" class="btn btn-success" style="float: right;" ng-click="save()">
+                    <button type="button" class="btn btn-success" id="btn-save" style="float: right;" ng-click="save()">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -169,6 +169,20 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" id="btn-save" ng-click="save()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 999999;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
                     </div>
                 </div>
             </div>
