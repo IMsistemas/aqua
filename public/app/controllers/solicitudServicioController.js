@@ -33,6 +33,8 @@
         $scope.codigoclienteSuministro = 0;
 
         $scope.initLoad = function () {
+            $scope.getPublicPath();
+
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
 
                 var list = [];

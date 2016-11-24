@@ -461,7 +461,7 @@ class ClienteController extends Controller
 
             $name = date('Ymd') . '_' . $suministro->numerosuministro . '.pdf';
 
-            $url_pdf = '/uploads/pdf_suministros/' . $name;
+            $url_pdf = 'uploads/pdf_suministros/' . $name;
 
             $this->createPDF($request->input('data_to_pdf'), $url_pdf);
 
@@ -523,7 +523,7 @@ class ClienteController extends Controller
             mkdir(public_path().'/uploads/pdf_suministros/');
         }
 
-        return $pdf->save(public_path().$url_pdf);
+        return $pdf->save(public_path() . '/' . $url_pdf);
     }
 
 

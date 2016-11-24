@@ -74,7 +74,7 @@ class EmpleadoController extends Controller
                     return response()->json(['success' => false]);
                 } else {
                     // $url_file = '/app/empleados/' . $name;
-                    $url_file = '/uploads/empleados/' . $name;
+                    $url_file = 'uploads/empleados/' . $name;
                 }
 
             }
@@ -142,7 +142,7 @@ class EmpleadoController extends Controller
             if(!$image->move($destinationPath, $name)) {
                 return response()->json(['success' => false]);
             } else {
-                $url_file = '/uploads/empleados/' . $name;
+                $url_file = 'uploads/empleados/' . $name;
             }
         }
 
