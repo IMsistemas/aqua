@@ -38,6 +38,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
     }
 
     $scope.viewModalAdd = function () {
+        $('#btn-save').prop('disabled', false)
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
             //var array_temp = [{label: '--Seleccione--', id: 0}];
@@ -63,6 +64,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
     }
 
     $scope.saveCalle = function () {
+        $('#btn-save').prop('disabled', true)
        var data = {
             nombrecalle: $scope.nombrecalle,
             idbarrio: $scope.t_barrio

@@ -36,23 +36,25 @@
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_servicio" class="form-control" ng-model="s_servicio" ng-change="FiltrarPorServicio()"
+            <select id="s_servicio" class="form-control" ng-model="s_servicio" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in servicioss"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <!--<select  id="s_anio" class="form-control" ng-model="s_anio" ng-change="FiltrarPorAnio()"
-                    ng-options="value.id as value.label for value in anios"></select>-->
-            <input type="text" class="form-control datepicker_a" ng-model="t_anio" id="t_anio" placeholder="-- Año --">
+
+            <input type="text" class="form-control datepicker_a" name="t_anio"
+                   id="t_anio" ng-model="t_anio"  ng-change="Filtrar()" placeholder="-- Año --">
+
+
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="FiltrarPorMes()"
+            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in meses"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="FiltrarPorEstado()"
+            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="Filtrar()"
                     ng-options="value.id as value.label for value in estadoss"></select>
         </div>
 
@@ -70,10 +72,10 @@
             <tr>
                 <th style="width: 5%;">No. Factura</th>
                 <th style="width: 7%;">Fecha</th>
-                <th style="width: 7%;">Periodo</th>
+                <th style="width: 12%;">Periodo</th>
                 <th style="width: 16%;">Servicios</th>
                 <th style="width: 5%;">Suministro</th>
-                <th style="width: 20%;">Tarifa</th>
+                <th style="width: 15%;">Tarifa</th>
                 <th style="width: 15%;">Direccion Suministro</th>
                 <th style="width: 5%;">Telefono Suministro</th>
                 <th style="width: 5%;">Consumo (m3)</th>
@@ -84,17 +86,20 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in cobroagua|filter:t_busqueda" ng-cloak>
-                <td>{{item.factura}}</td>
-                <td>{{item.fecha}}</td>
-                <td>{{item.periodo}}</td>
-                <td>{{item.servicios}}</td>
-                <td>{{item.suministro}}</td>
-                <td>{{item.tarifas}}</td>
-                <td>{{item.direccion}}</td>
-                <td>{{item.telefono}}</td>
-                <td>{{item.consumo}}</td>
-                <td>{{item.estado}}</td>
-                <td>{{item.total}}</td>
+                <td>{{item.factura.idfactura}}</td>
+                <td>{{ FormatoFecha(item.fecha)}}</td>
+                <td>{{yearmonth (item.fecha)}}</td>
+                <td>
+                    <span ng-repeat="serviciosenfactura in item.factura.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
+
+                </td>
+                <td>{{item.suministro.numerosuministro}}</td>
+                <td>{{item.suministro.aguapotable.nombretarifaaguapotable}}</td>
+                <td>{{item.suministro.direccionsumnistro}}</td>
+                <td>{{item.suministro.telefonosuministro}}</td>
+                <td>{{item.lectura.consumo}}</td>
+                <td>{{Pagada(item.estapagado)}}</td>
+                <td>{{item.factura.totalfactura}}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">
                         <i class="fa fa-lg fa-print" aria-hidden="true"></i>
@@ -102,7 +107,6 @@
                     <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
                         <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                     </button>
-
                 </td>
             </tr>
             </tbody>
@@ -175,8 +179,6 @@
                                                 <td>{{item.nombre}}</td>
                                                 <td>{{item.valor}}</td>
                                             </tr>
-
-
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -199,7 +201,7 @@
                             ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-next" ng-click="" >
+                    <button type="button" class="btn btn-primary" id="btn-next" ng-click="pagar()" >
                         Pagar <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
                     </button>
                 </div>

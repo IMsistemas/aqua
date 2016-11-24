@@ -133,7 +133,7 @@
                                                 <span class="help-block error"
                                                       ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.pattern">La Identificación debe ser solo números</span>
                                                 <span class="help-block error"
-                                                      ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.minlength">La Identificación debe ser mayor a 10 digitos</span>
+                                                      ng-show="formCliente.t_doc_id.$invalid && formCliente.t_doc_id.$error.minlength">La Identificación debe ser mayor a 10 dígito</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-xs-12 form-group error">
@@ -175,27 +175,33 @@
                                         <label for="t_telf_principal" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléf. Principal:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_telf_principal" id="t_telf_principal"
-                                                   ng-model="t_telf_principal" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                   ng-model="t_telf_principal" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
                                             <span class="help-block error"
-                                                  ng-show="formCliente.t_telf_principal.$invalid && formCliente.t_telf_principal.$error.pattern">Solo números, guion y parentesis</span>
+                                                  ng-show="formCliente.t_telf_principal.$invalid && formCliente.t_telf_principal.$error.pattern">Solo números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_telf_principal.$invalid && formCliente.t_telf_principal.$error.minlength">El Teléf. Principal debe ser mayor a 9 digitos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
                                         <label for="t_telf_secundario" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléf. Secundario:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_telf_secundario" id="t_telf_secundario"
-                                                   ng-model="t_telf_secundario" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                   ng-model="t_telf_secundario" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
                                             <span class="help-block error"
-                                                  ng-show="formCliente.t_telf_secundario.$invalid && formCliente.t_telf_secundario.$error.pattern">Solo números, guion y parentesis</span>
+                                                  ng-show="formCliente.t_telf_secundario.$invalid && formCliente.t_telf_secundario.$error.pattern">Solo números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_telf_secundario.$invalid && formCliente.t_telf_secundario.$error.minlength">El Teléf. Secundario debe ser mayor a 9 digitos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
                                         <label for="t_celular" class="col-sm-4 col-xs-12 control-label">Celular:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_celular" id="t_celular"
-                                                   ng-model="t_celular" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                   ng-model="t_celular" ng-keypress="onlyNumber($event)" ng-minlength="10" ng-pattern="/^([0-9]+)$/">
                                             <span class="help-block error"
-                                                  ng-show="formCliente.t_celular.$invalid && formCliente.t_celular.$error.pattern">Solo números, guion y parentesis</span>
+                                                  ng-show="formCliente.t_celular.$invalid && formCliente.t_celular.$error.pattern">Solo números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_celular.$invalid && formCliente.t_celular.$error.minlength">El Nro Celular debe ser mayor a 10 digitos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
@@ -214,18 +220,22 @@
                                         <label for="t_telf_principal_emp" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléf. Principal:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_telf_principal_emp" id="t_telf_principal_emp"
-                                                   ng-model="t_telf_principal_emp" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                   ng-model="t_telf_principal_emp"  ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
                                             <span class="help-block error"
-                                                  ng-show="formCliente.t_telf_principal_emp.$invalid && formCliente.t_telf_principal_emp.$error.pattern">Solo números, guion y parentesis</span>
+                                                  ng-show="formCliente.t_telf_principal_emp.$invalid && formCliente.t_telf_principal_emp.$error.pattern">Solo números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_telf_principal_emp.$invalid && formCliente.t_telf_principal_emp.$error.minlength">El Teléf. Principal debe ser mayor a 9 digitos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">
                                         <label for="t_telf_secundario_emp" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléf. Secundario:</label>
                                         <div class="col-sm-8 col-xs-12">
                                             <input type="text" class="form-control" name="t_telf_secundario_emp" id="t_telf_secundario_emp"
-                                                   ng-model="t_telf_secundario_emp" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                   ng-model="t_telf_secundario_emp" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
                                             <span class="help-block error"
-                                                  ng-show="formCliente.t_telf_secundario_emp.$invalid && formCliente.t_telf_secundario_emp.$error.pattern">Solo números, guion y parentesis</span>
+                                                  ng-show="formCliente.t_telf_secundario_emp.$invalid && formCliente.t_telf_secundario_emp.$error.pattern">Solo números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formCliente.t_telf_secundario_emp.$invalid && formCliente.t_telf_secundario_emp.$error.minlength">El Teléf. Secundario debe ser mayor a 9 digitos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 form-group error">

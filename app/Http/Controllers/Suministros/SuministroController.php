@@ -27,9 +27,25 @@ class SuministroController extends Controller
 
     public function getSuministrosByBarrio($id)
     {
+        $calles = Calle::with('barrio')->where('idbarrio', $id)->count();
+        if($calles > 0)
+        {
+            $calless = Calle::with('barrio')->where('idbarrio', $id)->get();
 
-       // return Suministro::with('cliente', 'calle.barrio', 'producto')->where('calle.barrio.idbarrio', $id)->orderBy('numerosuministro', 'asc')->get();
+            $array_sumi = [];
+
+            foreach ($calless as $callee){
+                $result = Suministro::with('cliente', 'calle.barrio', 'producto')->where('idcalle', $callee->idcalle)->orderBy('numerosuministro', 'asc')->get();
+            }
+            return $result;
+        }
     }
+
+    public function getSuministrosByCalle($id)
+    {
+        return $sumi = Suministro::with('cliente', 'calle.barrio', 'producto')->where('idcalle', $id)->orderBy('numerosuministro', 'asc')->get();
+    }
+
 
     public function getAguapotable()
     {

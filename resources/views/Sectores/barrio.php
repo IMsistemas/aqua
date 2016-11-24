@@ -113,7 +113,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveBarrio();" ng-disabled="formBarrio.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-savebarrio" ng-click="saveBarrio();" ng-disabled="formBarrio.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -164,7 +164,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveCalle();" ng-disabled="formCalle.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-savecalle" ng-click="saveCalle();" ng-disabled="formCalle.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>

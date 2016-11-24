@@ -323,7 +323,10 @@ Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsu
 Route::get('suministros/suministroById/{id}','Suministros\SuministroController@suministroById');
 Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
 Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroController@getCalleByBarrio');
+
 Route::get('suministros/getSuministrosByBarrio/{id}', 'Suministros\SuministroController@getSuministrosByBarrio');
+
+Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroController@getSuministrosByCalle');
 
 
 Route::resource('/suministros', 'Suministros\SuministroController');
@@ -331,6 +334,7 @@ Route::resource('/suministros', 'Suministros\SuministroController');
 /*=============================Módulo Facturacion====================================*/
 
 Route::get('factura/getCobroAgua', 'Facturas\FacturaController@getCobroAgua');
+Route::get('factura/Filtrar/{filtros}', 'Facturas\FacturaController@Filtrar');
 Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
 Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
 Route::get('factura/generate', 'Facturas\FacturaController@generate');

@@ -102,6 +102,10 @@
         };
 
         $scope.saveCliente = function () {
+
+            $('#btn-save').prop('disabled', true);
+
+
             if($scope.t_tipocliente > 0) {
                 var data = {
                     fechaingreso: $scope.convertDatetoDB($scope.t_fecha_ingreso),
@@ -126,10 +130,11 @@
                     $http.post(url, data).success(function (response) {
                         $scope.initLoad();
                         $('#modalAddCliente').modal('hide');
+                        $('#btn-save').prop('disabled', false);
                         $scope.message = 'Se insertó correctamente el cliente...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
-
+                        $('#btn-save').prop('disabled', false);
                     });
 
                 } else {
@@ -138,10 +143,11 @@
                     $http.put(url, data).success(function (response) {
                         $scope.initLoad();
                         $('#modalAddCliente').modal('hide');
+                        $('#btn-save').prop('disabled', false);
                         $scope.message = 'Se editó correctamente el Cliente seleccionado...';
                         $('#modalMessage').modal('show');
                     }).error(function (res) {
-
+                        $('#btn-save').prop('disabled', false);
                     });
                 }
 
@@ -406,6 +412,7 @@
         };
 
         $scope.saveSolicitudSuministro = function () {
+            $('#btn-save-solsuministro').prop('disabled', true);
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
@@ -423,7 +430,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-solsuministro').prop('disabled', true);
+
                     $('#btn-process-solsuministro').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -433,6 +440,41 @@
         };
 
         $scope.procesarSolicitudSuministro = function () {
+
+            $('#btn-process-solsuministro').prop('disabled', true);
+
+            if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
+                var tiene = 'NO'
+            } else {
+                var tiene = 'SI'
+            }
+
+            var tarifa = $('#s_suministro_tarifa option:selected').text();
+            var zona = $('#s_suministro_zona option:selected').text();
+            var transversal = $('#s_suministro_transversal option:selected').text();
+
+            var data_to_pdf = {
+                tarifa: tarifa,
+                zona: zona,
+                transversal: transversal,
+                no_suministro: $scope.t_suministro_nro,
+                nomcliente: $scope.nom_cliente_suministro,
+                telefono: $scope.t_suministro_telf,
+                direccion: $scope.t_suministro_direccion,
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+                total_suministro: $scope.total_suministro,
+
+                tiene_medidor: tiene,
+                marca_medidor: $scope.t_suministro_marca,
+                costo_medidor: $scope.t_suministro_costomedidor,
+            };
+
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
@@ -444,15 +486,15 @@
                 valor: $scope.total_suministro,
                 dividendos: $scope.s_suministro_credito,
                 valor_partial: $scope.total_partial,
-                idsolicitud: $scope.idsolicitud_to_process
+                idsolicitud: $scope.num_solicitud_suministro,
+
+                data_to_pdf: JSON.stringify(data_to_pdf)
             };
 
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
-
-                $('#btn-process-solsuministro').prop('disabled', true);
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalAction').modal('hide');
@@ -529,6 +571,8 @@
         };
 
         $scope.saveSolicitudServicio = function () {
+            $('#btn-save-servicio').prop('disabled', true);
+
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 servicios: $scope.services
@@ -538,7 +582,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-servicio').prop('disabled', true);
+
                     $('#btn-process-servicio').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -558,11 +602,13 @@
         };
 
         $scope.saveSolicitudOtro = function () {
+            $('#btn-save-otro').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.h_codigocliente_otro,
                 observacion: $scope.t_observacion_otro
             };
             $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
+
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -641,6 +687,7 @@
         };
 
         $scope.saveSolicitudMantenimiento = function () {
+            $('#btn-save-mant').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 numerosuministro: $scope.s_suministro_mant,
@@ -650,7 +697,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-mant').prop('disabled', true);
+
                     $('#btn-process-mant').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -775,6 +822,7 @@
         };
 
         $scope.saveSolicitudCambioNombre = function () {
+            $('#btn-save-setnombre').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre,
@@ -784,7 +832,7 @@
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
-                    $('#btn-save-setnombre').prop('disabled', true);
+
                     $('#btn-process-setnombre').prop('disabled', false);
                     $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
                     $('#modalMessage').modal('show');
@@ -794,6 +842,7 @@
         };
 
         $scope.procesarSolicitudSetName = function () {
+            $('#btn-process-setnombre').prop('disabled', true);
             var data = {
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre
             };
@@ -852,6 +901,9 @@
          */
 
         $scope.procesarSolicitud = function (id_btn) {
+
+            $('#' + id_btn).prop('disabled', true);
+
             var url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
 
             var data = {
@@ -860,8 +912,6 @@
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
-
-                $('#' + id_btn).prop('disabled', true);
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalActionServicio').modal('hide');
@@ -908,6 +958,38 @@
             }
         };
 
+        $scope.onlyCharasterAndSpace = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /^([a-zA-Záéíóúñ\s]+)$/;
+            var n = String.fromCharCode(k);
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+                return false;
+            }
+            else return true;
+
+        };
+
+        $scope.onlyNumber = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+
+            if (n == ".") {
+                return true;
+            } else {
+
+                if(patron.test(n) == false){
+                    $event.preventDefault();
+                }
+                else return true;
+            }
+        };
     });
 
     function convertDatetoDB(now, revert){

@@ -50,11 +50,16 @@
         };
 
         $scope.save = function() {
-
+            $('#btn-save').prop('disabled', true);
             //console.log($scope.lecturasUpdate);
 
             $http.put(API_URL + 'verLectura/update/' + JSON.stringify($scope.lecturasUpdate)).success(function(response){
-                console.log(response);
+                //console.log(response);
+                $('#btn-save').prop('disabled', false);
+                $scope.message = 'Se ha actualizado la(s) lectura(s) correctamente...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+
                 $scope.initData();
                 $scope.lecturasUpdate = [];
             });
@@ -160,6 +165,10 @@
             if (array_date[0] == yyyy && array_date[1] == mm){
                 return true;
             } else return false;
+        };
+
+        $scope.hideModalMessage = function () {
+            setTimeout("$('#modalMessage').modal('hide')", 3000);
         };
 
         $scope.initData();

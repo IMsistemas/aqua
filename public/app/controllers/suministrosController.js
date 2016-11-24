@@ -33,7 +33,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 
     $scope.FiltrarPorBarrio = function (){
         $http.get(API_URL + 'suministros/getCallesByBarrio/'+ $scope.s_zona).success(function (response) {
-            console.log(response);
+           // console.log(response);
             var longitud = response.length;
             var array_temp = [{label: '--Transversales--', id: 0}];
             for (var i = 0; i < longitud; i++) {
@@ -47,35 +47,53 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         if($scope.aux > 0)
         {
         $http.get(API_URL + 'suministros/getSuministrosByBarrio/'+ $scope.aux).success(function(response) {
-           // $scope.suministros = response;}
-          // $scope.initLoad();
+            console.log(response);
+            var longitud = response.length;
+            for (var i = 0; i < longitud; i++) {
+                var complete_name = {
+                    value: response[i].cliente.nombres + ' ' + response[i].cliente.apellidos,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+            }
+            $scope.suministros = response;
+
             });
         }
-        else {  $scope.initLoad();
+        else {
+
+            $scope.initLoad();
         }
-    }
+    };
 
     $scope.FiltrarPorCalle = function (){
 
-        $scope.aux1 = $scope.s_barrio;
-        $scope.aux2 = $scope.s_calle;
+        $scope.aux1 = $scope.s_zona;
+        $scope.aux2 = $scope.s_transversales;
 
         if($scope.aux2 > 0)
         {
-            $http.get(API_URL + 'canal/getCanalesByCalle/'+ $scope.s_calle).success(function(response) {
+            $http.get(API_URL + 'suministros/getSuministrosByCalle/'+ $scope.s_transversales).success(function(response) {
                 console.log(response);
-                $scope.canals = response;
-                /* var array_temp = [];
-                 for(var i = 0; i < response.length; i++){
+                var longitud = response.length;
+                for (var i = 0; i < longitud; i++) {
+                    var complete_name = {
+                        value: response[i].cliente.nombres + ' ' + response[i].cliente.apellidos,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+                }
+                $scope.suministros = response;
 
-                 for(var j = 0; j < (response[i].canal).length; j++){
-                 array_temp.push((response[i].canal)[j]);
-                 }
-                 }
-                 $scope.canals = array_temp;*/
             });
         }
-        else {  $scope.FiltrarPorBarrio();
+        else {
+
+            $scope.FiltrarPorBarrio();
         }
     }
 

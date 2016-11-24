@@ -37,9 +37,33 @@ class FacturaController extends Controller
 
     public function getCobroAgua()
     {
-        return CobroAgua::with('suministro.cliente.tipocliente.serviciostipocliente.serviciojunta.serviciosaguapotable.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' )
+        return CobroAgua::with('suministro.cliente','suministro.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' )
                                 ->orderBy('fecha','asc')->get();
     }
+
+    public function Filtrar($filter)
+    {
+        $filter = json_decode($filter);
+
+
+        $cobro = CobroAgua::with('suministro.cliente','suministro.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' );
+        $cobro->whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->mes);
+        $cobro ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->anio);
+        if($filter->estado == 1)
+        {
+            $cobro ->where('estapagado', true);
+        }
+
+        if($filter->estado == 2)
+        {
+            $cobro ->where('estapagado', false);
+        }
+
+        return $cobro->get();
+
+    }
+
+
 
     public function getServiciosXCobro($id)
     {
@@ -136,7 +160,13 @@ class FacturaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $cobro = CobroAgua::find($id);
+
+        $cobro->estapagado = true;
+        $cobro->save();
+
+        return response()->json(['success' => true]);
     }
 
     /**
