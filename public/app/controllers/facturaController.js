@@ -7,7 +7,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function () {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
-            (response.count == 0) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
+            (response.count == true) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
         });
 
         $scope.array_temp = [];
@@ -157,7 +157,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 $scope.message = 'Se ha generado los cobros del mes actual correctamente...';
                 $('#modalMessage').modal('show');
             } else if (response.result = '2') {
-                $scope.message = 'No existen registros a generar cobros en el mes...';
+                $scope.message = 'No existen registros para generar cobros de agua en el mes...';
                 $('#modalMessage').modal('show');
             }
         });

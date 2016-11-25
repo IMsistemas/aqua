@@ -76,30 +76,54 @@ class FacturaController extends Controller
         $count = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
             ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
             ->count();
-        return response()->json(['count' => $count]);
+        if($count!=0)
+        {
+            $count_suministro=Suministro::where ('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')->count();
+            if($count_suministro!=0) {
+                return response()->json(['success' => true, 'count' => $count_suministro]);
+
+            }
+            else
+            {
+                return response()->json(['success' => false, 'count' => $count_suministro]);
+            }
+
+
+        }else{
+            return response()->json(['success' => true, 'count' => $count]);
+        }
+
     }
 
     public function generate()
     {
         $suministro = Suministro::get();
         if (count($suministro) > 0){
-            foreach ($suministro as $item){
-                $cobro = new CobroAgua();
-                $cobro->fecha = date('Y-m-d');
-                $cobro->numerosuministro = $item->numerosuministro;
-                $cobro->estapagado = false;
-                $cobro->save();
+            foreach ($suministro as $item) {
 
-                $factura = new Factura();
-                $factura->fechafactura = date('Y-m-d');
-                $factura->idcobroagua = $cobro->idcobroagua;
-                $factura->codigocliente = $item->codigocliente;
-                $factura->estapagada = false;
-                $factura-> save();
+                $objectCobro = CobroAgua::where('numerosuministro', $item->numerosuministro)
+                    ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
+                    ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
+                    ->count();
+                if ($objectCobro == 0) {
 
-                $cobro2 = CobroAgua::find($cobro->idcobroagua);
-                $cobro2->idfactura = $factura->idfactura;
-                $cobro2->save();
+                    $cobro = new CobroAgua();
+                    $cobro->fecha = date('Y-m-d');
+                    $cobro->numerosuministro = $item->numerosuministro;
+                    $cobro->estapagado = false;
+                    $cobro->save();
+
+                    $factura = new Factura();
+                    $factura->fechafactura = date('Y-m-d');
+                    $factura->idcobroagua = $cobro->idcobroagua;
+                    $factura->codigocliente = $item->codigocliente;
+                    $factura->estapagada = false;
+                    $factura->save();
+
+                    $cobro2 = CobroAgua::find($cobro->idcobroagua);
+                    $cobro2->idfactura = $factura->idfactura;
+                    $cobro2->save();
+                }
             }
             $result = 1;
         } else {
