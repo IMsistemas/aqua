@@ -35,10 +35,6 @@
             </div>
         </div>
 
-        <div class="col-sm-2 col-xs-12">
-            <select id="s_servicio" class="form-control" ng-model="s_servicio" ng-change="Filtrar()"
-                    ng-options="value.id as value.label for value in servicioss"></select>
-        </div>
 
         <div class="col-sm-2 col-xs-12">
 
@@ -76,8 +72,8 @@
                 <th style="width: 16%;">Servicios</th>
                 <th style="width: 5%;">Suministro</th>
                 <th style="width: 15%;">Tarifa</th>
-                <th style="width: 15%;">Direccion Suministro</th>
-                <th style="width: 5%;">Telefono Suministro</th>
+                <th style="width: 15%;">Dirección Suministro</th>
+                <th style="width: 5%;">Teléfono Suministro</th>
                 <th style="width: 5%;">Consumo (m3)</th>
                 <th style="width: 5%;">Estado</th>
                 <th style="width: 5%;">Total</th>
@@ -85,21 +81,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in cobroagua|filter:t_busqueda" ng-cloak>
-                <td>{{item.factura.idfactura}}</td>
-                <td>{{ FormatoFecha(item.fecha)}}</td>
-                <td>{{yearmonth (item.fecha)}}</td>
+            <tr ng-repeat="item in factura|filter:t_busqueda" ng-cloak>
+                <td>{{item.idfactura}}</td>
+                <td>{{ FormatoFecha(item.fechafactura)}}</td>
+                <td>{{yearmonth (item.fechafactura)}}</td>
                 <td>
-                    <span ng-repeat="serviciosenfactura in item.factura.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
+                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
 
                 </td>
-                <td>{{item.suministro.numerosuministro}}</td>
-                <td>{{item.suministro.aguapotable.nombretarifaaguapotable}}</td>
-                <td>{{item.suministro.direccionsumnistro}}</td>
-                <td>{{item.suministro.telefonosuministro}}</td>
-                <td>{{item.lectura.consumo}}</td>
-                <td>{{Pagada(item.estapagado)}}</td>
-                <td>{{item.factura.totalfactura}}</td>
+                <td>{{item.cobroagua.suministro.numerosuministro}}</td>
+                <td>{{item.cobroagua.suministro.aguapotable.nombretarifaaguapotable}}</td>
+                <td>{{item.cobroagua.suministro.direccionsumnistro}}</td>
+                <td>{{item.cobroagua.suministro.telefonosuministro}}</td>
+                <td>{{item.cobroagua.lectura.consumo}}</td>
+                <td>{{Pagada(item.estapagada)}}</td>
+                <td>{{item.totalfactura}}</td>
                 <td>
                     <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">
                         <i class="fa fa-lg fa-print" aria-hidden="true"></i>
@@ -155,7 +151,7 @@
                                             <span class="label label-default" style="font-size: 12px !important;">Dirección Domicilio:</span> {{direcc_cliente}}
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 12px !important;">Telef. Celular:</span> {{telf_cliente}}
+                                            <span class="label label-default" style="font-size: 12px !important;">Teléf. Celular:</span> {{telf_cliente}}
                                         </div>
                                     </div>
                                    </fieldset>
@@ -177,7 +173,12 @@
                                             <tbody>
                                             <tr ng-repeat="item in aux_modal" ng-cloak >
                                                 <td>{{item.nombre}}</td>
-                                                <td>{{item.valor}}</td>
+                                                <td ng-if="item.id == 0">
+                                                    <input type="text" class="form-control" ng-model="item.valor" disabled>
+                                                </td>
+                                                <td ng-if="item.id != 0">
+                                                    <input type="text" class="form-control" ng-model="item.valor" ng-keypress="onlyDecimal($event)" ng-blur="reCalculateTotal()">
+                                                </td>
                                             </tr>
                                             </tbody>
                                             <tfoot>
@@ -197,8 +198,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btn-save-riego"
-                            ng-click="saveSolicitudRiego()" ng-disabled="formProcess.$invalid">
+                    <button type="button" class="btn btn-primary" id="btn-save"
+                            ng-click="save()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-primary" id="btn-next" ng-click="pagar()" >

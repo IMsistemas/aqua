@@ -338,6 +338,7 @@ Route::get('factura/Filtrar/{filtros}', 'Facturas\FacturaController@Filtrar');
 Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
 Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
 Route::get('factura/generate', 'Facturas\FacturaController@generate');
+Route::get('factura/getMultas', 'Facturas\FacturaController@getMultas');
 Route::get('factura/getServiciosXCobro/{id}', 'Facturas\FacturaController@getServiciosXCobro');
 
 

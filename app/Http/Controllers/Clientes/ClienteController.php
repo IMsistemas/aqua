@@ -506,7 +506,6 @@ class ClienteController extends Controller
 
     }
 
-
     private function createPDF($data0, $url_pdf)
     {
         $data = json_decode($data0);

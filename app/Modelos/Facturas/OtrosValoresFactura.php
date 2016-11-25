@@ -8,6 +8,8 @@ class OtrosValoresFactura extends Model
 {
 
     protected $table = "otrosvaloresfactura";
+    protected $primaryKey = null;
+    public $incrementing = false;
     public $timestamps = false;
 
 

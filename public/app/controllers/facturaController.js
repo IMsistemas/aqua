@@ -1,13 +1,13 @@
 app.controller('facturaController', function($scope, $http, API_URL) {
     $scope.cobroagua_aux = [];
 
-    $scope.cobroagua = [];
+    $scope.factura = [];
     $scope.aux = [];
     $scope.item = 0;
 
     $scope.initLoad = function () {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
-            (response.count == true) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
+            (response.success == true) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
         });
 
         $scope.array_temp = [];
@@ -18,7 +18,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
             console.log(response);
-            $scope.cobroagua = response;
+            $scope.factura = response;
         });
     };
 
@@ -71,82 +71,141 @@ app.controller('facturaController', function($scope, $http, API_URL) {
     $scope.ShowModalFactura = function (item) {
         console.log(item);
 
-        $scope.num_factura = item.factura.idfactura;
-        $scope.mes = Auxiliar (yearmonth(item.fecha));
-        $scope.multa = '';
+        $http.get(API_URL + 'factura/getMultas').success(function(response){
 
-        $scope.documentoidentidad_cliente = item.suministro.cliente.documentoidentidad;
-        $scope.nom_cliente = item.suministro.cliente.nombres + ' ' + item.suministro.cliente.apellidos;
-        $scope.direcc_cliente = item.suministro.cliente.direcciondomicilio;
-        $scope.telf_cliente = item.suministro.cliente.celular;
+            $scope.num_factura = item.idfactura;
+            $scope.mes = Auxiliar (yearmonth(item.fechafactura));
+            $scope.multa = '';
 
-        var arreg = [];
-        var total = 0.00;
+            $scope.documentoidentidad_cliente = item.cliente.documentoidentidad;
+            $scope.nom_cliente = item.cliente.nombres + ' ' + item.cliente.apellidos;
+            $scope.direcc_cliente = item.cliente.direcciondomicilio;
+            $scope.telf_cliente = item.cliente.celular;
 
-        if (item.valortarifabasica == null) {
-            var valores_atrasados = {
-                nombre: "Consumo Agua" + ' - ' +  $scope.mes  ,
-                valor: 0.00
-            }
-        }else {
-            var consumo_agua = {
-                nombre: "Consumo Agua" + ' - ' +  $scope.mes ,
-                valor: item.valortarifabasica
-            }
-        }
-        arreg.push(consumo_agua);
+            var arreg = [];
+            var total = 0.00;
 
-        if (item.valorexcedente == null) {
-            var excedente_agua = {
-                nombre: "Excedente Agua" + ' - ' +  $scope.mes,
-                valor:  0.00
-            }
-
-        } else {
-            var excedente_agua = {
-                nombre: "Excedente Agua" + ' - ' +  $scope.mes,
-                valor: item.valorexcedente
-            }
-        }
-            arreg.push(excedente_agua);
-
-        if (item.valormesesatrasados == null) {
-            var valores_atrasados = {
-                nombre: "Valores Atrasados",
-                valor: 0.00
-            }
-        }else
-            {
-                var valores_atrasados = {
-                    nombre: "Valores Atrasados",
-                    valor: item.valormesesatrasados
-                }
-            }
-                arreg.push(valores_atrasados);
-
-
-            if( item.factura.serviciosenfactura.length > 0) {
-                $scope.servicios = item.factura.serviciosenfactura;
-
-                for (var a = 0; a < $scope.servicios.length; a++) {
-                    var auxiliar = {
-                        nombre: $scope.servicios[a].serviciojunta.nombreservicio,
-                        valor: $scope.servicios[a].valor
+            if (item.cobroagua != null) {
+                if (item.cobroagua.valortarifabasica == null) {
+                    var valores_atrasados = {
+                        nombre: "Consumo Agua" + ' - ' +  $scope.mes  ,
+                        valor: 0.00,
+                        id: 0
                     }
-                    arreg.push(auxiliar);
+                }else {
+                    var consumo_agua = {
+                        nombre: "Consumo Agua" + ' - ' +  $scope.mes ,
+                        valor: item.cobroagua.valortarifabasica,
+                        id: 0
+                    }
+                }
+                arreg.push(consumo_agua);
+
+                if (item.cobroagua.valorexcedente == null) {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua" + ' - ' +  $scope.mes,
+                        valor:  0.00,
+                        id: 0
+                    }
+
+                } else {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua" + ' - ' +  $scope.mes,
+                        valor: item.cobroagua.valorexcedente,
+                        id: 0
+                    }
+                }
+                arreg.push(excedente_agua);
+
+                if (item.cobroagua.valormesesatrasados == null) {
+                    var valores_atrasados = {
+                        nombre: "Valores Atrasados",
+                        valor: 0.00,
+                        id: 0
+                    }
+                }else
+                {
+                    var valores_atrasados = {
+                        nombre: "Valores Atrasados",
+                        valor: item.cobroagua.valormesesatrasados,
+                        id: 0
+                    }
+                }
+                arreg.push(valores_atrasados);
+            }
+
+            if (item.cobroagua != null) {
+                if( item.serviciosenfactura.length > 0) {
+                    $scope.servicios = item.serviciosenfactura;
+
+                    for (var a = 0; a < $scope.servicios.length; a++) {
+                        var auxiliar = {
+                            nombre: $scope.servicios[a].serviciojunta.nombreservicio,
+                            valor: $scope.servicios[a].valor,
+                            id: 0
+                        }
+                        arreg.push(auxiliar);
+                    }
+                }
+            } else {
+                if( item.cliente.servicioscliente.length > 0) {
+                    $scope.servicios = item.cliente.servicioscliente;
+
+                    for (var a = 0; a < $scope.servicios.length; a++) {
+                        var auxiliar = {
+                            nombre: $scope.servicios[a].serviciojunta.nombreservicio,
+                            valor: $scope.servicios[a].valor,
+                            id: 0
+                        }
+                        arreg.push(auxiliar);
+                    }
                 }
             }
 
-        for (var i = 0; i < arreg.length; i++) {
-            total = total + parseFloat(arreg[i].valor);
-        }
 
-        $scope.total = total;
+            if (response.length > 0){
+                for (var j = 0; j < response.length; j++) {
+
+                    var otrosvalores = {
+                        nombre: response[j].nombreotrosvalores,
+                        valor: 0.00,
+                        id: response[j].idotrosvalores
+                    };
+
+                    if (item.otrosvaloresfactura.length > 0){
+                        for (var x = 0; x < item.otrosvaloresfactura.length; x++) {
+                            if (otrosvalores.id == item.otrosvaloresfactura[x].idotrosvalores) {
+                                otrosvalores.valor = item.otrosvaloresfactura[x].valor;
+                            }
+                        }
+                    }
+
+                    arreg.push(otrosvalores);
+                }
+            }
+
+
+            for (var i = 0; i < arreg.length; i++) {
+                total = total + parseFloat(arreg[i].valor);
+            }
+
+            $scope.total = total;
 
 
             $scope.aux_modal = arreg;
-        $('#modalFactura').modal('show');
-        // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
+            $('#modalFactura').modal('show');
+            // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
+        });
+
+    };
+
+    $scope.reCalculateTotal = function () {
+        var total = 0;
+        for (var i = 0; i < $scope.aux_modal.length; i++) {
+            total = total + parseFloat($scope.aux_modal[i].valor);
+        }
+
+        $scope.total = total;
     };
 
     $scope.generate = function () {
@@ -164,11 +223,30 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     };
 
+    $scope.save = function () {
+          var data = {
+              rubros: $scope.aux_modal,
+              no_factura: $scope.num_factura,
+              total: $scope.total
+          };
+
+        $http.post(API_URL + 'factura', data).success(function(response){
+
+            console.log(response.success);
+
+            /*$scope.initLoad();
+            $scope.message = 'Se actualizó correctamente la Factura';
+            $('#modalMessage').modal('show');
+            $scope.hideModalMessage();*/
+        });
+    };
+
     $scope.pagar = function(){
-        $http.put(API_URL + 'factura/'+ $scope.item ).success(function (response) {
+        var id = $scope.num_factura;
+        $http.put(API_URL + 'factura/'+ id, true ).success(function (response) {
             $scope.initLoad();
             $('#modalFactura').modal('hide');
-            $scope.message = 'Se efectuo el pago correctamente';
+            $scope.message = 'Se efectuó el pago correctamente';
             $('#modalMessage').modal('show');
             $scope.hideModalMessage();
         });
@@ -216,6 +294,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.Filtrar= function  () {
 
+        $scope.t_anio = $('#t_anio').val();
+
         if ($scope.t_anio == undefined) {
             var a = null;
         } else var a = $scope.t_anio;
@@ -224,22 +304,18 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             var m = null;
         } else var m = $scope.s_mes;
 
-        if ($scope.s_servicio == undefined) {
-            var s = null;
-        } else var s = $scope.s_servicio;
 
 
         var filtros = {
-            servicio: s,
             estado: $scope.s_estado,
             mes: m,
-            anio: 2016
+            anio: $scope.t_anio
         }
 
         console.log(filtros);
         $http.get(API_URL + 'factura/Filtrar/' + JSON.stringify(filtros)).success(function(response){
             console.log(response);
-            $scope.cobroagua = response;
+            $scope.factura = response;
 
 
         });
@@ -249,7 +325,53 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
 
 
+    $scope.onlyDecimal = function ($event) {
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /\d/;
+        var n = String.fromCharCode(k);
+        if (n == ".") {
+            return true;
+        } else {
+            if(patron.test(n) == false){
+                $event.preventDefault();
+            }
+            else return true;
+        }
+    };
 
+    $scope.onlyCharasterAndSpace = function ($event) {
+
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /^([a-zA-Záéíóúñ\s]+)$/;
+        var n = String.fromCharCode(k);
+
+        if(patron.test(n) == false){
+            $event.preventDefault();
+            return false;
+        }
+        else return true;
+
+    };
+
+    $scope.onlyNumber = function ($event) {
+
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /\d/;
+        var n = String.fromCharCode(k);
+
+        if (n == ".") {
+            return true;
+        } else {
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+            }
+            else return true;
+        }
+    };
 
 
     $scope.initLoad();

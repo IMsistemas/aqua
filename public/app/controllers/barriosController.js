@@ -210,7 +210,7 @@ app.controller('barrioController', function($scope, $http, API_URL) {
                 $scope.showModalAction($scope.barrio);
 
             } else {
-                $scope.message_error = 'La Transversal no puede ser eliminada porque esta relacionada con un suministro...';
+                $scope.message_error = 'La Transversal no puede ser eliminada porque está relacionada con un Suministro...';
                 $('#modalMessageError').modal('show');
             }
         });
