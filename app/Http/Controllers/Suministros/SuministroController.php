@@ -25,20 +25,26 @@ class SuministroController extends Controller
        return Suministro::with('cliente', 'calle.barrio', 'producto')->orderBy('numerosuministro', 'asc')->get();
     }
 
-    public function getSuministrosByBarrio($id)
+    public function getSuministrosByBarrio($filter)
     {
-        $calles = Calle::with('barrio')->where('idbarrio', $id)->count();
-        if($calles > 0)
-        {
-            $calless = Calle::with('barrio')->where('idbarrio', $id)->get();
+        $object_filter = json_decode($filter);
+        $suministro = Suministro::with(['cliente', 'producto',
+                            'calle' => function ($query_calle) use ($object_filter) {
+                                $result_calle = $query_calle->with([
+                                    'barrio' => function ($query_barrio) use ($object_filter) {
 
-            $array_sumi = [];
+                                        if ($object_filter->barrio != 0) {
+                                            $query_barrio->where('idbarrio', $object_filter->barrio);
+                                        }
+                                    }
+                                ]);
+                                if ($object_filter->calle != 0) {
+                                    return $result_calle->where('idcalle', $object_filter->calle);
+                                }
+                            }
+                        ]);
 
-            foreach ($calless as $callee){
-                $result = Suministro::with('cliente', 'calle.barrio', 'producto')->where('idcalle', $callee->idcalle)->orderBy('numerosuministro', 'asc')->get();
-            }
-            return $result;
-        }
+        return $suministro->get();
     }
 
     public function getSuministrosByCalle($id)

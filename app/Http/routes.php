@@ -324,7 +324,7 @@ Route::get('suministros/suministroById/{id}','Suministros\SuministroController@s
 Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
 Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroController@getCalleByBarrio');
 
-Route::get('suministros/getSuministrosByBarrio/{id}', 'Suministros\SuministroController@getSuministrosByBarrio');
+Route::get('suministros/getSuministrosByBarrio/{filter}', 'Suministros\SuministroController@getSuministrosByBarrio');
 
 Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroController@getSuministrosByCalle');
 

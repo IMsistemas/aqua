@@ -60,6 +60,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
             }
             $scope.suministros = response;
 
+
             });
         }
         else {
@@ -160,6 +161,68 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
     $scope.hideModalMessage = function () {
         setTimeout("$('#modalConfirmacion').modal('hide')", 3000);
     };
+
+
+
+    $scope.getByFilter = function (aux) {
+        if(aux==1) {
+            $http.get(API_URL + 'suministros/getCallesByBarrio/' + $scope.s_zona).success(function (response) {
+                // console.log(response);
+                var longitud = response.length;
+                var array_temp = [{label: '--Transversales--', id: 0}];
+                for (var i = 0; i < longitud; i++) {
+                    array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
+                }
+                $scope.transversaless = array_temp;
+                $scope.s_transversales = 0;
+            });
+        }
+        $scope.aux = 0;
+        $scope.aux = $scope.s_zona;
+        if($scope.aux > 0)
+        {
+
+        var filter = {
+            barrio: $scope.s_zona,
+            calle: $scope.s_transversales
+        };
+
+        $http.get(API_URL + 'suministros/getSuministrosByBarrio/' + JSON.stringify(filter)).success(function (response) {
+            console.log(response);
+
+           var longitud = response.length;
+
+            var temp = [];
+
+            for (var i = 0; i < longitud; i++) {
+                if (response[i].calle != null) {
+                    if (response[i].calle.barrio != null) {
+                        temp.push(response[i]);
+                    }
+                }
+            }
+
+
+            var longitud = temp.length;
+            for (var i = 0; i < longitud; i++) {
+                var complete_name = {
+                    value: temp[i].cliente.nombres + ' ' + temp[i].cliente.apellidos,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(temp[i].cliente, 'complete_name', complete_name);
+            }
+            $scope.suministros = temp;
+
+        });
+        }
+        else {
+
+            $scope.initLoad();
+        }
+    };
+
 
     $scope.initLoad();
     $scope.Filtro();
