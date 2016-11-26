@@ -188,16 +188,21 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 total = total + parseFloat(arreg[i].valor);
             }
 
-            $scope.total = total;
+            $scope.total = total.toFixed(2);
 
 
             $scope.aux_modal = arreg;
 
 
             if (item.estapagada == true) {
+
+                $('#footer-modal-factura').hide();
+
                 $('#btn-save').prop('disabled', true);
                 $('#btn-pagar').prop('disabled', true);
             } else {
+                $('#footer-modal-factura').show();
+
                 $('#btn-save').prop('disabled', false);
                 $('#btn-pagar').prop('disabled', false);
             }
@@ -252,7 +257,11 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         var id = $scope.num_factura;
         $http.put(API_URL + 'factura/'+ id, true ).success(function (response) {
             $scope.initLoad();
+
             $('#modalFactura').modal('hide');
+
+            $('#footer-modal-factura').hide();
+
             $('#btn-save').prop('disabled', true);
             $('#btn-pagar').prop('disabled', true);
             $scope.message = 'Se efectuó el pago correctamente';
