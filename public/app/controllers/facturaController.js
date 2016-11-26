@@ -69,7 +69,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
     };
 
     $scope.ShowModalFactura = function (item) {
-        console.log(item);
 
         $http.get(API_URL + 'factura/getMultas').success(function(response){
 
@@ -193,6 +192,17 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
 
             $scope.aux_modal = arreg;
+
+
+            if (item.estapagada == true) {
+                $('#btn-save').prop('disabled', true);
+                $('#btn-pagar').prop('disabled', true);
+            } else {
+                $('#btn-save').prop('disabled', false);
+                $('#btn-pagar').prop('disabled', false);
+            }
+
+
             $('#modalFactura').modal('show');
             // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
         });
@@ -231,13 +241,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
           };
 
         $http.post(API_URL + 'factura', data).success(function(response){
-
-            console.log(response.success);
-
-            /*$scope.initLoad();
+            $scope.initLoad();
             $scope.message = 'Se actualizó correctamente la Factura';
             $('#modalMessage').modal('show');
-            $scope.hideModalMessage();*/
+            $scope.hideModalMessage();
         });
     };
 
@@ -246,6 +253,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $http.put(API_URL + 'factura/'+ id, true ).success(function (response) {
             $scope.initLoad();
             $('#modalFactura').modal('hide');
+            $('#btn-save').prop('disabled', true);
+            $('#btn-pagar').prop('disabled', true);
             $scope.message = 'Se efectuó el pago correctamente';
             $('#modalMessage').modal('show');
             $scope.hideModalMessage();

@@ -459,6 +459,7 @@
                 transversal: transversal,
                 no_suministro: $scope.t_suministro_nro,
                 nomcliente: $scope.nom_cliente_suministro,
+                ci: $scope.objectAction.documentoidentidad,
                 telefono: $scope.t_suministro_telf,
                 direccion: $scope.t_suministro_direccion,
                 agua_potable: $scope.t_suministro_aguapotable,
@@ -494,7 +495,7 @@
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
-                $scope.idsolicitud_to_process = 0;
+                /*$scope.idsolicitud_to_process = 0;
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalAction').modal('hide');
@@ -502,7 +503,7 @@
                 $scope.message = 'Se procesó correctamente la solicitud...';
                 $('#modalMessage').modal('show');
 
-                $scope.hideModalMessage();
+                $scope.hideModalMessage();*/
 
             }).error(function (res) {
 

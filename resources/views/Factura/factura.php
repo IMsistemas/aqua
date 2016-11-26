@@ -202,7 +202,7 @@
                             ng-click="save()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-next" ng-click="pagar()" >
+                    <button type="button" class="btn btn-primary" id="btn-pagar" ng-click="pagar()" >
                         Pagar <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
                     </button>
                 </div>

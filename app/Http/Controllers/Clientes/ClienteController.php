@@ -446,7 +446,13 @@ class ClienteController extends Controller
     public function processSolicitudSuministro(Request $request, $id)
     {
 
-        $fecha_actual = date('Y-m-d');
+        $name = date('Ymd') . '_.pdf';
+
+        $url_pdf = 'uploads/' . $name;
+
+        $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+
+        /*$fecha_actual = date('Y-m-d');
 
         $suministro = new Suministro();
         $suministro->idcalle = $request->input('idcalle');
@@ -502,7 +508,7 @@ class ClienteController extends Controller
 
             } else return response()->json(['success' => false]);
 
-        } else return response()->json(['success' => false]);
+        } else return response()->json(['success' => false]);*/
 
     }
 

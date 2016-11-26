@@ -73,8 +73,6 @@ class FacturaController extends Controller
 
     }
 
-
-
     public function getServiciosXCobro($id)
     {
         $cliente = Cliente::find($id);
@@ -221,7 +219,8 @@ class FacturaController extends Controller
 
                     $object_find = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
                                                 ->where('idotrosvalores', $item['id'])
-                                                ->get();
+                                                ->count();
+
                     if (count($object_find) == 0){
                         $object = new OtrosValoresFactura();
                         $object->idfactura = $request->input('no_factura');
@@ -229,11 +228,11 @@ class FacturaController extends Controller
                         $object->idotrosvalores = $item['id'];
                         $object->save();
                     } else {
-                        $object = $object_find[0];
-                        $object->idfactura = $request->input('no_factura');
-                        $object->valor = $item['valor'];
-                        $object->idotrosvalores = $item['id'];
-                        $object->save();
+                        $object = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
+                                                        ->where('idotrosvalores', $item['id']);
+                        if ($object->update(['valor' => $item['valor']]) == false){
+                            return response()->json(['success' => false]);
+                        }
                     }
                 }
             }
@@ -244,7 +243,7 @@ class FacturaController extends Controller
         $factura->totalfactura = $request->input('total');
         $factura->save();
 
-        return response()->json(['success' => $object]);
+        return response()->json(['success' => true]);
     }
 
     /**
