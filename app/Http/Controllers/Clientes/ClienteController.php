@@ -446,6 +446,12 @@ class ClienteController extends Controller
     public function processSolicitudSuministro(Request $request, $id)
     {
 
+        /*$name = date('Ymd') . '_.pdf';
+
+        $url_pdf = 'uploads/' . $name;
+
+        $this->createPDF($request->input('data_to_pdf'), $url_pdf);*/
+
         $fecha_actual = date('Y-m-d');
 
         $suministro = new Suministro();

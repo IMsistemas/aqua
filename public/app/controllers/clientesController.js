@@ -459,6 +459,7 @@
                 transversal: transversal,
                 no_suministro: $scope.t_suministro_nro,
                 nomcliente: $scope.nom_cliente_suministro,
+                ci: $scope.objectAction.documentoidentidad,
                 telefono: $scope.t_suministro_telf,
                 direccion: $scope.t_suministro_direccion,
                 agua_potable: $scope.t_suministro_aguapotable,

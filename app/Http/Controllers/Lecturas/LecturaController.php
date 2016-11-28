@@ -270,7 +270,7 @@ class LecturaController extends Controller
             }
         }
 
-        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
@@ -281,15 +281,15 @@ class LecturaController extends Controller
 
             Mail::send('Lecturas.pdf_body_email_newLectura',['data' => $data] , function($message) use ($correo_cliente)
             {
-                $message->from('emarketing@imnegocios.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
-                $message->to($correo_cliente);
+                $message->from('notificaciones@cooptulcan.coop', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+                $message->to('raidelbg84@gmail.com');
                 $message->bcc('crios@imnegocios.com');
                 $message->bcc('kchicaiza@imnegocios.com');
                 $message->bcc('raidelbg84@gmail.com');
                 $message->bcc('yamilkag@gmail.com');
                 $message->bcc('lvinueza@imnegocios.com')->subject('Factura Lectura!');
             });
-        }
+        }*/
 
         return response()->json(['success' => true]);
     }

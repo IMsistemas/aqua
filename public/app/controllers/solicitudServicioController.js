@@ -37,7 +37,7 @@
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
 
                 var list = [];
-
+                console.log(response);
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
                     var length_suministro = suministro.length;
@@ -947,6 +947,7 @@
                 transversal: transversal,
                 no_suministro: $scope.t_suministro_nro,
                 nomcliente: $scope.nom_cliente_suministro,
+                ci: '',
                 telefono: $scope.t_suministro_telf,
                 direccion: $scope.t_suministro_direccion,
                 agua_potable: $scope.t_suministro_aguapotable,

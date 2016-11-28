@@ -73,8 +73,6 @@ class FacturaController extends Controller
 
     }
 
-
-
     public function getServiciosXCobro($id)
     {
         $cliente = Cliente::find($id);
@@ -83,25 +81,39 @@ class FacturaController extends Controller
 
     public function verifyPeriodo()
     {
-        $count = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
-            ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
-            ->count();
-        if($count!=0)
-        {
-            $count_suministro=Suministro::whereRaw('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')->count();
-            if($count_suministro!=0) {
-                return response()->json(['success' => true, 'count' => $count_suministro]);
+        $countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha ) = ' . date('m'))
+                                    ->whereRaw('EXTRACT( YEAR FROM fecha ) = ' . date('Y'))
+                                    ->count();
 
+        $partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM factura WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
+        $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
+
+        $countClientServices = ServiciosCliente::whereRaw($partialSQL)->count();
+
+        $activate = false;
+
+        if ($countClientServices > 0) {
+            $activate = true;
+        } else if ($countCobroAgua > 0) {
+            $count_suministro = Suministro::whereRaw('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')
+                                            ->count();
+            if($count_suministro > 0) {
+                $activate = true;
             }
-            else
-            {
+        }
+
+        return response()->json(['success' => $activate]);
+
+        /*if($countCobroAgua != 0) {
+            $count_suministro=Suministro::whereRaw('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')->count();
+            if($count_suministro != 0) {
+                return response()->json(['success' => true, 'count' => $count_suministro]);
+            } else {
                 return response()->json(['success' => false, 'count' => $count_suministro]);
             }
-
-
-        }else{
-            return response()->json(['success' => true, 'count' => $count]);
-        }
+        } else {
+            return response()->json(['success' => true, 'count' => $countCobroAgua]);
+        }*/
 
     }
 
@@ -122,7 +134,6 @@ class FacturaController extends Controller
                                                     ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
                                                     ->count();
                         if ($objectCobro == 0) {
-
                             $cobro = new CobroAgua();
                             $cobro->fecha = date('Y-m-d');
                             $cobro->numerosuministro = $item0->numerosuministro;
@@ -143,10 +154,14 @@ class FacturaController extends Controller
                     }
 
                 } else {
+                    $partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM factura WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
+                    $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
 
-                    $cliente_servicio = ServiciosCliente::where('codigocliente', $item->codigocliente)->get();
+                    $cliente_servicio = ServiciosCliente::where('codigocliente', $item->codigocliente)
+                                                        ->whereRaw( $partialSQL )
+                                                        ->get();
 
-                    if (count($cliente_servicio) > 0) {
+                    if ( count($cliente_servicio) > 0 ) {
                         $factura = new Factura();
                         $factura->fechafactura = date('Y-m-d');
                         $factura->codigocliente = $item->codigocliente;
@@ -158,40 +173,6 @@ class FacturaController extends Controller
             }
         }
 
-
-        /*$suministro = Suministro::get();
-        if (count($suministro) > 0){
-            foreach ($suministro as $item) {
-
-                $objectCobro = CobroAgua::where('numerosuministro', $item->numerosuministro)
-                    ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
-                    ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
-                    ->count();
-                if ($objectCobro == 0) {
-
-                    $cobro = new CobroAgua();
-                    $cobro->fecha = date('Y-m-d');
-                    $cobro->numerosuministro = $item->numerosuministro;
-                    $cobro->estapagado = false;
-                    $cobro->save();
-
-                    $factura = new Factura();
-                    $factura->fechafactura = date('Y-m-d');
-                    $factura->idcobroagua = $cobro->idcobroagua;
-                    $factura->codigocliente = $item->codigocliente;
-                    $factura->estapagada = false;
-                    $factura->save();
-
-                    $cobro2 = CobroAgua::find($cobro->idcobroagua);
-                    $cobro2->idfactura = $factura->idfactura;
-                    $cobro2->save();
-                }
-            }
-            $result = 1;
-        } else {
-            $result = 2;
-        }
-        return response()->json(['result' => $result]);*/
     }
 
     /**
@@ -222,6 +203,7 @@ class FacturaController extends Controller
                     $object_find = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
                                                 ->where('idotrosvalores', $item['id'])
                                                 ->get();
+
                     if (count($object_find) == 0){
                         $object = new OtrosValoresFactura();
                         $object->idfactura = $request->input('no_factura');
@@ -229,11 +211,11 @@ class FacturaController extends Controller
                         $object->idotrosvalores = $item['id'];
                         $object->save();
                     } else {
-                        $object = $object_find[0];
-                        $object->idfactura = $request->input('no_factura');
-                        $object->valor = $item['valor'];
-                        $object->idotrosvalores = $item['id'];
-                        $object->save();
+                        $object = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
+                                                        ->where('idotrosvalores', $item['id']);
+                        if ($object->update(['valor' => $item['valor']]) == false){
+                            return response()->json(['success' => false]);
+                        }
                     }
                 }
             }
@@ -244,7 +226,7 @@ class FacturaController extends Controller
         $factura->totalfactura = $request->input('total');
         $factura->save();
 
-        return response()->json(['success' => $object]);
+        return response()->json(['success' => true]);
     }
 
     /**

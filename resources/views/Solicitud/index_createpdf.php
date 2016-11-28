@@ -141,8 +141,8 @@
         <div class="container" style="margin-top: 2%;">
             <table style="width: 100%;">
                 <tr>
-                    <td style="width: 45%;"><span style="font-size: 18px; font-weight: bold;">SOLICITUD DE SUMINISTRO Nro: </span></td>
-                    <td style="width: 55%;"><span style="font-size: 16px;"><?= $data->no_suministro ?></span></td>
+                    <td style="width: 60%;"><span style="font-size: 16px; font-weight: bold;">SOLICITUD DE CONEXION DE AGUA POTABLE Nro: </span></td>
+                    <td style="width: 40%;"><span style="font-size: 14px;"><?= $data->no_suministro ?></span></td>
                 </tr>
             </table>
         </div>
@@ -150,8 +150,12 @@
         <div class="container" style="margin-top: 1%;">
             <table style="width: 100%;">
                 <tr>
-                    <td style="width: 45%;"><span style="font-size: 18px; font-weight: bold;">CLIENTE: </span></td>
-                    <td style="width: 55%;"><span style="font-size: 16px;"><?= $data->nomcliente ?></span></td>
+                    <td style="width: 15%;"><span style="font-size: 16px; font-weight: bold;">CLIENTE: </span></td>
+                    <td style="width: 85%;"><span style="font-size: 14px;"><?= $data->nomcliente ?></span></td>
+                </tr>
+                <tr>
+                    <td style="width: 15%;"><span style="font-size: 16px; font-weight: bold;">CI: </span></td>
+                    <td style="width: 85%;"><span style="font-size: 14px;"><?= $data->ci ?></span></td>
                 </tr>
             </table>
         </div>
@@ -186,13 +190,13 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Agua Potable: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->agua_potable ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->agua_potable ?></span></td>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Alcantarillado: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->alcantarillado ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->alcantarillado ?></span></td>
                 </tr>
                 <tr>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Garantía Apertura: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->garantia ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->garantia ?></span></td>
                     <td style="width: 20%;"></td>
                     <td style="width: 30%;"></td>
                 </tr>
@@ -214,7 +218,7 @@
                 </tr>
                 <tr>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Costo: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->costo_medidor ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->costo_medidor ?></span></td>
                     <td style="width: 20%;"></td>
                     <td style="width: 30%;"></td>
                 </tr>
@@ -230,17 +234,33 @@
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Cuota Inicial: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->cuota_inicial ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->cuota_inicial ?></span></td>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Crédito: </span></td>
                     <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->dividendos ?></span></td>
                 </tr>
                 <tr>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Total: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->valor_partial ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->valor_partial ?></span></td>
                     <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Cuotas de: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->total_suministro ?></span></td>
+                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->total_suministro ?></span></td>
                 </tr>
             </table>
+        </div>
+
+        <div class="container" style="margin-top: 2%;">
+            <span style="font-size: 12px;">
+                <p>
+                    El valor a plazos se cancelará en <?= $data->dividendos ?> dividendos de <?= $data->total_suministro ?> dólares americanos más el consumo mensual.
+                </p>
+
+                <p>
+                    El solicitante acepta conocer los deberes y atribuciones establecidas en la Ley 3327 de las Juntas
+                    Administradoras de Agua Potable y Alcantarillado Publicado en el Registro Oficial del 29 de Marzo de 1979, en
+                    actual vigencia dando a este documento el de CONTRATO DE SERVICIO de A.P.
+                    El mismo que se suscribe en original y copia en común de acuerdo en:
+                </p>
+            </span>
+
         </div>
 
     </body>
