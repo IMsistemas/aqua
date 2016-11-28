@@ -60,7 +60,7 @@
                         </li>
                         <ul class="sub-menu collapse" id="solicitud">
                             <li><a href="#" ng-click="toModuloSolicitud();">Solicitudes</a></li>
-                            <li><a href="#" ng-click="toModuloSolicitudEspera();">Solicitudes en espera</a></li>
+                            <!--<li><a href="#" ng-click="toModuloSolicitudEspera();">Solicitudes en espera</a></li>-->
                         </ul>
                         <li data-toggle="collapse" data-target="#cliente" class="collapsed">
                             <a href="#"><i class="fa fa-user fa-lg"></i> Clientes <span class="arrow"></span></a>
@@ -164,6 +164,7 @@
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
+    
 
 
     

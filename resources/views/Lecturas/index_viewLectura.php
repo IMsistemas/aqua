@@ -1,27 +1,4 @@
-<!doctype html>
-    <html lang="es-ES" ng-app="softver-aqua">
-    <head>
-        <meta charset="UTF-8">
 
-        <title>Aqua-Consulta Lectura</title>
-
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-
-        <style>
-            .dataclient{
-                font-weight: bold;
-            }
-
-            td{
-                vertical-align: middle !important;
-            }
-        </style>
-
-    </head>
     <div ng-controller="viewLecturaController">
 
         <div class="col-xs-12" style="margin-top: 2%;">
