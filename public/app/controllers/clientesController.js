@@ -495,7 +495,7 @@
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
-                /*$scope.idsolicitud_to_process = 0;
+                $scope.idsolicitud_to_process = 0;
 
                 $('#modalActionSuministro').modal('hide');
                 $('#modalAction').modal('hide');
@@ -503,7 +503,7 @@
                 $scope.message = 'Se procesó correctamente la solicitud...';
                 $('#modalMessage').modal('show');
 
-                $scope.hideModalMessage();*/
+                $scope.hideModalMessage();
 
             }).error(function (res) {
 
