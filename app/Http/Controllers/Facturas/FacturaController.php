@@ -83,7 +83,7 @@ class FacturaController extends Controller
     {
         $countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha ) = ' . date('m'))
                                     ->whereRaw('EXTRACT( YEAR FROM fecha ) = ' . date('Y'))
-                                    ->count();
+                                    ->get();
 
         $partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM factura WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
         $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
@@ -94,13 +94,13 @@ class FacturaController extends Controller
 
         if ($countClientServices > 0) {
             $activate = true;
-        } else if ($countCobroAgua > 0) {
+        } else if (count($countCobroAgua) > 0) {
             $count_suministro = Suministro::whereRaw('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')
                                             ->count();
             if($count_suministro > 0) {
                 $activate = true;
             }
-        }
+        } else $activate = true;
 
         return response()->json(['success' => $activate]);
 

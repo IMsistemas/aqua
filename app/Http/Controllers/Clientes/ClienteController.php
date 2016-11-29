@@ -458,7 +458,7 @@ class ClienteController extends Controller
         $suministro->idcalle = $request->input('idcalle');
         $suministro->codigocliente = $request->input('codigocliente');
         $suministro->idtarifaaguapotable = $request->input('idtarifa');
-        $suministro->direccionsumnistro = $request->input('direccionsuministro');
+        $suministro->direccionsuministro = $request->input('direccionsuministro');
         $suministro->telefonosuministro = $request->input('telefonosuministro');
         $suministro->fechainstalacionsuministro = $fecha_actual;
         $suministro->idproducto = $request->input('idproducto');
