@@ -363,7 +363,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             item: item
         };
 
-        $http.post(API_URL + 'factura/print/', a).success(function(response){
+        $http.post(API_URL + 'factura/print', a).success(function(response){
             console.log(response);
 
             var ventana = window.open(response.url);
