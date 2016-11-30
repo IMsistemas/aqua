@@ -282,10 +282,6 @@ class FacturaController extends Controller
 
     public function print(Request $request)
     {
-        /*$data = json_encode($request->input('item'));
-        $data = json_decode($data);
-        dd($request->input('item'));*/
-
         $data = $request->input('item');
 
         $plantilla = 'Factura.factura_print';
@@ -293,16 +289,16 @@ class FacturaController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
 
-        /*if (! is_dir(public_path().'/uploads/')){
+        if (! is_dir(public_path().'/uploads/')){
             mkdir(public_path().'/uploads/');
         }
 
-        if (! is_dir(public_path().'/uploads/pdf_suministros/')){
-            mkdir(public_path().'/uploads/pdf_suministros/');
-        }*/
+        if (! is_dir(public_path().'/uploads/factura/')){
+            mkdir(public_path().'/uploads/factura/');
+        }
 
-        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/aaa.pdf');
+        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf');
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf']);
     }
 }

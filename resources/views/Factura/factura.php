@@ -45,6 +45,7 @@
                 <th style="width: 5%;">No. Factura</th>
                 <th style="width: 7%;">Fecha</th>
                 <th style="width: 12%;">Periodo</th>
+                <th style="width: 12%;">Cliente</th>
                 <th style="width: 16%;">Servicios</th>
                 <th style="width: 5%;">Suministro</th>
                 <th style="width: 15%;">Tarifa</th>
@@ -61,9 +62,9 @@
                 <td>{{item.idfactura}}</td>
                 <td>{{ FormatoFecha(item.fechafactura)}}</td>
                 <td>{{yearmonth (item.fechafactura)}}</td>
+                <td>{{item.cliente.complete_name}}</td>
                 <td>
                     <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
-
                 </td>
                 <td>{{item.cobroagua.suministro.numerosuministro}}</td>
                 <td>{{item.cobroagua.suministro.aguapotable.nombretarifaaguapotable}}</td>
@@ -73,9 +74,16 @@
                 <td>{{Pagada(item.estapagada)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
-                    <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
-                        <i class="fa fa-lg fa-print" aria-hidden="true"></i>
-                    </button>
+                    <span ng-if="item.estapagada == true">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
+                            <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                    <span ng-if="item.estapagada == false">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)" disabled>
+                            <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                        </button>
+                    </span>
                     <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
                         <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                     </button>

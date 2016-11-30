@@ -17,7 +17,18 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.a = '';
 
         $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
-            console.log(response);
+            //console.log(response);
+
+            var longitud = response.length;
+            for (var i = 0; i < longitud; i++) {
+                var complete_name = {
+                    value: response[i].cliente.apellidos + ', ' + response[i].cliente.nombres,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+            }
             $scope.factura = response;
         });
     };
@@ -354,6 +365,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
         $http.post(API_URL + 'factura/print/', a).success(function(response){
             console.log(response);
+
+            var ventana = window.open(response.url);
+            setTimeout(function(){ ventana.print(); }, 2000);
+
         });
 
     };
