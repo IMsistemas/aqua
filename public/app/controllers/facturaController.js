@@ -340,7 +340,23 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
         }
 
+    $scope.print = function (item) {
 
+        console.log(item);
+
+        if (item.serviciosenfactura.length == 0) {
+            item.serviciosenfactura = item.cliente.servicioscliente;
+        }
+
+        var a = {
+            item: item
+        };
+
+        $http.post(API_URL + 'factura/print/', a).success(function(response){
+            console.log(response);
+        });
+
+    };
 
 
     $scope.onlyDecimal = function ($event) {

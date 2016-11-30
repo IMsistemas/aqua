@@ -73,7 +73,7 @@
                 <td>{{Pagada(item.estapagada)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
-                    <button type="button" class="btn btn-success btn-sm" ng-click="Print(item)">
+                    <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
                         <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                     </button>
                     <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">

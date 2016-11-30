@@ -279,4 +279,30 @@ class FacturaController extends Controller
     {
         //
     }
+
+    public function print(Request $request)
+    {
+        /*$data = json_encode($request->input('item'));
+        $data = json_decode($data);
+        dd($request->input('item'));*/
+
+        $data = $request->input('item');
+
+        $plantilla = 'Factura.factura_print';
+        $view = \View::make($plantilla, compact('data'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        /*if (! is_dir(public_path().'/uploads/')){
+            mkdir(public_path().'/uploads/');
+        }
+
+        if (! is_dir(public_path().'/uploads/pdf_suministros/')){
+            mkdir(public_path().'/uploads/pdf_suministros/');
+        }*/
+
+        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/aaa.pdf');
+
+        return response()->json(['success' => true]);
+    }
 }

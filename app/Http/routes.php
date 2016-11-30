@@ -341,6 +341,7 @@ Route::get('factura/generate', 'Facturas\FacturaController@generate');
 Route::get('factura/getMultas', 'Facturas\FacturaController@getMultas');
 Route::get('factura/getServiciosXCobro/{id}', 'Facturas\FacturaController@getServiciosXCobro');
 
+Route::post('factura/print/', 'Facturas\FacturaController@print');
 
 Route::resource('/factura', 'Facturas\FacturaController');
 
