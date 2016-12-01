@@ -281,6 +281,8 @@
     <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
     <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
 
+    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
+
     <script src="<?= asset('js/moment.min.js') ?>"></script>
     <script src="<?= asset('js/es.js') ?>"></script>
     <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>

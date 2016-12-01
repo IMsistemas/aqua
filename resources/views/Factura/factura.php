@@ -43,22 +43,22 @@
             <thead class="bg-primary">
             <tr>
                 <th style="width: 5%;">No. Factura</th>
-                <th style="width: 7%;">Fecha</th>
-                <th style="width: 12%;">Periodo</th>
-                <th style="width: 12%;">Cliente</th>
-                <th style="width: 16%;">Servicios</th>
+                <th style="width: 8%;">Fecha</th>
+                <th style="width: 10%;">Periodo</th>
+                <th>Cliente</th>
+                <th>Servicios</th>
                 <th style="width: 5%;">Suministro</th>
-                <th style="width: 15%;">Tarifa</th>
-                <th style="width: 15%;">Dirección Suministro</th>
+                <th style="width: 8%;">Tarifa</th>
+                <th style="width: 12%;">Dirección Suministro</th>
                 <th style="width: 5%;">Teléfono Suministro</th>
                 <th style="width: 5%;">Consumo (m3)</th>
                 <th style="width: 5%;">Estado</th>
                 <th style="width: 5%;">Total</th>
-                <th style="width: 5%;">Acciones</th>
+                <th style="width: 4%;">Acc.</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in factura|filter:t_busqueda" ng-cloak>
+            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 |filter:t_busqueda" ng-cloak>
                 <td>{{item.idfactura}}</td>
                 <td>{{ FormatoFecha(item.fechafactura)}}</td>
                 <td>{{yearmonth (item.fechafactura)}}</td>
@@ -84,13 +84,26 @@
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>
-                    <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
-                        <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
-                    </button>
+                    <span ng-if="item.totalfactura == null">
+                        <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" disabled>
+                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                    <span ng-if="item.totalfactura != null">
+                        <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">
+                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </span>
+
                 </td>
             </tr>
             </tbody>
         </table>
+        <dir-pagination-controls
+                max-size="5"
+                direction-links="true"
+                boundary-links="true" >
+        </dir-pagination-controls>
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura">

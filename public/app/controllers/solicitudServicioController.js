@@ -32,12 +32,14 @@
         $scope.services = [];
         $scope.codigoclienteSuministro = 0;
 
+
+
         $scope.initLoad = function () {
 
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
 
                 var list = [];
-                console.log(response);
+
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
                     var length_suministro = suministro.length;
@@ -1055,6 +1057,11 @@
 
         $scope.hideModalMessage = function () {
             setTimeout("$('#modalMessage').modal('hide')", 3000);
+        };
+
+        $scope.sort = function(keyname){
+            $scope.sortKey = keyname;
+            $scope.reverse = !$scope.reverse;
         };
 
         $scope.initLoad();

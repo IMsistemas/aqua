@@ -134,6 +134,8 @@ class ViewLecturaController extends Controller
                     $lectura->lecturaactual = $item->lecturaactual;
                     $lectura->consumo = $lectura->lecturaactual - $lectura->lecturaanterior;
                     //$this->updateRubrosValue($lectura->consumo, $tarifa, $numerosuministro, $idlectura);
+                } else {
+                    return response()->json(['success' => false]);
                 }
 
             }

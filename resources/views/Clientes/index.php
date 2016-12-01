@@ -20,19 +20,47 @@
         <table class="table table-responsive table-striped table-hover table-condensed">
             <thead class="bg-primary">
             <tr>
-                <th class="text-center" style="width: 10%;">CI / RUC</th>
-                <th class="text-center" style="width: 10%;">Fecha Ingreso</th>
-                <th class="text-center" style="">Razón Social</th>
-                <th class="text-center" style="width: 8%;">Celular</th>
-                <th class="text-center" style="width: 10%;">Telf. Domicilio</th>
-                <th class="text-center" style="width: 9%;">Telf. Trabajo</th>
-                <th class="text-center" style="width: 10%;">Dirección</th>
+                <th class="text-center" style="width: 10%;" ng-click="sort('documentoidentidad')">
+                    CI / RUC
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='documentoidentidad'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" style="width: 10%;" ng-click="sort('fechaingreso')">
+                    Fecha Ingreso
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='fechaingreso'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" ng-click="sort('complete_name')">
+                    Razón Social
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='complete_name'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" style="width: 8%;" ng-click="sort('celular')">
+                    Celular
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='celular'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" style="width: 10%;" ng-click="sort('telefonoprincipaldomicilio')">
+                    Telf. Domicilio
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='telefonoprincipaldomicilio'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" style="width: 9%;" ng-click="sort('telefonoprincipaltrabajo')">
+                    Telf. Trabajo
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='telefonoprincipaltrabajo'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th class="text-center" style="width: 10%;" ng-click="sort('direcciondomicilio')">
+                    Dirección
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='direcciondomicilio'"
+                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
                 <th class="text-center" style="width: 7%;">Estado</th>
                 <th class="text-center" style="width: 16%;">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in clientes | filter : t_busqueda" ng-cloak>
+            <tr dir-paginate="item in clientes | orderBy:sortKey:reverse |itemsPerPage:10 | filter : t_busqueda" ng-cloak>
                 <td>{{item.documentoidentidad}}</td>
                 <td>{{item.fechaingreso | formatDate}}</td>
                 <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.complete_name}}</td>
@@ -63,6 +91,11 @@
             </tr>
             </tbody>
         </table>
+        <dir-pagination-controls
+                max-size="5"
+                direction-links="true"
+                boundary-links="true" >
+        </dir-pagination-controls>
     </div>
 
 

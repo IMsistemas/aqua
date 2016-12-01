@@ -940,6 +940,11 @@
             $('#modalAction').modal('show');
         };
 
+        $scope.sort = function(keyname){
+            $scope.sortKey = keyname;
+            $scope.reverse = !$scope.reverse;
+        };
+
         $scope.hideModalMessage = function () {
             setTimeout("$('#modalMessage').modal('hide')", 3000);
         };

@@ -54,11 +54,19 @@
             //console.log($scope.lecturasUpdate);
 
             $http.put(API_URL + 'verLectura/update/' + JSON.stringify($scope.lecturasUpdate)).success(function(response){
-                //console.log(response);
-                $('#btn-save').prop('disabled', false);
-                $scope.message = 'Se ha actualizado la(s) lectura(s) correctamente...';
-                $('#modalMessage').modal('show');
-                $scope.hideModalMessage();
+                console.log(response);
+
+                if (response.success == true) {
+                    $('#btn-save').prop('disabled', false);
+                    $scope.message = 'Se ha actualizado la(s) lectura(s) correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+
+
+                } else {
+                    $scope.message_error = 'Verifique que no exista Lectura Actual menor a Lectura Anterior...';
+                    $('#modalMessageError').modal('show');
+                }
 
                 $scope.initData();
                 $scope.lecturasUpdate = [];
@@ -148,6 +156,20 @@
             console.log(filters);
 
             $http.get(API_URL + 'verLectura/getByFilter/' + JSON.stringify(filters)).success(function(response){
+
+                var longitud = response.length;
+                for (var i = 0; i < longitud; i++) {
+                    var complete_name = {
+                        value: response[i].apellidos + ', ' + response[i].nombres,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'complete_name', complete_name);
+                }
+
+                console.log(response);
+
                 $scope.lecturas = response;
             });
         };
@@ -169,6 +191,11 @@
 
         $scope.hideModalMessage = function () {
             setTimeout("$('#modalMessage').modal('hide')", 3000);
+        };
+
+        $scope.sort = function(keyname){
+            $scope.sortKey = keyname;
+            $scope.reverse = !$scope.reverse;
         };
 
         $scope.initData();

@@ -17,7 +17,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.a = '';
 
         $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
-            //console.log(response);
+            console.log(response);
 
             var longitud = response.length;
             for (var i = 0; i < longitud; i++) {
@@ -320,7 +320,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         }
     }
 
-
     $scope.Filtrar= function  () {
 
         $scope.t_anio = $('#t_anio').val();
@@ -353,8 +352,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.print = function (item) {
 
-        console.log(item);
-
         if (item.serviciosenfactura.length == 0) {
             item.serviciosenfactura = item.cliente.servicioscliente;
         }
@@ -372,7 +369,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         });
 
     };
-
 
     $scope.onlyDecimal = function ($event) {
         var k = $event.keyCode;
@@ -422,6 +418,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         }
     };
 
+    $scope.sort = function(keyname){
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    };
 
     $scope.initLoad();
     $scope.Servicio();

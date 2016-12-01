@@ -36,19 +36,39 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                         <tr>
-                            <th style="width: 10%;">Nro. Solicitud</th>
-                            <th style="width: 10%;">Fecha</th>
-                            <th>Cliente</th>
-                            <th>Dirección</th>
-                            <th style="width: 10%;">Teléfono</th>
+                            <th style="width: 10%;" ng-click="sort('data.idsolicitud')">
+                                Nro. Solicitud
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='data.idsolicitud'"
+                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th style="width: 10%;" ng-click="sort('data.fechasolicitud')">
+                                Fecha
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='data.fechasolicitud'"
+                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('data.cliente.complete_name')">
+                                Cliente
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.complete_name'"
+                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('data.cliente.direcciondomicilio')">
+                                Dirección
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.direcciondomicilio'"
+                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th style="width: 10%;" ng-click="sort('data.cliente.telefonoprincipaldomicilio')">
+                                Teléfono
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.telefonoprincipaldomicilio'"
+                                      ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
                             <th style="width: 12%;">Tipo Solicitud</th>
                             <th style="width: 10%;">Estado</th>
                             <th style="width: 12%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="solicitud in solicitudes | filter : search" ng-cloak>
-                            <td>{{solicitud.data.idsolicitud}}</td>
+                        <tr dir-paginate="solicitud in solicitudes |orderBy:sortKey:reverse |itemsPerPage:10 | filter : search" ng-cloak>
+                            <td class="text-center">{{solicitud.data.idsolicitud}}</td>
                             <td>{{solicitud.data.fechasolicitud | formatDate}}</td>
                             <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{solicitud.data.cliente.complete_name}}</td>
                             <td>{{solicitud.data.cliente.direcciondomicilio}}</td>
@@ -87,6 +107,11 @@
                         </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls
+                        max-size="5"
+                        direction-links="true"
+                        boundary-links="true" >
+                </dir-pagination-controls>
             </div>
 
 

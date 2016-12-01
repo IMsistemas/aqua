@@ -13,6 +13,7 @@
         <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
 
         <style>
             .dataclient{
@@ -138,6 +139,8 @@
 
     <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
     <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
+    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
 
     <script src="<?= asset('js/jquery.min.js') ?>"></script>
     <script src="<?= asset('js/bootstrap.min.js') ?>"></script>

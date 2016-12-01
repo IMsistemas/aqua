@@ -3,20 +3,6 @@
 
         <div class="col-xs-12" style="margin-top: 2%;">
             <fieldset>
-
-                <!--<legend style="padding-bottom: 10px;">
-                    <span style="font-weight: bold;">CONSULTA DE LECTURAS</span>
-                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
-                        <i class="fa fa-print fa-2x" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
-                        <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn btn-default" style="float: right; display: none;" ng-click="">
-                        <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i>
-                    </button>
-                </legend>-->
-
                 <div class="col-sm-6 col-xs-12">
                     <fieldset>
                         <legend>Periodo:</legend>
@@ -97,10 +83,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="lectura in lecturas | filter : t_search" ng-cloak>
+                            <tr dir-paginate="lectura in lecturas | orderBy:sortKey:reverse |itemsPerPage:4 | filter : t_search" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
                                 <td><i class="fa fa-user" ></i> {{lectura.complete_name}}</td>
-                                <td class="text-right">{{lectura.numerosuministro}}</td>
+                                <td class="text-center">{{lectura.numerosuministro}}</td>
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
                                 <td  class="text-right">
@@ -121,6 +107,11 @@
                             </tr>
                         </tbody>
                     </table>
+                    <dir-pagination-controls
+                            max-size="5"
+                            direction-links="true"
+                            boundary-links="true" >
+                    </dir-pagination-controls>
                 </div>
 
                 <div class="col-xs-12">
@@ -151,6 +142,20 @@
             </div>
         </div>
 
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Información</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message_error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 999999;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -169,21 +174,3 @@
     </div>
 
 
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-    <script src="<?= asset('js/moment.min.js') ?>"></script>
-    <script src="<?= asset('js/es.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-    <!-- AngularJS Application Scripts -->
-    <script src="<?= asset('app/app.js') ?>"></script>
-    <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
-  
-  
-  </html>
