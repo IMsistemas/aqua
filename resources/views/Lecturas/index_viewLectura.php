@@ -90,11 +90,11 @@
                                 <td>{{lectura.nombrecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
                                 <td  class="text-right">
-                                   <span ng-if="verifyDate(lectura.fechalectura) == true">
+                                   <span ng-if="verifyDate(lectura.fechalectura, lectura.estapagada) == true">
                                        <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
                                                ng-model="lectura.lecturaactual">
                                    </span>
-                                    <span ng-if="verifyDate(lectura.fechalectura) == false">
+                                    <span ng-if="verifyDate(lectura.fechalectura, lectura.estapagada) == false">
                                        <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
                                               ng-model="lectura.lecturaactual" disabled>
                                    </span>

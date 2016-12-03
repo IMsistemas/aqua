@@ -49,6 +49,16 @@ class ClienteController extends Controller
     }
 
     /**
+     * Obtener la configuracion del sistema
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getConfiguracion()
+    {
+        return Configuracion::all();
+    }
+
+    /**
      * Obtener el listado de todos los Tipos de Clientes
      *
      * @return mixed
@@ -458,7 +468,7 @@ class ClienteController extends Controller
         $suministro->idcalle = $request->input('idcalle');
         $suministro->codigocliente = $request->input('codigocliente');
         $suministro->idtarifaaguapotable = $request->input('idtarifa');
-        $suministro->direccionsuministro = $request->input('direccionsuministro');
+        $suministro->direccionsumnistro = $request->input('direccionsuministro');
         $suministro->telefonosuministro = $request->input('telefonosuministro');
         $suministro->fechainstalacionsuministro = $fecha_actual;
         $suministro->idproducto = $request->input('idproducto');

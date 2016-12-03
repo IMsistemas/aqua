@@ -173,6 +173,8 @@ Route::Delete('/calles/gestion/eliminarcalle/{idcalle}','Sectores\CalleControlle
 //Peticion para obtener el listado de solicitudes
 Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicitudes');
 
+Route::get('solicitud/getConfiguracion', 'Solicitud\SolicitudController@getConfiguracion');
+
 Route::get('solicitud/getByFilter/{filter}', 'Solicitud\SolicitudController@getByFilter');
 
 Route::put('solicitud/updateSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudOtro');
@@ -251,6 +253,8 @@ Route::resource('cuentascobrarcliente', 'Cuentas\CuentasPorCobrarSuministroContr
 
 
 /*===================================Módulo Cliente===========================================*/
+
+Route::get('cliente/getConfiguracion', 'Clientes\ClienteController@getConfiguracion');
 
 Route::get('cliente/getTarifas', 'Clientes\ClienteController@getTarifas');
 

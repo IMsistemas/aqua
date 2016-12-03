@@ -33,9 +33,11 @@ class ViewLecturaController extends Controller
     	return Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
     						->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
-                            ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
+                            ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
+                            ->join('factura', 'factura.idcobroagua', '=', 'cobroagua.idcobroagua')
+                            ->select('lectura.idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
                                         'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
-                                        'cliente.apellidos')
+                                        'cliente.apellidos', 'factura.estapagada')
                             ->whereRaw('EXTRACT( MONTH FROM fechalectura) = ' . date('m'))
                             ->whereRaw('EXTRACT( YEAR FROM fechalectura) = ' . date('Y'))
                             ->get();
@@ -67,9 +69,11 @@ class ViewLecturaController extends Controller
                             ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
                             ->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
-                            ->select('idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
+                            ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
+                            ->join('factura', 'factura.idcobroagua', '=', 'cobroagua.idcobroagua')
+                            ->select('lectura.idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
                                         'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
-                                        'cliente.apellidos');
+                                        'cliente.apellidos', 'factura.estapagada');
 
         if(count($array_filters) == 1){
             $array_filters[0][2] = "'" . $array_filters[0][2] . "'";

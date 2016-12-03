@@ -174,7 +174,7 @@
             });
         };
 
-        $scope.verifyDate = function (string_date) {
+        $scope.verifyDate = function (string_date, estapagado) {
             var now = new Date();
             var dd = now.getDate();
             if (dd < 10) dd = '0' + dd;
@@ -185,7 +185,11 @@
             var array_date = string_date.split('-');
 
             if (array_date[0] == yyyy && array_date[1] == mm){
-                return true;
+
+                if (estapagado == true) {
+                    return false;
+                } else return true;
+
             } else return false;
         };
 

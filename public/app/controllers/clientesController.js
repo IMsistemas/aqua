@@ -21,7 +21,18 @@
 
         $scope.services = [];
 
+        $scope.tasainteres = 0;
+
         $scope.initLoad = function () {
+
+            $http.get(API_URL + 'cliente/getConfiguracion').success(function(response){
+
+                console.log(response);
+
+                $scope.tasainteres = parseFloat(response[0].tasainteres);
+
+            });
+
             $http.get(API_URL + 'cliente/getClientes').success(function(response){
                 var longitud = response.length;
                 for (var i = 0; i < longitud; i++) {
@@ -360,7 +371,27 @@
             if ($scope.t_suministro_aguapotable != '' && $scope.t_suministro_alcantarillado != '' &&
                 $scope.t_suministro_cuota != '' && $scope.s_suministro_credito != 0 && $scope.s_suministro_credito != '') {
 
-                var total_partial = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+                var n = $scope.s_suministro_credito / 12;
+
+                var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+                if ($scope.t_suministro_costomedidor != ''){
+                    C += parseFloat($scope.t_suministro_costomedidor);
+                }
+
+                C -= parseFloat($scope.t_suministro_cuota);
+
+                var I = ((n * C) * $scope.tasainteres) / 100;
+
+                var M = C + I;
+
+                var cuotas = M / $scope.s_suministro_credito;
+
+                $scope.total_partial = M.toFixed(2);
+                $scope.credit_cant = $scope.s_suministro_credito;
+                $scope.total_suministro = cuotas.toFixed(2);
+
+
+                /*var total_partial = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
 
                 if ($scope.t_suministro_costomedidor != ''){
                     total_partial += parseFloat($scope.t_suministro_costomedidor);
@@ -372,7 +403,7 @@
 
                 $scope.total_partial = total_partial.toFixed(2);
                 $scope.credit_cant = $scope.s_suministro_credito;
-                $scope.total_suministro = total.toFixed(2);
+                $scope.total_suministro = total.toFixed(2);*/
 
                 $('#info_partial').show();
                 $('#info_total').show();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Solicitud;
 
 
+use App\Modelos\Configuraciones\Configuracion;
 use App\Modelos\Servicios\ServiciosCliente;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
 use App\Modelos\Solicitud\SolicitudMantenimiento;
@@ -25,6 +26,16 @@ class SolicitudController extends Controller
     public function index()
     {
         return view('Solicitud/index');
+    }
+
+    /**
+     * Devolver la configuracion del sistema
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getConfiguracion()
+    {
+        return Configuracion::all();
     }
 
     /**

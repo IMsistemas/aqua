@@ -343,6 +343,16 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         console.log(filtros);
         $http.get(API_URL + 'factura/Filtrar/' + JSON.stringify(filtros)).success(function(response){
             console.log(response);
+            var longitud = response.length;
+            for (var i = 0; i < longitud; i++) {
+                var complete_name = {
+                    value: response[i].cliente.apellidos + ', ' + response[i].cliente.nombres,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+            }
             $scope.factura = response;
 
 
