@@ -27,7 +27,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="cuenta in cuentas | filter : t_busqueda" ng-cloak>
+                    <tr dir-paginate="cuenta in cuentas | orderBy:sortKey:reverse |itemsPerPage:10 | filter : t_busqueda" ng-cloak>
                         <td>{{cuenta.cliente.documentoidentidad}}</td>
                         <td>{{cuenta.cliente.complete_name}}</td>
                         <td>{{cuenta.fecha}}</td>
@@ -35,6 +35,11 @@
                     </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls
+                    max-size="5"
+                    direction-links="true"
+                    boundary-links="true" >
+                </dir-pagination-controls>
 
             </div>
         </fieldset>

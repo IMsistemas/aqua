@@ -23,7 +23,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in barrios|filter:busqueda" ng-cloak>
+            <tr dir-paginate="item in barrios | orderBy:sortKey:reverse |itemsPerPage:10  |filter:busqueda" ng-cloak>
                <td><input type="text" class="form-control" ng-model="item.nombrebarrio"></td>
 
                 <td>
@@ -49,6 +49,13 @@
             </tr>
             </tbody>
         </table>
+
+        <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true" >
+        </dir-pagination-controls>
+
     </div>
 
     <div class="col-xs-12" style="float: right;">

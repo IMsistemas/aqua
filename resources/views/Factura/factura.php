@@ -16,8 +16,6 @@
 
             <input type="text" class="form-control datepicker_a" name="t_anio"
                    id="t_anio" ng-model="t_anio"  ng-change="Filtrar()" placeholder="-- Año --">
-
-
         </div>
 
         <div class="col-sm-2 col-xs-12">
