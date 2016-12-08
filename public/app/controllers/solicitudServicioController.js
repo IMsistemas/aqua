@@ -913,6 +913,12 @@
                 $('#fieldset_suministro_datoscosto').hide();
                 $('#modal-footer-suministro').hide();
 
+                $('#s_suministro_tarifa').prop('disabled', true);
+                $('#s_suministro_zona').prop('disabled', true);
+                $('#s_suministro_transversal').prop('disabled', true);
+                $('#t_suministro_direccion').prop('disabled', true);
+                $('#t_suministro_telf').prop('disabled', true);
+
             } else {
                 $scope.getTarifas();
                 $scope.getBarrios();
@@ -923,6 +929,12 @@
 
                 $('#fieldset_suministro_datoscosto').show();
                 $('#modal-footer-suministro').show();
+
+                $('#s_suministro_tarifa').prop('disabled', false);
+                $('#s_suministro_zona').prop('disabled', false);
+                $('#s_suministro_transversal').prop('disabled', false);
+                $('#t_suministro_direccion').prop('disabled', false);
+                $('#t_suministro_telf').prop('disabled', false);
             }
 
             $scope.getDividendo();
@@ -1086,6 +1098,21 @@
 
         $scope.hideModalMessage = function () {
             setTimeout("$('#modalMessage').modal('hide')", 3000);
+        };
+
+        $scope.onlyDecimal = function ($event) {
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+            if (n == ".") {
+                return true;
+            } else {
+                if(patron.test(n) == false){
+                    $event.preventDefault();
+                }
+                else return true;
+            }
         };
 
         $scope.sort = function(keyname){
