@@ -4,9 +4,10 @@
 
     <div class="col-xs-12" style="margin-top: 15px;">
 
-        <div class="col-sm-2 col-xs-12">
+        <div class="col-sm-4 col-xs-12">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="t_busqueda">
+                <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..."
+                       ng-model="t_busqueda" ng-keypress="initLoad(1)">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
@@ -19,12 +20,12 @@
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="Filtrar()"
+            <select id="s_mes" name="s_mes" class="form-control" ng-model="s_mes" ng-change="initLoad(1)"
                     ng-options="value.id as value.label for value in meses"></select>
         </div>
 
         <div class="col-sm-2 col-xs-12">
-            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="Filtrar()"
+            <select id="s_estado" class="form-control" ng-model="s_estado" ng-change="initLoad(1)"
                     ng-options="value.id as value.label for value in estadoss"></select>
         </div>
 
@@ -56,7 +57,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 |filter:t_busqueda" ng-cloak>
+            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
                 <td>{{item.idfactura}}</td>
                 <td>{{ FormatoFecha(item.fechafactura)}}</td>
                 <td>{{yearmonth (item.fechafactura)}}</td>
@@ -98,9 +99,16 @@
             </tbody>
         </table>
         <dir-pagination-controls
+
+                on-page-change="pageChanged(newPageNumber)"
+
+                template-url="dirPagination.html"
+
+                class="pull-right"
                 max-size="5"
                 direction-links="true"
                 boundary-links="true" >
+
         </dir-pagination-controls>
     </div>
 

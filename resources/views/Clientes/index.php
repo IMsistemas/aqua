@@ -633,10 +633,32 @@
 
                                             <label for="s_ident_new_client_setnombre" class="col-sm-4 col-xs-12 control-label">RUC/CI:</label>
                                             <div class="col-sm-8 col-xs-12" style="">
-                                                <select class="form-control"
+
+                                                <!--<select class="form-control"
                                                         name="s_ident_new_client_setnombre" id="s_ident_new_client_setnombre"
                                                         ng-model="s_ident_new_client_setnombre" ng-options="value.id as value.label for value in clientes_setN"
-                                                        ng-change="showInfoClienteForSetName()" ng-pattern="/^[1-9]+$/"></select>
+                                                        ng-change="showInfoClienteForSetName()" ng-pattern="/^[1-9]+$/"></select>-->
+
+                                                <angucomplete-alt
+                                                        id="s_ident_new_client_setnombre"
+                                                        pause="400"
+                                                        selected-object="showInfoClienteForSetName"
+
+                                                        remote-url="{{API_URL}}cliente/getIdentifyClientes/"
+
+                                                        title-field="documentoidentidad"
+
+                                                        minlength="1"
+                                                        input-class="form-control"
+                                                        match-class="highlight"
+                                                        field-required="true"
+                                                        input-name="s_ident_new_client_setnombre"
+                                                        disable-input="guardado"
+                                                        text-searching="Buscando RUC Clientes"
+                                                        text-no-results="RUC no encontrado"
+                                                        initial-value="documentoidentidad"
+                                                />
+
                                                 <span class="help-block error"
                                                       ng-show="formSetNombre.s_ident_new_client_setnombre.$invalid && formSetNombre.s_ident_new_client_setnombre.$error.pattern">
                                                             Seleccione un Cliente</span>

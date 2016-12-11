@@ -164,14 +164,21 @@ class ClienteController extends Controller
     /**
      * Obtener todos los clientes diferentes al id por parametro
      *
-     * @param $idcliente
+     * @param $text
      * @return mixed
      */
-    public function getIdentifyClientes($idcliente)
+    public function getIdentifyClientes($text)
     {
-        return Cliente::where('codigocliente', '!=', $idcliente)
-                                ->orderBy('documentoidentidad', 'asc')->get();
+        return Cliente::where('documentoidentidad', 'LIKE', '%' . $text . '%')
+                        ->orderBy('documentoidentidad', 'asc')->get();
     }
+
+
+    public function getInfoCliente($idcliente)
+    {
+        return Cliente::where('codigocliente', $idcliente)->get();
+    }
+
 
     /**
      * Obtener el ultimo id insertado y devolver el proximo de la tabla pasada por parametro

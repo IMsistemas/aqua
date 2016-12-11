@@ -5,9 +5,21 @@ app.controller('facturaController', function($scope, $http, API_URL) {
     $scope.aux = [];
     $scope.item = 0;
 
-    $scope.initLoad = function () {
+
+    $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
+
+    $scope.initLoad = function (pageNumber) {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
             (response.success == true) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
+        });
+
+        $('.datepicker_a').datetimepicker({
+            locale: 'es',
+            format: 'YYYY'
+        }).on('dp.change', function (e) {
+            $scope.initLoad(1);
         });
 
         $scope.array_temp = [];
@@ -16,20 +28,39 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.tarifa = '';
         $scope.a = '';
 
-        $http.get(API_URL + 'factura/getCobroAgua').success(function(response){
-            console.log(response);
 
-            var longitud = response.length;
+        $scope.t_anio = $('#t_anio').val();
+
+        if ($scope.s_mes == undefined) {
+            var m = null;
+        } else var m = $scope.s_mes;
+
+        if ($scope.t_busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.t_busqueda;
+
+        var filtros = {
+            estado: $scope.s_estado,
+            mes: m,
+            anio: $scope.t_anio,
+            search: search
+        };
+
+        $http.get(API_URL + 'factura/getCobroAgua?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+            //console.log(response);
+
+            var longitud = (response.data).length;
             for (var i = 0; i < longitud; i++) {
                 var complete_name = {
-                    value: response[i].cliente.apellidos + ', ' + response[i].cliente.nombres,
+                    value: response.data[i].cliente.apellidos + ', ' + response.data[i].cliente.nombres,
                     writable: true,
                     enumerable: true,
                     configurable: true
                 };
-                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+                Object.defineProperty(response.data[i].cliente, 'complete_name', complete_name);
             }
-            $scope.factura = response;
+            $scope.factura = response.data;
+            $scope.totalItems = response.total;
         });
     };
 
@@ -332,29 +363,26 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             var m = null;
         } else var m = $scope.s_mes;
 
-
-
         var filtros = {
             estado: $scope.s_estado,
             mes: m,
             anio: $scope.t_anio
         }
 
-        console.log(filtros);
-        $http.get(API_URL + 'factura/Filtrar/' + JSON.stringify(filtros)).success(function(response){
+        $http.get(API_URL + 'factura/Filtrar/' + JSON.stringify(filtros) + '?page=1').success(function(response){
             console.log(response);
-            var longitud = response.length;
+            var longitud = response.data.length;
             for (var i = 0; i < longitud; i++) {
                 var complete_name = {
-                    value: response[i].cliente.apellidos + ', ' + response[i].cliente.nombres,
+                    value: response.data[i].cliente.apellidos + ', ' + response.data[i].cliente.nombres,
                     writable: true,
                     enumerable: true,
                     configurable: true
                 };
-                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
+                Object.defineProperty(response.data[i].cliente, 'complete_name', complete_name);
             }
-            $scope.factura = response;
-
+            $scope.factura = response.data;
+            $scope.totalItems = response.total;
 
         });
 
@@ -433,11 +461,12 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.reverse = !$scope.reverse;
     };
 
-    $scope.initLoad();
+    $scope.Estado();
+    $scope.initLoad(1);
     $scope.Servicio();
     $scope.Anio();
     $scope.Meses();
-    $scope.Estado();
+
 
 });
 
@@ -453,6 +482,8 @@ $(function(){
     $('.datepicker_a').datetimepicker({
         locale: 'es',
         format: 'YYYY'
+    }).on('dp.change', function (e) {
+        $scope.initLoad(1);
     });
 });
 

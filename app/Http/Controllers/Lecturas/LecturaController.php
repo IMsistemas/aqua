@@ -139,12 +139,17 @@ class LecturaController extends Controller
     {
         //-------------------Valores Atrasados--------------------------------------------------------
 
-        $atraso = CobroAgua::where('estapagado', false)
+        $atraso = CobroAgua::with([
+                                    'factura' => function ($query) {
+                                        $query->where('estapagada', false);
+                                    }
+                                ])
                                 ->whereRaw('mesesatrasados IS NOT NULL')
                                 ->whereRaw('valormesesatrasados IS NOT NULL')
                                 ->where('numerosuministro', $numerosuministro)
                                 ->whereRaw('EXTRACT( MONTH FROM fecha) = (EXTRACT( MONTH FROM now()) - 1)')
                                 ->get();
+
 
         if (count($atraso) == 0){
             $valormesesatrasados = 0;
@@ -155,7 +160,7 @@ class LecturaController extends Controller
             } else {
                 $mesesatrasados = $atraso[0]->mesesatrasados + 1;
             }
-            $valormesesatrasados = $atraso[0]->valor;
+            $valormesesatrasados = $atraso[0]['factura']->totalfactura;
             settype($valormesesatrasados, 'float');
         }
 
@@ -270,7 +275,7 @@ class LecturaController extends Controller
             }
         }
 
-        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
@@ -281,15 +286,15 @@ class LecturaController extends Controller
 
             Mail::send('Lecturas.pdf_body_email_newLectura',['data' => $data] , function($message) use ($correo_cliente)
             {
-                $message->from('notificaciones@cooptulcan.coop', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
-                $message->to('raidelbg84@gmail.com');
-                $message->bcc('crios@imnegocios.com');
-                $message->bcc('kchicaiza@imnegocios.com');
+                $message->from('notificaciones@aqua.ec', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+                $message->to($correo_cliente);
+                $message->bcc('christian.imnegocios@gmail.com');
+                $message->bcc('kevin.imnegocios@gmail.com');
                 $message->bcc('raidelbg84@gmail.com');
                 $message->bcc('yamilkag@gmail.com');
-                $message->bcc('lvinueza@imnegocios.com')->subject('Factura Lectura!');
+                $message->bcc('luis.imnegocios@gmail.com')->subject('Prefactura Lectura!');
             });
-        }*/
+        }
 
         return response()->json(['success' => true]);
     }

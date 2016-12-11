@@ -41,24 +41,73 @@ class FacturaController extends Controller
         return OtrosValores::orderBy('nombreotrosvalores', 'asc')->get();
     }
 
-    public function getCobroAgua()
+    public function getCobroAgua(Request $request)
     {
-        /*return CobroAgua::with('suministro.cliente','suministro.aguapotable','factura.otrosvaloresfactura.otrosvalores','factura.serviciosenfactura.serviciojunta','lectura' )
-                                ->orderBy('fecha','asc')->get();*/
 
-        return Factura::with('cobroagua.suministro.cliente', 'cobroagua.suministro.aguapotable',
+        /*return Factura::with('cobroagua.suministro.cliente', 'cobroagua.suministro.aguapotable',
                                         'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
-                                        'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta')->orderBy('fechafactura','asc')->get();
+                                        'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta')
+                                        ->orderBy('fechafactura','asc')->paginate(5);*/
+
+        /*$facturas = Factura::with('cobroagua.suministro.cliente', 'cobroagua.suministro.aguapotable',
+                                'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
+                                'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta');*/
+
+        $filter = json_decode($request->get('filter'));
+
+        $search = $filter->search;
+
+        /*$facturas = Factura::with(['cobroagua.suministro.cliente' => function ($query) use ($search) {
+                                     return $query->whereRaw("(cliente.apellidos LIKE '%" . $search . "%' OR cliente.nombres LIKE '%" . $search . "%')");
+                                    },
+            'cobroagua.suministro.aguapotable', 'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
+            'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta']);*/
+
+        $facturas = Factura::with(
+            [
+                'cobroagua.suministro.aguapotable', 'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
+                'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta',
+
+                'cobroagua' => function ($query) use ($search){
+                    return $query->with([
+                        'suministro' => function ($query_suministro) use ($search) {
+                            return $query_suministro->with([
+                                'cliente' => function ($query_cliente) use ($search) {
+                                    $query_cliente->whereRaw("(cliente.apellidos LIKE '%" . $search . "%' OR cliente.nombres LIKE '%" . $search . "%')");
+                                }
+                            ]);
+                        }
+                    ]);
+                }
+            ]);
+
+
+        if ($filter->estado == 1) {
+            $facturas->where('estapagada', true);
+        }
+        if ($filter->estado == 2) {
+            $facturas->where('estapagada', false);
+        }
+
+        if ($filter->mes != null && $filter->mes != '') {
+            $facturas->whereRaw('EXTRACT( MONTH FROM fechafactura) = ' . $filter->mes);
+        }
+
+        if ($filter->anio != null && $filter->anio != '') {
+            $facturas->whereRaw('EXTRACT( YEAR FROM fechafactura) = ' . $filter->anio);
+        }
+
+        return $facturas->orderBy('fechafactura','asc')->paginate(5);
     }
 
     public function Filtrar($filter)
     {
         $filter = json_decode($filter);
 
-
         $cobro = Factura::with('cobroagua.suministro.cliente','cobroagua.suministro.aguapotable','otrosvaloresfactura.otrosvalores','serviciosenfactura.serviciojunta','cobroagua.lectura','cliente.servicioscliente.serviciojunta' );
         $cobro->whereRaw('EXTRACT( MONTH FROM fechafactura) = ' . $filter->mes);
         $cobro ->whereRaw('EXTRACT( YEAR FROM fechafactura) = ' . $filter->anio);
+
         if($filter->estado == 1)
         {
             $cobro ->where('estapagada', true);
@@ -69,7 +118,7 @@ class FacturaController extends Controller
             $cobro ->where('estapagada', false);
         }
 
-        return $cobro->get();
+        return $cobro->paginate(5);
 
     }
 

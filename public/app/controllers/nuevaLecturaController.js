@@ -60,7 +60,7 @@
             };
 
             $http.get(API_URL + 'nuevaLectura/getInfo/' + JSON.stringify(filter)).success(function(response) {
-                console.log(response);
+                //console.log(response);
 
                 if (response.success == true) {
                     if (response.suministro.length == 0){
@@ -159,7 +159,7 @@
             $('#myModalProgressBar').modal('show');
 
             var text_mes = '';
-            for (var i = 0; i < 12; i++){
+            for (var i = 1; i < 13; i++){
                 if ($scope.meses[i].id == $scope.s_mes) {
                     text_mes = $scope.meses[i].name;
                 }

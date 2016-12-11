@@ -785,16 +785,34 @@
                     array_temp.push({label: response[i].documentoidentidad, id: response[i].codigocliente});
                     $scope.list_clientes.push(response[i]);
                 }
-                $scope.clientes_setN = array_temp;
-                $scope.s_ident_new_client_setnombre = 0;
+                return array_temp;
+
+                /*$scope.clientes_setN = array_temp;
+                $scope.s_ident_new_client_setnombre = 0;*/
             });
         };
 
-        $scope.showInfoClienteForSetName = function () {
-            var codigocliente = $scope.s_ident_new_client_setnombre;
+        $scope.showInfoClienteForSetName = function (object) {
+
+            //console.log(object);
+
+            //var codigocliente = $scope.s_ident_new_client_setnombre;
+            var codigocliente = object.originalObject.codigocliente;
+
+            //console.log(codigocliente);
 
             if (codigocliente != 0 && codigocliente != undefined) {
-                var longitud = $scope.list_clientes.length;
+
+                $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
+                    $scope.nom_new_cliente_setnombre = response[0].apellidos + ', ' + response[0].nombres;
+                    $scope.direcc_new_cliente_setnombre = response[0].direcciondomicilio;
+                    $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
+                    $scope.celular_new_cliente_setnombre = response[0].celular;
+                    $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
+                });
+
+
+                /*var longitud = $scope.list_clientes.length;
 
                 for (var i = 0; i < longitud; i++) {
                     if (codigocliente == $scope.list_clientes[i].codigocliente) {
@@ -806,7 +824,7 @@
 
                         break;
                     }
-                }
+                }*/
             } else {
                 $scope.nom_new_cliente_setnombre = '';
                 $scope.direcc_new_cliente_setnombre = '';
@@ -893,7 +911,7 @@
         $scope.actionSetName = function () {
             $scope.getLastSetName();
             $scope.getSuministrosForSetName();
-            $scope.getIdentifyClientes();
+            //$scope.getIdentifyClientes();
 
             $scope.t_fecha_setnombre = $scope.nowDate();
             $scope.h_codigocliente_setnombre = $scope.objectAction.codigocliente;
