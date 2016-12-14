@@ -711,7 +711,9 @@
                                                 <label for="t_suministro_telf" class="col-sm-5 col-xs-12 control-label">Teléfono Instalac.:</label>
                                                 <div class="col-sm-7 col-xs-12" style="">
                                                     <input type="text" class="form-control" name="t_suministro_telf" id="t_suministro_telf"
-                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyDecimal($event)">
+                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
+                                                    <span class="help-block error"
+                                                          ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$error.pattern">Solo números</span>
                                                     <span class="help-block error"
                                                           ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$touched">
                                                         El Teléfono es requerido</span>
