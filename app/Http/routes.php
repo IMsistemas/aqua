@@ -276,8 +276,6 @@ Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente'
 
 Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
 
-//Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
-
 Route::get('cliente/getInfoCliente/{idcliente}', 'Clientes\ClienteController@getInfoCliente');
 
 Route::get('cliente/getIdentifyClientes/{text}', 'Clientes\ClienteController@getIdentifyClientes');

@@ -639,6 +639,8 @@
                                                         ng-model="s_ident_new_client_setnombre" ng-options="value.id as value.label for value in clientes_setN"
                                                         ng-change="showInfoClienteForSetName()" ng-pattern="/^[1-9]+$/"></select>-->
 
+                                                <input type="hidden" id="h_codigocliente_new" ng-model="h_codigocliente_new">
+
                                                 <angucomplete-alt
                                                         id="s_ident_new_client_setnombre"
                                                         pause="400"

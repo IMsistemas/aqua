@@ -173,12 +173,16 @@ class ClienteController extends Controller
                         ->orderBy('documentoidentidad', 'asc')->get();
     }
 
-
+    /**
+     * Obtener la informacion de un cliente en especifico
+     *
+     * @param $idcliente
+     * @return mixed
+     */
     public function getInfoCliente($idcliente)
     {
         return Cliente::where('codigocliente', $idcliente)->get();
     }
-
 
     /**
      * Obtener el ultimo id insertado y devolver el proximo de la tabla pasada por parametro

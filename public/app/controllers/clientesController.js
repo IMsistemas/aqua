@@ -794,44 +794,29 @@
 
         $scope.showInfoClienteForSetName = function (object) {
 
-            //console.log(object);
+            if (object.originalObject != undefined) {
+                var codigocliente = object.originalObject.codigocliente;
 
-            //var codigocliente = $scope.s_ident_new_client_setnombre;
-            var codigocliente = object.originalObject.codigocliente;
+                if (codigocliente != 0 && codigocliente != undefined) {
 
-            //console.log(codigocliente);
+                    $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
+                        $scope.nom_new_cliente_setnombre = response[0].apellidos + ', ' + response[0].nombres;
+                        $scope.direcc_new_cliente_setnombre = response[0].direcciondomicilio;
+                        $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
+                        $scope.celular_new_cliente_setnombre = response[0].celular;
+                        $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
+                        $scope.h_codigocliente_new = codigocliente;
+                    });
 
-            if (codigocliente != 0 && codigocliente != undefined) {
-
-                $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
-                    $scope.nom_new_cliente_setnombre = response[0].apellidos + ', ' + response[0].nombres;
-                    $scope.direcc_new_cliente_setnombre = response[0].direcciondomicilio;
-                    $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
-                    $scope.celular_new_cliente_setnombre = response[0].celular;
-                    $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
-                });
-
-
-                /*var longitud = $scope.list_clientes.length;
-
-                for (var i = 0; i < longitud; i++) {
-                    if (codigocliente == $scope.list_clientes[i].codigocliente) {
-                        $scope.nom_new_cliente_setnombre = $scope.list_clientes[i].apellidos + ', ' + $scope.list_clientes[i].nombres;
-                        $scope.direcc_new_cliente_setnombre = $scope.list_clientes[i].direcciondomicilio;
-                        $scope.telf_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaldomicilio;
-                        $scope.celular_new_cliente_setnombre = $scope.list_clientes[i].celular;
-                        $scope.telf_trab_new_cliente_setnombre = $scope.list_clientes[i].telefonoprincipaltrabajo;
-
-                        break;
-                    }
-                }*/
-            } else {
-                $scope.nom_new_cliente_setnombre = '';
-                $scope.direcc_new_cliente_setnombre = '';
-                $scope.telf_new_cliente_setnombre = '';
-                $scope.celular_new_cliente_setnombre = '';
-                $scope.telf_trab_new_cliente_setnombre = '';
+                } else {
+                    $scope.nom_new_cliente_setnombre = '';
+                    $scope.direcc_new_cliente_setnombre = '';
+                    $scope.telf_new_cliente_setnombre = '';
+                    $scope.celular_new_cliente_setnombre = '';
+                    $scope.telf_trab_new_cliente_setnombre = '';
+                }
             }
+
         };
 
         $scope.getSuministrosForSetName = function () {
@@ -875,7 +860,7 @@
             $('#btn-save-setnombre').prop('disabled', true);
             var solicitud = {
                 codigocliente: $scope.objectAction.codigocliente,
-                codigoclientenuevo: $scope.s_ident_new_client_setnombre,
+                codigoclientenuevo: $scope.h_codigocliente_new,
                 numerosuministro: $scope.s_suministro_setnombre
             };
             $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
