@@ -371,7 +371,7 @@
             if ($scope.t_suministro_aguapotable != '' && $scope.t_suministro_alcantarillado != '' &&
                 $scope.t_suministro_cuota != '' && $scope.s_suministro_credito != 0 && $scope.s_suministro_credito != '') {
 
-                var n = $scope.s_suministro_credito / 12;
+                /*var n = $scope.s_suministro_credito / 12;
 
                 var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
                 if ($scope.t_suministro_costomedidor != ''){
@@ -384,7 +384,22 @@
 
                 var M = C + I;
 
-                var cuotas = M / $scope.s_suministro_credito;
+                var cuotas = M / $scope.s_suministro_credito;*/
+
+
+                var n = $scope.s_suministro_credito / 12;
+
+                var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+                if ($scope.t_suministro_costomedidor != ''){
+                    C += parseFloat($scope.t_suministro_costomedidor);
+                }
+
+                var I = n * ($scope.tasainteres / 100) * C;
+
+                var M = C + I;
+
+                var cuotas = (M - parseFloat($scope.t_suministro_cuota)) / $scope.s_suministro_credito;
+
 
                 $scope.total_partial = M.toFixed(2);
                 $scope.credit_cant = $scope.s_suministro_credito;
