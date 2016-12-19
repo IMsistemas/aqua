@@ -410,3 +410,74 @@ Route::get('configuracion/configuracion','Configuraciones\ConfiguracionControlle
 Route::get('suministros/solicitudes/solicitudes/pdf/{idSolicitud}', 'Suministros\SolicitudController@generarPDF');
 
 Route::get('recaudacion/cobroagua/cuentas/pdf/{numerocuenta}', 'Cuentas\CobroAguaController@generarPDF');
+
+
+/*------------------------------------Fabian------------------------------------------------*/
+
+/*===================================Módulo Categorías===========================================*/
+
+
+Route::get('categoria/getCategoriasToFilter', 'Categorias\CategoriaController@getCategoriasToFilter');
+Route::get('categoria/lastCategoria/{id}', 'Categorias\CategoriaController@lastCategoria');
+Route::get('categoria/lastSubCategoria/{id}', 'Categorias\CategoriaController@lastSubCategoria');
+Route::get('categoria/getCategoriaTodelete/{id}', 'Categorias\CategoriaController@getCategoriaToDelete');
+Route::get('categoria/{id}', 'Categorias\CategoriaController@show');
+Route::get('categoria/getByFilter/{filters}', 'Categorias\CategoriaController@getByFilter');
+Route::put('categoria/update/{request}', 'Categorias\CategoriaController@update');
+Route::resource('categoria', 'Categorias\CategoriaController');
+
+/*===================================Módulo Catalogo Producto===========================================*/
+
+Route::get('catalogoproducto/getCategoriasToFilter', 'CatalogoProductos\CatalogoProductoController@getCategoriasToFilter');
+Route::get('catalogoproducto/getLastCatalogoProducto', 'CatalogoProductos\CatalogoProductoController@getLastCatalogoProducto');
+Route::get('catalogoproducto/getCatalogoProductos/{filters}', 'CatalogoProductos\CatalogoProductoController@getCatalogoProductos');
+Route::get('catalogoproducto/getCategoriasHijas/{filters}', 'CatalogoProductos\CatalogoProductoController@getCategoriasHijas');
+Route::get('catalogoproducto/{id}', 'CatalogoProductos\CatalogoProductoController@show');
+Route::resource('catalogoproducto', 'CatalogoProductos\CatalogoProductoController');
+
+/*===================================Módulo Bodega===========================================*/
+
+Route::get('bodega/getProvincias', 'Bodegas\BodegaController@getProvincias');
+Route::get('bodega/getLastBodega', 'Bodegas\BodegaController@getLastBodega');
+Route::get('bodega/getBodegas/{filters}', 'Bodegas\BodegaController@getBodegas');
+Route::get('bodega/getCiudad/{provincia}', 'Bodegas\BodegaController@getCiudades');
+Route::get('bodega/getSector/{ciudad}', 'Bodegas\BodegaController@getSectores');
+Route::get('bodega/getEmpleado/{nombre}', 'Bodegas\BodegaController@getEmpleado');
+Route::get('bodega/getEmpleadoByBodega/{id}', 'Bodegas\BodegaController@getEmpleadoByBodega');
+Route::get('bodega/anularBodega/{param}', 'Bodegas\BodegaController@anularBodega');
+Route::get('bodega/{id}', 'Bodegas\BodegaController@show');
+Route::resource('bodega', 'Bodegas\BodegaController');
+
+/*===================================Módulo Compras===========================================*/
+
+
+Route::get('compras/getLastCompra', 'Compras\CompraProductoController@getLastCompra');
+Route::get('compras/getProveedores', 'Compras\CompraProductoController@getProveedores');
+Route::get('compras/getComprasMes/{proveedor}', 'Compras\CompraProductoController@getComprasMes');
+Route::get('compras/getFormaPagoDocumento', 'Compras\CompraProductoController@getFormaPagoDocumento');
+Route::get('compras/getCompras/{filters}', 'Compras\CompraProductoController@getCompras');
+Route::get('compras/getProveedorByCI/{ci}', 'Compras\CompraProductoController@getProveedorByCI');
+Route::get('compras/pagarCompra/{id}', 'Compras\CompraProductoController@pagarCompra');
+Route::get('compras/anularCompra/{id}', 'Compras\CompraProductoController@anularCompra');
+Route::get('compras/getBodega/{texto}', 'Compras\CompraProductoController@getBodega');
+Route::get('compras/getCodigoProducto/{texto}', 'Compras\CompraProductoController@getCodigoProducto');
+Route::get('compras/getFormaPago', 'Compras\CompraProductoController@getFormaPago');
+Route::get('compras/getConfiguracion', 'Compras\CompraProductoController@getConfiguracion');
+Route::get('compras/getTipoComprobante', 'Compras\CompraProductoController@getTipoComprobante');
+Route::get('compras/getSustentoTributario', 'Compras\CompraProductoController@getSustentoTributario');
+Route::get('compras/getPais', 'Compras\CompraProductoController@getPais');
+Route::get('compras/imprimir/{id}', 'Compras\CompraProductoController@imprimir');
+Route::get('compras/pdf/{id}', 'Compras\CompraProductoController@pdf');
+Route::get('compras/excel/{id}', 'Compras\CompraProductoController@excel');
+Route::get('compras/imprimirCompra/{id}', 'Compras\CompraProductoController@imprimirCompra');
+Route::get('compras/{id}', 'Compras\CompraProductoController@show');
+Route::get('compras/getDetalle/{id}', 'Compras\CompraProductoController@getDetalle');
+
+
+Route::get('compras/formulario/{compra}', 'Compras\CompraProductoController@formulario');
+Route::resource('compras', 'Compras\CompraProductoController');
+
+
+
+
+
