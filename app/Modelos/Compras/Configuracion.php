@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Configuracion extends Model
 {
-    protected $table = "configuracion";
+    protected $table = "configuracioncontable";
 
-    protected $primaryKey = "idconfiguracion";
+    protected $primaryKey = "idconfiguracion2";
 
     public $incrementing = false;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'idconfiguracion','fechaingreso','iva','ice'        
+        'idconfiguracion2','fechaingreso','iva','ice'        
     ];
     
     

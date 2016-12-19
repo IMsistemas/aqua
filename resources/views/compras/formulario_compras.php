@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" ng-app="softver-erp-auto">
+<html lang="en-US" ng-app="softver-aqua-auto">
 <head>
 <title>Compras Inventario</title>
 
@@ -670,6 +670,12 @@
 		<!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
 	<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
 	<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+	
+	<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>   
+    <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>  
+    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
+	
 	<script src="<?= asset('js/jquery.min.js') ?>"></script>
 	<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
 	

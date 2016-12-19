@@ -1,5 +1,5 @@
 
-var appAu = angular.module('softver-erp-auto', ['angucomplete-alt','softver-erp']);
+var appAu = angular.module('softver-aqua-auto', ['angucomplete-alt','softver-aqua']);
 
 
 appAu.controller('comprasproductoIngresoController',  function($scope, $http, API_URL) {
