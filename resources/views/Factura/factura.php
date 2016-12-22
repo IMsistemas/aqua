@@ -70,15 +70,15 @@
                 <td>{{item.cobroagua.suministro.direccionsumnistro}}</td>
                 <td>{{item.cobroagua.suministro.telefonosuministro}}</td>
                 <td>{{item.cobroagua.lectura.consumo}}</td>
-                <td>{{Pagada(item.estapagada)}}</td>
+                <td>{{Pagada(item.estapagado)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
-                    <span ng-if="item.estapagada == true">
+                    <span ng-if="item.estapagado == true">
                         <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>
-                    <span ng-if="item.estapagada == false">
+                    <span ng-if="item.estapagado == false">
                         <button type="button" class="btn btn-success btn-sm" ng-click="print(item)" disabled>
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>

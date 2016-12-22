@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Configuracion extends Model
 {
-    protected $table = "configuracion";
-    protected $primaryKey = "";
+    protected $table = "configuracionjunta";
+    protected $primaryKey = "idconfiguracion";
     public $timestamps = false;
 
     

@@ -13,13 +13,13 @@ class OtrosValoresFactura extends Model
     public $timestamps = false;
 
 
-    public function otrosvalores()
+    public function otrovalor()
     {
-        return $this->belongsTo('App\Modelos\Facturas\OtrosValores','idotrosvalores');
+        return $this->belongsTo('App\Modelos\Facturas\OtrosValores','idotrovalor');
     }
 
 
-    public function factura()
+    public function facturacobro()
     {
         return $this->belongsTo('App\Modelos\Facturas\Factura','idfactura');
     }

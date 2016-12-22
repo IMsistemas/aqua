@@ -208,14 +208,14 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 for (var j = 0; j < response.length; j++) {
 
                     var otrosvalores = {
-                        nombre: response[j].nombreotrosvalores,
+                        nombre: response[j].nombreotrovalor,
                         valor: 0.00,
-                        id: response[j].idotrosvalores
+                        id: response[j].idotrovalor
                     };
 
                     if (item.otrosvaloresfactura.length > 0){
                         for (var x = 0; x < item.otrosvaloresfactura.length; x++) {
-                            if (otrosvalores.id == item.otrosvaloresfactura[x].idotrosvalores) {
+                            if (otrosvalores.id == item.otrosvaloresfactura[x].idotrovalor) {
                                 otrosvalores.valor = item.otrosvaloresfactura[x].valor;
                             }
                         }
@@ -236,7 +236,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             $scope.aux_modal = arreg;
 
 
-            if (item.estapagada == true) {
+            if (item.estapagado == true) {
 
                 $('#footer-modal-factura').hide();
 
