@@ -125,7 +125,7 @@
 
                     foreach ($data['otrosvaloresfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['otrosvalores']['nombreotrosvalores'] . '</td>';
+                        echo '<td>' . $item['otrovalor']['nombreotrovalor'] . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
@@ -205,7 +205,7 @@
 
                     foreach ($data['otrosvaloresfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['otrosvalores']['nombreotrosvalores'] . '</td>';
+                        echo '<td>' . $item['otrovalor']['nombreotrovalor'] . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
