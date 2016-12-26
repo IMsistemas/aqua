@@ -221,6 +221,21 @@ Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia ViewLectura
 Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 
+/*
+ * ---------------------------------------Raidel Berrillo Gonzalez------------------------------------------------------
+ */
+
+Route::get('retencionCompra/getCompras/{codigo}', 'Retencion\RetencionCompraController@getCompras');
+
+Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraController@getCodigos');
+
+Route::get('retencionCompra/form', 'Retencion\RetencionCompraController@form');
+
+Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
+
+/*
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
 
 
 /*------------------------------------Yamilka------------------------------------------------*/
@@ -476,6 +491,8 @@ Route::get('compras/getDetalle/{id}', 'Compras\CompraProductoController@getDetal
 
 Route::get('compras/formulario/{compra}', 'Compras\CompraProductoController@formulario');
 Route::resource('compras', 'Compras\CompraProductoController');
+
+
 
 
 
