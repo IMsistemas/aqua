@@ -84,9 +84,16 @@
                         </button>
                     </span>
                     <span ng-if="item.totalfactura == null">
-                        <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" disabled>
+                        <span ng-if="item.cobroagua == null">
+                            <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" >
                             <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                         </button>
+                        </span>
+                        <span ng-if="item.cobroagua != null">
+                            <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" disabled>
+                                <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </span>
                     </span>
                     <span ng-if="item.totalfactura != null">
                         <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)">

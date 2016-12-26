@@ -168,7 +168,6 @@ class FacturaController extends Controller
 
     public function generate()
     {
-
         $cliente = Cliente::all();
 
         if (count($cliente) > 0) {
@@ -177,7 +176,6 @@ class FacturaController extends Controller
                 if (count($cliente_suministro) > 0) {
 
                     foreach ($cliente_suministro as $item0) {
-
                         $objectCobro = CobroAgua::where('numerosuministro', $item0->numerosuministro)
                                                     ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
                                                     ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
@@ -209,7 +207,6 @@ class FacturaController extends Controller
                     $cliente_servicio = ServiciosCliente::where('codigocliente', $item->codigocliente)
                                                         ->whereRaw( $partialSQL )
                                                         ->get();
-
                     if ( count($cliente_servicio) > 0 ) {
                         $factura = new Factura();
                         $factura->fechafactura = date('Y-m-d');

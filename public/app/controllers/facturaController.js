@@ -47,7 +47,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         };
 
         $http.get(API_URL + 'factura/getCobroAgua?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
-            //console.log(response);
+            console.log(response);
 
             var longitud = (response.data).length;
             for (var i = 0; i < longitud; i++) {
