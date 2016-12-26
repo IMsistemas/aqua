@@ -154,10 +154,10 @@
                             <table class="table table-responsive table-striped table-hover table-condensed">
                                 <thead class="bg-primary">
                                 <tr>
-                                    <th class="text-center" style="width: 10%;">
+                                    <th class="text-center" style="width: 8%;">
                                         Año
                                     </th>
-                                    <th class="text-center" style="width: 15%;">
+                                    <th class="text-center" style="width: 10%;">
                                         Código
                                     </th>
                                     <th class="text-center" ng-click="sort('')">
@@ -165,7 +165,7 @@
                                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                     </th>
-                                    <th class="text-center" style="width: 12%;" ng-click="sort('')">
+                                    <th class="text-center" style="width: 15%;" ng-click="sort('')">
                                         Base Imponible
                                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -175,7 +175,7 @@
                                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                     </th>
-                                    <th class="text-center" style="width: 9%;" ng-click="sort('')">
+                                    <th class="text-center" style="width: 12%;" ng-click="sort('')">
                                         Valor
                                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -185,7 +185,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in itemretencion" ng-cloak>
-                                        <td>{{item.year}}</td>
+                                        <td class="text-center">{{item.year}}</td>
                                         <td>
                                             <input type="hidden" name="h_iddetalleretencionfuente" ng-model="h_iddetalleretencionfuente">
                                             <angucomplete-alt
@@ -212,9 +212,9 @@
 
                                         </td>
                                         <td>{{item.detalle}}</td>
-                                        <td>$ {{item.baseimponible}}</td>
-                                        <td><input type="text" class="form-control" ng-model="item.porciento" ng-blur="" ng-keypress="onlyDecimal($event)"></td>
-                                        <td>$ {{item.valor}}</td>
+                                        <td class="text-right">$ {{item.baseimponible}}</td>
+                                        <td><input type="text" class="form-control" ng-model="item.porciento" ng-blur="recalculateRow(item)" ng-keypress="onlyDecimal($event)"></td>
+                                        <td class="text-right">$ {{item.valor}}</td>
                                         <td>
                                             <button type="button" class="btn btn-danger" id="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
                                                     data-toggle="tooltip" data-placement="left" title="Agregar Retención" >
@@ -227,7 +227,7 @@
                                     <tr>
                                         <th colspan="5" class="text-right">TOTAL:</th>
                                         <th>
-                                            <input type="text" class="form-control" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)"/>
+                                            <input type="text" class="form-control" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)" disabled/>
                                         </th>
                                         <th></th>
                                     </tr>

@@ -2,8 +2,6 @@
  * Created by Raidel Berrillo Gonzalez on 15/12/2016.
  */
 
-    //var appRetencionCompra = angular.module('softver-erp-retencion', ['angucomplete-alt', 'angularUtils.directives.dirPagination','softver-erp']);
-
     app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
         $scope.tiporetencion = [
@@ -28,12 +26,21 @@
                 year: '2016',
                 codigo: '',
                 detalle: '',
+                id:0,
                 baseimponible: base,
                 porciento: '0.00',
                 valor: '0.00'
             };
 
             ($scope.itemretencion).push(object_row);
+        };
+
+        $scope.recalculateRow = function (item) {
+            var porciento = parseFloat(item.porciento);
+            var baseimponible = parseFloat(item.baseimponible);
+            var result = (porciento / 100) *  baseimponible;
+            item.valor = result.toFixed(2);
+            $scope.recalculateTotal();
         };
 
         $scope.recalculateTotal = function() {
@@ -111,7 +118,7 @@
         $scope.showInfoRetencion = function (object, data) {
 
             if (object.originalObject != undefined) {
-
+                data.id = object.originalObject.iddetalleretencionfuente;
                 data.codigo = object.originalObject.codigoSRI;
                 data.detalle = object.originalObject.nombreretencioniva;
                 data.porciento = object.originalObject.porcentajevigente;
@@ -147,6 +154,7 @@
                 }*/
             } else {
                 data.codigo = '';
+                data.id = 0;
                 data.detalle = '';
                 data.porciento = '0.00';
             }
@@ -272,7 +280,6 @@
             }
         }
 
-
         $scope.t_fechaingreso = $scope.nowDate();
 
     });
@@ -280,7 +287,6 @@
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-
         $('.datepicker').datetimepicker({
             locale: 'es',
             format: 'DD/MM/YYYY',

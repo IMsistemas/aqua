@@ -77,11 +77,17 @@ class RetencionCompraController extends Controller
 
             foreach ($retenciones as $item) {
                 $retencion = new RetencionFuenteCompra();
-                $retencion->numeroretencion = $request->input('numeroretencion');
+                //$retencion->numeroretencion = $request->input('numeroretencion');
                 $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
+                /*$retencion->iddetalleretencionfuente = $item->id;
                 $retencion->descripcion = $item->detalle;
                 $retencion->poecentajeretencion = $item->porciento;
-                $retencion->valorretenido = $item->valor;
+                $retencion->valorretenido = $item->valor;*/
+
+                $retencion->iddetalleretencionfuente = $item['id'];
+                $retencion->descripcion = $item['detalle'];
+                $retencion->poecentajeretencion = $item['porciento'];
+                $retencion->valorretenido = $item['valor'];
 
                 if ($retencion->save() == false) {
                     return response()->json(['success' => false]);
