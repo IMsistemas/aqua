@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                         <tr>
                             <th class="text-center" style="width: 10%;" ng-click="sort('')">
@@ -77,12 +77,12 @@
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th class="text-center" style="width: 8%;" ng-click="sort('')">
+                            <th class="text-center" style="width: 12%;" ng-click="sort('')">
                                 Tipo
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th class="text-center" style="width: 10%;" ng-click="sort('')">
+                            <th class="text-center" style="width: 13%;" ng-click="sort('')">
                                 Nro. Documento
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -92,29 +92,23 @@
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th class="text-center" style="width: 16%;">Acciones</th>
+                            <th class="text-center" style="width: 10%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:10 " total-items="totalItems" ng-cloak>
-                            <td>{{item.documentoidentidad}}</td>
-                            <td>{{item.fechaingreso | formatDate}}</td>
-                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.complete_name}}</td>
-                            <td>{{item.celular}}</td>
-                            <td>{{item.telefonoprincipaldomicilio}}</td>
-                            <td>{{item.telefonoprincipaltrabajo}}</td>
+                        <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
+                            <td>{{item.numeroretencion}}</td>
+                            <td>{{item.fecha | formatDate}}</td>
+                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.razonsocial}}</td>
+                            <td></td>
+                            <td>{{item.numerodocumentoproveedor}}</td>
+                            <td>$ {{item.totalretencion}}</td>
                             <td  class="text-center">
-                                <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfoCliente(item)">
+                                <button type="button" class="btn btn-info btn-sm" ng-click="">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-warning btn-sm" ng-click="edit(item)">
-                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDeleteCliente(item)">
-                                    <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
-                                    <i class="fa fa-lg fa-cogs" aria-hidden="true"></i>
+                                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                                    <i class="fa fa-lg fa-ban" aria-hidden="true"></i>
                                 </button>
                             </td>
                         </tr>

@@ -28,6 +28,11 @@ class RetencionCompraController extends Controller
         return view('retencion.form_retencionCompra');
     }
 
+    public function getRetenciones(Request $request)
+    {
+        return RetencionCompra::orderBy('fecha', 'desc')->paginate(5);
+    }
+
     public function getCodigos($codigo)
     {
         return DetalleRetencionFuente::where('codigoSRI', 'LIKE', '%' . $codigo . '%')->get();

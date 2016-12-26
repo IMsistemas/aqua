@@ -2,6 +2,19 @@
  * Created by Raidel Berrillo Gonzalez on 15/12/2016.
  */
 
+    app.filter('formatDate', function(){
+        return function(fecha){
+
+            var array_month = [
+                'Ene', 'Feb', 'Marz', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+            ];
+
+            var t = fecha.split('-');
+            return t[2] + '-' + array_month[t[1] - 1] + '-' + t[0];
+
+        }
+    });
+
     app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
         $scope.tiporetencion = [
@@ -18,8 +31,17 @@
          * FUNCIONES DEL INDEX------------------------------------------------------------------------------------------
          */
 
-        $scope.initLoad = function () {
+        $scope.retencion = [];
 
+        $scope.initLoad = function (pageNumber) {
+            $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber).success(function(response){
+                $scope.retencion = response.data;
+                $scope.totalItems = response.total;
+            });
+        };
+
+        $scope.pageChanged = function(newPage) {
+            $scope.initLoad(newPage);
         };
 
         /*
@@ -298,6 +320,8 @@
         }
 
         $scope.t_fechaingreso = $scope.nowDate();
+
+        $scope.initLoad();
 
     });
 
