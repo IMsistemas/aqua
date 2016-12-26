@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" ng-app="softver-erp-retencion">
+<html lang="es-ES" ng-app="softver-aqua">
 
     <head>
         <meta charset="utf-8">
@@ -291,6 +291,10 @@
     <script src="<?= asset('js/moment.min.js') ?>"></script>
     <script src="<?= asset('js/es.js') ?>"></script>
     <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
+
+    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
     <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
     <script src="<?= asset('app/app.js') ?>"></script>
 

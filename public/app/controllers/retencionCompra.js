@@ -2,9 +2,9 @@
  * Created by Raidel Berrillo Gonzalez on 15/12/2016.
  */
 
-    var appRetencionCompra = angular.module('softver-erp-retencion', ['angucomplete-alt', 'angularUtils.directives.dirPagination','softver-erp']);
+    //var appRetencionCompra = angular.module('softver-erp-retencion', ['angucomplete-alt', 'angularUtils.directives.dirPagination','softver-erp']);
 
-    appRetencionCompra.controller('retencionComprasController', function($scope, $http, API_URL) {
+    app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
         $scope.tiporetencion = [
             { id: 0, name: '-- Todos --' },
