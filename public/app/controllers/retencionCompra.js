@@ -14,6 +14,18 @@
         $scope.itemretencion = [];
         $scope.baseimponible = 0;
 
+        /*
+         * FUNCIONES DEL INDEX------------------------------------------------------------------------------------------
+         */
+
+        $scope.initLoad = function () {
+
+        };
+
+        /*
+         * FUNCIONES DEL FORMULARIO-------------------------------------------------------------------------------------
+         */
+
         $scope.loadFormPage = function(){
             window.open('retencionCompra/form', '_blank');
         };
@@ -36,6 +48,11 @@
         };
 
         $scope.recalculateRow = function (item) {
+
+            if (item.porciento == ''){
+                item.porciento = '0.00';
+            }
+
             var porciento = parseFloat(item.porciento);
             var baseimponible = parseFloat(item.baseimponible);
             var result = (porciento / 100) *  baseimponible;
