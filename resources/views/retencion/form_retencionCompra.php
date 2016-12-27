@@ -23,7 +23,9 @@
     <body>
 
         <div ng-controller="retencionComprasController">
+
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" id="idretencioncompra" value="<?= $idretencioncompra ?>">
 
             <form name="formRteCompras" novalidate="">
                 <div class="col-xs-12" style="margin-top: 15px;">
@@ -52,7 +54,7 @@
                                     pause = "400"
                                     selected-object = "showDataPurchase"
 
-                                    remote-url = "{{API_URL}}getCompras/"
+                                    remote-url = "{{API_URL}}../getCompras/"
 
                                     title-field="codigocompra"
 
@@ -204,7 +206,7 @@
                                                         selected-object = "showInfoRetencion"
                                                         selected-object-data = "item"
 
-                                                        remote-url = "{{API_URL}}getCodigos/"
+                                                        remote-url = "{{API_URL}}../getCodigos/"
 
                                                         title-field="codigoSRI"
 

@@ -2,18 +2,6 @@
  * Created by Raidel Berrillo Gonzalez on 15/12/2016.
  */
 
-    app.filter('formatDate', function(){
-        return function(fecha){
-
-            var array_month = [
-                'Ene', 'Feb', 'Marz', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-            ];
-
-            var t = fecha.split('-');
-            return t[2] + '-' + array_month[t[1] - 1] + '-' + t[0];
-
-        }
-    });
 
     app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
@@ -26,12 +14,13 @@
 
         $scope.itemretencion = [];
         $scope.baseimponible = 0;
+        $scope.idretencion = 0;
 
         /*
          * FUNCIONES DEL INDEX------------------------------------------------------------------------------------------
          */
 
-        $scope.retencion = [];
+        /*$scope.retencion = [];
 
         $scope.initLoad = function (pageNumber) {
             $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber).success(function(response){
@@ -44,13 +33,47 @@
             $scope.initLoad(newPage);
         };
 
+        $scope.loadFormPage = function(id){
+            window.open('retencionCompra/form/' + id, '_blank');
+        };*/
+
         /*
          * FUNCIONES DEL FORMULARIO-------------------------------------------------------------------------------------
          */
 
-        $scope.loadFormPage = function(){
-            window.open('retencionCompra/form', '_blank');
+        $scope.initLoad = function () {
+
+            $scope.idretencion = $('#idretencioncompra').val();
+
+            if ($scope.idretencion != 0) {
+                $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
+                    console.log(response);
+
+                    //$scope.t_fechaingreso = response[0].fecha;
+                    $scope.t_nroretencion = response[0].numeroretencion;
+                    $scope.t_nrocompra = response[0].codigocompra;
+                    $('#t_nrocompra').val(response[0].codigocompra);
+                    $scope.t_rucci = response[0].numerodocumentoproveedor;
+                    $scope.t_razonsocial = response[0].razonsocialproveedor;
+                    $scope.t_phone = response[0].telefonoproveedor;
+                    $scope.t_direccion = response[0].direccionproveedor;
+                    //$scope.t_ciudad = response[0].ciudad;
+
+                    $scope.t_tipocomprobante = response[0].nombretipocomprobante;
+
+                    var serial = (response[0].serialretencion).split('-');
+
+                    $scope.t_establ = serial[0];
+                    $scope.t_pto = serial[1];
+                    $scope.t_secuencial = serial[2];
+
+                    $scope.t_nroautorizacion = response[0].autorizacion;
+                });
+            }
+
         };
+
+        $scope.initLoad();
 
         $scope.createRow = function () {
 
@@ -321,7 +344,7 @@
 
         $scope.t_fechaingreso = $scope.nowDate();
 
-        $scope.initLoad();
+        //$scope.initLoad();
 
     });
 

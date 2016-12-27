@@ -23,9 +23,9 @@ class RetencionCompraController extends Controller
         return view('retencion.index_retencionCompra');
     }
 
-    public function form()
+    public function form($id)
     {
-        return view('retencion.form_retencionCompra');
+        return view('retencion.form_retencionCompra', ['idretencioncompra' => $id]);
     }
 
     public function getRetenciones(Request $request)
@@ -112,7 +112,14 @@ class RetencionCompraController extends Controller
      */
     public function show($id)
     {
-        //
+        return RetencionCompra::join('documentocompra', 'documentocompra.codigocompra', '=', 'retencioncompra.codigocompra')
+                                ->join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
+                                ->join('tipocomprobante', 'tipocomprobante.codigocomprbante', '=', 'documentocompra.codigocomprbante')
+                                ->select('documentocompra.*', 'tipocomprobante.nombretipocomprobante', 'retencioncompra.numeroretencion',
+                                            'retencioncompra.fecha AS fecharetencion', 'retencioncompra.autorizacion', 'retencioncompra.totalretencion',
+                                            'retencioncompra.numerodocumentoproveedor AS serialretencion', 'proveedor.*')
+                                ->where('idretencioncompra', $id)->get();
+
     }
 
     /**

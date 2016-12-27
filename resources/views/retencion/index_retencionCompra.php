@@ -22,7 +22,7 @@
 
     <body>
 
-        <div ng-controller="retencionComprasController">
+        <div ng-controller="retencionComprasIndexController">
 
             <div class="col-xs-12" style="margin-top: 15px;">
                 <div class="col-sm-3 col-xs-12">
@@ -52,7 +52,7 @@
                     </select>
                 </div>
                 <div class="col-sm-1 col-xs-12">
-                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="loadFormPage()">
+                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="loadFormPage(0)">
                         <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -104,7 +104,7 @@
                             <td>{{item.numerodocumentoproveedor}}</td>
                             <td>$ {{item.totalretencion}}</td>
                             <td  class="text-center">
-                                <button type="button" class="btn btn-info btn-sm" ng-click="">
+                                <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idretencioncompra)">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm" ng-click="">
@@ -148,6 +148,6 @@
     <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
     <script src="<?= asset('app/app.js') ?>"></script>
 
-    <script src="<?= asset('app/controllers/retencionCompra.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionComprasIndex.js') ?>"></script>
 </html>
 

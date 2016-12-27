@@ -317,7 +317,7 @@
                                            
                                             <select class="form-control" name="idformapago" id="idformapago" ng-model="compra.idformapago" ng-required="true" ng-disabled="impreso"
                                              ng-options="item.idformapago as item.nombreformapago for item in formaPagoDocumento">
-											  <option value="">Forma Pago</options>      
+											  <option value="">Forma Pago</option>
 											</select>
 
                                                 <span class="help-block error"
