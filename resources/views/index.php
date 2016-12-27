@@ -110,7 +110,7 @@
                             <li><a href="#" ng-click="">Usuarios</a></li>
                             <li><a href="#" ng-click="">Roles</a></li>
                         </ul>
-                        <li data-toggle="collapse" data-target="#configuracion" class="collapsed" ng-show='false'>
+                        <li data-toggle="collapse" data-target="#configuracion" class="collapsed" ng-show='true'>
                             <a href="#"><i class="fa fa-cog fa-spin fa-lg"></i> Configuración <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="configuracion">
@@ -192,6 +192,11 @@
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/comprasproductoController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/comprasproductoIngresoController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/comprarImprimirController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
+
     
 
 
