@@ -117,7 +117,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloProveedores = function(){		
 		$scope.titulo = "Proveedores";
-		$scope.toModulo = "api/proveedores";
+		$scope.toModulo = "proveedores";
 	}
 
 	$scope.toModuloCompras = function(){		
