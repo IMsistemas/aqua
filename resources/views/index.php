@@ -194,8 +194,8 @@
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
     <script src="<?= asset('app/controllers/comprasproductoController.js') ?>"></script>
     <script src="<?= asset('app/controllers/comprasproductoIngresoController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/comprarImprimirController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/comprasImprimirController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionCompra.js') ?>"></script>
 
     
 
