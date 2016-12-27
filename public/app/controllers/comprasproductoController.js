@@ -1,6 +1,6 @@
 //var appPage = angular.module('softver-aqua-page', ['angularUtils.directives.dirPagination','softver-aqua']);
 
-appPage.controller('comprasproductoController',  function($scope, $http, API_URL) {
+app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 
     $scope.compras = [];   
     $scope.proveedores = [];    
