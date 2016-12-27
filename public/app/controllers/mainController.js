@@ -113,6 +113,12 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.titulo = "Cuentas por cobrar al cliente";
 		$scope.toModulo = "cuentascobrarcliente";
 	}
+	
+
+	$scope.toModuloProveedores = function(){		
+		$scope.titulo = "Proveedores";
+		$scope.toModulo = "api/proveedores";
+	}
 
 	$scope.toModuloCompras = function(){		
 		$scope.titulo = "Compras Inventario";
