@@ -84,10 +84,10 @@
                             <a href="#"><i class="fa fa-user fa-lg"></i> Contabilidad <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="contabilidad">
-                            <li><a href="#" ng-click="toModuloCliente();">Compras</a></li>
-                            <li><a href="#" ng-click="toModuloCliente();">Ventas</a></li>
-                            <li ><a href="#" ng-click="toModuloCXC();">Comprobantes</a></li>
-                            <li ><a href="#" ng-click="toModuloCXP();">Retenciones</a></li>
+                            <li><a href="#" ng-click="toModuloCompras();">Compras</a></li>
+                            <li><a href="#" ng-click="toModuloVentas();">Ventas</a></li>
+                            <li ><a href="#" ng-click="toModuloComprobantes();">Comprobantes</a></li>
+                            <li ><a href="#" ng-click="toModuloRetenciones();">Retenciones</a></li>
                         </ul>
 
                         <li data-toggle="collapse" data-target="#personal" class="collapsed">
@@ -114,9 +114,9 @@
                             <a href="#"><i class="fa fa-cog fa-spin fa-lg"></i> Configuración <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="configuracion">
-                            <li><a href="#">Portafolio de Productos</a></li>
-                            <li><a href="#">Catálogo de Productos</a></li>
-                            <li><a href="#">Crear Bodegas</a></li>
+                            <li><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio de Productos</a></li>
+                            <li><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo de Productos</a></li>
+                            <li><a href="#" ng-click="toModuloCrearBodegas();">Crear Bodegas</a></li>
 
                         </ul>
 
