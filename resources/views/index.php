@@ -198,6 +198,7 @@
     <script src="<?= asset('app/controllers/retencionCompra.js') ?>"></script>
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/catalogoproductosController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
 
 
