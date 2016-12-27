@@ -1,4 +1,4 @@
-var appPage = angular.module('softver-aqua-page', ['angularUtils.directives.dirPagination','softver-aqua']);
+//var appPage = angular.module('softver-aqua-page', ['angularUtils.directives.dirPagination','softver-aqua']);
 
 appPage.controller('comprasproductoController',  function($scope, $http, API_URL) {
 
