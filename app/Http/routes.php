@@ -495,8 +495,29 @@ Route::get('compras/formulario/{compra}', 'Compras\CompraProductoController@form
 Route::resource('compras', 'Compras\CompraProductoController');
 
 
+		/*------------------------------------Diliannys------------------------------------------------*/
+	
+	/*===================================Módulo Proveedores===========================================*/
 
+	Route::get('proveedores', function () {
+	    return view('proveedores.index_proveedores');
+	});
 
+	Route::get('api/proveedores/nuevoproveedor', 'Proveedores\ProveedoresController@getNuevoProveedor');
+	Route::get('api/proveedores/ciudades/{idprovincia}', 'Proveedores\ProveedoresController@getCiudades');
+	Route::get('api/proveedores/ciudades', 'Proveedores\ProveedoresController@getCiudades');
+	Route::get('api/proveedores/provincias', 'Proveedores\ProveedoresController@getProvincias');
+	Route::get('api/proveedores/sectores/{idciudad}', 'Proveedores\ProveedoresController@getSectores');
+	Route::get('api/proveedores/sectores', 'Proveedores\ProveedoresController@getSectores');
+	Route::post('api/proveedores/{idproveedor}/contactos', 'Proveedores\ProveedoresController@storeContactos');
+	Route::get('api/proveedores/tiposcontribuyentes', 'Proveedores\ProveedoresController@getTiposContribuyentes');
+	Route::get('api/proveedores/contactosproveedor/{idproveedor}', 'Proveedores\ContactosProveedoresController@getContactosProveedor');
+	Route::put('api/proveedores/contactos/{request}', 'Proveedores\ContactosProveedoresController@updateContactosProveedor');
+	Route::post('api/proveedores/contactos/{idcontacto}', 'Proveedores\ContactosProveedoresController@destroyContactosProveedor');
+	Route::get('api/proveedores/fechacreacioncuenta/{idproveedor}', 'Proveedores\ProveedoresController@getFechaCreacion');
+	Route::resource('api/proveedores', 'Proveedores\ProveedoresController');
+	
 
-
-
+/*
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
