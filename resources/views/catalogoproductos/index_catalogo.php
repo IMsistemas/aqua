@@ -2,7 +2,7 @@
     <div ng-controller="catalogoproductosController">
     
     <div class="container">
-        <h2>Catálogo de Productos</h2>
+       
 
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
 

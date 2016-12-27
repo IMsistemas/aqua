@@ -115,7 +115,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	}
 
 	$scope.toModuloCompras = function(){		
-		$scope.titulo = "Compras";
+		$scope.titulo = "Compras Inventario";
 		$scope.toModulo = "compras";
 	}
 
@@ -145,7 +145,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	}
 
 	$scope.toModuloCrearBodegas = function(){		
-		$scope.titulo = "Cuentas por cobrar al cliente";
+		$scope.titulo = "Crear Bodegas";
 		$scope.toModulo = "bodega";
 	}
 

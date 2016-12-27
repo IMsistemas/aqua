@@ -2,7 +2,7 @@
     <div ng-controller="comprasproductoController">
     
     <div class="container">
-        <h2>Compras Inventario</h2>
+        
 
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
 
