@@ -114,6 +114,41 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "cuentascobrarcliente";
 	}
 
+	$scope.toModuloCompras = function(){		
+		$scope.titulo = "Compras";
+		$scope.toModulo = "compras";
+	}
+
+	$scope.toModuloVentas = function(){		
+		$scope.titulo = "Ventas";
+		$scope.toModulo = "ventas";
+	}
+
+	$scope.toModuloComprobantes = function(){		
+		$scope.titulo = "Comprobantes";
+		$scope.toModulo = "cuentascobrarcliente";
+	}
+
+	$scope.toModuloRetenciones = function(){		
+		$scope.titulo = "Retenciones";
+		$scope.toModulo = "retenciones";
+	}
+
+	$scope.toModuloPortafolioProductos = function(){		
+		$scope.titulo = "Portafolio de Productos";
+		$scope.toModulo = "categoria";
+	}
+
+	$scope.toModuloCatalogoProductos = function(){		
+		$scope.titulo = "Cuentas por cobrar al cliente";
+		$scope.toModulo = "catalogoproducto";
+	}
+
+	$scope.toModuloCrearBodegas = function(){		
+		$scope.titulo = "Cuentas por cobrar al cliente";
+		$scope.toModulo = "bodega";
+	}
+
 	$scope.prepareListBreadcrumb = function (list_module) {
 		$scope.list_breadcrumb = [
 			"<li><img src='img/ico-aqua.png'></li>",

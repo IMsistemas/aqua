@@ -71,6 +71,25 @@
                             <li ><a href="#" ng-click="toModuloCXC();">Cuentas por cobrar clientes</a></li>
                             <li ><a href="#" ng-click="toModuloCXP();">Cuentas por pagar clientes</a></li>
                         </ul>
+
+                        <li data-toggle="collapse" data-target="#proveedor" class="collapsed">
+                            <a href="#"><i class="fa fa-user fa-lg"></i> Proveedores <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="proveedor">
+                            <li><a href="#" ng-click="toModuloCliente();">Proveedores</a></li>
+                        </ul>
+
+
+                        <li data-toggle="collapse" data-target="#contabilidad" class="collapsed">
+                            <a href="#"><i class="fa fa-user fa-lg"></i> Contabilidad <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="contabilidad">
+                            <li><a href="#" ng-click="toModuloCliente();">Compras</a></li>
+                            <li><a href="#" ng-click="toModuloCliente();">Ventas</a></li>
+                            <li ><a href="#" ng-click="toModuloCXC();">Comprobantes</a></li>
+                            <li ><a href="#" ng-click="toModuloCXP();">Retenciones</a></li>
+                        </ul>
+
                         <li data-toggle="collapse" data-target="#personal" class="collapsed">
                             <a href="#"><i class="fa fa-male fa-lg"></i> Personal <span class="arrow"></span></a>
                         </li>
@@ -95,7 +114,10 @@
                             <a href="#"><i class="fa fa-cog fa-spin fa-lg"></i> Configuración <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="configuracion">
-                            <li><a href="#">Configuración del sistema</a></li>
+                            <li><a href="#">Portafolio de Productos</a></li>
+                            <li><a href="#">Catálogo de Productos</a></li>
+                            <li><a href="#">Crear Bodegas</a></li>
+
                         </ul>
 
                     </ul>
