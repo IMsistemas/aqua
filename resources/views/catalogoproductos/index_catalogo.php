@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-US" ng-app="softver-aqua-upload">
-    <head>
-        <title>Catálogo de Productos</title>
 
-        <!-- Load Bootstrap CSS -->
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-    </head>
-    <body>
     <div ng-controller="catalogoproductosController">
     
     <div class="container">
@@ -288,19 +276,4 @@
     </div>
     </div>
     
-        <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-    
-       <script src="<?= asset('js/jquery.min.js') ?>"></script>
-        <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-        
-        <!-- AngularJS Application Scripts -->
-        <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/catalogoproductosController.js') ?>"></script>
-    </body>
-</html>
+

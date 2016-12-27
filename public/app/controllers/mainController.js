@@ -140,7 +140,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	}
 
 	$scope.toModuloCatalogoProductos = function(){		
-		$scope.titulo = "Cuentas por cobrar al cliente";
+		$scope.titulo = "Catálogo de Prodructos";
 		$scope.toModulo = "catalogoproducto";
 	}
 
