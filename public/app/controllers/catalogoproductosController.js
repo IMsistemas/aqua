@@ -1,7 +1,7 @@
-var appUp = angular.module('softver-aqua-upload', ['ngFileUpload','softver-aqua']);
+//var appUp = angular.module('softver-aqua-upload', ['ngFileUpload','softver-aqua']);
 
 
-appUp.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload) {
+app.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload) {
 
     $scope.productos = [];
     $scope.producto_del = 0;

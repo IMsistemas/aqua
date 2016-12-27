@@ -1,5 +1,5 @@
-var appAu = angular.module('softver-aqua-auto', ['angucomplete-alt','softver-aqua']);
-appAu.controller('bodegasController',  function($scope, $http, API_URL) {
+//var appAu = angular.module('softver-aqua-auto', ['angucomplete-alt','softver-aqua']);
+app.controller('bodegasController',  function($scope, $http, API_URL) {
 
     $scope.bodegas = [];
     $scope.bodega_del = 0;    
