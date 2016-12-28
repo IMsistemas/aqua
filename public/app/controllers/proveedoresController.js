@@ -12,6 +12,38 @@ app.controller('proveedoresController', function($scope, $http, API_URL) {
 	$scope.contactosguardar = [];
 	$scope.cuentaproveedor =[];
 
+	$scope.onlyCharasterAndSpace = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /^([a-zA-Záéíóúñ\s]+)$/;
+            var n = String.fromCharCode(k);
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+                return false;
+            }
+            else return true;
+
+        };
+
+        $scope.onlyNumber = function ($event) {
+
+            var k = $event.keyCode;
+            if (k == 8 || k == 0) return true;
+            var patron = /\d/;
+            var n = String.fromCharCode(k);
+
+            if (n == ".") {
+                return true;
+            } else {
+
+                if(patron.test(n) == false){
+                    $event.preventDefault();
+                }
+                else return true;
+            }
+        };
 	$scope.mostrarmodal = function  () {
 		$('#botonagregarproveedor').button('loading');
 		fetchprovincias();

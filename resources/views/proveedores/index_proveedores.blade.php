@@ -89,7 +89,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">RUC</label>
-                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
+                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
                                                 <span class="text-danger" 
                                                         ng-show=" formProveedores.ruc.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
                                             </div>
@@ -97,7 +97,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Razón Social</label>
-                                                <input type="text" onkeypress="return soloLetras(event)" ng-model="proveedornuevo.razonsocialproveedor" class="form-control" id="" required placeholder='Razon Social'>
+                                                <input type="text" ng-keypress="onlyCharasterAndSpace($event);" ng-model="proveedornuevo.razonsocialproveedor" class="form-control" id="" required placeholder='Razon Social'>
                                             </div>
                                         </div>
 
@@ -110,7 +110,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Télefono</label>
-                                                <input type="text" ng-minlength ="9" id="telefono" name="telefono" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.telefonoproveedor" class="form-control" id="" placeholder='Telefono'>
+                                                <input type="text" ng-minlength ="9" id="telefono" name="telefono" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.telefonoproveedor" class="form-control" id="" placeholder='Telefono'>
                                                 <span class="text-danger" ng-show=" formProveedores.telefono.$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                                             </div>
                                         </div>
@@ -202,7 +202,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Tel. Principal</label>
-                                                <input type="text" ng-minlength ="9" id="telefonoprincipal" name="telefonoprincipal" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.telefonoprincipal" class="form-control" id="" required placeholder='Telefono Principal'>
+                                                <input type="text" ng-minlength ="9" id="telefonoprincipal" name="telefonoprincipal" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.telefonoprincipal" class="form-control" id="" required placeholder='Telefono Principal'>
                                                 <span class="text-danger" ng-show=" formProveedores.telefonoprincipal.$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                                             </div>
                                         </div>
@@ -211,14 +211,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Telf. Secundario</label>
-                                                <input type="text" ng-minlength ="9" id="telefonosec" name="telefonosec" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.telefonosecundario" class="form-control" id="" placeholder='Telefono Secundario'>
+                                                <input type="text" ng-minlength ="9" id="telefonosec" name="telefonosec" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.telefonosecundario" class="form-control" id="" placeholder='Telefono Secundario'>
                                                 <span class="text-danger" ng-show=" formProveedores.telefonosec.$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Celular</label>
-                                                <input type="text" ng-minlength ="10" name="celular" id="celular" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.celular" class="form-control" id="" placeholder='Celular'>
+                                                <input type="text" ng-minlength ="10" name="celular" id="celular" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.celular" class="form-control" id="" placeholder='Celular'>
                                                 <span class="text-danger" ng-show=" formProveedores.celular.$error.minlength">La longitud mínima es de 10 caracteres <br></span> 
                                             </div>
                                         </div>
@@ -264,7 +264,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">RUC</label>
-                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
+                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
                                                 <span class="help-inline" 
                                                         ng-show=" formProveedoresedit.ruc.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
 
@@ -273,7 +273,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Razón Social</label>
-                                                <input type="text" onkeypress="return soloLetras(event)" ng-model="proveedornuevo.razonsocialproveedor" class="form-control" id="" required>
+                                                <input type="text" ng-keypress="onlyCharasterAndSpace($event);" ng-model="proveedornuevo.razonsocialproveedor" class="form-control" id="" required>
                                             </div>
                                         </div>
 
@@ -286,7 +286,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Télefono</label>
-                                                <input type="text" ng-minlength ="9" id="telefono" name="telefono" onkeypress="return soloNumeros(event)" ng-model="proveedornuevo.telefonoproveedor" class="form-control" id="" placeholder='Telefono'>
+                                                <input type="text" ng-minlength ="9" id="telefono" name="telefono" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.telefonoproveedor" class="form-control" id="" placeholder='Telefono'>
                                                 <span class="text-danger" ng-show=" formProveedoresedit.telefono.$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                                             </div>
                                         </div>
@@ -416,21 +416,21 @@
 
                         
                         <td >
-                            <input type="text" onkeypress="return soloLetras(event)" class="form-control" 
+                            <input type="text" ng-keypress="onlyCharasterAndSpace($event);" class="form-control" 
                                    ng-model="contacto.nombrecontacto" placeholder='Nombre de Contacto' required>                        
                         </td >
                         <td >
-                            <input type="text" ng-minlength ="9" id="telefonoprincipal-@{{ contacto.idcontacto }}" name="telefonoprincipal-@{{ contacto.idcontacto }}" onkeypress="return soloNumeros(event)" class="form-control" 
+                            <input type="text" ng-minlength ="9" id="telefonoprincipal-@{{ contacto.idcontacto }}" name="telefonoprincipal-@{{ contacto.idcontacto }}" ng-keypress="onlyNumber($event)" class="form-control" 
                                    ng-model="contacto.telefonoprincipal" placeholder='Telefono Principal' required>
                                    <span class="text-danger" ng-show="formcontactos['telefonoprincipal-' + contacto.idcontacto].$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                         </td>
                         <td >
-                            <input type="text"ng-minlength ="9" id="telefonosecundario-@{{ contacto.idcontacto }}" name="telefonosecundario-@{{ contacto.idcontacto }}" onkeypress="return soloNumeros(event)" class="form-control" 
+                            <input type="text"ng-minlength ="9" id="telefonosecundario-@{{ contacto.idcontacto }}" name="telefonosecundario-@{{ contacto.idcontacto }}" ng-keypress="onlyNumber($event)" class="form-control" 
                                    ng-model="contacto.telefonosecundario" placeholder='Telefono Secundario'>
                                    <span class="text-danger" ng-show="formcontactos['telefonosecundario-' + contacto.idcontacto].$error.minlength">La longitud mínima es de 9 caracteres <br></span>
                         </td>
                         <td >
-                            <input type="text" ng-minlength ="10" id="celular-@{{ contacto.idcontacto }}" name="celular-@{{ contacto.idcontacto }}" onkeypress="return soloNumeros(event)" class="form-control" 
+                            <input type="text" ng-minlength ="10" id="celular-@{{ contacto.idcontacto }}" name="celular-@{{ contacto.idcontacto }}" ng-keypress="onlyNumber($event)" class="form-control" 
                                    ng-model="contacto.celular" placeholder='Celular'> 
                                    <span class="text-danger" ng-show="formcontactos['celular-' + contacto.idcontacto].$error.minlength">La longitud mínima es de 10 caracteres <br></span>  
                         </td>
