@@ -33,6 +33,12 @@ class RetencionCompraController extends Controller
         return RetencionCompra::orderBy('fecha', 'desc')->paginate(5);
     }
 
+    public function getRetencionesByCompra($id)
+    {
+        return RetencionFuenteCompra::join('detalleretencionfuente', 'detalleretencionfuente.iddetalleretencionfuente', '=', 'retencionfuentecompra.iddetalleretencionfuente')
+                                        ->where('idretencioncompra', $id)->get();
+    }
+
     public function getCodigos($codigo)
     {
         return DetalleRetencionFuente::where('codigoSRI', 'LIKE', '%' . $codigo . '%')->get();
@@ -99,7 +105,7 @@ class RetencionCompraController extends Controller
                 }
             }
 
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'idretencioncompra' => $retencionCompra->idretencioncompra]);
 
         } else return response()->json(['success' => false]);
     }
@@ -142,7 +148,42 @@ class RetencionCompraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $retencionCompra = RetencionCompra::find($id);
+
+        $retencionCompra->numeroretencion = $request->input('numeroretencion');
+        $retencionCompra->codigocompra = $request->input('codigocompra');
+        $retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
+        $retencionCompra->fecha = $request->input('fecha');
+        $retencionCompra->razonsocial = $request->input('razonsocial');
+        $retencionCompra->documentoidentidad = $request->input('documentoidentidad');
+        $retencionCompra->direccion = $request->input('direccion');
+        $retencionCompra->ciudad = $request->input('ciudad');
+        $retencionCompra->autorizacion = $request->input('autorizacion');
+        $retencionCompra->totalretencion = $request->input('totalretencion');
+
+        if ($retencionCompra->save()) {
+
+            $retenciones = $request->input('retenciones');
+
+            RetencionFuenteCompra::where('idretencioncompra', $id)->delete();
+
+            foreach ($retenciones as $item) {
+                $retencion = new RetencionFuenteCompra();
+                //$retencion->numeroretencion = $request->input('numeroretencion');
+                $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
+                $retencion->iddetalleretencionfuente = $item['id'];
+                $retencion->descripcion = $item['detalle'];
+                $retencion->poecentajeretencion = $item['porciento'];
+                $retencion->valorretenido = $item['valor'];
+
+                if ($retencion->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+            }
+
+            return response()->json(['success' => true]);
+
+        } else return response()->json(['success' => false]);
     }
 
     /**

@@ -227,6 +227,8 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 
 Route::get('retencionCompra/getRetenciones', 'Retencion\RetencionCompraController@getRetenciones');
 
+Route::get('retencionCompra/getRetencionesByCompra/{id}', 'Retencion\RetencionCompraController@getRetencionesByCompra');
+
 Route::get('retencionCompra/getCompras/{codigo}', 'Retencion\RetencionCompraController@getCompras');
 
 Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraController@getCodigos');
