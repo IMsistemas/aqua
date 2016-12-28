@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                         <tr>
                             <th class="text-center" style="width: 10%;" ng-click="sort('')">
@@ -98,11 +98,11 @@
                     <tbody>
                         <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
                             <td>{{item.numeroretencion}}</td>
-                            <td>{{item.fecha | formatDate}}</td>
+                            <td class="text-center">{{item.fecha | formatDate}}</td>
                             <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.razonsocial}}</td>
                             <td></td>
-                            <td>{{item.numerodocumentoproveedor}}</td>
-                            <td>$ {{item.totalretencion}}</td>
+                            <td class="text-center">{{item.numerodocumentoproveedor}}</td>
+                            <td class="text-right">$ {{item.totalretencion}}</td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idretencioncompra)">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>

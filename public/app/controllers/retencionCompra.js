@@ -87,6 +87,7 @@
                                 valor: data[i].valorretenido
                             };
                             ($scope.itemretencion).push(object_row);
+                            $('[data-toggle="tooltip"]').tooltip();
                         }
                         $scope.recalculateTotal();
                     });
@@ -109,6 +110,7 @@
             };
 
             ($scope.itemretencion).push(object_row);
+            $('[data-toggle="tooltip"]').tooltip();
         };
 
         $scope.recalculateRow = function (item) {

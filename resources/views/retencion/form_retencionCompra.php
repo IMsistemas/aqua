@@ -28,6 +28,31 @@
             <input type="hidden" id="idretencioncompra" value="<?= $idretencioncompra ?>">
 
             <form name="formRteCompras" novalidate="">
+                
+                <div class="col-xs-12" style="padding-top: 5px;">
+                    <div class="col-sm-4 col-xs-12"><img ng-src="../../img/logo.png" style=""></div>
+                    <div class="col-sm-4 col-xs-12 text-center" style="padding-top: 3%; font-weight: bold; font-size: 24px;">
+                        RETENCIONES COMPRA
+                    </div>
+                    <div class="col-sm-4 col-xs-12" style="padding-top: 2%;">
+                        <div style="float: right">
+                            <a href="#id" ng-click="imprimir()" data-toggle="tab" >
+                                <img ng-src="../../img/impresora.png" style="height: 50px" >
+                            </a>
+                        </div>
+                        <div style="float: right">
+                            <a href="#id" ng-click="pdf()" data-toggle="tab">
+                                <img ng-src="../../img/pdf.png" style="height: 50px" >
+                            </a>
+                        </div>
+                        <div style="float: right">
+                            <a href="#id" ng-click="excel()" data-toggle="tab">
+                                <img ng-src="../../img/excel.png" style="height: 50px" >
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <div class="col-sm-4 col-xs-12">
                         <div class="input-group">
@@ -232,8 +257,8 @@
                                         </td>
                                         <td class="text-right">$ {{item.valor}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" id="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
-                                                    data-toggle="tooltip" data-placement="left" title="Agregar Retención" >
+                                            <button type="button" class="btn btn-danger" name="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
+                                                    data-toggle="tooltip" data-placement="left" title="Eliminar Retención" >
                                                 <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </td>
@@ -266,12 +291,7 @@
                     </fieldset>
                 </div>
             </form>
-
-
-
-
-
-
+            
             <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 99999;">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
