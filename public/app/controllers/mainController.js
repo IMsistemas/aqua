@@ -126,8 +126,8 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	}
 
 	$scope.toModuloVentas = function(){		
-		$scope.titulo = "Ventas";
-		$scope.toModulo = "ventas";
+		$scope.titulo = "Ventas: Registro Ventas";
+		$scope.toModulo = "DocumentoVenta";
 	}
 
 	$scope.toModuloComprobantesVentas = function(){		

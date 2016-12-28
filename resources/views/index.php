@@ -73,7 +73,7 @@
                         </ul>
 
                         <li data-toggle="collapse" data-target="#proveedor" class="collapsed">
-                            <a href="#"><i class="fa fa-user fa-lg"></i> Proveedores <span class="arrow"></span></a>
+                            <a href="#"><i class="fa fa-shopping-cart"></i> Proveedores <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="proveedor">
                             <li><a href="#" ng-click="toModuloProveedores();">Proveedores</a></li>
@@ -81,13 +81,13 @@
 
 
                         <li data-toggle="collapse" data-target="#contabilidad" class="collapsed">
-                            <a href="#"><i class="fa fa-user fa-lg"></i> Contabilidad <span class="arrow"></span></a>
+                            <a href="#"><i class="fa fa-calculator"></i> Contabilidad <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="contabilidad">
                             <li><a href="#" ng-click="toModuloCompras();">Compras</a></li>
                             <li><a href="#" ng-click="toModuloVentas();">Ventas</a></li>
                             <li data-toggle="collapse" data-target="#comprobantes" class="collapsed">
-                                <a href="#"><i class="fa fa-user fa-lg"></i> Comprobantes<span class="arrow"></span></a>
+                                <a href="#"><i class="fa fa-paperclip"></i> Comprobantes<span class="arrow"></span></a>
                                 </li>
                             <ul class="sub-menu collapse" id="comprobantes">
                                 <li><a href="#" ng-click="toModuloComprobantesCompras();">Comprobantes Compras</a></li>
@@ -95,7 +95,7 @@
                             </ul>
 
                             <li data-toggle="collapse" data-target="#retenciones" class="collapsed">
-                                <a href="#"><i class="fa fa-user fa-lg"></i> Retenciones<span class="arrow"></span></a>
+                                <a href="#"><i class="fa fa-pencil-square-o fa-lg"></i> Retenciones<span class="arrow"></span></a>
                                 </li>
                             <ul class="sub-menu collapse" id="retenciones">
                                 <li><a href="#" ng-click="toModuloRetencionesCompras();">Retenciones Compras</a></li>
@@ -215,6 +215,7 @@
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/facturacionventa.js') ?>"></script>
 
 
 

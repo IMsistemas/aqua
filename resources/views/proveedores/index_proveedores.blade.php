@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="en-US" ng-app="softver-erp">
-    <head>
-        <title>Proveedores</title>
 
-        <!-- Load Bootstrap CSS -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/index.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style_generic_app.css') }}" rel="stylesheet">
-        <style>
-		<!--
-		.negrita{
-			font-weight: bold;
-		}
-		-->
-		</style>
-    </head>
-    <body>
     <div ng-controller="proveedoresController">
         <div class="container">
-            <h2>Proveedores</h2>
+            
     
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
             <div class="col-sm-4 col-xs-6">
@@ -530,6 +511,7 @@
 
     </div>
     
+<<<<<<< HEAD
     <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
     <script src="{{ asset('app/lib/angular/angular.min.js') }}"></script>
     <script src="{{ asset('app/lib/angular/angular-route.min.js') }}"></script>
@@ -539,6 +521,10 @@
         <!-- AngularJS Application Scripts -->
         <script src="{{ asset('app/app.js') }}"></script>
         <script src="{{ asset('app/controllers/proveedoresController.js') }}"></script>
+=======
+    
+    
+>>>>>>> 71740f22b3c92c26e05c2261de2123895dfdb4c6
 
         <script>
     function soloLetras(e){
