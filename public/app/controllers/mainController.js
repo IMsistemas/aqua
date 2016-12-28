@@ -130,13 +130,23 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "ventas";
 	}
 
-	$scope.toModuloComprobantes = function(){		
-		$scope.titulo = "Comprobantes";
+	$scope.toModuloComprobantesVentas = function(){		
+		$scope.titulo = "Comprobantes Ventas";
 		$scope.toModulo = "cuentascobrarcliente";
 	}
 
-	$scope.toModuloRetenciones = function(){		
-		$scope.titulo = "Retenciones";
+	$scope.toModuloComprobantesCompras = function(){		
+		$scope.titulo = "Comprobantes Compras";
+		$scope.toModulo = "cuentascobrarcliente";
+	}
+
+	$scope.toModuloRetencionesVentas = function(){		
+		$scope.titulo = "Retenciones Ventas";
+		$scope.toModulo = "retencionCompra";
+	}
+
+	$scope.toModuloRetencionesCompras = function(){		
+		$scope.titulo = "Retenciones Compras";
 		$scope.toModulo = "retencionCompra";
 	}
 
