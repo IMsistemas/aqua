@@ -510,8 +510,7 @@
 
 
     </div>
-    
-<<<<<<< HEAD
+
     <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
     <script src="{{ asset('app/lib/angular/angular.min.js') }}"></script>
     <script src="{{ asset('app/lib/angular/angular-route.min.js') }}"></script>
@@ -521,48 +520,45 @@
         <!-- AngularJS Application Scripts -->
         <script src="{{ asset('app/app.js') }}"></script>
         <script src="{{ asset('app/controllers/proveedoresController.js') }}"></script>
-=======
-    
-    
->>>>>>> 71740f22b3c92c26e05c2261de2123895dfdb4c6
 
-        <script>
-    function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-       especiales = "8-37-39-46";
 
-       tecla_especial = false
-       for(var i in especiales){
-            if(key == especiales[i]){
-                tecla_especial = true;
-                break;
+        <script type="text/javascript">
+            function soloLetras(e){
+               key = e.keyCode || e.which;
+               tecla = String.fromCharCode(key).toLowerCase();
+               letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+               especiales = "8-37-39-46";
+
+               tecla_especial = false
+               for(var i in especiales){
+                    if(key == especiales[i]){
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if(letras.indexOf(tecla)==-1 && !tecla_especial){
+                    return false;
+                }
             }
-        }
+            function soloNumeros(e) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toLowerCase();
+                letras = " 0123456789";
+                especiales = [8, 37, 39, 46];
 
-        if(letras.indexOf(tecla)==-1 && !tecla_especial){
-            return false;
-        }
-    }
-    function soloNumeros(e) {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " 0123456789";
-        especiales = [8, 37, 39, 46];
+                tecla_especial = false
+                for(var i in especiales) {
+                    if(key == especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
 
-        tecla_especial = false
-        for(var i in especiales) {
-            if(key == especiales[i]) {
-                tecla_especial = true;
-                break;
+                if(letras.indexOf(tecla) == -1 && !tecla_especial)
+                    return false;
             }
-        }
-
-        if(letras.indexOf(tecla) == -1 && !tecla_especial)
-            return false;
-    }
-</script>
+        </script>
     </body>
 </html>
     
