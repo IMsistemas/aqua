@@ -539,11 +539,8 @@
         <!-- AngularJS Application Scripts -->
         <script src="{{ asset('app/app.js') }}"></script>
         <script src="{{ asset('app/controllers/proveedoresController.js') }}"></script>
-    </body>
-</html>
-    
 
-<script>
+        <script>
     function soloLetras(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
@@ -579,6 +576,9 @@
         if(letras.indexOf(tecla) == -1 && !tecla_especial)
             return false;
     }
-
-   
 </script>
+    </body>
+</html>
+    
+
+
