@@ -215,6 +215,7 @@
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/facturacionventa.js') ?>"></script>
 
 
 
