@@ -8,6 +8,10 @@
     <div ng-show="ActivaVenta=='0'" ng-hide="ActivaVenta=='1'">
       <div class="row">
         <hr/>
+        <div class="col-xs-12 text-center">
+          <h3><strong>Registro Ventas</strong></h3>
+        </div>
+        <div class="col-xs-2">
           
           <div class="input-group ">
               <input type="text" class="form-control" ng-keyup="FiltrarVenta();" placeholder="Buscar" ng-model="F_RucCliente">
