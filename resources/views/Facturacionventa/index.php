@@ -4,7 +4,6 @@
 <div  class="container-fluid" ng-controller="facturacioventa" ng-cloak>
 
 
-
     <div ng-show="ActivaVenta=='0'" ng-hide="ActivaVenta=='1'">
       <div class="row">
         <hr/>
