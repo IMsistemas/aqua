@@ -76,7 +76,7 @@
                             <a href="#"><i class="fa fa-user fa-lg"></i> Proveedores <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse" id="proveedor">
-                            <li><a href="#" ng-click="toModuloCliente();">Proveedores</a></li>
+                            <li><a href="#" ng-click="toModuloProveedores();">Proveedores</a></li>
                         </ul>
 
 
@@ -200,6 +200,7 @@
     <script src="<?= asset('app/controllers/catalogoproductosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
 
 
 

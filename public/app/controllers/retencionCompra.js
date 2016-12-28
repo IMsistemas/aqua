@@ -47,18 +47,19 @@
 
             if ($scope.idretencion != 0) {
                 $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
-                    console.log(response);
-
-                    //$scope.t_fechaingreso = response[0].fecha;
+                    //console.log(response);
+                    $scope.t_fechaingreso = $scope.convertDatetoDB(response[0].fecharetencion, true);
                     $scope.t_nroretencion = response[0].numeroretencion;
-                    $scope.t_nrocompra = response[0].codigocompra;
-                    $('#t_nrocompra').val(response[0].codigocompra);
+
+                    $('#t_nrocompra').val((response[0].codigocompra).toString());
+
+                    $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (response[0].codigocompra).toString());
+
                     $scope.t_rucci = response[0].numerodocumentoproveedor;
                     $scope.t_razonsocial = response[0].razonsocialproveedor;
                     $scope.t_phone = response[0].telefonoproveedor;
                     $scope.t_direccion = response[0].direccionproveedor;
                     //$scope.t_ciudad = response[0].ciudad;
-
                     $scope.t_tipocomprobante = response[0].nombretipocomprobante;
 
                     var serial = (response[0].serialretencion).split('-');
@@ -68,19 +69,38 @@
                     $scope.t_secuencial = serial[2];
 
                     $scope.t_nroautorizacion = response[0].autorizacion;
+
+                    $('#btn-createrow').prop('disabled', false);
+
+                    $scope.baseimponible = response[0].subtotalnoivacompra;
+
+                    $http.get(API_URL + 'retencionCompra/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
+                        var longitud = data.length;
+                        for (var i = 0; i < longitud; i++){
+                            var object_row = {
+                                year: (response[0].fecharetencion).split('-')[0],
+                                codigo: data[i].codigoSRI,
+                                detalle: data[i].nombreretencioniva,
+                                id: data[i].iddetalleretencionfuente,
+                                baseimponible: response[0].subtotalnoivacompra,
+                                porciento: data[i].poecentajeretencion,
+                                valor: data[i].valorretenido
+                            };
+                            ($scope.itemretencion).push(object_row);
+                            $('[data-toggle="tooltip"]').tooltip();
+                        }
+                        $scope.recalculateTotal();
+                    });
                 });
             }
-
         };
-
-        $scope.initLoad();
 
         $scope.createRow = function () {
 
             var base = parseFloat($scope.baseimponible).toFixed(2);
 
             var object_row = {
-                year: '2016',
+                year: ($scope.t_fechaingreso).split('/')[2],
                 codigo: '',
                 detalle: '',
                 id:0,
@@ -90,6 +110,7 @@
             };
 
             ($scope.itemretencion).push(object_row);
+            $('[data-toggle="tooltip"]').tooltip();
         };
 
         $scope.recalculateRow = function (item) {
@@ -144,7 +165,6 @@
 
             var data = {
                 numeroretencion: $scope.t_nroretencion,
-                //codigocompra: $scope.t_nrocompra,
                 codigocompra: $('#t_nrocompra').val(),
                 numerodocumentoproveedor: $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial,
                 fecha: $scope.convertDatetoDB($scope.t_fechaingreso),
@@ -157,24 +177,32 @@
                 retenciones: $scope.itemretencion
             };
 
-            console.log(data);
-
             var url = API_URL + 'retencionCompras';
 
-            $http.post(url, data).success(function (response) {
-
-                if (response.success == true) {
-                    $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
-                    $('#modalMessage').modal('show');
-                    $scope.hideModalMessage();
-                } else {
-                    $scope.message_error = 'Ha ocurrido un error al intentar guardar las Retenciones...';
-                    $('#modalMessageError').modal('show');
-                }
-
-            }).error(function (res) {
-
-            });
+            if ($scope.idretencion == 0) {
+                $http.post(url, data).success(function (response) {
+                    if (response.success == true) {
+                        $scope.idretencion = response.idretencioncompra;
+                        $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
+                        $('#modalMessage').modal('show');
+                        $scope.hideModalMessage();
+                    } else {
+                        $scope.message_error = 'Ha ocurrido un error al intentar guardar las Retenciones...';
+                        $('#modalMessageError').modal('show');
+                    }
+                }).error(function (res) {});
+            } else {
+                $http.put(url + '/' + $scope.idretencion, data).success(function (response) {
+                    if (response.success == true) {
+                        $scope.message = 'Se actualizó correctamente las Retenciones seleccionadas...';
+                        $('#modalMessage').modal('show');
+                        $scope.hideModalMessage();
+                    } else {
+                        $scope.message_error = 'Ha ocurrido un error al intentar actualizar las Retenciones...';
+                        $('#modalMessageError').modal('show');
+                    }
+                }).error(function (res) {});
+            }
         };
 
         $scope.showInfoRetencion = function (object, data) {
@@ -340,11 +368,21 @@
                 }
                 $("#" + field).val(relleno + text);
             }
-        }
+        };
+
+        $scope.convertDatetoDB = function (now, revert) {
+            if (revert == undefined){
+                var t = now.split('/');
+                return t[2] + '-' + t[1] + '-' + t[0];
+            } else {
+                var t = now.split('-');
+                return t[2] + '/' + t[1] + '/' + t[0];
+            }
+        };
 
         $scope.t_fechaingreso = $scope.nowDate();
 
-        //$scope.initLoad();
+        $scope.initLoad();
 
     });
 
@@ -357,3 +395,13 @@
             ignoreReadonly: false
         });
     });
+
+    /*function convertDatetoDB(now, revert){
+        if (revert == undefined){
+            var t = now.split('/');
+            return t[2] + '-' + t[1] + '-' + t[0];
+        } else {
+            var t = now.split('-');
+            return t[2] + '/' + t[1] + '/' + t[0];
+        }
+    }*/
