@@ -166,32 +166,33 @@
                                     <div class="row"><div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Provincia</label>
-                                                <select ng-change="cargarCiudades(provincia)" ng-model="provincia" name=""  id="input" class="form-control" required="required">
+                                                <select ng-change="cargarCiudades(provincia)" ng-model="provincia" name="provincia"  id="input" class="form-control" required="required">
                                                     <option value="">--Seleccione--</option>
                                                     <option ng-repeat="provincia in provincias" value="@{{provincia.idprovincia}}">@{{provincia.nombreprovincia}}</option>
                                                 </select>
-                                                <p class="help-block">Seleccione una provincia.</p>
+                                                 <span ng-show="formProveedores.provincia.$error.required">Seleccione una provincia.</span>
+                                               
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Cantón</label>
-                                                <select name="" ng-change="cargarSectores(ciudad)" ng-model="ciudad" id="input" class="form-control" required="required">
+                                                <select name="ciudad" ng-change="cargarSectores(ciudad)" ng-model="ciudad" id="input" class="form-control" required="required">
                                                     <option value="">--Seleccione--</option>
                                                     <option ng-repeat="ciudad in ciudades" value="@{{ciudad.idciudad}}">@{{ciudad.nombreciudad}}</option>
                                                 </select>
-                                                <p class="help-block">Seleccione una ciudad.</p>
+                                                <span ng-show="formProveedores.ciudad.$error.required">Seleccione una ciudad.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Sector</label>
                                                
-                                                <select name="" ng-model="proveedornuevo.idsector" id="input" class="form-control" required="required">
+                                                <select name="sector" ng-model="proveedornuevo.idsector" id="input" class="form-control" required="required">
                                                      <option value="">--Seleccione--</option>
                                                     <option ng-repeat="sector in sectores" value="@{{sector.idsector}}">@{{sector.nombreparroquia}}</option>
                                                 </select>
-                                                <p class="help-block">Seleccione un sector.</p>
+                                                <span ng-show="formProveedores.sector.$error.required">Seleccione un sector.</span>
                                             </div>
                                         </div>
 
@@ -311,9 +312,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Tipo Identificación</label>
-                                                <select ng-model="proveedornuevo.codigotipoid" ng-options="tipocontribuyente.codigotipoid as tipocontribuyente.tipoidentificacion for tipocontribuyente in tiposcontribuyentes" class="form-control" required="required">
+                                                <select name="tipoidnt" ng-model="proveedornuevo.codigotipoid" ng-options="tipocontribuyente.codigotipoid as tipocontribuyente.tipoidentificacion for tipocontribuyente in tiposcontribuyentes" class="form-control" required="required">
                                                 </select>
-                                                <p class="help-block">Seleccione un tipo de identificación.</p>
+                                                <span ng-show="formProveedoresedit.tipoidnt.$error.required">Seleccione un tipo de identificación.</span>
                                             </div>
                                         </div>
 
@@ -327,9 +328,9 @@
                                             <div class="form-group">
                                                 <label for="">Correo</label>
                                                 <input type="email" ng-model="proveedornuevo.correocontactoproveedor" class="form-control" id="email" name="email" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" >
-                                                <span class="messages" ng-show="formProveedores.$submitted || formProveedores.email.$touched">
-                                                <span class="text-danger" ng-show="formProveedores.email.$error.required">El campo es obligatorio.</span>
-                                                <span class="text-danger" ng-show="formProveedores.email.$error.email">Formato de email incorrecto.</span>
+                                                <span class="messages" ng-show="formProveedoresedit.$submitted || formProveedores.email.$touched">
+                                                <span class="text-danger" ng-show="formProveedoresedit.email.$error.required">El campo es obligatorio.</span>
+                                                <span class="text-danger" ng-show="formProveedoresedit.email.$error.email">Formato de email incorrecto.</span>
                                                       </span>
                                             </div>
                                         </div>
@@ -346,29 +347,29 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Provincia</label>
-                                                <select ng-change="cargarCiudades(proveedornuevo.sector.ciudad.idprovincia)" ng-model="proveedornuevo.sector.ciudad.idprovincia" name=""  id="input" class="form-control" required="required" ng-options="provincia.idprovincia as provincia.nombreprovincia for provincia in provincias">
+                                                <select ng-change="cargarCiudades(proveedornuevo.sector.ciudad.idprovincia)" ng-model="proveedornuevo.sector.ciudad.idprovincia" name="provincia"  id="input" class="form-control" required="required" ng-options="provincia.idprovincia as provincia.nombreprovincia for provincia in provincias">
                                                     <option value="">--Seleccione--</option>
                                                 </select>
-                                                <p class="help-block">Seleccione una provincia.</p>
+                                                <span ng-show="formProveedoresedit.provincia.$error.required">Seleccione una provincia.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Cantón</label>
-                                                <select name="" ng-change="cargarSectores(proveedornuevo.sector.idciudad)" ng-model="proveedornuevo.sector.idciudad" id="input" class="form-control" required="required" ng-options="ciudad.idciudad as ciudad.nombreciudad for ciudad in ciudades">
+                                                <select name="ciudad" ng-change="cargarSectores(proveedornuevo.sector.idciudad)" ng-model="proveedornuevo.sector.idciudad" id="input" class="form-control" required="required" ng-options="ciudad.idciudad as ciudad.nombreciudad for ciudad in ciudades">
                                                 <option value="">--Seleccione--</option>
                                                 </select>
-                                                <p class="help-block">Seleccione una ciudad.</p>
+                                                <span ng-show="formProveedoresedit.ciudad.$error.required">Seleccione una ciudad.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Sector</label>
-                                                <select ng-model="proveedornuevo.idsector" ng-options="sector.idsector as sector.nombreparroquia for sector in sectores" class="form-control" required="required">
+                                                <select name="sector" ng-model="proveedornuevo.idsector" ng-options="sector.idsector as sector.nombreparroquia for sector in sectores" class="form-control" required="required">
                                                 <option value="">--Seleccione--</option>
                                                 </select>
                                                 
-                                               <p class="help-block">Seleccione un sector.</p>
+                                               <span ng-show="formProveedoresedit.sector.$error.required">Seleccione un secctor.</span>
                                             </div>
                                         </div>
 
