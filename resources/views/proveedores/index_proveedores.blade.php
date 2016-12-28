@@ -136,11 +136,11 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Tipo Identficación</label>
-                                                <select name="" ng-model="proveedornuevo.codigotipoid" id="input" class="form-control" required="required">
+                                                <select name="tipoidnt" ng-model="proveedornuevo.codigotipoid" id="input" class="form-control" required="required">
                                                     <option value="">--Seleccione--</option>
                                                     <option  ng-repeat="tipocontribuyente in tiposcontribuyentes" value="@{{tipocontribuyente.codigotipoid}}">@{{tipocontribuyente.tipoidentificacion}}</option>
                                                 </select>
-                                                <p class="help-block">Seleccione un tipo de identificación.</p>
+                                                <span ng-show="formProveedores.tipoidnt.$error.required">Seleccione Tipo de Identificación</span>
                                                 
                                             </div>
                                         </div>
