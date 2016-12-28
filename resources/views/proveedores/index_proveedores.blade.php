@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-US" ng-app="softver-erp">
-    <head>
-        <title>Proveedores</title>
 
-        <!-- Load Bootstrap CSS -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/index.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style_generic_app.css') }}" rel="stylesheet">
-        <style>
-		<!--
-		.negrita{
-			font-weight: bold;
-		}
-		-->
-		</style>
-    </head>
-    <body>
     <div ng-controller="proveedoresController">
         <div class="container">
             <h2>Proveedores</h2>
@@ -530,17 +511,7 @@
 
     </div>
     
-    <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
-    <script src="{{ asset('app/lib/angular/angular.min.js') }}"></script>
-    <script src="{{ asset('app/lib/angular/angular-route.min.js') }}"></script>
-       <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        
-        <!-- AngularJS Application Scripts -->
-        <script src="{{ asset('app/app.js') }}"></script>
-        <script src="{{ asset('app/controllers/proveedoresController.js') }}"></script>
-    </body>
-</html>
+    
     
 
 <script>
