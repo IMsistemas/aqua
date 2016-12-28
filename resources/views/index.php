@@ -90,16 +90,16 @@
                                 <a href="#"><i class="fa fa-user fa-lg"></i> Comprobantes<span class="arrow"></span></a>
                                 </li>
                             <ul class="sub-menu collapse" id="comprobantes">
-                                <li><a href="#" ng-click="toModuloCargo();">Comprobantes Compras</a></li>
-                                <li><a href="#" ng-click="toModuloEmpleado();">Comprobantes Ventas</a></li>
+                                <li><a href="#" ng-click="toModuloComprobantesCompras();">Comprobantes Compras</a></li>
+                                <li><a href="#" ng-click="toModuloComprobantesVentas();">Comprobantes Ventas</a></li>
                             </ul>
 
                             <li data-toggle="collapse" data-target="#retenciones" class="collapsed">
                                 <a href="#"><i class="fa fa-user fa-lg"></i> Retenciones<span class="arrow"></span></a>
                                 </li>
                             <ul class="sub-menu collapse" id="retenciones">
-                                <li><a href="#" ng-click="toModuloCargo();">Retenciones Compras</a></li>
-                                <li><a href="#" ng-click="toModuloEmpleado();">Retenciones Ventas</a></li>
+                                <li><a href="#" ng-click="toModuloRetencionesCompras();">Retenciones Compras</a></li>
+                                <li><a href="#" ng-click="toModuloRetencionesVentas();">Retenciones Ventas</a></li>
                             </ul>
 
                         </ul>
