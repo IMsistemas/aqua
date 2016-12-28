@@ -87,7 +87,7 @@
                             <li><a href="#" ng-click="toModuloCompras();">Compras</a></li>
                             <li><a href="#" ng-click="toModuloVentas();">Ventas</a></li>
                             <li data-toggle="collapse" data-target="#comprobantes" class="collapsed">
-                                <a href="#"><i class="fa fa-pencil-square-o fa-lg"></i> Comprobantes<span class="arrow"></span></a>
+                                <a href="#"><i class="fa fa-paperclip"></i> Comprobantes<span class="arrow"></span></a>
                                 </li>
                             <ul class="sub-menu collapse" id="comprobantes">
                                 <li><a href="#" ng-click="toModuloComprobantesCompras();">Comprobantes Compras</a></li>
