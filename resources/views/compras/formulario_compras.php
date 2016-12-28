@@ -242,8 +242,8 @@
 									<div class="col-sm-6">
 									<input type="text" class="form-control" name="numero3" ng-model="numero3"									
 									id="numero3" ng-required="true"
-									ng-maxlength="9"
-									maxlength="9"
+									ng-maxlength="8"
+									maxlength="8"
 									
 									ng-pattern="/[0-9]+$/"
 									style="width: 100px;"
@@ -252,7 +252,7 @@
 									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$touched">El número es requerido</span> 
 									<span class="help-block error"
 									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$error.minlength">La
-									longitud mínima es de 9 caracteres.</span> <span
+									longitud mínima es de 8 caracteres.</span> <span
 									class="help-block error"
 									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$error.pattern">El número no es válido.</span>
 									</div>

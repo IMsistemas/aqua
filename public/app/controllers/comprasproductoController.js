@@ -65,7 +65,9 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	    return +(Math.round(num + "e+2")  + "e-2");
 	}
     
-    
+    $scope.Add = function () {
+                $('#modalActionCargo').modal('show');
+    }
     
     $scope.anularCompra = function(){	
     	var anular = $scope.compra_anular;
