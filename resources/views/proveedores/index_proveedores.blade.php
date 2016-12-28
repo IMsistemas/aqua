@@ -1,7 +1,7 @@
 
     <div ng-controller="proveedoresController">
         <div class="container">
-            <h2>Proveedores</h2>
+            
     
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
             <div class="col-sm-4 col-xs-6">
