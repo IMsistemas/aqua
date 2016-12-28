@@ -3,28 +3,11 @@
 
 <div  class="container-fluid" ng-controller="facturacioventa" ng-cloak>
 
-    
-
-    <div class="row" ng-init="HeadInfoFacturaVenta();FormaPagoVenta();ConfigContable();FiltrarVenta();LoadDataToFiltro();" >
-        <div class="col-xs-12 text-center" >
-            <h1>
-                <strong>Ventas</strong>
-            </h1>
-        </div>
-    </div>
-
- 
-
-
 
 
     <div ng-show="ActivaVenta=='0'" ng-hide="ActivaVenta=='1'">
       <div class="row">
         <hr/>
-        <div class="col-xs-12 text-center">
-          <h3><strong>Registro Ventas</strong></h3>
-        </div>
-        <div class="col-xs-2">
           
           <div class="input-group ">
               <input type="text" class="form-control" ng-keyup="FiltrarVenta();" placeholder="Buscar" ng-model="F_RucCliente">
@@ -626,11 +609,5 @@
 
 
 
-</body>
-
-    
- 
-
-   
     
     
