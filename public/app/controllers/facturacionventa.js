@@ -1,5 +1,7 @@
 app.controller('facturacioventa', function($scope, $http, API_URL) {
 
+    $scope.CodigoDocumentoVenta="";
+
     $scope.ActivaVenta="0";
     $scope.Mensaje="";
     $scope.FechaRegistro=now();
@@ -106,7 +108,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.Otros=aux_subtotalOtros;
 
         $scope.Descuento=(($scope.SubtotalIva + $scope.SubtotalCero + $scope.Otros) * (($scope.PorcentajeDescuento)/100) );
-        $scope.Iva= (($scope.SubtotalIva)*($scope.PorcentajeIvaIceOtroConfig/100));
+        $scope.Iva=  (($scope.SubtotalIva)*($scope.PorcentajeIvaIceOtroConfig/100));
         $scope.Total=(($scope.SubtotalIva + $scope.SubtotalCero + $scope.Otros) - ($scope.Descuento) + ($scope.Iva));
     };
     
@@ -431,6 +433,26 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.Otros=parseFloat(data[0].otrosvalores); 
         $scope.Iva=parseFloat(data[0].ivaventa) 
         $scope.Total=parseFloat(data[0].totalventa);
+        $scope.Comentario=data[0].comentario;
+
+        var aux_intem=data[0].productosenventa;
+        for(x=0;x<aux_intem.length;x++){
+            $scope.Aux_Intem={
+                    TipoItem : "P",
+                    IdBodega: aux_intem[x].idbodega ,
+                    Bodega :  aux_intem[x].idbodega,
+                    CodProducto: aux_intem[x].codigoproducto,
+                    Detalle : aux_intem[x].codigoproducto,
+                    Descripcion: "",
+                    Cantidad: parseInt(aux_intem[x].cantidad),
+                    PVPUnitario: parseFloat(aux_intem[x].precio),
+                    IVA: parseInt(aux_intem[x].porcentajeiva),
+                    Total:''
+                };
+                $scope.DetalleVenta.push($scope.Aux_Intem);
+        }
+
+        $scope.CalculaTotalesVenta();
     };
 });
 
