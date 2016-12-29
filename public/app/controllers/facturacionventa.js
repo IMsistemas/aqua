@@ -397,6 +397,41 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             $("#Msm").modal("show");
         });
     };
+    //Editar
+    $scope.EditDocVenta=function(item) {
+      $http.get(API_URL + 'DocumentoVenta/loadEditVenta/'+item.codigoventa)
+        .success(function(response){
+            console.log(response);
+            $scope.ActivaVenta="1";
+            var aux_pventa=response.puntoventa;
+            var aux_cliente=response.cliente;
+            var aux_venta=response.venta;
+            $scope.Establecimiento=aux_pventa[0].idestablecimiento;
+            $scope.PuntoDeVenta=aux_pventa[0].idpuntoventa;
+            $scope.CiVenedor=aux_pventa[0].empleado.documentoidentidadempleado;
+            $scope.IDVendor=aux_pventa[0].empleado.idempleado;
+            $scope.NombreVendor=aux_pventa[0].empleado.apellidos+" "+aux_pventa[0].empleado.nombres;
+            $scope.Vendor=$scope.CiVenedor+" - "+$scope.NombreVendor;
+
+            $scope.CLiente=aux_cliente;
+            $scope.RUCCI=aux_cliente[0].documentoidentidad;
+            $scope.ReloadVenta(aux_venta);
+        });  
+    };
+    $scope.ReloadVenta=function(data) {
+        $scope.FechaRegistro=convertDatetoDB(data[0].fecharegistrocompra,"");
+        $scope.Autorizacion=data[0].autorizacionfacturar;
+        $scope.Numero=data[0].numerodocumento;
+        $scope.pago=data[0].codigoformapago;
+
+        $scope.PorcentajeDescuento= parseFloat(data[0].procentajedescuentocompra);
+        $scope.SubtotalIva= parseFloat(data[0].subtotalivaventa);
+        $scope.SubtotalCero=parseFloat(data[0].subtotalnoivaventa); 
+        $scope.Descuento=parseFloat(data[0].descuentoventa); 
+        $scope.Otros=parseFloat(data[0].otrosvalores); 
+        $scope.Iva=parseFloat(data[0].ivaventa) 
+        $scope.Total=parseFloat(data[0].totalventa);
+    };
 });
 
 

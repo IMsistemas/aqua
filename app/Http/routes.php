@@ -547,6 +547,7 @@ Route::get('DocumentoVenta/AllServicios', 'Facturacionventa\DocumentoVenta@getAl
 Route::get('DocumentoVenta/getVentas/{filtro}', 'Facturacionventa\DocumentoVenta@getVentas');
 Route::get('DocumentoVenta/getAllFitros', 'Facturacionventa\DocumentoVenta@getallFitros');
 Route::get('DocumentoVenta/anularVenta/{id}', 'Facturacionventa\DocumentoVenta@anularVenta');
+Route::get('DocumentoVenta/loadEditVenta/{id}', 'Facturacionventa\DocumentoVenta@getVentaXId');
 
 Route::resource('DocumentoVenta', 'Facturacionventa\DocumentoVenta');
 //------------Modulo documento venta---------------////

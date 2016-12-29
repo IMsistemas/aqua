@@ -41,7 +41,7 @@ class DocumentoVenta extends Controller
      */
     public function index()
     {
-        return view('Facturacionventa/index');
+        return view('Facturacionventa/aux_index');
     }
     /**
      * Obtener la informacion de un cliente en especifico
@@ -51,9 +51,6 @@ class DocumentoVenta extends Controller
      */
     public function getInfoClienteXCIRuc($getInfoCliente)
     {
-        //return Cliente::where('documentoidentidad', $idcliente)->orWhere('documentoidentidad', $idcliente)->get();
-       
-        //return Cliente::where('documentoidentidad', $getInfoCliente)->get();
         return Cliente::where('documentoidentidad', 'LIKE', '%' . $getInfoCliente . '%')->limit(1)->get();
     }
     /**
@@ -85,8 +82,6 @@ class DocumentoVenta extends Controller
     public function getinfoProducto($texto)
     {				
     	return CatalogoProducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
-    	//return CatalogoProducto::whereRaw('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
-    	//return CatalogoProducto::whereRaw("nombreproducto ILIKE '%" . $texto . "%' or codigoproducto ILIKE '%" . $texto . "%'")->get();
     }
     /**
      * obtener informacion de un empleado con su punto de venta
@@ -137,10 +132,6 @@ class DocumentoVenta extends Controller
                     }
         ])->get();
     */
-        /*return catalogoproducto:: with(['catalogoproducto.productoenbodega',
-            'productoenbodega'=>function($query) use ($id){
-            $query->where('idbodega',$id);
-        }])->get();*/
                 
     }
     /**
@@ -248,6 +239,26 @@ class DocumentoVenta extends Controller
         $aux_venta= venta::where("codigoventa", $id)
                     ->update(['estaanulada' => 't']);
         return  $aux_venta;
+    }
+
+    /**
+     * Datos de la venta para editar
+     *
+     * 
+     * @return mixed
+     */
+    public function getVentaXId($id)
+    {               
+    // $aux_puntoVenta= puntoventa::where("idpuntoventa","=",$aux_venta[0]->idpuntoventa)->get();
+        $aux_venta= venta::with('productosenventa','serviciosenventa','cliente')->where("documentoventa.codigoventa","=", $id)->get();
+        $aux_puntoVenta= puntoventa::with('empleado', 'establecimiento')->where("idpuntoventa","=",$aux_venta[0]->idpuntoventa)->limit(1)->get();
+        $aux_cliente=cliente::where("codigocliente","=",$aux_venta[0]->codigocliente)->get();
+        $aux_data = array(
+            "venta" => $aux_venta,
+            "puntoventa" => $aux_puntoVenta,
+            "cliente"=> $aux_cliente
+        );
+        return $aux_data;
     }
 
 

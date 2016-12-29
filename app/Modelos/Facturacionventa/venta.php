@@ -36,4 +36,21 @@ class venta extends Model
         'comentario',
         'impreso' 
     ];
+
+    public function puntoventa()
+    {
+        return $this->hasOne('App\Modelos\Facturacionventa\puntoventa',"idpuntoventa");
+    }
+    public function productosenventa()
+    {
+        return $this->hasMany('App\Modelos\Facturacionventa\productosenventa',"codigoventa");
+    }
+    public function serviciosenventa()
+    {
+        return $this->hasMany('App\Modelos\Facturacionventa\serviciosenventa',"codigoventa");
+    }
+    public function cliente()
+    {
+        return $this->hasOne('App\Modelos\Clientes\Cliente',"codigocliente");
+    }
 }

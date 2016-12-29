@@ -27,4 +27,9 @@ class puntoventa extends Model
     public function establecimiento(){
     	return $this->belongsTo('App\Modelos\Facturacionventa\establecimiento','idestablecimiento');
     }
+
+    public function venta()
+    {
+        return $this->hasMany('App\Modelos\Facturacionventa\venta',"idpuntoventa");
+    }
 }
