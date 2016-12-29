@@ -41,7 +41,8 @@ class DocumentoVenta extends Controller
      */
     public function index()
     {
-        return view('Facturacionventa/aux_index');
+        return view('Facturacionventa/index');
+        //return view('Facturacionventa/aux_index');
     }
     /**
      * Obtener la informacion de un cliente en especifico
