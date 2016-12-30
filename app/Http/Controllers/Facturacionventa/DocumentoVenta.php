@@ -179,7 +179,7 @@ class DocumentoVenta extends Controller
                     'idservicio'=> $servicio["idservicio"]
                 ]);
         }
-        return 1;
+        return $aux_venta->codigoventa;
     }
 
     /**
@@ -261,6 +261,48 @@ class DocumentoVenta extends Controller
         );
         return $aux_data;
     }
+    /**
+     * Actualiza la venta  
+     *
+     * @param  \Illuminate\Http\Request  $request, $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id){
+
+        $datos = $request->all();
+        //$datos["documentoventa"]
+        //$datos["productosenventa"]
+        //$datos["serviciosenventa"]
+        //return $datos["documentoventa"];
+        $aux_venta = venta::where("codigoventa","=",$id)
+                    ->update($datos["documentoventa"]);
+        //borrar para no buscar                     
+        $aux_prodv= productosenventa:: where("codigoventa","=",$id)->delete();
+        $aux_servv= serviciosenventa:: where("codigoventa","=",$id)->delete();
+        // se crean de nuevo los productos o servicios
+        foreach ($datos["productosenventa"] as $producto) {
+            productosenventa::create(
+                [
+                    'codigoventa'=> $id,
+                    'codigoproducto'=> $producto["codigoproducto"],
+                    'idbodega'=> $producto["idbodega"],
+                    'cantidad'=> $producto["cantidad"],
+                    'precio'=> $producto["precio"],
+                    'preciototal'=> $producto["preciototal"],
+                    'porcentajeiva'=> $producto["porcentajeiva"]
+
+                ]);
+        }
+        foreach ($datos["serviciosenventa"] as $servicio) {
+            serviciosenventa::create(
+                [
+                    'codigoventa'=>$id,
+                    'idservicio'=> $servicio["idservicio"]
+                ]);
+        }
+        return $id;
+    }
+
 
 
 }

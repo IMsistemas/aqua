@@ -173,7 +173,7 @@
           <div class="col-xs-6">
               <div class="input-group date datepicker">
                 <label class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i> Fecha Registro</label>
-                <input type="text" class="form-control input-sm" ng-model="FechaRegistro" >
+                <input type="text" class="form-control input-sm" id="aux_FechaRegistro" ng-model="FechaRegistro" >
                 <label class="input-group-addon"  ><i class="fa fa-calendar"></i></label>
               </div>
           </div>
@@ -415,8 +415,8 @@
                   <div class="col-xs-12" style="padding: 2%;">
                       <button class="btn btn-primary" ng-click="SaveVenta();"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                       <button class="btn btn-success" ng-click="InicioList();" ><i class="glyphicon glyphicon-th-list"></i> Registro Ventas</button>
-                      <!--<button class="btn btn-info"><i class="glyphicon glyphicon-tag"></i> Retencion</button>
-                      <button class="btn btn-primary"><i class="glyphicon glyphicon-usd"></i> Cobrar</button>
+                      <button class="btn btn-danger" ng-click="AnularVenta();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-trash"></i> Anular</button>
+                      <!--<button class="btn btn-primary"><i class="glyphicon glyphicon-usd"></i> Cobrar</button>
                       <button class="btn btn-info"><i class="glyphicon glyphicon-print"></i> Imprimir</button>-->
                   </div>
               </div>

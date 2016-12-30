@@ -217,7 +217,28 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $("#titulomsm").addClass("btn-primary");
         if($scope.pago!="0"){
             if($scope.CLiente.length!=0) {
-                $scope.sendDataToSave();
+                if($scope.DetalleVenta.length>0){
+                    //$scope.sendDataToSave();
+
+                    //----------
+                    if($scope.Numero!=""){
+                        if($scope.Autorizacion!="")
+                        {
+                            $scope.sendDataToSave();
+                        }else{
+                            $scope.Mensaje="Llene el numero de autorizacion";
+                            $("#Msm").modal("show");
+                        }
+                    }else{
+                        $scope.Mensaje="El numero de la factura";
+                        $("#Msm").modal("show");
+                    }
+                    ////////------------
+
+                }else{
+                    $scope.Mensaje="Seleccione un producto o un servicio para la venta";
+                    $("#Msm").modal("show");    
+                }
             }else{
                 $scope.Mensaje="Seleccione un cliente";
                 $("#Msm").modal("show");
@@ -253,15 +274,17 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
                 $scope.serviciosenventa.push(aux_servicioventa);
             }
         }
+        $scope.FechaRegistro=$("#aux_FechaRegistro").val();
+        var aux_fecha=convertDatetoDB($scope.FechaRegistro);
         $scope.documentoventa={
             codigoformapago: $scope.pago,
             codigocliente: $scope.CLiente[0].codigocliente,
             idpuntoventa: $scope.PuntoDeVenta,
             idempleado: $scope.IDVendor,
             idfactura: 1,
-            numerodocumento: '12345678910',
-            fecharegistrocompra: convertDatetoDB($scope.FechaRegistro),
-            autorizacionfacturar: '9876543211235474144',
+            numerodocumento: $scope.Numero,
+            fecharegistrocompra: aux_fecha,
+            autorizacionfacturar: $scope.Autorizacion,
             subtotalivaventa: $scope.SubtotalIva,
             descuentoventa: $scope.Descuento,
             ivaventa: $scope.Iva,
@@ -270,7 +293,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             procentajedescuentocompra: $scope.PorcentajeDescuento,
             estapagada:'F',
             estaanulada :'F',
-            fechapago: convertDatetoDB($scope.FechaRegistro),
+            fechapago: aux_fecha,
             comentario: $scope.Comentario,
             impreso : 'F'
         };
@@ -279,13 +302,30 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             productosenventa : $scope.productosenventa,
             serviciosenventa : $scope.serviciosenventa
         };
-        
-        $http.post(API_URL+'DocumentoVenta',$scope.Venta)
-        .success(function (response) {
-            $("#titulomsm").addClass("btn-success");
-            $scope.Mensaje="Se guardo correctamente";
-            $("#Msm").modal("show");
-        });
+    
+        if($scope.CodigoDocumentoVenta==""){ //si el documento venta es nuevo  isNaN($scope.CodigoDocumentoVenta
+            $http.post(API_URL+'DocumentoVenta',$scope.Venta)
+                .success(function (response) {
+                    $scope.CodigoDocumentoVenta=response;
+                    $("#titulomsm").addClass("btn-success");
+                    $scope.Mensaje="Se guardo correctamente";
+                    $("#Msm").modal("show");
+            });
+        }else{
+            if(!isNaN($scope.CodigoDocumentoVenta)){
+                $http.put(API_URL+'DocumentoVenta/'+$scope.CodigoDocumentoVenta,$scope.Venta)
+                    .success(function (response) {
+                        $scope.CodigoDocumentoVenta=response;
+                        $("#titulomsm").addClass("btn-success");
+                        $scope.Mensaje="Se modifico correctamente";
+                        $("#Msm").modal("show");
+                });
+            }else{
+                $("#titulomsm").addClass("btn-danger");
+                $scope.Mensaje="Error en la venta";
+                $("#Msm").modal("show");
+            }
+        }
     };
 
     /////////Filtro
@@ -374,6 +414,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
 
         $scope.PorcentajeIvaIceOtroConfig=0;
 
+        $scope.CodigoDocumentoVenta="";
 
         $scope.PorcentajeDescuento=0;
         $scope.SubtotalIva=0.0;
@@ -387,23 +428,29 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
     $scope.aux_ventatoAnular={};
     $scope.AnularVenta=function(item) {
         $("#AnularVenta").modal("show");
-        $scope.aux_ventatoAnular={};
-        $scope.aux_ventatoAnular=item;
+        if(item!=null){
+            $scope.aux_ventatoAnular={};
+            $scope.aux_ventatoAnular=item;
+            $scope.CodigoDocumentoVenta=$scope.aux_ventatoAnular.codigoventa;
+        }
     };
     $scope.ConfirAnulacion=function() {
         $("#AnularVenta").modal("hide");
-        $http.get(API_URL + 'DocumentoVenta/anularVenta/'+$scope.aux_ventatoAnular.codigoventa)
+        $http.get(API_URL + 'DocumentoVenta/anularVenta/'+$scope.CodigoDocumentoVenta)
         .success(function(response){
+            $scope.CodigoDocumentoVenta="";
             $("#titulomsm").addClass("btn-success");
             $scope.Mensaje="Se guardo correctamente";
             $("#Msm").modal("show");
         });
     };
+
+
+
     //Editar
     $scope.EditDocVenta=function(item) {
       $http.get(API_URL + 'DocumentoVenta/loadEditVenta/'+item.codigoventa)
         .success(function(response){
-            console.log(response);
             $scope.ActivaVenta="1";
             var aux_pventa=response.puntoventa;
             var aux_cliente=response.cliente;
@@ -418,6 +465,8 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             $scope.CLiente=aux_cliente;
             $scope.RUCCI=aux_cliente[0].documentoidentidad;
             $scope.ReloadVenta(aux_venta);
+
+            $scope.CodigoDocumentoVenta=aux_venta[0].codigoventa;
         });  
     };
     $scope.ReloadVenta=function(data) {
