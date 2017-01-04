@@ -63,7 +63,8 @@
                     <div class="col-sm-4 col-xs-12 error">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Retención Nro.: </span>
-                            <input type="text" class="form-control" id="t_nroretencion" name="t_nroretencion" ng-model="t_nroretencion" ng-required="true" placeholder="" />
+                            <input type="text" class="form-control" id="t_nroretencion" name="t_nroretencion"
+                                   ng-model="t_nroretencion" ng-required="true" ng-keypress="onlyNumber($event, 12, 't_nroretencion')" placeholder="" />
 
                         </div>
                         <span class="help-block error" style="text-align: right !important; color: red;"
@@ -163,7 +164,8 @@
                                 <div class="col-sm-6 col-xs-12 error">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Autorización: </span>
-                                        <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion" ng-model="t_nroautorizacion" ng-required="true" placeholder="" />
+                                        <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
+                                               ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
                                     </div>
                                     <span class="help-block error" style="text-align: right !important; color: red;"
                                           ng-show="formRteCompras.t_nroautorizacion.$invalid && formRteCompras.t_nroautorizacion.$touched" >El Nro. de Autorización es requerido</span>

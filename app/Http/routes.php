@@ -235,6 +235,10 @@ Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraCont
 
 Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@form');
 
+
+Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
+
+
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
 /*

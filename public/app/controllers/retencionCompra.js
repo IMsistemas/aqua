@@ -6,7 +6,7 @@
     app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
         $scope.tiporetencion = [
-            { id: 0, name: '-- Todos --' },
+            { id: 0, name: '-- Tipos de Retención --' },
             { id: 1, name: 'Retención IVA' },
             { id: 2, name: 'Retención Fuente a la Renta' }
         ];
@@ -16,40 +16,15 @@
         $scope.baseimponible = 0;
         $scope.idretencion = 0;
 
-        /*
-         * FUNCIONES DEL INDEX------------------------------------------------------------------------------------------
-         */
-
-        /*$scope.retencion = [];
-
-        $scope.initLoad = function (pageNumber) {
-            $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber).success(function(response){
-                $scope.retencion = response.data;
-                $scope.totalItems = response.total;
-            });
-        };
-
-        $scope.pageChanged = function(newPage) {
-            $scope.initLoad(newPage);
-        };
-
-        $scope.loadFormPage = function(id){
-            window.open('retencionCompra/form/' + id, '_blank');
-        };*/
-
-        /*
-         * FUNCIONES DEL FORMULARIO-------------------------------------------------------------------------------------
-         */
-
         $scope.initLoad = function () {
 
             $scope.idretencion = $('#idretencioncompra').val();
 
             if ($scope.idretencion != 0) {
                 $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
-                    //console.log(response);
+
                     $scope.t_fechaingreso = $scope.convertDatetoDB(response[0].fecharetencion, true);
-                    $scope.t_nroretencion = response[0].numeroretencion;
+                    $scope.t_nroretencion = (response[0].numeroretencion).trim();
 
                     $('#t_nrocompra').val((response[0].codigocompra).toString());
 

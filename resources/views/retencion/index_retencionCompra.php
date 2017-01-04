@@ -33,12 +33,12 @@
                 </div>
                 <div class="col-sm-2 col-xs-12">
                     <select class="form-control" name="s_tiporetencion" id="s_tiporetencion"
-                            ng-model="s_tiporetencion" ng-options="value.id as value.name for value in tiporetencion" ng-change="">
+                            ng-model="s_tiporetencion" ng-options="value.id as value.name for value in tiporetencion" ng-change="getCodigosRetencion()">
                     </select>
                 </div>
                 <div class="col-sm-2 col-xs-12">
                     <select class="form-control" name="s_codigoretencion" id="s_codigoretencion"
-                            ng-model="s_codigoretencion" ng-options="value.id as value.name for value in tipo" ng-change="">
+                            ng-model="s_codigoretencion" ng-options="value.id as value.name for value in codigosretencion" ng-change="">
                     </select>
                 </div>
                 <div class="col-sm-2 col-xs-12">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-sm-2 col-xs-12">
                     <select class="form-control" name="s_month" id="s_month"
-                            ng-model="s_month" ng-options="value.id as value.name for value in tipo" ng-change="">
+                            ng-model="s_month" ng-options="value.id as value.name for value in meses" ng-change="">
                     </select>
                 </div>
                 <div class="col-sm-1 col-xs-12">

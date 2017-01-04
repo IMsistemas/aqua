@@ -51,6 +51,15 @@ class RetencionCompraController extends Controller
                             ->whereRaw("documentocompra.codigocompra::text ILIKE '%" . $codigo . "%'")->get();
     }
 
+    public function getCodigosRetencion($tipo)
+    {
+        if ($tipo == 2) {
+            return DetalleRetencionFuente::orderBy('codigoSRI', 'asc')->get();
+        } else {
+            return [];
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
