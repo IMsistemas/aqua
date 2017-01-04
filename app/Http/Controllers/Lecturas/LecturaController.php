@@ -237,7 +237,7 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
-        /*$lectura = new Lectura();
+        $lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
@@ -274,8 +274,6 @@ class LecturaController extends Controller
                 $serviciofactura->save();
             }
         }
-
-        */
 
         $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
