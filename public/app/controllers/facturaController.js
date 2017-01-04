@@ -394,6 +394,19 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             item.serviciosenfactura = item.cliente.servicioscliente;
         }
 
+        var date_p = (item.cobroagua.lectura.fechalectura).split('-');
+        var date_p0 = date_p[1] + '/' + date_p[0];
+
+        var partial_date = {
+            value: date_p0,
+            writable: true,
+            enumerable: true,
+            configurable: true
+        };
+        Object.defineProperty(item, 'partial_date', partial_date);
+
+        console.log(item);
+
         var a = {
             item: item
         };

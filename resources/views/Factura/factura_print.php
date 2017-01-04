@@ -13,19 +13,19 @@
     body {
         font-family: Arial;
         font-size: 16px;
-        padding-top: 15%;
+        padding-top: 18%;
     }
 
     .subcontainer1 {
         position: relative;
         float: left;
-        width: 70%;
+        width: 74%;
     }
 
     .subcontainer2 {
         position: relative;
         float: right;
-        width: 28%;
+        width: 24%;
     }
 
     .container {
@@ -75,7 +75,7 @@
             <tr>
                 <table class="table_bordered" style="width: 60%;">
                     <tr>
-                        <td><?= $data['cobroagua']['lectura']['fechalectura'] ?></td>
+                        <td><?= $data['partial_date'] ?></td>
                         <td><?= $data['cobroagua']['lectura']['lecturaanterior'] ?></td>
                         <td><?= $data['cobroagua']['lectura']['lecturaactual'] ?></td>
                         <td><?= $data['cobroagua']['lectura']['consumo'] ?> m3</td>
@@ -118,14 +118,14 @@
 
                     foreach ($data['serviciosenfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['serviciojunta']['nombreservicio'] . '</td>';
+                        echo '<td>' . ucwords(strtolower($item['serviciojunta']['nombreservicio'])) . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
 
                     foreach ($data['otrosvaloresfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['otrovalor']['nombreotrovalor'] . '</td>';
+                        echo '<td>' . ucwords(strtolower($item['otrovalor']['nombreotrovalor'])) . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
@@ -166,7 +166,7 @@
                 <td>Telf: <?= $data['cobroagua']['suministro']['telefonosuministro'] ?></td>
             </tr>
             <tr>
-                <td style="width: 50%;"><?= $data['cobroagua']['lectura']['fechalectura'] ?></td>
+                <td style="width: 50%;"><?= $data['partial_date'] ?></td>
                 <td><?= $data['cobroagua']['lectura']['consumo'] ?> m3</td>
             </tr>
         </table>
@@ -198,14 +198,14 @@
 
                     foreach ($data['serviciosenfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['serviciojunta']['nombreservicio'] . '</td>';
+                        echo '<td>' . ucwords(strtolower($item['serviciojunta']['nombreservicio'])) . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
 
                     foreach ($data['otrosvaloresfactura'] as $item) {
                         echo '<tr>';
-                        echo '<td>' . $item['otrovalor']['nombreotrovalor'] . '</td>';
+                        echo '<td>' . ucwords(strtolower($item['otrovalor']['nombreotrovalor'])) . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
                     }
