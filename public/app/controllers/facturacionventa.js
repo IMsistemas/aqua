@@ -9,6 +9,9 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
     $scope.Formapago=[];
     $scope.DetalleVenta=[];
 
+    $scope.NRegistroVenta="";
+    $scope.EstadoAnulada="";
+
     $scope.Comentario="";
 
     $scope.Establecimiento="";
@@ -31,6 +34,20 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
     $scope.Otros=0.0; 
     $scope.Iva=0.0; 
     $scope.Total=0.0;
+    $scope.NumeroRegistroVenta=function() {
+        $http.get(API_URL + 'DocumentoVenta/NumRegistroVenta')
+        .success(function(response){
+        
+            var aux_codigoventa1=0;
+            if(response.codigoventa!=null ){
+                aux_codigoventa1=response.codigoventa;
+            }
+            var id=(aux_codigoventa1+1);
+            $scope.NRegistroVenta=completarNumer(id);
+        });
+    };
+    $scope.NumeroRegistroVenta();
+
     //Porcentaje Iva Ice Otro
     $scope.ConfigContable=function() {
         $http.get(API_URL + 'DocumentoVenta/porcentajeivaiceotro')
@@ -224,7 +241,15 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
                     if($scope.Numero!=""){
                         if($scope.Autorizacion!="")
                         {
-                            $scope.sendDataToSave();
+                            //--------Estado anulacion
+                            if($scope.EstadoAnulada=="" ||  $scope.EstadoAnulada==false){
+                                $scope.sendDataToSave();
+                            }else{
+                                $scope.Mensaje="El documento de venta no se puede guardar porque esta anulado";
+                                $("#Msm").modal("show");    
+                            }
+
+                            //--------Estado anulacion
                         }else{
                             $scope.Mensaje="Llene el numero de autorizacion";
                             $("#Msm").modal("show");
@@ -317,7 +342,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
                     .success(function (response) {
                         $scope.CodigoDocumentoVenta=response;
                         $("#titulomsm").addClass("btn-success");
-                        $scope.Mensaje="Se modifico correctamente";
+                        $scope.Mensaje="Se modifico correctamente el documento de venta";
                         $("#Msm").modal("show");
                 });
             }else{
@@ -392,7 +417,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.LoadDataToFiltro();
 
         $scope.ActivaVenta="0";
-        $scope.Mensaje="";
+        //$scope.Mensaje="";
         $scope.FechaRegistro=now();
         $scope.CLiente=[];
         $scope.Formapago=[];
@@ -415,6 +440,8 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.PorcentajeIvaIceOtroConfig=0;
 
         $scope.CodigoDocumentoVenta="";
+
+        $scope.EstadoAnulada="";
 
         $scope.PorcentajeDescuento=0;
         $scope.SubtotalIva=0.0;
@@ -440,8 +467,9 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         .success(function(response){
             $scope.CodigoDocumentoVenta="";
             $("#titulomsm").addClass("btn-success");
-            $scope.Mensaje="Se guardo correctamente";
+            $scope.Mensaje="Se anulo  correctamente la venta";
             $("#Msm").modal("show");
+            $scope.InicioList();
         });
     };
 
@@ -475,6 +503,11 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.Numero=data[0].numerodocumento;
         $scope.pago=data[0].codigoformapago;
 
+        //-----Estado anulado
+        $scope.EstadoAnulada=data[0].estaanulada;
+        //-----Estado anulado
+
+
         $scope.PorcentajeDescuento= parseFloat(data[0].procentajedescuentocompra);
         $scope.SubtotalIva= parseFloat(data[0].subtotalivaventa);
         $scope.SubtotalCero=parseFloat(data[0].subtotalnoivaventa); 
@@ -503,6 +536,25 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
 
         $scope.CalculaTotalesVenta();
     };
+    ///////////Excel
+    $scope.Excel=function(){
+        window.open(API_URL + 'DocumentoVenta/excel/'+$scope.CodigoDocumentoVenta);
+    };
+    ///Cobrar 
+    $scope.CobrarVenta=function(){
+        $("#CobrarVenta").modal("show");
+    };
+    $scope.ConfirmarCobro=function(){
+        $("#CobrarVenta").modal("hide");
+        $http.get(API_URL + 'DocumentoVenta/cobrar/'+$scope.CodigoDocumentoVenta)
+        .success(function(response){
+            $scope.CodigoDocumentoVenta="";
+            $("#titulomsm").addClass("btn-success");
+            $scope.Mensaje="Se guardo correctamente el cobro";
+            $("#Msm").modal("show");
+            $scope.InicioList();
+        });
+    };
 });
 
 
@@ -525,6 +577,17 @@ function now(){
     if (mm < 10) mm = '0' + mm;
     var yyyy = now.getFullYear();
     return dd + "\/" + mm + "\/" + yyyy;
+}
+function completarNumer(valor){
+    if(valor.toString().length>0){
+        var i=5;
+        var completa="0";
+        var aux_com=i-valor.toString().length;
+        for(x=0;x<aux_com;x++){
+            completa+="0";
+        }
+    }
+    return completa+valor.toString();
 }
 
 $(document).ready(function(){

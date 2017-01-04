@@ -146,6 +146,16 @@ class DocumentoVenta extends Controller
         return catalogoservicio::all();
     }
     /**
+     * Obtener todos los servicios
+     *
+     *
+     * @return mixed
+     */
+    public function getDocVenta()
+    {   $lastVta=venta::all();
+        return $lastVta->last();
+    }
+    /**
      * 
      *
      * @param  \Illuminate\Http\Request  $request
@@ -228,7 +238,7 @@ class DocumentoVenta extends Controller
         return  $aux_data;
     }
     /**
-     * obtener todos los filtros
+     * anular venta
      *
      * 
      * @return mixed
@@ -239,6 +249,18 @@ class DocumentoVenta extends Controller
         $aux_servv= serviciosenventa:: where("codigoventa","=",$id)->delete();
         $aux_venta= venta::where("codigoventa", $id)
                     ->update(['estaanulada' => 't']);
+        return  $aux_venta;
+    }
+     /**
+     * anular venta
+     *
+     * 
+     * @return mixed
+     */
+    public function confirmarcobro($id)
+    {               
+        $aux_venta= venta::where("codigoventa", $id)
+                    ->update(['estapagada' => 't']);
         return  $aux_venta;
     }
 
@@ -302,7 +324,80 @@ class DocumentoVenta extends Controller
         }
         return $id;
     }
+    /**
+    * Excell
+    *
+    * @param  $id
+    * @return excell
+    */
+    public function excel($id)
+        {
+            //$producto = $this->getVentaXId($id);
 
+            $docventa = $this->getVentaXId($id);
+            
+            \Excel::create('documentoventa', function($excel) use($docventa){
+            
+                $excel->sheet('Venta', function($sheet) use($docventa) {
+                    
+                    $aux_venta=$docventa["venta"][0];
+                    $aux_cliente=$docventa["cliente"][0];
 
+                    $sheet->setOrientation('landscape');
+                    
+                    $sheet->mergeCells('B5:I5');
+                    $sheet->cells('B5:I5', function($cells) {
+                        $cells->setFontWeight('bold');
+                        $cells->setAlignment('center');
+                    });
+
+                    $sheet->row(5, array('','Venta'));             
+                
+                    $sheet->row(8, array('','Fecha Registro:',$aux_venta["fecharegistrocompra"] ,'Registro Compra No:',str_pad($aux_venta["codigoventa"], 7, "0", STR_PAD_LEFT)));
+                    $sheet->row(9, array('','Datos Cliente'));
+                    $sheet->row(10, array('','Ruc/CI:',$aux_cliente["documentoidentidad"],'Razón Social:',$aux_cliente["apellidos"]." ".$aux_cliente["nombres"]));
+
+                    $sheet->row(11, array('','Telefono:',$aux_cliente["telefonosecundariodomicilio"],'Direccion:',$aux_cliente["direcciondomicilio"]." ".$aux_cliente["nombres"]));
+                                  
+                    $sheet->row(12, array('','Datos Documento'));
+                   
+                    $sheet->row(13, array('','Numero de documento:',$aux_venta["numerodocumento"],'Autorización:',$aux_venta["autorizacionfacturar"]));
+                    $sheet->row(14, array('','Forma Pago:',$aux_venta["codigoformapago"]));
+                    $sheet->row(15, array('','Detalle Compra'));
+                    $sheet->row(16, array('','T. Venta','Bodega','Cod. Prod','Cant.','Detalle','PVP Unitario','IVA','Total'));
+                    
+                    $sheet->cells('B20:I20', function($cells) {             
+                        $cells->setFontWeight('bold');          
+                    
+                    });
+                    
+                    $i = 17;
+                    foreach ($aux_venta["productosenventa"] as $item){
+
+                        $sheet->row($i, array("",'Producto',$item["idbodega"],$item["codigoproducto"],$item["cantidad"],"",$item["precio"],$item["porcentajeiva"],$item["cantidad"]*$item["precio"]));
+                        $i++;
+                    }
+                    $i++;
+                    $sheet->row($i, array('','Comentario:',$aux_venta["comentario"],"","","Descuento:",$aux_venta["procentajedescuentocompra"],"Subtotal 14%",$aux_venta["subtotalivaventa"]));
+                    $i++;
+                    $sheet->row($i, array('','','','','',"","",'Subtotal 0%:',$aux_venta["subtotalnoivaventa"]));
+                    $i++;
+                    $sheet->row($i, array('','','','','','','','Descuento:',$aux_venta["descuentoventa"]));
+                    $i++;
+                    $sheet->row($i, array('','','','','','','','Otros:',$aux_venta["otrosvalores"]));
+                    $i++;
+                    $sheet->row($i, array('','','','','','','','IVA:',$aux_venta["ivaventa"]));
+                    $i++;
+                    $sheet->row($i, array('','','','','','','','Total:',$aux_venta["totalventa"]));
+                    
+                    $objDrawing = new \PHPExcel_Worksheet_Drawing;
+                    $objDrawing->setPath(public_path('img/logo.png')); //your image path
+                    $objDrawing->setCoordinates('B2');
+                    $objDrawing->setWorksheet($sheet);
+                    
+                });
+            
+            })->export('xls');
+        }
 
 }

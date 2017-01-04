@@ -135,9 +135,9 @@
     <div ng-show="ActivaVenta=='1'"  ng-hide="ActivaVenta=='0'">
       <div class="row">
           <div class="col-xs-12 text-right">
-              <button class="btn btn-success"><i class="glyphicon glyphicon-th"></i> </button>
+              <!--<button class="btn btn-success"><i class="glyphicon glyphicon-th"></i> </button>
               <button class="btn btn-primary"><i class="glyphicon glyphicon-file"></i> </button>
-              <button class="btn btn-info"><i class="glyphicon glyphicon-print"></i> </button>
+              <button class="btn btn-info"><i class="glyphicon glyphicon-print"></i> </button>-->
           </div>
       </div>
       <div class="row">
@@ -151,7 +151,7 @@
           <div class="col-xs-6">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Registro de venta </span>
-                <input type="text" class="form-control input-sm" readonly >
+                <input type="text" class="form-control input-sm" ng-model="NRegistroVenta" readonly >
               </div>
           </div>
       </div>
@@ -385,10 +385,16 @@
               <div class="row" >
                   <div class="col-xs-12" style="padding: 2%;">
                       <button class="btn btn-primary" ng-click="SaveVenta();"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+
+
                       <button class="btn btn-success" ng-click="InicioList();" ><i class="glyphicon glyphicon-th-list"></i> Registro Ventas</button>
+                      
                       <button class="btn btn-danger" ng-click="AnularVenta();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-trash"></i> Anular</button>
-                      <!--<button class="btn btn-primary"><i class="glyphicon glyphicon-usd"></i> Cobrar</button>
-                      <button class="btn btn-info"><i class="glyphicon glyphicon-print"></i> Imprimir</button>-->
+
+                      <button class="btn btn-info" ng-click="Excel();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-file"></i> Excel</button>
+
+                      <button class="btn btn-info" ng-click="CobrarVenta();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-cog"></i> Cobrar</button>
+                      
                   </div>
               </div>
           </div>
@@ -578,7 +584,26 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" ng-click="ConfirAnulacion();" >Cargar</button>
+        <button type="button" class="btn btn-primary" ng-click="ConfirAnulacion();" >Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="CobrarVenta" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div id="titulomsm" class="modal-header btn-primary ">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Informacion</h4>
+      </div>
+      <div class="modal-body">
+        <strong>Esta seguro que dese cobrar la facura</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" ng-click="ConfirmarCobro();" >Aceptar</button>
       </div>
     </div>
   </div>
@@ -587,9 +612,5 @@
 
 
 
+
 </div>
-
-
-
-
-
