@@ -237,7 +237,7 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
-        $lectura = new Lectura();
+       /* $lectura = new Lectura();
         $lectura->numerosuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
@@ -273,7 +273,7 @@ class LecturaController extends Controller
                 $serviciofactura->valor = $item['valor'];
                 $serviciofactura->save();
             }
-        }
+        }*/
 
         $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
@@ -286,15 +286,13 @@ class LecturaController extends Controller
 
             Mail::send('Lecturas.pdf_body_email_newLectura',['data' => $data] , function($message) use ($correo_cliente)
             {
-                $message->from('notificaciones@aqua.ec', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
+                $message->from('notificacionimnegocios@gmail.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
 
                 $message->to($correo_cliente);
-                $message->to('raidelbg84@gmail.com')->subject('Prefactura Lectura!');
-
-                /*$message->bcc('christian.imnegocios@gmail.com');
+                $message->bcc('christian.imnegocios@gmail.com');
                 $message->bcc('kevin.imnegocios@gmail.com');
-                $message->bcc('raidelbg84@gmail.com');*/
-                //$message->bcc('luis.imnegocios@gmail.com')->subject('Prefactura Lectura!');
+                $message->bcc('raidelbg84@gmail.com');
+                $message->bcc('luis.imnegocios@gmail.com')->subject('Prefactura Lectura!');
             });
         }
 
