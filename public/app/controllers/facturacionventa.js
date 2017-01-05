@@ -500,6 +500,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             $scope.ReloadVenta(aux_venta);
 
             $scope.CodigoDocumentoVenta=aux_venta[0].codigoventa;
+            $scope.NRegistroVenta=completarNumer($scope.CodigoDocumentoVenta);
         });  
     };
     $scope.ReloadVenta=function(data) {
@@ -507,6 +508,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         $scope.Autorizacion=data[0].autorizacionfacturar;
         $scope.Numero=data[0].numerodocumento;
         $scope.pago=data[0].codigoformapago;
+
 
         //-----Estado anulado
         $scope.EstadoAnulada=data[0].estaanulada;

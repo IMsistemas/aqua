@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="col-xs-2"> 
-          <button class="btn btn-success" ng-click="ActivaVenta='1'">
+          <button class="btn btn-success" ng-click="ActivaVenta='1'; NumeroRegistroVenta();">
             <i class="glyphicon glyphicon-plus"></i>
             Nueva Venta
           </button>
