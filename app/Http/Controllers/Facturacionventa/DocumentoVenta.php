@@ -14,7 +14,7 @@ use App\Modelos\Facturacionventa\puntoventa;
 use App\Modelos\Facturacionventa\formapagoventa;
 use App\Modelos\Facturacionventa\configuracioncontable;
 use App\Modelos\Facturacionventa\productoenbodega;
-use App\Modelos\Facturacionventa\CatalogoProducto;
+use App\Modelos\Facturacionventa\catalogoproducto;
 use App\Modelos\Facturacionventa\catalogoservicio;
 use App\Modelos\Facturacionventa\venta;
 use App\Modelos\Facturacionventa\productosenventa;
@@ -82,7 +82,7 @@ class DocumentoVenta extends Controller
      */
     public function getinfoProducto($texto)
     {				
-    	return CatalogoProducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
+    	return catalogoproducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
     }
     /**
      * obtener informacion de un empleado con su punto de venta
@@ -399,5 +399,21 @@ class DocumentoVenta extends Controller
             
             })->export('xls');
         }
+
+    /**
+     * procesos para imprimir
+     *
+     * 
+     * @return mixed
+     */
+    public function imprimir($id)
+    {               
+        //$aux_venta=$this->getVentaXId($id);
+        $imprimir= true;
+        $view =  \View::make('Facturacionventa.printdocventa', compact('aux_venta','imprimir','id'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('documentoventa');
+    }        
 
 }

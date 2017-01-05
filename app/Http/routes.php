@@ -555,6 +555,7 @@ Route::get('DocumentoVenta/loadEditVenta/{id}', 'Facturacionventa\DocumentoVenta
 Route::get('DocumentoVenta/excel/{id}', 'Facturacionventa\DocumentoVenta@excel');
 Route::get('DocumentoVenta/NumRegistroVenta', 'Facturacionventa\DocumentoVenta@getDocVenta');
 Route::get('DocumentoVenta/cobrar/{id}', 'Facturacionventa\DocumentoVenta@confirmarcobro');
+Route::get('DocumentoVenta/print/{id}', 'Facturacionventa\DocumentoVenta@imprimir');
 
 Route::resource('DocumentoVenta', 'Facturacionventa\DocumentoVenta');
 //------------Modulo documento venta---------------////

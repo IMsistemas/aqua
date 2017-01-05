@@ -156,6 +156,11 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
         if($scope.Aux_AddBodega!=""){
             $http.get(API_URL + 'DocumentoVenta/LoadProductos/'+$scope.Aux_AddBodega)
             .success(function(response){
+                if(response.length==0){
+                    $("#titulomsm").addClass("btn-info");
+                    $scope.Mensaje="La bodega no tiene productos";
+                    $("#Msm").modal("show");
+                }
                 $scope.ProductoPorBodega=response;
             });
         }else{
@@ -554,6 +559,12 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             $("#Msm").modal("show");
             $scope.InicioList();
         });
+    };
+    ////Imprimir
+    $scope.print=function () {
+          var accion = API_URL + "DocumentoVenta/print/"+$scope.CodigoDocumentoVenta;
+          $("#WPrint").modal("show");
+          $("#bodyprint").html("<object width='100%' height='500' data='"+accion+"'></object>");
     };
 });
 
