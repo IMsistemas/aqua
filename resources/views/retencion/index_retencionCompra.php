@@ -148,6 +148,6 @@
     <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
     <script src="<?= asset('app/app.js') ?>"></script>
 
-    <script src="<?= asset('app/controllers/retencionComprasIndex.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
 </html>
 

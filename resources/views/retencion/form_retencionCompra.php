@@ -342,6 +342,6 @@
     <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
     <script src="<?= asset('app/app.js') ?>"></script>
 
-    <script src="<?= asset('app/controllers/retencionCompra.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
 </html>
 
