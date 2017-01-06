@@ -147,7 +147,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloRetencionesCompras = function(){		
 		$scope.titulo = "Retenciones Compras";
-		$scope.toModulo = "retencionCompra";
+		$scope.toModulo = "retencionCompras";
 	}
 
 	$scope.toModuloPortafolioProductos = function(){		
