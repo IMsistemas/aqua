@@ -216,8 +216,8 @@
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
     <script src="<?= asset('app/controllers/facturacionventa.js') ?>"></script>
-    <script src="<?= asset('app/controllers/retencionCompraIndexControler.js') ?>"></script>
-    <script src="<?= asset('app/controllers/retencionCompraControler.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionCompraIndexController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
 
 
 
