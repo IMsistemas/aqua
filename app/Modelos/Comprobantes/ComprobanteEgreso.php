@@ -9,4 +9,5 @@ class ComprobanteEgreso extends Model
     protected $table = 'comprobanteegreso';
     protected $primaryKey = 'idcomprobanteingreso3';
     public $timestamps = false;
+
 }
