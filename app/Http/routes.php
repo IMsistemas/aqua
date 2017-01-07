@@ -241,6 +241,11 @@ Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCom
 
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
+
+
+Route::resource('comprobEgreso', 'Comprobantes\ComprobanteEgresoController');
+
+
 /*
  * ---------------------------------------------------------------------------------------------------------------------
  */
