@@ -101,7 +101,45 @@ class RetencionVentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $retencionCompra = new RetencionVenta();
+
+        $retencionCompra->numeroretencion2 = $request->input('numeroretencion');
+        $retencionCompra->codigoventa = $request->input('codigocompra');
+        //$retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
+        $retencionCompra->fecha = $request->input('fecha');
+        $retencionCompra->razonsocial = $request->input('razonsocial');
+        $retencionCompra->documentoidentidad = $request->input('documentoidentidad');
+        $retencionCompra->direccion = $request->input('direccion');
+        //$retencionCompra->ciudad = $request->input('ciudad');
+        $retencionCompra->autorizacion = $request->input('autorizacion');
+        $retencionCompra->totalretencion = $request->input('totalretencion');
+
+        if ($retencionCompra->save()) {
+
+            $retenciones = $request->input('retenciones');
+
+            foreach ($retenciones as $item) {
+                $retencion = new RetencionFuenteVenta();
+                //$retencion->numeroretencion = $request->input('numeroretencion');
+                $retencion->idretencionventa = $retencionCompra->idretencionventa;
+                /*$retencion->iddetalleretencionfuente = $item->id;
+                $retencion->descripcion = $item->detalle;
+                $retencion->poecentajeretencion = $item->porciento;
+                $retencion->valorretenido = $item->valor;*/
+
+                $retencion->iddetalleretencion = $item['id'];
+                $retencion->descripcion = $item['detalle'];
+                $retencion->poecentajeretencion = $item['porciento'];
+                $retencion->valorretenido = $item['valor'];
+
+                if ($retencion->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+            }
+
+            return response()->json(['success' => true, 'idretencioncompra' => $retencionCompra->idretencioncompra]);
+
+        } else return response()->json(['success' => false]);
     }
 
     /**

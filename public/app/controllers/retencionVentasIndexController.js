@@ -111,10 +111,10 @@
 
                 $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (response[0].codigocompra).toString());
 
-                $scope.t_rucci = response[0].numerodocumentoproveedor;
+                $scope.t_rucci = response[0].documentoidentidad;
                 $scope.t_razonsocial = response[0].razonsocialproveedor;
-                $scope.t_phone = response[0].telefonoproveedor;
-                $scope.t_direccion = response[0].direccionproveedor;
+                $scope.t_phone = response[0].telefonoprincipaldomicilio;
+                $scope.t_direccion = response[0].direcciondomicilio;
                 //$scope.t_ciudad = response[0].nombreciudad;
                 //$scope.t_tipocomprobante = response[0].nombretipocomprobante;
 
@@ -333,6 +333,8 @@
 
         $scope.showInfoRetencion = function (object, data) {
 
+            console.log(object.originalObject);
+
             if (object.originalObject != undefined) {
                 data.id = object.originalObject.iddetalleretencion;
                 data.codigo = object.originalObject.codigosri;
@@ -388,18 +390,18 @@
         $scope.showDataPurchase = function (object) {
 
             if (object.originalObject != undefined) {
-                $scope.t_rucci = object.originalObject.numerodocumentoproveedor;
-                $scope.t_razonsocial = object.originalObject.razonsocialproveedor;
-                $scope.t_phone = object.originalObject.telefonoproveedor;
-                $scope.t_direccion = object.originalObject.direccionproveedor;
+                $scope.t_rucci = object.originalObject.documentoidentidad;
+                $scope.t_razonsocial = object.originalObject.apellidos + ' ' + object.originalObject.nombres;
+                $scope.t_phone = object.originalObject.telefonoprincipaldomicilio;
+                $scope.t_direccion = object.originalObject.direcciondomicilio;
                 //$scope.t_tipocomprobante = object.originalObject.nombretipocomprobante;
                 //$scope.t_ciudad = object.originalObject.nombreciudad;
 
-                $scope.baseimponible = object.originalObject.subtotalnoivacompra;
+                $scope.baseimponible = object.originalObject.subtotalnoivaventa;
 
-                $scope.baseimponibleIVA = object.originalObject.ivacompra;
+                $scope.baseimponibleIVA = object.originalObject.ivaventa;
 
-                $('#t_nrocompra').val(object.originalObject.codigocompra);
+                $('#t_nrocompra').val(object.originalObject.codigoventa);
 
                 $('#btn-createrow').prop('disabled', false);
             }
