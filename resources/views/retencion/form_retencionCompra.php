@@ -235,7 +235,7 @@
 
                                                         remote-url = "{{API_URL}}../getCodigos/"
 
-                                                        title-field="codigoSRI"
+                                                        title-field="codigosri"
 
                                                         minlength="1"
                                                         input-class="form-control text-right error"

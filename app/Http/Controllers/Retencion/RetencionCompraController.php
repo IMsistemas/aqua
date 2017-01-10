@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Retencion;
 
 use App\Modelos\Compras\CompraProducto;
+use App\Modelos\Retencion\DetalleRetencion;
+use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
 use App\Modelos\Retencion\RetencionCompra;
 use App\Modelos\Retencion\RetencionFuenteCompra;
@@ -30,23 +32,56 @@ class RetencionCompraController extends Controller
 
     public function getRetenciones(Request $request)
     {
-        return RetencionCompra::orderBy('fecha', 'desc')->paginate(5);
+
+        $filter = json_decode($request->get('filter'));
+
+        $retencion = null;
+
+        if ($filter->year != null && $filter->month != null) {
+            $retencion = RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year . ' AND EXTRACT( MONTH FROM fecha) = ' . $filter->month);
+        } else if ($filter->year != null) {
+            $retencion = RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year);
+        } else if ($filter->month != null) {
+            $retencion = RetencionCompra::whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->month);
+        }
+
+        if ($filter->search != null) {
+            if ($retencion != null) {
+                $retencion->whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
+            } else {
+                $retencion = RetencionCompra::whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
+            }
+        }
+
+        if ($retencion != null) {
+            $retencion = $retencion->orderBy('fecha', 'desc')->paginate(10);
+        } else {
+            $retencion = RetencionCompra::orderBy('fecha', 'desc')->paginate(10);
+        }
+
+        return $retencion;
+
+        //return RetencionCompra::orderBy('fecha', 'desc')->paginate(5);
     }
 
     public function getRetencionesByCompra($id)
     {
-        return RetencionFuenteCompra::join('detalleretencionfuente', 'detalleretencionfuente.iddetalleretencionfuente', '=', 'retencionfuentecompra.iddetalleretencionfuente')
+        return RetencionFuenteCompra::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuentecompra.iddetalleretencion')
                                         ->where('idretencioncompra', $id)->get();
     }
 
     public function getCodigos($codigo)
     {
-        return DetalleRetencionFuente::where('codigoSRI', 'LIKE', '%' . $codigo . '%')->get();
+        return DetalleRetencion::where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
+
+        //return DetalleRetencionFuente::where('codigoSRI', 'LIKE', '%' . $codigo . '%')->get();
     }
 
     public function getCompras($codigo)
     {
         return CompraProducto::join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
+                            ->join('sector', 'proveedor.idsector', '=', 'sector.idsector')
+                            ->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
                             ->join('tipocomprobante', 'tipocomprobante.codigocomprbante', '=', 'documentocompra.codigocomprbante')
                             ->whereRaw("documentocompra.codigocompra::text ILIKE '%" . $codigo . "%'")->get();
     }
@@ -54,7 +89,8 @@ class RetencionCompraController extends Controller
     public function getCodigosRetencion($tipo)
     {
         if ($tipo == 2) {
-            return DetalleRetencionFuente::orderBy('codigoSRI', 'asc')->get();
+            return DetalleRetencion::orderBy('codigosri', 'asc')->get();
+            //return DetalleRetencionFuente::orderBy('codigoSRI', 'asc')->get();
         } else {
             return [];
         }
@@ -104,7 +140,7 @@ class RetencionCompraController extends Controller
                 $retencion->poecentajeretencion = $item->porciento;
                 $retencion->valorretenido = $item->valor;*/
 
-                $retencion->iddetalleretencionfuente = $item['id'];
+                $retencion->iddetalleretencion = $item['id'];
                 $retencion->descripcion = $item['detalle'];
                 $retencion->poecentajeretencion = $item['porciento'];
                 $retencion->valorretenido = $item['valor'];
@@ -129,10 +165,12 @@ class RetencionCompraController extends Controller
     {
         return RetencionCompra::join('documentocompra', 'documentocompra.codigocompra', '=', 'retencioncompra.codigocompra')
                                 ->join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
+                                ->join('sector', 'proveedor.idsector', '=', 'sector.idsector')
+                                ->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
                                 ->join('tipocomprobante', 'tipocomprobante.codigocomprbante', '=', 'documentocompra.codigocomprbante')
                                 ->select('documentocompra.*', 'tipocomprobante.nombretipocomprobante', 'retencioncompra.numeroretencion',
                                             'retencioncompra.fecha AS fecharetencion', 'retencioncompra.autorizacion', 'retencioncompra.totalretencion',
-                                            'retencioncompra.numerodocumentoproveedor AS serialretencion', 'proveedor.*')
+                                            'retencioncompra.numerodocumentoproveedor AS serialretencion', 'ciudad.nombreciudad','proveedor.*')
                                 ->where('idretencioncompra', $id)->get();
 
     }
@@ -180,7 +218,7 @@ class RetencionCompraController extends Controller
                 $retencion = new RetencionFuenteCompra();
                 //$retencion->numeroretencion = $request->input('numeroretencion');
                 $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
-                $retencion->iddetalleretencionfuente = $item['id'];
+                $retencion->iddetalleretencion = $item['id'];
                 $retencion->descripcion = $item['detalle'];
                 $retencion->poecentajeretencion = $item['porciento'];
                 $retencion->valorretenido = $item['valor'];

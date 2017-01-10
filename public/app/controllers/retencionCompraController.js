@@ -5,15 +5,19 @@
 
     app.controller('retencionComprasController', function($scope, $http, API_URL) {
 
+
+
         $scope.tiporetencion = [
             { id: 0, name: '-- Tipos de Retención --' },
             { id: 1, name: 'Retención IVA' },
             { id: 2, name: 'Retención Fuente a la Renta' }
         ];
+
         $scope.s_tiporetencion = 0;
 
         $scope.itemretencion = [];
         $scope.baseimponible = 0;
+        $scope.baseimponibleIVA = 0;
         $scope.idretencion = 0;
 
         $scope.initLoad = function () {
@@ -48,19 +52,28 @@
                     $('#btn-createrow').prop('disabled', false);
 
                     $scope.baseimponible = response[0].subtotalnoivacompra;
+                    $scope.baseimponibleIVA = response[0].ivacompra;
 
                     $http.get(API_URL + 'retencionCompra/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
+                        console.log(data);
                         var longitud = data.length;
                         for (var i = 0; i < longitud; i++){
                             var object_row = {
                                 year: (response[0].fecharetencion).split('-')[0],
-                                codigo: data[i].codigoSRI,
-                                detalle: data[i].nombreretencioniva,
-                                id: data[i].iddetalleretencionfuente,
-                                baseimponible: response[0].subtotalnoivacompra,
+                                codigo: data[i].codigosri,
+                                detalle: data[i].concepto,
+                                id: data[i].iddetalleretencion,
+                                baseimponible: '0.00',
                                 porciento: data[i].poecentajeretencion,
                                 valor: data[i].valorretenido
                             };
+
+                            if (data[i].idtiporetencion == 1) {
+                                object_row.baseimponible = response[0].subtotalnoivacompra;
+                            } else {
+                                object_row.baseimponible = response[0].ivacompra;
+                            }
+
                             ($scope.itemretencion).push(object_row);
                             $('[data-toggle="tooltip"]').tooltip();
                         }
@@ -72,14 +85,14 @@
 
         $scope.createRow = function () {
 
-            var base = parseFloat($scope.baseimponible).toFixed(2);
+            //var base = parseFloat($scope.baseimponible).toFixed(2);
 
             var object_row = {
                 year: ($scope.t_fechaingreso).split('/')[2],
                 codigo: '',
                 detalle: '',
                 id:0,
-                baseimponible: base,
+                baseimponible: '0.00',
                 porciento: '0.00',
                 valor: '0.00'
             };
@@ -183,13 +196,20 @@
         $scope.showInfoRetencion = function (object, data) {
 
             if (object.originalObject != undefined) {
-                data.id = object.originalObject.iddetalleretencionfuente;
-                data.codigo = object.originalObject.codigoSRI;
-                data.detalle = object.originalObject.nombreretencioniva;
+                data.id = object.originalObject.iddetalleretencion;
+                data.codigo = object.originalObject.codigosri;
+                data.detalle = object.originalObject.concepto;
                 data.porciento = object.originalObject.porcentajevigente;
 
                 var porciento = parseFloat(data.porciento);
-                var baseimponible = parseFloat(data.baseimponible);
+
+                if (object.originalObject.idtiporetencion == 1) {
+                    var baseimponible = parseFloat($scope.baseimponible);
+                    data.baseimponible = $scope.baseimponible;
+                } else {
+                    var baseimponible = parseFloat($scope.baseimponibleIVA);
+                    data.baseimponible = $scope.baseimponibleIVA;
+                }
 
                 var result = (porciento / 100) *  baseimponible;
 
@@ -222,6 +242,7 @@
                 data.id = 0;
                 data.detalle = '';
                 data.porciento = '0.00';
+                data.baseimponible = '0.00';
             }
 
         };
@@ -237,6 +258,8 @@
                 $scope.t_tipocomprobante = object.originalObject.nombretipocomprobante;
 
                 $scope.baseimponible = object.originalObject.subtotalnoivacompra;
+
+                $scope.baseimponibleIVA = object.originalObject.ivacompra;
 
                 $('#t_nrocompra').val(object.originalObject.codigocompra);
 
