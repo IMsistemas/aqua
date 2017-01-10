@@ -86,8 +86,6 @@
                 search: search
             };
 
-            console.log(filtros);
-
             $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
                 $scope.retencion = response.data;
                 $scope.totalItems = response.total;
@@ -134,7 +132,7 @@
                 $scope.baseimponibleIVA = response[0].ivacompra;
 
                 $http.get(API_URL + 'retencionCompra/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
-                    console.log(data);
+
                     var longitud = data.length;
                     for (var i = 0; i < longitud; i++){
                         var object_row = {
@@ -221,70 +219,6 @@
             $scope.active = '0';
             $scope.initLoad(1);
         };
-
-
-        /*$scope.initLoad2 = function () {
-
-            $scope.idretencion = $('#idretencioncompra').val();
-
-            if ($scope.idretencion != 0) {
-                $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
-
-                    $scope.t_fechaingreso = $scope.convertDatetoDB(response[0].fecharetencion, true);
-                    $scope.t_nroretencion = (response[0].numeroretencion).trim();
-
-                    $('#t_nrocompra').val((response[0].codigocompra).toString());
-
-                    $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (response[0].codigocompra).toString());
-
-                    $scope.t_rucci = response[0].numerodocumentoproveedor;
-                    $scope.t_razonsocial = response[0].razonsocialproveedor;
-                    $scope.t_phone = response[0].telefonoproveedor;
-                    $scope.t_direccion = response[0].direccionproveedor;
-                    //$scope.t_ciudad = response[0].ciudad;
-                    $scope.t_tipocomprobante = response[0].nombretipocomprobante;
-
-                    var serial = (response[0].serialretencion).split('-');
-
-                    $scope.t_establ = serial[0];
-                    $scope.t_pto = serial[1];
-                    $scope.t_secuencial = serial[2];
-
-                    $scope.t_nroautorizacion = response[0].autorizacion;
-
-                    $('#btn-createrow').prop('disabled', false);
-
-                    $scope.baseimponible = response[0].subtotalnoivacompra;
-                    $scope.baseimponibleIVA = response[0].ivacompra;
-
-                    $http.get(API_URL + 'retencionCompra/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
-                        console.log(data);
-                        var longitud = data.length;
-                        for (var i = 0; i < longitud; i++){
-                            var object_row = {
-                                year: (response[0].fecharetencion).split('-')[0],
-                                codigo: data[i].codigosri,
-                                detalle: data[i].concepto,
-                                id: data[i].iddetalleretencion,
-                                baseimponible: '0.00',
-                                porciento: data[i].poecentajeretencion,
-                                valor: data[i].valorretenido
-                            };
-
-                            if (data[i].idtiporetencion == 1) {
-                                object_row.baseimponible = response[0].subtotalnoivacompra;
-                            } else {
-                                object_row.baseimponible = response[0].ivacompra;
-                            }
-
-                            ($scope.itemretencion).push(object_row);
-                            $('[data-toggle="tooltip"]').tooltip();
-                        }
-                        $scope.recalculateTotal();
-                    });
-                });
-            }
-        };*/
 
         $scope.createRow = function () {
 
@@ -452,7 +386,6 @@
         };
 
         $scope.showDataPurchase = function (object) {
-            console.log(object.originalObject);
 
             if (object.originalObject != undefined) {
                 $scope.t_rucci = object.originalObject.numerodocumentoproveedor;
@@ -470,8 +403,6 @@
 
                 $('#btn-createrow').prop('disabled', false);
             }
-
-
 
         };
 
