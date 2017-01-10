@@ -164,6 +164,13 @@
     <div ng-show="ActivaVenta=='1'"  ng-hide="ActivaVenta=='0'">
       <div class="row">
           <div class="col-xs-12 text-right">
+
+            <a   ng-click="Excel();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' ">
+              <img ng-src="../../img/excel.png" style="height: 40px" >
+            </a>
+            <a ng-click="print();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' ">
+              <img ng-src="../../img/pdf.png" style="height: 40px" >
+            </a>
               <!--<button class="btn btn-success"><i class="glyphicon glyphicon-th"></i> </button>
               <button class="btn btn-primary"><i class="glyphicon glyphicon-file"></i> </button>
               <button class="btn btn-info"><i class="glyphicon glyphicon-print"></i> </button>-->
@@ -420,9 +427,10 @@
                       
                       <button class="btn btn-danger" ng-click="AnularVenta();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-trash"></i> Anular</button>
 
-                      <button class="btn btn-info" ng-click="Excel();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-file"></i> Excel</button>
 
                       <button class="btn btn-info" ng-click="CobrarVenta();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-cog"></i> Cobrar</button>
+
+                      <button class="btn btn-info" ng-click="Excel();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-file"></i> Excel</button>
 
                       <button class="btn btn-info" ng-click="print();" ng-hide="CodigoDocumentoVenta==''" ng-show=" CodigoDocumentoVenta!='' " ><i class="glyphicon glyphicon-cog"></i> Imprimir</button>
                       

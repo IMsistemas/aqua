@@ -39,7 +39,7 @@ class venta extends Model
 
     public function puntoventa()
     {
-        return $this->hasOne('App\Modelos\Facturacionventa\puntoventa',"idpuntoventa");
+        return $this->belongsTo('App\Modelos\Facturacionventa\puntoventa',"idpuntoventa");
     }
     public function productosenventa()
     {
@@ -52,5 +52,9 @@ class venta extends Model
     public function cliente()
     {
         return $this->hasOne('App\Modelos\Clientes\Cliente',"codigocliente");
+    }
+    public function pago()
+    {
+        return $this->belongsTo('App\Modelos\Facturacionventa\formapagoventa',"codigoformapago");
     }
 }

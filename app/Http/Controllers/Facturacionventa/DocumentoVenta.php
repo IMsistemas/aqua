@@ -62,7 +62,7 @@ class DocumentoVenta extends Controller
      */
     public function getinfoBodegas($texto)
     {
-    	return Bodega::whereRaw("idbodega ILIKE '%" . $texto . "%' or nombrebodega ILIKE '%" . $texto . "%'")->get();
+        return Bodega::whereRaw("idbodega ILIKE '%" . $texto . "%' or nombrebodega ILIKE '%" . $texto . "%'")->get();
     }
     /**
      * Ontener todas las bodegas
@@ -81,8 +81,8 @@ class DocumentoVenta extends Controller
      * @return mixed
      */
     public function getinfoProducto($texto)
-    {				
-    	return catalogoproducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
+    {               
+        return catalogoproducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
     }
     /**
      * obtener informacion de un empleado con su punto de venta
@@ -272,8 +272,9 @@ class DocumentoVenta extends Controller
      */
     public function getVentaXId($id)
     {               
-    // $aux_puntoVenta= puntoventa::where("idpuntoventa","=",$aux_venta[0]->idpuntoventa)->get();
-        $aux_venta= venta::with('productosenventa','serviciosenventa','cliente')->where("documentoventa.codigoventa","=", $id)->get();
+        $aux_venta= venta::with('productosenventa.producto','serviciosenventa','cliente','pago','puntoventa.empleado')
+        ->where("documentoventa.codigoventa","=", $id)->get();
+
         $aux_puntoVenta= puntoventa::with('empleado', 'establecimiento')->where("idpuntoventa","=",$aux_venta[0]->idpuntoventa)->limit(1)->get();
         $aux_cliente=cliente::where("codigocliente","=",$aux_venta[0]->codigocliente)->get();
         $aux_data = array(
@@ -357,14 +358,14 @@ class DocumentoVenta extends Controller
                     $sheet->row(9, array('','Datos Cliente'));
                     $sheet->row(10, array('','Ruc/CI:',$aux_cliente["documentoidentidad"],'Razón Social:',$aux_cliente["apellidos"]." ".$aux_cliente["nombres"]));
 
-                    $sheet->row(11, array('','Telefono:',$aux_cliente["telefonosecundariodomicilio"],'Direccion:',$aux_cliente["direcciondomicilio"]." ".$aux_cliente["nombres"]));
+                    $sheet->row(11, array('','Telefono:',$aux_cliente["telefonosecundariodomicilio"],'Direccion:',$aux_cliente["direcciondomicilio"]));
                                   
                     $sheet->row(12, array('','Datos Documento'));
                    
                     $sheet->row(13, array('','Numero de documento:',$aux_venta["numerodocumento"],'Autorización:',$aux_venta["autorizacionfacturar"]));
-                    $sheet->row(14, array('','Forma Pago:',$aux_venta["codigoformapago"]));
+                    $sheet->row(14, array('','Forma Pago:',$aux_venta["pago"]->nombreformapago,'Vendedor', $aux_venta["puntoventa"]->empleado->apellidos." ".$aux_venta["puntoventa"]->empleado->nombres));
                     $sheet->row(15, array('','Detalle Compra'));
-                    $sheet->row(16, array('','T. Venta','Bodega','Cod. Prod','Cant.','Detalle','PVP Unitario','IVA','Total'));
+                    $sheet->row(16, array('','T. Venta','Bodega','Cod. Prod','Detalle','Cant.','PVP Unitario','IVA','Total'));
                     
                     $sheet->cells('B20:I20', function($cells) {             
                         $cells->setFontWeight('bold');          
@@ -374,7 +375,7 @@ class DocumentoVenta extends Controller
                     $i = 17;
                     foreach ($aux_venta["productosenventa"] as $item){
 
-                        $sheet->row($i, array("",'Producto',$item["idbodega"],$item["codigoproducto"],$item["cantidad"],"",$item["precio"],$item["porcentajeiva"],$item["cantidad"]*$item["precio"]));
+                        $sheet->row($i, array("",'Producto',$item["idbodega"],$item["codigoproducto"],$item["producto"]->nombreproducto,$item["cantidad"],$item["precio"],$item["porcentajeiva"],$item["cantidad"]*$item["precio"]));
                         $i++;
                     }
                     $i++;
@@ -408,9 +409,11 @@ class DocumentoVenta extends Controller
      */
     public function imprimir($id)
     {               
-        //$aux_venta=$this->getVentaXId($id);
+        $docventa=$this->getVentaXId($id);
+        $aux_venta=$docventa["venta"][0];
+        $aux_cliente=$docventa["cliente"][0];
         $imprimir= true;
-        $view =  \View::make('Facturacionventa.printdocventa', compact('aux_venta','imprimir','id'))->render();
+        $view =  \View::make('Facturacionventa.printdocventa', compact('aux_venta','aux_cliente','imprimir','id'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('documentoventa');

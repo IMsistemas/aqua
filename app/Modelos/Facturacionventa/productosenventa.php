@@ -24,4 +24,9 @@ class productosenventa extends Model
 		'preciototal',
         'porcentajeiva'
     ];
+
+    public function producto()
+    {
+        return $this->belongsTo('App\Modelos\Facturacionventa\catalogoproducto',"codigoproducto");
+    }
 }
