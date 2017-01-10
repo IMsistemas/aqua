@@ -235,13 +235,27 @@ Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraCont
 
 Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@form');
 
-
 Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
-
 
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
+//----------------------------------------------------------------------------------------------------------------------
 
+Route::get('retencionVentas/getRetenciones', 'Retencion\RetencionVentaController@getRetenciones');
+
+Route::get('retencionVentas/getRetencionesByVenta/{id}', 'Retencion\RetencionVentaController@getRetencionesByVenta');
+
+Route::get('retencionVentas/getVentas/{codigo}', 'Retencion\RetencionVentaController@getVentas');
+
+Route::get('retencionVentas/getCodigos/{codigo}', 'Retencion\RetencionVentaController@getCodigos');
+
+Route::get('retencionVentas/form/{id}', 'Retencion\RetencionVentaController@form');
+
+Route::get('retencionVentas/getCodigosRetencion/{tipo}', 'Retencion\RetencionVentaController@getCodigosRetencion');
+
+Route::resource('retencionVentas', 'Retencion\RetencionVentaController');
+
+//----------------------------------------------------------------------------------------------------------------------
 
 Route::resource('comprobEgreso', 'Comprobantes\ComprobanteEgresoController');
 
