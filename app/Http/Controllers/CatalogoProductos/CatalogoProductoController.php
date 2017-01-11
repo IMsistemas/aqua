@@ -184,5 +184,14 @@ class CatalogoProductoController extends Controller
         $producto->delete();
         return response()->json(['success' => true]);
     }
+    
+    public function anularProducto($param)
+    {
+    	$param = json_decode($param);
+    	$producto = CatalogoProducto::find($param->id);
+    	$$productobodega->estado = $param->estado;
+    	$producto->save();
+    	return response()->json(['success' => true]);
+    }
 
 }

@@ -205,12 +205,16 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
                 id: $scope.bodega_del,
                 estado: $scope.option
             }; 	
+    	var mens = 'Anulo';
+    	if($scope.option==1){
+    		mens = 'Activo';
+    	}
     	
         $http.get(API_URL + 'bodega/anularBodega/' + JSON.stringify(param)).success(function(response) {
             $scope.initLoad();
             $('#modalConfirmDelete').modal('hide');
             $scope.bodega_del = 0;
-            $scope.message = 'Se Anulo correctamente el Item seleccionado';
+            $scope.message = 'Se '+ mens +' correctamente el Item seleccionado';
             $('#modalMessage').modal('show');
             setTimeout("$('#modalMessage').modal('hide')",3000);
         });

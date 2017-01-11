@@ -477,6 +477,8 @@ Route::get('catalogoproducto/getCategoriasHijas/{filters}', 'CatalogoProductos\C
 Route::get('catalogoproducto/{id}', 'CatalogoProductos\CatalogoProductoController@show');
 Route::resource('catalogoproducto', 'CatalogoProductos\CatalogoProductoController');
 
+Route::get('catalogoproducto/anularProducto/{param}', 'CatalogoProducto\CatalogoProductoController@anularProducto');
+
 /*===================================Módulo Bodega===========================================*/
 
 Route::get('bodega/getProvincias', 'Bodegas\BodegaController@getProvincias');
