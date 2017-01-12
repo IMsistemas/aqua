@@ -89,7 +89,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">RUC</label>
-                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
+                                                <input type="text" name="ruc" ng-minlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
                                                 <span class="text-danger" 
                                                         ng-show=" formProveedores.ruc.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
                                             </div>
@@ -264,7 +264,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">RUC</label>
-                                                <input type="text" name="ruc" ng-minlength ="10" ng-maxlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
+                                                <input type="text" name="ruc" ng-minlength ="10" ng-keypress="onlyNumber($event)" ng-model="proveedornuevo.documentoproveedor" class="form-control" id="ruc" required>
                                                 <span class="help-inline" 
                                                         ng-show=" formProveedoresedit.ruc.$error.minlength">La longitud mínima es de 10 caracteres <br></span>
 
