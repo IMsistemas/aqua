@@ -366,7 +366,7 @@
 					
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
-							<label class="col-sm-4 control-label">Numero de documento:</label>
+							<label class="col-sm-4 control-label">Número de documento:</label>
 							<div class="col-sm-8">	
 							<div class="col-sm-3">						
 								<input type="text" class="form-control" name="numero1" ng-model="numero1"									

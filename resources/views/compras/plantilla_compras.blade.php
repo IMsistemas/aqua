@@ -94,7 +94,7 @@ tbody:before, tbody:after { display: none !important; }
 					<td style="width: 30%"><span class="control-label" style="display: inline-block"><?=$producto->fechacaducidad?></span></td>
 				</tr>
 				<tr>
-					<td><label class="control-label">Numero de documento:</label></td>
+					<td><label class="control-label">Número de documento:</label></td>
 					<td><span class="control-label" style="display: inline-block"><?=$producto->numerodocumentoproveedor?></span></td>
 					<td><label class="control-label">Tipo Comprobante:</label></td>
 					<td><span class="control-label" style="display: inline-block"><?=$producto->codigocomprbante ." - ".$producto->nombretipocomprobante?></span></td>
