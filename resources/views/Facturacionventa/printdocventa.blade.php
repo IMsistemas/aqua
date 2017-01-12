@@ -44,11 +44,11 @@
  	<tr>
  		<th class="text-left">Ruc/Ci:</th>
  		<td class="text-left" colspan="4"><?= $aux_cliente["documentoidentidad"] ?></td>
- 		<th class="text-left">Razon social:</th>
+ 		<th class="text-left">Razón social:</th>
  		<td class="text-left" colspan="4"><?= $aux_cliente["apellidos"]." ".$aux_cliente["nombres"] ?></td>
  	</tr>
  	<tr>
- 		<th class="text-left">Telefono:</th>
+ 		<th class="text-left">Teléfono:</th>
  		<td class="text-left" colspan="4"><?= $aux_cliente["telefonosecundariodomicilio"] ?></td>
  		<th class="text-left">Direccion:</th>
  		<td class="text-left" colspan="4"><?= $aux_cliente["direcciondomicilio"] ?></td>
@@ -62,9 +62,9 @@
  		<th colspan="10"></th>
  	</tr>
  	<tr>
- 		<th class="text-left">Numero documento:</th>
+ 		<th class="text-left">Número documento:</th>
  		<td class="text-left" colspan="4"><?= $aux_venta["numerodocumento"] ?></td>
- 		<th class="text-left">Autorizacion:</th>
+ 		<th class="text-left">Autorización:</th>
  		<td class="text-left" colspan="4"><?= $aux_venta["autorizacionfacturar"] ?></td>
  	</tr>
  	<tr>
