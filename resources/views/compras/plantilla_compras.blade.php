@@ -169,7 +169,7 @@ tbody:before, tbody:after { display: none !important; }
 			
 			<table style="width: 100%">
 				<tr>
-					<td style="width: 20%"><label class="control-label">Pais Pago:</label></td>
+					<td style="width: 20%"><label class="control-label">País Pago:</label></td>
 					<td style="width: 30%"><?php if($producto->codigotipopago == '01'):?>
 							<span class="control-label" style="display: inline-block">Residente</span>
 							<?php else:?>

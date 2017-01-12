@@ -633,7 +633,7 @@
 							<label >Residente?</label>
 							</div>
 							<div class="col-md-6 col-xs-12">
-							<label class="col-sm-4 control-label">Pais Pago:</label>
+							<label class="col-sm-4 control-label">País Pago:</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" name="pais" id="pais" ng-model="compra.codigopais" ng-required="true" ng-disabled="residente||impreso">
                                						<option value="">Pais Pago</option>
