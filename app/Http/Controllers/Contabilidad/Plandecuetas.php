@@ -10,12 +10,13 @@ use App\Http\Controllers\Controller;
 class Plandecuetas extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Carga la vista
      *
-     * @return \Illuminate\Http\Response
+     * 
      */
     public function index()
     {
         return view('Estadosfinancieros/PlandeCuentasContables');
+        //return view('Estadosfinancieros/aux_PlandeCuentasContables');
     }
 }

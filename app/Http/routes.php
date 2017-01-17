@@ -580,3 +580,9 @@ Route::get('DocumentoVenta/print/{id}', 'Facturacionventa\DocumentoVenta@imprimi
 
 Route::resource('DocumentoVenta', 'Facturacionventa\DocumentoVenta');
 //------------Modulo documento venta---------------////
+
+
+
+//-------------------------------- Contabilidad---------------/////////
+Route::resource('Contabilidad', 'Contabilidad\Plandecuetas');
+//-------------------------------- Contabilidad---------------/////////
