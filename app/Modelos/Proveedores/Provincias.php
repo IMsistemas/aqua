@@ -15,12 +15,12 @@ class Provincias extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombreprovincia',
+        'nameprovincia',
     ];
 
     public function ciudades()
     {
-        return $this->hasMany('App\Modelos\Proveedores\Ciudades','idciudad');
+        return $this->hasMany('App\Modelos\Proveedores\Ciudades','idcanton');
     }
    
 }

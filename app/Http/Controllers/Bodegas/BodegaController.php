@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Bodegas;
 
-use App\Modelos\Bodegas\Bodega;
+use App\Modelos\Contabilidad\Cont_Bodega;
 use App\Modelos\Categoria;
 use App\Modelos\Proveedores\Sectores;
 use App\Modelos\Proveedores\Ciudades;
 use App\Modelos\Proveedores\Provincias;
-use App\Modelos\Empleado;
+use App\Modelos\Nomina\Empleado;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -67,16 +67,18 @@ class BodegaController extends Controller
     
     public function getEmpleado($nombre)
     {
-    	return Empleado::whereRaw("nombres ilike '%".$nombre."%' or apellidos ilike '%".$nombre."%'")->get();
+    	return Empleado::join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+    				->whereRaw("persona.namepersona ilike '%".$nombre."%' or persona.lastnamepersona ilike '%".$nombre."%'")->get();
     
     }
     
     public function getEmpleadoByBodega($id)
     {
-    	return Empleado::join('bodega', 'empleado.idempleado', '=', 'bodega.idempleado')
+    	return Empleado::join('cont_bodega', 'empleado.idempleado', '=', 'cont_bodega.idempleado')
+    				->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
     				->join('cargo', 'empleado.idcargo', '=', 'cargo.idcargo')
-    				->select('empleado.*','cargo.nombrecargo')
-			    	->whereRaw("bodega.idbodega = '".$id."'")
+    				->select('empleado.*','cargo.namecargo','persona.*')
+			    	->whereRaw("cont_bodega.idbodega = '".$id."'")
 			    	->first();
     
     }
@@ -94,21 +96,23 @@ class BodegaController extends Controller
     	
     	$filterSector = ($filter->provinciaId != null)?" and provincia.idprovincia = ".$filter->provinciaId:"";
     	$filterSector .= ($filter->ciudadId != null)?" and ciudad.idciudad = ".$filter->ciudadId:"";
-    	$filterSector .= ($filter->sectorId != null)?" and bodega.idsector = ".$filter->sectorId:"";
+    	$filterSector .= ($filter->sectorId != null)?" and cont_bodega.idsector = ".$filter->sectorId:"";
     	
-    	return  Bodega::join('empleado', 'empleado.idempleado', '=', 'bodega.idempleado')
-    					->join('sector', 'sector.idsector', '=', 'bodega.idsector')
-    					->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
-    					->join('provincia', 'ciudad.idprovincia', '=', 'provincia.idprovincia')
+    	    	
+    	return Cont_Bodega::join('empleado', 'empleado.idempleado', '=', 'cont_bodega.idempleado')
+    					->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+    					->join('parroquia', 'parroquia.idparroquia', '=', 'cont_bodega.idparroquia')
+    					->join('canton', 'parroquia.idcanton', '=', 'canton.idcanton')
+    					->join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
                         ->select(
-                        		DB::raw("(empleado.apellidos || ' ' || empleado.nombres) as bodeguero ")
-                        		,'empleado.correo', 'bodega.*',
-                        		DB::raw("(provincia.nombreprovincia||'/'||ciudad.nombreciudad||'/'||sector.nombreparroquia) as ubicacion"))
-                            ->whereRaw("(bodega.idbodega ILIKE '%" . $filter->text . "%' 
-                            		or (provincia.nombreprovincia||'/'||ciudad.nombreciudad||'/'||sector.nombreparroquia) ILIKE '%" . $filter->text . "%'                             		
-                            		or (empleado.apellidos||' '||empleado.nombres) ILIKE '%" . $filter->text . "%' )                             		
+                        		DB::raw("(persona.lastnamepersona || ' ' || persona.namepersona) as bodeguero ")
+                        		,'persona.email', 'cont_bodega.*',
+                        		DB::raw("(provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) as ubicacion"))
+                            ->whereRaw("(cont_bodega.idbodega::text ILIKE '%" . $filter->text . "%' 
+                            		or (provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) ILIKE '%" . $filter->text . "%'                             		
+                            		or (persona.lastnamepersona||' '||persona.namepersona) ILIKE '%" . $filter->text . "%' )                             		
                             		".$filterSector)
-                            ->orderBy('bodega.idbodega', 'asc')
+                            ->orderBy('cont_bodega.idbodega', 'asc')
                             ->get();
     	
     }
@@ -120,8 +124,8 @@ class BodegaController extends Controller
      */
     public function getLastBodega()
     {
-        $bodega = new Bodega();		
-		$bodega->idbodega = Bodega::max('idbodega') +1;
+        $bodega = new Cont_Bodega();		
+		$bodega->idbodega = Cont_Bodega::max('idbodega') +1;
 		$date = Carbon::Today();
 		$bodega->fechaingreso = $date->format('Y-m-d');
 		return $bodega;
@@ -147,7 +151,7 @@ class BodegaController extends Controller
     {
     	$datos = $request->all();
     	unset($datos['fechaingreso']);
-    	$result = Bodega::create($datos);
+    	$result = Cont_Bodega::create($datos);
     	return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     	
     }
@@ -160,11 +164,11 @@ class BodegaController extends Controller
      */
     public function show($id)
     {
-        return Bodega::join('sector', 'sector.idsector', '=', 'bodega.idsector')
-    					->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
-    					->join('provincia', 'ciudad.idprovincia', '=', 'provincia.idprovincia')
-                        ->select('bodega.*','ciudad.idciudad','provincia.idprovincia')
-                        ->whereRaw("bodega.idbodega = '".$id."'")
+        return Cont_Bodega::join('parroquia', 'parroquia.idparroquia', '=', 'cont_bodega.idparroquia')
+    					->join('canton', 'parroquia.idcanton', '=', 'canton.idcanton')
+    					->join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
+                        ->select('cont_bodega.*','canton.idcanton','provincia.idprovincia')
+                        ->whereRaw("cont_bodega.idbodega = '".$id."'")
                         ->first() ;
     }
 
@@ -177,7 +181,7 @@ class BodegaController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	$bodega = Bodega::find($id);
+    	$bodega = Cont_Bodega::find($id);
     	$bodega->fill($request->all());
     	$bodega->save();
     	return response()->json(['success' => true]);
@@ -186,11 +190,25 @@ class BodegaController extends Controller
     public function anularBodega($param)
     {
     	$param = json_decode($param);
-    	$bodega = Bodega::find($param->id);
+    	$bodega = Cont_Bodega::find($param->id);
     	$bodega->estado = $param->estado;
     	$bodega->save();
     	return response()->json(['success' => true]);
     }
     
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+    	
+    		$bodega = Cont_Bodega::find($id);
+    		$bodega->delete();
+    		return response()->json(['success' => true]);
+    	
+    }
 
 }

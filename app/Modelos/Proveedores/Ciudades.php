@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ciudades extends Model
 {
-    protected $table = "ciudad";
+    protected $table = "canton";
 
-    protected $primaryKey = "idciudad";
+    protected $primaryKey = "idcanton";
 
     public $incrementing = false;
 
@@ -16,7 +16,7 @@ class Ciudades extends Model
 
     protected $fillable = [
         'idprovincia', 
-        'nombreciudad',
+        'nameciudad',
     ];
 
     public function provincia()
@@ -25,7 +25,7 @@ class Ciudades extends Model
     }
     public function sectores()
     {
-        return $this->hasMany('App\Modelos\Proveedores\Sectores','idsector');
+        return $this->hasMany('App\Modelos\Proveedores\Sectores','idparroquia');
     }
    
 }

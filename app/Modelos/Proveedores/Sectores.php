@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sectores extends Model
 {
-    protected $table = "sector";
+    protected $table = "parroquia";
 
-    protected $primaryKey = "idsector";
+    protected $primaryKey = "idparroquia";
 
     public $incrementing = false;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'idciudad',
-        'nombreparroquia'
+        'idcanton',
+        'nameparroquia'
     ];
 
     public function ciudad()
     {
-        return $this->belongsTo('App\Modelos\Proveedores\Ciudades','idciudad');
+        return $this->belongsTo('App\Modelos\Proveedores\Ciudades','idcanton');
     }
    
 }

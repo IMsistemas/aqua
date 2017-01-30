@@ -9,6 +9,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     $scope.testObj = [];
     
     
+    
     $scope.searchStr = [];
     
     $scope.searchByFilter = function(){
@@ -67,6 +68,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         $scope.modalstate = modalstate;
         $scope.lineas = [];
         $scope.sublineas = [];
+
         switch (modalstate) {
             case 'add':
             	
@@ -79,9 +81,10 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
 	                }); 
 	                $scope.provincia = '';
 	                $scope.ciudad = '';
+	                $scope.$broadcast('angucomplete-alt:clearInput');
 	                $('#modalAction').modal('show');
                 });
-
+                
                 break;
             case 'edit':
                 $scope.form_title = "Editar Bodega No ";
@@ -97,7 +100,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
 	                });  
                 	$scope.provincia = parseInt($scope.bodega.idprovincia);
 	                $scope.loadCiudad($scope.provincia,false);
-	                $scope.ciudad = parseInt($scope.bodega.idciudad);
+	                $scope.ciudad = parseInt($scope.bodega.idcanton);
 	                $scope.loadSector($scope.ciudad,false);	  
 	               
 	                 $('#modalAction').modal('show');
@@ -154,6 +157,8 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     $scope.save = function(modalstate, id) {
     	$scope.bodega.idempleado = $scope.testObj.originalObject.idempleado;    	
     	
+    	console.log($scope.bodega);
+    	
     	var url = API_URL + "bodega";
 
         if (modalstate === 'edit'){
@@ -189,12 +194,10 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     $scope.showModalConfirm = function(id,option){
         $scope.bodega_del = id;
         $scope.option = option;
-        $scope.mensaje = 'Anular';
-        $http.get(API_URL + 'bodega/getEmpleadoByBodega/'  + id).success(function(response) {
-            $scope.empleado = response;     
-            if(option == 1){
-            	$scope.mensaje = 'Activar';
-            }
+       
+        $http.get(API_URL + 'bodega/'  + id).success(function(response) {
+            $scope.bodega = response;     
+           
             $('#modalConfirmDelete').modal('show');
         });
     }
@@ -232,6 +235,28 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     	}
     	
     }
+    
+    
+    $scope.eliminarBodega = function(){
+        $http.delete(API_URL + 'bodega/' + $scope.bodega_del).success(function(response) {
+            if(response.success == true){
+                $scope.initLoad();
+                $('#modalConfirmDelete').modal('hide');
+                $scope.bodega_del = 0;
+                $scope.message = 'Se eliminó correctamente la Bodega seleccionada...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+
+            } else {
+                $scope.message_error = 'La bodega no puede ser eliminado porque esta asignada...';
+                $('#modalMessageError').modal('show');
+                $('#modalConfirmDelete').modal('hide');
+            }
+        });
+
+    };
+    
+    
     
 });
 
