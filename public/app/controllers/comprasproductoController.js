@@ -46,7 +46,7 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
     	$scope.searchByFilter();
         $http.get(API_URL + 'compras/getProveedores').success(function(response){
             $scope.proveedoresFiltro = response;
-            $scope.estados = [{id: 1, nombre: "Pagado"},{id: 0, nombre: "No Pagado"}]
+            $scope.estados = [{id: 1, nombre: "Anulado"},{id: 0, nombre: "No Anulado"}]
            
         });
        
@@ -76,13 +76,16 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	        $http.get(API_URL + 'compras/anularCompra/' + $scope.compra_anular).success(function(response) {
 	        	$scope.initLoad(); 
 	        	$scope.compra_anular = 0;
+	        	 $scope.anulado =  false;
 	        	$scope.message = 'La compra se ha Anulado.';	        	 
 	        	if(!response.success){
 	        		$scope.compra_anular = anular;
        			$scope.message = 'Ocurrio un error intentelo mas tarde';
        		}	
 	        	$('#modalConfirmAnular').modal('hide'); 
+	        	$('#modalConfirmAnular1').modal('hide'); 
 	            $('#modalMessage').modal('show');
+	            $('#modalMessage1').modal('show');
 	            setTimeout("$('#modalMessage').modal('hide')",3000);
 	        });
 	    }
@@ -105,27 +108,31 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
    
    // ingreso compra
    
-   
+  
+	 $scope.ivaProLabel = '';
+	 $scope.ivaPro = 0;
 	
 	$scope.newRow = function(){
 		$scope.read =  false;
-		return {cantidad:0,precioUnitario:0,iva:$scope.configuracion.iva,ice:$scope.configuracion.ice,total:0,productoObj:null,testObj:null}	
+		return {cantidad:0,descuento:0,precioUnitario:0,iva: $scope.ivaPro,ice:0,total:0,productoObj:null,testObj:null}	
 	}
 	
 	$scope.openForm = function(id){        	
 		$scope.listado = false;
 		$scope.idcompra = id;
-		$http.get(API_URL + 'compras/getConfiguracion').success(function(response){    
+		$scope.detalle = [$scope.newRow()];
+
+		/*$http.get(API_URL + 'compras/getConfiguracion').success(function(response){    
        	$scope.configuracion = response;
-       	$scope.detalle = [$scope.newRow()];
-       });
+       
+       });*/
 		if($scope.idcompra == 0){
 			$http.get(API_URL + 'compras/getLastCompra').success(function(response){    
 	        	$scope.compra = response;
-	        	$scope.compra.ivacompra = $scope.compra.totalcompra = 0;
-	        	$scope.compra.otrosvalores = $scope.compra.procentajedescuentocompra = 0;
-	        	$scope.compra.subtotalivacompra = $scope.compra.subtotalnoivacompra = 0;
-	        	$scope.compra.descuentocompra = $scope.compra.id = 0;
+	        	$scope.compra.ivacompra =  0;
+	        	
+	        	$scope.compra.subtotalconimpuestocompra = $scope.compra.subtotalcerocompra = 0;
+	        	$scope.compra.totaldescuento = $scope.compra.id = 0;
 	        	$scope.compra.codigopais = '999';	        	
 	        	$scope.ci = '';
 	        	$scope.residente =  true;
@@ -140,12 +147,10 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 				$scope.numero3 = '';
 				$scope.mensaje = true;
 				 $scope.relacionada = false;
-				 $('#razon').text('');
-				 $('#telefono').text('');
-				 $('#direccion').text('');
-				 $('#tipoidproveedor').text('');
-				 $('#tipoproveedor').text('');
-				 $('#ciudad').text('');
+				 $('#razon').val('');
+				 $('#telefono').val('');
+				 $('#direccion').val('');
+				 $scope.anulado =  true;
 	        });
 			
 		} else {
@@ -153,46 +158,36 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 			$http.get(API_URL + 'compras/'  + $scope.idcompra ).success(function(response){
 				$scope.compra = response;
 				
-				$scope.anulado = ($scope.compra.estaanulada == 1)?true:false;
-				$scope.pagado = ($scope.compra.estapagada == 1)?true:false;
+				$scope.anulado = ($scope.compra.estaAnulada == 0)?true:false;
 				
-				$scope.impreso = ($scope.compra.impreso == 1)?true:false;
+				
 				
 				if($scope.compra.estaanulada == 1){
 					$scope.impreso  = true; 
 				}
-				
-				autorization = $scope.compra.numerodocumentoproveedor.split("-");
+				$scope.compra.codigocompra = $scope.compra.iddocumentocompra;
+				autorization = $scope.compra.numdocumentocompra.split("-");
 				$scope.numero1 = autorization[0];
 				$scope.numero2 = autorization[1];
 				$scope.numero3 = autorization[2];
 				
-				$scope.ci = $scope.compra.proveedor.documentoproveedor;
-				$('#razon').text($scope.compra.proveedor.razonsocialproveedor);
-				 $('#telefono').text($scope.compra.proveedor.telefonoproveedor);
-				 $('#direccion').text($scope.compra.proveedor.direccionproveedor);
-				 $('#tipoidproveedor').text($scope.compra.proveedor.codigotipoid + ' - ' + $scope.compra.proveedor.tipoidentificacion);
-				 $('#tipoproveedor').text($scope.compra.proveedor.idtipoproveedor + ' - ' + $scope.compra.proveedor.nombretipoproveedor);
-				 $('#ciudad').text($scope.compra.proveedor.nombreciudad);
+				$scope.ci = $scope.compra.proveedor.numdocidentific;
+				$('#razon').val($scope.compra.proveedor.razonsocial);
+				 $('#telefono').val($scope.compra.proveedor.telefonoprincipal);
+				 $('#direccion').val($scope.compra.proveedor.direccion);
+				 $('#iva').val($scope.compra.proveedor.nametipoimpuestoiva);
 				 $scope.compra.idproveedor = $scope.compra.proveedor.idproveedor;
-				 if(($scope.compra.proveedor.codigotipoid == '01')||($scope.compra.proveedor.codigotipoid == '02')||($scope.compra.proveedor.codigotipoid == '03')){
-					 $scope.relacionada = true;
-				 }
 				 
-				 if($scope.compra.codigotipopago == '02'){
-					 $scope.residente = false;
-				 } else {
-					 $scope.compra.codigopais = '999';
-				 }
 					
-				 if(($scope.compra.totalcompra >= 50)){
-		            	$scope.retencion =  false;
-		            }
+				 
 				
            });
 			
 			$http.get(API_URL + 'compras/getDetalle/'  + $scope.idcompra ).success(function(response){
 				$scope.detalle = response;
+				$scope.detalle.forEach(function(item) {
+					$scope.compra.idbodega = item.idbodega;
+				 });
            });
 			
 			
@@ -216,10 +211,13 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
        	$scope.paises = response;
        });
        
+       $http.get(API_URL + 'compras/getBodegas').success(function(response){    
+          	$scope.bodegas = response;
+          });
        
        
        $http.get(API_URL + 'compras/getFormaPagoDocumento').success(function(response){    
-       	$scope.formaPagoDocumento = response;
+       	$scope.TiposPago = response;
        });
        
        
@@ -232,26 +230,26 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 		 if(typeof($scope.ci) != "undefined" && $scope.ci.length == 10 || $scope.ci.length == 13 ){
 			 $http.get(API_URL + 'compras/getProveedorByCI/' + $scope.ci).success(function(response){
 				 if(response){
-					 $('#razon').text(response.razonsocialproveedor);
-					 $('#telefono').text(response.telefonoproveedor);
-					 $('#direccion').text(response.direccionproveedor);
-					 $('#tipoidproveedor').text(response.codigotipoid + ' - ' + response.tipoidentificacion);
-					 $('#tipoproveedor').text(response.idtipoproveedor + ' - ' + response.nombretipoproveedor);
-					 $('#ciudad').text(response.nombreciudad);
+					 $('#razon').val(response.razonsocial);
+					 $('#telefono').val(response.telefonoprincipal);
+					 $('#direccion').val(response.direccion);					 
+					 $('#iva').val(response.nametipoimpuestoiva);
 					 $scope.compra.idproveedor = response.idproveedor;
-					 if((response.codigotipoid == '01')||(response.codigotipoid == '02')||(response.codigotipoid == '03')){
-						 $scope.relacionada = true;
-					 }
+					 $scope.compra.idtipoimpuestoiva = response.idtipoimpuestoiva;
+					 
+					 $scope.ivaPro = response.porcentaje;
+					 $scope.detalle.forEach(function(item) {
+						 item.iva = $scope.ivaPro;
+					 });
+					 
 					 $scope.mensaje = false;
 				 } else {					 
 					 $scope.mensaje = true;
 					 $scope.relacionada = false;
-					 $('#razon').text('');
-					 $('#telefono').text('');
-					 $('#direccion').text('');
-					 $('#tipoidproveedor').text('');
-					 $('#tipoproveedor').text('');
-					 $('#ciudad').text('');
+					 $('#razon').val('');
+					 $('#telefono').val('');
+					 $('#direccion').val('');
+					 $('#iva').val('');
 				 }
 				 		        	         
 		        });
@@ -270,26 +268,24 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	};
 	 
 	$scope.calcular = function (){
-		$scope.compra.ivacompra = $scope.compra.totalcompra = valoriva = 0;
-   	$scope.compra.subtotalivacompra = $scope.compra.subtotalnoivacompra = $scope.compra.descuentocompra = 0;
+		$scope.compra.ivacompra =  valoriva = 0;
+		$scope.compra.subtotalconimpuestocompra = $scope.compra.subtotalcerocompra = $scope.compra.totaldescuento = 0;
+		$scope.compra.subtotalcerocompra = 0;
+		$scope.compra.totaldescuento = 0;
 		$scope.detalle.forEach(function(item) {
-		    item.total = $scope.roundToTwo(parseInt(item.cantidadtotal) * parseFloat(item.precioUnitario));
+		    item.total = $scope.roundToTwo(parseInt(item.cantidad) * parseFloat(item.precioUnitario));
 		    if(parseFloat(item.iva) == 0){
-		    	$scope.compra.subtotalnoivacompra = $scope.roundToTwo(parseFloat($scope.compra.subtotalnoivacompra) + item.total);
+		    	$scope.compra.subtotalcerocompra = $scope.roundToTwo(parseFloat($scope.compra.subtotalcerocompra) + item.total);
 		    } else {
-		    	$scope.compra.subtotalivacompra = $scope.roundToTwo(parseFloat($scope.compra.subtotalivacompra) + item.total);	
+		    	$scope.compra.subtotalconimpuestocompra = $scope.roundToTwo(parseFloat($scope.compra.subtotalconimpuestocompra) + item.total);	
 		    	$scope.compra.ivacompra = $scope.roundToTwo(parseFloat($scope.compra.ivacompra) + ((item.total*item.iva)/100));
 		    }
 		});
-		  
-		if(parseFloat($scope.compra.procentajedescuentocompra) > 0){
-			 $scope.compra.descuentocompra = $scope.roundToTwo((($scope.compra.subtotalnoivacompra + $scope.compra.subtotalivacompra) * parseFloat($scope.compra.procentajedescuentocompra))/100);
-		}
-		$scope.compra.totalcompra = $scope.roundToTwo(($scope.compra.subtotalnoivacompra + $scope.compra.subtotalivacompra - $scope.compra.descuentocompra) + parseFloat($scope.compra.otrosvalores) + $scope.compra.ivacompra);
+		
+		
+		$scope.compra.valortotalcompra = $scope.roundToTwo(($scope.compra.subtotalcerocompra + $scope.compra.subtotalconimpuestocompra - $scope.compra.totaldescuento) +  $scope.compra.ivacompra);
 		$scope.pagoM = true;
-		if($scope.compra.totalcompra>=1000){
-			$scope.pagoM = false;
-		}
+		
 	}
 	
 	
@@ -306,18 +302,20 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	
 	 $scope.save = function() {		 
 		 var datas = [];
+		 
 		 $scope.impreso = true;
 		 $scope.detalle.forEach(function(item) {
-			 var row = {cantidad:item.cantidadtotal,precioUnitario:item.precioUnitario,iva:item.iva,ice:item.ice,total:item.total,idbodega: item.testObj.originalObject.idbodega,idproducto: item.productoObj.originalObject.codigoproducto} ;
+			 var row = {cantidad:item.cantidad,preciounitario:item.precioUnitario,iva:item.iva,ice:item.ice,descuento:item.descuento,total:item.total,idbodega:$scope.compra.idbodega,idcatalogitem: item.productoObj.originalObject.idcatalogitem} ;
 			 datas.push(row);
 		 });
 		 
 	    	var url = API_URL + "compras";
 	    	
-	    	$scope.compra.numerodocumentoproveedor = $scope.numero1 + '-' + $scope.numero2 + '-' + $scope.numero3;
+	    	$scope.compra.numdocumentocompra = $scope.numero1 + '-' + $scope.numero2 + '-' + $scope.numero3;
        	$scope.compra.detalle = datas;
        	$scope.guardado = true;
-
+       console.log($scope.compra);
+       	
 	        if ($scope.idcompra > 0){ 
 	        	
 	        	url += "/" + $scope.idcompra;        	
@@ -331,11 +329,7 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	                $('#modalMessage1').modal('show');
 	                setTimeout("$('#modalMessage1').modal('hide')",3000);
 	                
-	                $http.get(API_URL + 'compras/getComprasMes/'+$scope.compra.idproveedor).success(function(response){    
-	                	if(($scope.compra.totalcompra >= 50)||(response >= 2)){
-		                	$scope.retencion =  false;
-		                }
-	                });            
+	                            
 	            });
 	            
 	            
@@ -353,14 +347,10 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	                $('#modalMessage1').modal('show');
 	                setTimeout("$('#modalMessage1').modal('hide')",3000);
 	                
-	                $http.get(API_URL + 'compras/getComprasMes/'+$scope.compra.idproveedor).success(function(response){    
-	                	if(($scope.compra.totalcompra >= 50)||(response >= 2)){
-		                	$scope.retencion =  false;
-		                }
-	                });             
+	                           
 
 	            });
-	        }      
+	        }     
 	    	
 	    }
 	
@@ -383,24 +373,9 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	        });
 	    }
 	 
-	 $scope.anularCompra = function(){	
-		 $scope.anulado = true;
-	        $http.get(API_URL + 'compras/anularCompra/' + $scope.compra.codigocompra).success(function(response) {
-	        	 $scope.message = 'La compra se ha Anulado.';
-	        	 
-	        	if(!response.success){
-       			$scope.anulado = false;
-       			$scope.message = 'Ocurrio un error intentelo mas tarde';
-       		}	
-	        	$('#modalConfirmAnular1').modal('hide'); 
-	            $('#modalMessage1').modal('show');
-	            setTimeout("$('#modalMessage1').modal('hide')",3000);
-	        });
-	    }
-	 
-	 
-	 
-   $scope.showModalConfirm = function(){       
+	 	 
+   $scope.showModalConfirm1 = function(){       
+	   $scope.compra_anular = $scope.compra.iddocumentocompra;
            $('#modalConfirmAnular1').modal('show');       
    }
    
@@ -451,13 +426,4 @@ function defaultImage (obj){
 	obj.src = 'img/empleado.png';
 }
 
-$(function(){  
 
-    $('.datepicker').datetimepicker({
-        locale: 'es',
-        format: 'DD/MM/YYYY',
-        ignoreReadonly: true
-    });   
-    
-    
-})

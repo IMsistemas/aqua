@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Compras;
 
-use App\Modelos\Proveedores\Proveedor;
-use App\Modelos\Compras\CompraProducto;
-use App\Modelos\Compras\TipoComprobante;
-use App\Modelos\Compras\FormaPago;
-use App\Modelos\Compras\SustentoTributario;
-use App\Modelos\Compras\Pais;
-use App\Modelos\Compras\Configuracion;
-use App\Modelos\Compras\FormaPagoDocumento;
-use App\Modelos\Bodegas\Bodega;
-use App\Modelos\CatalogoProductos\CatalogoProducto;
-
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+
+use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\Contabilidad\Cont_FormaPago;
+use App\Modelos\Contabilidad\Cont_Bodega;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\SRI\SRI_PagoPais;
+use App\Modelos\SRI\SRI_PagoResidente;
+use App\Modelos\SRI\SRI_SustentoTributario;
+use App\Modelos\SRI\SRI_TipoComprobante;
+use App\Modelos\SRI\SRI_TipoImpuestoIva;
+use App\Modelos\Proveedores\Proveedor;
 
 use DateTime;
 
@@ -53,19 +53,19 @@ class CompraProductoController extends Controller
     public function getCompras($filter)
     {
     	$filter = json_decode($filter);    	 
-    	$filterCombo = ($filter->proveedorId != null)?" and documentocompra.idproveedor = ".$filter->proveedorId:"";
+    	$filterCombo = ($filter->proveedorId != null)?" and cont_documentocompra.idproveedor = ".$filter->proveedorId:"";
     	
     	if($filter->estado != null){
     		$opcion = boolval($filter->estado)? "true" : "false";
-    		$filterCombo .= " and documentocompra.estapagada = ".$opcion;    		
+    		$filterCombo .= ' and cont_documentocompra."estaAnulada" = '.$opcion;    		
     	}   	
     		 
-    	return  CompraProducto::join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
-    	->select('proveedor.razonsocialproveedor', 'documentocompra.*')
-    			->whereRaw("(documentocompra.codigocompra::text ILIKE '%" . $filter->text . "%'
-                            or proveedor.razonsocialproveedor ILIKE '%" . $filter->text . "%' )
+    	return  Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+    	->select('proveedor.razonsocial', 'cont_documentocompra.*')
+    			->whereRaw("(cont_documentocompra.iddocumentocompra::text ILIKE '%" . $filter->text . "%'
+                            or proveedor.razonsocial ILIKE '%" . $filter->text . "%' )
                             		".$filterCombo)
-                                		->orderBy('documentocompra.codigocompra', 'asc')
+                                		->orderBy('cont_documentocompra.iddocumentocompra', 'asc')
                                 		->get();
                                 		 
     }
@@ -73,26 +73,31 @@ class CompraProductoController extends Controller
     
     public function getFormaPago()
     {
-    	return FormaPago::All();
+    	return Cont_FormaPago::All();
     }
     public function getTipoComprobante()
     {
-    	return TipoComprobante::All();
+    	return SRI_TipoComprobante::All();
     }
     
     public function getSustentoTributario()
     {
-    	return SustentoTributario::All();
+    	return SRI_SustentoTributario::All();
+    }
+    
+    public function getBodegas()
+    {
+    	return Cont_Bodega::All();
     }
         
     public function getPais()
     {
-    	return Pais::All();
+    	return SRI_PagoPais::All();
     }
     
     public function getFormaPagoDocumento()
     {
-    	return FormaPagoDocumento::All();
+    	return SRI_PagoResidente::All();
     }
     
     public function getConfiguracion()
@@ -116,22 +121,20 @@ class CompraProductoController extends Controller
      */
     public function getLastCompra()
     {
-        $compra = new CompraProducto();		
-		$compra->codigocompra = CompraProducto::max('codigocompra') +1;
+        $compra = new Cont_DocumentoCompra();		
+		$compra->codigocompra = Cont_DocumentoCompra::max('iddocumentocompra') +1;
 		$date = Carbon::Today();
-		$compra->fecharegistrocompra = $compra->fechaemisionfacturaproveedor = $compra->fechacaducidad = $date->format('d/m/Y');
+		$compra->fecharegistrocompra = $compra->fechaemisioncompra = $date->format('Y-m-d');
 		return $compra;
     }
     
     
     public function getProveedorByCI($ci)
     {
-    	return Proveedor::join('sector', 'sector.idsector', '=', 'proveedor.idsector')
-    	->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
-    	->join('tipoidentificacionproveedor', 'tipoidentificacionproveedor.idtipoproveedor', '=', 'proveedor.idtipoproveedor')
-    	->join('tipoidentificacion', 'tipoidentificacion.codigotipoid', '=', 'proveedor.codigotipoid')
-    	->select('proveedor.*','ciudad.nombreciudad','tipoidentificacion.tipoidentificacion','tipoidentificacion.codigotipoid','tipoidentificacionproveedor.idtipoproveedor','tipoidentificacionproveedor.nombretipoproveedor')
-    	->whereRaw("proveedor.documentoproveedor = '".$ci."'")
+    	return Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona') 
+    	->join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'proveedor.idtipoimpuestoiva')   
+    	->select('proveedor.*','sri_tipoimpuestoiva.*')
+    	->whereRaw("persona.numdocidentific = '".$ci."'")
     	->first() ;
     }
     
@@ -143,7 +146,7 @@ class CompraProductoController extends Controller
     
     public function getCodigoProducto($texto)
     {
-    	return CatalogoProducto::whereRaw("codigoproducto::text LIKE '%" . $texto . "%'")
+    	return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $texto . "%'")
     	->get() ;
     }
     
@@ -157,40 +160,41 @@ class CompraProductoController extends Controller
     	{
     		$datos = $request->all();
     		$detalle = $datos['detalle'];
+    		$formaId = $datos['idformapago'];
+    		$ivaId = $datos['idtipoimpuestoiva'];
+    		$bodegaId = $datos['idbodega'];
     		unset( $datos['detalle']);
-    		unset( $datos['id']);
-    		
-    		$datos['fechacaducidad'] = DateTime::createFromFormat('d/m/Y', $datos['fechacaducidad'])->format('Y-m-d');
-    		$datos['fechaemisionfacturaproveedor'] = DateTime::createFromFormat('d/m/Y', $datos['fechaemisionfacturaproveedor'])->format('Y-m-d');
-    		$datos['fecharegistrocompra'] = DateTime::createFromFormat('d/m/Y', $datos['fecharegistrocompra'])->format('Y-m-d');
-    		
-    		$datos['codigotipopago'] = ($datos['codigopais']=='999')?'01':'02';
-    		
-    		if($datos['codigopais']=='999'){
-    			unset( $datos['codigopais']);
-    		}
+    		unset( $datos['id']);  
+    		unset( $datos['idformapago']);
+    		unset( $datos['codigocompra']);
+    		unset( $datos['codigopais']);
+    		unset( $datos['idbodega']);
     		
     		
-    		$datos['estapagada'] = false;
-    		$datos['estaanulada'] = false;
+    		$datos['estaAnulada'] = false;
     		
     		// insertamos producto en compra
-    		$producto = CompraProducto::create($datos);
+    		//$producto = Cont_DocumentoCompra::create($datos);
+    		DB::table('cont_documentocompra')->insert($datos);
+    		$producto = DB::getPdo()->lastInsertId('cont_documentocompra_iddocumentocompra_seq');
     		
     		$date = Carbon::Today();
     		foreach ($detalle as $item) {
     			 
     			// insercion de detalle en productos compra
-    			DB::table('productosencompra')->insert(
-    					array('codigoproducto' => $item['idproducto'], 'codigocompra' => $producto->codigocompra,
-    							'cantidadtotal' => $item['cantidad'], 'preciototal' => $item['total'], 
-    							'precio'=> $item['precioUnitario'],
-    							'porcentajeiva'=>$item['iva'], 'porcentajeice' => $item['ice'],
+    			DB::table('cont_itemcompra')->insert(
+    					array('idcatalogitem' => $item['idcatalogitem'], 'iddocumentocompra' => $producto,
+    							'cantidad' => $item['cantidad'], 'preciototal' => $item['total'], 
+    							'preciounitario'=> $item['preciounitario'],
+    							'descuento'=> $item['descuento'],
+    							'idtipoimpuestoiva'=>$ivaId,
     							'idbodega' => $item['idbodega']
     					)
     					);
-    			 
+    			
+    			
     			// ingreso o actualizacion de los productos en bodega
+    			/*
     			$productobodega = DB::table('productoenbodega')->where('codigoproducto', $item['idproducto'])->where('idbodega', $item['idbodega'])->first();
     	
     			if(is_object($productobodega)){
@@ -242,11 +246,11 @@ class CompraProductoController extends Controller
     					)
     					);
     			  
-    			
+    			*/
     			}    
     			
     			// insercion moviemoo cuetna proveedor
-    			
+    			/*
     			$cuenta = DB::table('cuentaproveedor')->where('idproveedor', $producto->idproveedor)->first(); 			 
     			
     			DB::table('movimientocuentaproveedor')->insert(
@@ -255,11 +259,17 @@ class CompraProductoController extends Controller
     							'montomovimiento' => $producto->totalcompra,'estapagado'=> false, 'anulada' => false
     					)
     					);
+    			*/
     			
-    			return $producto->codigocompra;
+    			DB::table('cont_formapago_documentocompra')->insert(
+    					array( 'iddocumentocompra' => $producto,
+    							'idformapago' => $formaId
+    					)
+    					);
+    			return $producto;
     	});
 	 
-    	return is_int($exception) ? response()->json(['success' => true, 'id' => $exception ]) : response()->json(['success' => false]);
+    	return ($exception) ? response()->json(['success' => true, 'id' => $exception ]) : response()->json(['success' => false]);
     	
     	 
     }
@@ -291,6 +301,7 @@ class CompraProductoController extends Controller
     
     public function anularCompra($id)
     {
+    	/*
     	$exception = DB::transaction(function() use ($id)
     	{
     		// disminucion de cantidad de los productos de la compra producto en las bodegas
@@ -350,6 +361,12 @@ class CompraProductoController extends Controller
     	});
 	 
     	return is_null($exception) ? response()->json(['success' => true, ]) : response()->json(['success' => false]);
+    	*/
+    	
+    	$compra = Cont_DocumentoCompra::find($id);
+    	$compra->estaAnulada =  true;
+    	$compra->save();
+    	return response()->json(['success' => true, ]) ;
     }
     
     public function formulario($compra)
@@ -360,32 +377,33 @@ class CompraProductoController extends Controller
     
     public function show($id)
     {
-    	$producto = CompraProducto::find($id);
-    	$producto->proveedor = Proveedor::join('sector', 'sector.idsector', '=', 'proveedor.idsector')
-    	->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
-    	->join('tipoidentificacionproveedor', 'tipoidentificacionproveedor.idtipoproveedor', '=', 'proveedor.idtipoproveedor')
-    	->join('tipoidentificacion', 'tipoidentificacion.codigotipoid', '=', 'proveedor.codigotipoid')
-    	->select('proveedor.*','ciudad.nombreciudad','tipoidentificacion.tipoidentificacion','tipoidentificacion.codigotipoid','tipoidentificacionproveedor.idtipoproveedor','tipoidentificacionproveedor.nombretipoproveedor')
+    	$producto = Cont_DocumentoCompra::find($id);
+    	$producto->proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
+    	->join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'proveedor.idtipoimpuestoiva')
+    	->select('proveedor.*','sri_tipoimpuestoiva.*','persona.numdocidentific')
     	->where("proveedor.idproveedor",$producto->idproveedor)->first();  
-    	
-    	   	
-    	$producto->fechacaducidad = DateTime::createFromFormat('Y-m-d',$producto->fechacaducidad)->format('d/m/Y');
-    	$producto->fechaemisionfacturaproveedor = DateTime::createFromFormat('Y-m-d', $producto->fechaemisionfacturaproveedor)->format('d/m/Y');
-    	$producto->fecharegistrocompra = DateTime::createFromFormat('Y-m-d', $producto->fecharegistrocompra)->format('d/m/Y');
+
+    	$formapago = DB::table('cont_formapago_documentocompra')
+    	->select('idformapago')
+    	->where("iddocumentocompra",$id)->first();
+    	$producto->idformapago = $formapago->idformapago;
     	
     	return $producto;
     }
     
     public function getDetalle($id)
     {
-    	$detalles = DB::table('productosencompra')->
-    	where('codigocompra', $id)->
-    	select('codigoproducto','codigocompra','cantidadtotal','precio as precioUnitario','preciototal as total','porcentajeiva as iva', 'porcentajeice as ice', 'idbodega')->
+    	$detalles = DB::table('cont_itemcompra')->
+    	where('iddocumentocompra', $id)->
+    	select('idcatalogitem','iddocumentocompra','cantidad','preciounitario as precioUnitario','preciototal as total', 'idbodega','idtipoimpuestoiva')->
     	get();
 		
     	foreach ($detalles as $item){
-    		$item->producto = CatalogoProducto::find($item->codigoproducto);
-    		$item->bodega = Bodega::find($item->idbodega);
+    		$item->producto = Cont_CatalogItem::find($item->idcatalogitem);
+    		$iva = SRI_TipoImpuestoIva::find($item->idtipoimpuestoiva);
+    		$item->iva = $iva->porcentaje;
+    		$item->ice = 0;
+    		$item->descuento = 0;
     	}
     	return $detalles;
     }
@@ -533,26 +551,26 @@ class CompraProductoController extends Controller
 
     $exception = DB::transaction(function() use ($request,$id)
     {
+   
     	$datos = $request->all();
     	$detalle = $datos['detalle'];
+    	$formaId = $datos['idformapago'];
+    	$ivaId = $datos['idtipoimpuestoiva'];
+    	$bodegaId = $datos['idbodega'];
     	unset( $datos['detalle']);
     	unset( $datos['id']);
-    
-    	$datos['fechacaducidad'] = DateTime::createFromFormat('d/m/Y', $datos['fechacaducidad'])->format('Y-m-d');
-    	$datos['fechaemisionfacturaproveedor'] = DateTime::createFromFormat('d/m/Y', $datos['fechaemisionfacturaproveedor'])->format('Y-m-d');
-    	$datos['fecharegistrocompra'] = DateTime::createFromFormat('d/m/Y', $datos['fecharegistrocompra'])->format('Y-m-d');
-    
-    	$datos['codigotipopago'] = ($datos['codigopais']=='999')?'01':'02';
-    
-    	if($datos['codigopais']=='999'){
-    		unset( $datos['codigopais']);
-    	}   	
-    
+    	unset( $datos['idformapago']);
+    	unset( $datos['codigocompra']);
+    	unset( $datos['codigopais']);
+    	unset( $datos['idbodega']);
+    	
+    	
+    	
     	// actualizamos producto en compra    	    	
-    	$producto = CompraProducto::find($id);
+    	$producto = Cont_DocumentoCompra::find($id);
     	$producto->fill($datos);
     	$producto->save();
-    	
+    	/*
     	// eliminacion de prodctos en bodega y kardex    	
     	$productos = DB::table('productosencompra')->where('codigocompra', $id)->get();
     	$date = Carbon::Today();
@@ -590,9 +608,31 @@ class CompraProductoController extends Controller
     				);  	
     		 
     	}  	
-    	
+    	*/
     	// eliminacion de los prodctos de la compra del producto
-    	DB::table('productosencompra')->where('codigocompra', $id)->delete();
+    	DB::table('cont_itemcompra')->where('iddocumentocompra', $id)->delete();
+    	
+    	
+    	
+    	
+    	$date = Carbon::Today();
+    	foreach ($detalle as $item) {
+    	
+    		// insercion de detalle en productos compra
+    		DB::table('cont_itemcompra')->insert(
+    				array('idcatalogitem' => $item['idcatalogitem'], 'iddocumentocompra' => $id,
+    						'cantidad' => $item['cantidad'], 'preciototal' => $item['total'],
+    						'preciounitario'=> $item['preciounitario'],
+    						'descuento'=> $item['descuento'],
+    						'idtipoimpuestoiva'=>$ivaId,
+    						'idbodega' => $item['idbodega']
+    				)
+    				);
+    	}
+    	
+    	
+    	/*
+    	
     	
     	/// ingreso nuevos productos    
     	foreach ($detalle as $item) {  		    		
@@ -673,6 +713,15 @@ class CompraProductoController extends Controller
     					'fechamovimiento' => $date->format('Y-m-d'), 'detallemovimiento' => 'Modificacion Factura '.$producto->codigocompra,
     					'montomovimiento' => $producto->totalcompra
     	]); 
+    	*/
+    	
+    	DB::table('cont_formapago_documentocompra')->where('iddocumentocompra', $id)->delete(); 
+    	
+    	DB::table('cont_formapago_documentocompra')->insert(
+    			array( 'iddocumentocompra' => $id,
+    					'idformapago' => $formaId
+    			)
+    			);
     	 
     	 
     });
