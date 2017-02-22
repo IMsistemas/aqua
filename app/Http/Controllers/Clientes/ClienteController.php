@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Clientes;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
-use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Cuentas\CuentasPorCobrarSuministro;
 use App\Modelos\Cuentas\CuentasPorPagarClientes;
+use App\Modelos\Persona;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServicioJunta;
@@ -18,9 +19,11 @@ use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
+use App\Modelos\SRI\SRI_TipoIdentificacion;
+use App\Modelos\SRI\SRI_TipoImpuestoIva;
 use App\Modelos\Suministros\Producto;
 use App\Modelos\Suministros\Suministro;
-use App\Modelos\Tarifas\Tarifa;
+use App\Modelos\Tarifas\TarifaAguaPotable;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -35,37 +38,160 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('Clientes/index');
+        return view('Clientes/index_cliente');
     }
 
     /**
-     * Obtener el Listado de todos los Clientes
+     * Obtener los clientes paginados
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getClientes(Request $request)
+    {
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+        $cliente = null;
+
+        $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
+
+        if ($search != null) {
+            $cliente = $cliente->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
+        }
+
+        return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);
+    }
+
+    /**
+     * Obtener todos los tipos de identificacion
      *
      * @return mixed
      */
-    public function getClientes()
+    public function getTipoIdentificacion()
     {
-        return Cliente::with('tipocliente')->orderBy('fechaingreso', 'asc')->get();
+        return SRI_TipoIdentificacion::orderBy('nameidentificacion', 'asc')->get();
     }
 
     /**
-     * Obtener la configuracion del sistema
+     * Obtener y devolver los numeros de identificacion que concuerden con el parametro a buscar
      *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @param $identify
+     * @return mixed
      */
-    public function getConfiguracion()
+    public function getIdentify($identify)
     {
-        return Configuracion::all();
+        return Persona::whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")
+            ->whereRaw('idpersona NOT IN (SELECT idpersona FROM cliente)')
+            ->get();
     }
 
     /**
-     * Obtener el listado de todos los Tipos de Clientes
+     * Obtener y devolver la persona que cumpla con el numero de identificacion buscado
+     *
+     * @param $identify
+     * @return mixed
+     */
+    public function getPersonaByIdentify($identify)
+    {
+        return Persona::whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")->get();
+    }
+
+    /**
+     * Obtener el listado de los tipos de impuestos IVA
      *
      * @return mixed
      */
-    public function getTipoCliente()
+    public function getImpuestoIVA()
     {
-        return TipoCliente::orderBy('nombretipo', 'asc')->get();
+        return SRI_TipoImpuestoIva::orderBy('nametipoimpuestoiva', 'asc')->get();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if ($request->input('idpersona') == 0) {
+            $persona = new Persona();
+        } else {
+            $persona = Persona::find($request->input('idpersona'));
+        }
+
+        $persona->numdocidentific = $request->input('documentoidentidadempleado');
+        $persona->email = $request->input('correo');
+        $persona->celphone = $request->input('celular');
+        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+        $persona->lastnamepersona = $request->input('apellidos');
+        $persona->namepersona = $request->input('nombres');
+        $persona->direccion = $request->input('direccion');
+
+        if ($persona->save()) {
+            $cliente = new Cliente();
+            $cliente->fechaingreso = $request->input('fechaingreso');
+            $cliente->estado = true;
+            $cliente->idpersona = $persona->idpersona;
+            $cliente->idplancuenta = $request->input('cuentacontable');
+            $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');
+            $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+            $cliente->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
+            $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
+            $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
+            $cliente->direcciontrabajo = $request->input('direcciontrabajo');
+
+            $cliente->idtipocliente = 1;
+
+            if ($cliente->save()) {
+                return response()->json(['success' => true]);
+            } else return response()->json(['success' => false]);
+
+        } else return response()->json(['success' => false]);
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $persona = Persona::find($request->input('idpersona'));
+
+        $persona->numdocidentific = $request->input('documentoidentidadempleado');
+        $persona->email = $request->input('correo');
+        $persona->celphone = $request->input('celular');
+        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+        $persona->lastnamepersona = $request->input('apellidos');
+        $persona->namepersona = $request->input('nombres');
+        $persona->direccion = $request->input('direccion');
+
+        if ($persona->save()) {
+            $cliente = Cliente::find($id);
+            $cliente->fechaingreso = $request->input('fechaingreso');
+            $cliente->estado = true;
+            $cliente->idpersona = $persona->idpersona;
+            $cliente->idplancuenta = $request->input('cuentacontable');
+            $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');
+            $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+            $cliente->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
+            $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
+            $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
+            $cliente->direcciontrabajo = $request->input('direcciontrabajo');
+
+            if ($cliente->save()) {
+                return response()->json(['success' => true]);
+            } else return response()->json(['success' => false]);
+
+        } else return response()->json(['success' => false]);
     }
 
     /**
@@ -76,71 +202,11 @@ class ClienteController extends Controller
      */
     public function getIsFreeCliente($codigocliente)
     {
-        return Solicitud::where('codigocliente', $codigocliente)->count();
+        return Solicitud::where('idcliente', $codigocliente)->count();
     }
 
     /**
-     * Almacenar el recurso
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(Request $request)
-    {
-        $cliente = new Cliente();
-
-        $cliente->documentoidentidad = $request->input('codigocliente');
-        $cliente->fechaingreso = $request->input('fechaingreso');
-        $cliente->apellidos = $request->input('apellido');
-        $cliente->nombres = $request->input('nombre');
-        $cliente->celular = $request->input('celular');
-        $cliente->correo = $request->input('email');
-        $cliente->direcciondomicilio = $request->input('direccion');
-        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
-        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
-        $cliente->direcciontrabajo = $request->input('direccionemp');
-        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
-        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
-        $cliente->id = $request->input('tipocliente');
-        $cliente->estaactivo = true;
-
-        $cliente->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Actualizar el recurso especificado.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $cliente = Cliente::find($id);
-
-        $cliente->documentoidentidad = $request->input('codigocliente');
-        $cliente->fechaingreso = $request->input('fechaingreso');
-        $cliente->apellidos = $request->input('apellido');
-        $cliente->nombres = $request->input('nombre');
-        $cliente->celular = $request->input('celular');
-        $cliente->correo = $request->input('email');
-        $cliente->direcciondomicilio = $request->input('direccion');
-        $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipal');
-        $cliente->telefonosecundariodomicilio = $request->input('telefonosecundario');
-        $cliente->direcciontrabajo = $request->input('direccionemp');
-        $cliente->telefonoprincipaltrabajo = $request->input('telfprincipalemp');
-        $cliente->telefonosecundariotrabajo = $request->input('telfsecundarioemp');
-        $cliente->id = $request->input('tipocliente');
-
-        $cliente->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Eliminar el recurso especificado.
+     * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -148,12 +214,9 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $cliente = Cliente::find($id);
-
         if ($cliente->delete()) {
             return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false]);
-        }
+        } else return response()->json(['success' => false]);
     }
 
 
@@ -232,7 +295,7 @@ class ClienteController extends Controller
      */
     public function getTarifas()
     {
-        return Tarifa::orderBy('nombretarifaaguapotable', 'asc')->get();
+        return TarifaAguaPotable::orderBy('nametarifaaguapotable', 'asc')->get();
     }
 
     /**
@@ -243,7 +306,7 @@ class ClienteController extends Controller
     public function getBarrios()
     {
 
-       return Barrio::orderBy('nombrebarrio', 'asc')->get();
+       return Barrio::orderBy('namebarrio', 'asc')->get();
     }
 
     /**
@@ -254,7 +317,7 @@ class ClienteController extends Controller
      */
     public function getCalles($idbarrio)
     {
-        return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get();
+        return Calle::where('idbarrio', $idbarrio)->orderBy('namecalle', 'asc')->get();
     }
 
     /**
@@ -264,7 +327,17 @@ class ClienteController extends Controller
      */
     public function getDividendos()
     {
-        return Configuracion::all();
+        return ConfiguracionSystem::where('optionname', 'AYORA_DIVIDENDO')->get();
+    }
+
+    /**
+     * Obtener la configuracion del sistema
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTasaInteres()
+    {
+        return ConfiguracionSystem::where('optionname', 'AYORA_TASAINTERES')->get();
     }
 
     /**
@@ -311,16 +384,25 @@ class ClienteController extends Controller
     {
         $fecha_actual = date('Y-m-d');
 
-        $solicitudsuministro = new SolicitudSuministro();
-        $solicitudsuministro->codigocliente = $request->input('codigocliente');
-        $solicitudsuministro->fechasolicitud = $fecha_actual;
-        $solicitudsuministro->estaprocesada = false;
-        $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
-        $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
+        $solicitud = new Solicitud();
+        $solicitud->idcliente = $request->input('codigocliente');
+        $solicitud->fechasolicitud = $fecha_actual;
+        $solicitud->estadoprocesada = false;
 
-        if ($solicitudsuministro->save() != false) {
-            return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
-        } else return response()->json(['success' => false]);
+        if ($solicitud->save()) {
+
+            $solicitudsuministro = new SolicitudSuministro();
+            $solicitudsuministro->idsolicitud = $solicitud->idsolicitud;
+            $solicitudsuministro->direccioninstalacion = $request->input('direccionsuministro');
+            $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
+
+            if ($solicitudsuministro->save() != false) {
+                return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+            } else return response()->json(['success' => false]);
+
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
     /**

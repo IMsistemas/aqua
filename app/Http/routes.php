@@ -95,21 +95,45 @@ Route::get('cliente/getTarifas', 'Clientes\ClienteController@getTarifas');
 
 Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');
 
+Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
+
+Route::get('cliente/getServicios', 'Clientes\ClienteController@getServicios');
+
+Route::get('cliente/getInfoCliente/{idcliente}', 'Clientes\ClienteController@getInfoCliente');
+
+Route::get('cliente/getIdentifyClientes/{text}', 'Clientes\ClienteController@getIdentifyClientes');
+
 Route::get('cliente/getIsFreeCliente/{codigocliente}', 'Clientes\ClienteController@getIsFreeCliente');
 
-Route::post('cliente/storeSolicitudRiego', 'Clientes\ClienteController@storeSolicitudRiego');
+Route::get('cliente/getExistsSolicitudServicio/{codigocliente}', 'Clientes\ClienteController@getExistsSolicitudServicio');
+
+Route::post('cliente/storeSolicitudSuministro', 'Clientes\ClienteController@storeSolicitudSuministro');
+
+Route::post('cliente/storeSolicitudServicios', 'Clientes\ClienteController@storeSolicitudServicios');
+
+Route::post('cliente/storeSolicitudCambioNombre', 'Clientes\ClienteController@storeSolicitudCambioNombre');
+
+Route::post('cliente/storeSolicitudMantenimiento', 'Clientes\ClienteController@storeSolicitudMantenimiento');
 
 Route::post('cliente/storeSolicitudOtro', 'Clientes\ClienteController@storeSolicitudOtro');
 
-Route::post('cliente/storeSolicitudSetName', 'Clientes\ClienteController@storeSolicitudSetName');
-
-Route::post('cliente/storeSolicitudFraccion', 'Clientes\ClienteController@storeSolicitudFraccion');
-
 Route::put('cliente/processSolicitud/{idsolicitud}', 'Clientes\ClienteController@processSolicitud');
 
-Route::put('cliente/processSolicitudSetName/{idsolicitud}', 'Clientes\ClienteController@processSolicitudSetName');
+Route::put('cliente/processSolicitudSuministro/{idsolicitud}', 'Clientes\ClienteController@processSolicitudSuministro');
 
-Route::put('cliente/processSolicitudFraccion/{idsolicitud}', 'Clientes\ClienteController@processSolicitudFraccion');
+Route::put('cliente/updateSetNameSuministro/{numerosuministro}', 'Clientes\ClienteController@updateSetNameSuministro');
+
+
+Route::get('cliente/getTasaInteres', 'Clientes\ClienteController@getTasaInteres');
+
+Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
+
+Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
+
+Route::get('cliente/getTipoIdentificacion', 'Clientes\ClienteController@getTipoIdentificacion');
+Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA');
+Route::get('cliente/getPersonaByIdentify/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
+Route::get('cliente/getIdentify/{identify}', 'Clientes\ClienteController@getIdentify');
 
 Route::resource('/cliente', 'Clientes\ClienteController');
 

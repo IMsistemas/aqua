@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table = "cliente";
-    protected $primaryKey = "codigocliente";
+    protected $primaryKey = "idcliente";
     public $timestamps = false;
 
 
@@ -19,18 +19,18 @@ class Cliente extends Model
 
     public function servicioscliente()
     {
-        return $this->hasMany('App\Modelos\Servicios\ServiciosCliente', 'codigocliente');
+        return $this->hasMany('App\Modelos\Servicios\ServiciosCliente', 'idcliente');
     }
 
     public function cuentasporpagarclientes()
     {
-        return $this->hasMany('App\Modelos\Cuentas\CuentasPorPagarClientes', 'codigocliente');
+        return $this->hasMany('App\Modelos\Cuentas\CuentasPorPagarClientes', 'idcliente');
     }
 
 
     public function cuentaporcobrarsuministro()
     {
-        return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','codigocliente');
+        return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','idcliente');
     }
 
 }
