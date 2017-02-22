@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\Sectores;
-
-use App\Modelos\Sectores\Barrio;
-use App\Modelos\Sectores\Parroquia;
-use App\Modelos\Tomas\Calle;
-use App\Modelos\Tomas\Canal;
-use App\Modelos\Tomas\Derivacion;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Modelos\Sectores\Provincia;
+use App\Modelos\Sectores\Canton;
+use App\Modelos\Sectores\Parroquia;
+use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 
 class BarrioController extends Controller
 {
@@ -21,7 +19,7 @@ class BarrioController extends Controller
      */
     public function index()
     {
-        return view('Sectores/index_barrio');
+        return view('Sectores/barrio');
     }
 
     public function llenar_tabla($data)
@@ -32,7 +30,6 @@ class BarrioController extends Controller
 
         foreach ($calles->calles as $idcalle) {
             $result = Canal::where('idcalle', $idcalle->idcalle)->orderBy('nombrecanal', 'asc')->get();
-            //$t = ['idcalle' => $idcalle->idcalle, 'canales' => $result];
             $t = ['idcalle' => $idcalle->nombrecalle, 'canales' => $result];
             $array_aux[] = $t;
         }
@@ -41,7 +38,6 @@ class BarrioController extends Controller
 
     public function getBarrios()
     {
-        //return Barrio::orderBy('nombrebarrio', 'asc')->get();
         return Barrio::with('calle')->orderBy('namebarrio', 'asc')->get();
     }
 
@@ -54,7 +50,6 @@ class BarrioController extends Controller
     {
         return Barrio::where('idbarrio', $id)->orderBy('namebarrio', 'asc')->get();
     }
-
 
     public function getCanals($data)
     {
@@ -87,7 +82,6 @@ class BarrioController extends Controller
 
     }
 
-
     public function getLastID()
     {
         $max_barrio = Barrio::max('idbarrio');
@@ -101,7 +95,6 @@ class BarrioController extends Controller
         return response()->json(['id' => $max_barrio]);
     }
 
-
     public function getParroquias()
     {
         return Parroquia::orderBy('nameparroquia', 'asc')->get();
@@ -112,6 +105,7 @@ class BarrioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //
@@ -129,9 +123,7 @@ class BarrioController extends Controller
 
         $barrio->idparroquia = $request->input('idparroquia');
         $barrio->namebarrio = $request->input('nombrebarrio');
-        //$barrio->observacion = $request->input('observacion');
-        //$barrio->fechaingreso = date('Y-m-d');
-
+        $barrio->fechaingreso = date('Y-m-d');
         $barrio->save();
 
         return response()->json(['success' => true]);
@@ -195,7 +187,6 @@ class BarrioController extends Controller
      */
     public function destroy($id)
     {
-
         $aux =  Calle::where ('idbarrio',$id)->count('idcalle');
 
         if ($aux > 0){
@@ -205,10 +196,5 @@ class BarrioController extends Controller
             $barrio->delete();
             return response()->json(['success' => true]);
         }
-
-
-
-
-
     }
 }

@@ -16,7 +16,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
             var longitud = response.length;
             var array_temp = [{label: '--Zonas --', id: 0}];
             for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
             }
             $scope.barrioss = array_temp;
             $scope.s_barrio = 0;
@@ -44,7 +44,7 @@ app.controller('callesController', function($scope, $http, API_URL) {
             //var array_temp = [{label: '--Seleccione--', id: 0}];
             var array_temp = [];
             for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
             }
             $scope.barrios = array_temp;
         });
@@ -88,31 +88,33 @@ app.controller('callesController', function($scope, $http, API_URL) {
     $scope.viewModalAdd = function () {
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
-            //var array_temp = [{label: '--Seleccione--', id: 0}];
-            var array_temp = [];
+            var array_temp = [{label: '--Seleccione--', id: 0}];
+            //var array_temp = [];
             for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
             }
             $scope.barrios = array_temp;
+            $scope.t_barrio = 0;
+
+            $http.get(API_URL + 'calle/getLastID').success(function(response){
+                console.log(response);
+
+                $scope.codigo = response.id;
+                $scope.date_ingreso = now();
+
+                $scope.nombrecalle = '';
+                $scope.observacionCalle = '';
+
+                $('#modalNueva').modal('show');
+            });
+
         });
 
-        $http.get(API_URL + 'calle/getLastID').success(function(response){
-            console.log(response);
-
-            $scope.codigo = response.id;
-            $scope.date_ingreso = now();
-
-            $scope.nombrecalle = '';
-            $scope.observacionCalle = '';
-
-            $('#modalNueva').modal('show');
-        });
-
-    }
+    };
 
     $scope.showModalDelete = function (item) {
         $scope.idcalle_del = item.idcalle;
-        $scope.nom_calle = item.nombrecalle;
+        $scope.nom_calle = item.namecalle;
         $('#modalDelete').modal('show');
     };
 

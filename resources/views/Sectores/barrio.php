@@ -24,10 +24,10 @@
             </thead>
             <tbody>
             <tr dir-paginate="item in barrios | orderBy:sortKey:reverse |itemsPerPage:10  |filter:busqueda" ng-cloak>
-               <td><input type="text" class="form-control" ng-model="item.nombrebarrio"></td>
+               <td><input type="text" class="form-control" ng-model="item.namebarrio"></td>
 
                 <td>
-                    <span ng-repeat="calle in item.calle">{{calle.nombrecalle}}; </span>
+                    <span ng-repeat="calle in item.calle">{{calle.namecalle}}; </span>
                     <button type="button" class="btn btn-primary btn-sm" ng-click="show_toma(item.idbarrio,2, item)">
                         <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
                     </button>
@@ -72,14 +72,41 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" name="formBarrio" novalidate="">
-                        <div class="form-group">
-                            <label for="t_codigo" class="col-sm-4 control-label">Código: </label>
-                            <div class="col-sm-8" style="padding-top: 7px;">
-                                {{codigo}}
+
+                        <div class="row">
+                            <!--<div class="form-group">
+                                <label for="t_codigo" class="col-sm-4 control-label">Código: </label>
+                                <div class="col-sm-8" style="padding-top: 7px;">
+                                    {{codigo}}
+                                </div>
+                            </div>-->
+
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Parroquia: </span>
+                                    <select id="t_parroquias" class="form-control" ng-model="t_parroquias"
+                                            ng-options="value.id as value.label for value in parroquias"></select>
+                                </div>
                             </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Nombre de la Zona: </span>
+                                    <input type="text" class="form-control" name="nombrebarrio" id="nombrebarrio" ng-model="nombrebarrio" placeholder=""
+                                           ng-required="true" ng-maxlength="100">
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$touched">El nombre de la Zona es requerido</span>
+                                <span class="help-block error"
+                                      ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$error.maxlength">La longitud máxima es de 100 caracteres</span>
+                            </div>
+
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
+                                <textarea id="observacionBarrio" class="form-control" rows="3" ng-model="observacionBarrio" placeholder="Observación"></textarea>
+                            </div>-->
                         </div>
 
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="t_codigo" class="col-sm-4 control-label">Parroquia:</label>
                             <div class="col-sm-8">
                                 <select disabled id="t_parroquias" class="form-control" ng-model="t_parroquias"
@@ -97,7 +124,7 @@
                                 <span class="help-block error"
                                       ng-show="formBarrio.nombrebarrio.$invalid && formBarrio.nombrebarrio.$error.maxlength">La longitud máxima es de 64 caracteres</span>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -123,7 +150,43 @@
 
                 <div class="modal-body">
                     <form class="form-horizontal" name="formCalle" novalidate="">
-                        <div class="form-group">
+
+                        <div class="row">
+                            <!--<div class="form-group">
+                                <label for="t_codigo" class="col-sm-4 control-label">Código: </label>
+                                <div class="col-sm-8" style="padding-top: 7px;">
+                                    {{codigo_toma}}
+                                </div>
+                            </div>-->
+
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Zona: </span>
+                                    <select disabled id="id_barrio" class="form-control" ng-model="id_barrio"
+                                            ng-options="value.id as value.label for value in barrios2"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Transversal: </span>
+                                    <input type="text" class="form-control" name="nombrecalle" id="nombrecalle" ng-model="nombrecalle" placeholder=""
+                                           ng-required="true" ng-maxlength="100">
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$touched">El nombre de la Transversal es requerido</span>
+                                <span class="help-block error"
+                                      ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$error.maxlength">La longitud máxima es de 100 caracteres</span>
+                            </div>
+
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
+                                <textarea id="observacionCalle" class="form-control" rows="3" ng-model="observacionCalle" placeholder="Observación"></textarea>
+                            </div>-->
+                        </div>
+
+
+
+                        <!--<div class="form-group">
                             <label for="t_codigo" class="col-sm-4 control-label">Código: </label>
                             <div class="col-sm-8" style="padding-top: 7px;">
                                 {{codigo_toma}}
@@ -148,7 +211,8 @@
                                 <span class="help-block error"
                                       ng-show="formCalle.nombrecalle.$invalid && formCalle.nombrecalle.$error.maxlength">La longitud máxima es de 64 caracteres</span>
                             </div>
-                        </div>
+                        </div>-->
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -269,7 +333,7 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="item in aux_calles|filter:busquedaa" ng-cloak>
-                                    <td><input type="text" class="form-control" ng-model="item.nombrecalle"></td>
+                                    <td><input type="text" class="form-control" ng-model="item.namecalle"></td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDeleteCalle(item)">
                                             <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
