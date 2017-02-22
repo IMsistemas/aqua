@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\Cargo;
+use App\Modelos\Nomina\Departamento;
 use App\Modelos\Nomina\Empleado;
+use App\Modelos\Persona;
+use App\Modelos\SRI\SRI_TipoIdentificacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,11 +31,26 @@ class EmpleadoController extends Controller
     /**
      * Obtener todos los empleados
      *
+     * @param Request $request
      * @return mixed
      */
-    public function getEmployees()
+    public function getEmployees(Request $request)
     {
-       return Empleado::with('cargo')->orderBy('fechaingreso', 'asc')->get();
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+        $employee = null;
+
+        $employees = Empleado::join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+                                ->join('departamento', 'departamento.iddepartamento', '=', 'empleado.iddepartamento')
+                                ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
+                                ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'empleado.idplancuenta')
+                                ->select('empleado.*', 'departamento.namedepartamento', 'cargo.namecargo', 'persona.*', 'cont_plancuenta.*');
+
+        if ($search != null) {
+            $employees = $employees->whereRaw("persona.razonsocial LIKE '%" . $search . "%'");
+        }
+
+        return $employees->orderBy('fechaingreso', 'desc')->paginate(10);
     }
 
 
@@ -42,8 +61,68 @@ class EmpleadoController extends Controller
      */
     public function getAllPositions()
     {
-        return Cargo::orderBy('nombrecargo', 'asc')->get();
+        return Cargo::orderBy('namecargo', 'asc')->get();
     }
+
+
+    /**
+     * Obtener todos los departamentos
+     *
+     * @return mixed
+     */
+    public function getDepartamentos()
+    {
+        return Departamento::orderBy('namedepartamento', 'asc')->get();
+    }
+
+
+    /**
+     * Obtener todos los tipos de identificacion
+     *
+     * @return mixed
+     */
+    public function getTipoIdentificacion()
+    {
+        return SRI_TipoIdentificacion::orderBy('nameidentificacion', 'asc')->get();
+    }
+
+
+    /**
+     * Obtener las cuentas del Plan de Cuenta
+     *
+     * @return mixed
+     */
+    public function getPlanCuenta()
+    {
+        return Cont_PlanCuenta::orderBy('jerarquia', 'asc')->get();
+    }
+
+
+    /**
+     * Obtener y devolver los numeros de identificacion que concuerden con el parametro a buscar
+     *
+     * @param $identify
+     * @return mixed
+     */
+    public function getIdentify($identify)
+    {
+        return Persona::whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")
+                        ->whereRaw('idpersona NOT IN (SELECT idpersona FROM empleado)')
+                        ->get();
+    }
+
+
+    /**
+     * Obtener y devolver la persona que cumpla con el numero de identificacion buscado
+     *
+     * @param $identify
+     * @return mixed
+     */
+    public function getPersonaByIdentify($identify)
+    {
+        return Persona::whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")->get();
+    }
+
 
     /**
      * Almacenar el recurso empleado
@@ -51,59 +130,56 @@ class EmpleadoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-
     public function store(Request $request)
     {
+        $url_file = null;
 
-        $empleado1 = Empleado::where('documentoidentidadempleado', $request->input('documentoidentidadempleado'))->count();
-
-        if ($empleado1 > 0) {
-            return response()->json(['success' => false]);
-        } else {
-
-
-            $url_file = null;
-
-            if ($request->hasFile('file')) {
-
-                $image = $request->file('file');
-                //$destinationPath = storage_path() . '/app/empleados';
-                $destinationPath = public_path() . '/uploads/empleados';
-                $name = rand(0, 9999) . '_' . $image->getClientOriginalName();
-                if (!$image->move($destinationPath, $name)) {
-                    return response()->json(['success' => false]);
-                } else {
-                    // $url_file = '/app/empleados/' . $name;
-                    $url_file = 'uploads/empleados/' . $name;
-                }
-
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $destinationPath = public_path() . '/uploads/empleados';
+            $name = rand(0, 9999) . '_' . $image->getClientOriginalName();
+            if(!$image->move($destinationPath, $name)) {
+                return response()->json(['success' => false]);
+            } else {
+                $url_file = '/uploads/empleados/' . $name;
             }
 
-            $empleado = new Empleado();
+        }
+        if ($request->input('idpersona') == 0) {
+            $persona = new Persona();
+        } else {
+            $persona = Persona::find($request->input('idpersona'));
+        }
+        $persona->lastnamepersona = $request->input('apellidos');
+        $persona->namepersona = $request->input('nombres');
+        $persona->numdocidentific = $request->input('documentoidentidadempleado');
+        $persona->email = $request->input('correo');
+        $persona->celphone = $request->input('celular');
+        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+        $persona->direccion = $request->input('direcciondomicilio');
 
-            $empleado->fechaingreso = $request->input('fechaingreso');
-            $empleado->documentoidentidadempleado = $request->input('documentoidentidadempleado');
+        if ($persona->save()) {
+            $empleado = new Empleado();
+            $empleado->idpersona = $persona->idpersona;
             $empleado->idcargo = $request->input('idcargo');
-            $empleado->apellidos = $request->input('apellidos');
-            $empleado->nombres = $request->input('nombres');
-            $empleado->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
-            $empleado->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
-            $empleado->celular = $request->input('celular');
-            $empleado->direcciondomicilio = $request->input('direcciondomicilio');
-            $empleado->correo = $request->input('correo');
+            $empleado->iddepartamento = $request->input('departamento');
+            $empleado->idplancuenta = $request->input('cuentacontable');
+            $empleado->estado = true;
+            $empleado->fechaingreso = $request->input('fechaingreso');
+            $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+            $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
             $empleado->salario = $request->input('salario');
 
             if ($url_file != null) {
-                $empleado->foto = $url_file;
+                $empleado->rutafoto = $url_file;
             }
-
             $empleado->save();
-
-            return response()->json(['success' => true]);
-
+        } else {
+            return response()->json(['success' => false]);
         }
+        return response()->json(['success' => true]);
     }
-
 
 
     /**
@@ -114,8 +190,9 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-       return Empleado::with('cargo')->where('documentoidentidadempleado', $id) ->get();
+        return Empleado::with('persona', 'cargo')->where('idempleado', $id) ->get();
     }
+
 
     /**
      * Actualizar el recurso empleado seleccionado
@@ -124,48 +201,51 @@ class EmpleadoController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
-    {
-
-    }
-
-
     public function updateEmpleado(Request $request, $id)
     {
         $url_file = null;
 
         if ($request->hasFile('file')) {
-
             $image = $request->file('file');
             $destinationPath = public_path() . '/uploads/empleados';
-            $name = rand(0, 9999).'_'.$image->getClientOriginalName();
+            $name = rand(0, 9999) . '_' . $image->getClientOriginalName();
             if(!$image->move($destinationPath, $name)) {
                 return response()->json(['success' => false]);
             } else {
-                $url_file = 'uploads/empleados/' . $name;
+                $url_file = '/uploads/empleados/' . $name;
             }
         }
 
-        $empleado = Empleado::find($id);
-        $empleado->documentoidentidadempleado = $request->input('documentoidentidadempleado');
-        $empleado->idcargo = $request->input('idcargo');
-        $empleado->apellidos = $request->input('apellidos');
-        $empleado->nombres = $request->input('nombres');
-        $empleado->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
-        $empleado->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
-        $empleado->celular = $request->input('celular');
-        $empleado->direcciondomicilio = $request->input('direcciondomicilio');
-        $empleado->correo = $request->input('correo');
-        $empleado->salario = $request->input('salario');
+        $persona = Persona::find($request->input('idpersona'));;
+        $persona->lastnamepersona = $request->input('apellidos');
+        $persona->namepersona = $request->input('nombres');
+        $persona->numdocidentific = $request->input('documentoidentidadempleado');
+        $persona->email = $request->input('correo');
+        $persona->celphone = $request->input('celular');
+        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+        $persona->direccion = $request->input('direcciondomicilio');
 
-        if ($url_file != null) {
-            $empleado->foto = $url_file;
+        if ($persona->save()) {
+            $empleado = Empleado::find($id);
+            $empleado->idcargo = $request->input('idcargo');
+            $empleado->iddepartamento = $request->input('departamento');
+            $empleado->idplancuenta = $request->input('cuentacontable');
+            $empleado->fechaingreso = $request->input('fechaingreso');
+            $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+            $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
+            $empleado->salario = $request->input('salario');
+
+            if ($url_file != null) {
+                $empleado->rutafoto = $url_file;
+            }
+            $empleado->save();
+        } else {
+            return response()->json(['success' => false]);
         }
-
-        $empleado->save();
-
-        return response()->json(['success' => true, 'request' => $request]);
+        return response()->json(['success' => true]);
     }
+
 
     /**
      * Eliminar el recurso empleado seleccionado
@@ -176,8 +256,10 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         $empleado = Empleado::find($id);
-        $empleado->delete();
-        return response()->json(['success' => true]);
+        if ($empleado->delete()) {
+            return response()->json(['success' => true]);
+        }
+        else return response()->json(['success' => false]);
     }
 
 }
