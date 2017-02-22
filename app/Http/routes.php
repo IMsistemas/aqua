@@ -271,40 +271,27 @@ Route::post('editTerreno/update/{id}', 'Terreno\TerrenoController@update');
 
 Route::resource('/editTerreno', 'Terreno\TerrenoController');
 
-/*===================================Módulo Nomina===========================================*/
+/*
+ * -------------------------Modulo Nomina (Yamilka)---------------------------------------------------------------------
+ */
 
 Route::get('cargo/getCargos', 'Nomina\CargoController@getCargos');
 Route::get('cargo/getCargoByID/{id}', 'Nomina\CargoController@getCargoByID');
 Route::resource('/cargo', 'Nomina\CargoController');
 
-
-//Ruta devuelve todos los empleados
 Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
-
-//Ruta devuelve todos los cargos
 Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
-
 Route::get('empleado/getDepartamentos', 'Nomina\EmpleadoController@getDepartamentos');
-
 Route::get('empleado/getPlanCuenta', 'Nomina\EmpleadoController@getPlanCuenta');
-
 Route::get('empleado/getTipoIdentificacion', 'Nomina\EmpleadoController@getTipoIdentificacion');
-
 Route::get('empleado/getIdentify/{identify}', 'Nomina\EmpleadoController@getIdentify');
-
+Route::get('empleado/getPersonaByIdentify/{identify}', 'Nomina\EmpleadoController@getPersonaByIdentify');
 Route::post('empleado/updateEmpleado/{id}', 'Nomina\EmpleadoController@updateEmpleado');
-
 Route::resource('/empleado', 'Nomina\EmpleadoController');
 
-
-//Ruta devuelve todos los empleados
-//Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
-//Ruta devuelve todos los cargos
-//Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
-//Ruta devuelve los cargos por filtro
-//Route::get('empleado/getByFilter/{filters}', 'Nomina\EmpleadoController@getByFilter');
-//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia empleado
-//Route::resource('empleado', 'Nomina\EmpleadoController');
+/*
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
 
 
 /*--------------------------------------Christian-------------------------------------------------*/
@@ -609,28 +596,26 @@ Route::get('compras/getDetalle/{id}', 'Compras\CompraProductoController@getDetal
 Route::get('compras/formulario/{compra}', 'Compras\CompraProductoController@formulario');
 Route::resource('compras', 'Compras\CompraProductoController');
 
-/*------------------------------------Diliannys------------------------------------------------*/
-	
-	/*===================================Módulo Proveedores===========================================*/
+/*
+ * -------------------------Modulo Proveedores y Transportista (Raidel)-------------------------------------------------
+ */
 
-	Route::get('proveedores', function () {
-	    return view('proveedores.index_proveedores');
-	});
+Route::get('proveedor/getTipoIdentificacion', 'Proveedores\ProveedorController@getTipoIdentificacion');
+Route::get('proveedor/getProvincias', 'Proveedores\ProveedorController@getProvincias');
+Route::get('proveedor/getCantones/{idprovincia}', 'Proveedores\ProveedorController@getCantones');
+Route::get('proveedor/getParroquias/{idcanton}', 'Proveedores\ProveedorController@getParroquias');
+Route::get('proveedor/getImpuestoIVA', 'Proveedores\ProveedorController@getImpuestoIVA');
+Route::get('proveedor/getIdentify/{identify}', 'Proveedores\ProveedorController@getIdentify');
+Route::get('proveedor/getProveedores', 'Proveedores\ProveedorController@getProveedores');
+Route::get('proveedor/getContactos/{idproveedor}', 'Proveedores\ProveedorController@getContactos');
+Route::post('proveedor/storeContactos', 'Proveedores\ProveedorController@storeContactos');
+Route::delete('proveedor/destroyContacto/{idcontacto}', 'Proveedores\ProveedorController@destroyContacto');
+Route::resource('proveedor', 'Proveedores\ProveedorController');
 
-	Route::get('api/proveedores/nuevoproveedor', 'Proveedores\ProveedoresController@getNuevoProveedor');
-	Route::get('api/proveedores/ciudades/{idprovincia}', 'Proveedores\ProveedoresController@getCiudades');
-	Route::get('api/proveedores/ciudades', 'Proveedores\ProveedoresController@getCiudades');
-	Route::get('api/proveedores/provincias', 'Proveedores\ProveedoresController@getProvincias');
-	Route::get('api/proveedores/sectores/{idciudad}', 'Proveedores\ProveedoresController@getSectores');
-	Route::get('api/proveedores/sectores', 'Proveedores\ProveedoresController@getSectores');
-	Route::post('api/proveedores/{idproveedor}/contactos', 'Proveedores\ProveedoresController@storeContactos');
-	Route::get('api/proveedores/tiposcontribuyentes', 'Proveedores\ProveedoresController@getTiposContribuyentes');
-	Route::get('api/proveedores/contactosproveedor/{idproveedor}', 'Proveedores\ContactosProveedoresController@getContactosProveedor');
-	Route::put('api/proveedores/contactos/{request}', 'Proveedores\ContactosProveedoresController@updateContactosProveedor');
-	Route::post('api/proveedores/contactos/{idcontacto}', 'Proveedores\ContactosProveedoresController@destroyContactosProveedor');
-	Route::get('api/proveedores/fechacreacioncuenta/{idproveedor}', 'Proveedores\ProveedoresController@getFechaCreacion');
-	Route::resource('api/proveedores', 'Proveedores\ProveedoresController');
-	
+Route::get('transportista/getTransportista', 'Transportista\TransportistaController@getTransportista');
+Route::get('transportista/getTipoIdentificacion', 'Transportista\TransportistaController@getTipoIdentificacion');
+Route::get('transportista/getIdentify/{identify}', 'Transportista\TransportistaController@getIdentify');
+Route::resource('/transportista', 'Transportista\TransportistaController');
 
 /*
  * ---------------------------------------------------------------------------------------------------------------------
