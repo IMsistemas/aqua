@@ -264,7 +264,7 @@ class ClienteController extends Controller
         } else if ($table == 'solsuministro') {
             $max = SolicitudSuministro::max('idsolicitudsuministro');
         } else if ($table == 'suministro') {
-            $max = Suministro::max('numerosuministro');
+            $max = Suministro::max('idsuministro');
         } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
         } else if ($table == 'solicitudmantenimiento') {
@@ -532,7 +532,7 @@ class ClienteController extends Controller
     public function processSolicitud(Request $request, $id)
     {
         $solicitud = Solicitud::find($id);
-        $solicitud->estaprocesada = true;
+        $solicitud->estadoprocesada = true;
         $solicitud->fechaprocesada = date('Y-m-d');
         $solicitud->save();
 
@@ -559,30 +559,36 @@ class ClienteController extends Controller
 
         $suministro = new Suministro();
         $suministro->idcalle = $request->input('idcalle');
-        $suministro->codigocliente = $request->input('codigocliente');
+        $suministro->idcliente = $request->input('codigocliente');
         $suministro->idtarifaaguapotable = $request->input('idtarifa');
         $suministro->direccionsumnistro = $request->input('direccionsuministro');
         $suministro->telefonosuministro = $request->input('telefonosuministro');
-        $suministro->fechainstalacionsuministro = $fecha_actual;
-        $suministro->idproducto = $request->input('idproducto');
+        $suministro->fechainstalacion = $fecha_actual;
 
-        if ($suministro->save() != false) {
+        $suministro->numerosuministro = 1;
 
-            $name = date('Ymd') . '_' . $suministro->numerosuministro . '.pdf';
+        //$suministro->idproducto = $request->input('idproducto');
+
+        if ($suministro->save()) {
+
+            $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
 
             $url_pdf = 'uploads/pdf_suministros/' . $name;
 
-            $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+            //$this->createPDF($request->input('data_to_pdf'), $url_pdf);
 
             $solicitudsuministro = SolicitudSuministro::find($id);
-            $solicitudsuministro->estaprocesada = true;
-            $solicitudsuministro->fechaprocesada = date('Y-m-d');
-            $solicitudsuministro->numerosuministro = $suministro->numerosuministro;
-            $solicitudsuministro->rutapdf = $url_pdf;
+            /*$solicitudsuministro->estadoprocesada = true;
+            $solicitudsuministro->fechaprocesada = date('Y-m-d');*/
+            $solicitudsuministro->idsuministro = $suministro->idsuministro;
 
-            if ($solicitudsuministro->save() != false) {
+            //$solicitudsuministro->rutapdf = $url_pdf;
 
-                $cxc = new CuentasPorCobrarSuministro();
+            if ($solicitudsuministro->save()) {
+
+                return response()->json(['success' => true]);
+
+                /*$cxc = new CuentasPorCobrarSuministro();
                 $cxc->codigocliente = $request->input('codigocliente');
                 $cxc->numerosuministro = $suministro->numerosuministro;
                 $cxc->fecha = $fecha_actual;
@@ -607,7 +613,7 @@ class ClienteController extends Controller
 
                     } else return response()->json(['success' => true]);
 
-                } else return response()->json(['success' => false]);
+                } else return response()->json(['success' => false]);*/
 
             } else return response()->json(['success' => false]);
 
