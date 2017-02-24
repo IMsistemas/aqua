@@ -599,27 +599,27 @@
         $scope.getTarifas = function () {
             $http.get(API_URL + 'cliente/getTarifas').success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].nametarifaaguapotable, id: response[i].idtarifaaguapotable})
                 }
                 $scope.tarifas = array_temp;
-                $scope.s_suministro_tarifa = 0;
+                $scope.s_suministro_tarifa = '';
             });
         };
 
         $scope.getBarrios = function () {
             $http.get(API_URL + 'cliente/getBarrios').success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
                 }
                 $scope.barrios = array_temp;
-                $scope.s_suministro_zona = 0;
+                $scope.s_suministro_zona = '';
 
-                $scope.calles = [{label: '-- Seleccione --', id: 0}];
-                $scope.s_suministro_transversal = 0;
+                $scope.calles = [{label: '-- Seleccione --', id: ''}];
+                $scope.s_suministro_transversal = '';
             });
         };
 
@@ -629,12 +629,12 @@
             if (idbarrio != 0) {
                 $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
                     var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: 0}];
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
                         array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
                     }
                     $scope.calles = array_temp;
-                    $scope.s_suministro_transversal = 0;
+                    $scope.s_suministro_transversal = '';
                 });
             } else {
                 $scope.calles = [{label: '-- Seleccione --', id: 0}];
@@ -865,6 +865,9 @@
                 data_to_pdf: JSON.stringify(data_to_pdf)
             };
 
+
+            console.log(data);
+
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
@@ -888,12 +891,12 @@
          */
 
         $scope.getExistsSolicitudServicio = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
-                if (response.length == 0){
+                if (response.success == false){
                     $scope.actionServicioShow();
                 } else {
-                    var msg = 'El cliente: "' + $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+                    var msg = 'El cliente: "' + $scope.objectAction.razonsocial;
                     msg += '"; ya presenta una Solicitud de Servicios';
                     $scope.message_info = msg;
                     $('#modalMessageInfo').modal('show');
@@ -978,7 +981,7 @@
         $scope.saveSolicitudOtro = function () {
             $('#btn-save-otro').prop('disabled', true);
             var solicitud = {
-                codigocliente: $scope.h_codigocliente_otro,
+                codigocliente: $scope.objectAction.idcliente,
                 observacion: $scope.t_observacion_otro
             };
             $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
@@ -1000,12 +1003,12 @@
             $scope.getLastIDOtros();
 
             $scope.t_fecha_otro = $scope.nowDate();
-            $scope.h_codigocliente_otro = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_otro = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_otro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_otro = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_otro = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_otro = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_otro = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_otro = $scope.objectAction.direccion;
             $scope.telf_cliente_otro = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_otro = $scope.objectAction.celular;
+            $scope.celular_cliente_otro = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_otro = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.t_observacion_otro = '';
@@ -1025,30 +1028,31 @@
         };
 
         $scope.getSuministros = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
                     $scope.list_suministros.push(response[i]);
                 }
                 $scope.suministro_mant = array_temp;
-                $scope.s_suministro_mant = 0;
+                $scope.s_suministro_mant = '';
             });
         };
 
         $scope.showInfoSuministro = function () {
+
             var numerosuministro = $scope.s_suministro_mant;
             if (numerosuministro != 0 && numerosuministro != undefined) {
                 var longitud = $scope.list_suministros.length;
 
                 for (var i = 0; i < longitud; i++) {
-                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                        $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
-                        $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+                    if (numerosuministro == $scope.list_suministros[i].idsuministro) {
+                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.namebarrio;
+                        $scope.transversal_mant = $scope.list_suministros[i].calle.namecalle;
+                        $scope.tarifa_mant = $scope.list_suministros[i].tarifaaguapotable.nametarifaaguapotable;
 
                         break;
                     }
@@ -1063,7 +1067,7 @@
         $scope.saveSolicitudMantenimiento = function () {
             $('#btn-save-mant').prop('disabled', true);
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 numerosuministro: $scope.s_suministro_mant,
                 observacion: $scope.t_observacion_mant
             };
@@ -1085,12 +1089,12 @@
             $scope.getSuministros();
 
             $scope.t_fecha_mant = $scope.nowDate();
-            $scope.h_codigocliente_mant = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_mant = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_mant = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_mant = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_mant = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_mant = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_mant = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_mant = $scope.objectAction.direccion;
             $scope.telf_cliente_mant = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_mant = $scope.objectAction.celular;
+            $scope.celular_cliente_mant = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_mant = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.zona_mant = '';

@@ -1028,6 +1028,74 @@
 
                                         <div class="col-xs-12" style="padding: 0;">
                                             <div class="col-sm-6 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">RUC/CI: </span>
+                                                    <input class="form-control" type="text" name="documentoidentidad_cliente_mant" id="documentoidentidad_cliente_mant"
+                                                           ng-model="documentoidentidad_cliente_mant" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Cliente: </span>
+                                                    <input class="form-control" type="text" name="nom_cliente_mant" id="nom_cliente_mant"
+                                                           ng-model="nom_cliente_mant" disabled >
+                                                </div>
+
+                                                <input type="hidden" ng-model="h_codigocliente">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                            <div class="col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Dirección Domicilio: </span>
+                                                    <input class="form-control" type="text" name="direcc_cliente_mant" id="direcc_cliente_mant"
+                                                           ng-model="direcc_cliente_mant" disabled >
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Celular: </span>
+                                                    <input class="form-control" type="text" name="celular_cliente_mant" id="celular_cliente_mant"
+                                                           ng-model="celular_cliente_mant" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Domicilio: </span>
+                                                    <input class="form-control" type="text" name="telf_cliente_mant" id="telf_cliente_mant"
+                                                           ng-model="telf_cliente_mant" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Trabajo: </span>
+                                                    <input class="form-control" type="text" name="telf_trab_cliente_mant" id="telf_trab_cliente_mant"
+                                                           ng-model="telf_trab_cliente_mant" disabled >
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!--<div class="col-xs-12" style="padding: 0;">
+                                            <div class="col-sm-6 col-xs-12">
                                             <span class="label label-info" style="font-size: 14px !important;">
                                                 <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_mant}}
                                             </div>
@@ -1056,7 +1124,7 @@
                                             <span class="label label-default" style="font-size: 14px !important;">
                                                 <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_mant}}
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </fieldset>
                                 </div>
 
@@ -1064,49 +1132,66 @@
                                     <fieldset>
                                         <legend style="font-size: 16px; font-weight: bold;">Datos de Suministro</legend>
 
-                                        <div class="col-xs-12" style="">
-                                            <div class="col-sm-6 col-xs-12 form-group error text-left">
-                                                <label for="s_suministro_mant" class="col-sm-4 col-xs-12 control-label">Suministros:</label>
-                                                <div class="col-sm-8 col-xs-12" style="">
-                                                    <select class="form-control" name="s_suministro_mant" id="s_suministro_mant"
-                                                            ng-model="s_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
-                                                            ng-change="showInfoSuministro()" ng-pattern="/^[1-9]+$/"></select>
-                                                    <!--<span class="help-block error"
-                                                          ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$touched">Suministro es requerida</span>-->
-                                                    <span class="help-block error"
-                                                          ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$error.pattern">
-                                                            Seleccione un Suministro</span>
-                                                </div>
-                                            </div>
+                                        <div class="col-sm-6 col-xs-12 error ">
 
-                                            <div class="col-sm-6 col-xs-12" style="padding-left: 45px;">
-                                            <span class="label label-default" style="!important; font-size: 14px !important;">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Zona:</span> {{zona_mant}}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Suministros: </span>
+                                                <select class="form-control" name="s_suministro_mant" id="s_suministro_mant"
+                                                        ng-model="s_suministro_mant" ng-options="value.id as value.label for value in suministro_mant"
+                                                        ng-change="showInfoSuministro()" required></select>
                                             </div>
+                                            <span class="help-block error"
+                                                      ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$touched">Suministro es requerida</span>
+                                            <!--<span class="help-block error"
+                                                  ng-show="formMant.s_suministro_mant.$invalid && formMant.s_suministro_mant.$error.pattern">
+                                                            Seleccione un Suministro</span>-->
+
                                         </div>
 
-                                        <div class="col-xs-12" style="padding: 0;">
-                                            <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 14px !important;">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Transversal:</span> {{transversal_mant}}
+                                        <div class="col-sm-6 col-xs-12">
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Zona: </span>
+                                                <input class="form-control" type="text" name="zona_mant" id="zona_mant"
+                                                       ng-model="zona_mant" disabled >
                                             </div>
-                                            <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 14px !important;">
-                                                <i class="fa fa-list" aria-hidden="true"></i> Tarifa:</span> {{tarifa_mant}}
+
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Transversal: </span>
+                                                <input class="form-control" type="text" name="transversal_mant" id="transversal_mant"
+                                                       ng-model="transversal_mant" disabled >
                                             </div>
+
+
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Tarifa: </span>
+                                                <input class="form-control" type="text" name="tarifa_mant" id="tarifa_mant"
+                                                       ng-model="tarifa_mant" disabled >
+                                            </div>
+
                                         </div>
 
                                     </fieldset>
                                 </div>
 
-                                <div class="col-xs-12 form-group error" style="">
-                                    <label for="t_observacion_mant" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Observación:</label>
-                                    <div class="col-sm-10 col-xs-12">
-                                        <textarea class="form-control" name="t_observacion_mant" id="t_observacion_mant" ng-model="t_observacion_mant" rows="2" ng-required="true"></textarea>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12 error">
+                                    <textarea class="form-control" name="t_observacion_mant" id="t_observacion_mant" ng-model="t_observacion_mant" rows="3"
+                                              ng-required="true" placeholder="Observación"></textarea>
                                         <span class="help-block error"
                                               ng-show="formMant.t_observacion_mant.$invalid && formMant.t_observacion_mant.$touched">La Observación es requerida</span>
                                     </div>
                                 </div>
+
+
                             </div>
 
                         </form>
@@ -1140,7 +1225,7 @@
                     <div class="modal-header modal-header-primary">
 
                         <div class="col-md-6 col-xs-12">
-                            <h4 class="modal-title">Otro Tipo de Solicitud Solicitud Nro: {{num_solicitud_otro}}</h4>
+                            <h4 class="modal-title">Otro Tipo de Solicitud Nro: {{num_solicitud_otro}}</h4>
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
@@ -1164,6 +1249,73 @@
                                         <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente</legend>
 
                                         <div class="col-xs-12" style="padding: 0;">
+                                            <div class="col-sm-6 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">RUC/CI: </span>
+                                                    <input class="form-control" type="text" name="documentoidentidad_cliente_otro" id="documentoidentidad_cliente_otro"
+                                                           ng-model="documentoidentidad_cliente_otro" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Cliente: </span>
+                                                    <input class="form-control" type="text" name="nom_cliente_otro" id="nom_cliente_otro"
+                                                           ng-model="nom_cliente_otro" disabled >
+                                                </div>
+
+                                                <input type="hidden" ng-model="h_codigocliente">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                            <div class="col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Dirección Domicilio: </span>
+                                                    <input class="form-control" type="text" name="direcc_cliente_otro" id="direcc_cliente_otro"
+                                                           ng-model="direcc_cliente_otro" disabled >
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Celular: </span>
+                                                    <input class="form-control" type="text" name="celular_cliente_otro" id="celular_cliente_otro"
+                                                           ng-model="celular_cliente_otro" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Domicilio: </span>
+                                                    <input class="form-control" type="text" name="telf_cliente_otro" id="telf_cliente_otro"
+                                                           ng-model="telf_cliente_otro" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-4 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Trabajo: </span>
+                                                    <input class="form-control" type="text" name="telf_trab_cliente_otro" id="telf_trab_cliente_otro"
+                                                           ng-model="telf_trab_cliente_otro" disabled >
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!--<div class="col-xs-12" style="padding: 0;">
                                             <div class="col-sm-6 col-xs-12">
                                             <span class="label label-info" style="font-size: 14px !important;">
                                                 <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_otro}}
@@ -1193,14 +1345,14 @@
                                             <span class="label label-default" style="font-size: 14px !important;">
                                                 <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_otro}}
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </fieldset>
                                 </div>
 
-                                <div class="col-xs-12 form-group" style="">
-                                    <label for="t_observacion_otro" class="col-sm-2 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Descripción:</label>
-                                    <div class="col-sm-10 col-xs-12">
-                                        <textarea class="form-control" id="t_observacion_otro" ng-model="t_observacion_otro" rows="2" ng-required="true"></textarea>
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12 error">
+                                        <textarea class="form-control" id="t_observacion_otro" ng-model="t_observacion_otro" rows="3"
+                                                  ng-required="true" placeholder="Descripción"></textarea>
                                         <span class="help-block error"
                                               ng-show="formProcessOtros.t_observacion_otro.$invalid && formProcessOtros.t_observacion_otro.$touched">La Descripción es requerida</span>
                                     </div>
@@ -1266,10 +1418,10 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Tarifa: </span>
                                                 <select name="s_suministro_tarifa" id="s_suministro_tarifa" class="form-control" ng-model="s_suministro_tarifa"
-                                                        ng-options="value.id as value.label for value in tarifas" ng-pattern="/^[1-9]+$/"></select>
+                                                        ng-options="value.id as value.label for value in tarifas" required></select>
                                             </div>
                                             <span class="help-block error"
-                                                  ng-show="formProcessSuministro.s_suministro_tarifa.$invalid && formProcessSuministro.s_suministro_tarifa.$error.pattern">
+                                                  ng-show="formProcessSuministro.s_suministro_tarifa.$invalid && formProcessSuministro.s_suministro_tarifa.$touched" >
                                                             Seleccione una Tarifa</span>
                                         </div>
 
@@ -1279,10 +1431,10 @@
                                                 <span class="input-group-addon"> Zona: </span>
                                                 <select name="s_suministro_zona" id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
                                                         ng-options="value.id as value.label for value in barrios"
-                                                        ng-change="getCalles()" ng-pattern="/^[1-9]+$/"></select>
+                                                        ng-change="getCalles()" required></select>
                                             </div>
                                             <span class="help-block error"
-                                                  ng-show="formProcessSuministro.s_suministro_zona.$invalid && formProcessSuministro.s_suministro_zona.$error.pattern">
+                                                  ng-show="formProcessSuministro.s_suministro_zona.$invalid && formProcessSuministro.s_suministro_zona.$touched">
                                                             Seleccione una Zona</span>
                                         </div>
 
@@ -1291,10 +1443,10 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon"> Transversal: </span>
                                                 <select name="s_suministro_transversal" id="s_suministro_transversal" class="form-control" ng-model="s_suministro_transversal"
-                                                        ng-options="value.id as value.label for value in calles" ng-pattern="/^[1-9]+$/"></select>
+                                                        ng-options="value.id as value.label for value in calles" required></select>
                                             </div>
                                             <span class="help-block error"
-                                                  ng-show="formProcessSuministro.s_suministro_transversal.$invalid && formProcessSuministro.s_suministro_transversal.$error.pattern">
+                                                  ng-show="formProcessSuministro.s_suministro_transversal.$invalid && formProcessSuministro.s_suministro_transversal.$touched">
                                                             Seleccione una Transversal</span>
                                         </div>
 
@@ -1332,7 +1484,7 @@
                                     <fieldset>
                                         <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
 
-                                        <div class="col-xs-12" style="padding: 2%; margin-top: -15px;">
+                                        <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                             <fieldset>
                                                 <legend style="font-size: 14px; font-weight: bold;">Acometida</legend>
 
@@ -1375,7 +1527,7 @@
                                             </fieldset>
                                         </div>
 
-                                        <div class="col-xs-12" style="padding: 2%; margin-top: -5px;">
+                                        <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                             <fieldset>
                                                 <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
 
@@ -1411,7 +1563,7 @@
                                             </fieldset>
                                         </div>
 
-                                        <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
+                                        <div class="col-xs-12" style="padding: 2%; margin-top: -40px;">
                                             <fieldset>
                                                 <legend style="font-size: 14px; font-weight: bold;">Total</legend>
 
@@ -1433,10 +1585,10 @@
                                                         <span class="input-group-addon"> Crédito: </span>
                                                         <select name="s_suministro_credito" id="s_suministro_credito" class="form-control" ng-model="s_suministro_credito"
                                                                 ng-options="value.id as value.label for value in creditos"
-                                                                ng-change="calculateTotalSuministro()"  ng-pattern="/^[1-9]+$/"></select>
+                                                                ng-change="calculateTotalSuministro()"  required></select>
                                                     </div>
                                                     <span class="help-block error"
-                                                          ng-show="formProcessSuministro.s_suministro_credito.$invalid && formProcessSuministro.s_suministro_credito.$error.pattern">
+                                                          ng-show="formProcessSuministro.s_suministro_credito.$invalid && formProcessSuministro.s_suministro_credito.$touched">
                                                             Seleccione un Crédito</span>
                                                 </div>
                                             </fieldset>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Suministro extends Model
 {
     protected $table = "suministro";
-    protected $primaryKey = "numerosuministro";
+    protected $primaryKey = "idsuministro";
     public $timestamps = false; 
 
     public function cliente()
@@ -25,14 +25,14 @@ class Suministro extends Model
     	return $this->belongsTo('App\Modelos\Suministros\Producto','idproducto');
     }
 
-    public function aguapotable()
+    public function tarifaaguapotable()
     {
     	return $this->belongsTo('App\Modelos\Servicios\AguaPotable','idtarifaaguapotable');
     }
 
     public function cuentaporcobrarsuministro()
     {
-        return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','numerosuministro');
+        return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','idsuministro');
     }
 
 }

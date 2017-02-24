@@ -73,25 +73,21 @@ Route::get('cliente/getClienteByIdentify/{idcliente}', 'Clientes\ClienteControll
 
 Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
 
-Route::get('cliente/getTerrenosByCliente/{idcliente}', 'Clientes\ClienteController@getTerrenosByCliente');
+Route::get('cliente/getConfiguracion', 'Clientes\ClienteController@getConfiguracion');
 
-Route::get('cliente/getLastID/{table}', 'Clientes\ClienteController@getLastID');
-//Peticion para obtener la constante para calculo
-Route::get('cliente/getConstante', 'Clientes\ClienteController@getConstante');
-//Peticion para calcular el valor por area
-Route::get('cliente/calculateValor/{area}', 'Clientes\ClienteController@calculateValor');
-
-Route::get('cliente/getDerivaciones/{idcanal}', 'Clientes\ClienteController@getDerivaciones');
-
-Route::get('cliente/getCanales/{idcalle}', 'Clientes\ClienteController@getCanales');
-
-Route::get('cliente/getTomas/{idbarrio}', 'Clientes\ClienteController@getTomas');
-
-Route::get('cliente/getCultivos/{idtarifa}', 'Clientes\ClienteController@getCultivos');
+Route::get('cliente/getTarifas', 'Clientes\ClienteController@getTarifas');
 
 Route::get('cliente/getBarrios', 'Clientes\ClienteController@getBarrios');
 
-Route::get('cliente/getTarifas', 'Clientes\ClienteController@getTarifas');
+Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
+
+Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
+
+Route::get('cliente/getInfoMedidor', 'Clientes\ClienteController@getInfoMedidor');
+
+Route::get('cliente/getSuministros/{codigocliente}', 'Clientes\ClienteController@getSuministros');
+
+Route::get('cliente/getLastID/{table}', 'Clientes\ClienteController@getLastID');
 
 Route::get('cliente/getClientes', 'Clientes\ClienteController@getClientes');
 

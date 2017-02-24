@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AguaPotable extends Model
 {
-    protected $table = "aguapotable";
+    protected $table = "tarifaaguapotable";
     protected $primaryKey = "idtarifaaguapotable";
     public $timestamps = false;
 
