@@ -3,7 +3,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
     $scope.initLoad = function () {
         $http.get(API_URL + 'suministros/getsuministros').success(function (response) {
             console.log(response);
-            var longitud = response.length;
+            /*var longitud = response.length;
             for (var i = 0; i < longitud; i++) {
                 var complete_name = {
                     value: response[i].cliente.nombres + ' ' + response[i].cliente.apellidos,
@@ -12,7 +12,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
-            }
+            }*/
             $scope.suministros = response;
         });
     }

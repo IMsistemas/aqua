@@ -11,6 +11,10 @@ class Cliente extends Model
     protected $primaryKey = "idcliente";
     public $timestamps = false;
 
+    public function persona()
+    {
+        return $this->belongsTo('App\Modelos\Persona','idpersona');
+    }
 
     public function tipocliente()
     {
@@ -26,7 +30,6 @@ class Cliente extends Model
     {
         return $this->hasMany('App\Modelos\Cuentas\CuentasPorPagarClientes', 'idcliente');
     }
-
 
     public function cuentaporcobrarsuministro()
     {

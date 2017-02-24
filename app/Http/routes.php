@@ -133,6 +133,19 @@ Route::get('cliente/getIdentify/{identify}', 'Clientes\ClienteController@getIden
 
 Route::resource('/cliente', 'Clientes\ClienteController');
 
+/*=============================Módulo Suministro====================================*/
+
+Route::get('suministros/getsuministros', 'Suministros\SuministroController@getsuministros');
+Route::get('suministros/suministroById/{id}','Suministros\SuministroController@suministroById');
+Route::get('suministros/getCalle', 'Suministros\SuministroController@getCalle');
+Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroController@getCalleByBarrio');
+
+Route::get('suministros/getSuministrosByBarrio/{filter}', 'Suministros\SuministroController@getSuministrosByBarrio');
+
+Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroController@getSuministrosByCalle');
+
+
+Route::resource('/suministros', 'Suministros\SuministroController');
 
 /*--------------------------------------Yamilka-------------------------------------------------*/
 /*===================================Sectores===========================================*/
