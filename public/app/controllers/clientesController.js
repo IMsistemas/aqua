@@ -1140,16 +1140,18 @@
 
         $scope.showInfoClienteForSetName = function (object) {
 
+            console.log(object);
+
             if (object.originalObject != undefined) {
-                var codigocliente = object.originalObject.codigocliente;
+                var codigocliente = object.originalObject.cliente[0].idcliente;
 
                 if (codigocliente != 0 && codigocliente != undefined) {
 
                     $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
-                        $scope.nom_new_cliente_setnombre = response[0].apellidos + ', ' + response[0].nombres;
-                        $scope.direcc_new_cliente_setnombre = response[0].direcciondomicilio;
+                        $scope.nom_new_cliente_setnombre = object.originalObject.razonsocial;
+                        $scope.direcc_new_cliente_setnombre = object.originalObject.direccion;
                         $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
-                        $scope.celular_new_cliente_setnombre = response[0].celular;
+                        $scope.celular_new_cliente_setnombre = object.originalObject.celphone;
                         $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
                         $scope.h_codigocliente_new = codigocliente;
                     });
@@ -1166,31 +1168,32 @@
         };
 
         $scope.getSuministrosForSetName = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
                     $scope.list_suministros.push(response[i]);
                 }
                 $scope.suministro_setN = array_temp;
-                $scope.s_suministro_setnombre = 0;
+                $scope.s_suministro_setnombre = '';
             });
         };
 
         $scope.showInfoSuministroForSetName = function () {
+
             var numerosuministro = $scope.s_suministro_setnombre;
 
             if (numerosuministro != 0 && numerosuministro != undefined) {
                 var longitud = $scope.list_suministros.length;
 
                 for (var i = 0; i < longitud; i++) {
-                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.nombrecalle;
-                        $scope.tarifa_setnombre = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+                    if (numerosuministro == $scope.list_suministros[i].idsuministro) {
+                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.namebarrio;
+                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.namecalle;
+                        $scope.tarifa_setnombre = $scope.list_suministros[i].tarifaaguapotable.nametarifaaguapotable;
 
                         break;
                     }
@@ -1204,11 +1207,15 @@
 
         $scope.saveSolicitudCambioNombre = function () {
             $('#btn-save-setnombre').prop('disabled', true);
+
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 codigoclientenuevo: $scope.h_codigocliente_new,
                 numerosuministro: $scope.s_suministro_setnombre
             };
+
+            console.log(solicitud);
+
             $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
@@ -1245,12 +1252,12 @@
             //$scope.getIdentifyClientes();
 
             $scope.t_fecha_setnombre = $scope.nowDate();
-            $scope.h_codigocliente_setnombre = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_setnombre = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_setnombre = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_setnombre = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_setnombre = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_setnombre = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_setnombre = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_setnombre = $scope.objectAction.direccion;
             $scope.telf_cliente_setnombre = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_setnombre = $scope.objectAction.celular;
+            $scope.celular_cliente_setnombre = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_setnombre = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.junta_setnombre = '';

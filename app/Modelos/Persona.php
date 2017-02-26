@@ -18,7 +18,7 @@ class Persona extends Model
 
     public function cliente()
     {
-    	return $this->hasMany('App\Modelos\Clientes');
+    	return $this->hasMany('App\Modelos\Clientes\Cliente', 'idpersona');
     }
 
     public function empleado()

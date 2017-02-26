@@ -232,8 +232,13 @@ class ClienteController extends Controller
      */
     public function getIdentifyClientes($text)
     {
-        return Cliente::where('documentoidentidad', 'LIKE', '%' . $text . '%')
-                        ->orderBy('documentoidentidad', 'asc')->get();
+
+        return Persona::with('cliente')->whereRaw("numdocidentific::text ILIKE '%" . $text . "%'")
+            //->whereRaw('idpersona NOT IN (SELECT idpersona FROM cliente)')
+            ->get();
+
+        /*return Cliente::where('documentoidentidad', 'LIKE', '%' . $text . '%')
+                        ->orderBy('documentoidentidad', 'asc')->get();*/
     }
 
     /**
@@ -244,7 +249,7 @@ class ClienteController extends Controller
      */
     public function getInfoCliente($idcliente)
     {
-        return Cliente::where('codigocliente', $idcliente)->get();
+        return Cliente::where('idcliente', $idcliente)->get();
     }
 
     /**
@@ -458,17 +463,26 @@ class ClienteController extends Controller
      */
     public function storeSolicitudCambioNombre(Request $request)
     {
-        $solicitud = new SolicitudCambioNombre();
-        $solicitud->numerosuministro = $request->input('numerosuministro');
-        $solicitud->codigocliente = $request->input('codigocliente');
-        $solicitud->codigoclientenuevo = $request->input('codigoclientenuevo');
-        $solicitud->fechasolicitud = date('Y-m-d');
-        $solicitud->estaprocesada = false;
+        $fecha_actual = date('Y-m-d');
 
-        if ($solicitud->save() != false) {
-            $max_idsolicitud = SolicitudCambioNombre::where('idsolicitudcambionombre', $solicitud->idsolicitudcambionombre)
-                ->get();
-            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+        $solicitud = new Solicitud();
+        $solicitud->idcliente = $request->input('codigocliente');
+        $solicitud->fechasolicitud = $fecha_actual;
+        $solicitud->estadoprocesada = false;
+
+        if ($solicitud->save()) {
+
+            $solicitud_cambio = new SolicitudCambioNombre();
+            $solicitud_cambio->idsuministro = $request->input('numerosuministro');
+            $solicitud_cambio->idcliente = $request->input('codigoclientenuevo');
+            $solicitud_cambio->idsolicitud = $solicitud->idsolicitud;
+
+            if ($solicitud_cambio->save()) {
+                $max_idsolicitud = SolicitudCambioNombre::where('idsolicitudcambionombre', $solicitud_cambio->idsolicitudcambionombre)
+                    ->get();
+                return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+            } else return response()->json(['success' => false]);
+
         } else return response()->json(['success' => false]);
     }
 
