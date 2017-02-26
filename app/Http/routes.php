@@ -20,7 +20,7 @@ Route::get('/inicio', function () {
 //Peticion para obtener el listado de solicitudes
 Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicitudes');
 
-Route::get('solicitud/getSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudOtro');
+Route::get('solicitud/getSolicitudOtro/{id}', 'Solicitud\SolicitudController@getSolicitudOtro');
 
 Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');
 

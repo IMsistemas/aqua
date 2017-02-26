@@ -41,7 +41,6 @@ class SolicitudController extends Controller
         return ConfiguracionSystem::where('optionname', 'AYORA_TASAINTERES')->get();
     }
 
-
     /**
      * Obtener todas las solicitudes independientemente de su tipo
      *
@@ -76,15 +75,28 @@ class SolicitudController extends Controller
         return Solicitud::with('cliente.persona')
             ->selectRaw(
                 '*,
-                (SELECT idsolicitud FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
-                (SELECT idsolicitud FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre,
-                (SELECT idsolicitud FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento,
-                (SELECT idsolicitud FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
-                (SELECT idsolicitud FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
+                (SELECT idsolicitudotro FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
+                (SELECT idsolicitudcambionombre FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre,
+                (SELECT idsolicitudmantenimiento FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento,
+                (SELECT idsolicitudsuministro FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
+                (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
             )
             ->orderBy('fechasolicitud', 'asc')->paginate(10);
 
     }
+
+
+    public function getSolicitudOtro($id)
+    {
+        return SolicitudOtro::where('idsolicitudotro', $id)->get();
+    }
+
+
+
+
+
+
+
 
     /**
      * Obtener mediante filtros de busqueda, las solicitudes que correspondan

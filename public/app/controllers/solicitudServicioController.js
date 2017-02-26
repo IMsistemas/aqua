@@ -369,34 +369,40 @@
 
         $scope.actionOtro = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
 
-            $scope.num_solicitud_otro = solicitud.data.idsolicitudotro;
+            $http.get(API_URL + 'solicitud/getSolicitudOtro/' + solicitud.tipo_id).success(function(response){
 
-            $scope.t_fecha_otro = solicitud.data.fechasolicitud;
-            $scope.h_codigocliente_otro = solicitud.data.cliente.codigocliente;
-            $scope.documentoidentidad_cliente_otro = solicitud.data.cliente.documentoidentidad;
-            $scope.nom_cliente_otro = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
-            $scope.direcc_cliente_otro = solicitud.data.cliente.direcciondomicilio;
-            $scope.telf_cliente_otro = solicitud.data.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_otro = solicitud.data.cliente.celular;
-            $scope.telf_trab_cliente_otro = solicitud.data.cliente.telefonoprincipaltrabajo;
+                $scope.num_solicitud_otro = solicitud.tipo_id;
 
-            $scope.t_observacion_otro = solicitud.data.descripcion;
+                $scope.t_fecha_otro = solicitud.fechasolicitud;
+                $scope.h_codigocliente_otro = solicitud.cliente.idcliente;
+                $scope.documentoidentidad_cliente_otro = solicitud.cliente.persona.numdocidentific;
+                $scope.nom_cliente_otro = solicitud.cliente.persona.razonsocial;
+                $scope.direcc_cliente_otro = solicitud.cliente.persona.direccion;
+                $scope.telf_cliente_otro = solicitud.cliente.telefonoprincipaldomicilio;
+                $scope.celular_cliente_otro = solicitud.cliente.persona.celphone;
+                $scope.telf_trab_cliente_otro = solicitud.cliente.telefonoprincipaltrabajo;
 
-            if(solicitud.data.estaprocesada == true) {
-                $('#t_observacion_otro').prop('disabled', true);
-                $('#btn-save-otro').prop('disabled', true);
-                $('#btn-process-otro').prop('disabled', true);
-                $('#modal-footer-otro').hide();
-            } else {
-                $('#t_observacion_otro').prop('disabled', false);
-                $('#btn-save-otro').prop('disabled', false);
-                $('#btn-process-otro').prop('disabled', false);
-                $('#modal-footer-otro').show();
-            }
+                $scope.t_observacion_otro = response[0].descripcion;
 
-            $('#modalActionOtro').modal('show');
+                if(solicitud.estadoprocesada == true) {
+                    $('#t_observacion_otro').prop('disabled', true);
+                    $('#btn-save-otro').prop('disabled', true);
+                    $('#btn-process-otro').prop('disabled', true);
+                    $('#modal-footer-otro').hide();
+                } else {
+                    $('#t_observacion_otro').prop('disabled', false);
+                    $('#btn-save-otro').prop('disabled', false);
+                    $('#btn-process-otro').prop('disabled', false);
+                    $('#modal-footer-otro').show();
+                }
+
+                $('#modalActionOtro').modal('show');
+
+            });
+
+
         };
 
         /*
