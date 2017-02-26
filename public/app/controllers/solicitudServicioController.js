@@ -468,42 +468,79 @@
 
         $scope.actionMantenimiento = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
-            $scope.getSuministros(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
+            $scope.getSuministros(solicitud.cliente.idcliente, solicitud.data.numerosuministro);
 
-            $scope.num_solicitud_mant = solicitud.data.idsolicitudmantenimiento;
-            $scope.t_fecha_mant = solicitud.data.fechasolicitud;
-            $scope.h_codigocliente_mant = solicitud.data.cliente.codigocliente;
-            $scope.documentoidentidad_cliente_mant = solicitud.data.cliente.documentoidentidad;
-            $scope.nom_cliente_mant = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
-            $scope.direcc_cliente_mant = solicitud.data.cliente.direcciondomicilio;
-            $scope.telf_cliente_mant = solicitud.data.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_mant = solicitud.data.cliente.celular;
-            $scope.telf_trab_cliente_mant = solicitud.data.cliente.telefonoprincipaltrabajo;
+            $http.get(API_URL + 'solicitud/getSolicitudOtro/' + solicitud.tipo_id).success(function(response){
 
-            $scope.zona_mant = solicitud.data.suministro.calle.barrio.nombrebarrio;
-            $scope.transversal_mant = solicitud.data.suministro.calle.nombrecalle;
-            $scope.tarifa_mant = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+                $scope.num_solicitud_otro = solicitud.tipo_id;
 
-            $scope.t_observacion_mant = solicitud.data.observacion;
+                $scope.t_fecha_otro = solicitud.fechasolicitud;
+                $scope.h_codigocliente_otro = solicitud.cliente.idcliente;
+                $scope.documentoidentidad_cliente_otro = solicitud.cliente.persona.numdocidentific;
+                $scope.nom_cliente_otro = solicitud.cliente.persona.razonsocial;
+                $scope.direcc_cliente_otro = solicitud.cliente.persona.direccion;
+                $scope.telf_cliente_otro = solicitud.cliente.telefonoprincipaldomicilio;
+                $scope.celular_cliente_otro = solicitud.cliente.persona.celphone;
+                $scope.telf_trab_cliente_otro = solicitud.cliente.telefonoprincipaltrabajo;
 
-            if(solicitud.data.estaprocesada == true) {
-                $('#s_suministro_mant').prop('disabled', true);
-                $('#t_observacion_mant').prop('disabled', true);
+                $scope.t_observacion_otro = response[0].descripcion;
 
-                $('#btn-save-mant').prop('disabled', true);
-                $('#btn-process-mant').prop('disabled', true);
-                $('#modal-footer-mant').hide();
-            } else {
-                $('#s_suministro_mant').prop('disabled', false);
-                $('#t_observacion_mant').prop('disabled', false);
+                if(solicitud.estadoprocesada == true) {
+                    $('#t_observacion_otro').prop('disabled', true);
+                    $('#btn-save-otro').prop('disabled', true);
+                    $('#btn-process-otro').prop('disabled', true);
+                    $('#modal-footer-otro').hide();
+                } else {
+                    $('#t_observacion_otro').prop('disabled', false);
+                    $('#btn-save-otro').prop('disabled', false);
+                    $('#btn-process-otro').prop('disabled', false);
+                    $('#modal-footer-otro').show();
+                }
 
-                $('#btn-save-mant').prop('disabled', false);
-                $('#btn-process-mant').prop('disabled', false);
-                $('#modal-footer-mant').show();
-            }
+                $('#modalActionOtro').modal('show');
 
-            $('#modalActionMantenimiento').modal('show');
+                //---------------------------------------------------------------------------------------
+
+                $scope.num_solicitud_mant = solicitud.tipo_id;
+                $scope.t_fecha_mant = solicitud.fechasolicitud;
+                $scope.h_codigocliente_mant = solicitud.cliente.idcliente;
+                $scope.documentoidentidad_cliente_mant = solicitud.cliente.persona.numdocidentific;
+                $scope.nom_cliente_mant = solicitud.cliente.persona.razonsocial;
+                $scope.direcc_cliente_mant = solicitud.cliente.persona.direccion;
+                $scope.telf_cliente_mant = solicitud.cliente.telefonoprincipaldomicilio;
+                $scope.celular_cliente_mant = solicitud.cliente.persona.celphone;
+                $scope.telf_trab_cliente_mant = solicitud.cliente.telefonoprincipaltrabajo;
+
+                $scope.zona_mant = solicitud.data.suministro.calle.barrio.nombrebarrio;
+                $scope.transversal_mant = solicitud.data.suministro.calle.nombrecalle;
+                $scope.tarifa_mant = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+
+                $scope.t_observacion_mant = solicitud.data.observacion;
+
+                if(solicitud.data.estaprocesada == true) {
+                    $('#s_suministro_mant').prop('disabled', true);
+                    $('#t_observacion_mant').prop('disabled', true);
+
+                    $('#btn-save-mant').prop('disabled', true);
+                    $('#btn-process-mant').prop('disabled', true);
+                    $('#modal-footer-mant').hide();
+                } else {
+                    $('#s_suministro_mant').prop('disabled', false);
+                    $('#t_observacion_mant').prop('disabled', false);
+
+                    $('#btn-save-mant').prop('disabled', false);
+                    $('#btn-process-mant').prop('disabled', false);
+                    $('#modal-footer-mant').show();
+                }
+
+                $('#modalActionMantenimiento').modal('show');
+
+            });
+
+
+
+
         };
 
         /*
