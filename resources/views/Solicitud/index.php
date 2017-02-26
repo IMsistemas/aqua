@@ -68,15 +68,15 @@
                     </thead>
                     <tbody>
                         <tr dir-paginate="solicitud in solicitudes |orderBy:sortKey:reverse |itemsPerPage:10 | filter : search" ng-cloak>
-                            <td class="text-center">{{solicitud.data.idsolicitud}}</td>
-                            <td>{{solicitud.data.fechasolicitud | formatDate}}</td>
-                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{solicitud.data.cliente.complete_name}}</td>
-                            <td>{{solicitud.data.cliente.direcciondomicilio}}</td>
-                            <td>{{solicitud.data.cliente.telefonoprincipaldomicilio}}</td>
+                            <td class="text-center">{{solicitud.idsolicitud}}</td>
+                            <td>{{solicitud.fechasolicitud | formatDate}}</td>
+                            <td style="font-weight: bold;">{{solicitud.cliente.persona.razonsocial}}</td>
+                            <td>{{solicitud.cliente.persona.direccion}}</td>
+                            <td>{{solicitud.cliente.telefonoprincipaldomicilio}}</td>
                             <td>{{solicitud.tipo}}</td>
-                            <td ng-if="solicitud.data.estaprocesada == true"><span class="label label-primary" style="font-size: 14px !important;">Procesada</span></td>
-                            <td ng-if="solicitud.data.estaprocesada == false"><span class="label label-warning" style="font-size: 14px !important;">En Espera</span></td>
-                            <td ng-if="solicitud.data.estaprocesada == true">
+                            <td ng-if="solicitud.estadoprocesada == true"><span class="label label-primary" style="font-size: 14px !important;">Procesada</span></td>
+                            <td ng-if="solicitud.estadoprocesada == false"><span class="label label-warning" style="font-size: 14px !important;">En Espera</span></td>
+                            <td ng-if="solicitud.estadoprocesada == true">
                                 <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
                                     <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                 </button>
@@ -90,7 +90,7 @@
                                 </span>
 
                             </td>
-                            <td ng-if="solicitud.data.estaprocesada == false">
+                            <td ng-if="solicitud.estadoprocesada == false">
                                 <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
                                     <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                 </button>

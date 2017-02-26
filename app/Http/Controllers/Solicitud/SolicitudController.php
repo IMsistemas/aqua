@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Solicitud;
 
 
-use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Configuracion\ConfiguracionSystem;
+//use App\Modelos\Configuraciones\Configuracion;
 use App\Modelos\Servicios\ServiciosCliente;
+use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
 use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
@@ -28,15 +30,17 @@ class SolicitudController extends Controller
         return view('Solicitud/index');
     }
 
+
     /**
-     * Devolver la configuracion del sistema
+     * Obtener la configuracion del sistema
      *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getConfiguracion()
+    public function getTasaInteres()
     {
-        return Configuracion::all();
+        return ConfiguracionSystem::where('optionname', 'AYORA_TASAINTERES')->get();
     }
+
 
     /**
      * Obtener todas las solicitudes independientemente de su tipo
@@ -45,7 +49,7 @@ class SolicitudController extends Controller
      */
     public function getSolicitudes()
     {
-        $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
+        /*$solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                                                         ->orderBy('fechasolicitud', 'desc')->get();
 
         $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
@@ -63,7 +67,20 @@ class SolicitudController extends Controller
             'suministro' => $solicitudsuministro, 'otro' => $solicitudotro,
             'setname' => $solicitudsetname, 'servicio' => $solicitudservicio,
             'mantenimiento' => $solicitudmantenim
-        ]);
+        ]);*/
+
+
+        return Solicitud::with('cliente.persona')
+            ->selectRaw(
+                '*,
+                (SELECT idsolicitud FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
+                (SELECT idsolicitud FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre,
+                (SELECT idsolicitud FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento,
+                (SELECT idsolicitud FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
+                (SELECT idsolicitud FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
+            )
+            ->orderBy('fechasolicitud', 'asc')->get();
+
     }
 
     /**

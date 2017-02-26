@@ -36,18 +36,69 @@
 
         $scope.initLoad = function () {
 
-            $http.get(API_URL + 'solicitud/getConfiguracion').success(function(response){
-
-                console.log(response);
-
-                $scope.tasainteres = parseFloat(response[0].tasainteres);
-
+            $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
+                $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
 
             $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
 
-                var list = [];
+                console.log(response);
+
+                var longitud = response.length;
+
+                if (longitud > 0) {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        var tipo = '';
+                        var idtipo = 0;
+
+                        if (response[i].solicitudcambionombre != null) {
+                            tipo = 'Cambio de Nombre';
+                            idtipo = response[i].solicitudcambionombre;
+                        } else if (response[i].solicitudmantenimiento != null) {
+                            tipo = 'Mantenimiento';
+                            idtipo = response[i].solicitudmantenimiento;
+                        } else if (response[i].solicitudotro != null) {
+                            tipo = 'Otra Solicitud';
+                            idtipo = response[i].solicitudotro;
+                        } else if (response[i].solicitudservicio != null) {
+                            tipo = 'Servicio';
+                            idtipo = response[i].solicitudservicio;
+                        } else if (response[i].solicitudsuministro != null) {
+                            tipo = 'Suministro';
+                            idtipo = response[i].solicitudsuministro;
+                        }
+
+                        var tipo_name = {
+                            value: tipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response[i], 'tipo', tipo_name);
+
+                        var tipo_id = {
+                            value: idtipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response[i], 'tipo_id', tipo_id);
+
+                    }
+
+                }
+
+
+                $scope.solicitudes = response;
+
+
+
+
+
+                /*var list = [];
 
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
@@ -155,7 +206,7 @@
                     }
                 }
 
-                $scope.solicitudes = list;
+                $scope.solicitudes = list;*/
 
             });
         };
