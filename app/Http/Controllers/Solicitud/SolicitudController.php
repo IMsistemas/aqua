@@ -92,6 +92,12 @@ class SolicitudController extends Controller
     }
 
 
+    public function getSolicitudMantenimiento($id)
+    {
+        return SolicitudMantenimiento::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')->where('idsolicitudmantenimiento', $id)->get();
+    }
+
+
 
 
 
@@ -209,7 +215,7 @@ class SolicitudController extends Controller
     public function updateSolicitudMantenimiento(Request $request, $id)
     {
         $solicitud = SolicitudMantenimiento::find($id);
-        $solicitud->numerosuministro = $request->input('numerosuministro');
+        $solicitud->idsuministro = $request->input('numerosuministro');
         $solicitud->observacion = $request->input('observacion');
         $result = $solicitud->save();
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);

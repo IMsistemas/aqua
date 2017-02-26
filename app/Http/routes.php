@@ -22,6 +22,10 @@ Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicit
 
 Route::get('solicitud/getSolicitudOtro/{id}', 'Solicitud\SolicitudController@getSolicitudOtro');
 
+Route::get('solicitud/getSolicitudMantenimiento/{id}', 'Solicitud\SolicitudController@getSolicitudMantenimiento');
+
+
+
 Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');
 
 Route::get('solicitud/getSolicitudSetN/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudSetN');
@@ -38,11 +42,14 @@ Route::put('solicitud/processSolicitudFraccion/{idsolicitud}', 'Solicitud\Solici
 
 Route::put('solicitud/updateSolicitudOtro/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudOtro');
 
-Route::put('solicitud/updateSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudRiego');
+Route::put('solicitud/updateSolicitudMantenimiento/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudMantenimiento');
 
 Route::put('solicitud/updateSolicitudSetName/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudSetName');
 
-Route::put('solicitud/updateSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudFraccion');
+Route::put('solicitud/updateSolicitudServicio/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudServicio');
+
+Route::put('solicitud/updateSolicitudSuministro/{idsolicitud}', 'Solicitud\SolicitudController@updateSolicitudSuministro');
+
 
 //Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Solicitud
 Route::resource('/solicitud', 'Solicitud\SolicitudController');

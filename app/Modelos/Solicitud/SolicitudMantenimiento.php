@@ -12,11 +12,11 @@ class SolicitudMantenimiento extends Model
 
     public function cliente()
     {
-        return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigocliente');
+        return $this->belongsTo('App\Modelos\Clientes\Cliente', 'idcliente');
     }
 
     public function suministro()
     {
-        return $this->belongsTo('App\Modelos\Suministros\Suministro', 'numerosuministro');
+        return $this->belongsTo('App\Modelos\Suministros\Suministro', 'idsuministro');
     }
 }
