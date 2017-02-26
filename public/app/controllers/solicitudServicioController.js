@@ -34,18 +34,29 @@
 
         $scope.tasainteres = 0;
 
-        $scope.initLoad = function () {
+        $scope.pageChanged = function(newPage) {
+            $scope.initLoad(newPage);
+        };
+
+        $scope.initLoad = function (pageNumber) {
 
             $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
+            if ($scope.busqueda == undefined) {
+                var search = null;
+            } else var search = $scope.busqueda;
 
-            $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
+            var filtros = {
+                search: search
+            };
+
+            $http.get(API_URL + 'solicitud/getSolicitudes?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
                 console.log(response);
 
-                var longitud = response.length;
+                var longitud = response.data.length;
 
                 if (longitud > 0) {
 
@@ -54,21 +65,21 @@
                         var tipo = '';
                         var idtipo = 0;
 
-                        if (response[i].solicitudcambionombre != null) {
+                        if (response.data[i].solicitudcambionombre != null) {
                             tipo = 'Cambio de Nombre';
-                            idtipo = response[i].solicitudcambionombre;
-                        } else if (response[i].solicitudmantenimiento != null) {
+                            idtipo = response.data[i].solicitudcambionombre;
+                        } else if (response.data[i].solicitudmantenimiento != null) {
                             tipo = 'Mantenimiento';
-                            idtipo = response[i].solicitudmantenimiento;
-                        } else if (response[i].solicitudotro != null) {
+                            idtipo = response.data[i].solicitudmantenimiento;
+                        } else if (response.data[i].solicitudotro != null) {
                             tipo = 'Otra Solicitud';
-                            idtipo = response[i].solicitudotro;
-                        } else if (response[i].solicitudservicio != null) {
+                            idtipo = response.data[i].solicitudotro;
+                        } else if (response.data[i].solicitudservicio != null) {
                             tipo = 'Servicio';
-                            idtipo = response[i].solicitudservicio;
-                        } else if (response[i].solicitudsuministro != null) {
+                            idtipo = response.data[i].solicitudservicio;
+                        } else if (response.data[i].solicitudsuministro != null) {
                             tipo = 'Suministro';
-                            idtipo = response[i].solicitudsuministro;
+                            idtipo = response.data[i].solicitudsuministro;
                         }
 
                         var tipo_name = {
@@ -77,7 +88,7 @@
                             enumerable: true,
                             configurable: true
                         };
-                        Object.defineProperty(response[i], 'tipo', tipo_name);
+                        Object.defineProperty(response.data[i], 'tipo', tipo_name);
 
                         var tipo_id = {
                             value: idtipo,
@@ -85,18 +96,14 @@
                             enumerable: true,
                             configurable: true
                         };
-                        Object.defineProperty(response[i], 'tipo_id', tipo_id);
+                        Object.defineProperty(response.data[i], 'tipo_id', tipo_id);
 
                     }
 
                 }
 
-
-                $scope.solicitudes = response;
-
-
-
-
+                $scope.solicitudes = response.data;
+                $scope.totalItems = response.total;
 
                 /*var list = [];
 

@@ -10,24 +10,24 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <div class="form-group">
-                        <label for="t_estado" class="col-sm-5 control-label">Tipo Solicitud:</label>
-                        <div class="col-sm-7">
-                            <select class="form-control" name="t_estado" id="t_tipo_solicitud"
-                                    ng-model="t_tipo_solicitud" ng-options="value.id as value.name for value in tipo"
-                                    ng-change="searchByFilter()"> </select>
-                        </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Tipo Solicitud: </span>
+                        <select class="form-control" name="t_estado" id="t_tipo_solicitud"
+                                ng-model="t_tipo_solicitud" ng-options="value.id as value.name for value in tipo"
+                                ng-change="searchByFilter()"> </select>
                     </div>
+
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <div class="form-group">
-                        <label for="t_estado" class="col-sm-4 control-label">Estado:</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" name="t_estado" id="t_estado"
-                                    ng-model="t_estado" ng-options="value.id as value.name for value in estados"
-                                    ng-change="searchByFilter()"> </select>
-                        </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Estado: </span>
+                        <select class="form-control" name="t_estado" id="t_estado"
+                                ng-model="t_estado" ng-options="value.id as value.name for value in estados"
+                                ng-change="searchByFilter()"> </select>
                     </div>
+
                 </div>
 
             </div>
@@ -67,7 +67,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="solicitud in solicitudes |orderBy:sortKey:reverse |itemsPerPage:10 | filter : search" ng-cloak>
+                        <!--<tr dir-paginate="solicitud in solicitudes |orderBy:sortKey:reverse |itemsPerPage:10 | filter : search" ng-cloak>-->
+                        <tr dir-paginate="solicitud in solicitudes | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td class="text-center">{{solicitud.idsolicitud}}</td>
                             <td>{{solicitud.fechasolicitud | formatDate}}</td>
                             <td style="font-weight: bold;">{{solicitud.cliente.persona.razonsocial}}</td>
@@ -108,9 +109,16 @@
                     </tbody>
                 </table>
                 <dir-pagination-controls
-                        max-size="5"
+
+                        on-page-change="pageChanged(newPageNumber)"
+
+                        template-url="dirPagination.html"
+
+                        class="pull-right"
+                        max-size="10"
                         direction-links="true"
                         boundary-links="true" >
+
                 </dir-pagination-controls>
             </div>
 

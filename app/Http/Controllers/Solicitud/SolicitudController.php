@@ -47,7 +47,7 @@ class SolicitudController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSolicitudes()
+    public function getSolicitudes(Request $request)
     {
         /*$solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
                                                         ->orderBy('fechasolicitud', 'desc')->get();
@@ -69,6 +69,9 @@ class SolicitudController extends Controller
             'mantenimiento' => $solicitudmantenim
         ]);*/
 
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+        $cliente = null;
 
         return Solicitud::with('cliente.persona')
             ->selectRaw(
@@ -79,7 +82,7 @@ class SolicitudController extends Controller
                 (SELECT idsolicitud FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
                 (SELECT idsolicitud FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
             )
-            ->orderBy('fechasolicitud', 'asc')->get();
+            ->orderBy('fechasolicitud', 'asc')->paginate(10);
 
     }
 
