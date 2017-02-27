@@ -104,9 +104,10 @@ class BodegaController extends Controller
     					->join('parroquia', 'parroquia.idparroquia', '=', 'cont_bodega.idparroquia')
     					->join('canton', 'parroquia.idcanton', '=', 'canton.idcanton')
     					->join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
+                        ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_bodega.idplancuenta')
                         ->select(
                         		DB::raw("(persona.lastnamepersona || ' ' || persona.namepersona) as bodeguero ")
-                        		,'persona.email', 'cont_bodega.*',
+                        		,'persona.email', 'cont_bodega.*', 'cont_plancuenta.concepto',
                         		DB::raw("(provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) as ubicacion"))
                             ->whereRaw("(cont_bodega.idbodega::text ILIKE '%" . $filter->text . "%' 
                             		or (provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) ILIKE '%" . $filter->text . "%'                             		
@@ -167,7 +168,8 @@ class BodegaController extends Controller
         return Cont_Bodega::join('parroquia', 'parroquia.idparroquia', '=', 'cont_bodega.idparroquia')
     					->join('canton', 'parroquia.idcanton', '=', 'canton.idcanton')
     					->join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
-                        ->select('cont_bodega.*','canton.idcanton','provincia.idprovincia')
+                        ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_bodega.idplancuenta')
+                        ->select('cont_bodega.*','canton.idcanton','provincia.idprovincia', 'cont_plancuenta.concepto')
                         ->whereRaw("cont_bodega.idbodega = '".$id."'")
                         ->first() ;
     }
