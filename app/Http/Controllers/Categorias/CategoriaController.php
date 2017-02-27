@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Categorias;
 use App\Modelos\Categoria;
+use App\Modelos\Contabilidad\Cont_Categoria;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -91,7 +92,7 @@ class CategoriaController extends Controller
         $filter = json_decode($filter);
         $filterCategorias = ($filter->catId != null)?" and idcategoria <@ '".$filter->catId."'":"";  
         $ltree = str_replace(' ','',$filter->text);
-        $array =  Categoria::orderBy('idcategoria', 'asc')
+        $array =  Cont_Categoria::orderBy('idcategoria', 'asc')
     	 		->whereRaw("( idcategoria <@ '".$ltree."' OR nombrecategoria ILIKE '%" . $filter->text . "%') ".$filterCategorias)       
                 ->get();
         

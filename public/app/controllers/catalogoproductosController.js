@@ -3,7 +3,136 @@
 
 app.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload) {
 
-    $scope.productos = [];
+
+    $scope.items = [];
+    $scope.select_cuenta = null;
+
+
+    $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
+
+    $scope.initLoad = function(pageNumber){
+
+        if ($scope.busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.busqueda;
+
+        var filtros = {
+            search: search
+        };
+
+        $http.get(API_URL + 'catalogoproducto/getCatalogoItems?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+            $scope.items = response.data;
+            $scope.totalItems = response.total;
+        });
+    };
+
+    $scope.initLoad(1);
+
+
+    $scope.toggle = function(modalstate) {
+
+
+        switch (modalstate) {
+            case 'add':
+                $scope.form_title = 'Nuevo Item';
+
+                $http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
+
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
+                    }
+                    $scope.tipo = array_temp;
+                    $scope.s_tipoitem = '';
+
+                });
+
+                $http.get(API_URL + 'catalogoproducto/getImpuestoICE').success(function(response){
+
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nametipoimpuestoice, id: response[i].idtipoimpuestoice})
+                    }
+                    $scope.imp_ice = array_temp;
+                    $scope.s_ice = '';
+
+                });
+
+                $http.get(API_URL + 'catalogoproducto/getImpuestoIVA').success(function(response){
+
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
+                    }
+                    $scope.imp_iva = array_temp;
+                    $scope.s_iva = '';
+
+                    $('#modalAction').modal('show');
+
+
+                });
+
+
+
+
+
+
+                break;
+            case 'edit':
+
+
+                break;
+            case 'info':
+
+
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+
+
+    $scope.showPlanCuenta = function () {
+
+        $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
+    $scope.selectCuenta = function () {
+        var selected = $scope.select_cuenta;
+
+        $scope.cuenta_employee = selected.concepto;
+
+        $('#modalPlanCuenta').modal('hide');
+    };
+
+    $scope.click_radio = function (item) {
+        $scope.select_cuenta = item;
+    };
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
+    };
+
+
+    /**
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+
+    /*$scope.productos = [];
     $scope.producto_del = 0;
     $scope.lineas = $scope.lineasFiltro = [];
     $scope.sublineas = $scope.sublineasFiltro  =[];   
@@ -79,6 +208,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 	                $scope.linea = '';
 	                $('#modalAction').modal('show');
                 });
+
+                $('#modalAction').modal('show');
 
                 break;
             case 'edit':
@@ -218,7 +349,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     		return '';
     	}
     	
-    }
+    }*/
     
 });
 

@@ -568,7 +568,14 @@ Route::get('catalogoproducto/getCategoriasToFilter', 'CatalogoProductos\Catalogo
 Route::get('catalogoproducto/getLastCatalogoProducto', 'CatalogoProductos\CatalogoProductoController@getLastCatalogoProducto');
 Route::get('catalogoproducto/getCatalogoProductos/{filters}', 'CatalogoProductos\CatalogoProductoController@getCatalogoProductos');
 Route::get('catalogoproducto/getCategoriasHijas/{filters}', 'CatalogoProductos\CatalogoProductoController@getCategoriasHijas');
-Route::get('catalogoproducto/{id}', 'CatalogoProductos\CatalogoProductoController@show');
+
+//Route::get('catalogoproducto/{id}', 'CatalogoProductos\CatalogoProductoController@show');
+
+Route::get('catalogoproducto/getTipoItem', 'CatalogoProductos\CatalogoProductoController@getTipoItem');
+Route::get('catalogoproducto/getImpuestoICE', 'CatalogoProductos\CatalogoProductoController@getImpuestoICE');
+Route::get('catalogoproducto/getImpuestoIVA', 'CatalogoProductos\CatalogoProductoController@getImpuestoIVA');
+Route::get('catalogoproducto/getCatalogoItems', 'CatalogoProductos\CatalogoProductoController@getCatalogoItems');
+
 Route::resource('catalogoproducto', 'CatalogoProductos\CatalogoProductoController');
 
 

@@ -39,11 +39,11 @@
    
     
     $scope.initLoad = function(){
-    	$scope.searchByFilter();
+    	/*$scope.searchByFilter();
         $http.get(API_URL + 'categoria/getCategoriasToFilter').success(function(response){
             $scope.categoriasFiltro = response;
            
-        });
+        });*/
        
     }
 
@@ -75,7 +75,8 @@
       };
       
       $scope.addCategoria = function(nivel) {
-      	$http.get(API_URL + 'categoria/lastCategoria/' + nivel).success(function(response) {       		 
+
+          /*$http.get(API_URL + 'categoria/lastCategoria/' + nivel).success(function(response) {
       		$scope.inserted = {
                       idcategoria: response.lastId,
                       nombrecategoria: ''     
@@ -84,9 +85,9 @@
               $scope.button = true;
               $scope.buttonSave = true;
               $scope.edit = $scope.categorias.length - 1;
-          });    	
+          });*/
           
-        }; 
+      };
       
       
       $scope.buscar = function(listado, valor, indice){

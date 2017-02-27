@@ -5,6 +5,10 @@ namespace App\Http\Controllers\CatalogoProductos;
 use App\Modelos\CatalogoProductos\CatalogoProducto;
 use App\Modelos\Categoria;
 
+use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Contabilidad\Cont_ClaseItem;
+use App\Modelos\SRI\SRI_TipoImpuestoIce;
+use App\Modelos\SRI\SRI_TipoImpuestoIva;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -23,6 +27,54 @@ class CatalogoProductoController extends Controller
     {
         return view('catalogoproductos.index_catalogo');
     }
+
+
+
+    public function getCatalogoItems(Request $request)
+    {
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+        $cliente = null;
+
+        return Cont_CatalogItem::orderBy('idcatalogitem', 'desc')->paginate(10);
+
+
+        /*$cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
+
+        if ($search != null) {
+            $cliente = $cliente->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
+        }
+
+        return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);*/
+    }
+
+    public function getImpuestoIVA()
+    {
+        return SRI_TipoImpuestoIva::orderBy('nametipoimpuestoiva', 'asc')->get();
+    }
+
+    public function getImpuestoICE()
+    {
+        return SRI_TipoImpuestoIce::orderBy('nametipoimpuestoice', 'asc')->get();
+    }
+
+    public function getTipoItem()
+    {
+        return Cont_ClaseItem::orderBy('nameclaseitem', 'asc')->get();
+    }
+
+
+    /**
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+
+
+
+
+
+
 
     /**
      * Obtener las categorias para filtro
@@ -133,10 +185,10 @@ class CatalogoProductoController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    /*public function show($id)
     {
         return CatalogoProducto::find($id);
-    }
+    }*/
 
     /**
      * Actualizar el recurso producto seleccionado
