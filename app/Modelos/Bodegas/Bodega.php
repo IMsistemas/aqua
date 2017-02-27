@@ -12,6 +12,8 @@ class Bodega extends Model
 
     public $incrementing = false;
 
+    public $timestamps = true;
+
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $fillable = [

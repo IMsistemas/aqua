@@ -12,7 +12,7 @@ class Cont_Bodega extends Model
 
     public $incrementing = false;
 
-    public $timestamps = false;
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
         'idbodega','idparroquia','idempleado','direccionbodega', 'telefonobodega',
@@ -22,6 +22,4 @@ class Cont_Bodega extends Model
     public function empleado(){
     	return $this->belongsTo('App\Modelos\Empleado');
     }
-
-   
 }

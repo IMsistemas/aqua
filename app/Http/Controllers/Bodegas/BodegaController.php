@@ -185,7 +185,7 @@ class BodegaController extends Controller
     {
     	$bodega = Cont_Bodega::find($id);
     	$bodega->fill($request->all());
-    	$bodega->save();
+    	$bodega->update();
     	return response()->json(['success' => true]);
     }
 
