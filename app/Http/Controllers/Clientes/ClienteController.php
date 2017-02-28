@@ -108,6 +108,11 @@ class ClienteController extends Controller
         return SRI_TipoImpuestoIva::orderBy('nametipoimpuestoiva', 'asc')->get();
     }
 
+    public function getTipoCliente()
+    {
+        return TipoCliente::orderBy('nametipocliente', 'asc')->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -144,7 +149,7 @@ class ClienteController extends Controller
             $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
             $cliente->direcciontrabajo = $request->input('direcciontrabajo');
 
-            $cliente->idtipocliente = 1;
+            $cliente->idtipocliente = $request->input('tipocliente');
 
             if ($cliente->save()) {
                 return response()->json(['success' => true]);

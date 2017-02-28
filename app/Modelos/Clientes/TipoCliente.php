@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class TipoCliente extends Model
 {
     protected $table = "tipocliente";
-    protected $primaryKey = "id";
+    protected $primaryKey = "idtipocliente";
     public $timestamps = false;
 
     public function cliente()
     {
-        return $this->hasMany('App\Modelos\Clientes\Cliente','id');
+        return $this->hasMany('App\Modelos\Clientes\Cliente','idtipocliente');
     }
 
     public function serviciostipocliente()
