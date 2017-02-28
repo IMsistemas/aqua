@@ -38,8 +38,8 @@ class ProveedorController extends Controller
         $proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
                         ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'proveedor.idplancuenta')
                         ->join('parroquia', 'proveedor.idparroquia', '=', 'parroquia.idparroquia')
-                        ->join('canton', 'canton.idcanton', '=', 'parroquia.idparroquia')
-                        ->join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
+                        ->join('canton', 'canton.idcanton', '=', 'parroquia.idcanton')
+                        ->join('provincia', 'provincia.idprovincia', '=', 'canton.idprovincia')
                         ->select('proveedor.*', 'persona.*', 'cont_plancuenta.*', 'canton.idcanton', 'provincia.idprovincia');
 
         if ($search != null) {
@@ -226,11 +226,15 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        $proveedor = Proveedor::find($id);
-        if ($proveedor->delete()) {
-            return response()->json(['success' => true]);
+        if (ContactoProveedor::where('idproveedor', $id)->delete()) {
+            $proveedor = Proveedor::find($id);
+            if ($proveedor->delete()) {
+                return response()->json(['success' => true]);
+            }
+            else return response()->json(['success' => false]);
+        } else {
+            return response()->json(['success' => false]);
         }
-        else return response()->json(['success' => false]);
     }
 
     public function destroyContacto($idcontacto)

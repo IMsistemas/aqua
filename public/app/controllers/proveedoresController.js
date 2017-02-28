@@ -452,7 +452,8 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
     $scope.destroyContacto = function () {
 
-        $http.delete(API_URL + 'proveedor/destroyContacto/' + $scope.idcontacto).success(function (data) {
+        if($scope.idcontacto == 0) {
+
             $http.get(API_URL + 'proveedor/getContactos/' + $scope.idproveedor).success(function(response){
                 $scope.contactos = [];
 
@@ -470,23 +471,41 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
                     $scope.contactos.push(object);
                 }
-
                 $('#modalMessageDeleteContacto').modal('hide');
-                $scope.message = 'Contacto eliminado satisfactoriamente';
-                $scope.idcontacto = 0;
-                $('#modalMessage').modal('show');
-                setTimeout("$('#modalMessage').modal('hide')",3000);
-
             });
 
+        } else {
 
+            $http.delete(API_URL + 'proveedor/destroyContacto/' + $scope.idcontacto).success(function (data) {
+                $http.get(API_URL + 'proveedor/getContactos/' + $scope.idproveedor).success(function(response){
+                    $scope.contactos = [];
 
+                    var longitud = response.length;
+                    for(var i = 0; i < longitud; i++){
+                        var object = {
+                            nombrecontacto: response[i].namecontacto,
+                            idcontacto: response[i].idcontactoproveedor,
+                            telefonoprincipalcont: response[i].telefonoprincipal,
+                            telefonosecundario: response[i].telefonosecundario,
+                            celular: response[i].celular,
+                            observacion: response[i].observacion,
+                            idproveedor: response[i].idproveedor
+                        };
 
-        }).error(function (res) {
+                        $scope.contactos.push(object);
+                    }
 
-        });
+                    $('#modalMessageDeleteContacto').modal('hide');
+                    $scope.message = 'Contacto eliminado satisfactoriamente';
+                    $scope.idcontacto = 0;
+                    $('#modalMessage').modal('show');
+                    setTimeout("$('#modalMessage').modal('hide')",3000);
 
+                });
+            }).error(function (res) {
 
+            });
+        }
 
     };
 
