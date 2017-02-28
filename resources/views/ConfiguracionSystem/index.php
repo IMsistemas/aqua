@@ -477,31 +477,31 @@
 
                     <form class="form-horizontal" name="formEspecifica" novalidate="">
 
-                        <!--<div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Dividendos: </span>
-                                    <input type="text" class="form-control" placeholder="Para sistema AYORA"
-                                        name="t_ayora_dividendos" id="t_ayora_dividendos" ng-model="t_ayora_dividendos" required
-                                           ng-keypress="onlyNumber($event, 100, 't_ayora_dividendos')" />
-                                    <input type="hidden" name="h_ayora_dividendos" id="h_ayora_dividendos" ng-model="h_ayora_dividendos" >
-                                </div>
-                                <span class="help-block error"
-                                  ng-show="formEspecifica.t_ayora_dividendos.$invalid && formEspecifica.t_ayora_dividendos.$touched">Dividendos es requerido</span>
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Dividendos: </span>
+                                <input type="text" class="form-control" placeholder="Para sistema AYORA"
+                                    name="t_ayora_dividendos" id="t_ayora_dividendos" ng-model="t_ayora_dividendos" required
+                                       ng-keypress="onlyNumber($event, 100, 't_ayora_dividendos')" />
+                                <input type="hidden" name="h_ayora_dividendos" id="h_ayora_dividendos" ng-model="h_ayora_dividendos" >
                             </div>
-
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Tasa Interés: </span>
-                                    <input type="text" class="form-control" placeholder="Para sistema AYORA"
-                                           name="t_ayora_tasainteres" id="t_ayora_tasainteres" ng-model="t_ayora_tasainteres" required
-                                           ng-keypress="onlyDecimal($event)" />
-                                    <input type="hidden" name="h_ayora_tasainteres" id="h_ayora_tasainteres" ng-model="h_ayora_tasainteres" >
-                                </div>
-                                <span class="help-block error"
-                                  ng-show="formEspecifica.t_ayora_tasainteres.$invalid && formEspecifica.t_ayora_tasainteres.$touched">Tasa Interés es requerida</span>
-                            </div>-->
+                            <span class="help-block error"
+                              ng-show="formEspecifica.t_ayora_dividendos.$invalid && formEspecifica.t_ayora_dividendos.$touched">Dividendos es requerido</span>
+                        </div>
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Tasa Interés: </span>
+                                <input type="text" class="form-control" placeholder="Para sistema AYORA"
+                                       name="t_ayora_tasainteres" id="t_ayora_tasainteres" ng-model="t_ayora_tasainteres" required
+                                       ng-keypress="onlyDecimal($event)" />
+                                <input type="hidden" name="h_ayora_tasainteres" id="h_ayora_tasainteres" ng-model="h_ayora_tasainteres" >
+                            </div>
+                            <span class="help-block error"
+                              ng-show="formEspecifica.t_ayora_tasainteres.$invalid && formEspecifica.t_ayora_tasainteres.$touched">Tasa Interés es requerida</span>
+                        </div>
+
+                        <!--<div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Constante: </span>
                                 <input type="text" class="form-control" placeholder="Para sistema Pisque"
@@ -511,7 +511,7 @@
                             </div>
                             <span class="help-block error"
                                   ng-show="formEspecifica.t_pisque_constante.$invalid && formEspecifica.t_pisque_constante.$touched">La Constante es requerida</span>
-                        </div>
+                        </div>-->
 
                     </form>
                     <div class="col-xs-12 text-center" style="margin-top: 5px;">

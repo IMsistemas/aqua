@@ -300,13 +300,13 @@ class ConfiguracionSystemController extends Controller
 
         //-----PARA SISTEMA PISQUE (RIEGO)------------------------------------------------
 
-        return ConfiguracionSystem::where('optionname','PISQUE_CONSTANTE')->get();
+        //return ConfiguracionSystem::where('optionname','PISQUE_CONSTANTE')->get();
 
         //-----PARA SISTEMA AYORA (POTABLE)-----------------------------------------------
 
-        /*return ConfiguracionSystem::where('optionname','AYORA_DIVIDENDO')
+        return ConfiguracionSystem::where('optionname','AYORA_DIVIDENDO')
             ->orWhere('optionname','AYORA_TASAINTERES')
-            ->get();*/
+            ->get();
 
     }
 
