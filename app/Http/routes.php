@@ -24,11 +24,15 @@ Route::get('solicitud/getSolicitudOtro/{id}', 'Solicitud\SolicitudController@get
 
 Route::get('solicitud/getSolicitudMantenimiento/{id}', 'Solicitud\SolicitudController@getSolicitudMantenimiento');
 
+Route::get('solicitud/getSolicitudSetN/{id}', 'Solicitud\SolicitudController@getSolicitudSetN');
+
+
+
+
+
 
 
 Route::get('solicitud/getSolicitudRiego/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudRiego');
-
-Route::get('solicitud/getSolicitudSetN/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudSetN');
 
 Route::get('solicitud/getSolicitudFraccion/{idsolicitud}', 'Solicitud\SolicitudController@getSolicitudFraccion');
 

@@ -252,7 +252,302 @@
                 </div>
             </div>
 
+
             <div class="modal fade" tabindex="-1" role="dialog" id="modalActionSetNombre">
+                <div class="modal-dialog" role="document" style="width: 60%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+
+                            <div class="col-md-6 col-xs-12">
+                                <h4 class="modal-title">Solicitud de Cambio de Nombre Nro: {{num_solicitud_setnombre}}</h4>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <h4 class="modal-title"><label for="t_fecha_process" class="col-sm-6" style="font-weight: normal !important;">Fecha Ingreso:</label></h4>
+                                    <div class="col-sm-5" style="padding: 0;">
+                                        <input type="text" class="form-control input-sm datepicker" name="t_fecha_setnombre"
+                                               id="t_fecha_setnombre" ng-model="t_fecha_setnombre" style="color: black !important;" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" name="formSetNombre" novalidate="">
+
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                        <fieldset ng-cloak>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente actual</legend>
+
+                                            <div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">RUC/CI: </span>
+                                                        <input class="form-control" type="text" name="documentoidentidad_cliente_setnombre" id="documentoidentidad_cliente_setnombre"
+                                                               ng-model="documentoidentidad_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-sm-6 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Cliente: </span>
+                                                        <input class="form-control" type="text" name="nom_cliente_setnombre" id="nom_cliente_setnombre"
+                                                               ng-model="nom_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                    <input type="hidden" ng-model="h_codigocliente_setnombre">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Dirección Domicilio: </span>
+                                                        <input class="form-control" type="text" name="direcc_cliente_setnombre" id="direcc_cliente_setnombre"
+                                                               ng-model="direcc_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-4 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Celular: </span>
+                                                        <input class="form-control" type="text" name="celular_cliente_setnombre" id="celular_cliente_setnombre"
+                                                               ng-model="celular_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-sm-4 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Teléfono Domicilio: </span>
+                                                        <input class="form-control" type="text" name="telf_cliente_setnombre" id="telf_cliente_setnombre"
+                                                               ng-model="telf_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-sm-4 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Teléfono Trabajo: </span>
+                                                        <input class="form-control" type="text" name="telf_trab_cliente_setnombre" id="telf_trab_cliente_setnombre"
+                                                               ng-model="telf_trab_cliente_setnombre" disabled >
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <!--<div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-info" style="font-size: 14px !important;">
+                                                    <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente_setnombre}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-info" style="font-size: 14px !important;">
+                                                    <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente_setnombre}}
+                                                    <input type="hidden" ng-model="h_codigocliente_setnombre">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-default" style="font-size: 14px !important;">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente_setnombre}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-default" style="font-size: 14px !important;">
+                                                    <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente_setnombre}}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-default" style="font-size: 14px !important;">
+                                                    <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente_setnombre}}
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                <span class="label label-default" style="font-size: 14px !important;">
+                                                    <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente_setnombre}}
+                                                </div>
+                                            </div>-->
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -25px !important;">
+                                        <fieldset>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos de Suministro</legend>
+
+                                            <div class="col-sm-6 col-xs-12 error">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Suministros: </span>
+                                                    <select class="form-control" name="s_suministro_setnombre" id="s_suministro_setnombre"
+                                                            ng-model="s_suministro_setnombre" ng-options="value.id as value.label for value in suministro_setN"
+                                                            ng-change="showInfoSuministroForSetName()" required ></select>
+                                                </div>
+
+                                                <span class="help-block error"
+                                                      ng-show="formSetNombre.s_suministro_setnombre.$invalid && formSetNombre.s_suministro_setnombre.$touched">
+                                                                Seleccione un Suministro</span>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Zona: </span>
+                                                    <input class="form-control" type="text" name="zona_setnombre" id="zona_setnombre"
+                                                           ng-model="zona_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Transversal: </span>
+                                                    <input class="form-control" type="text" name="transversal_setnombre" id="transversal_setnombre"
+                                                           ng-model="transversal_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tarifa: </span>
+                                                    <input class="form-control" type="text" name="tarifa_setnombre" id="tarifa_setnombre"
+                                                           ng-model="tarifa_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                        <fieldset>
+                                            <legend style="font-size: 16px; font-weight: bold;">Datos del nuevo Cliente</legend>
+
+                                            <div class="col-xs-12" style="padding: 0;">
+                                                <div class="col-sm-6 col-xs-12 error">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">RUC/CI: </span>
+                                                        <angucomplete-alt
+                                                                id="s_ident_new_client_setnombre"
+                                                                pause="400"
+                                                                selected-object="showInfoClienteForSetName"
+
+                                                                remote-url="{{API_URL}}cliente/getIdentifyClientes/"
+
+                                                                title-field="numdocidentific"
+
+                                                                minlength="1"
+                                                                input-class="form-control"
+                                                                match-class="highlight"
+                                                                field-required="true"
+                                                                input-name="s_ident_new_client_setnombre"
+                                                                disable-input="guardado"
+                                                                text-searching="Buscando RUC Clientes"
+                                                                text-no-results="RUC no encontrado"
+                                                                initial-value="numdocidentific"
+                                                        />
+                                                    </div>
+                                                    <input type="hidden" id="h_codigocliente_new" ng-model="h_codigocliente_new">
+
+                                                    <span class="help-block error"
+                                                          ng-show="formSetNombre.s_ident_new_client_setnombre.$invalid && formSetNombre.s_ident_new_client_setnombre.$error.pattern">
+                                                                Seleccione un Cliente</span>
+
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Cliente: </span>
+                                                        <input class="form-control" type="text" name="nom_new_cliente_setnombre" id="nom_new_cliente_setnombre"
+                                                               ng-model="nom_new_cliente_setnombre" disabled >
+                                                    </div>
+                                                    <input type="hidden" ng-model="h_new_codigocliente_setnombre">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Dirección Domicilio: </span>
+                                                    <input class="form-control" type="text" name="direcc_new_cliente_setnombre" id="direcc_new_cliente_setnombre"
+                                                           ng-model="direcc_new_cliente_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Domicilio: </span>
+                                                    <input class="form-control" type="text" name="telf_new_cliente_setnombre" id="telf_new_cliente_setnombre"
+                                                           ng-model="telf_new_cliente_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Celular: </span>
+                                                    <input class="form-control" type="text" name="celular_new_cliente_setnombre" id="celular_new_cliente_setnombre"
+                                                           ng-model="celular_new_cliente_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Trabajo: </span>
+                                                    <input class="form-control" type="text" name="telf_trab_new_cliente_setnombre" id="telf_trab_new_cliente_setnombre"
+                                                           ng-model="telf_trab_new_cliente_setnombre" disabled >
+                                                </div>
+
+                                            </div>
+
+
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-success" id="btn-save-setnombre"
+                                    ng-click="saveSolicitudCambioNombre()" ng-disabled="formSetNombre.$invalid">
+                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btn-process-setnombre"
+                                    ng-click="procesarSolicitud()" disabled>
+                                Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="modal fade" tabindex="-1" role="dialog" id="modalActionSetNombre">
                 <div class="modal-dialog" role="document" style="width: 60%;">
                     <div class="modal-content">
                         <div class="modal-header modal-header-primary">
@@ -418,7 +713,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modalActionMantenimiento">

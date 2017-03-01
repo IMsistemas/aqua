@@ -94,11 +94,17 @@ class SolicitudController extends Controller
 
     public function getSolicitudMantenimiento($id)
     {
-        return SolicitudMantenimiento::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')->where('idsolicitudmantenimiento', $id)->get();
+        return SolicitudMantenimiento::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')
+                                        ->where('idsolicitudmantenimiento', $id)->get();
     }
 
 
-
+    public function getSolicitudSetN($id)
+    {
+        return SolicitudCambioNombre::with(
+            'suministro.tarifaaguapotable', 'suministro.calle.barrio', 'cliente.persona'
+            )->where('idsolicitudcambionombre', $id)->get();
+    }
 
 
 
