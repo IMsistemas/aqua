@@ -39,11 +39,11 @@
    
     
     $scope.initLoad = function(){
-    	/*$scope.searchByFilter();
+    	$scope.searchByFilter();
         $http.get(API_URL + 'categoria/getCategoriasToFilter').success(function(response){
             $scope.categoriasFiltro = response;
            
-        });*/
+        });
        
     }
 
@@ -59,13 +59,13 @@
     $scope.addSubCategoria = function(nivel) {
     	$http.get(API_URL + 'categoria/lastSubCategoria/' + nivel ).success(function(response) {                		 
     		$scope.inserted = {
-                    idcategoria: nivel + "." +response.lastId,
+                    jerarquia: nivel + "." +response.lastId,
                     nombrecategoria: ''     
             };
     		if(response.lastId > 1){
     			nivel =   nivel + "." + (parseInt(response.lastId)-1);      
     		}    
-    		$scope.edit = $scope.buscar($scope.categorias,nivel,'idcategoria')+1;    		
+    		$scope.edit = $scope.buscar($scope.categorias,nivel,'jerarquia')+1;    		
             $scope.categorias.splice($scope.edit,0,$scope.inserted);
             $scope.button = true;  
             $scope.buttonSave = true;           
@@ -76,16 +76,16 @@
       
       $scope.addCategoria = function(nivel) {
 
-          /*$http.get(API_URL + 'categoria/lastCategoria/' + nivel).success(function(response) {
+          $http.get(API_URL + 'categoria/lastCategoria/' + nivel).success(function(response) {
       		$scope.inserted = {
-                      idcategoria: response.lastId,
+                      jerarquia: response.lastId,
                       nombrecategoria: ''     
               };  
               $scope.categorias.push($scope.inserted);
               $scope.button = true;
               $scope.buttonSave = true;
               $scope.edit = $scope.categorias.length - 1;
-          });*/
+          });
           
       };
       
