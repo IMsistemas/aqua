@@ -1,28 +1,7 @@
 
-<!doctype html>
-<html lang="es-ES" ng-app="softver-aqua">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Catalogo Items</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-</head>
-
-<body>
 
 
     <div ng-controller="catalogoproductosController">
-
-        <div class="container">
 
             <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
 
@@ -124,7 +103,7 @@
                     </dir-pagination-controls>
                 </div>
 
-            </div>
+           
 
         </div>
 
@@ -134,7 +113,7 @@
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
 
-                        <h4 class="modal-title">{{form_title}}{{producto.codigoproducto}} <span class='pull-right'> Fecha Creación: {{formatoFecha(producto.fechaingreso)}}</span></h4>
+                        <h4 class="modal-title">{{form_title}} {{producto.idcatalogitem}} </h4>
 
                     </div>
                     <div class="modal-body">
@@ -146,22 +125,34 @@
                                     <div class="col-sm-5 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">Código Item: </span>
-                                            <input type="text" class="form-control" name="t_codigoitem" id="t_codigoitem" ng-model="t_codigoitem" />
+                                            <input type="text" class="form-control" name="t_codigoitem" id="t_codigoitem" ng-model="producto.codigoproducto" ng-required="true" ng-maxlength="20" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
                                         </div>
+                                        <span class="help-block error"
+                                                      ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$touched">El Código es requerido</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$error.maxlength">La longitud máxima es de 20 caracteres</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$error.pattern">El Código debe ser solo letras y espacios</span>
                                     </div>
 
                                     <div class="col-sm-7 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">Detalle Item: </span>
-                                            <input type="text" class="form-control" name="t_detalleitem" id="t_detalleitem" ng-model="t_detalleitem"/>
+                                            <input type="text" class="form-control" name="t_detalleitem" id="t_detalleitem" ng-model="producto.nombreproducto" ng-required="true" ng-maxlength="50" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
                                         </div>
+                                        <span class="help-block error"
+                                                      ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$touched">El Detalle es requerido</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$error.pattern">El Detalle debe ser solo letras y espacios</span>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Tipo Item: </span>
                                             <select class="form-control" name="s_tipoitem" id="s_tipoitem"
-                                                    ng-model="s_tipoitem" ng-options="value.id as value.label for value in tipo" required>
+                                                    ng-model="producto.idclaseitem" ng-options="value.id as value.label for value in tipo" required>
                                             </select>
                                         </div>
                                         <span class="help-block error"
@@ -169,45 +160,47 @@
                                     </div>
 
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Categoría: </span>
-                                            <select class="form-control" name="s_categoria" id="s_categoria" ng-model="s_categoria">
-                                                <option value="">-- Seleccione --</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Línea: </span>
-                                            <select class="form-control" name="s_linea" id="s_linea" ng-model="s_linea">
-                                                <option value="">-- Seleccione --</option>
+                                            <span class="input-group-addon">Línea: </span>                                            
+                                            <select class="form-control" name="s_linea" id="s_linea"
+                                                    ng-model="s_linea" ng-options="value.id as value.label for value in lineas" required ng-change="loadSubLinea(s_linea,false)">
                                             </select>
-                                        </div>
+                                       
+                                    	</div>
+                                    	 <span class="help-block error"
+                                              ng-show="formProducto.s_linea.$invalid && formProducto.s_linea.$touched">La línea es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">SubLínea: </span>
-                                            <select class="form-control" name="s_sublinea" id="s_sublinea" ng-model="s_sublinea">
-                                                <option value="">-- Seleccione --</option>
-                                            </select>
+                                            <select class="form-control" name="s_sublinea" id="s_sublinea" ng-model="producto.idcategoria"
+                                            	ng-options="value.id as value.label for value in sublineas" required>
+                                            	</select>
                                         </div>
+                                        <span class="help-block error"
+                                              ng-show="formProducto.s_sublinea.$invalid && formProducto.s_sublinea.$touched">La sublínea es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Precio Venta: </span>
-                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="t_precioventa"/>
+                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-required="true" ng-pattern="/^[0-9]+([,][0-9]+)?$/"/>
                                         </div>
+                                        <span class="help-block error"
+                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>
+                                        <span class="help-block error"
+                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$error.pattern">El Precio Venta debe ser solo numeros</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">IVA: </span>
                                             <select class="form-control" name="s_iva" id="s_iva"
-                                                    ng-model="s_iva" ng-options="value.id as value.label for value in imp_iva" required>
+                                                    ng-model="producto.idtipoimpuestoiva" ng-options="value.id as value.label for value in imp_iva" required>
                                             </select>
                                         </div>
                                         <span class="help-block error"
@@ -218,7 +211,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">ICE: </span>
                                             <select class="form-control" name="s_ice" id="s_ice"
-                                                    ng-model="s_ice" ng-options="value.id as value.label for value in imp_ice">
+                                                    ng-model="producto.idtipoimpuestoice" ng-options="value.id as value.label for value in imp_ice">
                                             </select>
                                         </div>
                                     </div>
@@ -228,9 +221,9 @@
                                             <span class="input-group-addon">Cuenta Contable: </span>
                                             <input type="text" class="form-control" name="t_cuentacontable" id="t_cuentacontable" ng-model="t_cuentacontable" placeholder=""
                                                    ng-required="true" readonly>
-                                            <input type="hidden" name="h_idplancuenta" id="h_idplancuenta" ng-model="h_idplancuenta">
+                                            <input type="hidden" name="h_idplancuenta" id="h_idplancuenta" ng-model="producto.idplancuenta">
                                             <span class="input-group-btn" role="group">
-                                                <button type="button" class="btn btn-info" id="btn-pcc" ng-click="showPlanCuenta()">
+                                                <button type="button" class="btn btn-info" id="btn-pcc" ng-click="showPlanCuenta(1)">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                             </span>
@@ -242,21 +235,26 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Contable Ingreso: </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
-                                                   ng-model="t_cuentacontableingreso" placeholder="" readonly >
-                                            <input type="hidden" name="h_idplancuenta_i" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
+                                                   ng-model="t_cuentacontableingreso" placeholder="" ng-required="true" readonly >
+                                            <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
                                             <span class="input-group-btn" role="group">
-                                                <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta()">
+                                                <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
+                                        <span class="help-block error" ng-show="formProducto.t_cuentacontableingreso.$error.required">La asignación de una cuenta ingreso es requerida</span>
                                     </div>
 
                                     <div class="col-xs-6" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Foto: </span>
-                                            <input type="file" class="form-control" name="t_file" id="t_file" ng-model="t_file" />
+                                            <input type="file" ngf-select class="form-control" name="t_file" id="t_file" ng-model="producto.foto" accept="image/*" ngf-max-size="2MB" ngf-pattern="image/*" />
                                         </div>
+                                        <span class="help-block error"
+										           ng-show="formProducto.t_file.$error.pattern">El archivo debe ser Imagen</span>
+											      <span class="help-block error"
+											       ng-show="formProducto.t_file.$error.maxSize">El tamaño máximo es de 2 MB </span> 
                                     </div>
                                     <div class="col-xs-6" style="margin-top: 5px;">
                                         FOTO
@@ -505,11 +503,3 @@
         </div>
 
     </div>
-
-
-</body>
-
-
-
-
-</html>

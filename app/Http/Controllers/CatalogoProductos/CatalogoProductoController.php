@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
+use App\Modelos\Contabilidad\Cont_Categoria;
 
 class CatalogoProductoController extends Controller
 {
@@ -64,7 +65,36 @@ class CatalogoProductoController extends Controller
     {
         return Cont_ClaseItem::orderBy('nameclaseitem', 'asc')->get();
     }
-
+    
+    /**
+     * Obtener las lineas para filtro
+     *
+     * @return mixed
+     */
+    public function getCategoriasToFilter()
+    {
+    	return Cont_Categoria::orderBy('jerarquia', 'asc')
+    	->whereRaw('nlevel(jerarquia) = 1')
+    	->get();
+    
+    }
+    
+    public function getCategoriasHijas($filter)
+    {
+    	$filter = json_decode($filter);
+    	return Cont_Categoria::orderBy('jerarquia', 'asc')
+    	->whereRaw("nlevel(jerarquia) = ".$filter->nivel. " and jerarquia <@ '".$filter->padre."'")
+    	->get();
+    
+    }
+    
+    public function getLastCatalogoProducto()
+    {
+    	$producto = new Cont_CatalogItem();
+    	$producto->idcatalogitem = Cont_CatalogItem::max('idcatalogitem') +1;
+    	
+    	return $producto;
+    }
 
     /**
      * -----------------------------------------------------------------------------------------------------------------
@@ -76,18 +106,7 @@ class CatalogoProductoController extends Controller
 
 
 
-    /**
-     * Obtener las categorias para filtro
-     *
-     * @return mixed
-     */
-    public function getCategoriasToFilter()
-    {
-    	return Categoria::orderBy('idcategoria', 'asc')
-    	->whereRaw('nlevel(idcategoria) = 1')
-    	->get();
-    	 
-    }
+    
 
     /**
      * Obtener los productos filtrados
@@ -133,23 +152,9 @@ class CatalogoProductoController extends Controller
      *
      * @return mixed
      */
-    public function getLastCatalogoProducto()
-    {
-        $producto = new CatalogoProducto();		
-		$producto->codigoproducto = CatalogoProducto::max('codigoproducto') +1;
-		$date = Carbon::Today();
-		$producto->fechaingreso = $date->format('Y-m-d');
-		return $producto;
-    }
+   
     
-    public function getCategoriasHijas($filter)
-    {
-    	$filter = json_decode($filter);
-    	return Categoria::orderBy('idcategoria', 'asc')
-    	->whereRaw("nlevel(idcategoria) = ".$filter->nivel. " and idcategoria <@ '".$filter->padre."'")
-    	->get();
-    
-    }    
+     
 
 
     /**
@@ -160,22 +165,20 @@ class CatalogoProductoController extends Controller
      */
     public function store(Request $request)
     {
-    	$image = Input::file('rutafoto');
+    	$image = Input::file('foto');
     	$destinationPath = 'uploads/productos';
     	$date = Carbon::Today();
     	$name = rand(0, 9999).'_'.$image->getClientOriginalName();
     	if(!$image->move($destinationPath, $name)) {
     		return response()->json(['success' => false]);
-    	} else {
-    		
-    		$producto = new CatalogoProducto();
-    		$producto->nombreproducto = $request->input('nombreproducto');
-    		$producto->idcategoria = $request->input('idcategoria');
-    		$producto->fechaingreso =  $request->input('fechaingreso');    		
-    		$producto->rutafoto = $destinationPath.'/'. $name;    		
-    		$producto->save();
+    	} else {    		
+    		$data = $request->all();
+    		$date = Carbon::Today();
+    		$data['created_at'] = $data['updated_at']  = $date;
+    		$data['foto'] = $destinationPath.'/'. $name;
+    		$result = Cont_CatalogItem::create($data);    		
     	}
-    	return response()->json(['success' => true]);
+    	return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     	
     }
 

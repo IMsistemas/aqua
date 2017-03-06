@@ -15,7 +15,7 @@ class Cont_CatalogItem extends Model
     public $timestamps = false;
     protected $fillable = [
         'idtipoimpuestoiva', 'idtipoimpuestoice', 'idplancuenta', 
-            'idclaseitem', 'idcategoria', 'nombreproducto', 'codigoproducto', 'precioventa'        
+            'idclaseitem', 'idcategoria', 'nombreproducto', 'codigoproducto', 'precioventa', 'foto'        
     ];
 
     public function cont_itemventa(){

@@ -6,6 +6,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     $scope.items = [];
     $scope.select_cuenta = null;
+    $scope.sublineas = $scope.sublineasFiltro  =[];   
+    $scope.select_cuentaC = null;
+    $scope.opcion = 0;
 
 
     $scope.pageChanged = function(newPage) {
@@ -37,50 +40,61 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         switch (modalstate) {
             case 'add':
                 $scope.form_title = 'Nuevo Item';
+                $scope.producto = null;
+                $http.get(API_URL + 'catalogoproducto/getLastCatalogoProducto' )
+                .success(function(response) {
+                	$scope.producto = response; 
+                	$http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
 
-                $http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
+                        }
+                        $scope.tipo = array_temp;
+                        $scope.producto.idclaseitem = '';
 
-                    var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: ''}];
-                    for(var i = 0; i < longitud; i++){
-                        array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
-                    }
-                    $scope.tipo = array_temp;
-                    $scope.s_tipoitem = '';
+                    });
 
+                    $http.get(API_URL + 'catalogoproducto/getImpuestoICE').success(function(response){
+
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoice, id: response[i].idtipoimpuestoice})
+                        }
+                        $scope.imp_ice = array_temp;
+                        $scope.producto.idtipoimpuestoice = '';
+
+                    });
+
+                    $http.get(API_URL + 'catalogoproducto/getImpuestoIVA').success(function(response){
+
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
+                        }
+                        $scope.imp_iva = array_temp;
+                        $scope.producto.idtipoimpuestoiva = '';
+
+                    });
+                    $scope.sublineas = [{label: '-- Seleccione --', id: ''}];
+                     
+                    $http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
+                    	var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nombrecategoria, id: response[i].idcategoria})
+                        }
+                        $scope.lineas = array_temp;
+                        $scope.s_linea = ''; 
+                        $scope.producto.idcategoria = ''; 
+                        $('#modalAction').modal('show');
+                    });
                 });
 
-                $http.get(API_URL + 'catalogoproducto/getImpuestoICE').success(function(response){
-
-                    var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: ''}];
-                    for(var i = 0; i < longitud; i++){
-                        array_temp.push({label: response[i].nametipoimpuestoice, id: response[i].idtipoimpuestoice})
-                    }
-                    $scope.imp_ice = array_temp;
-                    $scope.s_ice = '';
-
-                });
-
-                $http.get(API_URL + 'catalogoproducto/getImpuestoIVA').success(function(response){
-
-                    var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: ''}];
-                    for(var i = 0; i < longitud; i++){
-                        array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
-                    }
-                    $scope.imp_iva = array_temp;
-                    $scope.s_iva = '';
-
-                    $('#modalAction').modal('show');
-
-
-                });
-
-
-
-
-
+                
 
                 break;
             case 'edit':
@@ -100,9 +114,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
 
 
-
-    $scope.showPlanCuenta = function () {
-
+    $scope.showPlanCuenta = function (opcion) {
+    	$scope.opcion = opcion;
         $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
             $scope.cuentas = response;
             $('#modalPlanCuenta').modal('show');
@@ -111,9 +124,16 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     };
 
     $scope.selectCuenta = function () {
+    	
         var selected = $scope.select_cuenta;
-
-        $scope.cuenta_employee = selected.concepto;
+        if($scope.opcion == 1){
+        	$scope.t_cuentacontable = selected.concepto;
+            $scope.producto.idplancuenta = selected.idplancuenta;
+        } else {
+        	$scope.t_cuentacontableingreso = selected.concepto;
+            $scope.producto.idplancuenta_ingreso = selected.idplancuenta;
+        }
+        
 
         $('#modalPlanCuenta').modal('hide');
     };
@@ -125,6 +145,55 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.hideModalMessage = function () {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
+    
+    $scope.loadSubLinea = function(padre,filtro) {
+    	var filter = {
+                padre: padre,
+                nivel: 2
+            };
+    	
+        $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
+        	if(filtro){
+        		$scope.searchByFilter();
+        		$scope.lineasFiltro = response; 
+        	}else{
+        		var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nombrecategoria, id: response[i].idcategoria})
+                }
+                $scope.sublineas = array_temp;
+                $scope.s_sublinea = '';  
+        	}
+        	         
+        });
+    }
+    
+    $scope.save = function(modalstate, id) {
+
+        var url = API_URL + "catalogoproducto";
+        if (modalstate === 'edit'){
+            url += "/" + id;
+            $scope.producto._method= 'PUT'; 
+        }    	       	
+        	
+        
+        console.log($scope.producto);
+        
+        $scope.upload = Upload.upload({
+      	      url: url,
+      	      data: $scope.producto,   
+      	      
+      	}).success(function(data, status, headers, config) {
+      	    	$scope.initLoad();
+      	    	$scope.message = 'El item se almaceno correctamente.';
+              	$('#modalAction').modal('hide');
+              	$('#modalMessage').modal('show');
+              	setTimeout("$('#modalMessage').modal('hide')",3000);
+       });
+        
+    }
+    
 
 
     /**
@@ -135,7 +204,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     /*$scope.productos = [];
     $scope.producto_del = 0;
     $scope.lineas = $scope.lineasFiltro = [];
-    $scope.sublineas = $scope.sublineasFiltro  =[];   
+    
     
     $scope.searchByFilter = function(){
     
@@ -263,22 +332,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         }
      }
     
-    $scope.loadLinea = function(padre,filtro) {
-    	var filter = {
-                padre: padre,
-                nivel: 2
-            };
-    	
-        $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
-        	if(filtro){
-        		$scope.searchByFilter();
-        		$scope.lineasFiltro = response; 
-        	}else{
-        		$scope.lineas = response; 
-        	}
-        	         
-        });
-    }
+   
     
     $scope.loadSublinea = function(padre,filtro) {
     	var filter = {
@@ -297,27 +351,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     }
     
 
-    $scope.save = function(modalstate, id) {
-
-        var url = API_URL + "catalogoproducto";
-        if (modalstate === 'edit'){
-            url += "/" + id;
-            $scope.producto._method= 'PUT'; 
-        }    	       	
-        	
-        $scope.upload = Upload.upload({
-      	      url: url,
-      	      data: $scope.producto,   
-      	      
-      	}).success(function(data, status, headers, config) {
-      	    	$scope.initLoad();
-      	    	$scope.message = 'El item se almaceno correctamente.';
-              	$('#modalAction').modal('hide');
-              	$('#modalMessage').modal('show');
-              	setTimeout("$('#modalMessage').modal('hide')",3000);
-       });
-        
-    }
+    
 
    
 
