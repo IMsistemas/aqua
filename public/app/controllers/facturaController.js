@@ -12,7 +12,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function (pageNumber) {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
-            (response.success == true) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
+            (response.success == false) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
         });
 
         $('.datepicker_a').datetimepicker({
@@ -49,7 +49,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $http.get(API_URL + 'factura/getCobroAgua?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             console.log(response);
 
-            var longitud = (response.data).length;
+            /*var longitud = (response.data).length;
             for (var i = 0; i < longitud; i++) {
                 var complete_name = {
                     value: response.data[i].cliente.apellidos + ', ' + response.data[i].cliente.nombres,
@@ -58,7 +58,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response.data[i].cliente, 'complete_name', complete_name);
-            }
+            }*/
             $scope.factura = response.data;
             $scope.totalItems = response.total;
         });
@@ -476,7 +476,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.Estado();
     $scope.initLoad(1);
-    $scope.Servicio();
+    //$scope.Servicio();
     $scope.Anio();
     $scope.Meses();
 

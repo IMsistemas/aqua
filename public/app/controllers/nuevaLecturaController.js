@@ -89,12 +89,12 @@
                             $scope.lectura_actual = lectura_actual;
                             $scope.consumo = parseInt(lectura_actual) - lectura_anterior;
 
-                            $scope.getValueRublos($scope.consumo, response.suministro[0].aguapotable.idtarifaaguapotable);
+                            $scope.getValueRublos($scope.consumo, response.suministro[0].tarifaaguapotable.idtarifaaguapotable);
 
-                            $scope.nombre_cliente = response.suministro[0].cliente.apellidos + ', ' + response.suministro[0].cliente.nombres;
-                            $scope.barrio = (response.suministro[0].calle.barrio.nombrebarrio).trim();
-                            $scope.calle = (response.suministro[0].calle.nombrecalle).trim();
-                            $scope.tarifa = response.suministro[0].aguapotable.nombretarifaaguapotable;
+                            $scope.nombre_cliente = response.suministro[0].cliente.persona.razonsocial;
+                            $scope.barrio = response.suministro[0].calle.barrio.namebarrio;
+                            $scope.calle = response.suministro[0].calle.namecalle;
+                            $scope.tarifa = response.suministro[0].tarifaaguapotable.nametarifaaguapotable;
 
                             $('#btn_export_pdf').prop('disabled', false);
                             $('#btn_print_pdf').prop('disabled', false);

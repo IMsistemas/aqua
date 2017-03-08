@@ -8,7 +8,7 @@ class ExcedenteTarifa extends Model
 {
 
     protected $table = "excedentetarifa";
-    protected $primaryKey = 'idexcedente';
+    protected $primaryKey = 'idexcedentetarifa';
     public $timestamps = false;
 
 

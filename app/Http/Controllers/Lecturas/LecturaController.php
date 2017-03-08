@@ -54,19 +54,19 @@ class LecturaController extends Controller
     {
         $filter = json_decode($filter);
 
-        $count = CobroAgua::where('numerosuministro', $filter->id)
-                            ->whereRaw('EXTRACT( MONTH FROM fecha) =' . $filter->month)
-                            ->whereRaw('EXTRACT( YEAR FROM fecha) =' . $filter->year)
+        $count = CobroAgua::where('idsuministro', $filter->id)
+                            ->whereRaw('EXTRACT( MONTH FROM fechacobro) =' . $filter->month)
+                            ->whereRaw('EXTRACT( YEAR FROM fechacobro) =' . $filter->year)
                             ->get();
 
         if (count($count) == 0) {
             $result_array = ['success' => false, 'flag' => 'no_exists'];
         } else {
             if ($count[0]->idlectura == null) {
-                $suministro = Suministro::with('cliente', 'aguapotable', 'calle.barrio')
-                    ->where('suministro.numerosuministro', $filter->id)
+                $suministro = Suministro::with('cliente.persona', 'tarifaaguapotable', 'calle.barrio')
+                    ->where('suministro.idsuministro', $filter->id)
                     ->get();
-                $lectura = Lectura::where('numerosuministro', $filter->id)
+                $lectura = Lectura::where('idsuministro', $filter->id)
                     ->orderBy('idlectura', 'desc')
                     ->take(1)
                     ->get();
@@ -139,15 +139,11 @@ class LecturaController extends Controller
     {
         //-------------------Valores Atrasados--------------------------------------------------------
 
-        $atraso = CobroAgua::with([
-                                    'factura' => function ($query) {
-                                        $query->where('estapagada', false);
-                                    }
-                                ])
+        $atraso = CobroAgua::where('estadopagado', false)
                                 ->whereRaw('mesesatrasados IS NOT NULL')
                                 ->whereRaw('valormesesatrasados IS NOT NULL')
-                                ->where('numerosuministro', $numerosuministro)
-                                ->whereRaw('EXTRACT( MONTH FROM fecha) = (EXTRACT( MONTH FROM now()) - 1)')
+                                ->where('idsuministro', $numerosuministro)
+                                ->whereRaw('EXTRACT( MONTH FROM fechacobro) = (EXTRACT( MONTH FROM now()) - 1)')
                                 ->get();
 
 
@@ -160,7 +156,7 @@ class LecturaController extends Controller
             } else {
                 $mesesatrasados = $atraso[0]->mesesatrasados + 1;
             }
-            $valormesesatrasados = $atraso[0]['factura']->totalfactura;
+            //$valormesesatrasados = $atraso[0]['factura']->totalfactura;
             settype($valormesesatrasados, 'float');
         }
 
@@ -210,7 +206,8 @@ class LecturaController extends Controller
         $tarifa_basica = $this->calculateTarifaBasica($consumo, $tarifa);
         $excedente = $this->calculateExcedente($consumo, $tarifa);
         $meses_atrasados = $this->calculateMonthAtrasados($numerosuministro);
-        $servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
+
+        //$servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
 
         $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica, 'id' => 0];
         $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente, 'id' => 0];
@@ -218,9 +215,9 @@ class LecturaController extends Controller
 
         $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado];
 
-        foreach ($servicios as $servicio) {
+        /*foreach ($servicios as $servicio) {
             $value_return[] = $servicio;
-        }
+        }*/
 
         return [
             'value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados'],

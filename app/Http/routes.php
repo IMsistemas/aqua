@@ -59,6 +59,42 @@ Route::put('solicitud/updateSolicitudSuministro/{idsolicitud}', 'Solicitud\Solic
 Route::resource('/solicitud', 'Solicitud\SolicitudController');
 
 
+/*===================================Módulo Lectura===========================================*/
+
+Route::get('nuevaLectura/getInfo/{filter}', 'Lecturas\LecturaController@getInfo');
+
+Route::get('nuevaLectura/exportToPDF/{type}/{data}', 'Lecturas\LecturaController@exportToPDF');
+
+//Ruta devuelve el ultimo ID + 1
+Route::get('nuevaLectura/lastId', 'Lecturas\LecturaController@getLastID');
+//Ruta devuelve todos los rubros
+Route::get('nuevaLectura/getRubros', 'Lecturas\LecturaController@getRubros');
+
+//Ruta devuelve los valores de los rublos en dependencia del suministro, consumo y tarifa
+//Route::get('nuevaLectura/getRubros/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@getRubrosValue');
+Route::get('nuevaLectura/calculate/{consumo}/{tarifa}/{numerosuministro}', 'Lecturas\LecturaController@calculate');
+
+
+//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia Lectura
+Route::resource('nuevaLectura', 'Lecturas\LecturaController');
+//Ruta devuelve las lecturas
+Route::get('verLectura/getLecturas', 'Lecturas\ViewLecturaController@getLecturas');
+//Ruta devuelve los barrios
+Route::get('verLectura/getBarrios', 'Lecturas\ViewLecturaController@getBarrios');
+//Ruta devuelve las calles
+Route::get('verLectura/getCalles/{idbarrio}', 'Lecturas\ViewLecturaController@getCalles');
+//Ruta devuelve las lecturas por filtro
+Route::get('verLectura/getByFilter/{filters}', 'Lecturas\ViewLecturaController@getByFilter');
+//Ruta para actualizar los campos de lectura actual y observacion en cada lectura
+Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update');
+//Resource, atiende peticiones REST generales: [GET|POST|PUT|DELETE] hacia ViewLectura
+Route::resource('verLectura', 'Lecturas\ViewLecturaController');
+
+
+
+
+
+
 /*===================================Tarifas===================================================*/
 
 Route::get('tarifa/getTarifas', 'Tarifas\TarifaController@getTarifas');
@@ -158,6 +194,21 @@ Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroCont
 
 
 Route::resource('/suministros', 'Suministros\SuministroController');
+
+
+/*===================================COBRO AGUA===========================================*/
+
+Route::get('factura/getCobroAgua', 'Facturas\FacturaController@getCobroAgua');
+Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
+Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
+Route::get('factura/generate', 'Facturas\FacturaController@generate');
+Route::get('factura/getServiciosXCobro/{id}', 'Facturas\FacturaController@getServiciosXCobro');
+
+
+Route::resource('/factura', 'Facturas\FacturaController');
+
+
+
 
 /*--------------------------------------Yamilka-------------------------------------------------*/
 /*===================================Sectores===========================================*/

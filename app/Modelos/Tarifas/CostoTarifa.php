@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CostoTarifa extends Model
 {
 
-    protected $table = 'costotarifa';
-    protected $primaryKey = 'idcosto';
+    protected $table = 'costotarifabasica';
+    protected $primaryKey = 'idcostotarifabasica';
     public $timestamps = false;
 
 

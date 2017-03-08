@@ -58,19 +58,19 @@
             </thead>
             <tbody>
             <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
-                <td>{{item.idfactura}}</td>
-                <td>{{ FormatoFecha(item.fechafactura)}}</td>
-                <td>{{yearmonth (item.fechafactura)}}</td>
-                <td>{{item.cliente.complete_name}}</td>
+                <td>{{item.idcobroagua}}</td>
+                <td>{{ FormatoFecha(item.fechacobro)}}</td>
+                <td>{{yearmonth (item.fechacobro)}}</td>
+                <td>{{item.suministro.cliente.persona.razonsocial}}</td>
                 <td>
                     <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
                 </td>
-                <td>{{item.cobroagua.suministro.numerosuministro}}</td>
-                <td>{{item.cobroagua.suministro.aguapotable.nombretarifaaguapotable}}</td>
-                <td>{{item.cobroagua.suministro.direccionsumnistro}}</td>
-                <td>{{item.cobroagua.suministro.telefonosuministro}}</td>
-                <td>{{item.cobroagua.lectura.consumo}}</td>
-                <td>{{Pagada(item.estapagado)}}</td>
+                <td>{{item.suministro.idsuministro}}</td>
+                <td>{{item.suministro.tarifaaguapotable.nametarifaaguapotable}}</td>
+                <td>{{item.suministro.direccionsumnistro}}</td>
+                <td>{{item.suministro.telefonosuministro}}</td>
+                <td>{{item.lectura.consumo}}</td>
+                <td>{{Pagada(item.estadopagado)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
                     <span ng-if="item.estapagado == true">

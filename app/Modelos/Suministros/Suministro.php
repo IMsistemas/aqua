@@ -30,6 +30,11 @@ class Suministro extends Model
     	return $this->belongsTo('App\Modelos\Servicios\AguaPotable','idtarifaaguapotable');
     }
 
+    public function cobroagua()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CobroAgua','idsuministro');
+    }
+
     public function cuentaporcobrarsuministro()
     {
         return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','idsuministro');

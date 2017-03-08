@@ -18,7 +18,7 @@ class CobroAgua extends Model
 
     public function suministro()
     {
-        return $this->belongsTo('App\Modelos\Suministros\Suministro','numerosuministro');
+        return $this->belongsTo('App\Modelos\Suministros\Suministro','idsuministro');
     }
 
     public function factura()
