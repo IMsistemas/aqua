@@ -21,6 +21,10 @@ class CobroAgua extends Model
         return $this->belongsTo('App\Modelos\Suministros\Suministro','idsuministro');
     }
 
+    public function catalogoitem_cobroagua(){
+        return $this->hasMany('App\Modelos\Cuentas\CatalogoItemCobroAgua','idcobroagua');
+    }
+
     public function factura()
     {
         return $this->belongsTo('App\Modelos\Facturas\Factura','idfactura');

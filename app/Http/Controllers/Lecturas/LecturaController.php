@@ -295,26 +295,27 @@ class LecturaController extends Controller
             }
         }
 
-        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
-                            ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
-                            ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
+        $cliente = Cliente::join('suministro', 'suministro.idcliente', '=', 'cliente.idcliente')
+                            ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
+                            ->select('persona.email', 'persona.razonsocial')
+                            ->where('suministro.idsuministro', '=', $request->input('numerosuministro'))
                             ->get();
 
-        if ($cliente[0]->correo != '' && $cliente[0]->correo != null) {
-            $correo_cliente = $cliente[0]->correo;
+        if ($cliente[0]->email != '' && $cliente[0]->email != null) {
+            $correo_cliente = $cliente[0]->email;
             $data = json_decode($request->input('pdf'));
 
             Mail::send('Lecturas.pdf_body_email_newLectura',['data' => $data] , function($message) use ($correo_cliente)
             {
                 $message->from('notificacionimnegocios@gmail.com', 'Junta Administradora de Agua Potable y Alcantarillado Parroquia Ayora');
 
-                $message->to($correo_cliente);
-                $message->bcc('christian.imnegocios@gmail.com');
+                $message->to($correo_cliente)
+                /*$message->bcc('christian.imnegocios@gmail.com');
                 $message->bcc('kevin.imnegocios@gmail.com');
                 $message->bcc('raidelbg84@gmail.com');
-                $message->bcc('luis.imnegocios@gmail.com')->subject('Prefactura Lectura!');
+                $message->bcc('luis.imnegocios@gmail.com')*/->subject('Prefactura Lectura!');
             });
-        }*/
+        }
 
         return response()->json(['success' => true]);
     }

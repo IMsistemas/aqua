@@ -112,22 +112,24 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.ShowModalFactura = function (item) {
 
+        console.log(item);
+
         $http.get(API_URL + 'factura/getMultas').success(function(response){
 
             $scope.num_factura = item.idfactura;
-            $scope.mes = Auxiliar (yearmonth(item.fechafactura));
+            $scope.mes = Auxiliar(yearmonth(item.fechacobro));
             $scope.multa = '';
 
-            $scope.documentoidentidad_cliente = item.cliente.documentoidentidad;
-            $scope.nom_cliente = item.cliente.nombres + ' ' + item.cliente.apellidos;
-            $scope.direcc_cliente = item.cliente.direcciondomicilio;
-            $scope.telf_cliente = item.cliente.celular;
+            $scope.documentoidentidad_cliente = item.suministro.cliente.persona.numdocidentific;
+            $scope.nom_cliente = item.suministro.cliente.persona.razonsocial;
+            $scope.direcc_cliente = item.suministro.cliente.persona.direccion;
+            $scope.telf_cliente = item.suministro.cliente.persona.celphone;
 
             var arreg = [];
             var total = 0.00;
 
-            if (item.cobroagua != null) {
-                if (item.cobroagua.valortarifabasica == null) {
+            if (item != null) {
+                if (item.valortarifabasica == null) {
                     var valores_atrasados = {
                         nombre: "Consumo Agua" + ' - ' +  $scope.mes  ,
                         valor: 0.00,
@@ -136,13 +138,13 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 }else {
                     var consumo_agua = {
                         nombre: "Consumo Agua" + ' - ' +  $scope.mes ,
-                        valor: item.cobroagua.valortarifabasica,
+                        valor: item.valortarifabasica,
                         id: 0
                     }
                 }
                 arreg.push(consumo_agua);
 
-                if (item.cobroagua.valorexcedente == null) {
+                if (item.valorexcedente == null) {
                     var excedente_agua = {
                         nombre: "Excedente Agua" + ' - ' +  $scope.mes,
                         valor:  0.00,
@@ -152,13 +154,13 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 } else {
                     var excedente_agua = {
                         nombre: "Excedente Agua" + ' - ' +  $scope.mes,
-                        valor: item.cobroagua.valorexcedente,
+                        valor: item.valorexcedente,
                         id: 0
                     }
                 }
                 arreg.push(excedente_agua);
 
-                if (item.cobroagua.valormesesatrasados == null) {
+                if (item.valormesesatrasados == null) {
                     var valores_atrasados = {
                         nombre: "Valores Atrasados",
                         valor: 0.00,
@@ -168,16 +170,16 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 {
                     var valores_atrasados = {
                         nombre: "Valores Atrasados",
-                        valor: item.cobroagua.valormesesatrasados,
+                        valor: item.valormesesatrasados,
                         id: 0
                     }
                 }
                 arreg.push(valores_atrasados);
             }
 
-            if (item.cobroagua != null) {
-                if( item.serviciosenfactura.length > 0) {
-                    $scope.servicios = item.serviciosenfactura;
+            if (item.catalogoitem_cobroagua != null) {
+                if( item.catalogoitem_cobroagua.length > 0) {
+                    $scope.servicios = item.catalogoitem_cobroagua;
 
                     for (var a = 0; a < $scope.servicios.length; a++) {
                         var auxiliar = {
@@ -236,7 +238,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             $scope.aux_modal = arreg;
 
 
-            if (item.estapagado == true) {
+            if (item.estadopagado == true) {
 
                 $('#footer-modal-factura').hide();
 
