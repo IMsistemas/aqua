@@ -883,7 +883,7 @@
          *  ACTIONS FOR SOLICITUD SUMINISTRO----------------------------------------------------------------------------
          */
 
-        $scope.getLastIDSolSuministro = function () {
+        /*$scope.getLastIDSolSuministro = function () {
             $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
                 $scope.num_solicitud_suministro = response.id;
             });
@@ -962,7 +962,7 @@
                 $scope.creditos = array_temp;
                 $scope.s_suministro_credito = 0;
             });
-        };
+        };*/
 
         $scope.getInfoMedidor = function () {
             $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
@@ -1057,12 +1057,126 @@
             }
         };
 
+
+        $scope.getLastIDSolSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
+                $scope.num_solicitud_suministro = response.id;
+            });
+        };
+
+        $scope.getLastIDSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/suministro').success(function(response){
+                $scope.t_suministro_nro = response.id;
+            });
+        };
+
+        $scope.getTarifas = function () {
+            $http.get(API_URL + 'cliente/getTarifas').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nametarifaaguapotable, id: response[i].idtarifaaguapotable})
+                }
+                $scope.tarifas = array_temp;
+                $scope.s_suministro_tarifa = '';
+            });
+        };
+
+        $scope.getBarrios = function () {
+            $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
+                }
+                $scope.barrios = array_temp;
+                $scope.s_suministro_zona = '';
+
+                $scope.calles = [{label: '-- Seleccione --', id: ''}];
+                $scope.s_suministro_transversal = '';
+            });
+        };
+
+        $scope.getCalles = function() {
+            var idbarrio = $scope.s_suministro_zona;
+
+            if (idbarrio != 0) {
+                $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
+                    }
+                    $scope.calles = array_temp;
+                    $scope.s_suministro_transversal = '';
+                });
+            } else {
+                $scope.calles = [{label: '-- Seleccione --', id: 0}];
+                $scope.s_suministro_transversal = 0;
+            }
+        };
+
+        $scope.getDividendo = function () {
+            $http.get(API_URL + 'cliente/getDividendos').success(function(response){
+
+                var dividendos = parseInt(response[0].optionvalue);
+
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+
+                for (var i = 1; i <= dividendos; i++) {
+                    array_temp.push({label: i, id: i})
+                }
+
+                $scope.creditos = array_temp;
+                $scope.s_suministro_credito = 0;
+            });
+        };
+
+
         $scope.actionSuministro = function (solicitud) {
             //$scope.getInfoMedidor();
             //$scope.getLastIDSolSuministro();
             //$scope.getLastIDSuministro();
 
+            $scope.getLastIDSolSuministro();
+            $scope.getLastIDSuministro();
+            $scope.getTarifas();
+            $scope.getBarrios();
+            $scope.getDividendo();
+
             $scope.codigoclienteSuministro = solicitud.idcliente;
+
+            $http.get(API_URL + 'solicitud/getSolicitudSuministro/' + solicitud.tipo_id).success(function(response){
+
+                console.log(response);
+
+                $scope.t_suministro_telf = response[0].telefonosuminstro;
+                $scope.t_suministro_direccion = response[0].direccioninstalacion;
+
+                if(solicitud.estadoprocesada == true) {
+
+                    $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
+                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+                    $scope.s_suministro_transversal = response[0].suministro.calle.idcalle;
+
+                    $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
+
+
+                    $('#btn-save-solsuministro').prop('disabled', true);
+                    $('#btn-process-solsuministro').prop('disabled', true);
+                    $('#modal-footer-suministro').hide();
+                } else {
+                    $('#btn-save-solsuministro').prop('disabled', false);
+                    $('#btn-process-solsuministro').prop('disabled', false);
+                    $('#modal-footer-suministro').show();
+                }
+
+                $('#modalActionSuministro').modal('show');
+
+            });
+
+
 
             /*if (solicitud.suministro != null) {
                 $scope.getTarifas(solicitud.data.suministro.idtarifaaguapotable);
@@ -1118,7 +1232,7 @@
 
             $('#btn-process-solsuministro').prop('disabled', true);*/
 
-            $('#modalActionSuministro').modal('show');
+            //$('#modalActionSuministro').modal('show');
         };
 
         $scope.saveSolicitudSuministro = function () {

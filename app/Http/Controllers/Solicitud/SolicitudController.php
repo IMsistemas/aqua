@@ -106,6 +106,12 @@ class SolicitudController extends Controller
             )->where('idsolicitudcambionombre', $id)->get();
     }
 
+    public function getSolicitudSuministro($id)
+    {
+        return SolicitudSuministro::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')
+                                        ->where('idsolicitudsuministro', $id)->get();
+    }
+
 
 
 
