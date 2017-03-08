@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Lecturas;
 
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Facturas\Factura;
 use App\Modelos\Lecturas\Lectura;
@@ -173,7 +175,7 @@ class LecturaController extends Controller
      */
     private function calculateServiciosJunta($idtarifa, $valueTarifa, $valueExcedente)
     {
-        $servicios_junta = ServicioJunta::all();
+        /*$servicios_junta = ServicioJunta::all();
 
         $array_servicios = [];
 
@@ -190,7 +192,27 @@ class LecturaController extends Controller
             $array_servicios[] = ['nombreservicio' => $servicio->nombreservicio, 'valor' => $value, 'id' => $object[0]->idserviciojunta];
         }
 
+        return $array_servicios;*/
+
+        $servicios = Cont_CatalogItem::where('idclaseitem', 2)->get();
+
+        $array_servicios = [];
+
+        foreach ($servicios as $servicio) {
+            $object = CatalogoItemTarifaAguapotable::where('idtarifaaguapotable', $idtarifa)
+                                                    ->where('idcatalogitem', $servicio->idcatalogitem)
+                                                    ->get();
+            if ($object[0]->esporcentaje == true) {
+                $value = ($valueTarifa + $valueExcedente) * $object[0]->valor;
+            } else {
+                $value = $object[0]->valor;
+            }
+            settype($value, 'float');
+            $array_servicios[] = ['nombreservicio' => $servicio->nombreproducto, 'valor' => $value, 'id' => $object[0]->idcatalogitem];
+        }
+
         return $array_servicios;
+
     }
 
     /**
@@ -207,7 +229,7 @@ class LecturaController extends Controller
         $excedente = $this->calculateExcedente($consumo, $tarifa);
         $meses_atrasados = $this->calculateMonthAtrasados($numerosuministro);
 
-        //$servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
+        $servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
 
         $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica, 'id' => 0];
         $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente, 'id' => 0];
@@ -215,9 +237,9 @@ class LecturaController extends Controller
 
         $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado];
 
-        /*foreach ($servicios as $servicio) {
+        foreach ($servicios as $servicio) {
             $value_return[] = $servicio;
-        }*/
+        }
 
         return [
             'value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados'],
@@ -234,8 +256,8 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
-       /* $lectura = new Lectura();
-        $lectura->numerosuministro = $request->input('numerosuministro');
+        $lectura = new Lectura();
+        $lectura->idsuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
         $lectura->lecturaactual = $request->input('lecturaactual');
         $lectura->lecturaanterior = $request->input('lecturaanterior');
@@ -243,9 +265,9 @@ class LecturaController extends Controller
         $lectura->consumo = $request->input('consumo');
         $lectura->save();
 
-        $cobroagua = CobroAgua::where('numerosuministro', $request->input('numerosuministro'))
-                                ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . $request->input('mes'))
-                                ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . $request->input('anno'))
+        $cobroagua = CobroAgua::where('idsuministro', $request->input('numerosuministro'))
+                                ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . $request->input('mes'))
+                                ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . $request->input('anno'))
                                 ->get()->first();
 
         $cobroagua->idlectura =  $lectura->idlectura;
@@ -253,10 +275,10 @@ class LecturaController extends Controller
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
         $cobroagua->valortarifabasica = $request->input('tarifa_basica');
-        $cobroagua->estapagado = false;
+        $cobroagua->estadopagado = false;
         $cobroagua->save();
 
-        $factura = Factura::find($cobroagua->idfactura);
+        /*$factura = Factura::find($cobroagua->idfactura);
         $factura->totalfactura = $request->input('total');
         $factura->save();
 
@@ -270,7 +292,7 @@ class LecturaController extends Controller
                 $serviciofactura->valor = $item['valor'];
                 $serviciofactura->save();
             }
-        }*/
+        }
 
         $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
@@ -291,7 +313,7 @@ class LecturaController extends Controller
                 $message->bcc('raidelbg84@gmail.com');
                 $message->bcc('luis.imnegocios@gmail.com')->subject('Prefactura Lectura!');
             });
-        }
+        }*/
 
         return response()->json(['success' => true]);
     }
