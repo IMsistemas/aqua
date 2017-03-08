@@ -354,7 +354,7 @@ class FacturaController extends Controller
         //
     }
 
-    public function print(Request $request)
+    public function printer(Request $request)
     {
         $data = $request->input('item');
 
