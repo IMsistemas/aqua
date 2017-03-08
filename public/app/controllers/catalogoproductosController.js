@@ -3,14 +3,61 @@
 
 app.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload) {
 
-
+    $scope.producto_del = 0;    
     $scope.items = [];
     $scope.select_cuenta = null;
-    $scope.sublineas = $scope.sublineasFiltro  =[];   
+    $scope.lineas = $scope.sublineasFiltro  =[];   
     $scope.select_cuentaC = null;
     $scope.opcion = 0;
+    
+    $scope.searchByFilter = function(){
+    
+        var t_search = null;
+        var t_lineaId = null;
+        var t_subId = null;
+        
+        if($scope.search != undefined && $scope.search != ''){
+            t_search = $scope.search;
+            var last = t_search.substring(t_search.length -1);            
+            if (last === "."){ 
+            	t_search = t_search.substring(0,t_search.length -1);
+            }
+        }
+        
+        if($scope.idCategoria != undefined && $scope.idCategoria != ''){
+            t_subId = $scope.idCategoria;            
+        }
 
+        var filter = {
+            text: t_search,
+            subId: t_subId
+        };
+        $scope.productos = [];
+        $http.get(API_URL + 'catalogoproducto/getCatalogoProductos/' + JSON.stringify(filter)).success(function(response){
+            $scope.items = response;            
+        });
+    }
+    
+    $scope.initLoad = function(){
+    	$scope.searchByFilter();
+        $http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
+            $scope.lineasFiltro = response;
+           
+        });
+       
+    }
+    
+    $scope.initLoad();   
+	
+	
+	
+	
+	
+	
+	
+    
 
+/*
     $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
     };
@@ -32,15 +79,19 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     };
 
     $scope.initLoad(1);
+*/
 
+    $scope.toggle = function(modalstate, id) {
 
-    $scope.toggle = function(modalstate) {
-
-
+    	$scope.modalstate = modalstate;
+    	$scope.formProducto.$setPristine();
+        $scope.formProducto.$setUntouched(); 
         switch (modalstate) {
             case 'add':
                 $scope.form_title = 'Nuevo Item';
                 $scope.producto = null;
+                $scope.t_cuentacontableingreso = '';
+                $scope.t_cuentacontable = '';
                 $http.get(API_URL + 'catalogoproducto/getLastCatalogoProducto' )
                 .success(function(response) {
                 	$scope.producto = response; 
@@ -85,7 +136,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                     	var longitud = response.length;
                         var array_temp = [{label: '-- Seleccione --', id: ''}];
                         for(var i = 0; i < longitud; i++){
-                            array_temp.push({label: response[i].nombrecategoria, id: response[i].idcategoria})
+                            array_temp.push({label: response[i].nombrecategoria, id: response[i].jerarquia})
                         }
                         $scope.lineas = array_temp;
                         $scope.s_linea = ''; 
@@ -99,10 +150,93 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 break;
             case 'edit':
 
+            	$scope.form_title = "Editar Producto";                
+                $scope.id = id;
+                $scope.producto = null;              
+                $http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){
+                  	$scope.producto = response;    	
+ 
+                	$http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
+
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
+                        }
+                        $scope.tipo = array_temp;                       
+
+                    });
+
+                    $http.get(API_URL + 'catalogoproducto/getImpuestoICE').success(function(response){
+
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoice, id: response[i].idtipoimpuestoice})
+                        }
+                        $scope.imp_ice = array_temp;
+                        
+
+                    });
+
+                    $http.get(API_URL + 'catalogoproducto/getImpuestoIVA').success(function(response){
+
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
+                        }
+                        $scope.imp_iva = array_temp;
+                       
+
+                    });
+                    $scope.sublineas = [{label: '-- Seleccione --', id: ''}];
+                     
+                    $http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
+                    	var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nombrecategoria, id: response[i].jerarquia})
+                        }
+                        $scope.lineas = array_temp;           
+                       
+                        
+                    });
+                    
+                    
+                    var ids = $scope.producto.jerarquia.split('.');
+                	$scope.s_linea = ids[0];	  
+                	 
+	                $scope.loadSubLinea($scope.s_linea,false, true);
+	                 
+	                $scope.t_cuentacontable = $scope.producto.concepto;	                
+	                $scope.t_cuentacontableingreso = $scope.producto.c2;
+	                $scope.foto = $scope.producto.foto;
+	                
+	                
+	                $('#modalAction').modal('show');
+                    
+                    
+                });
 
                 break;
             case 'info':
 
+            	$http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){                	
+                    $scope.producto = response;                                       
+                    var ids = $scope.producto.jerarquia.split('.');    	
+                    var filter = {
+                            padre:  ids[0],
+                            nivel: 1
+                        };
+                	
+                    $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
+	                     	$scope.linea = response[0].nombrecategoria;
+	                });
+	                
+	                console.log($scope.producto);
+                    $('#modalInfoEmpleado').modal('show');
+                });
 
 
                 break;
@@ -146,7 +280,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
     
-    $scope.loadSubLinea = function(padre,filtro) {
+    $scope.loadSubLinea = function(padre,filtro,inicio) {
     	var filter = {
                 padre: padre,
                 nivel: 2
@@ -154,16 +288,21 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     	
         $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
         	if(filtro){
-        		$scope.searchByFilter();
-        		$scope.lineasFiltro = response; 
+        		$scope.sublineasFiltro = response; 
+        		$scope.idCategoria = '';
         	}else{
         		var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
                 for(var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].nombrecategoria, id: response[i].idcategoria})
                 }
                 $scope.sublineas = array_temp;
-                $scope.s_sublinea = '';  
+                
+                if(!inicio){
+                	$scope.producto.idcategoria = 0; 
+                	console.log("test ", $scope.producto.idcategoria);
+                }
+                
         	}
         	         
         });
@@ -172,9 +311,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.save = function(modalstate, id) {
 
         var url = API_URL + "catalogoproducto";
+
         if (modalstate === 'edit'){
             url += "/" + id;
             $scope.producto._method= 'PUT'; 
+
         }    	       	
         	
         
@@ -194,67 +335,43 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         
     }
     
+    $scope.formatoFecha = function(fecha){
+    	if(typeof fecha != 'undefined'){
+    		var t = fecha.split('-');
+        	var meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+            return t[2] + '-' + meses[t[1]-1] + '-' + t[0];
+    	} else {
+    		return '';
+    	}
+    	
+    }
+    
+    $scope.showModalConfirm = function(id){
+        $scope.empleado_del = id;
+        $http.get(API_URL + 'catalogoproducto/'  + id).success(function(response) {
+            $scope.producto = response;
+            $('#modalConfirmDelete').modal('show');
+        });
+    }
 
+    $scope.destroyProducto = function(){
+        $http.delete(API_URL + 'catalogoproducto/' + $scope.empleado_del).success(function(response) {
+            $scope.initLoad();
+            $('#modalConfirmDelete').modal('hide');
+            $scope.empleado_del = 0;
+            $scope.message = 'Se elimino correctamente el Item seleccionado';
+            $('#modalMessage').modal('show');
+            setTimeout("$('#modalMessage').modal('hide')",3000);
+        });
+    }   
+    
 
     /**
      * -----------------------------------------------------------------------------------------------------------------
      */
 
 
-    /*$scope.productos = [];
-    $scope.producto_del = 0;
-    $scope.lineas = $scope.lineasFiltro = [];
-    
-    
-    $scope.searchByFilter = function(){
-    
-        var t_search = null;
-        var t_catId = null;
-        var t_lineaId = null;
-        var t_subId = null;
-        
-        if($scope.search != undefined && $scope.search != ''){
-            t_search = $scope.search;
-            var last = t_search.substring(t_search.length -1);            
-            if (last === "."){ 
-            	t_search = t_search.substring(0,t_search.length -1);
-            }
-        }
-        
-        if($scope.categoriaFiltro != undefined && $scope.categoriaFiltro != ''){
-            t_catId = $scope.categoriaFiltro;            
-        }
-        
-        if($scope.lineaFiltro != undefined && $scope.lineaFiltro != ''){
-            t_lineaId = $scope.lineaFiltro;            
-        }
-        
-        if($scope.idCategoria != undefined && $scope.idCategoria != ''){
-            t_subId = $scope.idCategoria;            
-        }
-
-        var filter = {
-            text: t_search,
-            catId: t_catId,
-            linId: t_lineaId,
-            subId: t_subId
-        };
-        $scope.productos = [];
-        $http.get(API_URL + 'catalogoproducto/getCatalogoProductos/' + JSON.stringify(filter)).success(function(response){
-            $scope.productos = response;            
-        });
-    }
-    
-    $scope.initLoad = function(){
-    	$scope.searchByFilter();
-        $http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
-            $scope.categoriasFiltro = response;
-           
-        });
-       
-    }
-    
-    $scope.initLoad();   
+    /*
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;
         $scope.lineas = [];
@@ -355,35 +472,10 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
    
 
-    $scope.showModalConfirm = function(id){
-        $scope.empleado_del = id;
-        $http.get(API_URL + 'catalogoproducto/'  + id).success(function(response) {
-            $scope.producto = response;
-            $('#modalConfirmDelete').modal('show');
-        });
-    }
-
-    $scope.destroyProducto = function(){
-        $http.delete(API_URL + 'catalogoproducto/' + $scope.empleado_del).success(function(response) {
-            $scope.initLoad();
-            $('#modalConfirmDelete').modal('hide');
-            $scope.empleado_del = 0;
-            $scope.message = 'Se elimino correctamente el Item seleccionado';
-            $('#modalMessage').modal('show');
-            setTimeout("$('#modalMessage').modal('hide')",3000);
-        });
-    }   
     
-    $scope.formatoFecha = function(fecha){
-    	if(typeof fecha != 'undefined'){
-    		var t = fecha.split('-');
-        	var meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-            return t[2] + '-' + meses[t[1]-1] + '-' + t[0];
-    	} else {
-    		return '';
-    	}
-    	
-    }*/
+
+    
+    */
     
 });
 

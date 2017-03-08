@@ -12,25 +12,14 @@
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="col-sm-2 col-xs-3">
-                    <div class="form-group has-feedback">
-                        <select class="form-control" name="categoria" id="categoria" ng-model="categoriaFiltro"
-                            ng-change="loadLinea(categoriaFiltro,true)">
-                            <option value="">Categoría</option>
-                            <option ng-repeat="item in categoriasFiltro"
-                                    value="{{item.idcategoria}}">{{item.nombrecategoria}}
-                            </option>
-                            </select>
-                    </div>
-                </div>
-
+               
                 <div class="col-sm-2 col-xs-3">
                     <div class="form-group has-feedback">
                         <select class="form-control" name="linea" id="linea" ng-model="lineaFiltro"
-                            ng-change="loadSublinea(lineaFiltro,true)">
+                            ng-change="loadSubLinea(lineaFiltro,true,false)">
                             <option value="">Línea</option>
                             <option ng-repeat="item in lineasFiltro"
-                                    value="{{item.idcategoria}}">{{item.nombrecategoria}}
+                                    value="{{item.jerarquia}}">{{item.nombrecategoria}}
                             </option>
                             </select>
                     </div>
@@ -67,21 +56,21 @@
                         <tbody>
                         <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td style="text-align: center;">
-                            <img class="img-circle" ng-if="producto.rutafoto" ng-src="{{ producto.rutafoto }}" onerror="defaultImage(this)"  style="width: 50px;" >
+                            <img class="img-circle" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 50px;" >
                             </td>
                             <td>{{producto.codigoproducto}}</td>
                             <td>{{producto.nombreproducto}}</td>
-                            <td>{{formatoFecha(producto.fechaingreso)}}</td>
+                            <td>{{ producto.created_at }}</td>
                             <td>
-                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.codigoproducto)"
+                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
                                         data-toggle="tooltip" data-placement="bottom" title="Editar" >
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(producto.codigoproducto)"
+                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(producto.idcatalogitem)"
                                         data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </button>
-                                <button type="button" class="btn btn-info" ng-click="toggle('info',producto.codigoproducto)"
+                                <button type="button" class="btn btn-info" ng-click="toggle('info',producto.idcatalogitem)"
                                         data-toggle="tooltip" data-placement="bottom" title="Información">
                                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                 </button>
@@ -188,7 +177,7 @@
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Precio Venta: </span>
-                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-required="true" ng-pattern="/^[0-9]+([,][0-9]+)?$/"/>
+                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
                                         </div>
                                         <span class="help-block error"
                                                       ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>
@@ -246,7 +235,7 @@
                                         <span class="help-block error" ng-show="formProducto.t_cuentacontableingreso.$error.required">La asignación de una cuenta ingreso es requerida</span>
                                     </div>
 
-                                    <div class="col-xs-6" style="margin-top: 5px;">
+                                    <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Foto: </span>
                                             <input type="file" ngf-select class="form-control" name="t_file" id="t_file" ng-model="producto.foto" accept="image/*" ngf-max-size="2MB" ngf-pattern="image/*" />
@@ -256,8 +245,9 @@
 											      <span class="help-block error"
 											       ng-show="formProducto.t_file.$error.maxSize">El tamaño máximo es de 2 MB </span> 
                                     </div>
-                                    <div class="col-xs-6" style="margin-top: 5px;">
-                                        FOTO
+                                    <div class="col-xs-12" style="margin-top: 25px;">
+                                        
+                                         <img class="img-circle" ng-if="producto.foto" ng-src="{{ foto }}" onerror="defaultImage(this)"  style="width: 150px;" >
                                     </div>
                                 </div>
 
@@ -424,7 +414,7 @@
         </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoEmpleado">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog " role="document">
                 <div class="modal-content">
                     <div class="modal-header modal-header-info">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -432,25 +422,40 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-xs-12 text-center">
-                            <img ng-if="rutafoto" ng-src="{{ rutafoto }}" onerror="defaultImage(this)" class="img-circle" style="width:150px" >
+                            <img ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)" class="img-circle" style="width:150px" >
 
                         </div>
                         <div class="row text-center">
-                            <div class="col-xs-12 text-center" style="font-size: 18px;">{{nombreproducto}}</div>
+                            <div class="col-xs-12 text-center" style="font-size: 18px;">{{producto.nombreproducto}}</div>
 
                             <div class="col-xs-12">
-                                <span style="font-weight: bold">Fecha Ingreso: </span>{{formatoFecha(fechaingreso)}}
-                            </div>
-
-                            <div class="col-xs-12">
-                                <span style="font-weight: bold">Categoría: </span>{{categoria}}
+                                <span style="font-weight: bold">Fecha Ingreso: </span>{{producto.created_at}}
                             </div>
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">Línea: </span>{{linea}}
                             </div>
                             <div class="col-xs-12">
-                                <span style="font-weight: bold">Sublínea: </span>{{sublinea}}
+                                <span style="font-weight: bold">Sublínea: </span>{{producto.nombrecategoria}}
                             </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Tipo Item: </span>{{producto.nameclaseitem}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Precio Venta: </span>{{producto.precioventa}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">IVA: </span>{{producto.nametipoimpuestoiva}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">ICE: </span>{{producto.nametipoimpuestoice}}
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Cuenta Contable: </span>{{producto.concepto}}                                
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight: bold">Cuenta contable Ingreso: </span>{{producto.c2}}
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
