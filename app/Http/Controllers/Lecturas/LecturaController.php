@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecturas;
 
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Cuentas\CatalogoItemCobroAgua;
 use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Facturas\Factura;
@@ -280,21 +281,21 @@ class LecturaController extends Controller
 
         /*$factura = Factura::find($cobroagua->idfactura);
         $factura->totalfactura = $request->input('total');
-        $factura->save();
+        $factura->save();*/
 
         $servicios = $request->input('rubros');
 
         foreach ($servicios as $item) {
             if ($item['id'] != 0) {
-                $serviciofactura = new ServiciosEnFactura();
-                $serviciofactura->idserviciojunta = $item['id'];
-                $serviciofactura->idfactura = $cobroagua->idfactura;
+                $serviciofactura = new CatalogoItemCobroAgua();
+                $serviciofactura->idcatalogitem = $item['id'];
+                $serviciofactura->idcobroagua = $cobroagua->idcobroagua;
                 $serviciofactura->valor = $item['valor'];
                 $serviciofactura->save();
             }
         }
 
-        $cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+        /*$cliente = Cliente::join('suministro', 'suministro.codigocliente', '=', 'cliente.codigocliente')
                             ->select('cliente.correo', 'cliente.nombres', 'cliente.apellidos')
                             ->where('suministro.numerosuministro', '=', $request->input('numerosuministro'))
                             ->get();
