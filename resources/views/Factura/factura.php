@@ -63,7 +63,7 @@
                 <td>{{yearmonth (item.fechacobro)}}</td>
                 <td>{{item.suministro.cliente.persona.razonsocial}}</td>
                 <td>
-                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
+                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}</span>
                 </td>
                 <td>{{item.suministro.idsuministro}}</td>
                 <td>{{item.suministro.tarifaaguapotable.nametarifaaguapotable}}</td>
