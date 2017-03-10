@@ -60,7 +60,7 @@
                             </td>
                             <td>{{producto.codigoproducto}}</td>
                             <td>{{producto.nombreproducto}}</td>
-                            <td>{{ producto.created_at }}</td>
+                            <td>{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
                             <td>
                                 <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
                                         data-toggle="tooltip" data-placement="bottom" title="Editar" >
@@ -203,6 +203,8 @@
                                                     ng-model="producto.idtipoimpuestoice" ng-options="value.id as value.label for value in imp_ice">
                                             </select>
                                         </div>
+                                        <span class="help-block error"
+                                              ng-show="formProducto.s_ice.$invalid && formProducto.s_ice.$touched">El Impuesto ICE es requerido</span>
                                     </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
@@ -224,7 +226,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Contable Ingreso: </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
-                                                   ng-model="t_cuentacontableingreso" placeholder="" ng-required="true" readonly >
+                                                   ng-model="t_cuentacontableingreso" placeholder=""  readonly >
                                             <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
@@ -232,13 +234,13 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error" ng-show="formProducto.t_cuentacontableingreso.$error.required">La asignación de una cuenta ingreso es requerida</span>
+                                        
                                     </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Foto: </span>
-                                            <input type="file" ngf-select class="form-control" name="t_file" id="t_file" ng-model="producto.foto" accept="image/*" ngf-max-size="2MB" ngf-pattern="image/*" />
+                                            <input type="file" ngf-select class="form-control" name="t_file" id="t_file" ng-model="producto.foto" accept="image/*" ngf-max-size="2MB" ngf-pattern="image/*"  onchange="angular.element(this).scope().photoChanged(this.files)"  />
                                         </div>
                                         <span class="help-block error"
 										           ng-show="formProducto.t_file.$error.pattern">El archivo debe ser Imagen</span>
@@ -246,8 +248,8 @@
 											       ng-show="formProducto.t_file.$error.maxSize">El tamaño máximo es de 2 MB </span> 
                                     </div>
                                     <div class="col-xs-12" style="margin-top: 25px;">
-                                        
-                                         <img class="img-circle" ng-if="producto.foto" ng-src="{{ foto }}" onerror="defaultImage(this)"  style="width: 150px;" >
+                                         
+                                         <img class="img-circle" ng-if="producto.foto" ng-src="{{ thumbnail.dataUrl  }}" onerror="defaultImage(this)"  style="width: 150px;" >
                                     </div>
                                 </div>
 
@@ -429,7 +431,7 @@
                             <div class="col-xs-12 text-center" style="font-size: 18px;">{{producto.nombreproducto}}</div>
 
                             <div class="col-xs-12">
-                                <span style="font-weight: bold">Fecha Ingreso: </span>{{producto.created_at}}
+                                <span style="font-weight: bold">Fecha Ingreso: </span>{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}
                             </div>
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">Línea: </span>{{linea}}

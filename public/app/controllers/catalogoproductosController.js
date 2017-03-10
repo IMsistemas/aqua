@@ -1,7 +1,7 @@
 //var appUp = angular.module('softver-aqua-upload', ['ngFileUpload','softver-aqua']);
 
 
-app.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload) {
+app.controller('catalogoproductosController',  function($scope, $http, API_URL,Upload,$timeout) {
 
     $scope.producto_del = 0;    
     $scope.items = [];
@@ -88,6 +88,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         $scope.formProducto.$setUntouched(); 
         switch (modalstate) {
             case 'add':
+            	$scope.thumbnail = {
+        	        dataUrl: ''
+        	    };
                 $scope.form_title = 'Nuevo Item';
                 $scope.producto = null;
                 $scope.t_cuentacontableingreso = '';
@@ -211,8 +214,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 	                 
 	                $scope.t_cuentacontable = $scope.producto.concepto;	                
 	                $scope.t_cuentacontableingreso = $scope.producto.c2;
-	                $scope.foto = $scope.producto.foto;
 	                
+	                
+	                $scope.thumbnail = {
+	            	        dataUrl: $scope.producto.foto
+	            	    };
 	                
 	                $('#modalAction').modal('show');
                     
@@ -366,6 +372,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     }   
     
 
+    $scope.formatDate = function(date){
+        var dateOut = new Date(date);
+        return dateOut;
+  };
+  
     /**
      * -----------------------------------------------------------------------------------------------------------------
      */
@@ -476,6 +487,33 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     
     */
+  
+  
+  
+  $scope.thumbnail = {
+	        dataUrl: ''
+	    };
+	    $scope.fileReaderSupported = window.FileReader != null;
+	    $scope.photoChanged = function(files){
+	        if (files != null) {
+	            var file = files[0];
+	        if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
+	            $timeout(function() {
+	                var fileReader = new FileReader();
+	                fileReader.readAsDataURL(file);
+	                fileReader.onload = function(e) {
+	                    $timeout(function(){
+	 $scope.thumbnail.dataUrl = e.target.result;
+	                    });
+	                }
+	            });
+	        }
+	    }
+	    };
+  
+  
+  
+  
     
 });
 

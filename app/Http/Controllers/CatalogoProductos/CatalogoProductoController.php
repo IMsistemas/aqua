@@ -173,7 +173,9 @@ class CatalogoProductoController extends Controller
     		}
     		$data['foto'] = $destinationPath.'/'. $name;
     	}   	 
-    	
+    	if(!($data['idplancuenta_ingreso']>0)){
+    		unset($data['idplancuenta_ingreso']);
+    	}
     	$producto->fill($data);
     	$producto->update();
     	return response()->json(['success' => true]);
