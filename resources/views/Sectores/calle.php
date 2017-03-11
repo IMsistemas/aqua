@@ -69,12 +69,14 @@
                                 </div>
                             </div>-->
 
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 error">
                                 <div class="input-group">
                                     <span class="input-group-addon">Zona: </span>
-                                    <select id="t_barrio" class="form-control" ng-model="t_barrio"
+                                    <select id="t_barrio" class="form-control" ng-model="t_barrio" name="t_barrio"
                                             ng-options="value.id as value.label for value in barrios" required></select>
                                 </div>
+                                <span class="help-block error"
+                                      ng-show="formCalle.t_barrio.$invalid && formCalle.t_barrio.$touched">La zona es requerida</span>
                             </div>
 
                             <div class="col-xs-12 error" style="margin-top: 5px;">

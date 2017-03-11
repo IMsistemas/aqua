@@ -81,12 +81,14 @@
                                 </div>
                             </div>-->
 
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 error">
                                 <div class="input-group">
                                     <span class="input-group-addon">Parroquia: </span>
-                                    <select id="t_parroquias" class="form-control" ng-model="t_parroquias"
-                                            ng-options="value.id as value.label for value in parroquias"></select>
+                                    <select id="t_parroquias" class="form-control" ng-model="t_parroquias" name="t_parroquias"
+                                            ng-options="value.id as value.label for value in parroquias" required ></select>
                                 </div>
+                                <span class="help-block error"
+                                      ng-show="formBarrio.t_parroquias.$invalid && formBarrio.t_parroquias.$touched">El nombre de la Zona es requerido</span>
                             </div>
 
                             <div class="col-xs-12 error" style="margin-top: 5px;">

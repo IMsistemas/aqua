@@ -37,8 +37,8 @@ app.controller('callesController', function($scope, $http, API_URL) {
         }
     }
 
-    $scope.viewModalAdd = function () {
-        $('#btn-save').prop('disabled', false)
+    $scope.viewModalAdd2 = function () {
+        //$('#btn-save').prop('disabled', false)
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
             //var array_temp = [{label: '--Seleccione--', id: 0}];
@@ -88,13 +88,13 @@ app.controller('callesController', function($scope, $http, API_URL) {
     $scope.viewModalAdd = function () {
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
-            var array_temp = [{label: '--Seleccione--', id: 0}];
+            var array_temp = [{label: '--Seleccione--', id: ''}];
             //var array_temp = [];
             for (var i = 0; i < longitud; i++) {
                 array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
             }
             $scope.barrios = array_temp;
-            $scope.t_barrio = 0;
+            $scope.t_barrio = '';
 
             $http.get(API_URL + 'calle/getLastID').success(function(response){
                 console.log(response);
