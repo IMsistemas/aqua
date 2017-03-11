@@ -209,8 +209,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                     
                     var ids = $scope.producto.jerarquia.split('.');
                 	$scope.s_linea = ids[0];	  
-                	 
-	                $scope.loadSubLinea($scope.s_linea,false, true);
+                	$scope.idcat = $scope.producto.idcategoria;
+	                $scope.loadSubLinea($scope.s_linea,false, $scope.idcat);
 	                 
 	                $scope.t_cuentacontable = $scope.producto.concepto;	                
 	                $scope.t_cuentacontableingreso = $scope.producto.c2;
@@ -258,6 +258,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     	$scope.opcion = opcion;
         $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
             $scope.cuentas = response;
+            $scope.cuentas.push({"idplancuenta":0,"concepto": "NINGUNO"});
             $('#modalPlanCuenta').modal('show');
         });
 
@@ -266,12 +267,18 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.selectCuenta = function () {
     	
         var selected = $scope.select_cuenta;
+        var concepto = selected.concepto;
+        var idplan = selected.idplancuenta; 
+        if(idplan == 0){
+        	concepto = "";
+            idplan = null; 
+        }
         if($scope.opcion == 1){
-        	$scope.t_cuentacontable = selected.concepto;
-            $scope.producto.idplancuenta = selected.idplancuenta;
+        	$scope.t_cuentacontable = concepto;
+            $scope.producto.idplancuenta = idplan;
         } else {
-        	$scope.t_cuentacontableingreso = selected.concepto;
-            $scope.producto.idplancuenta_ingreso = selected.idplancuenta;
+        	$scope.t_cuentacontableingreso = concepto;
+            $scope.producto.idplancuenta_ingreso = idplan;
         }
         
 
@@ -286,12 +293,13 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
     
-    $scope.loadSubLinea = function(padre,filtro,inicio) {
+    $scope.loadSubLinea = function(padre,filtro,value1) {
     	var filter = {
                 padre: padre,
                 nivel: 2
             };
-    	
+    	 if(padre > 0){
+    	 
         $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
         	if(filtro){
         		$scope.sublineasFiltro = response; 
@@ -302,16 +310,22 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 for(var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].nombrecategoria, id: response[i].idcategoria})
                 }
-                $scope.sublineas = array_temp;
                 
-                if(!inicio){
-                	$scope.producto.idcategoria = 0; 
-                	console.log("test ", $scope.producto.idcategoria);
-                }
+                $scope.sublineas = array_temp;
+                $scope.producto.idcategoria = value1; 	
                 
         	}
         	         
         });
+    	 } else {
+    		 $scope.sublineas =  [{label: '-- Seleccione --', id: 0}];
+    		 if(filtro){
+    			 $scope.idCategoria = '';
+    			 $scope.initLoad(); 
+    		 }
+    		 
+    	 }
+    	 
     }
     
     $scope.save = function(modalstate, id) {

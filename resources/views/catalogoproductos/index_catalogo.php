@@ -16,7 +16,7 @@
                 <div class="col-sm-2 col-xs-3">
                     <div class="form-group has-feedback">
                         <select class="form-control" name="linea" id="linea" ng-model="lineaFiltro"
-                            ng-change="loadSubLinea(lineaFiltro,true,false)">
+                            ng-change="loadSubLinea(lineaFiltro,true,0)">
                             <option value="">Línea</option>
                             <option ng-repeat="item in lineasFiltro"
                                     value="{{item.jerarquia}}">{{item.nombrecategoria}}
@@ -155,7 +155,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">Línea: </span>                                            
                                             <select class="form-control" name="s_linea" id="s_linea"
-                                                    ng-model="s_linea" ng-options="value.id as value.label for value in lineas" required ng-change="loadSubLinea(s_linea,false)">
+                                                    ng-model="s_linea" ng-options="value.id as value.label for value in lineas" required ng-change="loadSubLinea(s_linea,false,0)">
                                             </select>
                                        
                                     	</div>
@@ -167,7 +167,8 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">SubLínea: </span>
                                             <select class="form-control" name="s_sublinea" id="s_sublinea" ng-model="producto.idcategoria"
-                                            	ng-options="value.id as value.label for value in sublineas" required>
+                                            	ng-options="value.id as value.label for value in sublineas" 
+                                            	required>
                                             	</select>
                                         </div>
                                         <span class="help-block error"
