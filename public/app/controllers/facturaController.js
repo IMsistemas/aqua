@@ -112,11 +112,13 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.ShowModalFactura = function (item) {
 
-        console.log(item);
-
         $http.get(API_URL + 'factura/getMultas').success(function(response){
 
-            $scope.num_factura = item.idfactura;
+            console.log(item);
+            console.log(response);
+
+            //$scope.num_factura = item.idfactura;
+
             $scope.mes = Auxiliar(yearmonth(item.fechacobro));
             $scope.multa = '';
 
@@ -183,16 +185,16 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
                     for (var a = 0; a < $scope.servicios.length; a++) {
                         var auxiliar = {
-                            nombre: $scope.servicios[a].serviciojunta.nombreservicio,
+                            nombre: $scope.servicios[a].cont_catalogitem.nombreproducto,
                             valor: $scope.servicios[a].valor,
                             id: 0
-                        }
+                        };
                         arreg.push(auxiliar);
                     }
                 }
             } else {
-                if( item.cliente.servicioscliente.length > 0) {
-                    $scope.servicios = item.cliente.servicioscliente;
+                /*if( item.cliente.servicioscliente.length > 0) {
+                    $scope.servicios = item.catalogoitem_cobroagua;
 
                     for (var a = 0; a < $scope.servicios.length; a++) {
                         var auxiliar = {
@@ -202,7 +204,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                         }
                         arreg.push(auxiliar);
                     }
-                }
+                }*/
             }
 
 
@@ -210,18 +212,18 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 for (var j = 0; j < response.length; j++) {
 
                     var otrosvalores = {
-                        nombre: response[j].nombreotrovalor,
+                        nombre: response[j].nombreotrosvalores,
                         valor: 0.00,
-                        id: response[j].idotrovalor
+                        id: response[j].idotrosvalores
                     };
 
-                    if (item.otrosvaloresfactura.length > 0){
+                    /*if (item.otrosvaloresfactura.length > 0){
                         for (var x = 0; x < item.otrosvaloresfactura.length; x++) {
                             if (otrosvalores.id == item.otrosvaloresfactura[x].idotrovalor) {
                                 otrosvalores.valor = item.otrosvaloresfactura[x].valor;
                             }
                         }
-                    }
+                    }*/
 
                     arreg.push(otrosvalores);
                 }

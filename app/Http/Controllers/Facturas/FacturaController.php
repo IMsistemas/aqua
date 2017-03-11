@@ -38,7 +38,7 @@ class FacturaController extends Controller
 
     public function getMultas()
     {
-        return OtrosValores::orderBy('nombreotrovalor', 'asc')->get();
+        return OtrosValores::orderBy('nombreotrosvalores', 'asc')->get();
     }
 
     public function getCobroAgua(Request $request)

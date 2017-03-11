@@ -198,6 +198,7 @@ Route::resource('/suministros', 'Suministros\SuministroController');
 
 /*===================================COBRO AGUA===========================================*/
 
+Route::get('factura/getMultas', 'Facturas\FacturaController@getMultas');
 Route::get('factura/getCobroAgua', 'Facturas\FacturaController@getCobroAgua');
 Route::get('factura/getServicios', 'Facturas\FacturaController@getServicios');
 Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
