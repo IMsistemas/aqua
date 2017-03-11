@@ -11,9 +11,9 @@ class CatalogoItemCobroAgua extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    public function cont_catalogoitem()
+    public function cont_catalogitem()
     {
-        return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogoItem', 'idcatalogitem');
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem', 'idcatalogitem');
     }
 
     public function cobroagua()
