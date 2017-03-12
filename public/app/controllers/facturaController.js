@@ -117,7 +117,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             console.log(item);
             console.log(response);
 
-            //$scope.num_factura = item.idfactura;
+            $scope.num_factura = item.idcobroagua;
 
             $scope.mes = Auxiliar(yearmonth(item.fechacobro));
             $scope.multa = '';
@@ -217,13 +217,13 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                         id: response[j].idotrosvalores
                     };
 
-                    /*if (item.otrosvaloresfactura.length > 0){
-                        for (var x = 0; x < item.otrosvaloresfactura.length; x++) {
-                            if (otrosvalores.id == item.otrosvaloresfactura[x].idotrovalor) {
-                                otrosvalores.valor = item.otrosvaloresfactura[x].valor;
+                    if (item.otrosvalores_cobroagua.length > 0){
+                        for (var x = 0; x < item.otrosvalores_cobroagua.length; x++) {
+                            if (otrosvalores.id == item.otrosvalores_cobroagua[x].idotrosvalores) {
+                                otrosvalores.valor = item.otrosvalores_cobroagua[x].valor;
                             }
                         }
-                    }*/
+                    }
 
                     arreg.push(otrosvalores);
                 }
@@ -236,9 +236,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
             $scope.total = total.toFixed(2);
 
-
             $scope.aux_modal = arreg;
-
 
             if (item.estadopagado == true) {
 
@@ -266,7 +264,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             total = total + parseFloat($scope.aux_modal[i].valor);
         }
 
-        $scope.total = total;
+        $scope.total = total.toFixed(2);
     };
 
     $scope.generate = function () {
@@ -291,7 +289,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
               total: $scope.total
           };
 
-        $http.post(API_URL + 'factura', data).success(function(response){
+          $http.post(API_URL + 'factura', data).success(function(response){
             $scope.initLoad();
             $scope.message = 'Se actualizó correctamente la Factura';
             $('#modalMessage').modal('show');
@@ -392,13 +390,13 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
         }
 
-    $scope.print = function (item) {
+    $scope.printer = function (item) {
 
-        if (item.serviciosenfactura.length == 0) {
+        /*if (item.catalogoitem_cobroagua.length == 0) {
             item.serviciosenfactura = item.cliente.servicioscliente;
-        }
+        }*/
 
-        var date_p = (item.cobroagua.lectura.fechalectura).split('-');
+        var date_p = (item.lectura.fechalectura).split('-');
         var date_p0 = date_p[1] + '/' + date_p[0];
 
         var partial_date = {

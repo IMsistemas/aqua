@@ -73,13 +73,13 @@
                 <td>{{Pagada(item.estadopagado)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
-                    <span ng-if="item.estapagado == true">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
+                    <span ng-if="item.estadopagado == true">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)">
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>
-                    <span ng-if="item.estapagado == false">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)" disabled>
+                    <span ng-if="item.estadopagado == false">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)" disabled>
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>

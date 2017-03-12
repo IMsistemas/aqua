@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CobroAgua extends Model
 {
-     protected $table = "cobroagua";
-     protected $primaryKey = "idcobroagua";
+     protected $table = 'cobroagua';
+     protected $primaryKey = 'idcobroagua';
      public $timestamps = false;
 
     public function lectura()
@@ -21,8 +21,14 @@ class CobroAgua extends Model
         return $this->belongsTo('App\Modelos\Suministros\Suministro','idsuministro');
     }
 
-    public function catalogoitem_cobroagua(){
+    public function catalogoitem_cobroagua()
+    {
         return $this->hasMany('App\Modelos\Cuentas\CatalogoItemCobroAgua','idcobroagua');
+    }
+
+    public function otrosvalores_cobroagua()
+    {
+        return $this->hasMany('App\Modelos\Facturas\OtrosValoresCobroAgua','idcobroagua');
     }
 
     public function factura()

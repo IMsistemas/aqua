@@ -205,6 +205,7 @@ Route::get('factura/verifyPeriodo', 'Facturas\FacturaController@verifyPeriodo');
 Route::get('factura/generate', 'Facturas\FacturaController@generate');
 Route::get('factura/getServiciosXCobro/{id}', 'Facturas\FacturaController@getServiciosXCobro');
 
+Route::post('factura/print/', 'Facturas\FacturaController@printer');
 
 Route::resource('/factura', 'Facturas\FacturaController');
 
