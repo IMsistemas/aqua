@@ -47,7 +47,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="item in clientes | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak >
+                        <tr dir-paginate="item in clientes | orderBy:sortKey:reverse |filter:t_busqueda| itemsPerPage:10" total-items="totalItems" ng-cloak >
                             <td>{{item.numdocidentific}}</td>
                             <td>{{item.fechaingreso | formatDate}}</td>
                             <td>{{item.razonsocial}}</td>
