@@ -24,12 +24,17 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             }
         }
         
+        if($scope.lineaFiltro != undefined && $scope.lineaFiltro != ''){
+            t_lineaId = $scope.lineaFiltro;            
+        }
+        
         if($scope.idCategoria != undefined && $scope.idCategoria != ''){
             t_subId = $scope.idCategoria;            
         }
 
         var filter = {
             text: t_search,
+            linId: t_lineaId,
             subId: t_subId
         };
         $scope.productos = [];
@@ -49,38 +54,6 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     
     $scope.initLoad();   
 	
-	
-	
-	
-	
-	
-	
-    
-
-/*
-    $scope.pageChanged = function(newPage) {
-        $scope.initLoad(newPage);
-    };
-
-    $scope.initLoad = function(pageNumber){
-
-        if ($scope.busqueda == undefined) {
-            var search = null;
-        } else var search = $scope.busqueda;
-
-        var filtros = {
-            search: search
-        };
-
-        $http.get(API_URL + 'catalogoproducto/getCatalogoItems?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
-            $scope.items = response.data;
-            $scope.totalItems = response.total;
-        });
-    };
-
-    $scope.initLoad(1);
-*/
-
     $scope.toggle = function(modalstate, id) {
 
     	$scope.modalstate = modalstate;
@@ -391,118 +364,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         return dateOut;
   };
   
-    /**
-     * -----------------------------------------------------------------------------------------------------------------
-     */
-
-
-    /*
-    $scope.toggle = function(modalstate, id) {
-        $scope.modalstate = modalstate;
-        $scope.lineas = [];
-        $scope.sublineas = [];
-        $scope.formProducto.$setPristine();
-        $scope.formProducto.$setUntouched();        
-        
-        switch (modalstate) {
-            case 'add':            	
-            	$scope.form_title = "Nuevo Producto No ";                
-                $http.get(API_URL + 'catalogoproducto/getLastCatalogoProducto' )
-                .success(function(response) {
-                	$scope.producto = response; 
-                	$scope.rutafoto = '';
-                	$('#fotoPre').attr('src', '');
-	                $http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
-	                    $scope.categorias = response;                   
-	                }); 
-	                $scope.categoria = '';
-	                $scope.linea = '';
-	                $('#modalAction').modal('show');
-                });
-
-                $('#modalAction').modal('show');
-
-                break;
-            case 'edit':
-                $scope.form_title = "Editar Producto No ";                
-                $scope.id = id;
-                $scope.producto = null;              
-                $http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){
-                	$scope.producto = response;    
-                	$scope.rutafoto = $scope.producto.rutafoto;
-                	$http.get(API_URL + 'catalogoproducto/getCategoriasToFilter').success(function(response){
-	                    $scope.categorias = response;                   
-	                }); 
-                	var ids = $scope.producto.idcategoria.split('.');
-                	$scope.categoria = ids[0];
-	                $scope.linea = ids[0] + '.' + ids[1];
-                	
-	                $scope.loadLinea($scope.categoria,false);
-	                $scope.loadSublinea($scope.categoria,false);
-	                         
-	                 $('#modalAction').modal('show');
-
-                });
-
-                break;
-
-            case 'info':
-            	             	
-            	$http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){                	
-                        $scope.nombreproducto = response.nombreproducto;
-                        $scope.fechaingreso = response.fechaingreso;
-                        $scope.rutafoto = response.rutafoto;
-                        var ids = response.idcategoria.split('.');                    	
-    	                
-    	                $http.get(API_URL + 'categoria/'  + ids[0]).success(function(response){
-    	                	$scope.categoria = response.nombrecategoria;
-    	                });
-    	                $http.get(API_URL + 'categoria/'  + ids[0] + '.' + ids[1]).success(function(response){
-    	                	$scope.linea = response.nombrecategoria;
-    	                });
-    	                $http.get(API_URL + 'categoria/'  + response.idcategoria).success(function(response){
-    	                	$scope.sublinea = response.nombrecategoria;
-    	                });
-
-                        $('#modalInfoEmpleado').modal('show');
-                    });
-
-                break;
-
-            default:
-                break;
-        }
-     }
     
-   
-    
-    $scope.loadSublinea = function(padre,filtro) {
-    	var filter = {
-                padre: padre,
-                nivel: 3
-            };
-    	
-        $http.get(API_URL + 'catalogoproducto/getCategoriasHijas/' + JSON.stringify(filter)).success(function(response){
-        	if(filtro){
-        		$scope.searchByFilter();
-        		$scope.sublineasFiltro = response;
-        	}else{
-        		$scope.sublineas = response;
-        	}
-        });       
-    }
-    
-
-    
-
-   
-
-    
-
-    
-    */
-  
-  
   
   $scope.thumbnail = {
 	        dataUrl: ''

@@ -67,7 +67,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="bodega in bodegas" >
+                    <tr dir-paginate="bodega in bodegas | orderBy:sortKey:reverse | itemsPerPage:10"  >
+                    
                         <td style="text-align: center;">{{bodega.idbodega}}</td>
                         
                         <td>{{bodega.ubicacion}}</td>
@@ -89,6 +90,13 @@
                     </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls                           
+                            template-url="dirPagination.html"
+                            class="pull-right"
+                            max-size="10"
+                            direction-links="true"
+                            boundary-links="true" >
+                    </dir-pagination-controls>
 
             </div>
 

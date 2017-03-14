@@ -25,7 +25,7 @@ class Ciudades extends Model
     }
     public function sectores()
     {
-        return $this->hasMany('App\Modelos\Proveedores\Sectores','idparroquia');
+        return $this->hasMany('App\Modelos\Proveedores\Sectores','idcanton');
     }
    
 }

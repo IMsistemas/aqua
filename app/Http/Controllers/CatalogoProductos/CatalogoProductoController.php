@@ -223,10 +223,13 @@ class CatalogoProductoController extends Controller
     	$meses = array('ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic');      	
     	$filter = json_decode($filter);
     	
-    	$filterCategorias = ($filter->subId != null)?" and idcategoria = '".$filter->subId."'":"";
+    	$filterCategorias = ($filter->linId != null)?" and cont_categoria.jerarquia <@ '".$filter->linId."'":"";
+    	
+    	$filterCategorias .= ($filter->subId != null)?" and cont_catalogitem.idcategoria = '".$filter->subId."'":"";
     	
     	$ltree = str_replace(' ','',$filter->text);
     	return  Cont_CatalogItem::orderBy('codigoproducto', 'asc')
+    	->join('cont_categoria', 'cont_categoria.idcategoria', '=', 'cont_catalogitem.idcategoria')
     	->whereRaw("( idcatalogitem::text like '%" . $filter->text . "%' or nombreproducto ILIKE '%" . $filter->text . "%') ".$filterCategorias)
     	->get();
     }

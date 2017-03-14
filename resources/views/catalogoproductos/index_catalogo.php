@@ -16,7 +16,7 @@
                 <div class="col-sm-2 col-xs-3">
                     <div class="form-group has-feedback">
                         <select class="form-control" name="linea" id="linea" ng-model="lineaFiltro"
-                            ng-change="loadSubLinea(lineaFiltro,true,0)">
+                            ng-change="loadSubLinea(lineaFiltro,true,0); searchByFilter();">
                             <option value="">Línea</option>
                             <option ng-repeat="item in lineasFiltro"
                                     value="{{item.jerarquia}}">{{item.nombrecategoria}}
@@ -54,7 +54,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10"  >
                             <td style="text-align: center;">
                             <img class="img-circle" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 50px;" >
                             </td>
@@ -78,18 +78,15 @@
                         </tr>
                         </tbody>
                     </table>
-                    <dir-pagination-controls
-
-                            on-page-change="pageChanged(newPageNumber)"
-
+                    <dir-pagination-controls                           
                             template-url="dirPagination.html"
-
                             class="pull-right"
                             max-size="10"
                             direction-links="true"
                             boundary-links="true" >
-
                     </dir-pagination-controls>
+                 
+                    
                 </div>
 
            

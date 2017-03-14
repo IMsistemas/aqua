@@ -148,8 +148,11 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         	if(filtro){
         		$scope.searchByFilter();
         		$scope.ciudadesFiltro = response; 
+        		$scope.ciudadFiltro = "";
+        		$scope.sectorFiltro = "";
         	}else{
         		$scope.ciudades = response; 
+        		$scope.sectores = []
         	}
         	         
         });
@@ -161,6 +164,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         	if(filtro){
         		$scope.searchByFilter();
         		$scope.sectoresFiltro = response;
+        		$scope.sectorFiltro = "";
         	}else{
         		$scope.sectores = response;
         	}

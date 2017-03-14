@@ -47,6 +47,7 @@ class BodegaController extends Controller
     public function getCiudades($provincia)
     {
     	$Provincia =  Provincias::find($provincia);
+    	
     	$Ciudades = $Provincia->ciudades;
     	return $Ciudades;
     
@@ -95,8 +96,8 @@ class BodegaController extends Controller
     	$filter = json_decode($filter);
     	
     	$filterSector = ($filter->provinciaId != null)?" and provincia.idprovincia = ".$filter->provinciaId:"";
-    	$filterSector .= ($filter->ciudadId != null)?" and ciudad.idciudad = ".$filter->ciudadId:"";
-    	$filterSector .= ($filter->sectorId != null)?" and cont_bodega.idsector = ".$filter->sectorId:"";
+    	$filterSector .= ($filter->ciudadId != null)?" and canton.idcanton = ".$filter->ciudadId:"";
+    	$filterSector .= ($filter->sectorId != null)?" and cont_bodega.idparroquia = ".$filter->sectorId:"";
     	
     	    	
     	return Cont_Bodega::join('empleado', 'empleado.idempleado', '=', 'cont_bodega.idempleado')
