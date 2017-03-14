@@ -60,7 +60,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr dir-paginate="item in clientes|orderBy:sortKey:reverse|filter:t_busqueda|itemsPerPage:10" ng-cloak>
+            <tr dir-paginate="item in clientes|orderBy:sortKey:reverse|filter:t_busqueda|itemsPerPage:10" total-items="totalItems" ng-cloak>
                 <td>{{item.documentoidentidad}}</td>
                 <td>{{item.fechaingreso | formatDate}}</td>
                 <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.complete_name}}</td>
