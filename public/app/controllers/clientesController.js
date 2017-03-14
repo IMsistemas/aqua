@@ -936,8 +936,8 @@
                 var array_temp = [];
                 for (var i = 0; i < longitud; i++) {
                     var object_service = {
-                        idserviciojunta: response[i].idserviciojunta,
-                        nombreservicio: response[i].nombreservicio,
+                        idserviciojunta: response[i].idcatalogitem,
+                        nombreservicio: response[i].nombreproducto,
                         valor: 0
                     };
                     array_temp.push(object_service);
@@ -957,18 +957,20 @@
         };
 
         $scope.actionServicioShow = function () {
-            $scope.getLastIDSolicServicio();
+            /*$scope.getLastIDSolicServicio();*/
             $scope.getServicios();
 
+            //console.log($scope.objectAction);
+
             $scope.t_fecha_process = $scope.nowDate();
-            $scope.h_codigocliente = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente = $scope.objectAction.lastnamepersona + ', ' + $scope.objectAction.namepersona;
+            $scope.direcc_cliente = $scope.objectAction.direccion;
             $scope.telf_cliente = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente = $scope.objectAction.celular;
+            $scope.celular_cliente = $scope.objectAction.celphone;
             $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
-            $scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;
+            /*$scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;*/
 
             $('#modalActionServicio').modal('show');
         };
@@ -977,13 +979,15 @@
             $('#btn-save-servicio').prop('disabled', true);
 
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 servicios: $scope.services
             };
 
+            console.log(solicitud);
+
             $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
                 if(response.success == true){
-                    $scope.initLoad();
+                    $scope.initLoad(1);
                     $scope.idsolicitud_to_process = response.idsolicitud;
 
                     $('#btn-process-servicio').prop('disabled', false);

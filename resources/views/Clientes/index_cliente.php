@@ -557,43 +557,63 @@
                                         <fieldset ng-cloak>
                                             <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente</legend>
 
-                                            <div class="col-xs-12" style="padding: 0;">
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-info" style="font-size: 14px !important;">
-                                                    <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente}}
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-info" style="font-size: 14px !important;">
-                                                    <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente}}
-                                                    <input type="hidden" ng-model="h_codigocliente">
+                                            <div class="col-sm-6 col-xs-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">RUC/CI: </span>
+                                                    <input type="text" class="form-control" name="documentoidentidad_cliente" id="documentoidentidad_cliente"
+                                                        ng-model="documentoidentidad_cliente" readonly/>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-default" style="font-size: 14px !important;">
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente}}
+
+                                            <div class="col-sm-6 col-xs-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Cliente: </span>
+                                                    <input type="text" class="form-control" name="nom_cliente" id="nom_cliente"
+                                                           ng-model="nom_cliente" readonly/>
                                                 </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-default" style="font-size: 14px !important;">
-                                                    <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Domicilio:</span> {{telf_cliente}}
+                                                <input type="hidden" ng-model="h_codigocliente">
+                                            </div>
+
+                                            <div class="col-xs-12" style="margin-top: 5px;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Dirección Domicilio: </span>
+                                                    <input type="text" class="form-control" name="direcc_cliente" id="direcc_cliente"
+                                                           ng-model="direcc_cliente" readonly/>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-default" style="font-size: 14px !important;">
-                                                    <i class="fa fa-mobile" aria-hidden="true"></i> Celular:</span> {{celular_cliente}}
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-default" style="font-size: 14px !important;">
-                                                    <i class="fa fa-phone" aria-hidden="true"></i> Teléfono Trabajo:</span> {{telf_trab_cliente}}
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Domicilio: </span>
+                                                    <input type="text" class="form-control" name="telf_cliente" id="telf_cliente"
+                                                           ng-model="telf_cliente" readonly/>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
-                                                <div class="col-sm-6 col-xs-12">
-                                                <span class="label label-default" style="font-size: 14px !important;">
-                                                    <i class="fa fa-users" aria-hidden="true"></i> Tipo Cliente:</span> {{tipo_tipo_cliente}}
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Celular: </span>
+                                                    <input type="text" class="form-control" name="celular_cliente" id="celular_cliente"
+                                                           ng-model="celular_cliente" readonly/>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Teléfono Trabajo: </span>
+                                                    <input type="text" class="form-control" name="telf_trab_cliente" id="telf_trab_cliente"
+                                                           ng-model="telf_trab_cliente" readonly/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Tipo Cliente: </span>
+                                                    <input type="text" class="form-control" name="tipo_tipo_cliente" id="tipo_tipo_cliente"
+                                                           ng-model="tipo_tipo_cliente" readonly/>
+                                                </div>
+                                            </div>
+
                                         </fieldset>
                                     </div>
 

@@ -6,6 +6,8 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 
 use App\Modelos\Configuracion\ConfiguracionSystem;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
 use App\Modelos\Cuentas\CuentasPorCobrarSuministro;
 use App\Modelos\Cuentas\CuentasPorPagarClientes;
 use App\Modelos\Persona;
@@ -295,7 +297,7 @@ class ClienteController extends Controller
      */
     public function getServicios()
     {
-        return ServicioJunta::orderBy('nombreservicio')->get();
+        return Cont_CatalogItem::where('idclaseitem', 2)->orderBy('nombreproducto', 'asc')->get();
     }
 
     /**
@@ -381,20 +383,13 @@ class ClienteController extends Controller
      */
     public function getExistsSolicitudServicio($codigocliente)
     {
-
-        $solicitud = Solicitud::where('idcliente', $codigocliente)->get();
-
-        if (count($solicitud) == 1) {
-            $solicitudServicio = SolicitudServicio::where('idsolicitud', $solicitud[0]['idsolicitud'])->get();
-            if (count($solicitudServicio) == 1) {
-                return response()->json(['success' => true]);
-            }
-            else return response()->json(['success' => false]);
+        $count = SolicitudServicio::join('solicitud', 'solicitud.idsolicitud', '=', 'solicitudservicio.idsolicitud')
+                                    ->whereRaw('solicitud.idcliente = ' . $codigocliente)->count();
+        if ($count >= 1) {
+            return response()->json(['success' => true]);
         } else {
             return response()->json(['success' => false]);
         }
-
-
     }
 
     /**
@@ -436,27 +431,41 @@ class ClienteController extends Controller
      */
     public function storeSolicitudServicios(Request $request)
     {
-        $solicitud = new SolicitudServicio();
-        $solicitud->codigocliente = $request->input('codigocliente');
-        $solicitud->fechasolicitud = date('Y-m-d');
-        $solicitud->estaprocesada = false;
+        $fecha_actual = date('Y-m-d');
+
+        $solicitud = new Solicitud();
+        $solicitud->idcliente = $request->input('codigocliente');
+        $solicitud->fechasolicitud = $fecha_actual;
+        $solicitud->estadoprocesada = false;
 
         if ($solicitud->save() != false) {
-            $list_services = $request->input('servicios');
 
-            foreach ($list_services as $item) {
-                if ($item['valor'] != 0 && $item['valor'] != '') {
-                    $object = new ServiciosCliente();
-                    $object->idserviciojunta = $item['idserviciojunta'];
-                    $object->valor = $item['valor'];
-                    $object->codigocliente = $request->input('codigocliente');
-                    $object->save();
+            $solicitudservicio = new SolicitudServicio();
+            $solicitudservicio->idsolicitud = $solicitud->idsolicitud;
+
+            if ($solicitudservicio->save()) {
+
+                $list_services = $request->input('servicios');
+
+                foreach ($list_services as $item) {
+                    if ($item['valor'] != 0 && $item['valor'] != '') {
+                        $object = new CatalogoItemSolicitudServicio();
+                        $object->idcatalogitem = $item['idserviciojunta'];
+                        $object->idsolicitudservicio = $solicitudservicio->idsolicitudservicio;
+
+                        if ($item['valor'] == '' || $item['valor'] == null) {
+                            $object->valor = 0;
+                        } else {
+                            $object->valor = $item['valor'];
+                        }
+
+                        if ($object->save() == false) {
+                            return response()->json(['success' => false]);
+                        }
+                    }
                 }
             }
-
-            $max_idsolicitud = SolicitudServicio::where('idsolicitudservicio', $solicitud->idsolicitudservicio)
-                                                    ->get();
-            return response()->json(['success' => true, 'idsolicitud' => $max_idsolicitud[0]->idsolicitud]);
+            return response()->json(['success' => true, 'idsolicitud' => $solicitud->idsolicitud]);
         } else return response()->json(['success' => false]);
     }
 
