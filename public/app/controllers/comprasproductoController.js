@@ -417,7 +417,49 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	   $scope.initLoad();
    }
    
+   $scope.calculateLength = function(field, length) {
+       var text = $("#" + field).val();
+       var longitud = text.length;
+       if (longitud == length) {
+           $("#" + field).val(text);
+       } else {
+           var diferencia = parseInt(length) - parseInt(longitud);
+           var relleno = '';
+           if (diferencia == 1) {
+               relleno = '0';
+           } else {
+               var i = 0;
+               while (i < diferencia) {
+                   relleno += '0';
+                   i++;
+               }
+           }
+           $("#" + field).val(relleno + text);
+           return relleno+text;
+       }
+   };
    
+   
+   $scope.onlyNumber = function ($event, length, field) {
+
+       if (length != undefined) {
+           var valor = $('#' + field).val();
+           if (valor.length == length) $event.preventDefault();
+       }
+        var k = $event.keyCode;
+           if (k == 8 || k == 0) return true;
+           var patron = /\d/;
+           var n = String.fromCharCode(k);
+       if (n == ".") {
+               return true;
+           } else {
+           if(patron.test(n) == false){
+                   $event.preventDefault();
+               }
+               else return true;
+           }
+           console.log(field);
+       };
    
     
 });
