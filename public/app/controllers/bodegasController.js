@@ -143,24 +143,35 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
      }
     
     $scope.loadCiudad = function(padre,filtro) {	
-    	
-        $http.get(API_URL + 'bodega/getCiudad/' + padre).success(function(response){
-        	if(filtro){
-        		$scope.searchByFilter();
-        		$scope.ciudadesFiltro = response; 
+    	if(padre != ''){
+    		$http.get(API_URL + 'bodega/getCiudad/' + padre).success(function(response){
+            	if(filtro){
+            		$scope.searchByFilter();
+            		$scope.ciudadesFiltro = response; 
+            		$scope.ciudadFiltro = "";
+            		$scope.sectorFiltro = "";
+            	}else{
+            		$scope.ciudades = response; 
+            		$scope.sectores = []
+            	}
+            	         
+            });
+    	} else {
+    		$scope.sectores = []
+    		if(filtro){
+        		
+        		$scope.ciudadesFiltro = []; 
+        		$scope.sectoresFiltro = [];
         		$scope.ciudadFiltro = "";
         		$scope.sectorFiltro = "";
-        	}else{
-        		$scope.ciudades = response; 
-        		$scope.sectores = []
+        		$scope.searchByFilter();
         	}
-        	         
-        });
+    	}      
     }
     
     $scope.loadSector = function(padre,filtro) {
-    	
-        $http.get(API_URL + 'bodega/getSector/' + + padre).success(function(response){
+    	if(padre != ''){
+        $http.get(API_URL + 'bodega/getSector/' + padre).success(function(response){
         	if(filtro){
         		$scope.searchByFilter();
         		$scope.sectoresFiltro = response;
@@ -168,7 +179,15 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         	}else{
         		$scope.sectores = response;
         	}
-        });       
+        });  
+    	} else {
+    		$scope.sectores = []
+    		if(filtro){   			
+        		$scope.sectoresFiltro = [];
+        		$scope.sectorFiltro = "";
+        		$scope.searchByFilter();
+        	}
+    	}      
     }
     
     
