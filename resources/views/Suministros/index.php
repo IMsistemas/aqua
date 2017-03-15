@@ -47,7 +47,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr dir-paginate="suministro in suministros | orderBy:sortKey:reverse |itemsPerPage:10| filter : busqueda" ng-cloak>
+                <tr dir-paginate="suministro in suministros| orderBy:sortKey:reverse|filter:busqueda|itemsPerPage:10" ng-cloak>
                     <td>{{suministro.idsuministro}}</td>
                     <td>{{suministro.cliente.persona.razonsocial}}</td>
                     <td>{{suministro.calle.barrio.namebarrio}}</td>
