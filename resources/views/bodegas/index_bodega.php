@@ -161,12 +161,14 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Teléfono Principal: </span>
                                                 <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
-                                                       ng-required="true" ng-model="bodega.telefonobodega" ng-maxlength="9" ng-pattern="/[0-9\-\ ]+$/" >
+                                                       ng-required="true" ng-model="bodega.telefonobodega" ng-maxlength="9" ng-minlength="9" ng-pattern="/[0-9\-\ ]+$/" >
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formBodega.telefonoprincipal.$invalid && formBodega.telefonoprincipal.$touched">El Teléfono Principal es requerido</span>
                                             <span class="help-block error"
                                                   ng-show="formBodega.telefonoprincipal.$invalid && formBodega.telefonoprincipal.$error.maxlength">La longitud máxima es de 9 números.</span>
+                                                                                        <span class="help-block error"
+                                                  ng-show="formBodega.telefonoprincipal.$invalid && formBodega.telefonoprincipal.$error.minlength">La longitud mínima es de 9 números.</span>
                                             <span class="help-block error"
                                                   ng-show="formBodega.telefonoprincipal.$invalid && formBodega.telefonoprincipal.$error.pattern">El Teléfono debe ser solo números, guion y espacios.</span>
                                         </div>
@@ -175,10 +177,12 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Teléfono Secundario: </span>
                                                 <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
-                                                       ng-model="bodega.telefonosecundariobodega" ng-maxlength="9" ng-pattern="/[0-9\-\ ]+$/" >
+                                                       ng-model="bodega.telefonosecundariobodega" ng-maxlength="9" ng-pattern="/[0-9\-\ ]+$/" ng-minlength="9" >
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formBodega.telefonosecundario.$invalid && formBodega.telefonosecundario.$error.maxlength">La longitud máxima es de 9 números</span>
+                                            <span class="help-block error"
+                                                  ng-show="formBodega.telefonosecundario.$invalid && formBodega.telefonosecundario.$error.minlength">La longitud mínima es de 9 números</span>
                                             <span class="help-block error"
                                                   ng-show="formBodega.telefonosecundario.$invalid && formBodega.telefonosecundario.$error.pattern">El Teléfono debe ser solo números, guion y espacios</span>
                                         </div>
@@ -187,10 +191,12 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Teléfono Opcional: </span>
                                                 <input type="text" class="form-control" name="opcional" id="opcional"
-                                                       ng-model="bodega.telefonoopcionalbodega" ng-maxlength="9" ng-pattern="/[0-9\-\ ]+$/" >
+                                                       ng-model="bodega.telefonoopcionalbodega" ng-maxlength="9" ng-pattern="/[0-9\-\ ]+$/" ng-minlength="9" >
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formBodega.opcional.$invalid && formBodega.opcional.$error.maxlength">La longitud máxima es de 9 números</span>
+                                                  <span class="help-block error"
+                                                  ng-show="formBodega.opcional.$invalid && formBodega.opcional.$error.minlength">La longitud mínima es de 9 números</span>
                                             <span class="help-block error"
                                                   ng-show="formBodega.opcional.$invalid && formBodega.opcional.$error.pattern">El Teléfono debe ser solo números, guion y espacios</span>
 
