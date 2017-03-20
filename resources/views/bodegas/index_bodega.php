@@ -26,7 +26,7 @@
             <div class="col-sm-2 col-xs-3">
                 <div class="form-group has-feedback">
                     <select class="form-control" name="ciudad" id="ciudad" ng-model="ciudadFiltro"
-                        ng-change="loadSector(ciudadFiltro,true)">
+                        ng-change="loadSector(ciudadFiltro,true,0)">
                         <option value="">Ciudad</option>
 						<option ng-repeat="item in ciudadesFiltro"						       
 						        value="{{item.idcanton}}">{{item.namecanton}}     
@@ -241,7 +241,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Cantón: </span>
                                                 <select class="form-control" name="ciudad" id="ciudad" ng-model="ciudad"
-                                                        ng-required="true" ng-change="loadSector(ciudad,false)"
+                                                        ng-required="true" ng-change="loadSector(ciudad,false,0)"
                                                         ng-options="item.idcanton as item.namecanton for item in ciudades">
                                                     <option value="">-- Seleccione --</option>
                                                 </select>

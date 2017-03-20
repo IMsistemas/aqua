@@ -108,7 +108,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
                 	$scope.provincia = parseInt($scope.bodega.idprovincia);
 	                $scope.loadCiudad($scope.provincia,false);
 	                $scope.ciudad = parseInt($scope.bodega.idcanton);
-	                $scope.loadSector($scope.ciudad,false);
+	                $scope.loadSector($scope.ciudad,false,$scope.bodega.idparroquia );
 
                     $scope.select_cuenta = {
                         idplancuenta: $scope.bodega.idplancuenta,
@@ -169,7 +169,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     	}      
     }
     
-    $scope.loadSector = function(padre,filtro) {
+    $scope.loadSector = function(padre,filtro,value) {
     	if(padre != ''){
         $http.get(API_URL + 'bodega/getSector/' + padre).success(function(response){
         	if(filtro){
@@ -178,6 +178,7 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         		$scope.sectorFiltro = "";
         	}else{
         		$scope.sectores = response;
+        		$scope.bodega.idparroquia = value;
         	}
         });  
     	} else {
