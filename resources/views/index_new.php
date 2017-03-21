@@ -73,19 +73,19 @@
                                     Contabilidad <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#">Gestión de Proveedores</a></li>
-                                    <li><a href = "#">Gestión de Transportistas</a></li>
+                                    <li><a href = "#" ng-click="toModuloProveedores();">Gestión de Proveedores</a></li>
+                                    <li><a href = "#" ng-click="toModuloTransportistas();">Gestión de Transportistas</a></li>
                                     <li role="separator" class="divider"></li>
 
-                                    <li><a href = "#">Plan de Cuenta</a></li>
+                                    <li><a href = "#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Inventario</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#">Bodega</a></li>
-                                            <li><a href="#">Catálogo Item</a></li>
-                                            <li><a href="#">Portafolio</a></li>
-                                            <li><a href="#">Registro Inventario</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloCrearBodegas();">Bodega</a></li>
+                                            <li><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo Item</a></li>
+                                            <li><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio</a></li>
+                                            <li><a href="#" ng-click="">Registro Inventario</a></li>
                                         </ul>
                                     </li>
 
@@ -93,7 +93,7 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Compras</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#">Facturación de Compras</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
                                             <li><a href="#">Retención Compras</a></li>
                                             <li><a href="#">Comprobante Egreso</a></li>
                                             <li><a href="#">Cuentas por Pagar</a></li>
@@ -104,11 +104,11 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Ventas</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#">Facturación de Ventas</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
                                             <li><a href="#">Retención Ventas</a></li>
                                             <li><a href="#">Comprobante Ingreso</a></li>
                                             <li><a href="#">Cuentas por Cobrar</a></li>
-                                            <li><a href="#">Guía de Remisión</a></li>
+                                            <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                         </ul>
                                     </li>
 
@@ -125,9 +125,9 @@
                                     Recursos Humanos <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#">Cargos</a></li>
-                                    <li><a href = "#">Personal</a></li>
-                                    <li><a href = "#">Nómina</a></li>
+                                    <li><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
+                                    <li><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
+                                    <li><a href = "#" ng-click="">Nómina</a></li>
                                 </ul>
                             </li>
 
@@ -136,14 +136,14 @@
                                     Configuración <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#">Configuración del Sistema</a></li>
+                                    <li><a href = "#" ng-click="toModuloConfiguracion();">Configuración del Sistema</a></li>
                                     <li><a href = "#">Gestión de Nomencladores</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Sectorización</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#">Zonas</a></li>
-                                            <li><a href="#">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
                                         </ul>
                                     </li>
                                 </ul>
