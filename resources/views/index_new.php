@@ -168,10 +168,10 @@
     </header>
 
 
-    <div class="container-fixed" style="margin-top: 5%;">
+    <div class="container-fixed" style="">
 
 
-        <div class="col-xs-12" style="padding: 0; overflow-y: auto;" ng-include="toModulo">
+        <div class="col-xs-12" style="padding: 0; margin-top: 5%;" ng-include="toModulo">
 
         </div>
 
