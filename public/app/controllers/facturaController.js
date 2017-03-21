@@ -229,9 +229,10 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 }
             }
 
-
-            for (var i = 0; i < arreg.length; i++) {
-                total = total + parseFloat(arreg[i].valor);
+            if (arreg.length > 0) {
+                for (var i = 0; i < arreg.length; i++) {
+                    total = total + parseFloat(arreg[i].valor);
+                }
             }
 
             $scope.total = total.toFixed(2);

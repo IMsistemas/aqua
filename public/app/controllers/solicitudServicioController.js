@@ -840,7 +840,73 @@
 
         $scope.actionServicioShow = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+            console.log(solicitud);
+
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
+
+            $scope.num_solicitud_servicio = solicitud.solicitudservicio;
+            $scope.t_fecha_process = solicitud.fechasolicitud;
+            $scope.h_codigocliente = solicitud.idcliente;
+            $scope.documentoidentidad_cliente = solicitud.cliente.persona.numdocidentific;
+            $scope.nom_cliente = solicitud.cliente.persona.razonsocial;
+            $scope.direcc_cliente = solicitud.cliente.persona.direccion;
+            $scope.telf_cliente = solicitud.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente = solicitud.cliente.persona.celphone;
+            $scope.telf_trab_cliente = solicitud.cliente.telefonoprincipaltrabajo;
+
+            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_setN = array_temp;
+
+
+
+                $http.get(API_URL + 'solicitud/getSolicitudServicio/' + solicitud.tipo_id).success(function(response){
+
+                    console.log(response);
+
+                    var longitud = response.length;
+                    var array_temp = [];
+                    for (var i = 0; i < longitud; i++) {
+                        var object_service = {
+                            idserviciojunta: response[i].idcatalogitem,
+                            nombreservicio: response[i].cont_catalogitem.nombreproducto,
+                            valor: response[i].valor
+                        };
+                        array_temp.push(object_service);
+                    }
+                    $scope.services = array_temp;
+
+
+                    if(solicitud.estadoprocesada == true) {
+
+                        $scope.disableInput = true;
+
+                        $('#btn-save-servicio').prop('disabled', true);
+                        $('#btn-process-servicio').prop('disabled', true);
+                        $('#modal-footer-servicio').hide();
+                    } else {
+
+                        $scope.disableInput = false;
+
+                        $('#btn-save-servicio').prop('disabled', false);
+                        $('#btn-process-servicio').prop('disabled', false);
+                        $('#modal-footer-servicio').show();
+                    }
+
+                    $('#modalActionServicio').modal('show');
+
+                });
+
+            });
+
+            /*$scope.idsolicitud_to_process = solicitud.data.idsolicitud;
 
             $scope.num_solicitud_servicio = solicitud.data.idsolicitudservicio;
             $scope.t_fecha_process = solicitud.data.fechasolicitud;
@@ -874,7 +940,7 @@
                 $('#btn-save-servicio').prop('disabled', false);
                 $('#btn-process-servicio').prop('disabled', false);
                 $('#modal-footer-servicio').show();
-            }
+            }*/
 
             $('#modalActionServicio').modal('show');
         };

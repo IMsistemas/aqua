@@ -22,7 +22,7 @@
             <div class="col-xs-12" style="margin-top: 15px;">
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="t_busqueda">
+                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keypress="initLoad(1)">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="item in clientes|orderBy:sortKey:reverse|filter:t_busqueda| itemsPerPage:10" total-items="totalItems" ng-cloak >
+                        <tr dir-paginate="item in clientes|orderBy:sortKey:reverse| itemsPerPage:10" total-items="totalItems" ng-cloak >
                             <td>{{item.numdocidentific}}</td>
                             <td>{{item.fechaingreso | formatDate}}</td>
                             <td>{{item.razonsocial}}</td>

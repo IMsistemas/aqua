@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Solicitud;
 
 use App\Modelos\Configuracion\ConfiguracionSystem;
 //use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
 use App\Modelos\Servicios\ServiciosCliente;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
@@ -85,19 +86,16 @@ class SolicitudController extends Controller
 
     }
 
-
     public function getSolicitudOtro($id)
     {
         return SolicitudOtro::where('idsolicitudotro', $id)->get();
     }
-
 
     public function getSolicitudMantenimiento($id)
     {
         return SolicitudMantenimiento::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')
                                         ->where('idsolicitudmantenimiento', $id)->get();
     }
-
 
     public function getSolicitudSetN($id)
     {
@@ -112,6 +110,11 @@ class SolicitudController extends Controller
                                         ->where('idsolicitudsuministro', $id)->get();
     }
 
+    public function getSolicitudServicio($id)
+    {
+        return CatalogoItemSolicitudServicio::with('cont_catalogitem')
+                                                ->where('idsolicitudservicio', $id)->get();
+    }
 
 
 

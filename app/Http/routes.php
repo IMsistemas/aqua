@@ -28,7 +28,7 @@ Route::get('solicitud/getSolicitudSetN/{id}', 'Solicitud\SolicitudController@get
 
 Route::get('solicitud/getSolicitudSuministro/{id}', 'Solicitud\SolicitudController@getSolicitudSuministro');
 
-
+Route::get('solicitud/getSolicitudServicio/{id}', 'Solicitud\SolicitudController@getSolicitudServicio');
 
 
 

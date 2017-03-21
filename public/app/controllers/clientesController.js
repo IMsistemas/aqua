@@ -88,6 +88,7 @@
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
+
             if ($scope.busqueda == undefined) {
                 var search = null;
             } else var search = $scope.busqueda;
