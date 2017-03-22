@@ -106,7 +106,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             if (data.success == true) {
                 $scope.initLoad();
                 $('#modalActionCargo').modal('hide');
-                $scope.message = 'Se editó correctamente los datos de la Empresa';
+                $scope.message = 'Se editó correctamente la configuracion del establecimiento';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
             }
@@ -599,6 +599,18 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             $('#modalPlanCuenta').modal('show');
         });
 
+    };
+
+    $scope.clean = function (field_concepto, field_id) {
+
+        $scope.field1 = field_concepto;
+        $scope.field2 = field_id;
+
+        var fieldconcepto = $parse($scope.field1);
+        fieldconcepto.assign($scope, '');
+
+        var fieldid = $parse($scope.field2);
+        fieldid.assign($scope, '');
     };
 
     $scope.selectCuenta = function () {

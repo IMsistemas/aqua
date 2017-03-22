@@ -169,6 +169,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-irbpnr-compra" ng-click="showPlanCuenta('irbpnr_compra', 'irbpnr_compra_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-irbpnr-compra" ng-click = "clean('irbpnr_compra', 'irbpnr_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -186,6 +189,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-propina-compra" ng-click="showPlanCuenta('propina_compra', 'propina_compra_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-propina_compra" ng-click = "clean('propina_compra', 'propina_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -202,6 +208,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-retiva-compra" ng-click="showPlanCuenta('retiva_compra', 'retiva_compra_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retiva_compra" ng-click = "clean('retiva_compra', 'retiva_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -216,6 +225,9 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-retrenta-compra" ng-click="showPlanCuenta('retrenta_compra', 'retrenta_compra_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retrenta_compra" ng-click = "clean('retrenta_compra', 'retrenta_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -253,6 +265,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-irbpnr_venta" ng-click="showPlanCuenta('irbpnr_venta', 'irbpnr_venta_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-irbpnr_venta" ng-click = "clean('irbpnr_venta', 'irbpnr_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -269,6 +284,9 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-propina-venta" ng-click="showPlanCuenta('propina_venta', 'propina_venta_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-propina_venta" ng-click = "clean('propina_venta', 'propina_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -287,6 +305,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-retiva-venta" ng-click="showPlanCuenta('retiva_venta', 'retiva_venta_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retiva_venta" ng-click = "clean('retiva_venta', 'retiva_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -304,6 +325,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-retrenta-venta" ng-click="showPlanCuenta('retrenta_venta', 'retrenta_venta_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retrenta_venta" ng-click = "clean('retrenta_venta', 'retrenta_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -320,6 +344,9 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-costo-venta" ng-click="showPlanCuenta('costo_venta', 'costo_venta_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-costo_venta" ng-click = "clean('costo_venta', 'costo_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -356,7 +383,10 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-irbpnr-nc" ng-click="showPlanCuenta('irbpnr_nc', 'irbpnr_nc_h')">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-irbpnr_nc" ng-click = "clean('irbpnr_nc', 'irbpnr_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -373,6 +403,9 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-propina-nc" ng-click="showPlanCuenta('propina_nc', 'propina_nc_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-propina_nc" ng-click = "clean('propina_nc', 'propina_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -391,6 +424,9 @@
                                                 <button type="button" class="btn btn-info" id="btn-retiva_nc" ng-click="showPlanCuenta('retiva_nc', 'retiva_nc_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retiva_nc" ng-click = "clean('retiva_nc', 'retiva_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
                                             </span>
                                         </div>
                                         <span class="help-block error"
@@ -407,6 +443,9 @@
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-retrenta-nc" ng-click="showPlanCuenta('retrenta_nc', 'retrenta_nc_h')">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-retrenta_nc" ng-click = "clean('retrenta_nc', 'retrenta_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
                                         </div>
