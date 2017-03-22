@@ -97,6 +97,7 @@
                 </table>
                 <dir-pagination-controls
 			       max-size="5"
+			       class="pull-left"
 			       direction-links="true"
 			       boundary-links="true" >
 			    </dir-pagination-controls>

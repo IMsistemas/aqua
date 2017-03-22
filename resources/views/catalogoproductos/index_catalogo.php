@@ -80,7 +80,7 @@
                     </table>
                     <dir-pagination-controls                           
                             template-url="dirPagination.html"
-                            class="pull-right"
+                            class="pull-left"
                             max-size="10"
                             direction-links="true"
                             boundary-links="true" >
