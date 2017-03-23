@@ -138,6 +138,22 @@
                                 <ul class = "dropdown-menu">
                                     <li><a href = "#" ng-click="toModuloConfiguracion();">Configuración del Sistema</a></li>
                                     <li><a href = "#">Gestión de Nomencladores</a></li>
+                                     <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                    }</ul>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Sectorización</a>
