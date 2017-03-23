@@ -312,7 +312,7 @@
 										ng-maxlength="3"
 										maxlength="3"																				
 										ng-disabled="guardado"
-										ng-keypress="onlyNumber($event,3,'numero1')" ng-blur="numero1=calculateLength('numero1','3')" 
+										ng-keypress="onlyNumber($event,3,'numero1')" ng-blur="numero1=calculateLength('numero1',3)" 
 										> 
 		                    
 		                    
@@ -322,7 +322,7 @@
 									id="numero2" ng-required="true"
 									ng-maxlength="3"
 									maxlength="3"
-									ng-keypress="onlyNumber($event,3,'numero2')" ng-blur="numero2=calculateLength('numero2','3')" 									
+									ng-keypress="onlyNumber($event,3,'numero2')" ng-blur="numero2=calculateLength('numero2',3)" 									
 									ng-disabled="guardado"
 									> 
 		                </span>
@@ -330,9 +330,9 @@
 									id="numero3" ng-required="true"
 									ng-maxlength="9"
 									maxlength="9"
-									ng-keypress="onlyNumber($event,9,'numero3')" ng-blur="numero3=calculateLength('numero3','9')" 
+									ng-keypress="onlyNumber($event,9,'numero3')" ng-blur="numero3=calculateLength('numero3',9)" 
 									
-									style="width: 100px;"
+									
 									ng-disabled="guardado"
 									> 
 	                </div>
@@ -363,7 +363,7 @@
 				<div class="col-sm-8 col-xs-12" style="margin-top: 5px;">
 					<div class="input-group">                        
 		                <span class="input-group-addon">Fecha Emisión: </span>
-		                <input type="text" class="form-control datepicker" datetime-picker name="fechaemisioncompra"
+		                <input type="text" class="form-control datepicker"  name="fechaemisioncompra"
 									id="fechaemisioncompra" 
 									ng-model="compra.fechaemisioncompra"	
 																	

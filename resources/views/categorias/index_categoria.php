@@ -45,11 +45,11 @@
                         <td>
 	                        <div class="form-group" ng-form name="myForm">
 		                        <input type="text" class="form-control" name="nombrecategoria" id="nombrecategoria" ng-class="{'negrita': categoria.jerarquia.indexOf('.') === -1}"
-		                          ng-model="categoria.nombrecategoria" ng-required="true" ng-maxlength="10" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/" focus-me="$index == edit">
+		                          ng-model="categoria.nombrecategoria" ng-required="true" ng-maxlength="100" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/" focus-me="$index == edit">
 		                          <span class="help-block error"
                                                       ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$touched">El Nombre es requerido</span>
 		                          <span class="help-block error"
-		                                ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$error.maxlength">La longitud máxima es de 10 caracteres</span>
+		                                ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$error.maxlength">La longitud máxima es de 100 caracteres</span>
 		                          <span class="help-block error"
 		                                ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$error.pattern">El nombre debe ser solo letras, puntos, números, guion y espacios</span>
 		                                {{ valid(myForm.$invalid) }}
