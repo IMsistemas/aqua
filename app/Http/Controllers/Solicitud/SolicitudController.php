@@ -49,31 +49,11 @@ class SolicitudController extends Controller
      */
     public function getSolicitudes(Request $request)
     {
-        /*$solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
-                                                        ->orderBy('fechasolicitud', 'desc')->get();
-
-        $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')->get();
-
-        $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                                                        ->orderBy('fechasolicitud', 'desc')->get();
-
-        $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
-                                                        ->orderBy('fechasolicitud', 'desc')->get();
-
-        $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                                                        ->orderBy('fechasolicitud', 'desc')->get();
-
-        return response()->json([
-            'suministro' => $solicitudsuministro, 'otro' => $solicitudotro,
-            'setname' => $solicitudsetname, 'servicio' => $solicitudservicio,
-            'mantenimiento' => $solicitudmantenim
-        ]);*/
-
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
         $cliente = null;
 
-        return Solicitud::with('cliente.persona')
+        /*return Solicitud::with('cliente.persona')
             ->selectRaw(
                 '*,
                 (SELECT idsolicitudotro FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
@@ -82,7 +62,19 @@ class SolicitudController extends Controller
                 (SELECT idsolicitudsuministro FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
                 (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
             )
-            ->orderBy('fechasolicitud', 'asc')->paginate(10);
+            ->orderBy('fechasolicitud', 'asc')->paginate(10);*/
+
+        return Solicitud::join('cliente', 'solicitud.idcliente', '=', 'cliente.idcliente')
+                            ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
+                            ->selectRaw(
+                                '*,
+                                (SELECT idsolicitudotro FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
+                                (SELECT idsolicitudcambionombre FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre,
+                                (SELECT idsolicitudmantenimiento FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento,
+                                (SELECT idsolicitudsuministro FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
+                                (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
+                            )
+                            ->orderBy('fechasolicitud', 'asc')->paginate(10);
 
     }
 
@@ -129,80 +121,54 @@ class SolicitudController extends Controller
     {
         $filter_view = json_decode($filter);
 
-        $solicitudsuministro = [];
-        $solicitudsetname = [];
-        $solicitudservicio = [];
-        $solicitudotro = [];
-        $solicitudmantenim = [];
+        $search = $filter_view->search;
 
-        if ($filter_view->estado != 3) {
+        $solicitud = Solicitud::join('cliente', 'solicitud.idcliente', '=', 'cliente.idcliente')
+                                ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona');
 
-            $estado = true;
-            if ($filter_view->estado == 2) $estado = false;
-
-            if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
-                                        ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 4){
-                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')->orderBy('fechasolicitud', 'desc')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 2){
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 1){
-                $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->where('estaprocesada', $estado)->orderBy('fechasolicitud', 'desc')->get();
-            }
-
-        } else {
-            if ($filter_view->tipo == 5){
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 4){
-                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 3){
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 2){
-                $solicitudsetname = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            } else if ($filter_view->tipo == 1){
-                $solicitudotro = SolicitudOtro::with('cliente')->orderBy('fechasolicitud', 'desc')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            } else {
-                $solicitudsuministro = SolicitudSuministro::with('cliente', 'suministro.aguapotable', 'suministro.calle.barrio', 'suministro.cuentaporcobrarsuministro')
-                                                                ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudotro = SolicitudOtro::with('cliente')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudsetname = SolicitudCambioNombre::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudservicio = SolicitudServicio::with('cliente.tipocliente', 'cliente.servicioscliente.serviciojunta')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-                $solicitudmantenim = SolicitudMantenimiento::with('cliente', 'suministro.calle.barrio', 'suministro.aguapotable')
-                    ->orderBy('fechasolicitud', 'desc')->get();
-            }
+        if ($filter_view->estado == 2) {
+            $solicitud = $solicitud->where('estadoprocesada', false);
+        } elseif ($filter_view->estado == 1) {
+            $solicitud = $solicitud->where('estadoprocesada', true);
         }
 
-        return response()->json([
-            'suministro' => $solicitudsuministro, 'otro' => $solicitudotro,
-            'setname' => $solicitudsetname, 'servicio' => $solicitudservicio,
-            'mantenimiento' => $solicitudmantenim
-        ]);
+        if ($filter_view->tipo == 1) {
+            $solicitud = $solicitud->selectRaw('
+                *, (SELECT idsolicitudotro FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro 
+            ')->whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudotro)');
+        } elseif ($filter_view->tipo == 2) {
+            $solicitud = $solicitud->selectRaw('
+                *, (SELECT idsolicitudmantenimiento FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento 
+            ')->whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudmantenimiento)');
+        } elseif ($filter_view->tipo == 3) {
+            $solicitud = $solicitud->selectRaw('
+                *, (SELECT idsolicitudcambionombre FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre 
+            ')->whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudcambionombre)');
+        } elseif ($filter_view->tipo == 4) {
+            $solicitud = $solicitud->selectRaw('
+                *, (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio 
+            ')->whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudservicio)');
+        } elseif ($filter_view->tipo == 5) {
+            $solicitud = $solicitud->selectRaw('
+                *, (SELECT idsolicitudsuministro FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro 
+            ')->whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudsuministro)');
+        } else {
+            $solicitud = $solicitud->selectRaw('
+                *,
+                (SELECT idsolicitudotro FROM solicitudotro WHERE solicitudotro.idsolicitud = solicitud.idsolicitud) AS solicitudotro,
+                (SELECT idsolicitudcambionombre FROM solicitudcambionombre WHERE solicitudcambionombre.idsolicitud = solicitud.idsolicitud) AS solicitudcambionombre,
+                (SELECT idsolicitudmantenimiento FROM solicitudmantenimiento WHERE solicitudmantenimiento.idsolicitud = solicitud.idsolicitud) AS solicitudmantenimiento,
+                (SELECT idsolicitudsuministro FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS solicitudsuministro,
+                (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio
+            ');
+        }
+
+        if ($search != null) {
+            $solicitud->whereRaw("(persona.lastnamepersona LIKE '%" . $search . "%' OR persona.namepersona LIKE '%" . $search . "%')");
+        }
+
+        return $solicitud->orderBy('fechasolicitud', 'asc')->paginate(10);
+
     }
 
     /**

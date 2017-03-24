@@ -1,11 +1,11 @@
 
 
-        <div class="col-xs-12" ng-controller="solicitudController" style="margin-top: 2%;">
+        <div class="col-xs-12" ng-controller="solicitudController" style="margin-top: 1%;">
 
             <div class="col-xs-12">
                 <div class="col-sm-4 col-xs-12">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search" placeholder="BUSCAR..." ng-model="search">
+                        <input type="text" class="form-control" id="search" placeholder="BUSCAR..." ng-model="search" ng-keyup="searchByFilter()">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -36,8 +36,8 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                         <tr>
-                            <th style="width: 10%;" ng-click="sort('data.idsolicitud')">
-                                Nro. Solicitud
+                            <th style="width: 5%;" ng-click="sort('data.idsolicitud')">
+                                Nro.
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.idsolicitud'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
@@ -61,9 +61,9 @@
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.telefonoprincipaldomicilio'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th style="width: 12%;">Tipo Solicitud</th>
+                            <th style="width: 10%;">Tipo Solicitud</th>
                             <th style="width: 10%;">Estado</th>
-                            <th style="width: 12%;">Acciones</th>
+                            <th style="width: 10%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,9 +71,9 @@
                         <tr dir-paginate="solicitud in solicitudes | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td class="text-center">{{solicitud.idsolicitud}}</td>
                             <td>{{solicitud.fechasolicitud | formatDate}}</td>
-                            <td style="font-weight: bold;">{{solicitud.cliente.persona.razonsocial}}</td>
-                            <td>{{solicitud.cliente.persona.direccion}}</td>
-                            <td>{{solicitud.cliente.telefonoprincipaldomicilio}}</td>
+                            <td style="font-weight: bold;">{{solicitud.razonsocial}}</td>
+                            <td>{{solicitud.direccion}}</td>
+                            <td>{{solicitud.telefonoprincipaldomicilio}}</td>
                             <td>{{solicitud.tipo}}</td>
                             <td ng-if="solicitud.estadoprocesada == true"><span class="label label-primary" style="font-size: 14px !important;">Procesada</span></td>
                             <td ng-if="solicitud.estadoprocesada == false"><span class="label label-warning" style="font-size: 14px !important;">En Espera</span></td>

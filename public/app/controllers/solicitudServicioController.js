@@ -219,14 +219,72 @@
         };
 
         $scope.searchByFilter = function () {
+
+            console.log($scope.search);
+
+            if ($scope.search == undefined) {
+                var search = null;
+            } else var search = $scope.search;
+
             var filter = {
                 tipo: $scope.t_tipo_solicitud,
-                estado: $scope.t_estado
+                estado: $scope.t_estado,
+                search: search
             };
 
             $http.get(API_URL + 'solicitud/getByFilter/' + JSON.stringify(filter)).success(function(response){
 
-                var list = [];
+                var longitud = response.data.length;
+
+                if (longitud > 0) {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        var tipo = '';
+                        var idtipo = 0;
+
+                        if (response.data[i].solicitudcambionombre != null) {
+                            tipo = 'Cambio de Nombre';
+                            idtipo = response.data[i].solicitudcambionombre;
+                        } else if (response.data[i].solicitudmantenimiento != null) {
+                            tipo = 'Mantenimiento';
+                            idtipo = response.data[i].solicitudmantenimiento;
+                        } else if (response.data[i].solicitudotro != null) {
+                            tipo = 'Otra Solicitud';
+                            idtipo = response.data[i].solicitudotro;
+                        } else if (response.data[i].solicitudservicio != null) {
+                            tipo = 'Servicio';
+                            idtipo = response.data[i].solicitudservicio;
+                        } else if (response.data[i].solicitudsuministro != null) {
+                            tipo = 'Suministro';
+                            idtipo = response.data[i].solicitudsuministro;
+                        }
+
+                        var tipo_name = {
+                            value: tipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo', tipo_name);
+
+                        var tipo_id = {
+                            value: idtipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo_id', tipo_id);
+
+                    }
+
+                }
+
+                $scope.solicitudes = response.data;
+                $scope.totalItems = response.total;
+
+
+                /*var list = [];
 
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
@@ -334,7 +392,7 @@
                     }
                 }
 
-                $scope.solicitudes = list;
+                $scope.solicitudes = list;*/
 
             });
 

@@ -22,7 +22,7 @@
             <div class="col-xs-12" style="margin-top: 15px;">
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keypress="initLoad(1)">
+                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -1425,7 +1425,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"> Teléfono Instalac.: </span>
                                                     <input type="text" class="form-control" name="t_suministro_telf" id="t_suministro_telf"
-                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-pattern="/^([0-9]+)$/">
+                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]+)$/">
                                                 </div>
 
                                                 <span class="help-block error"
@@ -1433,6 +1433,10 @@
                                                 <span class="help-block error"
                                                       ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$touched">
                                                             El Teléfono es requerido</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$error.maxlength">La longitud máxima es de 9 números</span>
+                                                <span class="help-block error"
+                                                      ng-show="formProcessSuministro.t_suministro_telf.$invalid && formProcessSuministro.t_suministro_telf.$error.minlength">La longitud mínima es de 9 números</span>
                                             </div>
 
                                         </fieldset>
