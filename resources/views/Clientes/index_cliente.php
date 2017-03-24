@@ -363,49 +363,49 @@
 
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modalPlanCuenta">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Plan de Cuenta</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                                    <thead class="bg-primary">
-                                    <tr>
-                                        <th style="width: 15%;">ORDEN</th>
-                                        <th>CONCEPTO</th>
-                                        <th style="width: 10%;">COD. SRI</th>
-                                        <th style="width: 4%;"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="item in cuentas" ng-cloak >
-                                        <td>{{item.jerarquia}}</td>
-                                        <td>{{item.concepto}}</td>
-                                        <td>{{item.codigosri}}</td>
-                                        <td>
-                                            <input type="radio" name="select_cuenta"  ng-click="click_radio(item)">
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Plan de Cuenta</h4>
+                        </div>
+                        <div class="modal-body" style="max-height: calc(100% - 500px) !important; overflow: auto !important;">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                        <thead class="bg-primary">
+                                        <tr>
+                                            <th style="width: 15%;">ORDEN</th>
+                                            <th>CONCEPTO</th>
+                                            <th style="width: 10%;">CODIGO</th>
+                                            <th style="width: 4%;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in cuentas" ng-cloak >
+                                            <td>{{item.jerarquia}}</td>
+                                            <td>{{item.concepto}}</td>
+                                            <td>{{item.codigosri}}</td>
+                                            <td>
+                                                <input type="radio" name="select_cuenta"  ng-click="click_radio(item)">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
-                            Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
+                                Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modalDeleteCliente">
                 <div class="modal-dialog" role="document">

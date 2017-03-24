@@ -56,11 +56,11 @@ class ClienteController extends Controller
         $cliente = null;
 
         $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
-            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
-            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
+                            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+                            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $cliente = $cliente->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific LIKE '%" . $search . "%')");
         }
 
         return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);

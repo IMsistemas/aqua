@@ -134,9 +134,12 @@
 
                     if (longitud > 0) {
                         $scope.idpersona = response[0].idpersona;
-                    } else {
+                    } /*else {
+
+
+
                         $scope.idpersona = 0;
-                    }
+                    }*/
 
                 });
 
@@ -205,6 +208,7 @@
                         $scope.idcliente = 0;
                         $scope.documentoidentidadempleado = '';
                         $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
+                        $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
                         $scope.idpersona = 0;
                         $scope.apellido = '';
                         $scope.nombre = '';
@@ -283,6 +287,9 @@
                     }
                 });
             } else {
+
+                console.log(data);
+
                 $http.put(url + '/' + $scope.idcliente, data ).success(function (response) {
                     if (response.success == true) {
                         $scope.idpersona = 0;
@@ -356,6 +363,8 @@
 
                         console.log(item);
 
+                        $scope.idpersona = item.idpersona;
+
                         $scope.idcliente = item.idcliente;
 
                         //$scope.t_codigocliente = 0;
@@ -363,7 +372,7 @@
                         $scope.t_fecha_ingreso = convertDatetoDB(item.fechaingreso, true);
                         $scope.documentoidentidadempleado = item.numdocidentific;
                         $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
-                        $scope.idpersona = item.idpersona;
+
                         $scope.apellido = item.lastnamepersona;
                         $scope.nombre = item.namepersona;
                         $scope.telefonoprincipal = item.telefonoprincipaldomicilio;
