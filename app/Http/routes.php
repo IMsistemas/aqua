@@ -766,11 +766,19 @@ Route::get('estadosfinacieros/plancuentastipo/{filtro}', 'Contabilidad\Plandecue
 Route::get('estadosfinacieros/borrarcuenta/{filtro}', 'Contabilidad\Plandecuetas@deletecuenta');
 Route::get('estadosfinacieros/plancontabletotal', 'Contabilidad\Plandecuetas@plancontabletotal');
 
+//-------------------------------- Asiento Contable ---------------/////////
+Route::get('estadosfinacieros/numcomp/{filtro}', 'Contabilidad\Plandecuetas@NumComprobante');
+Route::get('estadosfinacieros/asc/{transaccion}', 'Contabilidad\Plandecuetas@GuardarAsientoContable');
+Route::get('estadosfinacieros/borrarasc/{id}', 'Contabilidad\Plandecuetas@BorrarAsientoContable');
+Route::get('estadosfinacieros/datosasc/{id}', 'Contabilidad\Plandecuetas@DatosAsientoContable');
+Route::get('estadosfinacieros/Editarasc/{transaccion}', 'Contabilidad\Plandecuetas@EditarAsientoContable');
+//-------------------------------- Registro Contable ---------------/////////
+Route::get('estadosfinacieros/registrocuenta/{filtro}', 'Contabilidad\Plandecuetas@LoadRegistroContable');
+
 Route::resource('Contabilidad', 'Contabilidad\Plandecuetas');
 
 //-------------------------------- Tipo Transaccion Contable---------------/////////
 Route::get('transacciones/alltipotransacciones', 'Contabilidad\TipoTransaccion@getalltipotransacciones');
-
 
 //-------------------------------- Guía Remisión---------------/////////
 Route::resource('guiaremision', 'Guiaremision\GuiaremisionController');
@@ -819,3 +827,15 @@ Route::put('configuracion/updateConfigVenta/{id}', 'ConfiguracionSystem\Configur
 Route::put('configuracion/updateConfigCompra/{id}', 'ConfiguracionSystem\ConfiguracionSystemController@updateConfigCompra');
 
 Route::resource('configuracion', 'ConfiguracionSystem\ConfiguracionSystemController');
+
+
+//-------------------------------- Inveario Intem Kardex ---------------/////////
+
+Route::resource('Inventario', 'CatalogoProductos\InventarioKardex');
+Route::get('procesoskardex/loadbodegas', 'CatalogoProductos\InventarioKardex@cargarbodegas');
+Route::get('procesoskardex/loadcategoria', 'CatalogoProductos\InventarioKardex@cargarcategoria');
+Route::get('procesoskardex/loadsubcategoria/{id}', 'CatalogoProductos\InventarioKardex@cargarsubcategoria');
+Route::get('procesoskardex/loadinventario/{filtro}', 'CatalogoProductos\InventarioKardex@cargarinvetarioporbodega');
+Route::get('procesoskardex/loadkardex/{filtro}', 'CatalogoProductos\InventarioKardex@kardexitem');
+
+//-------------------------------- Inveario Intem Kardex ---------------/////////

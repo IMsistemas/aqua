@@ -1496,8 +1496,8 @@
                                                     <div class="col-sm-4 col-xs-12">
 
                                                         <div class="input-group">
-                                                            <span class="input-group-addon"> ¿Cliente tiene Medidor?: </span>
-                                                            <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor"
+                                                            <span class="input-group-addon"> ¿Cliente no tiene Medidor?: </span>
+                                                            <input type="checkbox" class="" id="t_suministro_medidor" ng-model="t_suministro_medidor"
                                                                    ng-click="deshabilitarMedidor()">
                                                         </div>
 
@@ -1506,8 +1506,8 @@
                                                     <div class="col-sm-4 col-xs-12">
 
                                                         <div class="input-group">
-                                                            <span class="input-group-addon"> Marca: </span>
-                                                            <input type="text" class="form-control" id="t_suministro_marca" ng-model="t_suministro_marca">
+                                                            <span class="input-group-addon"> Medidor: </span>
+                                                            <input type="text" class="form-control" id="t_suministro_marca" ng-model="t_suministro_marca" disabled>
                                                         </div>
 
                                                     </div>
@@ -1517,7 +1517,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon"> Costo: </span>
                                                             <input type="text" class="form-control" id="t_suministro_costomedidor" ng-model="t_suministro_costomedidor"
-                                                                   ng-blur="calculateTotalSuministro()" ng-keypress="onlyDecimal($event)">
+                                                                   ng-blur="calculateTotalSuministro()" ng-keypress="onlyDecimal($event)" disabled>
                                                         </div>
 
                                                     </div>

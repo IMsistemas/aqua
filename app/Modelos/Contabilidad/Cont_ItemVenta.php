@@ -9,12 +9,21 @@ class Cont_ItemVenta extends Model
 
     protected $table = 'cont_itemventa';
     protected $primaryKey = 'iditemventa';
+    public $incrementing = true;
+
     public $timestamps = false;
-    public $incrementing = false;
 
     protected $fillable = [
-        'iditemventa', 'idcatalogitem', 'iddocumentoventa', 'idbodega', 'idtipoimpuestoiva', 
-            'idtipoimpuestoice', 'cantidad', 'preciounitario', 'descuento', 'preciototal'        
+        'iditemventa',
+        'idcatalogitem',
+        'iddocumentoventa',
+        'idbodega',
+        'idtipoimpuestoiva',
+        'idtipoimpuestoice',
+        'cantidad',
+        'preciounitario',
+        'descuento',
+        'preciototal'
     ];
 
     public function cont_documentoventa(){

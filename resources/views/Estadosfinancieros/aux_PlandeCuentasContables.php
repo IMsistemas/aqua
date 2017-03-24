@@ -15,9 +15,9 @@
 </head>
 <body>
 
-	<div class="container-fluid" ng-controller="Contabilidad" ng-init="LoadTipoTransaccion();" ng-cloak>
-		<div class="row">
-			<div class="col-xs-6">
+  <div class="container-fluid" ng-controller="Contabilidad" ng-init="LoadTipoTransaccion();" ng-cloak>
+    <div class="row">
+      <div class="col-xs-6">
                 <h3><strong>Plan de cuentas</strong></h3>
                 <div class="row">
                     <div class="col-xs-4">
@@ -173,7 +173,7 @@
 
             </div>
 
-		</div>
+    </div>
 
 
 
@@ -555,7 +555,7 @@
 
 
 
-	</div>
+  </div>
 
 
     <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>

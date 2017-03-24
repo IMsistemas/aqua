@@ -13,16 +13,32 @@ class Cont_DocumentoVenta extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'iddocumentoventa', 'idpuntoventa', 'idcliente', 'idtipoimpuestoiva', 
-            'numdocumentoventa', 'fecharegistroventa', 'fechaemisionventa', 'nroautorizacionventa', 
-            'nroguiaremision', 'subtotalconimpuestoventa', 'subtotalceroventa', 
-            'subtotalnoobjivaventa', 'subtotalexentivaventa', 'subtotalsinimpuestoventa', 
-            'totaldescuento', 'icecompra', 'ivacompra', 'irbpnrventa', 'propina', 'otrosventa', 
-            'valortotalventa'        
+        'iddocumentoventa', 
+        'idpuntoventa',
+        'idcliente',
+        'idtipoimpuestoiva',
+        'numdocumentoventa',
+        'fecharegistroventa',
+        'fechaemisionventa',
+        'nroautorizacionventa',
+        'nroguiaremision',
+        'subtotalconimpuestoventa',
+        'subtotalceroventa',
+        'subtotalnoobjivaventa',
+        'subtotalexentivaventa',
+        'subtotalsinimpuestoventa', 
+        'totaldescuento',
+        'icecompra',
+        'ivacompra',
+        'irbpnrventa',
+        'propina',
+        'otrosventa',
+        'valortotalventa',
+        'estadoanulado'
     ];
 
     public function cont_documentoguiaremision(){
-    	return $this->belongsTo('App\Modelos\Contabilidad');
+    	return $this->hasMany('App\Modelos\Contabilidad');
     }
     public function cont_itemventa(){
         return $this->hasMany('App\Modelos\Contabilidad');

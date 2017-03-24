@@ -708,14 +708,17 @@
 
         $scope.deshabilitarMedidor = function () {
             if ($scope.t_suministro_medidor == true) {
+
                 $scope.t_suministro_marca = '';
                 $scope.t_suministro_costomedidor = '';
 
-                $('#t_suministro_marca').prop('disabled', true);
-                $('#t_suministro_costomedidor').prop('disabled', true);
-            } else {
                 $('#t_suministro_marca').prop('disabled', false);
                 $('#t_suministro_costomedidor').prop('disabled', false);
+
+            } else {
+
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
 
                 $scope.t_suministro_marca = $scope.marcaproducto;
                 $scope.t_suministro_costomedidor = $scope.precioproducto;
