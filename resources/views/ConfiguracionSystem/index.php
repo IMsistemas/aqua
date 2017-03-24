@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-6 text-center" style="margin-top: 5px;" ng-cloak>
-                                <img class="img-thumbnail" ngf-src="file" src="{{url_foto}}" alt="" style="width: 50%;">
+                                <img class="img-thumbnail" ngf-src="file" ng-src="{{url_foto}}" alt="" style="width: 50%;">
                             </div>
                         </div>
                     </form>
@@ -174,8 +174,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formCompras.irbpnr_compra.$invalid && formCompras.irbpnr_compra.$touched">Cuenta IRBPNR es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -194,8 +192,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formCompras.propina_compra.$invalid && formCompras.propina_compra.$touched">Cuenta Propina es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -213,8 +209,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formCompras.retiva_compra.$invalid && formCompras.retiva_compra.$touched">Cuenta Retención IVA es requerida</span>
                                     </div>
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
@@ -231,8 +225,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formCompras.retrenta_compra.$invalid && formCompras.retrenta_compra.$touched">Cuenta Retención Renta es requerida</span>
                                     </div>
 
                                 </form>
@@ -270,8 +262,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formVentas.irbpnr_venta.$invalid && formVentas.irbpnr_venta.$touched">Cuenta IRBPNR es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -290,8 +280,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formVentas.propina_venta.$invalid && formVentas.propina_venta.$touched">Cuenta Propina es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -310,8 +298,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formVentas.retiva_venta.$invalid && formVentas.retiva_venta.$touched">Cuenta Retención IVA es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -330,8 +316,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formVentas.retrenta_venta.$invalid && formVentas.retrenta_venta.$touched">Cuenta Retención Renta es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -350,8 +334,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formVentas.costo_venta.$invalid && formVentas.costo_venta.$touched">Cuenta Costo de Venta es requerida</span>
                                     </div>
 
                                 </form>
@@ -389,8 +371,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formNC.irbpnr_nc.$invalid && formNC.irbpnr_nc.$touched">Cuenta IRBPNR es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -409,8 +389,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formNC.propina_nc.$invalid && formNC.propina_nc.$touched">Cuenta Propina es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -429,8 +407,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formNC.retiva_nc.$invalid && formNC.retiva_nc.$touched">Cuenta Retención IVA es requerida</span>
                                     </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -449,8 +425,6 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        <span class="help-block error"
-                                              ng-show="formNC.retrenta_nc.$invalid && formNC.retrenta_nc.$touched">Cuenta Retención Renta es requerida</span>
                                     </div>
 
                                 </form>
