@@ -85,7 +85,7 @@
                                             <li><a tabindex="-1" href="#" ng-click="toModuloCrearBodegas();">Bodega</a></li>
                                             <li><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo Item</a></li>
                                             <li><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio</a></li>
-                                            <li><a href="#" ng-click="">Registro Inventario</a></li>
+                                            <li><a href="#" ng-click="toModuloInventario();">Registro Inventario y Kardex</a></li>
                                         </ul>
                                     </li>
 
@@ -238,13 +238,13 @@
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/bodegasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/facturacionventa.js') ?>"></script>
+    <script src="<?= asset('app/controllers/venta.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/configuracionSystemController.js') ?>"></script>
 
 
-
+    <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
     
 
 

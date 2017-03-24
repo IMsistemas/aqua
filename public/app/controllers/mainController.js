@@ -180,6 +180,11 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "Contabilidad";
 	}
 
+    $scope.toModuloInventario = function(){
+        $scope.titulo = "Inventario";
+        $scope.toModulo = "Inventario";
+    }
+
 	$scope.toModuloTransportistas = function(){		
 		$scope.titulo = "Crear Transportistas";
 		$scope.toModulo = "transportista";
