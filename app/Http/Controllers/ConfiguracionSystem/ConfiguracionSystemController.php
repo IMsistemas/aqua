@@ -192,7 +192,9 @@ class ConfiguracionSystemController extends Controller
 
     public function getPlanCuenta()
     {
-        return Cont_PlanCuenta::orderBy('jerarquia', 'asc')->get();
+        return Cont_PlanCuenta::selectRaw('
+                 * , (SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ cont_plancuenta.jerarquia) AS madreohija
+            ')->orderBy('jerarquia', 'asc')->get();
     }
 
     public function updateIvaDefault(Request $request, $id)

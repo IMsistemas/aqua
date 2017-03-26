@@ -1,7 +1,15 @@
 
 <div ng-controller="callesController">
 
-    <div class="col-xs-12"  style="margin-top: 15px;">
+    <div class="col-xs-12">
+
+        <h4>Gestión de Transversales</h4>
+
+        <hr>
+
+    </div>
+
+    <div class="col-xs-12"  style="margin-top: 5px;">
         <div class="col-sm-4 col-xs-12">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda">

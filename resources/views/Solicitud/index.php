@@ -1,6 +1,14 @@
 
 
-        <div class="col-xs-12" ng-controller="solicitudController" style="margin-top: 1%;">
+        <div class="col-xs-12" ng-controller="solicitudController">
+
+            <div class="col-xs-12">
+
+                <h4>Gestión de Solicitudes</h4>
+
+                <hr>
+
+            </div>
 
             <div class="col-xs-12">
                 <div class="col-sm-4 col-xs-12">
