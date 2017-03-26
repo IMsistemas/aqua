@@ -2,7 +2,15 @@
 
     <div ng-controller="cargosController">
 
-        <div class="col-xs-12" style="margin-top: 2%;">
+        <div class="col-xs-12">
+
+            <h4>Gestión de Cargos</h4>
+
+            <hr>
+
+        </div>
+
+        <div class="col-xs-12" style="margin-top: 5px;">
 
             <div class="col-sm-6 col-xs-8">
                 <div class="form-group has-feedback">

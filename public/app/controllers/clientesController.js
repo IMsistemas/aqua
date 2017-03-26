@@ -1,3 +1,4 @@
+
     app.filter('formatDate', function(){
         return function(texto){
             return convertDatetoDB(texto, true);
@@ -98,7 +99,7 @@
             };
 
             $http.get(API_URL + 'cliente/getClientes?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
-                console.log(response.data);
+
                 $scope.clientes = response.data;
                 $scope.totalItems = response.total;
             });
@@ -155,8 +156,10 @@
         $scope.showPlanCuenta = function () {
 
             $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
+
                 $scope.cuentas = response;
                 $('#modalPlanCuenta').modal('show');
+
             });
 
         };

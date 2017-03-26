@@ -242,13 +242,8 @@
     <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/configuracionSystemController.js') ?>"></script>
-
-
+    <script src="<?= asset('app/controllers/transportistaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
-    
-
-
-    
 
     
 

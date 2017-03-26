@@ -14,12 +14,27 @@
     <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
+    <style>
+        .modal-body {
+            max-height: calc(100vh - 210px);
+            overflow-y: auto;
+        }
+    </style>
+
 </head>
 
 <body>
         <div ng-controller="clientesController">
 
-            <div class="col-xs-12" style="margin-top: 15px;">
+            <div class="col-xs-12">
+
+                <h4>Gestión de Clientes</h4>
+
+                <hr>
+
+            </div>
+
+            <div class="col-xs-12" style="margin-top: 5px;">
                 <div class="col-sm-6 col-xs-12">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
@@ -38,7 +53,7 @@
                     <thead class="bg-primary">
                     <tr>
                         <th class="text-center" style="width: 10%;">CI / RUC</th>
-                        <th class="text-center" style="width: 10%;">Fecha Ingr.</th>
+                        <th class="text-center" style="width: 10%;">Fecha Ingreso</th>
                         <th class="text-center" style="">Razón Social / Nombre y Apellidos</th>
                         <th class="text-center" style="width: 8%;">Celular</th>
                         <th class="text-center" style="width: 20%;">Dirección</th>
@@ -361,7 +376,6 @@
                 </div>
             </div>
 
-
             <div class="modal fade" tabindex="-1" role="dialog" id="modalPlanCuenta">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -369,8 +383,16 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title">Plan de Cuenta</h4>
                         </div>
-                        <div class="modal-body" style="max-height: calc(100% - 500px) !important; overflow: auto !important;">
+                        <div class="modal-body">
                             <div class="row">
+
+                                <div class="col-xs-12">
+                                    <div class="form-group  has-feedback">
+                                        <input type="text" class="form-control" id="" ng-model="searchContabilidad" placeholder="BUSCAR..." >
+                                        <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                                    </div>
+                                </div>
+
                                 <div class="col-xs-12">
                                     <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                         <thead class="bg-primary">
@@ -382,12 +404,12 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="item in cuentas" ng-cloak >
+                                        <tr ng-repeat="item in cuentas | filter:searchContabilidad" ng-cloak >
                                             <td>{{item.jerarquia}}</td>
                                             <td>{{item.concepto}}</td>
                                             <td>{{item.codigosri}}</td>
                                             <td>
-                                                <input type="radio" name="select_cuenta"  ng-click="click_radio(item)">
+                                                <input ng-show="item.madreohija=='1'" ng-hide="item.madreohija!='1'" type="radio" name="select_cuenta"  ng-click="click_radio(item)">
                                             </td>
                                         </tr>
                                         </tbody>
