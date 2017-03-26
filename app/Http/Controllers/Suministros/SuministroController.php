@@ -60,7 +60,7 @@ class SuministroController extends Controller
 
     public function getCalleByBarrio($id)
     {
-        return Calle::with('barrio')->where('idbarrio', $id)->orderBy('nombrecalle', 'asc')->get();
+        return Calle::with('barrio')->where('idbarrio', $id)->orderBy('namecalle', 'asc')->get();
     }
 
     public function getCalle()

@@ -21,14 +21,24 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
-            <select id="s_zona" class="form-control" ng-model="s_zona" ng-change="getByFilter(1)"
-                    ng-options="value.id as value.label for value in zonass"></select>
+        <div class="col-sm-3 col-xs-12">
+
+            <div class="input-group">
+                <span class="input-group-addon">Zonas: </span>
+                <select id="s_zona" class="form-control" ng-model="s_zona" ng-change="getByFilter(1)"
+                        ng-options="value.id as value.label for value in zonass"></select>
+            </div>
+
         </div>
 
-        <div class="col-sm-3">
-            <select id="s_transversales" class="form-control" ng-model="s_transversales" ng-change="getByFilter(2)"
-                    ng-options="value.id as value.label for value in transversaless"></select>
+        <div class="col-sm-3 col-xs-12">
+
+            <div class="input-group">
+                <span class="input-group-addon">Transversales: </span>
+                <select id="s_transversales" class="form-control" ng-model="s_transversales" ng-change="getByFilter(2)"
+                        ng-options="value.id as value.label for value in transversaless"></select>
+            </div>
+
         </div>
 
 
