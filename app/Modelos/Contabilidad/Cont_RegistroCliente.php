@@ -21,7 +21,8 @@ class Cont_RegistroCliente extends Model
         'fecha',
         'debe',
         'haber',
-        'numerodocumento'
+        'numerodocumento',
+        'estadoanulado'
     ];
 
     public function cliente()

@@ -18,7 +18,9 @@ use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Http\Controllers\CatalogoProductos\CoreKardex;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Contabilidad\Cont_ItemVenta;
-//use App\Modelos\Facturacionventa\puntoventa;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
+use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta;
+//use App\Modelos\Facturacionventa\puntoventa; 
 
 
 
@@ -93,7 +95,7 @@ class DocumentoVenta extends Controller
     public function getAllbodegas()
     {
         //return Bodega::all();
-        return Cont_Bodega::all();
+        return Cont_Bodega::join("cont_plancuenta","cont_plancuenta.idplancuenta","=","cont_bodega.idplancuenta")->get();
     }
     /**
      * Ontener la informacion de una producto
@@ -205,7 +207,7 @@ class DocumentoVenta extends Controller
      * @return mixed
      */
     public function getDocVenta()
-    {   $lastVta=venta::all();
+    {   $lastVta=Cont_DocumentoVenta::all();
         return $lastVta->last();
     }
     /**
@@ -276,6 +278,25 @@ class DocumentoVenta extends Controller
         for($x=0;$x<count($filtro->DataItemsVenta);$x++){
             Cont_ItemVenta::create((array) $filtro->DataItemsVenta[$x]);
         }
+
+        $registrocliente = array(
+            'idcliente' => $docventa->idcliente,
+            'idtransaccion' => $id_transaccion,
+            'fecha' => $docventa->fecharegistroventa,
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente 
+            'haber' => 0,
+            'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."", 
+            'estadoanulado' => false);
+        $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
+        /*
+        $formapagoventa = array(
+            'idformapago' => $filtro->Idformapagoventa, 
+            'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa);
+        $aux_formapagoVenta=Cont_FormaPagoDocumentoVenta::create($formapagoventa);*/
+        /*$aux_formapagoVenta=new Cont_FormaPagoDocumentoVenta;
+        $aux_formapagoVenta->idformapago=$filtro->Idformapagoventa;
+        $aux_formapagoVenta->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
+        $aux_formapagoVenta->save();*/
         return 1;
 
         /*$aux_filtro="";

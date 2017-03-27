@@ -28,7 +28,7 @@
 
 
 
-<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
+<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
 <form class="form-horizontal" name="formventa" id="formventa"  novalidate="" >
 <div class="form-group" ng-show="VerFactura!=1" ng-hide="VerFactura==1">
   <div class="row">
@@ -47,16 +47,28 @@
             <th>Subotal</th>
             <th>Iva</th>
             <th>Total</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="v in Allventas">
-            <th>{{$index+1}}</th>
-            <th>{{v.fechaemisionventa}}</th>
-            <th>{{v.nroautorizacionventa}}</th>
-            <th>{{v.subtotalconimpuestoventa}}</th>
-            <th>{{v.ivacompra}}</th>
-            <th>{{v.valortotalventa}}</th>
+            <td>{{$index+1}}</td>
+            <td>{{v.fechaemisionventa}}</td>
+            <td>{{v.nroautorizacionventa}}</td>
+            <td>{{v.subtotalconimpuestoventa}}</td>
+            <td>{{v.ivacompra}}</td>
+            <td>{{v.valortotalventa}}</td>
+            <td>
+              <button type="button" class="btn btn-info">
+                  <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span> 
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -81,14 +93,16 @@
         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
           <div class="input-group">                        
                     <span class="input-group-addon">No. Venta: </span>
-                    <input type="text" class="form-control"  id="NoVenta" ng-model="NoVenta" />
+                    <input type="text" class="form-control" name="NoVenta" id="NoVenta" ng-model="NoVenta" ng-required="true" />
                 </div> 
+                <span class="help-block error" ng-show="formventa.NoVenta.$invalid && formventa.NoVenta.$touched">El número es requerido</span> 
+
         </div>
 
         <div class="col-xs-12" style="margin-top: 5px;">
           <div class="input-group">                        
                     <span class="input-group-addon">RUC: </span>
-                    <input type="text" class="form-control" name="DICliente" id="DICliente" ng-model="DICliente"  ng-keyup="BuscarCliente();"  ng-required="true" ng-maxlength="13"  ng-pattern="/[0-9]+$/"
+                    <input type="text" class="form-control" name="DICliente" id="DICliente" ng-model="DICliente"  ng-keyup="BuscarCliente();" ng-blur="DICliente=Cliente.numdocidentific"  ng-required="true" ng-maxlength="13"  ng-pattern="/[0-9]+$/"
                      />
 
           </div>
@@ -263,10 +277,10 @@
           </td>
           <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.cantidad"/></td>
           <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
-          <td><input type="text" class="form-control" ng-model="item.descuento"/></td>
+          <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.descuento"/></td>
           <td><input type="text" class="form-control" ng-model="item.iva" ng-value="{{item.productoObj.originalObject.porcentaje}}" /></td>
           <td><input type="text" class="form-control" ng-model="item.ice"/></td>
-          <td><input type="text" class="form-control" disabled ng-value="item.cantidad*item.precioU"/></td>
+          <td><input type="text" class="form-control" ng-model="item.total" disabled  ng-value="item.cantidad*item.precioU"/></td>
           <td>
             <button type="button" class="btn btn-danger" ng-click="QuitarItem(item)">
                       <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span> 
@@ -282,12 +296,12 @@
     <div class="col-xs-12">
       <div class="input-group">                        
                 <span class="input-group-addon">Forma Pago: </span>
-                <select class="form-control" id="FormaPago" ng-model="FormaPago" required="true">
+                <select class="form-control" id="cmbFormapago" ng-model="cmbFormapago" name="cmbFormapago" required="true">
                   <option value="">-- Seleccione --</option>
                   <option ng-repeat="f in Formapago" value="{{f.idformapago}}">{{f.codigosri+"-"+f.nameformapago}}</option>
                 </select>
       </div> 
-      <span class="help-block error" ng-show="formventa.FormaPago.$invalid && formventa.FormaPago.$touched">Es requerido la forma de pago</span> 
+      <span class="help-block error" ng-show="formventa.cmbFormapago.$invalid && formventa.cmbFormapago.$touched">Es requerido la forma de pago</span> 
     </div>
 
     <div class="col-xs-12" style="margin-top: 15px;">
@@ -298,7 +312,7 @@
 
 
     <div class="col-xs-12 text-right" style="margin-top: 20px;">
-    <button type="button" class="btn btn-primary" ng-click="VerFactura=2">
+    <button type="button" class="btn btn-primary" ng-click="VerFactura=2; AllDocVenta();">
                   Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> 
               </button>
       <button type="button" class="btn btn-default">

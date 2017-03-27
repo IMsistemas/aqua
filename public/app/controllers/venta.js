@@ -16,6 +16,28 @@ $scope.t_pto="";
 $scope.Bodega="";
 $scope.observacion="";
 $scope.Allventas=[];
+$scope.cmbFormapago="";
+
+	$scope.NumeroRegistroVenta=function() {
+        $http.get(API_URL + 'DocumentoVenta/NumRegistroVenta')
+        .success(function(response){
+        	console.log(response)
+
+        /*NoVenta iddocumentoventa*/
+            if(response.iddocumentoventa!=null ){
+                $scope.NoVenta=parseInt(response.iddocumentoventa)+1;
+                $("#t_secuencial").val(String(parseInt(response.iddocumentoventa)+1));
+                $scope.calculateLength("t_secuencial",9);
+                $scope.t_secuencial=$("#t_secuencial").val();
+            }else{
+            	$scope.NoVenta=1;
+            	$("#t_secuencial").val("1")
+            	$scope.calculateLength("t_secuencial",9);
+            	$scope.t_secuencial=$("#t_secuencial").val();
+            	
+            }
+        });
+    };
 	///---All Facturas
 	$scope.AllDocVenta=function () {
 		$http.get(API_URL + 'DocumentoVenta/getAllFitros')
@@ -26,23 +48,36 @@ $scope.Allventas=[];
 	};
 	///---Cliente
 	$scope.BuscarCliente=function () {
-		$http.get(API_URL + 'DocumentoVenta/getInfoClienteXCIRuc/'+$scope.DICliente)
-	        .success(function(response){
-	            $scope.Cliente=response[0];
-	            console.log($scope.Cliente);
-	     });
+		if($scope.DICliente!=""){
+			$http.get(API_URL + 'DocumentoVenta/getInfoClienteXCIRuc/'+$scope.DICliente)
+		        .success(function(response){
+		            $scope.Cliente=response[0];
+		            console.log($scope.Cliente);
+		     });
+		}else{
+			QuitarClasesMensaje();
+	        $("#titulomsm").addClass("btn-warning");
+	        $("#msm").modal("show");
+	        $scope.Mensaje="Ingrese un número de identificación";
+		}
 	};
 	///---
 	$scope.ConfigContable=function(){
 		$http.get(API_URL + 'DocumentoVenta/porcentajeivaiceotro')
 	        .success(function(response){
 	            $scope.Configuracion=response;
+	            console.log(response);
 	            if(String($scope.Configuracion[0].IdContable)==""){
 	            	QuitarClasesMensaje();
 			        $("#titulomsm").addClass("btn-danger");
 			        $("#msm").modal("show");
 			        $scope.Mensaje="La venta necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
 	            }
+	     }).error(function(res){
+	     	QuitarClasesMensaje();
+	        $("#titulomsm").addClass("btn-danger");
+	        $("#msm").modal("show");
+	        $scope.Mensaje="La venta necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
 	     });
 	};
 	///---
@@ -50,6 +85,7 @@ $scope.Allventas=[];
 		$http.get(API_URL + 'DocumentoVenta/AllBodegas')
 	        .success(function(response){
 	            $scope.Bodegas=response;
+	            console.log(response);
 	     });
 	};
 	///---
@@ -124,14 +160,31 @@ $scope.Allventas=[];
     $scope.ValorTotal=0;
     $scope.CalculaValores=function(){
     	var aux_subtotalconimpuestos=0;
+
     	for(x=0;x<$scope.items.length;x++){
     		console.log($scope.items[x]);
     		if(parseInt($scope.items[x].iva)==0 ){
     			if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
-    				aux_subtotalconimpuestos+=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
+    				if(parseFloat($scope.items[x].descuento)>0){
+    					var aux_descuento=(((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*(parseFloat($scope.items[x].descuento)))/100);
+    					var preciouxcantida=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
+    					$scope.items[x].total=(preciouxcantida-aux_descuento).toFixed(4);
+    				}else{
+    					$scope.items[x].total=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
+    				}
     			}
     		}
     	}
+
+    	for(x=0;x<$scope.items.length;x++){
+    		console.log($scope.items[x]);
+    		if(parseInt($scope.items[x].iva)==0 ){
+    			if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
+    				aux_subtotalconimpuestos+=parseFloat($scope.items[x].total);
+    			}
+    		}
+    	}
+    	
     	$scope.Subtotalconimpuestos= aux_subtotalconimpuestos.toFixed(4);
     	$scope.ValIVA=(($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100).toFixed(4);
     	$scope.ValorTotal=(parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA)).toFixed(4);
@@ -147,9 +200,15 @@ $scope.Allventas=[];
     		numcomprobante:1,
     		descripcion: $scope.observacion
     	};
-    	//Asiento contable Partida doble
+    	//Asiento contable Partida doble 	ay123
     	var RegistroC=[];
     	//Asiento contable cliente -- el cliente por lo genearal es un activo entonces el cliente aumenta una deuda por el debe 
+    	var aux_bodegaseleccionada={};
+    	for(i=0;i<$scope.Bodegas.length;i++){
+    		if(parseInt($scope.Bodegas[i].idbodega)==parseInt($scope.Bodega)){
+    			aux_bodegaseleccionada=$scope.Bodegas[i];
+    		}
+    	}
     	var cliente={
     		idplancuenta: $scope.Cliente.idplancuenta,
     		concepto: $scope.Cliente.concepto,
@@ -165,10 +224,11 @@ $scope.Allventas=[];
     	for(x=0;x<$scope.items.length;x++){
     		if($scope.items[x].productoObj.originalObject.idclaseitem==1){
     			var producto={
-		    		idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
-		    		concepto: $scope.items[x].productoObj.originalObject.concepto,
-		    		controlhaber: $scope.items[x].productoObj.originalObject.controlhaber,
-		    		tipocuenta: $scope.items[x].productoObj.originalObject.tipocuenta,
+		    		//idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
+		    		idplancuenta: aux_bodegaseleccionada.idplancuenta,
+		    		concepto: aux_bodegaseleccionada.concepto,
+		    		controlhaber: aux_bodegaseleccionada.controlhaber,
+		    		tipocuenta: aux_bodegaseleccionada.tipocuenta,
 		    		Debe: 0,
 		    		Haber: (parseFloat($scope.items[x].productoObj.originalObject.costopromedio)*parseInt($scope.items[x].cantidad)).toFixed(4),
 		    		Descipcion:''
@@ -252,8 +312,8 @@ $scope.Allventas=[];
 		    		idbodega: $scope.Bodega,
 		    		fecharegistro:convertDatetoDB($("#FechaEmision").val()),
 		    		cantidad:parseInt($scope.items[x].cantidad),
-		    		costounitario: parseFloat($scope.items[x].precioU),
-		    		costototal:(parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+		    		costounitario: parseFloat($scope.items[x].productoObj.originalObject.costopromedio),
+		    		costototal:(parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].productoObj.originalObject.costopromedio)).toFixed(4),
 		    		tipoentradasalida:2,
 		    		estadoanulado:true,
 		    		descripcion:$scope.observacion
@@ -312,7 +372,8 @@ $scope.Allventas=[];
     	var transaccion_venta={
     		DataContabilidad:Contabilidad,
     		Datakardex:kardex,
-    		DataVenta:DocVenta, 
+    		DataVenta:DocVenta,
+    		Idformapagoventa: $scope.cmbFormapago, 
     		DataItemsVenta:ItemsVenta
     	};
     	$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta))
@@ -323,6 +384,7 @@ $scope.Allventas=[];
 				        $("#msm").modal("show");
 				        $scope.Mensaje="La venta se guardo correctamente";
 				        $scope.LimiarDataVenta();
+				        $scope.NumeroRegistroVenta();
                     }else{
                     	QuitarClasesMensaje();
 				        $("#titulomsm").addClass("btn-danger");
@@ -349,7 +411,7 @@ $scope.Allventas=[];
 		$scope.Cliente={};
 		$scope.items=[];
 		$scope.Bodegas=[];
-		$scope.Formapago=[];
+		$scope.cmbFormapago="";
 		$scope.PuntoVenta=[];
 		$scope.PuntoVentaSeleccionado={};
 		$scope.Configuracion=[];
