@@ -3,7 +3,15 @@
 
     <div ng-controller="catalogoproductosController">
 
-            <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
+            <div class="col-xs-12">
+
+                <h4>Gestión de Item</h4>
+
+                <hr>
+
+            </div>
+
+            <div class="col-xs-12" style="margin-top: 5px; margin-bottom: 2%">
 
                 <div class="col-sm-4 col-xs-6">
                     <div class="form-group has-feedback">
@@ -38,7 +46,7 @@
 
                 <div class="col-sm-2 col-xs-3">
                     <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">
-                       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                       Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </div>
 
@@ -471,23 +479,31 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
+
+                            <div class="col-xs-12">
+                                <div class="form-group  has-feedback">
+                                    <input type="text" class="form-control" id="" ng-model="searchContabilidad" placeholder="BUSCAR..." >
+                                    <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                                </div>
+                            </div>
+
                             <div class="col-xs-12">
                                 <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
                                         <th style="width: 15%;">ORDEN</th>
                                         <th>CONCEPTO</th>
-                                        <th style="width: 10%;">COD. SRI</th>
+                                        <th style="width: 10%;">CODIGO</th>
                                         <th style="width: 4%;"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="item in cuentas" ng-cloak >
+                                    <tr ng-repeat="item in cuentas | filter:searchContabilidad" ng-cloak >
                                         <td>{{item.jerarquia}}</td>
                                         <td>{{item.concepto}}</td>
                                         <td>{{item.codigosri}}</td>
                                         <td>
-                                            <input type="radio" name="select_cuenta"  ng-click="click_radio(item)">
+                                            <input ng-show="item.madreohija=='1'" ng-hide="item.madreohija!='1'" type="radio" name="select_cuenta"  ng-click="click_radio(item)">
                                         </td>
                                     </tr>
                                     </tbody>
