@@ -406,7 +406,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="EnviarDatosGuardarVenta();" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+        <button type="button" class="btn btn-success" ng-click="EnviarDatosGuardarVenta();" data-dismiss="modal">Aceptar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
       </div>
     </div>
   </div>

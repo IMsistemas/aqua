@@ -33,7 +33,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.url_foto = 'img/empleado.png';
 
         $http.get(API_URL + '/configuracion/getDataEmpresa').success(function(response){
-
+            console.log(API_URL);
             if(response.length != 0){
                 $scope.t_razonsocial = response[0].razonsocial;
                 $scope.t_nombrecomercial = response[0].nombrecomercial;
