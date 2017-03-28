@@ -14,7 +14,7 @@ class Canton extends Model
     public function provincia(){
     	return $this->belongsTo('App\Modelos\Sectores\Provincia','idprovincia');
     }
-
+    /*-----------*/
     public function parroquia(){
     	return $this->hasMany('App\Modelos\Sectores\Parroquia','idcanton');
     }
