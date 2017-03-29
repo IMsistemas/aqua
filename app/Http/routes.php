@@ -681,3 +681,97 @@ Route::get('transacciones/alltipotransacciones', 'Contabilidad\TipoTransaccion@g
 Route::resource('guiaremision', 'Guiaremision\GuiaremisionController');
 Route::get('guiaremision/getGiaremision', 'Guiaremision\GuiaremisionController@show');
 Route::get('guiaremision/getItemsVenta', 'Guiaremision\GuiaremisionController@getItemsVenta');
+
+
+/*===================================Módulo Nomencladores===========================================*/
+
+Route::get('Nomenclador/getTipoDocumento', 'Nomenclador\NomencladorController@getTipoDocumento' );
+Route::get('Nomenclador/gettipoidentificacion', 'Nomenclador\NomencladorController@gettipoidentificacion' );
+Route::get('Nomenclador/getTipoImpuesto', 'Nomenclador\NomencladorController@getTipoImpuesto' );
+Route::get('Nomenclador/getImpuestoIVA', 'Nomenclador\NomencladorController@getImpuestoIVA' );
+Route::get('Nomenclador/getImpuestoICE', 'Nomenclador\NomencladorController@getImpuestoICE' );
+Route::get('Nomenclador/getTipoImpuestoRetenc', 'Nomenclador\NomencladorController@getTipoImpuestoRetenc' );
+Route::get('Nomenclador/getImpuestoIVARENTA', 'Nomenclador\NomencladorController@getImpuestoIVARENTA' );
+Route::get('Nomenclador/getSustentoTributario', 'Nomenclador\NomencladorController@getSustentoTributario' );
+Route::get('Nomenclador/getSustentoTributarioEX', 'Nomenclador\NomencladorController@getSustentoTributarioEX' );
+Route::get('Nomenclador/getTipoComprobante', 'Nomenclador\NomencladorController@getTipoComprobante' );
+Route::get('Nomenclador/getPagoResidente', 'Nomenclador\NomencladorController@getPagoResidente' );
+Route::get('Nomenclador/getPagoPais', 'Nomenclador\NomencladorController@getPagoPais' );
+Route::get('Nomenclador/getContFormaPago', 'Nomenclador\NomencladorController@getContFormaPago' );
+Route::get('Nomenclador/getprovincia', 'Nomenclador\NomencladorController@getprovincia' );
+Route::get('Nomenclador/getprovinciaEX', 'Nomenclador\NomencladorController@getprovinciaEX' );
+Route::get('Nomenclador/getCantonEX', 'Nomenclador\NomencladorController@getCantonEX' );
+Route::get('Nomenclador/getCantonEXA', 'Nomenclador\NomencladorController@getCantonEXA' );
+Route::get('Nomenclador/getParroquiaEX', 'Nomenclador\NomencladorController@getParroquiaEX' );
+
+
+
+
+Route::get('Nomenclador/getTipoDocByID/{id}', 'Nomenclador\NomencladorController@getTipoDocByID');
+Route::get('Nomenclador/getTipoIdentByID/{id}', 'Nomenclador\NomencladorController@getTipoIdentByID');
+Route::get('Nomenclador/getTipoImpuestoByID/{id}', 'Nomenclador\NomencladorController@getTipoImpuestoByID');
+Route::get('Nomenclador/getTipoImpuestoIvaByID/{id}', 'Nomenclador\NomencladorController@getTipoImpuestoIvaByID' );
+Route::get('Nomenclador/getTipoImpuestoIceByID/{id}', 'Nomenclador\NomencladorController@getTipoImpuestoIceByID' );
+Route::get('Nomenclador/getTipoImpuestoRetencionRetByID/{id}', 'Nomenclador\NomencladorController@getTipoImpuestoRetencionRetByID' );
+Route::get('Nomenclador/getTipoImpuestoRetencionIvaRetByID/{id}', 'Nomenclador\NomencladorController@getTipoImpuestoRetencionIvaRetByID' );
+Route::get('Nomenclador/getSustentoTributarioByID/{id}', 'Nomenclador\NomencladorController@getSustentoTributarioByID' );
+Route::get('Nomenclador/getComprobanteTributarioByID/{id}', 'Nomenclador\NomencladorController@getComprobanteTributarioByID' );
+Route::get('Nomenclador/getSustentoComprobanteByID/{id}', 'Nomenclador\NomencladorController@getSustentoComprobanteByID' );
+Route::get('Nomenclador/getPagoResidenteByID/{id}', 'Nomenclador\NomencladorController@getPagoResidenteByID' );
+Route::get('Nomenclador/getPaisPagoByID/{id}', 'Nomenclador\NomencladorController@getPaisPagoByID' );
+Route::get('Nomenclador/getFormaPagoByID/{id}', 'Nomenclador\NomencladorController@getFormaPagoByID' );
+Route::get('Nomenclador/getprovinciaByID/{id}', 'Nomenclador\NomencladorController@getprovinciaByID' );
+Route::get('Nomenclador/getcantonEXByID/{id}', 'Nomenclador\NomencladorController@getcantonEXByID' );
+Route::get('Nomenclador/getparroquiaEXByID/{id}', 'Nomenclador\NomencladorController@getparroquiaEXByID' );
+
+
+
+Route::post('Nomenclador/updatetpidentsri/{id}', 'Nomenclador\NomencladorController@updatetpidentsri' );
+Route::post('Nomenclador/updatetpimpsri/{id}', 'Nomenclador\NomencladorController@updatetpimpsri' );
+Route::post('Nomenclador/updatetpimpIvasri/{id}', 'Nomenclador\NomencladorController@updatetpimpIvasri' );
+Route::post('Nomenclador/updatetpimpIcesri/{id}', 'Nomenclador\NomencladorController@updatetpimpIcesri' );
+Route::post('Nomenclador/updatetpimpRetensri/{id}', 'Nomenclador\NomencladorController@updatetpimpRetensri' );
+Route::post('Nomenclador/updatetpimpIvaRetensri/{id}', 'Nomenclador\NomencladorController@updatetpimpIvaRetensri' );
+Route::post('Nomenclador/updateSustentoTributario/{id}', 'Nomenclador\NomencladorController@updateSustentoTributario' );
+Route::post('Nomenclador/updateSustento_Comprobante/{id}', 'Nomenclador\NomencladorController@updateSustento_Comprobante' );
+Route::post('Nomenclador/updatePagoResidente/{id}', 'Nomenclador\NomencladorController@updatePagoResidente' );
+Route::post('Nomenclador/updatePagoPais/{id}', 'Nomenclador\NomencladorController@updatePagoPais' );
+Route::post('Nomenclador/updateFormaPago/{id}', 'Nomenclador\NomencladorController@updateFormaPago' );
+Route::post('Nomenclador/updateProvincia/{id}', 'Nomenclador\NomencladorController@updateProvincia' );
+Route::post('Nomenclador/updatecantonEX/{id}', 'Nomenclador\NomencladorController@updatecantonEX' );
+Route::post('Nomenclador/updateparroquiaEX/{id}', 'Nomenclador\NomencladorController@updateparroquiaEX' );
+
+Route::post('Nomenclador/getTipoDocumento','Nomenclador\NomencladorController@store');
+Route::post('Nomenclador/storeTipoIdent','Nomenclador\NomencladorController@storeTipoIdent');
+Route::post('Nomenclador/storeTipoImpuesto','Nomenclador\NomencladorController@storeTipoImpuesto');
+Route::post('Nomenclador/storeTipoImpuestoiva','Nomenclador\NomencladorController@storeTipoImpuestoiva');
+Route::post('Nomenclador/storeTipoImpuestoice','Nomenclador\NomencladorController@storeTipoImpuestoice');
+Route::post('Nomenclador/storeTipoImpuestoReten','Nomenclador\NomencladorController@storeTipoImpuestoReten');
+Route::post('Nomenclador/storeTipoImpuestoIvaReten','Nomenclador\NomencladorController@storeTipoImpuestoIvaReten');
+Route::post('Nomenclador/storeSustentoTrib','Nomenclador\NomencladorController@storeSustentoTrib');
+Route::post('Nomenclador/storeComprobanteSustento','Nomenclador\NomencladorController@storeComprobanteSustento');
+Route::post('Nomenclador/storeTipoPagoResidente','Nomenclador\NomencladorController@storeTipoPagoResidente');
+Route::post('Nomenclador/storepagopais','Nomenclador\NomencladorController@storepagopais');
+Route::post('Nomenclador/storeformapago','Nomenclador\NomencladorController@storeformapago');
+Route::post('Nomenclador/storeprovincia','Nomenclador\NomencladorController@storeprovincia');
+Route::post('Nomenclador/storecantonEX','Nomenclador\NomencladorController@storecantonEX');
+Route::post('Nomenclador/storeparroquiaEX','Nomenclador\NomencladorController@storeparroquiaEX');
+
+
+Route::post('Nomenclador/deleteTipoIdentSRI', 'Nomenclador\NomencladorController@deleteTipoIdentSRI');
+Route::post('Nomenclador/deleteTipoImpuesto', 'Nomenclador\NomencladorController@deleteTipoImpuesto');
+Route::post('Nomenclador/deleteTipoImpuestoIva', 'Nomenclador\NomencladorController@deleteTipoImpuestoIva');
+Route::post('Nomenclador/deleteTipoImpuestoIce', 'Nomenclador\NomencladorController@deleteTipoImpuestoIce');
+Route::post('Nomenclador/deleteTipoImpuestoRetencion', 'Nomenclador\NomencladorController@deleteTipoImpuestoRetencion');
+Route::post('Nomenclador/deleteTipoImpuestoIvaRetencion', 'Nomenclador\NomencladorController@deleteTipoImpuestoIvaRetencion');
+Route::post('Nomenclador/deleteSustentoTrib', 'Nomenclador\NomencladorController@deleteSustentoTrib');
+Route::post('Nomenclador/deleteSustentoComprobante', 'Nomenclador\NomencladorController@deleteSustentoComprobante');
+Route::post('Nomenclador/deleteTipoPagoResidente', 'Nomenclador\NomencladorController@deleteTipoPagoResidente');
+Route::post('Nomenclador/deletepagopais', 'Nomenclador\NomencladorController@deletepagopais');
+Route::post('Nomenclador/deleteformapago', 'Nomenclador\NomencladorController@deleteformapago');
+Route::post('Nomenclador/deleteprovincia', 'Nomenclador\NomencladorController@deleteprovincia');
+Route::post('Nomenclador/deletecantonEX', 'Nomenclador\NomencladorController@deletecantonEX');
+Route::post('Nomenclador/deleteParroquiaEX', 'Nomenclador\NomencladorController@deleteParroquiaEX');
+
+
+Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');

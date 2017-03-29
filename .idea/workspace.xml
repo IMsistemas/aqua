@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bc92b6bd-88ac-4176-8987-1f939ea91b36" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
     </list>
     <ignored path="aqua.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,21 +32,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11458">
-              <caret line="683" column="0" lean-forward="false" selection-start-line="683" selection-start-column="0" selection-end-line="683" selection-end-column="0" />
+            <state relative-caret-position="349">
+              <caret line="776" column="69" lean-forward="false" selection-start-line="776" selection-start-column="69" selection-end-line="776" selection-end-column="69" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NomencladorController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NomencladorController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="1345" column="5" lean-forward="false" selection-start-line="1345" selection-start-column="5" selection-end-line="1345" selection-end-column="5" />
+            <state relative-caret-position="204">
+              <caret line="1366" column="48" lean-forward="false" selection-start-line="1366" selection-start-column="48" selection-end-line="1366" selection-end-column="48" />
               <folding>
                 <element signature="e#52#90#0#PHP" expanded="true" />
               </folding>
@@ -56,8 +57,8 @@
       <file leaf-file-name="index_nomenclador.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="1845" column="0" lean-forward="true" selection-start-line="1845" selection-start-column="0" selection-end-line="1845" selection-end-column="0" />
+            <state relative-caret-position="233">
+              <caret line="1822" column="0" lean-forward="true" selection-start-line="1822" selection-start-column="0" selection-end-line="1822" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,8 +67,8 @@
       <file leaf-file-name="nomencladorController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/nomencladorController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="1106" column="17" lean-forward="false" selection-start-line="1106" selection-start-column="17" selection-end-line="1106" selection-end-column="17" />
+            <state relative-caret-position="259">
+              <caret line="2189" column="48" lean-forward="false" selection-start-line="2189" selection-start-column="48" selection-end-line="2189" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -105,6 +106,7 @@
       <find>put</find>
       <find>deleterow</find>
       <find>gettipodoc</find>
+      <find>getimpuesto</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -158,12 +160,12 @@
         <option value="$PROJECT_DIR$/public/app/controllers/comprobEgresoIndexController.js" />
         <option value="$PROJECT_DIR$/app/Modelos/Comprobantes/ComprobanteEgreso.php" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Modelos/Sectores/Canton.php" />
         <option value="$PROJECT_DIR$/app/Modelos/Sectores/Parroquia.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/nomencladorController.js" />
         <option value="$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/nomencladorController.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
       </list>
     </option>
   </component>
@@ -299,10 +301,32 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modelos" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SRI" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -545,6 +569,8 @@
       <workItem from="1490662657263" duration="1813000" />
       <workItem from="1490665741745" duration="90000" />
       <workItem from="1490666438428" duration="22000" />
+      <workItem from="1490666917851" duration="24000" />
+      <workItem from="1490796656153" duration="4251000" />
     </task>
     <task id="LOCAL-00107" summary="SubModulo 001N - Solicitudes">
       <created>1479442190579</created>
@@ -893,14 +919,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="844694000" />
+    <option name="totallyTimeSpent" value="848969000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21406959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22012103" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35015774" sideWeight="0.5087848" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -961,7 +987,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Envio de Factura de Lectura por correo en Modulo Lectura" />
     <MESSAGE value="Restaurar configuracion de correo en .env" />
     <MESSAGE value="Restaurar configuracion de correo en Libreria de Envio de Correo de Laravel" />
     <MESSAGE value="Arreglo de estilo a login.php" />
@@ -986,7 +1011,8 @@
     <MESSAGE value="SubModulo Retencion" />
     <MESSAGE value="SubModulo Comprobantes Egreso e Ingreso" />
     <MESSAGE value="SubModulo Cobro de Agua" />
-    <option name="LAST_COMMIT_MESSAGE" value="SubModulo Cobro de Agua" />
+    <MESSAGE value="NomencladorAqua" />
+    <option name="LAST_COMMIT_MESSAGE" value="NomencladorAqua" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.80487806" />
   </component>
   <component name="XDebuggerManager">
@@ -1324,37 +1350,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11458">
-          <caret line="683" column="0" lean-forward="false" selection-start-line="683" selection-start-column="0" selection-end-line="683" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/nomencladorController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="1106" column="17" lean-forward="false" selection-start-line="1106" selection-start-column="17" selection-end-line="1106" selection-end-column="17" />
+        <state relative-caret-position="259">
+          <caret line="2189" column="48" lean-forward="false" selection-start-line="2189" selection-start-column="48" selection-end-line="2189" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="1845" column="0" lean-forward="true" selection-start-line="1845" selection-start-column="0" selection-end-line="1845" selection-end-column="0" />
+        <state relative-caret-position="233">
+          <caret line="1822" column="0" lean-forward="true" selection-start-line="1822" selection-start-column="0" selection-end-line="1822" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="1345" column="5" lean-forward="false" selection-start-line="1345" selection-start-column="5" selection-end-line="1345" selection-end-column="5" />
+        <state relative-caret-position="204">
+          <caret line="1366" column="48" lean-forward="false" selection-start-line="1366" selection-start-column="48" selection-end-line="1366" selection-end-column="48" />
           <folding>
             <element signature="e#52#90#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="776" column="69" lean-forward="false" selection-start-line="776" selection-start-column="69" selection-end-line="776" selection-end-column="69" />
+          <folding />
         </state>
       </provider>
     </entry>
