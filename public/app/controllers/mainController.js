@@ -190,6 +190,11 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "transportista";
 	}
 
+    $scope.toModuloNomenclador = function(){
+        $scope.titulo = "Crear Transportistas";
+        $scope.toModulo = "Nomenclador";
+    }
+
 	$scope.prepareListBreadcrumb = function (list_module) {
 		$scope.list_breadcrumb = [
 			"<li><img src='img/ico-aqua.png'></li>",
