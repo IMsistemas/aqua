@@ -53,7 +53,15 @@
                           </ul>
                         </div>
                     </div>
+                    <div class="col-sm-6 col-xs-12">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
+                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                    </div>
                 </div>
+                </div>
+
+
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -72,7 +80,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="cuenta in CuentasContables" >
+                                <tr ng-repeat="cuenta in CuentasContables| filter:busqueda" >
                                     <td>
                                         <button class="btn btn-primary btn-sm" ng-click="AgregarCuentahija(cuenta);"><i class="glyphicon glyphicon glyphicon-plus"></i></button>
                                         <button class="btn btn-warning btn-sm" ng-click="ModificarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-edit"></i></button>
