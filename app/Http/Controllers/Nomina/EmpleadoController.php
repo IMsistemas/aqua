@@ -47,7 +47,7 @@ class EmpleadoController extends Controller
                                 ->select('empleado.*', 'departamento.namedepartamento', 'cargo.namecargo', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $employees = $employees->whereRaw("persona.razonsocial LIKE '%" . $search . "%'");
+            $employees = $employees->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
         }
 
         return $employees->orderBy('fechaingreso', 'desc')->paginate(10);
