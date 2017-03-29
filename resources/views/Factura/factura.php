@@ -65,7 +65,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
+            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 | filter:t_busqueda" total-items="totalItems" ng-cloak>
                 <td>{{item.idcobroagua}}</td>
                 <td>{{ FormatoFecha(item.fechacobro)}}</td>
                 <td>{{yearmonth (item.fechacobro)}}</td>
