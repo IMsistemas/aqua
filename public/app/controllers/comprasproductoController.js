@@ -417,9 +417,69 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	   $scope.initLoad();
    }
    
+   $scope.calculateLength = function(field, length) {
+       var text = $("#" + field).val();
+       var longitud = text.length;
+       var relleno = '';
+       if (longitud == length) {
+           $("#" + field).val(text);
+       } else {
+           var diferencia = parseInt(length) - parseInt(longitud);
+           
+           if (diferencia == 1) {
+               relleno = '0';
+           } else {
+               var i = 0;
+               while (i < diferencia) {
+                   relleno += '0';
+                   i++;
+               }
+           }
+           $("#" + field).val(relleno + text);
+          
+       }
+       return relleno+text;
+   };
    
    
-    
+   $scope.onlyNumber = function ($event, length, field) {
+
+       
+        var k = $event.charCode;
+           if (k == 8 || k == 0){
+        	   return true;
+           }
+           
+           if (length != undefined) {
+               var valor = $('#' + field).val();
+               if (valor.length == length) $event.preventDefault();
+           }          
+           
+           
+           var patron = /\d/;
+           var n = String.fromCharCode(k);
+
+           if (n === ".") {
+               return true;
+           } else {
+        	  
+	           if(patron.test(n) === false){
+	                   $event.preventDefault();
+	                   
+	            } else { 
+	            	
+            	   return true;
+               }
+           }
+          
+       };
+   
+       $('.datepicker').datetimepicker({
+           locale: 'es',
+           format: 'YYYY-MM-DD',
+           ignoreReadonly: true
+       });  
+       
 });
 
 function defaultImage (obj){

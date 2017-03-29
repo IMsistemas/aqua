@@ -41,7 +41,7 @@ class CompraProductoController extends Controller
      */
     public function getProveedores()
     {
-    	return Proveedor::All();   	 
+    	return Proveedor::join('persona','persona.idpersona','=','proveedor.idpersona')->get();   	 
     }
     
     /**
@@ -61,9 +61,10 @@ class CompraProductoController extends Controller
     	}   	
     		 
     	return  Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
-    	->select('proveedor.razonsocial', 'cont_documentocompra.*')
+    	->join('persona','persona.idpersona','=','proveedor.idpersona')
+    	->select('persona.razonsocial', 'cont_documentocompra.*')
     			->whereRaw("(cont_documentocompra.iddocumentocompra::text ILIKE '%" . $filter->text . "%'
-                            or proveedor.razonsocial ILIKE '%" . $filter->text . "%' )
+                            or persona.razonsocial ILIKE '%" . $filter->text . "%' )
                             		".$filterCombo)
                                 		->orderBy('cont_documentocompra.iddocumentocompra', 'asc')
                                 		->get();
@@ -133,7 +134,7 @@ class CompraProductoController extends Controller
     {
     	return Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona') 
     	->join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'proveedor.idtipoimpuestoiva')   
-    	->select('proveedor.*','sri_tipoimpuestoiva.*')
+    	->select('proveedor.*', 'persona.*','sri_tipoimpuestoiva.*')
     	->whereRaw("persona.numdocidentific = '".$ci."'")
     	->first() ;
     }
@@ -171,7 +172,7 @@ class CompraProductoController extends Controller
     		unset( $datos['idbodega']);
     		
     		
-    		$datos['estaAnulada'] = false;
+    		$datos['estadoanulado'] = false;
     		
     		// insertamos producto en compra
     		//$producto = Cont_DocumentoCompra::create($datos);
@@ -364,7 +365,7 @@ class CompraProductoController extends Controller
     	*/
     	
     	$compra = Cont_DocumentoCompra::find($id);
-    	$compra->estaAnulada =  true;
+    	$compra->estadoanulado =  true;
     	$compra->save();
     	return response()->json(['success' => true, ]) ;
     }
@@ -380,7 +381,7 @@ class CompraProductoController extends Controller
     	$producto = Cont_DocumentoCompra::find($id);
     	$producto->proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
     	->join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'proveedor.idtipoimpuestoiva')
-    	->select('proveedor.*','sri_tipoimpuestoiva.*','persona.numdocidentific')
+    	->select('proveedor.*','persona.*','sri_tipoimpuestoiva.*','persona.numdocidentific')
     	->where("proveedor.idproveedor",$producto->idproveedor)->first();  
 
     	$formapago = DB::table('cont_formapago_documentocompra')

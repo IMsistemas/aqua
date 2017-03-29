@@ -1,39 +1,60 @@
 
 
 app.controller('cargosController', function($scope, $http, API_URL) {
+
     $scope.cargos = [];
-    $scope.modalstate =  '';
     $scope.idcargo_del = 0;
+    $scope.modalstate = '';
 
+    $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
 
-    $scope.initLoad = function () {
-        $http.get(API_URL + 'cargo/getCargos').success(function (response) {
-            $scope.cargos = response;
+    $scope.initLoad = function(pageNumber){
+
+        if ($scope.busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.busqueda;
+
+        var filtros = {
+            search: search
+        };
+
+        $http.get(API_URL + 'cargo/getCargos?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+            $scope.cargos = response.data;
+            $scope.totalItems = response.total;
         });
-    }
+    };
 
-    $scope.Add = function (modalstate,id) {
-        $scope.modalstate = modalstate ;
+    $scope.initLoad(1);
+
+    $scope.toggle = function(modalstate, id) {
+        $scope.modalstate = modalstate;
+
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Adicionar Cargo";
+                $scope.form_title = "Nuevo Cargo";
                 $scope.nombrecargo = '';
-
                 $('#modalActionCargo').modal('show');
+
                 break;
             case 'edit':
+
+                $scope.form_title = "Editar Cargo";
                 $scope.idc = id;
+
                 $http.get(API_URL + 'cargo/getCargoByID/' + id).success(function(response) {
-                    console.log(response[0].nombrecargo);
-                    $scope.nombrecargo = response[0].nombrecargo;
-                    $scope.form_title = "Editar Cargo";
+                    $scope.nombrecargo = response[0].namecargo.trim();
                     $('#modalActionCargo').modal('show');
                 });
+                    break;
+            default:
                 break;
         }
     };
 
     $scope.Save = function (){
+
         var data = {
             nombrecargo: $scope.nombrecargo
         };
@@ -53,34 +74,30 @@ app.controller('cargosController', function($scope, $http, API_URL) {
                         $scope.message_error = 'Ya existe ese Cargo...';
                         $('#modalMessageError').modal('show');
                     }
-
                 });
-
                 break;
             case 'edit':
-                    $http.put(API_URL + 'cargo/'+ $scope.idc, data ).success(function (response) {
-                        $scope.initLoad();
-                        $('#modalActionCargo').modal('hide');
-                        $scope.message = 'Se editó correctamente el Cargo seleccionado';
-                        $('#modalMessage').modal('show');
-                        $scope.hideModalMessage();
-                    }).error(function (res) {
+                $http.put(API_URL + 'cargo/'+ $scope.idc, data ).success(function (response) {
+                    $scope.initLoad();
+                    $('#modalActionCargo').modal('hide');
+                    $scope.message = 'Se editó correctamente el Cargo seleccionado';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }).error(function (res) {
 
-                    });
-                    break;
+                });
+                break;
         }
     };
 
     $scope.showModalConfirm = function (cargo) {
         $scope.idcargo_del = cargo.idcargo;
-        $scope.nom_cargo_delete = cargo.nombrecargo;
+        $scope.cargo_seleccionado = cargo.namecargo;
         $('#modalConfirmDelete').modal('show');
     };
 
-
     $scope.delete = function(){
         $http.delete(API_URL + 'cargo/' + $scope.idcargo_del).success(function(response) {
-            console.log(response.success);
             if(response.success == true){
                 $scope.initLoad();
                 $('#modalConfirmDelete').modal('hide');
@@ -96,14 +113,12 @@ app.controller('cargosController', function($scope, $http, API_URL) {
             }
         });
 
-
-
     };
 
     $scope.hideModalMessage = function () {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
+
     $scope.initLoad();
 });
-

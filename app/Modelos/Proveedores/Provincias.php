@@ -20,7 +20,7 @@ class Provincias extends Model
 
     public function ciudades()
     {
-        return $this->hasMany('App\Modelos\Proveedores\Ciudades','idcanton');
+        return $this->hasMany('App\Modelos\Proveedores\Ciudades','idprovincia');
     }
    
 }

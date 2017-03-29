@@ -1,8 +1,12 @@
 
-    <div ng-controller="categoriasController">
-    
-    <div class="container">
-        
+    <div class="col-xs-12">
+
+                <h4>Portafolio</h4>
+
+                <hr>
+
+            </div>
+    <div ng-controller="categoriasController">      
     
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
             <div class="col-sm-4 col-xs-6">
@@ -16,9 +20,9 @@
                 <div class="form-group has-feedback">
                     <select class="form-control" name="idCategoria" id="idCategoria" ng-model="idCategoria"
                         ng-change="searchByFilter()">
-                        <option value="">Escoja Categorías</option>
+                        <option value="">Escoja una Línea</option>
 						<option ng-repeat="item in categoriasFiltro"						       
-						        value="{{item.idcategoria}}">{{item.nombrecategoria}}     
+						        value="{{item.jerarquia}}">{{item.nombrecategoria}}     
 						</option>                        
                         </select>                    
                 </div>
@@ -36,47 +40,63 @@
                         <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='idcategoria'; reversa=!reversa;">
                         Código</a></th>
                         <th style="text-align: center;">Nombre</th>
-                        <th style="width: 30%;">Acciones</th>
+                        <th style="width: 20%; text-align: center;">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="categoria in categorias | orderBy:ordenarColumna:reversa">
                         <td >
-                        <span ng-class="{'negrita': categoria.idcategoria.indexOf('.') === -1}" >{{categoria.idcategoria}}</span>
+                        <span ng-class="{'negrita': categoria.jerarquia.indexOf('.') === -1}" >{{ categoria.jerarquia }}</span>
                         
                         </td>
                         <td>
 	                        <div class="form-group" ng-form name="myForm">
-		                        <input type="text" class="form-control" name="nombre" id="nombre" ng-class="{'negrita': categoria.idcategoria.indexOf('.') === -1}"
-		                          ng-model="categoria.nombrecategoria" ng-required="true" ng-maxlength="19" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/" focus-me="$index == edit">
+		                        <input type="text" class="form-control" name="nombrecategoria" id="nombrecategoria" ng-class="{'negrita': categoria.jerarquia.indexOf('.') === -1}"
+		                          ng-model="categoria.nombrecategoria" ng-required="true" ng-maxlength="100" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/" focus-me="$index == edit">
 		                          <span class="help-block error"
-                                                      ng-show="myForm.nombre.$invalid && myForm.nombre.$touched">El Nombre es requerido</span>
+                                                      ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$touched">El Nombre es requerido</span>
 		                          <span class="help-block error"
-		                                ng-show="myForm.nombre.$invalid && myForm.nombre.$error.maxlength">La longitud máxima es de 19 caracteres</span>
+		                                ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$error.maxlength">La longitud máxima es de 100 caracteres</span>
 		                          <span class="help-block error"
-		                                ng-show="myForm.nombre.$invalid && myForm.nombre.$error.pattern">El nombre debe ser solo letras, puntos, números, guion y espacios</span>
+		                                ng-show="myForm.nombrecategoria.$invalid && myForm.nombrecategoria.$error.pattern">El nombre debe ser solo letras, puntos, números, guion y espacios</span>
 		                                {{ valid(myForm.$invalid) }}
 		                     </div>
                         </td>
                         <td class="text-center">
                         
                         <div class="buttons" ng-show="$index == edit">
-					          <button type="button" ng-click="saveCategoria($index)" class="btn btn-primary" ng-disabled="myForm.$invalid">
+                        <table class="tableIn">                    
+                        <tr>
+                        <td class="tdLeft"> 
+                        	 <button type="button" ng-click="saveCategoria($index)" class="btn btn-primary" ng-disabled="myForm.$invalid">
 					            Guardar
 					          </button>
-					          <button type="button" ng-click="cancel($index)" class="btn btn-default">
+                        </td>
+                        <td class="tdRight">
+                        	<button type="button" ng-click="cancel($index)" class="btn btn-default">
 					            Cancelar
 					          </button>
+                        </td>
+                        </tr>
+                        </table>
 					     
                         </div>
                         
                         <div class="buttons" ng-show="$index != edit">
-                            <button type="button" class="btn btn-warning" ng-click="addSubCategoria(categoria.idcategoria)" ng-disabled="button">
-                              {{ (categoria.idcategoria.indexOf('.') === -1)?'Línea': 'Sublínea' }} <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        <table class="tableIn">                    
+                        <tr>
+                        <td class="tdLeft">
+                            <button type="button" class="btn btn-warning" ng-click="addSubCategoria(categoria.jerarquia)" ng-disabled="button" ng-show="(categoria.jerarquia.indexOf('.') === -1)">
+                              {{ (categoria.jerarquia.indexOf('.') === -1)?'Sublínea': 'Sublínea1' }} <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </button>
-                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(categoria.idcategoria)">
+                            </td>
+                        <td class="tdRight">
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(categoria.jerarquia)">
                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
+                            </td>
+                        </tr>
+                        </table>
                             </div>
                         </td>
                     </tr>
@@ -126,9 +146,33 @@
                 </div>
             </div>
         </div>
-    </div>
+
     </div>
     
-    
+<style>
+<!--
+.negrita{
+	font-weight: bold;
+}
+
+.tableIn {
+	width: 100%;
+}
+
+.tableIn td {
+	width: 50%;
+}
+
+.tdLeft {
+	text-align: right;
+}
+
+.tdRight {
+	text-align: left;
+	padding-left: 5px;
+}
+
+-->
+</style>
 
     

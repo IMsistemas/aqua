@@ -1,3 +1,4 @@
+
     app.filter('formatDate', function(){
         return function(texto){
             return convertDatetoDB(texto, true);
@@ -23,7 +24,7 @@
 
         $scope.tasainteres = 0;
 
-        $scope.initLoad = function () {
+        /*$scope.initLoad = function () {
 
             $http.get(API_URL + 'cliente/getConfiguracion').success(function(response){
 
@@ -46,7 +47,7 @@
                 }
                 $scope.clientes = response;
             });
-        };
+        };*/
 
         $scope.nowDate = function () {
             var now = new Date();
@@ -71,6 +72,371 @@
         /*
          *  ACTION FOR CLIENTE------------------------------------------------------------------------------------------
          */
+
+        $scope.idcliente = 0;
+
+        $scope.idpersona = 0;
+        $scope.id = 0;
+        $scope.select_cuenta = null;
+
+        $scope.pageChanged = function(newPage) {
+            $scope.initLoad(newPage);
+        };
+
+        $scope.initLoad = function (pageNumber) {
+
+            $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
+                $scope.tasainteres = parseFloat(response[0].optionvalue);
+            });
+
+
+            if ($scope.busqueda == undefined) {
+                var search = null;
+            } else var search = $scope.busqueda;
+
+            var filtros = {
+                search: search
+            };
+
+            $http.get(API_URL + 'cliente/getClientes?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+
+                $scope.clientes = response.data;
+                $scope.totalItems = response.total;
+            });
+        };
+
+        $scope.showDataPurchase = function (object) {
+            if (object != undefined && object.originalObject != undefined) {
+
+                console.log(object.originalObject);
+
+                $scope.documentoidentidadempleado = object.originalObject.numdocidentific;
+                $scope.apellido = object.originalObject.lastnamepersona;
+                $scope.nombre = object.originalObject.namepersona;
+                $scope.direccion = object.originalObject.direccion;
+                $scope.celular = object.originalObject.celphone;
+                $scope.correo = object.originalObject.email;
+                $scope.tipoidentificacion = object.originalObject.idtipoidentificacion;
+                $scope.idpersona = object.originalObject.idpersona;
+
+                $scope.objectPerson = {
+                    idperson: object.originalObject.idpersona,
+                    identify: object.originalObject.numdocidentific
+                };
+            }
+        };
+
+        $scope.focusOut = function () {
+
+            if ($scope.documentoidentidadempleado != null && $scope.documentoidentidadempleado != '' && $scope.documentoidentidadempleado != undefined) {
+                $http.get(API_URL + 'empleado/getPersonaByIdentify/' + $scope.documentoidentidadempleado).success(function(response){
+
+                    var longitud = response.length;
+
+                    if (longitud > 0) {
+                        $scope.idpersona = response[0].idpersona;
+                    } /*else {
+
+
+
+                        $scope.idpersona = 0;
+                    }*/
+
+                });
+
+                $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', $scope.documentoidentidadempleado);
+            }
+
+        };
+
+        $scope.inputChanged = function (str) {
+            $scope.documentoidentidadempleado = str;
+        };
+
+        $scope.showPlanCuenta = function () {
+
+            $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
+
+                $scope.cuentas = response;
+                $('#modalPlanCuenta').modal('show');
+
+            });
+
+        };
+
+        $scope.selectCuenta = function () {
+            var selected = $scope.select_cuenta;
+
+            $scope.cuenta_employee = selected.concepto;
+
+            $('#modalPlanCuenta').modal('hide');
+        };
+
+        $scope.click_radio = function (item) {
+            $scope.select_cuenta = item;
+        };
+
+        $scope.showModalAddCliente = function () {
+
+            $http.get(API_URL + 'cliente/getTipoIdentificacion').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nameidentificacion, id: response[i].idtipoidentificacion})
+                }
+                $scope.idtipoidentificacion = array_temp;
+                $scope.tipoidentificacion = '';
+
+                $http.get(API_URL + 'cliente/getTipoCliente').success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nametipocliente, id: response[i].idtipocliente})
+                    }
+                    $scope.tipocliente = array_temp;
+                    $scope.s_tipocliente = '';
+
+                    $http.get(API_URL + 'cliente/getImpuestoIVA').success(function(response){
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
+                        }
+                        $scope.imp_iva = array_temp;
+                        $scope.iva = '';
+
+                        $scope.t_codigocliente = 0;
+                        $scope.t_fecha_ingreso = $scope.nowDate();
+
+                        $scope.idcliente = 0;
+                        $scope.documentoidentidadempleado = '';
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
+                        $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
+                        $scope.idpersona = 0;
+                        $scope.apellido = '';
+                        $scope.nombre = '';
+                        $scope.telefonoprincipal = '';
+                        $scope.telefonosecundario = '';
+                        $scope.celular = '';
+                        $scope.direccion = '';
+                        $scope.telefonoprincipaltrabajo = '';
+                        $scope.telefonosecundariotrabajo = '';
+                        $scope.direcciontrabajo = '';
+                        $scope.correo = '';
+                        $scope.cuenta_employee = '';
+
+                        $scope.select_cuenta = null;
+
+                        $scope.title_modal_cliente = 'Nuevo Cliente';
+
+                        $('#modalAddCliente').modal('show');
+
+                    });
+
+                });
+
+            });
+
+        };
+
+        $scope.saveCliente = function () {
+
+            var url = API_URL + 'cliente';
+
+            var fechaingreso = $('#t_fecha_ingreso').val();
+
+            var data = {
+
+                // datos de persona
+
+                documentoidentidadempleado: $scope.documentoidentidadempleado,
+                correo: $scope.correo,
+                celular: $scope.celular,
+                tipoidentificacion: $scope.tipoidentificacion,
+                apellidos: $scope.apellido,
+                nombres: $scope.nombre,
+                direccion: $scope.direccion,
+
+                // datos de cliente
+
+                fechaingreso: convertDatetoDB(fechaingreso),
+                idpersona:  $scope.idpersona,
+                cuentacontable: $scope.select_cuenta.idplancuenta,
+                impuesto_iva: $scope.iva,
+
+                telefonoprincipaldomicilio: $scope.telefonoprincipal,
+                telefonosecundariodomicilio: $scope.telefonosecundario,
+                telefonoprincipaltrabajo: $scope.telefonoprincipaltrabajo,
+                telefonosecundariotrabajo: $scope.telefonosecundariotrabajo,
+                direcciontrabajo: $scope.direcciontrabajo,
+
+                tipocliente: $scope.s_tipocliente
+
+            };
+
+            if ($scope.idcliente == 0) {
+                $http.post(url, data ).success(function (response) {
+                    if (response.success == true) {
+                        $scope.initLoad(1);
+                        $scope.message = 'Se guardó correctamente la información del Cliente...';
+                        $('#modalAddCliente').modal('hide');
+                        $('#modalMessage').modal('show');
+                        $scope.hideModalMessage();
+                    }
+                    else {
+                        $('#modalAddCliente').modal('hide');
+                        $scope.message_error = 'Ha ocurrido un error..';
+                        $('#modalMessageError').modal('show');
+                    }
+                });
+            } else {
+
+                console.log(data);
+
+                $http.put(url + '/' + $scope.idcliente, data ).success(function (response) {
+                    if (response.success == true) {
+                        $scope.idpersona = 0;
+                        $scope.idcliente = 0;
+                        $scope.initLoad(1);
+                        $scope.message = 'Se editó correctamente la información del Cliente...';
+                        $('#modalAddCliente').modal('hide');
+                        $('#modalMessage').modal('show');
+                        $scope.hideModalMessage();
+                    }
+                    else {
+                        $('#modalAddCliente').modal('hide');
+                        $scope.message_error = 'Ha ocurrido un error..';
+                        $('#modalMessageError').modal('show');
+                    }
+                }).error(function (res) {
+
+                });
+            }
+        };
+
+        $scope.showModalInfoCliente = function (item) {
+            $scope.name_cliente = item.razonsocial;
+            $scope.identify_cliente = item.numdocidentific;
+            $scope.fecha_solicitud = item.fechaingreso;
+            $scope.address_cliente = item.direccion;
+            $scope.email_cliente = item.email;
+            $scope.celular_cliente = item.celphone;
+            $scope.telf_cliente = item.telefonoprincipaldomicilio + ' / ' + item.telefonosecundariodomicilio;
+            $scope.telf_cliente_emp = item.telefonoprincipaltrabajo + ' / ' + item.telefonosecundariotrabajo;
+
+            if (item.estado == true){
+                $scope.estado_solicitud = 'Activo';
+            } else {
+                $scope.estado_solicitud = 'Inactivo';
+            }
+
+            $('#modalInfoCliente').modal('show');
+
+        };
+
+        $scope.showModalEditCliente = function (item) {
+
+            $http.get(API_URL + 'cliente/getTipoIdentificacion').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nameidentificacion, id: response[i].idtipoidentificacion})
+                }
+                $scope.idtipoidentificacion = array_temp;
+                $scope.tipoidentificacion = item.idtipoidentificacion;
+
+
+                $http.get(API_URL + 'cliente/getTipoCliente').success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].nametipocliente, id: response[i].idtipocliente})
+                    }
+                    $scope.tipocliente = array_temp;
+                    $scope.s_tipocliente = item.idtipocliente;
+
+                    $http.get(API_URL + 'cliente/getImpuestoIVA').success(function(response){
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoimpuestoiva, id: response[i].idtipoimpuestoiva})
+                        }
+                        $scope.imp_iva = array_temp;
+                        $scope.iva = item.idtipoimpuestoiva;
+
+                        console.log(item);
+
+                        $scope.idpersona = item.idpersona;
+
+                        $scope.idcliente = item.idcliente;
+
+                        //$scope.t_codigocliente = 0;
+
+                        $scope.t_fecha_ingreso = convertDatetoDB(item.fechaingreso, true);
+                        $scope.documentoidentidadempleado = item.numdocidentific;
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
+
+                        $scope.apellido = item.lastnamepersona;
+                        $scope.nombre = item.namepersona;
+                        $scope.telefonoprincipal = item.telefonoprincipaldomicilio;
+                        $scope.telefonosecundario = item.telefonoprincipaltrabajo;
+                        $scope.celular = item.celphone;
+                        $scope.direccion = item.direccion;
+                        $scope.telefonoprincipaltrabajo = item.telefonoprincipaltrabajo;
+                        $scope.telefonosecundariotrabajo = item.telefonosecundariotrabajo;
+                        $scope.direcciontrabajo = item.direcciontrabajo;
+                        $scope.correo = item.email;
+                        $scope.cuenta_employee = item.concepto;
+
+                        var objectPlan = {
+                            idplancuenta: item.idplancuenta,
+                            concepto: item.concepto
+                        };
+
+                        $scope.select_cuenta = objectPlan;
+
+                        $scope.title_modal_cliente = 'Editar Cliente';
+
+                        $('#modalAddCliente').modal('show');
+
+                    });
+
+                });
+
+
+
+
+            });
+        };
+
+        $scope.showModalDeleteCliente = function (item) {
+            $scope.idcliente = item.idcliente;
+            $http.get(API_URL + 'cliente/getIsFreeCliente/' + item.idcliente).success(function(response){
+                if (response == 0) {
+                    $scope.nom_cliente = item.razonsocial;
+                    $('#modalDeleteCliente').modal('show');
+                } else {
+                    $scope.message_info = 'No se puede eliminar el cliente seleccionado, ya presenta solicitudes a su nombre...';
+                    $('#modalMessageInfo').modal('show');
+                }
+            });
+
+        };
+
+        $scope.deleteCliente = function(){
+            $http.delete(API_URL + 'cliente/' + $scope.idcliente).success(function(response) {
+                $scope.initLoad(1);
+                $('#modalDeleteCliente').modal('hide');
+                $scope.idcliente = 0;
+                $scope.message = 'Se eliminó correctamente el Cliente seleccionado...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            });
+        };
+
+
+
+        /*
 
         $scope.edit = function (item) {
             $scope.t_codigocliente = item.codigocliente;
@@ -103,11 +469,7 @@
                 $('#modalAddCliente').modal('show');
             });
 
-            /*var id =  item.id;
-            $http.delete(API_URL + 'cliente/getTipoClienteByID/'+id).success(function(response){
 
-               $scope.t_tipocliente = response.id;
-            });*/
 
 
         };
@@ -246,18 +608,16 @@
                 $scope.estado_solicitud = 'Inactivo';
             }
 
-             /*var id =  item.id;
 
-             $http.delete(API_URL + 'cliente/getTipoClienteByID/'+id).success(function(response){
-
-            // $scope.tipo_cliente = response.nombretipo;
-             });*/
 
             $('#modalInfoCliente').modal('show');
 
         };
 
-        $scope.initLoad();
+        */
+
+
+        $scope.initLoad(1);
 
         /*
          *  ACTIONS FOR SOLICITUD SUMINISTRO----------------------------------------------------------------------------
@@ -278,27 +638,27 @@
         $scope.getTarifas = function () {
             $http.get(API_URL + 'cliente/getTarifas').success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].nombretarifaaguapotable, id: response[i].idtarifaaguapotable})
+                    array_temp.push({label: response[i].nametarifaaguapotable, id: response[i].idtarifaaguapotable})
                 }
                 $scope.tarifas = array_temp;
-                $scope.s_suministro_tarifa = 0;
+                $scope.s_suministro_tarifa = '';
             });
         };
 
         $scope.getBarrios = function () {
             $http.get(API_URL + 'cliente/getBarrios').success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                    array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
                 }
                 $scope.barrios = array_temp;
-                $scope.s_suministro_zona = 0;
+                $scope.s_suministro_zona = '';
 
-                $scope.calles = [{label: '-- Seleccione --', id: 0}];
-                $scope.s_suministro_transversal = 0;
+                $scope.calles = [{label: '-- Seleccione --', id: ''}];
+                $scope.s_suministro_transversal = '';
             });
         };
 
@@ -308,12 +668,12 @@
             if (idbarrio != 0) {
                 $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
                     var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: 0}];
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
-                        array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
+                        array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
                     }
                     $scope.calles = array_temp;
-                    $scope.s_suministro_transversal = 0;
+                    $scope.s_suministro_transversal = '';
                 });
             } else {
                 $scope.calles = [{label: '-- Seleccione --', id: 0}];
@@ -323,7 +683,8 @@
 
         $scope.getDividendo = function () {
             $http.get(API_URL + 'cliente/getDividendos').success(function(response){
-                var dividendos = response[0].dividendo;
+
+                var dividendos = parseInt(response[0].optionvalue);
 
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
 
@@ -350,14 +711,17 @@
 
         $scope.deshabilitarMedidor = function () {
             if ($scope.t_suministro_medidor == true) {
+
                 $scope.t_suministro_marca = '';
                 $scope.t_suministro_costomedidor = '';
 
-                $('#t_suministro_marca').prop('disabled', true);
-                $('#t_suministro_costomedidor').prop('disabled', true);
-            } else {
                 $('#t_suministro_marca').prop('disabled', false);
                 $('#t_suministro_costomedidor').prop('disabled', false);
+
+            } else {
+
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
 
                 $scope.t_suministro_marca = $scope.marcaproducto;
                 $scope.t_suministro_costomedidor = $scope.precioproducto;
@@ -389,8 +753,11 @@
 
                 var n = $scope.s_suministro_credito / 12;
 
+
+                console.log($scope.t_suministro_costomedidor);
+
                 var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
-                if ($scope.t_suministro_costomedidor != ''){
+                if ($scope.t_suministro_costomedidor != '' && $scope.t_suministro_costomedidor != undefined){
                     C += parseFloat($scope.t_suministro_costomedidor);
                 }
 
@@ -432,7 +799,7 @@
         };
 
         $scope.actionSuministro = function () {
-            $scope.getInfoMedidor();
+            //$scope.getInfoMedidor();
             $scope.getLastIDSolSuministro();
             $scope.getLastIDSuministro();
             $scope.getTarifas();
@@ -440,7 +807,7 @@
             $scope.getDividendo();
 
             $scope.t_suministro_medidor = false;
-            $scope.nom_cliente_suministro = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+            $scope.nom_cliente_suministro = $scope.objectAction.razonsocial;
 
             $scope.t_suministro_direccion = '';
             $scope.t_suministro_telf = '';
@@ -463,7 +830,7 @@
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
@@ -471,6 +838,8 @@
                 dividendos: $scope.s_suministro_credito,
                 valor_partial: $scope.total_partial
             };
+
+            console.log(data);
 
             $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
                 if(response.success == true){
@@ -505,7 +874,7 @@
                 transversal: transversal,
                 no_suministro: $scope.t_suministro_nro,
                 nomcliente: $scope.nom_cliente_suministro,
-                ci: $scope.objectAction.documentoidentidad,
+                ci: $scope.objectAction.numdocidentific,
                 telefono: $scope.t_suministro_telf,
                 direccion: $scope.t_suministro_direccion,
                 agua_potable: $scope.t_suministro_aguapotable,
@@ -526,7 +895,7 @@
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
@@ -537,6 +906,9 @@
 
                 data_to_pdf: JSON.stringify(data_to_pdf)
             };
+
+
+            console.log(data);
 
             var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
@@ -561,12 +933,12 @@
          */
 
         $scope.getExistsSolicitudServicio = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
-                if (response.length == 0){
+                if (response.success == false){
                     $scope.actionServicioShow();
                 } else {
-                    var msg = 'El cliente: "' + $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
+                    var msg = 'El cliente: "' + $scope.objectAction.razonsocial;
                     msg += '"; ya presenta una Solicitud de Servicios';
                     $scope.message_info = msg;
                     $('#modalMessageInfo').modal('show');
@@ -580,8 +952,8 @@
                 var array_temp = [];
                 for (var i = 0; i < longitud; i++) {
                     var object_service = {
-                        idserviciojunta: response[i].idserviciojunta,
-                        nombreservicio: response[i].nombreservicio,
+                        idserviciojunta: response[i].idcatalogitem,
+                        nombreservicio: response[i].nombreproducto,
                         valor: 0
                     };
                     array_temp.push(object_service);
@@ -601,18 +973,20 @@
         };
 
         $scope.actionServicioShow = function () {
-            $scope.getLastIDSolicServicio();
+            /*$scope.getLastIDSolicServicio();*/
             $scope.getServicios();
 
+            //console.log($scope.objectAction);
+
             $scope.t_fecha_process = $scope.nowDate();
-            $scope.h_codigocliente = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente = $scope.objectAction.apellidos + ', ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente = $scope.objectAction.lastnamepersona + ', ' + $scope.objectAction.namepersona;
+            $scope.direcc_cliente = $scope.objectAction.direccion;
             $scope.telf_cliente = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente = $scope.objectAction.celular;
+            $scope.celular_cliente = $scope.objectAction.celphone;
             $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
-            $scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;
+            /*$scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;*/
 
             $('#modalActionServicio').modal('show');
         };
@@ -621,13 +995,15 @@
             $('#btn-save-servicio').prop('disabled', true);
 
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 servicios: $scope.services
             };
 
+            console.log(solicitud);
+
             $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
                 if(response.success == true){
-                    $scope.initLoad();
+                    $scope.initLoad(1);
                     $scope.idsolicitud_to_process = response.idsolicitud;
 
                     $('#btn-process-servicio').prop('disabled', false);
@@ -651,7 +1027,7 @@
         $scope.saveSolicitudOtro = function () {
             $('#btn-save-otro').prop('disabled', true);
             var solicitud = {
-                codigocliente: $scope.h_codigocliente_otro,
+                codigocliente: $scope.objectAction.idcliente,
                 observacion: $scope.t_observacion_otro
             };
             $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
@@ -673,12 +1049,12 @@
             $scope.getLastIDOtros();
 
             $scope.t_fecha_otro = $scope.nowDate();
-            $scope.h_codigocliente_otro = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_otro = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_otro = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_otro = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_otro = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_otro = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_otro = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_otro = $scope.objectAction.direccion;
             $scope.telf_cliente_otro = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_otro = $scope.objectAction.celular;
+            $scope.celular_cliente_otro = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_otro = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.t_observacion_otro = '';
@@ -698,30 +1074,31 @@
         };
 
         $scope.getSuministros = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
                     $scope.list_suministros.push(response[i]);
                 }
                 $scope.suministro_mant = array_temp;
-                $scope.s_suministro_mant = 0;
+                $scope.s_suministro_mant = '';
             });
         };
 
         $scope.showInfoSuministro = function () {
+
             var numerosuministro = $scope.s_suministro_mant;
             if (numerosuministro != 0 && numerosuministro != undefined) {
                 var longitud = $scope.list_suministros.length;
 
                 for (var i = 0; i < longitud; i++) {
-                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                        $scope.transversal_mant = $scope.list_suministros[i].calle.nombrecalle;
-                        $scope.tarifa_mant = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+                    if (numerosuministro == $scope.list_suministros[i].idsuministro) {
+                        $scope.zona_mant = $scope.list_suministros[i].calle.barrio.namebarrio;
+                        $scope.transversal_mant = $scope.list_suministros[i].calle.namecalle;
+                        $scope.tarifa_mant = $scope.list_suministros[i].tarifaaguapotable.nametarifaaguapotable;
 
                         break;
                     }
@@ -736,7 +1113,7 @@
         $scope.saveSolicitudMantenimiento = function () {
             $('#btn-save-mant').prop('disabled', true);
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 numerosuministro: $scope.s_suministro_mant,
                 observacion: $scope.t_observacion_mant
             };
@@ -758,12 +1135,12 @@
             $scope.getSuministros();
 
             $scope.t_fecha_mant = $scope.nowDate();
-            $scope.h_codigocliente_mant = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_mant = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_mant = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_mant = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_mant = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_mant = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_mant = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_mant = $scope.objectAction.direccion;
             $scope.telf_cliente_mant = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_mant = $scope.objectAction.celular;
+            $scope.celular_cliente_mant = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_mant = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.zona_mant = '';
@@ -809,16 +1186,18 @@
 
         $scope.showInfoClienteForSetName = function (object) {
 
+            console.log(object);
+
             if (object.originalObject != undefined) {
-                var codigocliente = object.originalObject.codigocliente;
+                var codigocliente = object.originalObject.cliente[0].idcliente;
 
                 if (codigocliente != 0 && codigocliente != undefined) {
 
                     $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
-                        $scope.nom_new_cliente_setnombre = response[0].apellidos + ', ' + response[0].nombres;
-                        $scope.direcc_new_cliente_setnombre = response[0].direcciondomicilio;
+                        $scope.nom_new_cliente_setnombre = object.originalObject.razonsocial;
+                        $scope.direcc_new_cliente_setnombre = object.originalObject.direccion;
                         $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
-                        $scope.celular_new_cliente_setnombre = response[0].celular;
+                        $scope.celular_new_cliente_setnombre = object.originalObject.celphone;
                         $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
                         $scope.h_codigocliente_new = codigocliente;
                     });
@@ -835,31 +1214,32 @@
         };
 
         $scope.getSuministrosForSetName = function () {
-            var codigocliente = $scope.objectAction.codigocliente;
+            var codigocliente = $scope.objectAction.idcliente;
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].numerosuministro});
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
                     $scope.list_suministros.push(response[i]);
                 }
                 $scope.suministro_setN = array_temp;
-                $scope.s_suministro_setnombre = 0;
+                $scope.s_suministro_setnombre = '';
             });
         };
 
         $scope.showInfoSuministroForSetName = function () {
+
             var numerosuministro = $scope.s_suministro_setnombre;
 
             if (numerosuministro != 0 && numerosuministro != undefined) {
                 var longitud = $scope.list_suministros.length;
 
                 for (var i = 0; i < longitud; i++) {
-                    if (numerosuministro == $scope.list_suministros[i].numerosuministro) {
-                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.nombrebarrio;
-                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.nombrecalle;
-                        $scope.tarifa_setnombre = $scope.list_suministros[i].aguapotable.nombretarifaaguapotable;
+                    if (numerosuministro == $scope.list_suministros[i].idsuministro) {
+                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.namebarrio;
+                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.namecalle;
+                        $scope.tarifa_setnombre = $scope.list_suministros[i].tarifaaguapotable.nametarifaaguapotable;
 
                         break;
                     }
@@ -873,11 +1253,15 @@
 
         $scope.saveSolicitudCambioNombre = function () {
             $('#btn-save-setnombre').prop('disabled', true);
+
             var solicitud = {
-                codigocliente: $scope.objectAction.codigocliente,
+                codigocliente: $scope.objectAction.idcliente,
                 codigoclientenuevo: $scope.h_codigocliente_new,
                 numerosuministro: $scope.s_suministro_setnombre
             };
+
+            console.log(solicitud);
+
             $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
@@ -914,12 +1298,12 @@
             //$scope.getIdentifyClientes();
 
             $scope.t_fecha_setnombre = $scope.nowDate();
-            $scope.h_codigocliente_setnombre = $scope.objectAction.codigocliente;
-            $scope.documentoidentidad_cliente_setnombre = $scope.objectAction.documentoidentidad;
-            $scope.nom_cliente_setnombre = $scope.objectAction.apellidos + ' ' + $scope.objectAction.nombres;
-            $scope.direcc_cliente_setnombre = $scope.objectAction.direcciondomicilio;
+            $scope.h_codigocliente_setnombre = $scope.objectAction.idcliente;
+            $scope.documentoidentidad_cliente_setnombre = $scope.objectAction.numdocidentific;
+            $scope.nom_cliente_setnombre = $scope.objectAction.razonsocial;
+            $scope.direcc_cliente_setnombre = $scope.objectAction.direccion;
             $scope.telf_cliente_setnombre = $scope.objectAction.telefonoprincipaldomicilio;
-            $scope.celular_cliente_setnombre = $scope.objectAction.celular;
+            $scope.celular_cliente_setnombre = $scope.objectAction.celphone;
             $scope.telf_trab_cliente_setnombre = $scope.objectAction.telefonoprincipaltrabajo;
 
             $scope.junta_setnombre = '';

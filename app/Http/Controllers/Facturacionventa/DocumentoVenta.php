@@ -4,21 +4,36 @@ namespace App\Http\Controllers\Facturacionventa;
 
 use Illuminate\Http\Request;
 
+
+
 use App\Modelos\Clientes\Cliente;
-use App\Modelos\Bodegas\Bodega;
+use App\Modelos\Contabilidad\Cont_Bodega;
+use App\Modelos\Contabilidad\Cont_FormaPago;
+use App\Modelos\Contabilidad\Cont_PuntoDeVenta;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Nomina\Empleado;
+use App\Modelos\Configuracion\ConfiguracionSystem;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
+use App\Http\Controllers\CatalogoProductos\CoreKardex;
+use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_ItemVenta;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
+use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta;
+//use App\Modelos\Facturacionventa\puntoventa; 
 
 
-use App\Modelos\Facturacionventa\establecimiento;
-use App\Modelos\Facturacionventa\puntoventa;
+
+/*use App\Modelos\Facturacionventa\establecimiento;
+
 use App\Modelos\Facturacionventa\formapagoventa;
 use App\Modelos\Facturacionventa\configuracioncontable;
-use App\Modelos\Facturacionventa\productoenbodega;
-use App\Modelos\Facturacionventa\catalogoproducto;
-use App\Modelos\Facturacionventa\catalogoservicio;
+use App\Modelos\Facturacionventa\productoenbodega;*/
+//use App\Modelos\Facturacionventa\catalogoproducto;
+/*use App\Modelos\Facturacionventa\catalogoservicio;
 use App\Modelos\Facturacionventa\venta;
 use App\Modelos\Facturacionventa\productosenventa;
-use App\Modelos\Facturacionventa\serviciosenventa;
+use App\Modelos\Facturacionventa\serviciosenventa;*/
 
 
 use App\Http\Requests;
@@ -41,7 +56,8 @@ class DocumentoVenta extends Controller
      */
     public function index()
     {
-        return view('Facturacionventa/index');
+        return view('Facturacionventa/venta');
+        //return view('Facturacionventa/index');
         //return view('Facturacionventa/aux_index');
     }
     /**
@@ -52,7 +68,13 @@ class DocumentoVenta extends Controller
      */
     public function getInfoClienteXCIRuc($getInfoCliente)
     {
-        return Cliente::where('documentoidentidad', 'LIKE', '%' . $getInfoCliente . '%')->limit(1)->get();
+        //return Cliente::where('documentoidentidad', 'LIKE', '%' . $getInfoCliente . '%')->limit(1)->get();
+        return Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
+                        ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
+                        ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
+                        ->whereRaw("persona.numdocidentific LIKE '%".$getInfoCliente."%'")
+                        ->limit(1)
+                        ->get();
     }
     /**
      * Ontener la informacion de una bodega
@@ -72,7 +94,8 @@ class DocumentoVenta extends Controller
      */
     public function getAllbodegas()
     {
-        return Bodega::all();
+        //return Bodega::all();
+        return Cont_Bodega::join("cont_plancuenta","cont_plancuenta.idplancuenta","=","cont_bodega.idplancuenta")->get();
     }
     /**
      * Ontener la informacion de una producto
@@ -91,8 +114,12 @@ class DocumentoVenta extends Controller
      * @return mixed
      */
     public function getPuntoVentaEmpleado()
-    {               
-        return  puntoventa::with('empleado', 'establecimiento')->limit(1)->get();
+    {   
+        // return puntoventa::all();           
+        return  Cont_PuntoDeVenta::join("sri_establecimiento","sri_establecimiento.idestablecimiento","=","cont_puntoventa.idestablecimiento")
+                                    ->join("empleado","empleado.idempleado","=","cont_puntoventa.idempleado")
+                                    ->join("persona","persona.idpersona","=","empleado.idpersona")
+                                    ->get();
     }
     /**
      * Obtener la forma de pago para la venta 
@@ -102,7 +129,7 @@ class DocumentoVenta extends Controller
      */
     public function getFormaPago()
     {               
-        return   formapagoventa::all();
+        return   Cont_FormaPago::all();
     }
     /**
      * Obtener configuracion contable
@@ -112,7 +139,20 @@ class DocumentoVenta extends Controller
      */
     public function getCofiguracioncontable()
     {               
-        return   configuracioncontable::all();
+        //return   configuracioncontable::all();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' ")->get();
+        $aux_configcontable=array();
+        foreach ($aux_data as $i) {
+            $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            $configventa = array(
+                'Id' => $i->idconfiguracionsystem,
+                'IdContable'=> $i->optionvalue,
+                'Descripcion'=>$i->optionname,
+                'Contabilidad'=>$aux_contable );
+            array_push($aux_configcontable, $configventa);
+        }
+        return $aux_configcontable;
+
     }
     /**
      * obtener productos por bodega
@@ -123,8 +163,23 @@ class DocumentoVenta extends Controller
     public function getProductoPorBodega($id)
     {   
 
-        return  catalogoproducto::join('productoenbodega', 'productoenbodega.codigoproducto', '=', 'catalogoproducto.codigoproducto')
-                ->where("productoenbodega.idbodega", $id)->get();
+        return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                                //->join("cont_plancuenta","cont_plancuenta.idplancuenta","=","cont_catalogitem.idplancuenta")
+                                ->selectRaw("*")
+                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                                ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                                ->whereRaw("cont_catalogitem.codigoproducto LIKE '%$id%' ")
+                                ->get();
+        //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
+        //->get() ;
+
+        //return  catalogoproducto::join('productoenbodega', 'productoenbodega.codigoproducto', '=', 'catalogoproducto.codigoproducto')
+                //->where("productoenbodega.idbodega", $id)->get();
      /*return productoenbodega::with(
         [
             'bodega', 'catalogoproducto',
@@ -152,7 +207,7 @@ class DocumentoVenta extends Controller
      * @return mixed
      */
     public function getDocVenta()
-    {   $lastVta=venta::all();
+    {   $lastVta=Cont_DocumentoVenta::all();
         return $lastVta->last();
     }
     /**
@@ -164,11 +219,12 @@ class DocumentoVenta extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
+
         //$datos["documentoventa"]
         //$datos["productosenventa"]
         //$datos["serviciosenventa"]
 
-        $aux_venta = venta::create($datos["documentoventa"]);
+        /*$aux_venta = venta::create($datos["documentoventa"]);
         foreach ($datos["productosenventa"] as $producto) {
             productosenventa::create(
                 [
@@ -189,7 +245,7 @@ class DocumentoVenta extends Controller
                     'idservicio'=> $servicio["idservicio"]
                 ]);
         }
-        return $aux_venta->codigoventa;
+        return $aux_venta->codigoventa;*/
     }
 
     /**
@@ -201,7 +257,49 @@ class DocumentoVenta extends Controller
     public function getVentas($filtro)
     {
         $filtro = json_decode($filtro);
-        $aux_filtro="";
+        //--Parte contable
+        $id_transaccion= CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
+        //--Fin parte contable
+        //--Parte invetario kardex
+        for($x=0;$x<count($filtro->Datakardex);$x++){
+            $filtro->Datakardex[$x]->idtransaccion=$id_transaccion;
+        }
+        $id_kardex= CoreKardex::GuardarKardex($filtro->Datakardex);
+        //--Fin Parte invetario kardex
+
+        $aux_docventa=(array) $filtro->DataVenta;
+        $docventa=Cont_DocumentoVenta::create($aux_docventa);
+        $aux_addVenta=Cont_DocumentoVenta::all();
+        for($x=0;$x<count($filtro->DataItemsVenta);$x++){
+            $filtro->DataItemsVenta[$x]->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
+        }
+        $aux_itemventa=(array) $filtro->DataItemsVenta;
+        //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+        for($x=0;$x<count($filtro->DataItemsVenta);$x++){
+            Cont_ItemVenta::create((array) $filtro->DataItemsVenta[$x]);
+        }
+
+        $registrocliente = array(
+            'idcliente' => $docventa->idcliente,
+            'idtransaccion' => $id_transaccion,
+            'fecha' => $docventa->fecharegistroventa,
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente 
+            'haber' => 0,
+            'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."", 
+            'estadoanulado' => false);
+        $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
+        /*
+        $formapagoventa = array(
+            'idformapago' => $filtro->Idformapagoventa, 
+            'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa);
+        $aux_formapagoVenta=Cont_FormaPagoDocumentoVenta::create($formapagoventa);*/
+        /*$aux_formapagoVenta=new Cont_FormaPagoDocumentoVenta;
+        $aux_formapagoVenta->idformapago=$filtro->Idformapagoventa;
+        $aux_formapagoVenta->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
+        $aux_formapagoVenta->save();*/
+        return 1;
+
+        /*$aux_filtro="";
         if($filtro->PuntoVenta != null  && $filtro->PuntoVenta!="" ){
             $aux_filtro .=" AND puntoventa.idpuntoventa='".$filtro->PuntoVenta."' ";
         }
@@ -218,7 +316,7 @@ class DocumentoVenta extends Controller
         return venta:: join('cliente', 'cliente.codigocliente','=','documentoventa.codigocliente')
                         ->join("puntoventa","puntoventa.idpuntoventa","=","documentoventa.idpuntoventa")
                         ->whereRaw("(documentoidentidad LIKE '%".$filtro->RucOcLiente."%'  OR CONCAT(apellidos, ' ', nombres) LIKE '%".$filtro->RucOcLiente."%' )".$aux_filtro
-                                  )->get();
+                                  )->get();*/
     }
 
     /**
@@ -228,14 +326,16 @@ class DocumentoVenta extends Controller
      * @return mixed
      */
     public function getallFitros()
-    {               
+    {     
+        return Cont_DocumentoVenta::whereRaw(" estadoanulado=false ")->get();
+        /*
         $establecimiento= establecimiento::all();
         $puntoventa=puntoventa::all();
         $aux_data = array(
             "establecimiento" => $establecimiento,
             "puntoventa" => $puntoventa,
         );
-        return  $aux_data;
+        return  $aux_data;*/
     }
     /**
      * anular venta
@@ -418,5 +518,6 @@ class DocumentoVenta extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream('documentoventa');
     }        
+
 
 }

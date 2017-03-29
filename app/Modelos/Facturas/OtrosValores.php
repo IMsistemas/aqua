@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class OtrosValores extends Model
 {
-    protected $table = "otrovalor";
-    protected $primaryKey = "idotrovalor";
+    protected $table = 'otrosvalores';
+    protected $primaryKey = 'idotrosvalores';
     public $timestamps = false;
 
     public function otrosvaloresfactura()
     {
-        return $this->hasMany('App\Modelos\Facturas\OtrosValoresFactura', 'idotrovalor');
+        return $this->hasMany('App\Modelos\Facturas\OtrosValoresFactura', 'idotrosvalores');
     }
 }

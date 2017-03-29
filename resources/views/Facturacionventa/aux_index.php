@@ -105,7 +105,7 @@
                   <span class="glyphicon sort-icon" ng-show="sortKey=='codigoventa'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th>Fecha Ingreso</th>
-                <th>Razón Social</th>
+                <th>Razon Social</th>
                 <th>Subtotal</th>
                 <th>Iva</th>
                 <th>Total</th>
@@ -209,7 +209,7 @@
           </div>
           <div class="col-xs-6">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Razón Social</span>
+                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Razon Social</span>
                 <input type="text" class="form-control input-sm"  value="{{CLiente[0].apellidos +' '+ CLiente[0].nombres}}" readonly >
             </div>
           </div>
@@ -218,7 +218,7 @@
       <div class="row">
           <div class="col-xs-6">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Teléfono</span>
+                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Telefono</span>
                 <input type="text" class="form-control input-sm"  value="{{CLiente[0].telefonoprincipaldomicilio}}" readonly >
             </div>
           </div>
@@ -263,7 +263,7 @@
 
           <div class="col-xs-6">
               <div class="input-group" >
-                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Autorización</span>
+                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-tag"></i> Autorizacion</span>
                 <input type="text"  class="form-control input-sm" maxlength="37" ng-model="Autorizacion" >
               </div>
           </div>
@@ -562,7 +562,7 @@
               <thead>
                 <tr class="bg-success">
                   <th></th>
-                  <th>Código</th>
+                  <th>Codigo</th>
                   <th>Descripcion</th>
                 </tr>
               </thead>
@@ -598,7 +598,7 @@
     <div class="modal-content">
       <div id="titulomsm" class="modal-header ">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Información</h4>
+        <h4 class="modal-title">Informacion</h4>
       </div>
       <div class="modal-body">
         <strong>{{Mensaje}}</strong>
@@ -616,7 +616,7 @@
     <div class="modal-content">
       <div id="titulomsm" class="modal-header btn-danger ">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Información</h4>
+        <h4 class="modal-title">Informacion</h4>
       </div>
       <div class="modal-body">
         <strong>Esta seguro que dese anular la facura</strong>

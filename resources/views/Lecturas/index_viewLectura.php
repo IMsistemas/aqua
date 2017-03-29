@@ -1,67 +1,80 @@
 
     <div ng-controller="viewLecturaController">
 
-        <div class="col-xs-12" style="margin-top: 2%;">
+        <div class="col-xs-12">
+
+            <h4>Registro de Tomas de Lecturas</h4>
+
+            <hr>
+
+        </div>
+
+        <div class="col-xs-12">
             <fieldset>
                 <div class="col-sm-6 col-xs-12">
-                    <fieldset>
-                        <legend>Periodo:</legend>
-                        <div class="row">
-                            <div class="col-xs-6" style="padding: 0;">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Año:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control datepicker_a" name="s_anno"
-                                               id="s_anno" ng-model="s_anno" ng-change="searchByFilter();">
-                                    </div>
-                                </div>
+
+                    <h4>Periodo:</h4>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Año: </span>
+                                <input type="text" class="form-control datepicker_a" name="s_anno"
+                                       id="s_anno" ng-model="s_anno" ng-change="searchByFilter();">
                             </div>
-                            <div class="col-xs-6" style="padding: 0;">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Mes:</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes" ng-change="searchByFilter();"
-                                                    ng-options="value.id as value.name for value in meses">
-                                           </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
+
                         </div>
-                    </fieldset>
+
+                        <div class="col-xs-6">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Mes: </span>
+                                <select class="form-control" name="s_mes" id="s_mes" ng-model="s_mes" ng-change="searchByFilter();"
+                                        ng-options="value.id as value.name for value in meses">
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
                 
                 <div class="col-sm-6 col-xs-12">
-                    <fieldset>
-                        <legend>Sector:</legend>
-                        <div class="row">
-                            <div class="col-xs-6" style="padding: 0;">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Barrio:</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" name="s_barrio" id="s_barrio" ng-model="s_barrio"
-                                                ng-options="value.id as value.label for value in barrios"
-                                                ng-change="loadCalles(); searchByFilter();"></select>
-                                    </div>
-                                </div>
+
+                    <h4>Sector:</h4>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Barrio: </span>
+                                <select class="form-control" name="s_barrio" id="s_barrio" ng-model="s_barrio"
+                                        ng-options="value.id as value.label for value in barrios"
+                                        ng-change="loadCalles(); searchByFilter();"></select>
                             </div>
-                            <div class="col-xs-6" style="padding: 0;">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Calle:</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" name="s_calle" id="s_calle" ng-model="s_calle"
-                                            ng-options="value.id as value.label for value in calles"
-                                            ng-change="searchByFilter();"></select>
-                                    </div>
-                                </div>
-                            </div>
-                            
+
                         </div>
-                    </fieldset>
+                        <div class="col-xs-6">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Calle: </span>
+                                <select class="form-control" name="s_calle" id="s_calle" ng-model="s_calle"
+                                        ng-options="value.id as value.label for value in calles"
+                                        ng-change="searchByFilter();"></select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="col-xs-12" style="margin-top: 10px;">
-                    <div class="form-group has-feedback" style="float: right; width: 50%;">
+                <div class="col-xs-12" style="margin-top: 5px;">
+                    <div class="form-group has-feedback" style="width: 50%;">
                         <input type="text" class="form-control" id="search-list-trans" placeholder="BUSCAR..." 
                                 ng-model="t_search" >
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>

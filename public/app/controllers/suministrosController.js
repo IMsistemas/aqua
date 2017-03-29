@@ -3,7 +3,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
     $scope.initLoad = function () {
         $http.get(API_URL + 'suministros/getsuministros').success(function (response) {
             console.log(response);
-            var longitud = response.length;
+            /*var longitud = response.length;
             for (var i = 0; i < longitud; i++) {
                 var complete_name = {
                     value: response[i].cliente.nombres + ' ' + response[i].cliente.apellidos,
@@ -12,7 +12,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
-            }
+            }*/
             $scope.suministros = response;
         });
     }
@@ -20,14 +20,14 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
     $scope.Filtro = function () {
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
             var longitud = response.length;
-            var array_temp = [{label: '--Zonas --', id: 0}];
+            var array_temp = [{label: '-- Todos --', id: 0}];
             for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrebarrio, id: response[i].idbarrio})
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
             }
             $scope.zonass = array_temp;
             $scope.s_zona = 0;
         });
-        $scope.transversaless = [{label: '--Transversales--', id: 0}];
+        $scope.transversaless = [{label: '-- Todos --', id: 0}];
         $scope.s_transversales = 0;
     };
 
@@ -35,9 +35,9 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         $http.get(API_URL + 'suministros/getCallesByBarrio/'+ $scope.s_zona).success(function (response) {
            // console.log(response);
             var longitud = response.length;
-            var array_temp = [{label: '--Transversales--', id: 0}];
+            var array_temp = [{label: '-- Todos --', id: 0}];
             for (var i = 0; i < longitud; i++) {
-                array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
+                array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
             }
             $scope.transversaless = array_temp;
             $scope.s_transversales = 0;
@@ -169,9 +169,9 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
             $http.get(API_URL + 'suministros/getCallesByBarrio/' + $scope.s_zona).success(function (response) {
                 // console.log(response);
                 var longitud = response.length;
-                var array_temp = [{label: '--Transversales--', id: 0}];
+                var array_temp = [{label: '-- Todos --', id: 0}];
                 for (var i = 0; i < longitud; i++) {
-                    array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle})
+                    array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
                 }
                 $scope.transversaless = array_temp;
                 $scope.s_transversales = 0;

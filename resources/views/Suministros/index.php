@@ -1,9 +1,19 @@
 
 
 <div ng-controller="suministrosController">
-    <div class="container" style="margin-top: 2%;">
 
-        <div class="col-xs-12"  style="margin-top: 15px;">
+    <div class="col-xs-12">
+
+        <div class="col-xs-12">
+
+            <h4>Gestión de Suministros</h4>
+
+            <hr>
+
+        </div>
+
+        <div class="col-xs-12"  style="margin-top: 5px;">
+
         <div class="col-sm-6 col-xs-8">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda">
@@ -11,14 +21,24 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
-            <select id="s_zona" class="form-control" ng-model="s_zona" ng-change="getByFilter(1)"
-                    ng-options="value.id as value.label for value in zonass"></select>
+        <div class="col-sm-3 col-xs-12">
+
+            <div class="input-group">
+                <span class="input-group-addon">Zonas: </span>
+                <select id="s_zona" class="form-control" ng-model="s_zona" ng-change="getByFilter(1)"
+                        ng-options="value.id as value.label for value in zonass"></select>
+            </div>
+
         </div>
 
-        <div class="col-sm-3">
-            <select id="s_transversales" class="form-control" ng-model="s_transversales" ng-change="getByFilter(2)"
-                    ng-options="value.id as value.label for value in transversaless"></select>
+        <div class="col-sm-3 col-xs-12">
+
+            <div class="input-group">
+                <span class="input-group-addon">Transversales: </span>
+                <select id="s_transversales" class="form-control" ng-model="s_transversales" ng-change="getByFilter(2)"
+                        ng-options="value.id as value.label for value in transversaless"></select>
+            </div>
+
         </div>
 
 
@@ -47,10 +67,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr dir-paginate="suministro in suministros | orderBy:sortKey:reverse |itemsPerPage:10| filter : busqueda" ng-cloak>
-                    <td>{{suministro.numerosuministro}}</td>
-                    <td>{{suministro.cliente.complete_name}}</td>
-                    <td>{{suministro.calle.barrio.nombrebarrio}}</td>
+                <tr dir-paginate="suministro in suministros| orderBy:sortKey:reverse|filter:busqueda|itemsPerPage:10" ng-cloak>
+                    <td>{{suministro.idsuministro}}</td>
+                    <td>{{suministro.cliente.persona.razonsocial}}</td>
+                    <td>{{suministro.calle.barrio.namebarrio}}</td>
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td >

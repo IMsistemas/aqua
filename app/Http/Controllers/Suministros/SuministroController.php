@@ -22,13 +22,13 @@ class SuministroController extends Controller
 
     public function getsuministros()
     {
-       return Suministro::with('cliente', 'calle.barrio', 'producto')->orderBy('numerosuministro', 'asc')->get();
+       return Suministro::with('cliente.persona', 'calle.barrio')->orderBy('idsuministro', 'asc')->get();
     }
 
     public function getSuministrosByBarrio($filter)
     {
         $object_filter = json_decode($filter);
-        $suministro = Suministro::with(['cliente', 'producto',
+        $suministro = Suministro::with(['cliente',
                             'calle' => function ($query_calle) use ($object_filter) {
                                 $result_calle = $query_calle->with([
                                     'barrio' => function ($query_barrio) use ($object_filter) {
@@ -60,7 +60,7 @@ class SuministroController extends Controller
 
     public function getCalleByBarrio($id)
     {
-        return Calle::with('barrio')->where('idbarrio', $id)->orderBy('nombrecalle', 'asc')->get();
+        return Calle::with('barrio')->where('idbarrio', $id)->orderBy('namecalle', 'asc')->get();
     }
 
     public function getCalle()

@@ -67,6 +67,11 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.toModulo = "calle";
 	}
 
+	$scope.toModuloConfiguracion = function(){		
+		$scope.titulo = "Configuración";
+		$scope.toModulo = "configuracion";
+	}
+
 	$scope.toModuloCargo = function(){
 		$scope.titulo = "Cargos";
 		$scope.toModulo = "cargo";
@@ -117,7 +122,7 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 
 	$scope.toModuloProveedores = function(){		
 		$scope.titulo = "Proveedores";
-		$scope.toModulo = "proveedores";
+		$scope.toModulo = "proveedor";
 	}
 
 	$scope.toModuloCompras = function(){		
@@ -128,6 +133,11 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	$scope.toModuloVentas = function(){		
 		$scope.titulo = "Ventas: Registro Ventas";
 		$scope.toModulo = "DocumentoVenta";
+	}
+
+	$scope.toModuloGuiaRemision = function(){		
+		$scope.titulo = "Ventas";
+		$scope.toModulo = "guiaremision";
 	}
 
 	$scope.toModuloComprobantesVentas = function(){		
@@ -156,13 +166,28 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 	}
 
 	$scope.toModuloCatalogoProductos = function(){		
-		$scope.titulo = "Catálogo de Prodructos";
+		$scope.titulo = "Catálogo de Productos";
 		$scope.toModulo = "catalogoproducto";
 	}
 
 	$scope.toModuloCrearBodegas = function(){		
 		$scope.titulo = "Crear Bodegas";
 		$scope.toModulo = "bodega";
+	}
+
+	$scope.toModuloPlanCuentas = function(){		
+		$scope.titulo = "Plan de Cuentas";
+		$scope.toModulo = "Contabilidad";
+	}
+
+    $scope.toModuloInventario = function(){
+        $scope.titulo = "Inventario";
+        $scope.toModulo = "Inventario";
+    }
+
+	$scope.toModuloTransportistas = function(){		
+		$scope.titulo = "Crear Transportistas";
+		$scope.toModulo = "transportista";
 	}
 
 	$scope.prepareListBreadcrumb = function (list_module) {

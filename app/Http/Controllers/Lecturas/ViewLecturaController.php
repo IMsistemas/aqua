@@ -30,14 +30,13 @@ class ViewLecturaController extends Controller
      */
     public function getLecturas()
     {
-    	return Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
+    	return Lectura::join('suministro', 'lectura.idsuministro', '=', 'suministro.idsuministro')
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-    						->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
+    						->join('cliente', 'suministro.idcliente', '=', 'cliente.idcliente')
                             ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
-                            ->join('facturacobro', 'facturacobro.idcobroagua', '=', 'cobroagua.idcobroagua')
-                            ->select('lectura.idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
-                                        'cliente.apellidos', 'facturacobro.estapagado')
+                            //->join('facturacobro', 'facturacobro.idcobroagua', '=', 'cobroagua.idcobroagua')
+                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'observacion', 'fechalectura',
+                                        'lecturaactual', 'consumo', 'calle.namecalle')
                             ->whereRaw('EXTRACT( MONTH FROM fechalectura) = ' . date('m'))
                             ->whereRaw('EXTRACT( YEAR FROM fechalectura) = ' . date('Y'))
                             ->get();
@@ -105,7 +104,7 @@ class ViewLecturaController extends Controller
      */
     public function getBarrios()
     {
-        return Barrio::orderBy('nombrebarrio', 'asc')->get(); 
+        return Barrio::orderBy('namebarrio', 'asc')->get();
     }
 
     /**
@@ -116,7 +115,7 @@ class ViewLecturaController extends Controller
      */
     public function getCalles($idbarrio)
     {
-        return Calle::where('idbarrio', $idbarrio)->orderBy('nombrecalle', 'asc')->get(); 
+        return Calle::where('idbarrio', $idbarrio)->orderBy('namecalle', 'asc')->get();
     }
 
     /**

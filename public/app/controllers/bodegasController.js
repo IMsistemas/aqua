@@ -7,8 +7,8 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
     $scope.sectores = $scope.sectoresFiltro  =[];
     $scope.personas = [];
     $scope.testObj = [];
-    
-    
+
+    $scope.select_cuenta = null;
     
     $scope.searchStr = [];
     
@@ -81,6 +81,10 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
 	                }); 
 	                $scope.provincia = '';
 	                $scope.ciudad = '';
+
+                    $scope.idplancuenta = '';
+                    $scope.select_cuenta = null;
+
 	                $scope.$broadcast('angucomplete-alt:clearInput');
 	                $('#modalAction').modal('show');
                 });
@@ -91,6 +95,9 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
                 $scope.id = id;
 
                 $http.get(API_URL + 'bodega/'  + id ).success(function(response){
+
+                    console.log(response);
+
                 	$scope.bodega = response;     
                 	$http.get(API_URL + 'bodega/getEmpleadoByBodega/' + $scope.bodega.idbodega).success(function(response){
                 		$scope.empleado = response;	                                   		     
@@ -101,8 +108,15 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
                 	$scope.provincia = parseInt($scope.bodega.idprovincia);
 	                $scope.loadCiudad($scope.provincia,false);
 	                $scope.ciudad = parseInt($scope.bodega.idcanton);
-	                $scope.loadSector($scope.ciudad,false);	  
-	               
+	                $scope.loadSector($scope.ciudad,false,$scope.bodega.idparroquia );
+
+                    $scope.select_cuenta = {
+                        idplancuenta: $scope.bodega.idplancuenta,
+                        concepto: $scope.bodega.concepto
+                    };
+
+                    $scope.idplancuenta = $scope.bodega.concepto;
+
 	                 $('#modalAction').modal('show');
 
                 });
@@ -129,34 +143,59 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
      }
     
     $scope.loadCiudad = function(padre,filtro) {	
-    	
-        $http.get(API_URL + 'bodega/getCiudad/' + padre).success(function(response){
-        	if(filtro){
+    	if(padre != ''){
+    		$http.get(API_URL + 'bodega/getCiudad/' + padre).success(function(response){
+            	if(filtro){
+            		$scope.searchByFilter();
+            		$scope.ciudadesFiltro = response; 
+            		$scope.ciudadFiltro = "";
+            		$scope.sectorFiltro = "";
+            	}else{
+            		$scope.ciudades = response; 
+            		$scope.sectores = []
+            	}
+            	         
+            });
+    	} else {
+    		$scope.sectores = []
+    		if(filtro){
+        		
+        		$scope.ciudadesFiltro = []; 
+        		$scope.sectoresFiltro = [];
+        		$scope.ciudadFiltro = "";
+        		$scope.sectorFiltro = "";
         		$scope.searchByFilter();
-        		$scope.ciudadesFiltro = response; 
-        	}else{
-        		$scope.ciudades = response; 
         	}
-        	         
-        });
+    	}      
     }
     
-    $scope.loadSector = function(padre,filtro) {
-    	
-        $http.get(API_URL + 'bodega/getSector/' + + padre).success(function(response){
+    $scope.loadSector = function(padre,filtro,value) {
+    	if(padre != ''){
+        $http.get(API_URL + 'bodega/getSector/' + padre).success(function(response){
         	if(filtro){
         		$scope.searchByFilter();
         		$scope.sectoresFiltro = response;
+        		$scope.sectorFiltro = "";
         	}else{
         		$scope.sectores = response;
+        		$scope.bodega.idparroquia = value;
         	}
-        });       
+        });  
+    	} else {
+    		$scope.sectores = []
+    		if(filtro){   			
+        		$scope.sectoresFiltro = [];
+        		$scope.sectorFiltro = "";
+        		$scope.searchByFilter();
+        	}
+    	}      
     }
     
     
     $scope.save = function(modalstate, id) {
-    	$scope.bodega.idempleado = $scope.testObj.originalObject.idempleado;    	
-    	
+    	$scope.bodega.idempleado = $scope.testObj.originalObject.idempleado;
+        $scope.bodega.idplancuenta = $scope.select_cuenta.idplancuenta;
+
     	console.log($scope.bodega);
     	
     	var url = API_URL + "bodega";
@@ -255,8 +294,31 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
         });
 
     };
-    
-    
+
+    $scope.showPlanCuenta = function () {
+
+        $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
+    $scope.selectCuenta = function () {
+        var selected = $scope.select_cuenta;
+
+        $scope.idplancuenta = selected.concepto;
+
+        $('#modalPlanCuenta').modal('hide');
+    };
+
+    $scope.click_radio = function (item) {
+        $scope.select_cuenta = item;
+    };
+
+    $scope.hideModalMessage = function () {
+        setTimeout("$('#modalMessage').modal('hide')", 3000);
+    };
     
 });
 

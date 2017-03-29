@@ -34,20 +34,78 @@
 
         $scope.tasainteres = 0;
 
-        $scope.initLoad = function () {
+        $scope.pageChanged = function(newPage) {
+            $scope.initLoad(newPage);
+        };
 
-            $http.get(API_URL + 'solicitud/getConfiguracion').success(function(response){
+        $scope.initLoad = function (pageNumber) {
 
-                console.log(response);
-
-                $scope.tasainteres = parseFloat(response[0].tasainteres);
-
+            $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
+                $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
+            if ($scope.busqueda == undefined) {
+                var search = null;
+            } else var search = $scope.busqueda;
 
-            $http.get(API_URL + 'solicitud/getSolicitudes').success(function(response){
+            var filtros = {
+                search: search
+            };
 
-                var list = [];
+            $http.get(API_URL + 'solicitud/getSolicitudes?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+
+                //console.log(response);
+
+                var longitud = response.data.length;
+
+                if (longitud > 0) {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        var tipo = '';
+                        var idtipo = 0;
+
+                        if (response.data[i].solicitudcambionombre != null) {
+                            tipo = 'Cambio de Nombre';
+                            idtipo = response.data[i].solicitudcambionombre;
+                        } else if (response.data[i].solicitudmantenimiento != null) {
+                            tipo = 'Mantenimiento';
+                            idtipo = response.data[i].solicitudmantenimiento;
+                        } else if (response.data[i].solicitudotro != null) {
+                            tipo = 'Otra Solicitud';
+                            idtipo = response.data[i].solicitudotro;
+                        } else if (response.data[i].solicitudservicio != null) {
+                            tipo = 'Servicio';
+                            idtipo = response.data[i].solicitudservicio;
+                        } else if (response.data[i].solicitudsuministro != null) {
+                            tipo = 'Suministro';
+                            idtipo = response.data[i].solicitudsuministro;
+                        }
+
+                        var tipo_name = {
+                            value: tipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo', tipo_name);
+
+                        var tipo_id = {
+                            value: idtipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo_id', tipo_id);
+
+                    }
+
+                }
+
+                $scope.solicitudes = response.data;
+                $scope.totalItems = response.total;
+
+                /*var list = [];
 
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
@@ -155,20 +213,78 @@
                     }
                 }
 
-                $scope.solicitudes = list;
+                $scope.solicitudes = list;*/
 
             });
         };
 
         $scope.searchByFilter = function () {
+
+            console.log($scope.search);
+
+            if ($scope.search == undefined) {
+                var search = null;
+            } else var search = $scope.search;
+
             var filter = {
                 tipo: $scope.t_tipo_solicitud,
-                estado: $scope.t_estado
+                estado: $scope.t_estado,
+                search: search
             };
 
             $http.get(API_URL + 'solicitud/getByFilter/' + JSON.stringify(filter)).success(function(response){
 
-                var list = [];
+                var longitud = response.data.length;
+
+                if (longitud > 0) {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        var tipo = '';
+                        var idtipo = 0;
+
+                        if (response.data[i].solicitudcambionombre != null) {
+                            tipo = 'Cambio de Nombre';
+                            idtipo = response.data[i].solicitudcambionombre;
+                        } else if (response.data[i].solicitudmantenimiento != null) {
+                            tipo = 'Mantenimiento';
+                            idtipo = response.data[i].solicitudmantenimiento;
+                        } else if (response.data[i].solicitudotro != null) {
+                            tipo = 'Otra Solicitud';
+                            idtipo = response.data[i].solicitudotro;
+                        } else if (response.data[i].solicitudservicio != null) {
+                            tipo = 'Servicio';
+                            idtipo = response.data[i].solicitudservicio;
+                        } else if (response.data[i].solicitudsuministro != null) {
+                            tipo = 'Suministro';
+                            idtipo = response.data[i].solicitudsuministro;
+                        }
+
+                        var tipo_name = {
+                            value: tipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo', tipo_name);
+
+                        var tipo_id = {
+                            value: idtipo,
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response.data[i], 'tipo_id', tipo_id);
+
+                    }
+
+                }
+
+                $scope.solicitudes = response.data;
+                $scope.totalItems = response.total;
+
+
+                /*var list = [];
 
                 var suministro = response.suministro;
                 if (suministro.length > 0) {
@@ -276,7 +392,7 @@
                     }
                 }
 
-                $scope.solicitudes = list;
+                $scope.solicitudes = list;*/
 
             });
 
@@ -311,34 +427,40 @@
 
         $scope.actionOtro = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
 
-            $scope.num_solicitud_otro = solicitud.data.idsolicitudotro;
+            $http.get(API_URL + 'solicitud/getSolicitudOtro/' + solicitud.tipo_id).success(function(response){
 
-            $scope.t_fecha_otro = solicitud.data.fechasolicitud;
-            $scope.h_codigocliente_otro = solicitud.data.cliente.codigocliente;
-            $scope.documentoidentidad_cliente_otro = solicitud.data.cliente.documentoidentidad;
-            $scope.nom_cliente_otro = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
-            $scope.direcc_cliente_otro = solicitud.data.cliente.direcciondomicilio;
-            $scope.telf_cliente_otro = solicitud.data.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_otro = solicitud.data.cliente.celular;
-            $scope.telf_trab_cliente_otro = solicitud.data.cliente.telefonoprincipaltrabajo;
+                $scope.num_solicitud_otro = solicitud.tipo_id;
 
-            $scope.t_observacion_otro = solicitud.data.descripcion;
+                $scope.t_fecha_otro = solicitud.fechasolicitud;
+                $scope.h_codigocliente_otro = solicitud.cliente.idcliente;
+                $scope.documentoidentidad_cliente_otro = solicitud.cliente.persona.numdocidentific;
+                $scope.nom_cliente_otro = solicitud.cliente.persona.razonsocial;
+                $scope.direcc_cliente_otro = solicitud.cliente.persona.direccion;
+                $scope.telf_cliente_otro = solicitud.cliente.telefonoprincipaldomicilio;
+                $scope.celular_cliente_otro = solicitud.cliente.persona.celphone;
+                $scope.telf_trab_cliente_otro = solicitud.cliente.telefonoprincipaltrabajo;
 
-            if(solicitud.data.estaprocesada == true) {
-                $('#t_observacion_otro').prop('disabled', true);
-                $('#btn-save-otro').prop('disabled', true);
-                $('#btn-process-otro').prop('disabled', true);
-                $('#modal-footer-otro').hide();
-            } else {
-                $('#t_observacion_otro').prop('disabled', false);
-                $('#btn-save-otro').prop('disabled', false);
-                $('#btn-process-otro').prop('disabled', false);
-                $('#modal-footer-otro').show();
-            }
+                $scope.t_observacion_otro = response[0].descripcion;
 
-            $('#modalActionOtro').modal('show');
+                if(solicitud.estadoprocesada == true) {
+                    $('#t_observacion_otro').prop('disabled', true);
+                    $('#btn-save-otro').prop('disabled', true);
+                    $('#btn-process-otro').prop('disabled', true);
+                    $('#modal-footer-otro').hide();
+                } else {
+                    $('#t_observacion_otro').prop('disabled', false);
+                    $('#btn-save-otro').prop('disabled', false);
+                    $('#btn-process-otro').prop('disabled', false);
+                    $('#modal-footer-otro').show();
+                }
+
+                $('#modalActionOtro').modal('show');
+
+            });
+
+
         };
 
         /*
@@ -404,42 +526,64 @@
 
         $scope.actionMantenimiento = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
-            $scope.getSuministros(solicitud.data.cliente.codigocliente, solicitud.data.numerosuministro);
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
 
-            $scope.num_solicitud_mant = solicitud.data.idsolicitudmantenimiento;
-            $scope.t_fecha_mant = solicitud.data.fechasolicitud;
-            $scope.h_codigocliente_mant = solicitud.data.cliente.codigocliente;
-            $scope.documentoidentidad_cliente_mant = solicitud.data.cliente.documentoidentidad;
-            $scope.nom_cliente_mant = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
-            $scope.direcc_cliente_mant = solicitud.data.cliente.direcciondomicilio;
-            $scope.telf_cliente_mant = solicitud.data.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_mant = solicitud.data.cliente.celular;
-            $scope.telf_trab_cliente_mant = solicitud.data.cliente.telefonoprincipaltrabajo;
+            //$scope.getSuministros(solicitud.cliente.idcliente, solicitud.data.numerosuministro);
 
-            $scope.zona_mant = solicitud.data.suministro.calle.barrio.nombrebarrio;
-            $scope.transversal_mant = solicitud.data.suministro.calle.nombrecalle;
-            $scope.tarifa_mant = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.cliente.idcliente).success(function(response){
 
-            $scope.t_observacion_mant = solicitud.data.observacion;
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_mant = array_temp;
 
-            if(solicitud.data.estaprocesada == true) {
-                $('#s_suministro_mant').prop('disabled', true);
-                $('#t_observacion_mant').prop('disabled', true);
+                $http.get(API_URL + 'solicitud/getSolicitudMantenimiento/' + solicitud.tipo_id).success(function(response){
 
-                $('#btn-save-mant').prop('disabled', true);
-                $('#btn-process-mant').prop('disabled', true);
-                $('#modal-footer-mant').hide();
-            } else {
-                $('#s_suministro_mant').prop('disabled', false);
-                $('#t_observacion_mant').prop('disabled', false);
+                    console.log(response);
 
-                $('#btn-save-mant').prop('disabled', false);
-                $('#btn-process-mant').prop('disabled', false);
-                $('#modal-footer-mant').show();
-            }
+                    $scope.num_solicitud_mant = solicitud.tipo_id;
+                    $scope.t_fecha_mant = solicitud.fechasolicitud;
+                    $scope.h_codigocliente_mant = solicitud.cliente.idcliente;
+                    $scope.documentoidentidad_cliente_mant = solicitud.cliente.persona.numdocidentific;
+                    $scope.nom_cliente_mant = solicitud.cliente.persona.razonsocial;
+                    $scope.direcc_cliente_mant = solicitud.cliente.persona.direccion;
+                    $scope.telf_cliente_mant = solicitud.cliente.telefonoprincipaldomicilio;
+                    $scope.celular_cliente_mant = solicitud.cliente.persona.celphone;
+                    $scope.telf_trab_cliente_mant = solicitud.cliente.telefonoprincipaltrabajo;
 
-            $('#modalActionMantenimiento').modal('show');
+                    $scope.s_suministro_mant = response[0].suministro.idsuministro;
+
+                    $scope.zona_mant = response[0].suministro.calle.barrio.namebarrio;
+                    $scope.transversal_mant = response[0].suministro.calle.namecalle;
+                    $scope.tarifa_mant = response[0].suministro.tarifaaguapotable.nametarifaaguapotable;
+
+                    $scope.t_observacion_mant = response[0].observacion;
+
+                    if(solicitud.estadoprocesada == true) {
+                        $('#s_suministro_mant').prop('disabled', true);
+                        $('#t_observacion_mant').prop('disabled', true);
+
+                        $('#btn-save-mant').prop('disabled', true);
+                        $('#btn-process-mant').prop('disabled', true);
+                        $('#modal-footer-mant').hide();
+                    } else {
+                        $('#s_suministro_mant').prop('disabled', false);
+                        $('#t_observacion_mant').prop('disabled', false);
+
+                        $('#btn-save-mant').prop('disabled', false);
+                        $('#btn-process-mant').prop('disabled', false);
+                        $('#modal-footer-mant').show();
+                    }
+
+                    $('#modalActionMantenimiento').modal('show');
+
+                });
+
+            });
         };
 
         /*
@@ -458,7 +602,7 @@
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
                 $scope.list_clientes = [];
                 for(var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].documentoidentidad, id: response[i].codigocliente});
+                    array_temp.push({label: response[i].numdocidentific, id: response[i].idcliente});
                     $scope.list_clientes.push(response[i]);
                 }
                 $scope.clientes_setN = array_temp;
@@ -467,7 +611,7 @@
             });
         };
 
-        $scope.showInfoClienteForSetName = function () {
+        $scope.showInfoClienteForSetName2 = function () {
             var codigocliente = $scope.s_ident_new_client_setnombre;
 
             if (codigocliente != 0 && codigocliente != undefined) {
@@ -493,6 +637,35 @@
             }
         };
 
+        $scope.showInfoClienteForSetName = function (object) {
+
+            console.log(object);
+
+            if (object.originalObject != undefined) {
+                var codigocliente = object.originalObject.cliente[0].idcliente;
+
+                if (codigocliente != 0 && codigocliente != undefined) {
+
+                    $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
+                        $scope.nom_new_cliente_setnombre = object.originalObject.razonsocial;
+                        $scope.direcc_new_cliente_setnombre = object.originalObject.direccion;
+                        $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
+                        $scope.celular_new_cliente_setnombre = object.originalObject.celphone;
+                        $scope.telf_trab_new_cliente_setnombre = response[0].telefonoprincipaltrabajo;
+                        $scope.h_codigocliente_new = codigocliente;
+                    });
+
+                } else {
+                    $scope.nom_new_cliente_setnombre = '';
+                    $scope.direcc_new_cliente_setnombre = '';
+                    $scope.telf_new_cliente_setnombre = '';
+                    $scope.celular_new_cliente_setnombre = '';
+                    $scope.telf_trab_new_cliente_setnombre = '';
+                }
+            }
+
+        };
+
         $scope.getSuministrosForSetName = function (codigocliente, numerosuministro) {
             $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
@@ -507,7 +680,7 @@
             });
         };
 
-        $scope.showInfoSuministroForSetName = function () {
+        $scope.showInfoSuministroForSetName2 = function () {
             var numerosuministro = $scope.s_suministro_setnombre;
 
             if (numerosuministro != 0 && numerosuministro != undefined) {
@@ -529,9 +702,32 @@
             }
         };
 
+        $scope.showInfoSuministroForSetName = function () {
+
+            var numerosuministro = $scope.s_suministro_setnombre;
+
+            if (numerosuministro != 0 && numerosuministro != undefined) {
+                var longitud = $scope.list_suministros.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (numerosuministro == $scope.list_suministros[i].idsuministro) {
+                        $scope.zona_setnombre = $scope.list_suministros[i].calle.barrio.namebarrio;
+                        $scope.transversal_setnombre = $scope.list_suministros[i].calle.namecalle;
+                        $scope.tarifa_setnombre = $scope.list_suministros[i].tarifaaguapotable.nametarifaaguapotable;
+
+                        break;
+                    }
+                }
+            } else {
+                $scope.zona_setnombre = '';
+                $scope.transversal_setnombre = '';
+                $scope.tarifa_setnombre = '';
+            }
+        };
+
         $scope.saveSolicitudCambioNombre = function () {
             var solicitud = {
-                codigoclientenuevo: $scope.s_ident_new_client_setnombre,
+                codigoclientenuevo: $scope.h_codigocliente_new,
                 numerosuministro: $scope.s_suministro_setnombre
             };
             var idsolicitud = $scope.num_solicitud_setnombre;
@@ -563,66 +759,82 @@
 
         $scope.actionSetName = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
 
-            $scope.getIdentifyClientes(solicitud.data.codigocliente, solicitud.data.codigoclientenuevo);
+            $scope.num_solicitud_setnombre = solicitud.solicitudcambionombre;
+            $scope.t_fecha_setnombre = solicitud.fechasolicitud;
+            $scope.h_codigocliente_setnombre = solicitud.idcliente;
+            $scope.documentoidentidad_cliente_setnombre = solicitud.cliente.persona.numdocidentific;
+            $scope.nom_cliente_setnombre = solicitud.cliente.persona.razonsocial;
+            $scope.direcc_cliente_setnombre = solicitud.cliente.persona.direccion;
+            $scope.telf_cliente_setnombre = solicitud.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente_setnombre = solicitud.cliente.persona.celphone;
+            $scope.telf_trab_cliente_setnombre = solicitud.cliente.telefonoprincipaltrabajo;
 
-            $scope.num_solicitud_setnombre = solicitud.data.idsolicitudcambionombre;
-            $scope.t_fecha_setnombre = solicitud.data.fechasolicitud;
-            $scope.h_codigocliente_setnombre = solicitud.data.cliente.codigocliente;
-            $scope.documentoidentidad_cliente_setnombre = solicitud.data.cliente.documentoidentidad;
-            $scope.nom_cliente_setnombre = solicitud.data.cliente.apellidos + ', ' + solicitud.data.cliente.nombres;
-            $scope.direcc_cliente_setnombre = solicitud.data.cliente.direcciondomicilio;
-            $scope.telf_cliente_setnombre = solicitud.data.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_setnombre = solicitud.data.cliente.celular;
-            $scope.telf_trab_cliente_setnombre = solicitud.data.cliente.telefonoprincipaltrabajo;
+            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
 
-            $scope.junta_setnombre = '';
-            $scope.toma_setnombre = '';
-            $scope.canal_setnombre = '';
-            $scope.derivacion_setnombre = '';
-            $scope.cultivo_setnombre = '';
-            $scope.area_setnombre = '';
-            $scope.caudal_setnombre = '';
-            $scope.nom_new_cliente_setnombre = '';
-            $scope.direcc_new_cliente_setnombre = '';
-            $scope.telf_new_cliente_setnombre = '';
-            $scope.celular_new_cliente_setnombre = '';
-            $scope.telf_trab_new_cliente_setnombre = '';
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_setN = array_temp;
 
 
-            if(solicitud.data.estaprocesada == true) {
 
-                $scope.suministro_setN = [{label: solicitud.data.suministro.direccionsumnistro, id: solicitud.data.numerosuministro}];
-                $scope.s_suministro_setnombre = solicitud.data.numerosuministro;
+                $http.get(API_URL + 'solicitud/getSolicitudSetN/' + solicitud.tipo_id).success(function(response){
 
-                $scope.zona_setnombre = solicitud.data.suministro.calle.barrio.nombrebarrio;
-                $scope.transversal_setnombre = solicitud.data.suministro.calle.nombrecalle;
-                $scope.tarifa_setnombre = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+                    console.log(response);
 
-                $('#s_suministro_setnombre').prop('disabled', true);
-                $('#s_ident_new_client_setnombre').prop('disabled', true);
+                    //Datos del Suministro
 
-                $('#btn-save-setnombre').prop('disabled', true);
-                $('#btn-process-setnombre').prop('disabled', true);
-                $('#modal-footer-setnombre').hide();
-            } else {
+                    $scope.s_suministro_setnombre = response[0].idsuministro;
+                    $scope.zona_setnombre = response[0].suministro.calle.barrio.namebarrio;
+                    $scope.transversal_setnombre = response[0].suministro.calle.namecalle;
+                    $scope.tarifa_setnombre = response[0].suministro.tarifaaguapotable.nametarifaaguapotable;
 
-                $scope.getSuministrosForSetName(solicitud.data.codigocliente, solicitud.data.numerosuministro);
+                    //Datos del Cliente Nuevo
 
-                $scope.zona_setnombre = solicitud.data.suministro.calle.barrio.nombrebarrio;
-                $scope.transversal_setnombre = solicitud.data.suministro.calle.nombrecalle;
-                $scope.tarifa_setnombre = solicitud.data.suministro.aguapotable.nombretarifaaguapotable;
+                    $scope.s_ident_new_client_setnombre = response[0].cliente.persona.numdocidentific;
+                    $scope.$broadcast('angucomplete-alt:changeInput', 's_ident_new_client_setnombre', response[0].cliente.persona.numdocidentific);
 
-                $('#s_suministro_setnombre').prop('disabled', false);
-                $('#s_ident_new_client_setnombre').prop('disabled', false);
+                    $scope.h_codigocliente_new = response[0].idcliente;
+                    $scope.nom_new_cliente_setnombre = response[0].cliente.persona.razonsocial;
+                    $scope.direcc_new_cliente_setnombre = response[0].cliente.persona.direccion;
+                    $scope.celular_new_cliente_setnombre = response[0].cliente.persona.celphone;
+                    $scope.telf_new_cliente_setnombre = response[0].cliente.telefonoprincipaldomicilio;
+                    $scope.telf_trab_new_cliente_setnombre = response[0].cliente.telefonoprincipaltrabajo;
 
-                $('#btn-save-setnombre').prop('disabled', false);
-                $('#btn-process-setnombre').prop('disabled', false);
-                $('#modal-footer-setnombre').show();
-            }
+                    if(solicitud.estadoprocesada == true) {
 
-            $('#modalActionSetNombre').modal('show');
+                        $scope.disableInput = true;
+
+                        $('#s_suministro_setnombre').prop('disabled', true);
+                        $('#s_ident_new_client_setnombre').prop('disabled', true);
+
+                        $('#btn-save-setnombre').prop('disabled', true);
+                        $('#btn-process-setnombre').prop('disabled', true);
+                        $('#modal-footer-setnombre').hide();
+                    } else {
+
+                        $scope.disableInput = false;
+
+                        $('#s_suministro_setnombre').prop('disabled', false);
+                        $('#s_ident_new_client_setnombre').prop('disabled', false);
+
+                        $('#btn-save-setnombre').prop('disabled', false);
+                        $('#btn-process-setnombre').prop('disabled', false);
+                        $('#modal-footer-setnombre').show();
+                    }
+
+                    $('#modalActionSetNombre').modal('show');
+
+                });
+
+            });
+
         };
 
         /*
@@ -686,7 +898,73 @@
 
         $scope.actionServicioShow = function (solicitud) {
 
-            $scope.idsolicitud_to_process = solicitud.data.idsolicitud;
+            console.log(solicitud);
+
+            $scope.idsolicitud_to_process = solicitud.idsolicitud;
+
+            $scope.num_solicitud_servicio = solicitud.solicitudservicio;
+            $scope.t_fecha_process = solicitud.fechasolicitud;
+            $scope.h_codigocliente = solicitud.idcliente;
+            $scope.documentoidentidad_cliente = solicitud.cliente.persona.numdocidentific;
+            $scope.nom_cliente = solicitud.cliente.persona.razonsocial;
+            $scope.direcc_cliente = solicitud.cliente.persona.direccion;
+            $scope.telf_cliente = solicitud.cliente.telefonoprincipaldomicilio;
+            $scope.celular_cliente = solicitud.cliente.persona.celphone;
+            $scope.telf_trab_cliente = solicitud.cliente.telefonoprincipaltrabajo;
+
+            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                $scope.list_suministros = [];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].direccionsumnistro, id: response[i].idsuministro});
+                    $scope.list_suministros.push(response[i]);
+                }
+                $scope.suministro_setN = array_temp;
+
+
+
+                $http.get(API_URL + 'solicitud/getSolicitudServicio/' + solicitud.tipo_id).success(function(response){
+
+                    console.log(response);
+
+                    var longitud = response.length;
+                    var array_temp = [];
+                    for (var i = 0; i < longitud; i++) {
+                        var object_service = {
+                            idserviciojunta: response[i].idcatalogitem,
+                            nombreservicio: response[i].cont_catalogitem.nombreproducto,
+                            valor: response[i].valor
+                        };
+                        array_temp.push(object_service);
+                    }
+                    $scope.services = array_temp;
+
+
+                    if(solicitud.estadoprocesada == true) {
+
+                        $scope.disableInput = true;
+
+                        $('#btn-save-servicio').prop('disabled', true);
+                        $('#btn-process-servicio').prop('disabled', true);
+                        $('#modal-footer-servicio').hide();
+                    } else {
+
+                        $scope.disableInput = false;
+
+                        $('#btn-save-servicio').prop('disabled', false);
+                        $('#btn-process-servicio').prop('disabled', false);
+                        $('#modal-footer-servicio').show();
+                    }
+
+                    $('#modalActionServicio').modal('show');
+
+                });
+
+            });
+
+            /*$scope.idsolicitud_to_process = solicitud.data.idsolicitud;
 
             $scope.num_solicitud_servicio = solicitud.data.idsolicitudservicio;
             $scope.t_fecha_process = solicitud.data.fechasolicitud;
@@ -720,7 +998,7 @@
                 $('#btn-save-servicio').prop('disabled', false);
                 $('#btn-process-servicio').prop('disabled', false);
                 $('#modal-footer-servicio').show();
-            }
+            }*/
 
             $('#modalActionServicio').modal('show');
         };
@@ -729,7 +1007,7 @@
          *  ACTIONS FOR SOLICITUD SUMINISTRO----------------------------------------------------------------------------
          */
 
-        $scope.getLastIDSolSuministro = function () {
+        /*$scope.getLastIDSolSuministro = function () {
             $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
                 $scope.num_solicitud_suministro = response.id;
             });
@@ -808,7 +1086,7 @@
                 $scope.creditos = array_temp;
                 $scope.s_suministro_credito = 0;
             });
-        };
+        };*/
 
         $scope.getInfoMedidor = function () {
             $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
@@ -903,14 +1181,128 @@
             }
         };
 
+
+        $scope.getLastIDSolSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
+                $scope.num_solicitud_suministro = response.id;
+            });
+        };
+
+        $scope.getLastIDSuministro = function () {
+            $http.get(API_URL + 'cliente/getLastID/suministro').success(function(response){
+                $scope.t_suministro_nro = response.id;
+            });
+        };
+
+        $scope.getTarifas = function () {
+            $http.get(API_URL + 'cliente/getTarifas').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].nametarifaaguapotable, id: response[i].idtarifaaguapotable})
+                }
+                $scope.tarifas = array_temp;
+                $scope.s_suministro_tarifa = '';
+            });
+        };
+
+        $scope.getBarrios = function () {
+            $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
+                }
+                $scope.barrios = array_temp;
+                $scope.s_suministro_zona = '';
+
+                $scope.calles = [{label: '-- Seleccione --', id: ''}];
+                $scope.s_suministro_transversal = '';
+            });
+        };
+
+        $scope.getCalles = function() {
+            var idbarrio = $scope.s_suministro_zona;
+
+            if (idbarrio != 0) {
+                $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
+                    }
+                    $scope.calles = array_temp;
+                    $scope.s_suministro_transversal = '';
+                });
+            } else {
+                $scope.calles = [{label: '-- Seleccione --', id: 0}];
+                $scope.s_suministro_transversal = 0;
+            }
+        };
+
+        $scope.getDividendo = function () {
+            $http.get(API_URL + 'cliente/getDividendos').success(function(response){
+
+                var dividendos = parseInt(response[0].optionvalue);
+
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+
+                for (var i = 1; i <= dividendos; i++) {
+                    array_temp.push({label: i, id: i})
+                }
+
+                $scope.creditos = array_temp;
+                $scope.s_suministro_credito = 0;
+            });
+        };
+
+
         $scope.actionSuministro = function (solicitud) {
-            $scope.getInfoMedidor();
+            //$scope.getInfoMedidor();
             //$scope.getLastIDSolSuministro();
             //$scope.getLastIDSuministro();
 
-            $scope.codigoclienteSuministro = solicitud.data.codigocliente;
+            $scope.getLastIDSolSuministro();
+            $scope.getLastIDSuministro();
+            $scope.getTarifas();
+            $scope.getBarrios();
+            $scope.getDividendo();
 
-            if (solicitud.data.suministro != null) {
+            $scope.codigoclienteSuministro = solicitud.idcliente;
+
+            $http.get(API_URL + 'solicitud/getSolicitudSuministro/' + solicitud.tipo_id).success(function(response){
+
+                console.log(response);
+
+                $scope.t_suministro_telf = response[0].telefonosuminstro;
+                $scope.t_suministro_direccion = response[0].direccioninstalacion;
+
+                if(solicitud.estadoprocesada == true) {
+
+                    $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
+                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+                    $scope.s_suministro_transversal = response[0].suministro.calle.idcalle;
+
+                    $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
+
+
+                    $('#btn-save-solsuministro').prop('disabled', true);
+                    $('#btn-process-solsuministro').prop('disabled', true);
+                    $('#modal-footer-suministro').hide();
+                } else {
+                    $('#btn-save-solsuministro').prop('disabled', false);
+                    $('#btn-process-solsuministro').prop('disabled', false);
+                    $('#modal-footer-suministro').show();
+                }
+
+                $('#modalActionSuministro').modal('show');
+
+            });
+
+
+
+            /*if (solicitud.suministro != null) {
                 $scope.getTarifas(solicitud.data.suministro.idtarifaaguapotable);
                 $scope.getBarrios(solicitud.data.suministro.calle.idbarrio);
                 $scope.getCalles(solicitud.data.suministro.calle.idbarrio, solicitud.data.suministro.calle.idcalle);
@@ -962,9 +1354,9 @@
             $scope.t_suministro_garantia = '';
             $scope.t_suministro_cuota = '';
 
-            $('#btn-process-solsuministro').prop('disabled', true);
+            $('#btn-process-solsuministro').prop('disabled', true);*/
 
-            $('#modalActionSuministro').modal('show');
+            //$('#modalActionSuministro').modal('show');
         };
 
         $scope.saveSolicitudSuministro = function () {

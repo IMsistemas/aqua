@@ -6,6 +6,7 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Clientes\TipoCliente;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Facturas\Factura;
+use App\Modelos\Facturas\OtrosValoresCobroAgua;
 use App\Modelos\Facturas\OtrosValoresFactura;
 use App\Modelos\Facturas\OtrosValores;
 use App\Modelos\Servicios\ServicioJunta;
@@ -38,42 +39,26 @@ class FacturaController extends Controller
 
     public function getMultas()
     {
-        return OtrosValores::orderBy('nombreotrovalor', 'asc')->get();
+        return OtrosValores::orderBy('nombreotrosvalores', 'asc')->get();
     }
 
     public function getCobroAgua(Request $request)
     {
 
-        /*return Factura::with('cobroagua.suministro.cliente', 'cobroagua.suministro.aguapotable',
-                                        'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
-                                        'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta')
-                                        ->orderBy('fechafactura','asc')->paginate(5);*/
-
-        /*$facturas = Factura::with('cobroagua.suministro.cliente', 'cobroagua.suministro.aguapotable',
-                                'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
-                                'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta');*/
-
         $filter = json_decode($request->get('filter'));
 
         $search = $filter->search;
 
-        /*$facturas = Factura::with(['cobroagua.suministro.cliente' => function ($query) use ($search) {
-                                     return $query->whereRaw("(cliente.apellidos LIKE '%" . $search . "%' OR cliente.nombres LIKE '%" . $search . "%')");
-                                    },
-            'cobroagua.suministro.aguapotable', 'otrosvaloresfactura.otrosvalores', 'serviciosenfactura.serviciojunta',
-            'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta']);*/
-
-        $facturas = Factura::with(
+        $facturas = CobroAgua::with(
             [
-                'cobroagua.suministro.aguapotable', 'otrosvaloresfactura.otrovalor', 'serviciosenfactura.serviciojunta',
-                'cobroagua.lectura', 'cliente.servicioscliente.serviciojunta',
+                'suministro.tarifaaguapotable', 'lectura', 'catalogoitem_cobroagua.cont_catalogitem', 'otrosvalores_cobroagua.otrosvalores',
 
-                'cobroagua' => function ($query) use ($search){
-                    return $query->with([
-                        'suministro' => function ($query_suministro) use ($search) {
-                            return $query_suministro->with([
-                                'cliente' => function ($query_cliente) use ($search) {
-                                    $query_cliente->whereRaw("(cliente.apellidos LIKE '%" . $search . "%' OR cliente.nombres LIKE '%" . $search . "%')");
+                'suministro' => function ($query_suministro) use ($search) {
+                    return $query_suministro->with([
+                        'cliente' => function ($query_cliente) use ($search) {
+                            return $query_cliente->with([
+                                'persona' => function ($query_persona) use ($search) {
+                                    $query_persona->whereRaw("(persona.lastnamepersona LIKE '%" . $search . "%' OR persona.namepersona LIKE '%" . $search . "%')");
                                 }
                             ]);
                         }
@@ -83,21 +68,21 @@ class FacturaController extends Controller
 
 
         if ($filter->estado == 1) {
-            $facturas->where('estapagado', true);
+            $facturas->where('estadopagado', true);
         }
         if ($filter->estado == 2) {
-            $facturas->where('estapagado', false);
+            $facturas->where('estadopagado', false);
         }
 
         if ($filter->mes != null && $filter->mes != '') {
-            $facturas->whereRaw('EXTRACT( MONTH FROM fechafactura) = ' . $filter->mes);
+            $facturas->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . $filter->mes);
         }
 
         if ($filter->anio != null && $filter->anio != '') {
-            $facturas->whereRaw('EXTRACT( YEAR FROM fechafactura) = ' . $filter->anio);
+            $facturas->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . $filter->anio);
         }
 
-        return $facturas->orderBy('fechafactura','asc')->paginate(5);
+        return $facturas->orderBy('fechacobro','asc')->paginate(5);
     }
 
     public function Filtrar($filter)
@@ -130,7 +115,18 @@ class FacturaController extends Controller
 
     public function verifyPeriodo()
     {
-        $countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha ) = ' . date('m'))
+        $countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fechacobro ) = ' . date('m'))
+                                        ->whereRaw('EXTRACT( YEAR FROM fechacobro ) = ' . date('Y'))->count();
+
+        if ($countCobroAgua > 0) {
+            $activate = true;
+        } else {
+            $activate = false;
+        }
+
+        return response()->json(['success' => $activate]);
+
+        /*$countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha ) = ' . date('m'))
                                     ->whereRaw('EXTRACT( YEAR FROM fecha ) = ' . date('Y'))
                                     ->get();
 
@@ -151,7 +147,7 @@ class FacturaController extends Controller
             }
         } else $activate = true;
 
-        return response()->json(['success' => $activate]);
+        return response()->json(['success' => $activate]);*/
 
         /*if($countCobroAgua != 0) {
             $count_suministro=Suministro::whereRaw('numerosuministro NOT IN(SELECT numerosuministro FROM cobroagua)')->count();
@@ -172,22 +168,22 @@ class FacturaController extends Controller
 
         if (count($cliente) > 0) {
             foreach ($cliente as $item) {
-                $cliente_suministro = Suministro::where('codigocliente', $item->codigocliente)->get();
+                $cliente_suministro = Suministro::where('idcliente', $item->idcliente)->get();
                 if (count($cliente_suministro) > 0) {
 
                     foreach ($cliente_suministro as $item0) {
-                        $objectCobro = CobroAgua::where('numerosuministro', $item0->numerosuministro)
-                                                    ->whereRaw('EXTRACT( MONTH FROM fecha) = ' . date('m'))
-                                                    ->whereRaw('EXTRACT( YEAR FROM fecha) = ' . date('Y'))
+                        $objectCobro = CobroAgua::where('idsuministro', $item0->idsuministro)
+                                                    ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . date('m'))
+                                                    ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . date('Y'))
                                                     ->count();
                         if ($objectCobro == 0) {
                             $cobro = new CobroAgua();
-                            $cobro->fecha = date('Y-m-d');
-                            $cobro->numerosuministro = $item0->numerosuministro;
-                            $cobro->estapagado = false;
+                            $cobro->fechacobro = date('Y-m-d');
+                            $cobro->idsuministro = $item0->idsuministro;
+                            $cobro->estadopagado = false;
                             $cobro->save();
 
-                            $factura = new Factura();
+                            /*$factura = new Factura();
                             $factura->fechafactura = date('Y-m-d');
                             $factura->idcobroagua = $cobro->idcobroagua;
                             $factura->codigocliente = $item->codigocliente;
@@ -196,12 +192,12 @@ class FacturaController extends Controller
 
                             $cobro2 = CobroAgua::find($cobro->idcobroagua);
                             $cobro2->idfactura = $factura->idfactura;
-                            $cobro2->save();
+                            $cobro2->save();*/
                         }
                     }
 
                 } else {
-                    $partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM facturacobro WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
+                    /*$partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM facturacobro WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
                     $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
 
                     $cliente_servicio = ServiciosCliente::where('codigocliente', $item->codigocliente)
@@ -213,7 +209,7 @@ class FacturaController extends Controller
                         $factura->codigocliente = $item->codigocliente;
                         $factura->estapagado = false;
                         $factura->save();
-                    }
+                    }*/
 
                 }
             }
@@ -246,19 +242,19 @@ class FacturaController extends Controller
             if ($item['id'] != 0){
                 if ($item['valor'] != 0 && $item['valor'] != '') {
 
-                    $object_find = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
-                                                ->where('idotrovalor', $item['id'])
+                    $object_find = OtrosValoresCobroAgua::where('idcobroagua', $request->input('no_factura'))
+                                                ->where('idotrosvalores', $item['id'])
                                                 ->get();
 
                     if (count($object_find) == 0){
-                        $object = new OtrosValoresFactura();
-                        $object->idfactura = $request->input('no_factura');
+                        $object = new OtrosValoresCobroAgua();
+                        $object->idcobroagua = $request->input('no_factura');
                         $object->valor = $item['valor'];
-                        $object->idotrovalor = $item['id'];
+                        $object->idotrosvalores = $item['id'];
                         $object->save();
                     } else {
-                        $object = OtrosValoresFactura::where('idfactura', $request->input('no_factura'))
-                                                        ->where('idotrovalor', $item['id']);
+                        $object = OtrosValoresCobroAgua::where('idcobroagua', $request->input('no_factura'))
+                                                        ->where('idotrosvalores', $item['id']);
                         if ($object->update(['valor' => $item['valor']]) == false){
                             return response()->json(['success' => false]);
                         }
@@ -268,9 +264,9 @@ class FacturaController extends Controller
 
         }
 
-        $factura = Factura::find($request->input('no_factura'));
+        /*$factura = Factura::find($request->input('no_factura'));
         $factura->totalfactura = $request->input('total');
-        $factura->save();
+        $factura->save();*/
 
         return response()->json(['success' => true]);
     }
@@ -306,10 +302,9 @@ class FacturaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $cobro = CobroAgua::find($id);
 
-        $cobro = Factura::find($id);
-
-        $cobro->estapagado = true;
+        $cobro->estadopagado = true;
         $cobro->save();
 
         return response()->json(['success' => true]);
@@ -326,7 +321,7 @@ class FacturaController extends Controller
         //
     }
 
-    public function print(Request $request)
+    public function printer(Request $request)
     {
         $data = $request->input('item');
 
@@ -343,8 +338,12 @@ class FacturaController extends Controller
             mkdir(public_path().'/uploads/factura/');
         }
 
-        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf');
+        /*$pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf');
 
-        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf']);
+        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf']);*/
+
+        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['idsuministro'] . '.pdf');
+
+        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['idsuministro'] . '.pdf']);
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Sectores;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +30,6 @@ class BarrioController extends Controller
 
         foreach ($calles->calles as $idcalle) {
             $result = Canal::where('idcalle', $idcalle->idcalle)->orderBy('nombrecanal', 'asc')->get();
-            //$t = ['idcalle' => $idcalle->idcalle, 'canales' => $result];
             $t = ['idcalle' => $idcalle->nombrecalle, 'canales' => $result];
             $array_aux[] = $t;
         }
@@ -39,17 +38,17 @@ class BarrioController extends Controller
 
     public function getBarrios()
     {
-        return Barrio::with('calle')->orderBy('nombrebarrio', 'asc')->get();
+        return Barrio::with('calle')->orderBy('namebarrio', 'asc')->get();
     }
 
     public function getBarrio()
     {
-        return Barrio::orderBy('nombrebarrio', 'asc')->get();
+        return Barrio::orderBy('namebarrio', 'asc')->get();
     }
 
     public function getBarrio_ID($id)
     {
-        return Barrio::where('idbarrio', $id)->orderBy('nombrebarrio', 'asc')->get();
+        return Barrio::where('idbarrio', $id)->orderBy('namebarrio', 'asc')->get();
     }
 
     public function getCanals($data)
@@ -98,7 +97,7 @@ class BarrioController extends Controller
 
     public function getParroquias()
     {
-        return Parroquia::orderBy('nombreparroquia', 'asc')->get();
+        return Parroquia::orderBy('nameparroquia', 'asc')->get();
     }
 
     /**
@@ -123,7 +122,8 @@ class BarrioController extends Controller
         $barrio = new Barrio();
 
         $barrio->idparroquia = $request->input('idparroquia');
-        $barrio->nombrebarrio = $request->input('nombrebarrio');
+        $barrio->namebarrio = $request->input('nombrebarrio');
+        $barrio->fechaingreso = date('Y-m-d');
         $barrio->save();
 
         return response()->json(['success' => true]);
@@ -136,7 +136,7 @@ class BarrioController extends Controller
         foreach ($barrioa as $item) {
             $barri = Barrio::find($item['idbarrio']);
 
-            $barri->nombrebarrio = $item['nombrebarrio'];
+            $barri->namebarrio = $item['namebarrio'];
 
             $barri->save();
         }

@@ -2,7 +2,15 @@
 
 <div ng-controller="facturaController">
 
-    <div class="col-xs-12" style="margin-top: 15px;">
+    <div class="col-xs-12">
+
+        <h4>Gestión de Cobros y Servicios</h4>
+
+        <hr>
+
+    </div>
+
+    <div class="col-xs-12" style="margin-top: 5px;">
 
         <div class="col-sm-4 col-xs-12">
             <div class="form-group has-feedback">
@@ -57,29 +65,29 @@
             </tr>
             </thead>
             <tbody>
-            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 " total-items="totalItems" ng-cloak>
-                <td>{{item.idfactura}}</td>
-                <td>{{ FormatoFecha(item.fechafactura)}}</td>
-                <td>{{yearmonth (item.fechafactura)}}</td>
-                <td>{{item.cliente.complete_name}}</td>
+            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 | filter:t_busqueda" total-items="totalItems" ng-cloak>
+                <td>{{item.idcobroagua}}</td>
+                <td>{{ FormatoFecha(item.fechacobro)}}</td>
+                <td>{{yearmonth (item.fechacobro)}}</td>
+                <td>{{item.suministro.cliente.persona.razonsocial}}</td>
                 <td>
-                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}; </span>
+                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}</span>
                 </td>
-                <td>{{item.cobroagua.suministro.numerosuministro}}</td>
-                <td>{{item.cobroagua.suministro.aguapotable.nombretarifaaguapotable}}</td>
-                <td>{{item.cobroagua.suministro.direccionsumnistro}}</td>
-                <td>{{item.cobroagua.suministro.telefonosuministro}}</td>
-                <td>{{item.cobroagua.lectura.consumo}}</td>
-                <td>{{Pagada(item.estapagado)}}</td>
+                <td>{{item.suministro.idsuministro}}</td>
+                <td>{{item.suministro.tarifaaguapotable.nametarifaaguapotable}}</td>
+                <td>{{item.suministro.direccionsumnistro}}</td>
+                <td>{{item.suministro.telefonosuministro}}</td>
+                <td>{{item.lectura.consumo}}</td>
+                <td>{{Pagada(item.estadopagado)}}</td>
                 <td>{{item.totalfactura}}</td>
                 <td>
-                    <span ng-if="item.estapagado == true">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)">
+                    <span ng-if="item.estadopagado == true">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)">
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>
-                    <span ng-if="item.estapagado == false">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="print(item)" disabled>
+                    <span ng-if="item.estadopagado == false">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)" disabled>
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>
@@ -124,7 +132,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-md-11 col-xs-12">
-                        <h4 class="modal-title">Factura</h4>
+                        <h4 class="modal-title">Factura: {{num_factura}} </h4>
                     </div>
                             <div class="col-sm-1 col-xs-12 text-right">
                                 <div class="col-xs-2"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -134,14 +142,6 @@
                 <div class="modal-body">
                     <form class="form-horizontal" name="formProcess" novalidate="">
 
-                        <div class="col-sm-6 col-xs-12 form-group" style="padding-left: 0;">
-                            <label for="num_factura" class="col-sm-6 col-xs-12 control-label text-left">No. Factura:</label>
-                            <div class="col-sm-6 col-xs-12" style="padding-left: 0;">
-                                <input type="text" class="form-control" name="num_factura" id="num_factura" ng-model="num_factura" disabled>
-                            </div>
-                        </div>
-
-
                         <div class="row">
                             <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
                                 <fieldset ng-cloak>
@@ -149,25 +149,36 @@
 
                                     <div class="col-xs-12" style="padding: 0;">
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-info" style="font-size: 14px !important;">
-                                                <i class="fa fa-star" aria-hidden="true"></i> RUC/CI:</span> {{documentoidentidad_cliente}}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">RUC/CI: </span>
+                                                <input type="text" class="form-control" name="documentoidentidad_cliente" ng-model="documentoidentidad_cliente" readonly/>
+                                            </div>
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                             <span class="label label-info" style="font-size: 14px !important;">
-                                                <i class="fa fa-user" aria-hidden="true"></i> CLIENTE:</span> {{nom_cliente}}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Cliente: </span>
+                                                <input type="text" class="form-control" name="nom_cliente" ng-model="nom_cliente" readonly/>
+                                            </div>
                                             <input type="hidden" ng-model="h_codigocliente">
                                         </div>
                                     </div>
+
                                     <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 14px !important;">
-                                                <i class="fa fa-map-marker" aria-hidden="true"></i> Dirección Domicilio:</span> {{direcc_cliente}}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Dirección Domicilio: </span>
+                                                <input type="text" class="form-control" name="direcc_cliente" ng-model="direcc_cliente" readonly/>
+                                            </div>
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
-                                            <span class="label label-default" style="font-size: 14px !important;">
-                                                <i class="fa fa-mobile" aria-hidden="true"></i> Teléf. Celular:</span> {{telf_cliente}}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Teléf. Celular: </span>
+                                                <input type="text" class="form-control" name="telf_cliente" ng-model="telf_cliente" readonly/>
+                                            </div>
                                         </div>
                                     </div>
+
                                    </fieldset>
                             </div>
 

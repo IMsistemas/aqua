@@ -1,4 +1,11 @@
+    
+    <div class="col-xs-12">
 
+                <h4>Facturación de Compras</h4>
+
+                <hr>
+
+            </div>
     <div ng-controller="comprasproductoController">
     
     <div class="container1" ng-show="listado">       
@@ -97,6 +104,7 @@
                 </table>
                 <dir-pagination-controls
 			       max-size="5"
+			       class="pull-left"
 			       direction-links="true"
 			       boundary-links="true" >
 			    </dir-pagination-controls>
@@ -308,10 +316,10 @@
 		                    
 		                    <input type="text" class="form-control" name="numero1" ng-model="numero1"									
 										id="numero1" ng-required="true"
-										ng-minlength="3"
-										maxlength="3"
-										ng-pattern="/[0-9]+$/"										
+										ng-maxlength="3"
+										maxlength="3"																				
 										ng-disabled="guardado"
+										ng-keypress="onlyNumber($event,3,'numero1')" ng-blur="numero1=calculateLength('numero1',3)" 
 										> 
 		                    
 		                    
@@ -319,20 +327,19 @@
 	                    <span class="input-group-btn" style="width: 15%;" >
 		                     <input type="text" class="form-control" name="numero2" ng-model="numero2"									
 									id="numero2" ng-required="true"
-									ng-minlength="3"
+									ng-maxlength="3"
 									maxlength="3"
-									ng-pattern="/[0-9]+$/"
-									
+									ng-keypress="onlyNumber($event,3,'numero2')" ng-blur="numero2=calculateLength('numero2',3)" 									
 									ng-disabled="guardado"
 									> 
 		                </span>
 	                    <input type="text" class="form-control" name="numero3" ng-model="numero3"									
 									id="numero3" ng-required="true"
-									ng-maxlength="8"
-									maxlength="8"
+									ng-maxlength="9"
+									maxlength="9"
+									ng-keypress="onlyNumber($event,9,'numero3')" ng-blur="numero3=calculateLength('numero3',9)" 
 									
-									ng-pattern="/[0-9]+$/"
-									style="width: 100px;"
+									
 									ng-disabled="guardado"
 									> 
 	                </div>
@@ -363,7 +370,7 @@
 				<div class="col-sm-8 col-xs-12" style="margin-top: 5px;">
 					<div class="input-group">                        
 		                <span class="input-group-addon">Fecha Emisión: </span>
-		                <input type="text" class="form-control datepicker" datetime-picker name="fechaemisioncompra"
+		                <input type="text" class="form-control datepicker"  name="fechaemisioncompra"
 									id="fechaemisioncompra" 
 									ng-model="compra.fechaemisioncompra"	
 																	

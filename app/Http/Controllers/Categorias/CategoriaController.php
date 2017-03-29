@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Categorias;
-use App\Modelos\Categoria;
+use App\Modelos\Contabilidad\Cont_Categoria;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -28,9 +29,9 @@ class CategoriaController extends Controller
      */
     public function lastCategoria($id)
     {    	
-    	$resultado = DB::table('categoria')
-                  ->select(DB::raw('subpath(idcategoria,-1,1) as nivel'))
-                  ->whereRaw("nlevel(idcategoria) =".$id )
+    	$resultado = DB::table('cont_categoria')
+                  ->select(DB::raw('subpath(jerarquia,-1,1) as nivel'))
+                  ->whereRaw("nlevel(jerarquia) =".$id )
     			  ->get();
     	$lastID = 0;
     	foreach ($resultado as $item){
@@ -50,8 +51,8 @@ class CategoriaController extends Controller
      */
     public function getCategoriasToFilter()
     {
-    	 return Categoria::orderBy('idcategoria', 'asc')
-    	 	->whereRaw('nlevel(idcategoria) = 1')
+    	 return Cont_Categoria::orderBy('jerarquia', 'asc')
+    	 	->whereRaw('nlevel(jerarquia) = 1')
     	 	->get();
     	
     }
@@ -66,9 +67,9 @@ class CategoriaController extends Controller
     {
     	$nivel = str_replace('.', '', $id);
     	$nivelNumerico = strlen($nivel) + 1; 
-    	$resultado = DB::table('categoria')
-    	->select(DB::raw('subpath(idcategoria,-1,1) as nivel'))
-    	->whereRaw("idcategoria <@ '".$id."' and nlevel(idcategoria) = ".$nivelNumerico)    	
+    	$resultado = DB::table('cont_categoria')
+    	->select(DB::raw('subpath(jerarquia,-1,1) as nivel'))
+    	->whereRaw("jerarquia <@ '".$id."' and nlevel(jerarquia) = ".$nivelNumerico)    	
     	->get();
     	$lastID = 0;
     	foreach ($resultado as $item){
@@ -89,16 +90,16 @@ class CategoriaController extends Controller
     public function getByFilter($filter)
     {
         $filter = json_decode($filter);
-        $filterCategorias = ($filter->catId != null)?" and idcategoria <@ '".$filter->catId."'":"";  
+        $filterCategorias = ($filter->catId != null)?" and jerarquia <@ '".$filter->catId."'":"";  
         $ltree = str_replace(' ','',$filter->text);
-        $array =  Categoria::orderBy('idcategoria', 'asc')
-    	 		->whereRaw("( idcategoria <@ '".$ltree."' OR nombrecategoria ILIKE '%" . $filter->text . "%') ".$filterCategorias)       
+        $array =  Cont_Categoria::orderBy('jerarquia', 'asc')
+    	 		->whereRaw("( jerarquia <@ '".$ltree."' OR nombrecategoria ILIKE '%" . $filter->text . "%') ".$filterCategorias)       
                 ->get();
         
         $ids = array();
         $items = array();
         foreach($array as $key => $val) {
-          	$ids[$key] = $val['idcategoria'];
+          	$ids[$key] = $val['jerarquia'];
            	$items[$key] = $val;
         }
         array_multisort($ids, SORT_NATURAL, $items);
@@ -114,7 +115,10 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $result = Categoria::create($request->all());
+    	$data = $request->all();
+    	$date = Carbon::Today();
+    	$data['created_at'] = $data['updated_at']  = $date;		
+        $result = Cont_Categoria::create($data);
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
     }
 
@@ -126,14 +130,14 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = Cont_Categoria::find($id);
         return response()->json($categoria);
     }
     
     public function getCategoriaToDelete($id)
     {    	
-    	$categorias = Categoria::orderBy('idcategoria', 'asc')
-    	->whereRaw("idcategoria <@ '".$id ."'")
+    	$categorias = Cont_Categoria::orderBy('jerarquia', 'asc')
+    	->whereRaw("jerarquia <@ '".$id ."'")
     	->get();
     	$categoria = $categorias[0];
     	$categoria->hijos = count($categorias);
@@ -151,9 +155,12 @@ class CategoriaController extends Controller
     public function update($request)
     {        
         $categorias = json_decode($request);
+        $date = Carbon::Today();
+        
         foreach ($categorias as $item) {
-            $categoria = Categoria::find($item->idcategoria);
-            $categoria->nombrecategoria = $item->nombrecategoria;            
+            $categoria = Cont_Categoria::find($item->idcategoria);
+            $categoria->nombrecategoria = $item->nombrecategoria;  
+            $categoria->updated_at = $date;
             $categoria->save();
         }
         return response()->json(['success' => true]);
@@ -166,8 +173,8 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-    	$categorias = Categoria::orderBy('idcategoria', 'asc')
-    	 		->whereRaw("idcategoria <@ '".$id ."'")       
+    	$categorias = Cont_Categoria::orderBy('jerarquia', 'asc')
+    	 		->whereRaw("jerarquia <@ '".$id ."'")       
                 ->get();    	
     	foreach ($categorias as $item){
     		$item->delete();

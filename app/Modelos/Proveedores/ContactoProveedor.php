@@ -6,22 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactoProveedor extends Model
 {
-    protected $table = "contactosprovedor";
-
-    protected $primaryKey = "idcontacto";
-
-    public $incrementing = false;
-
+    protected $table = 'contactoproveedor';
+    protected $primaryKey = 'idcontactoproveedor';
     public $timestamps = false;
-
-    protected $fillable = [
-        'idproveedor', 
-        'nombrecontacto',
-        'telefonoprincipal',
-        'telefonosecundario',
-        'celular',
-        'observacion',
-    ];
 
     public function proveedor()
     {

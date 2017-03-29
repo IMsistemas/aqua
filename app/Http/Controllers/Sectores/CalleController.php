@@ -20,21 +20,21 @@ class CalleController extends Controller
 
     public function getCalles()
     {
-        return Calle::orderBy('nombrecalle', 'asc')->get();
+        return Calle::orderBy('namecalle', 'asc')->get();
     }
 
     public function getCallesById($id){
-        return Calle::where('idbarrio', $id)->orderBy('nombrecalle')->get();
+        return Calle::where('idbarrio', $id)->orderBy('namecalle')->get();
     }
 
     public function getCalleByBarrio($id){
-        return Calle::where('idbarrio', $id)->orderBy('nombrecalle')->get();
+        return Calle::where('idbarrio', $id)->orderBy('namecalle')->get();
     }
 
 
     public function getBarrios()
     {
-        return Barrio::orderBy('nombrebarrio', 'asc')->get();
+        return Barrio::orderBy('namebarrio', 'asc')->get();
     }
 
 
@@ -73,7 +73,8 @@ class CalleController extends Controller
         $calle = new Calle();
 
         $calle->idbarrio = $request->input('idbarrio');
-        $calle->nombrecalle = $request->input('nombrecalle');
+        $calle->namecalle = $request->input('nombrecalle');
+        $calle->fechaingreso = date('Y-m-d');
 
         $calle->save();
 
@@ -89,7 +90,7 @@ class CalleController extends Controller
         foreach ($callea as $item) {
             $calle1 = Calle::find($item['idcalle']);
 
-            $calle1->nombrecalle = $item['nombrecalle'];
+            $calle1->namecalle = $item['namecalle'];
 
             $calle1->save();
         }
