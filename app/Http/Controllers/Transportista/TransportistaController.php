@@ -38,7 +38,7 @@ class TransportistaController extends Controller
         $transportista = Transportista::join('persona', 'persona.idpersona', '=', 'transportista.idpersona');
 
         if ($search != null) {
-            $transportista = $transportista->whereRaw("persona.razonsocial LIKE '%" . $search . "%'");
+            $transportista = $transportista->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
         }
 
         return $transportista->orderBy('fechaingreso', 'desc')->paginate(10);
