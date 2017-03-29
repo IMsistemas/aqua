@@ -1,4 +1,10 @@
+<div class="col-xs-12">
 
+                <h4>Facturación de Ventas</h4>
+
+                <hr>
+
+            </div>
 
 
 <div  class="container-fluid" ng-controller="facturacioventa" ng-cloak  ng-init="HeadInfoFacturaVenta();FormaPagoVenta(); ConfigContable();FiltrarVenta();LoadDataToFiltro();">

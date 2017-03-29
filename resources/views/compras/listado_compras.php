@@ -1,4 +1,11 @@
+    
+    <div class="col-xs-12">
 
+                <h4>Facturación de Compras</h4>
+
+                <hr>
+
+            </div>
     <div ng-controller="comprasproductoController">
     
     <div class="container1" ng-show="listado">       

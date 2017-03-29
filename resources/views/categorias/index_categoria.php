@@ -1,4 +1,11 @@
 
+    <div class="col-xs-12">
+
+                <h4>Portafolio</h4>
+
+                <hr>
+
+            </div>
     <div ng-controller="categoriasController">      
     
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
