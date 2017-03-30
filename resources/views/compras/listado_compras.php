@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback">
                     <select class="form-control" name="proveedor" id="proveedor" ng-model="proveedorFiltro"
                       ng-change="searchByFilter()">
-                        <option value="">Proveedor</option>
+                        <option value="">-- Seleccione Proveedor --</option>
 						<option ng-repeat="item in proveedoresFiltro"						       
 						        value="{{item.idproveedor}}">{{item.razonsocial}}     
 						</option>                        
@@ -37,7 +37,7 @@
                 <div class="form-group has-feedback">
                     <select class="form-control" name="estado" id="estado" ng-model="estadoFiltro"
                         ng-change="searchByFilter()">
-                        <option value="">Estado</option>
+                        <option value="">-- Seleccione Estado --</option>
 						<option ng-repeat="item in estados"						       
 						        value="{{item.id}}">{{item.nombre}}     
 						</option>                        
@@ -217,9 +217,9 @@
 			</div>
 
         <form class="form-horizontal" name="formCompra" id="formCompra"  novalidate="" >
-            <div class="form-group col-xs-12">
+            <div class="col-xs-12">
 
-                <div class="form-group col-xs-6">
+                <div class="col-xs-6">
                     <fieldset>
                         <legend>Datos Proveedor</legend>
 
@@ -288,7 +288,7 @@
                                 <span class="input-group-addon">Bodega: </span>
                                 <select ng-disabled="impreso" class="form-control" name="bodega" id="bodega" ng-model="compra.idbodega" ng-required="true"
                                         ng-options="item.idbodega as item.namebodega for item in bodegas">
-                                    <option value="">Bodega</option>
+                                    <option value="">-- Seleccione --</option>
                                 </select>
                             </div>
                             <span class="help-block error" ng-show="formCompra.bodega.$invalid && formCompra.bodega.$touched">La Bodega es requerida</span>
@@ -396,7 +396,7 @@
                                 <span class="input-group-addon">Sustento Tributario: </span>
                                 <select ng-disabled="impreso" class="form-control" name="codigosustento" id="codigosustento" ng-model="compra.idsustentotributario" ng-required="true"
                                         ng-options="item.idsustentotributario as item.namesustento for item in sustentotributario">
-                                    <option value="">Sustento Tributario</option>
+                                    <option value="">-- Seleccione --</option>
                                 </select>
 
 
@@ -412,7 +412,7 @@
 
                                 <select ng-disabled="impreso" class="form-control" name="tipocomprobante" id="tipocomprobante" ng-model="compra.idtipocomprobante" ng-required="true"
                                         ng-options="item.idtipocomprobante as item.namecomprobante for item in tiposComprobante">
-                                    <option value="">Tipo Comprobante</option>
+                                    <option value="">-- Seleccione --</option>
                                 </select>
 
 
@@ -425,8 +425,7 @@
 
             </div>
 
-
-            <div class="col-xs-12 text-right" style="margin-top: 5px;">
+            <div class="col-xs-12 text-right" style="">
                 <button type="button" class="btn btn-primary" style="float: right;" ng-click="addDetalle()" ng-disabled="impreso">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
@@ -478,8 +477,8 @@
                             <label class="control-label" ng-show="read">{{ item.producto.nombreproducto }}</label>
 
                         </td>
-                        <td>
-                            <input type="text" class="form-control" name="cantidad{{$index}}" id="cantidad{{$index}}" ng-disabled="impreso"
+                        <td class="text-right">
+                            <input type="text" class="form-control text-right" name="cantidad{{$index}}" id="cantidad{{$index}}" ng-disabled="impreso"
                                    ng-model="item.cantidad" ng-required="true" ng-maxlength="5" ng-pattern="/[0-9]+$/" ng-change="calcular()">
                             <span class="help-block error"
                                   ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$touched">La Cantidad es requerida</span>
@@ -490,7 +489,7 @@
                                     ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$error.pattern">La Cantidad no es válida.</span>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="unitario{{$index}}" id="unitario{{$index}}" ng-disabled="impreso"
+                            <input type="text" class="form-control text-right" name="unitario{{$index}}" id="unitario{{$index}}" ng-disabled="impreso"
                                    ng-model="item.precioUnitario" ng-required="true" ng-maxlength="8" ng-pattern="/^\d+(?:\.\d{1,4})?$/" ng-change="calcular()">
                             <span class="help-block error"
                                   ng-show="formCompra.unitario{{$index}}.$invalid && formCompra.unitario{{$index}}.$touched">El Precio Unitario es requerido</span>
@@ -501,7 +500,7 @@
                                     ng-show="formCompra.unitario{{$index}}.$invalid && formCompra.unitario{{$index}}.$error.pattern">El Precio Unitario no es válido.</span>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="descuento{{$index}}" id="descuento{{$index}}" ng-disabled="impreso"
+                            <input type="text" class="form-control text-right" name="descuento{{$index}}" id="descuento{{$index}}" ng-disabled="impreso"
                                    ng-model="item.descuento" ng-required="true" ng-maxlength="5" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
                             <span class="help-block error"
                                   ng-show="formCompra.descuento{{$index}}.$invalid && formCompra.descuento{{$index}}.$touched">El IVA es requerido</span>
@@ -512,7 +511,7 @@
                                     ng-show="formCompra.descuento{{$index}}.$invalid && formCompra.descuento{{$index}}.$error.pattern">El IVA no es válido.</span>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="iva{{$index}}" id="iva{{$index}}" ng-disabled="impreso"
+                            <input type="text" class="form-control text-right" name="iva{{$index}}" id="iva{{$index}}" ng-disabled="impreso"
                                    ng-model="item.iva" ng-required="true" ng-maxlength="5" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
                             <span class="help-block error"
                                   ng-show="formCompra.iva{{$index}}.$invalid && formCompra.iva{{$index}}.$touched">El IVA es requerido</span>
@@ -523,7 +522,7 @@
                                     ng-show="formCompra.iva{{$index}}.$invalid && formCompra.iva{{$index}}.$error.pattern">El IVA no es válido.</span>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="ice{{$index}}" id="ice{{$index}}" ng-disabled="impreso"
+                            <input type="text" class="form-control text-right" name="ice{{$index}}" id="ice{{$index}}" ng-disabled="impreso"
                                    ng-model="item.ice" ng-required="true" ng-maxlength="5" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
                             <span class="help-block error"
                                   ng-show="formCompra.ice{{$index}}.$invalid && formCompra.ice{{$index}}.$touched">El ICE es requerido</span>
@@ -535,7 +534,7 @@
                         </td>
                         <td>
 
-                            <input type="text" class="form-control" disabled ng-model="item.total" /></td>
+                            <input type="text" class="form-control text-right" disabled ng-model="item.total" /></td>
                         <td>
                             <button type="button" class="btn btn-danger" ng-click="delDetalle($index)" ng-disabled="(detalle.length ==1)||impreso">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -553,7 +552,7 @@
                         <span class="input-group-addon">Forma Pago: </span>
                         <select class="form-control" name="idformapago" id="idformapago" ng-model="compra.idformapago" ng-required="true" ng-disabled="impreso"
                                 ng-options="item.idformapago as item.nameformapago for item in formasPago">
-                            <option value="">Forma Pago</option>
+                            <option value="">-- Seleccione --</option>
                         </select>
                     </div>
                     <span class="help-block error"
@@ -581,7 +580,7 @@
                                 <span class="input-group-addon">Pais Pago: </span>
                                 <select class="form-control" name="pais" id="pais" ng-model="compra.codigopais"  >
                                     <option value="">-- Seleccione --</option>
-                                    <option value="999">Residente</option>
+                                    <option value="999">-- Seleccione --</option>
                                     <option ng-repeat="item in paises"
                                             value="{{item.idpagopais}}">{{item.pais }}
                                     </option>
@@ -667,34 +666,34 @@
                     <tbody>
                     <tr>
                         <td style="width: 60%;">SubTotal con Impuesto</td>
-                        <td>
+                        <td class="text-right">
                             {{ compra.subtotalconimpuestocompra }}
                         </td>
                     </tr>
                     <tr>
                         <td>SubTotal 0%</td>
-                        <td>{{ compra.subtotalcerocompra }} </td>
+                        <td class="text-right">{{ compra.subtotalcerocompra }} </td>
                     </tr>
                     <tr>
                         <td>SubTotal No Objeto IVA</td>
-                        <td>{{ compra.subtotalnoobjivacompra }}</td>
+                        <td class="text-right">{{ compra.subtotalnoobjivacompra }}</td>
                     </tr>
                     <tr>
                         <td>SubTotal Exento IVA</td>
-                        <td>{{ compra.subtotalexentivacompra }}</td>
+                        <td class="text-right">{{ compra.subtotalexentivacompra }}</td>
                     </tr>
                     <tr>
                         <td>SubTotal Sin Impuestos</td>
-                        <td>{{ compra.subtotalsinimpuestocompra }}</td>
+                        <td class="text-right">{{ compra.subtotalsinimpuestocompra }}</td>
                     </tr>
                     <tr>
                         <td>Total Descuento</td>
-                        <td>{{ compra.totaldescuento }}</td>
+                        <td class="text-right">{{ compra.totaldescuento }}</td>
                     </tr>
                     <tr>
                         <td>ICE</td>
                         <td>
-                            <input type="text" class="form-control" name="iceF" ng-model="compra.icecompra"
+                            <input type="text" class="form-control text-right" name="iceF" ng-model="compra.icecompra"
                                    id="iceF"
                                    ng-maxlength="5"
                                    maxlength="5"
@@ -714,7 +713,7 @@
                     <tr>
                         <td>IVA</td>
                         <td>
-                            <input type="text" class="form-control" name="ivaF" ng-model="compra.ivacompra"
+                            <input type="text" class="form-control text-right" name="ivaF" ng-model="compra.ivacompra"
                                    id="ivaF"
                                    ng-maxlength="5"
                                    maxlength="5"
@@ -734,7 +733,7 @@
                     <tr>
                         <td>IRBPNR</td>
                         <td>
-                            <input type="text" class="form-control" name="irbpnr" ng-model="compra.irbpnrcompra"
+                            <input type="text" class="form-control text-right" name="irbpnr" ng-model="compra.irbpnrcompra"
                                    id="irbpnr"
                                    ng-maxlength="5"
                                    maxlength="5"
@@ -754,7 +753,7 @@
                     <tr>
                         <td>PROPINA</td>
                         <td>
-                            <input type="text" class="form-control" name="propina" ng-model="compra.propinacompra"
+                            <input type="text" class="form-control text-right" name="propina" ng-model="compra.propinacompra"
                                    id="propina"
                                    ng-maxlength="5"
                                    maxlength="5"
@@ -773,7 +772,7 @@
                     </tr>
                     <tr>
                         <td>VALOR TOTAL</td>
-                        <td>{{ compra.valortotalcompra }}</td>
+                        <td  class="text-right">{{ compra.valortotalcompra }}</td>
                     </tr>
                     </tbody>
                 </table>

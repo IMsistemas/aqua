@@ -316,7 +316,7 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
        	$scope.guardado = true;
        console.log($scope.compra);
        	
-	        if ($scope.idcompra > 0){ 
+	        if ($scope.idcompra > 0){
 	        	
 	        	url += "/" + $scope.idcompra;        	
 	        	
@@ -350,7 +350,7 @@ app.controller('comprasproductoController',  function($scope, $http, API_URL) {
 	                           
 
 	            });
-	        }     
+	        }
 	    	
 	    }
 	
