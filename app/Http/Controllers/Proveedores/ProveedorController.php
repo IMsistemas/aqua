@@ -226,15 +226,13 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        if (ContactoProveedor::where('idproveedor', $id)->delete()) {
-            $proveedor = Proveedor::find($id);
-            if ($proveedor->delete()) {
-                return response()->json(['success' => true]);
-            }
-            else return response()->json(['success' => false]);
-        } else {
-            return response()->json(['success' => false]);
+        ContactoProveedor::where('idproveedor', $id)->delete();
+
+        $proveedor = Proveedor::find($id);
+        if ($proveedor->delete()) {
+            return response()->json(['success' => true]);
         }
+        else return response()->json(['success' => false]);
     }
 
     public function destroyContacto($idcontacto)

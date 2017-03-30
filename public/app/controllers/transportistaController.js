@@ -61,7 +61,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                     $scope.documentoidentidadempleado = '';
                     $('#documentoidentidadempleado').val('');
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', ' ');
-
+                    $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
                     $scope.razonsocial = '';
                     $scope.placa = '';
                     $scope.celular = '';

@@ -93,7 +93,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                     $scope.documentoidentidadempleado = '';
                     $('#documentoidentidadempleado').val('');
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
-
+                    $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
                     $scope.razonsocial = '';
                     $scope.telefonoprincipal = '';
                     $scope.celular = '';
@@ -371,12 +371,21 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
     $scope.destroy = function(){
         $http.delete(API_URL + 'proveedor/' + $scope.proveedor_del).success(function(response) {
-            $scope.initLoad(1);
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.proveedor_del = 0;
-            $scope.message = 'Se eliminó correctamente el Proveedor seleccionado';
-            $('#modalMessage').modal('show');
-            $scope.hideModalMessage();
+
+            if (response.success == true) {
+                $scope.initLoad(1);
+                $scope.proveedor_del = 0;
+                $scope.message = 'Se eliminó correctamente el Proveedor seleccionado';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+                $scope.message_error = 'Ha ocurrido un error..';
+                $('#modalMessageError').modal('show');
+            }
+
+
         });
     };
 

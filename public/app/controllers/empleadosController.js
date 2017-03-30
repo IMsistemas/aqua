@@ -108,7 +108,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.documentoidentidadempleado = '';
                     $('#documentoidentidadempleado').val('');
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', ' ');
-
+                    $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
                     $scope.apellido = '';
                     $scope.nombre = '';
                     $scope.telefonoprincipal = '';
