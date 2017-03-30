@@ -96,7 +96,21 @@ Route::put('verLectura/update/{request}', 'Lecturas\ViewLecturaController@update
 Route::resource('verLectura', 'Lecturas\ViewLecturaController');
 
 
+/*
+ * ---------------------------------------Raidel Berrillo Gonzalez------------------------------------------------------
+ */
 
+Route::get('retencionCompra/getRetenciones', 'Retencion\RetencionCompraController@getRetenciones');
+Route::get('retencionCompra/getRetencionesByCompra/{id}', 'Retencion\RetencionCompraController@getRetencionesByCompra');
+Route::get('retencionCompra/getCompras/{codigo}', 'Retencion\RetencionCompraController@getCompras');
+Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraController@getCodigos');
+Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@form');
+Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
+Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
+
+/*
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
 
 
 
