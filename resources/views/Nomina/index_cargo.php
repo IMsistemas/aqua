@@ -14,7 +14,7 @@
 
             <div class="col-sm-6 col-xs-8">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keypress="initLoad(1)">
+                    <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>

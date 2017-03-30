@@ -26,7 +26,7 @@ app.controller('cargosController', function($scope, $http, API_URL) {
         });
     };
 
-    $scope.initLoad(1);
+    
 
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;
