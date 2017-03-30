@@ -56,16 +56,16 @@
 							<div class="col-sm-8">
 							<div class='input-group date datepicker' id='registro' name='registro'>
 								<input type="text" class="form-control" name="fecharegistrocompra"
-									id="fecharegistrocompra" 
-									ng-model="compra.fecharegistrocompra" 
+									id="fecharegistrocompra"
+									ng-model="compra.fecharegistrocompra"
 									readonly="readonly"
 									ng-disabled="impreso"
-									> 
+									>
 									<label class="input-group-addon btn" for="registro">
 							       <span class="fa fa-calendar"></span>
 							    </label>
-	                    	</div>	
-									
+	                    	</div>
+
 							</div>
 
 						</div>
@@ -83,7 +83,7 @@
 					<div class="form-group col-xs-12">
 						<label class="control-label">Datos Proveedor</label>
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
 							<label class="col-sm-4 control-label">Ruc/CI:</label>
@@ -96,7 +96,7 @@
 									ng-pattern="/[0-9]+$/"
 									ng-disabled="impreso"
 									> <span class="help-block error"
-									ng-show="formCompra.ci.$invalid && formCompra.ci.$touched">El Ruc/CI es requerido</span> 
+									ng-show="formCompra.ci.$invalid && formCompra.ci.$touched">El Ruc/CI es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.ci.$invalid && formCompra.ci.$error.maxlength">La
 									longitud máxima es de 13 caracteres.</span> <span
@@ -112,7 +112,7 @@
 							</div>
 
 						</div>
-					</div>	
+					</div>
 					<div class="form-group col-xs-12">
 					<div class="col-md-6 col-xs-12">
 							<label class="col-sm-4 control-label">Teléfono:</label>
@@ -171,15 +171,15 @@
 							<div class="col-sm-8">
 							<div class='input-group date datepicker' id='emision' name='emision'>
 								<input type="text" class="form-control " name="fechaemisionfacturaproveedor"
-									id="fechaemisionfacturaproveedor" 
-									ng-model="compra.fechaemisionfacturaproveedor"									
+									id="fechaemisionfacturaproveedor"
+									ng-model="compra.fechaemisionfacturaproveedor"
 									readonly="readonly"
 									ng-disabled="impreso"
-									> 								
+									>
 								<label class="input-group-addon btn" for="emision">
 							       <span class="fa fa-calendar"></span>
 							    </label>
-	                    	</div>	
+	                    	</div>
 							</div>
 
 						</div>
@@ -189,26 +189,26 @@
 							<div class="col-sm-8">
 							<div class='input-group date datepicker' id='caducidad' name='caducidad'>
 								<input type="text" class="form-control" name="fechacaducidad"
-									id="fechacaducidad" 
-									ng-model="compra.fechacaducidad" 
+									id="fechacaducidad"
+									ng-model="compra.fechacaducidad"
 									readonly="readonly"
 									ng-disabled="impreso"
-									> 
+									>
 									<label class="input-group-addon btn" for="caducidad">
 							       <span class="fa fa-calendar"></span>
 							    </label>
-	                    	</div>	
+	                    	</div>
 							</div>
 
 						</div>
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
 							<label class="col-sm-4 control-label">Número de documento:</label>
-							<div class="col-sm-8">	
-							<div class="col-sm-3">						
-								<input type="text" class="form-control" name="numero1" ng-model="numero1"									
+							<div class="col-sm-8">
+							<div class="col-sm-3">
+								<input type="text" class="form-control" name="numero1" ng-model="numero1"
 									id="numero1" ng-required="true"
 									ng-minlength="3"
 									maxlength="3"
@@ -216,7 +216,7 @@
 									style="width: 50px;"
 									ng-disabled="guardado"
 									> <span class="help-block error"
-									ng-show="formCompra.numero1.$invalid && formCompra.numero1.$touched">El Establecimineto es requerido</span> 
+									ng-show="formCompra.numero1.$invalid && formCompra.numero1.$touched">El Establecimineto es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.numero1.$invalid && formCompra.numero1.$error.minlength">La
 									longitud mínima es de 3 caracteres.</span> <span
@@ -224,7 +224,7 @@
 									ng-show="formCompra.numero1.$invalid && formCompra.numero1.$error.pattern">El Establecimineto no es válido.</span>
 									</div>
 									<div class="col-sm-3">
-									<input type="text" class="form-control" name="numero2" ng-model="numero2"									
+									<input type="text" class="form-control" name="numero2" ng-model="numero2"
 									id="numero2" ng-required="true"
 									ng-minlength="3"
 									maxlength="3"
@@ -232,7 +232,7 @@
 									style="width: 50px;"
 									ng-disabled="guardado"
 									> <span class="help-block error"
-									ng-show="formCompra.numero2.$invalid && formCompra.numero2.$touched">El Facturero es requerido</span> 
+									ng-show="formCompra.numero2.$invalid && formCompra.numero2.$touched">El Facturero es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.numero2.$invalid && formCompra.numero2.$error.minlength">La
 									longitud mínima es de 3 caracteres.</span> <span
@@ -240,16 +240,16 @@
 									ng-show="formCompra.numero2.$invalid && formCompra.numero2.$error.pattern">El Facturero no es válido.</span>
 									</div>
 									<div class="col-sm-6">
-									<input type="text" class="form-control" name="numero3" ng-model="numero3"									
+									<input type="text" class="form-control" name="numero3" ng-model="numero3"
 									id="numero3" ng-required="true"
 									ng-maxlength="8"
 									maxlength="8"
-									
+
 									ng-pattern="/[0-9]+$/"
 									style="width: 100px;"
 									ng-disabled="guardado"
 									> <span class="help-block error"
-									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$touched">El número es requerido</span> 
+									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$touched">El número es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.numero3.$invalid && formCompra.numero3.$error.minlength">La
 									longitud mínima es de 8 caracteres.</span> <span
@@ -263,36 +263,36 @@
                                             <div class="col-sm-8">
                                                 <select ng-disabled="impreso" class="form-control" name="tipocomprobante" id="tipocomprobante" ng-model="compra.codigocomprbante" ng-required="true" >
                                						<option value="">Tipo Comprobante</option>
-													<option ng-repeat="item in tiposComprobante"						       
-													        value="{{item.codigocomprbante}}">{{item.codigocomprbante}} - {{ item.nombretipocomprobante }}     
-													</option> 
+													<option ng-repeat="item in tiposComprobante"
+													        value="{{item.codigocomprbante}}">{{item.codigocomprbante}} - {{ item.nombretipocomprobante }}
+													</option>
 												</select>
                                                 <span class="help-block error"
                                                       ng-show="formCompra.tipocomprobante.$invalid && formCompra.tipocomprobante.$touched">El Tipo Comprobante es requerido</span>
                                             </div>
 
 						</div>
-					</div>	
-					
+					</div>
+
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
 							<label class="col-sm-4 control-label">Autorización:</label>
-							<div class="col-sm-8">	
-												
-								<input type="text" class="form-control" name="autorizacionfacturaproveedor" ng-model="compra.autorizacionfacturaproveedor"									
+							<div class="col-sm-8">
+
+								<input type="text" class="form-control" name="autorizacionfacturaproveedor" ng-model="compra.autorizacionfacturaproveedor"
 									id="autorizacionfacturaproveedor" ng-required="true"
 									ng-maxlength="37"
 									maxlength="37"
 									ng-pattern="/[0-9]+$/"
 									ng-disabled="impreso"
 									> <span class="help-block error"
-									ng-show="formCompra.autorizacionfacturaproveedor.$invalid && formCompra.autorizacionfacturaproveedor.$touched">La Autorización es requerida</span> 
+									ng-show="formCompra.autorizacionfacturaproveedor.$invalid && formCompra.autorizacionfacturaproveedor.$touched">La Autorización es requerida</span>
 									<span class="help-block error"
 									ng-show="formCompra.autorizacionfacturaproveedor.$invalid && formCompra.autorizacionfacturaproveedor.$error.maxlength">La
 									longitud máxima es de 37 caracteres.</span> <span
 									class="help-block error"
 									ng-show="formCompra.autorizacionfacturaproveedor.$invalid && formCompra.autorizacionfacturaproveedor.$error.pattern">La Autorización no es válida.</span>
-									
+
 							</div>
 						</div>
 						<div class="col-md-6 col-xs-12">
@@ -300,9 +300,9 @@
                                             <div class="col-sm-8">
                                                 <select ng-disabled="impreso" class="form-control" name="codigosustento" id="codigosustento" ng-model="compra.codigosustento" ng-required="true" >
                                						<option value="">Sustento Tributario</option>
-													<option ng-repeat="item in sustentotributario"						       
-													        value="{{item.codigosustento}}">{{item.codigosustento}} - {{ item.nombresustento }}     
-													</option> 
+													<option ng-repeat="item in sustentotributario"
+													        value="{{item.codigosustento}}">{{item.codigosustento}} - {{ item.nombresustento }}
+													</option>
 												</select>
                                                 <span class="help-block error"
                                                       ng-show="formCompra.codigosustento.$invalid && formCompra.codigosustento.$touched">El Sustento Tributario es requerido</span>
@@ -314,7 +314,7 @@
 						<div class="col-md-6 col-xs-12">
 							<label class="col-sm-4 control-label">Forma Pago:</label>
                                             <div class="col-sm-8">
-                                           
+
                                             <select class="form-control" name="idformapago" id="idformapago" ng-model="compra.idformapago" ng-required="true" ng-disabled="impreso"
                                              ng-options="item.idformapago as item.nombreformapago for item in formaPagoDocumento">
 											  <option value="">Forma Pago</option>
@@ -326,12 +326,12 @@
 
 						</div>
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<label class="control-label">Detalle Compra</label>
 					</div>
 					<div class="form-group col-xs-12">
-					
+
 		                <button type="button" class="btn btn-primary" style="float: right;" ng-click="addDetalle()" ng-disabled="impreso">
 		                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		                </button>
@@ -354,15 +354,15 @@
                     <tbody>
                     <tr ng-repeat="item in detalle">
                     <td>
-	                  
+
                     		<div>
-                                            <angucomplete-alt 
-                                            	  id="nombrebodega{{$index}}"									            
+                                            <angucomplete-alt
+                                            	  id="nombrebodega{{$index}}"
 									              pause="400"
-									              selected-object="item.testObj"									              
+									              selected-object="item.testObj"
 									              remote-url="{{API_URL}}../getBodega/"
 									              title-field="idbodega,nombrebodega"
-									              description-field="twitter"									              
+									              description-field="twitter"
 									              minlength="1"
 									              input-class="form-control form-control-small"
 									              match-class="highlight"
@@ -375,17 +375,17 @@
 									               />
                                             </div>
                                             <span class="help-block error"
-                                                      ng-show="formCompra.nombrebodega{{$index}}.$invalid && formCompra.nombrebodega{{$index}}.$touched">La bodega es requerida.</span>                                                                                   
+                                                      ng-show="formCompra.nombrebodega{{$index}}.$invalid && formCompra.nombrebodega{{$index}}.$touched">La bodega es requerida.</span>
 						 </td>
                         <td>
 		                 <div>
-                                            <angucomplete-alt 
-                                            	  id="codigoproducto{{$index}}"									            
+                                            <angucomplete-alt
+                                            	  id="codigoproducto{{$index}}"
 									              pause="400"
-									              selected-object="item.productoObj"									              
+									              selected-object="item.productoObj"
 									              remote-url="{{API_URL}}../getCodigoProducto/"
 									              title-field="codigoproducto"
-									              description-field="twitter"									              
+									              description-field="twitter"
 									              minlength="1"
 									              input-class="form-control form-control-small"
 									              match-class="highlight"
@@ -398,30 +398,30 @@
 									               />
                                             </div>
                                             <span class="help-block error"
-                                                      ng-show="formCompra.codigoproducto{{$index}}.$invalid && formCompra.codigoproducto{{$index}}.$touched">El producto es requerido.</span>                                                                                   
+                                                      ng-show="formCompra.codigoproducto{{$index}}.$invalid && formCompra.codigoproducto{{$index}}.$touched">El producto es requerido.</span>
 						 </td>
                     </td>
-                    <td>              
+                    <td>
 		               		<input type="text" class="form-control" name="cantidad{{$index}}" id="cantidad{{$index}}" ng-disabled="impreso"
 		                      ng-model="item.cantidadtotal" ng-required="true" ng-maxlength="5" ng-pattern="/[0-9]+$/" ng-change="calcular()">
 		                      <span class="help-block error"
-									ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$touched">La Cantidad es requerida</span> 
+									ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$touched">La Cantidad es requerida</span>
 									<span class="help-block error"
 									ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$error.maxlength">La
 									longitud máxima es de 5 números.</span> <span
 									class="help-block error"
-									ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$error.pattern">La Cantidad no es válida.</span>		                          
-		            
+									ng-show="formCompra.cantidad{{$index}}.$invalid && formCompra.cantidad{{$index}}.$error.pattern">La Cantidad no es válida.</span>
+
                     </td>
                     <td>
-                    		<label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label> 
-                    		<label class="control-label" ng-show="read">{{ item.producto.nombreproducto }}</label> 
+                    		<label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label>
+                    		<label class="control-label" ng-show="read">{{ item.producto.nombreproducto }}</label>
                     </td>
                     <td>
                     	<input type="text" class="form-control" name="unitario{{$index}}" id="unitario{{$index}}" ng-disabled="impreso"
 		                      ng-model="item.precioUnitario" ng-required="true" ng-maxlength="8" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
 		                      <span class="help-block error"
-									ng-show="formCompra.unitario{{$index}}.$invalid && formCompra.unitario{{$index}}.$touched">El Precio Unitario es requerido</span> 
+									ng-show="formCompra.unitario{{$index}}.$invalid && formCompra.unitario{{$index}}.$touched">El Precio Unitario es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.unitario{{$index}}.$invalid && formCompra.unitario{{$index}}.$error.maxlength">La
 									longitud máxima es de 7 números.</span> <span
@@ -432,7 +432,7 @@
                     	<input type="text" class="form-control" name="iva{{$index}}" id="iva{{$index}}" ng-disabled="impreso"
 		                      ng-model="item.iva" ng-required="true" ng-maxlength="5" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
 		                      <span class="help-block error"
-									ng-show="formCompra.iva{{$index}}.$invalid && formCompra.iva{{$index}}.$touched">El IVA es requerido</span> 
+									ng-show="formCompra.iva{{$index}}.$invalid && formCompra.iva{{$index}}.$touched">El IVA es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.iva{{$index}}.$invalid && formCompra.iva{{$index}}.$error.maxlength">La
 									longitud máxima es de 4 números.</span> <span
@@ -443,28 +443,28 @@
                     	<input type="text" class="form-control" name="ice{{$index}}" id="ice{{$index}}" ng-disabled="impreso"
 		                      ng-model="item.ice" ng-required="true" ng-maxlength="5" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()">
 		                      <span class="help-block error"
-									ng-show="formCompra.ice{{$index}}.$invalid && formCompra.ice{{$index}}.$touched">El ICE es requerido</span> 
+									ng-show="formCompra.ice{{$index}}.$invalid && formCompra.ice{{$index}}.$touched">El ICE es requerido</span>
 									<span class="help-block error"
 									ng-show="formCompra.ice{{$index}}.$invalid && formCompra.ice{{$index}}.$error.maxlength">La
 									longitud máxima es de 4 números.</span> <span
 									class="help-block error"
 									ng-show="formCompra.ice{{$index}}.$invalid && formCompra.ice{{$index}}.$error.pattern">El ICE no es válido.</span>
                     </td>
-                    <td><label class="control-label">{{ item.total }} </label></td>    
+                    <td><label class="control-label">{{ item.total }} </label></td>
                     <td>
                     	<button type="button" class="btn btn-danger" ng-click="delDetalle($index)" ng-disabled="(detalle.length ==1)||impreso">
                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
-                    </td>                
+                    </td>
                     </tr>
                     </tbody>
                 </table>
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<label class="control-label">Datos Pago</label>
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
 						<div class="col-md-6 col-xs-12">
@@ -477,19 +477,19 @@
                                                 <select class="form-control" name="pais" id="pais" ng-model="compra.codigopais" ng-required="true" ng-disabled="residente||impreso">
                                						<option value="">Pais Pago</option>
                                						<option value="999">Residente</option>
-													<option ng-repeat="item in paises"						       
-													        value="{{item.codigopais}}">{{item.nombrepais }}     
-													</option> 
+													<option ng-repeat="item in paises"
+													        value="{{item.codigopais}}">{{item.nombrepais }}
+													</option>
 												</select>
                                                 <span class="help-block error"
                                                       ng-show="formCompra.pais.$invalid && formCompra.pais.$touched">El Pais Pago es requerido</span>
                                             </div>
                                             </div>
-							
+
 						</div>
-						
+
 					</div>
-					
+
 					<div class="form-group col-xs-12">
 						<div class="col-md-6 col-xs-12">
 						<div class="col-md-12">
@@ -497,54 +497,54 @@
                                             <div class="col-sm-8">
                                                 <select class="form-control" name="codigoformapago" id="codigoformapago" ng-model="compra.codigoformapago3" ng-disabled="pagoM||impreso">
                                						<option value="">Forma Pago</option>
-													<option ng-repeat="item in formasPago"						       
-													        value="{{item.codigoformapago}}">{{item.nombreformapago}}     
-													</option> 
+													<option ng-repeat="item in formasPago"
+													        value="{{item.codigoformapago}}">{{item.nombreformapago}}
+													</option>
 												</select>
-                                                
+
                                             </div>
 						</div>
-						<div class="col-md-12" style="height: 130px;">						
+						<div class="col-md-12" style="height: 130px;">
 						</div>
 
-						<div class="col-md-12">	
+						<div class="col-md-12">
 
 						<button type="button" class="btn btn-primary" id="btn-save" ng-click="save()" ng-disabled="(formCompra.$invalid || impreso || anulado )">
-                            Guardar 
+                            Guardar
                         </button>
                         <button type="button" class="btn btn-primary" id="btn-anular" ng-click="showModalConfirm()" ng-disabled="(impreso || anulado)">
-                            Anular 
+                            Anular
                         </button>
                         <button type="button" class="btn btn-primary" id="btn-retencion" ng-click="activarPestana()" ng-disabled="(!guardado||retencion || anulado)" ng-show="false">
-                            Retención 
-                        </button>	
+                            Retención
+                        </button>
                         <button type="button" class="btn btn-primary" id="btn-pago" ng-click="pagarCompra()" ng-disabled="( pagado || anulado)" ng-show="false">
-                            Pagar 
-                        </button>				
+                            Pagar
+                        </button>
 						</div>
 						</div>
-						
-						
+
+
 						<div class="col-md-6 col-xs-12">
 						<div class="col-md-12">
 						<div class="col-md-3">
-						<input type="text" class="form-control" name="descuentocompra" ng-model="compra.procentajedescuentocompra "									
+						<input type="text" class="form-control" name="descuentocompra" ng-model="compra.procentajedescuentocompra "
 									id="descuentocompra" ng-required="true"
 									ng-maxlength="5"
 									maxlength="5"
 									ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-change="calcular()"
 									ng-disabled="impreso"
-									> 
+									>
 									<span class="help-block error"
-									ng-show="formCompra.descuentocompra.$invalid && formCompra.descuentocompra.$touched">El descuento es requerido.</span> 
+									ng-show="formCompra.descuentocompra.$invalid && formCompra.descuentocompra.$touched">El descuento es requerido.</span>
 									<span class="help-block error"
 									ng-show="formCompra.descuentocompra.$invalid && formCompra.descuentocompra.$error.maxlength">La
 									longitud máxima es de 7 números.</span> <span
 									class="help-block error"
 									ng-show="formCompra.descuentocompra.$invalid && formCompra.descuentocompra.$error.pattern">El Descuento no es válido.</span>
-									
+
 						</div>
-						
+
 						<div class="col-md-3">
 						<label > % Descuento</label>
 						</div>
@@ -582,24 +582,24 @@
 						<label > Otros:</label>
 						</div>
 						<div class="col-md-3">
-							
-							<input type="text" class="form-control" name="otros" ng-model="compra.otrosvalores"									
+
+							<input type="text" class="form-control" name="otros" ng-model="compra.otrosvalores"
 									id="otros" ng-required="true"
 									ng-maxlength="5"
 									maxlength="5"
 									ng-pattern="/^\d+(?:\.\d{1,2})?$/"
 									ng-change="calcular()"
 									ng-disabled="impreso"
-									> 
+									>
 									<span class="help-block error"
-									ng-show="formCompra.otros.$invalid && formCompra.otros.$touched">El Valor Otros es requerido.</span> 
+									ng-show="formCompra.otros.$invalid && formCompra.otros.$touched">El Valor Otros es requerido.</span>
 									<span class="help-block error"
 									ng-show="formCompra.otros.$invalid && formCompra.otros.$error.maxlength">La
 									longitud máxima es de 7 números.</span> <span
 									class="help-block error"
 									ng-show="formCompra.otros.$invalid && formCompra.otros.$error.pattern">El Valor Otros no es válido.</span>
-									
-							
+
+
 						</div>
 						</div>
 						<div class="col-md-12">
@@ -612,7 +612,7 @@
 						<input type="text" ng-model="compra.ivacompra" name="iva" id="iva" readonly="readonly" class="form-control">
 						</div>
 						</div>
-						
+
 						<div class="col-md-12">
 						<div class="col-md-6">
 						</div>
@@ -623,7 +623,7 @@
 						<input type="text" ng-model="compra.totalcompra" name="total" id="total" readonly="readonly" class="form-control">
 						</div>
 						</div>
-					</div>				
+					</div>
 					</div>
 					</form>
 					</div>
