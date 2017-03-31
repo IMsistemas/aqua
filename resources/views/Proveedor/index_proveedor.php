@@ -462,9 +462,11 @@
 
                             <td >
                                 <input type="text" ng-keypress="onlyCharasterAndSpace($event);" name="contacto" class="form-control"
-                                       ng-model="contacto.nombrecontacto" required />
+                                       ng-model="contacto.nombrecontacto" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/" required />
                                 <span class="help-block error"
                                       ng-show="formcontactos.contacto.$invalid && formcontactos.contacto.$touched">Requerido</span>
+                                <span class="help-block error"
+                                      ng-show="formcontactos.contacto.$error.pattern">Sólo se permite letras y espacios</span>
                             </td >
                             <td>
                                     <input type="text" class="form-control" name="telefonoprincipalcont" ng-model="contacto.telefonoprincipalcont"

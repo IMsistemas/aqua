@@ -222,7 +222,7 @@
                                     <span class="help-block error"
                                           ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.maxlength">La longitud máxima es de 128 caracteres</span>
                                     <span class="help-block error"
-                                          ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.pattern">El Apellido debe ser solo letras y espacios</span>
+                                          ng-show="formEmployee.apellido.$invalid && formEmployee.apellido.$error.pattern">El Apellido debe ser sólo letras y espacios</span>
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
