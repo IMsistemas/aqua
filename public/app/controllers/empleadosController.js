@@ -117,7 +117,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.direccion = '';
                     $scope.correo = '';
                     $scope.salario = '';
-
+                    $scope.file = '';
                     $scope.fechaingreso = fecha();
 
                     $scope.cuenta_employee = '';
