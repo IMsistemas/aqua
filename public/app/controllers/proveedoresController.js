@@ -429,6 +429,19 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
         $scope.contactos.push(object);
     };
 
+    app.directive('focusMe', function () {
+        return {
+            link: function(scope, element, attrs) {
+                scope.$watch(attrs.focusMe, function(value) {
+                    if(value === true) {
+                        element[0].focus();
+                        element[0].select();
+                    }
+                });
+            }
+        };
+    });
+
     $scope.saveAllContactos = function() {
 
         var data = {
