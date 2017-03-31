@@ -110,7 +110,7 @@ class CatalogoProductoController extends Controller
     	$date = Carbon::Today();
     	$data['created_at'] = $data['updated_at']  = $date;
     
-    	 
+    
     	if(is_object($image)){
     		$destinationPath = 'uploads/productos';
     		$name = rand(0, 9999).'_'.$image->getClientOriginalName();
@@ -162,6 +162,8 @@ class CatalogoProductoController extends Controller
     	$date = Carbon::Today();
     	$data = $request->all();
     	$data['updated_at']  = $date;
+    	
+    	
     	if(is_object($image)){
     		if (file_exists($producto->foto)) {
     			unlink($producto->foto);
@@ -176,6 +178,8 @@ class CatalogoProductoController extends Controller
     	if(!($data['idplancuenta_ingreso']>0)){
     		unset($data['idplancuenta_ingreso']);
     	}
+    	
+    	    	
     	$producto->fill($data);
     	$producto->update();
     	return response()->json(['success' => true]);
