@@ -179,14 +179,15 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                         $scope.salario = item.salario;
 
                         $scope.idpersona = item.idpersona;
+                        console.log(item);
 
                         if (item.rutafoto != null && item.rutafoto != ''){
                             $scope.url_foto = API_URL+item.rutafoto;
-                            console.log( $scope.url_foto);
+                            
                         } else {
                             $scope.url_foto = 'img/empleado.png';
                         }
-
+                        console.log( $scope.url_foto);
                         $scope.departamento = item.iddepartamento;
 
                         $scope.cuenta_employee = item.concepto;
