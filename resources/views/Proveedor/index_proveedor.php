@@ -39,7 +39,7 @@
 
         <div class="col-sm-6 col-xs-8">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda">
+                <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
@@ -62,7 +62,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr dir-paginate="proveedor in proveedores | orderBy:sortKey:reverse | itemsPerPage:10 |filter:busqueda" ng-cloak >
+                    <tr dir-paginate="proveedor in proveedores|orderBy:sortKey:reverse| itemsPerPage:10"  total-items="totalItems" ng-cloak >
                         <td>{{proveedor.numdocidentific}}</td>
                         <td>{{proveedor.razonsocial}}</td>
                         <td>{{proveedor.direccion}}</td>
@@ -86,7 +86,12 @@
                 </tbody>
             </table>
             <dir-pagination-controls
-                max-size="5"
+                on-page-change="pageChanged(newPageNumber)"
+
+                template-url="dirPagination.html"
+
+                class="pull-right"
+                max-size="10"
                 direction-links="true"
                 boundary-links="true" >
             </dir-pagination-controls>
@@ -461,45 +466,45 @@
                         <tr  ng-repeat="contacto in contactos  | filter:searchcontato">
 
                             <td >
-                                <input type="text" ng-keypress="onlyCharasterAndSpace($event);" name="contacto" class="form-control"
+                                <input type="text" ng-keypress="onlyCharasterAndSpace($event);" name='contacto{{$index}}' class="form-control"
                                        ng-model="contacto.nombrecontacto" ng-pattern="/^([a-zA-ZáéíóúñÑ ])+$/" required />
                                 <span class="help-block error"
-                                      ng-show="formcontactos.contacto.$invalid && formcontactos.contacto.$touched">Requerido</span>
+                                      ng-show="formcontactos.contacto{{$index}}.$invalid && formcontactos.contacto{{$index}}.$touched">Requerido</span>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.contacto.$error.pattern">Sólo se permite letras y espacios</span>
+                                      ng-show="formcontactos.contacto{{$index}}.$error.pattern">Sólo se permite letras y espacios</span>
                             </td >
                             <td>
-                                    <input type="text" class="form-control" name="telefonoprincipalcont" ng-model="contacto.telefonoprincipalcont"
+                                    <input type="text" class="form-control" name='telefonoprincipalcont{{$index}}' ng-model="contacto.telefonoprincipalcont"
                                            required ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]+)$/"/>
                                     <span class="help-block error"
-                                          ng-show="formcontactos.telefonoprincipalcont.$invalid && formcontactos.telefonoprincipalcont.$touched">Requerido</span>
+                                          ng-show="formcontactos.telefonoprincipalcont{{$index}}.$invalid && formcontactos.telefonoprincipalcont{{$index}}.$touched">Requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formcontactos.telefonoprincipalcont.$invalid && formcontactos.telefonoprincipalcont.$error.maxlength">La longitud máxima es de 9</span>
+                                          ng-show="formcontactos.telefonoprincipalcont{{$index}}.$invalid && formcontactos.telefonoprincipalcont{{$index}}.$error.maxlength">La longitud máxima es de 9</span>
                                     <span class="help-block error"
-                                          ng-show="formcontactos.telefonoprincipalcont.$invalid && formcontactos.telefonoprincipalcont.$error.minlength">La longitud mínima es de 9</span>
+                                          ng-show="formcontactos.telefonoprincipalcont{{$index}}.$invalid && formcontactos.telefonoprincipalcont{{$index}}.$error.minlength">La longitud mínima es de 9</span>
                                     <span class="help-block error"
-                                      ng-show="formcontactos.telefonoprincipalcont.$invalid && formcontactos.telefonoprincipalcont.$error.pattern">
+                                      ng-show="formcontactos.telefonoprincipalcont{{$index}}.$invalid && formcontactos.telefonoprincipalcont{{$index}}.$error.pattern">
                                             Solo números</span>
                             </td>
                             <td >
-                                <input type="text" class="form-control" name="telefonosecundario" ng-model="contacto.telefonosecundario"
+                                <input type="text" class="form-control" name='telefonosecundario{{$index}}' ng-model="contacto.telefonosecundario"
                                        ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]+)$/"/>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.telefonosecundario.$invalid && formcontactos.telefonosecundario.$error.maxlength">La longitud máxima es de 9</span>
+                                      ng-show="formcontactos.telefonosecundario{{$index}}.$invalid && formcontactos.telefonosecundario{{$index}}.$error.maxlength">La longitud máxima es de 9</span>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.telefonosecundario.$invalid && formcontactos.telefonosecundario.$error.minlength">La longitud mínima es de 9</span>
+                                      ng-show="formcontactos.telefonosecundario{{$index}}.$invalid && formcontactos.telefonosecundario{{$index}}.$error.minlength">La longitud mínima es de 9</span>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.telefonosecundario.$invalid && formcontactos.telefonosecundario.$error.pattern">
+                                      ng-show="formcontactos.telefonosecundario{{$index}}.$invalid && formcontactos.telefonosecundario{{$index}}.$error.pattern">
                                             Solo números</span>
                             </td>
                             <td >
-                                <input type="text" class="form-control" ng-model="contacto.celular" name="celularcontacto" ng-minlength="10" ng-maxlength="10" ng-pattern="/^([0-9]+)$/"/>
+                                <input type="text" class="form-control" ng-model="contacto.celular" name="celularcontacto{{$index}}" ng-minlength="10" ng-maxlength="10" ng-pattern="/^([0-9]+)$/"/>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.celularcontacto.$invalid && formcontactos.celularcontacto.$error.maxlength">La longitud máxima es de 10</span>
+                                      ng-show="formcontactos.celularcontacto{{$index}}.$invalid && formcontactos.celularcontacto{{$index}}.$error.maxlength">La longitud máxima es de 10</span>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.celularcontacto.$invalid && formcontactos.celularcontacto.$error.minlength">La longitud mínima es de 10</span>
+                                      ng-show="formcontactos.celularcontacto{{$index}}.$invalid && formcontactos.celularcontacto{{$index}}.$error.minlength">La longitud mínima es de 10</span>
                                 <span class="help-block error"
-                                      ng-show="formcontactos.celularcontacto.$invalid && formcontactos.celularcontacto.$error.pattern">
+                                      ng-show="formcontactos.celularcontacto{{$index}}.$invalid && formcontactos.celularcontacto{{$index}}.$error.pattern">
                                             Solo números</span>
                             </td>
                             <td >

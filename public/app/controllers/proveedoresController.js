@@ -418,7 +418,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
         var object = {
             nombrecontacto: '',
-            idcontacto: 0,
+            idcontacto: '',
             telefonoprincipalcont: '',
             telefonosecundario: '',
             celular: '',
@@ -439,7 +439,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
             if (response.success == true) {
 
                 $scope.message = 'Se guardó correctamente la información de los Contactos del Proveedor...';
-                $('#modalContactos').modal('hide');
+                //$('#modalContactos').modal('hide');
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
             }
