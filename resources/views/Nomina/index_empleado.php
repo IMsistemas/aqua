@@ -326,7 +326,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Salario: </span>
                                         <input type="text" class="form-control" name="salario" id="salario" ng-model="salario" placeholder="" ng-maxlength="12"
-                                               ng-pattern="/^([0-9]{1,9}\.[0-9]{2})$/">
+                                               ng-pattern="/^([0-9]{1,9}\.[0-9]{2})$/" required>
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formEmployee.salario.$invalid && formEmployee.salario.$error.maxlength">La longitud máxima es de 12 caracteres</span>
