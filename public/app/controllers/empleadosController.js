@@ -182,6 +182,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                         if (item.rutafoto != null && item.rutafoto != ''){
                             $scope.url_foto = API_URL+item.rutafoto;
+                            console.log( $scope.url_foto);
                         } else {
                             $scope.url_foto = 'img/empleado.png';
                         }
