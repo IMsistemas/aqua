@@ -185,6 +185,7 @@ Route::put('cliente/processSolicitudSuministro/{idsolicitud}', 'Clientes\Cliente
 
 Route::put('cliente/updateSetNameSuministro/{numerosuministro}', 'Clientes\ClienteController@updateSetNameSuministro');
 
+Route::get('cliente/getItems', 'Clientes\ClienteController@getItems');
 
 Route::get('cliente/getTasaInteres', 'Clientes\ClienteController@getTasaInteres');
 

@@ -718,6 +718,8 @@
                 $('#t_suministro_marca').prop('disabled', false);
                 $('#t_suministro_costomedidor').prop('disabled', false);
 
+                $scope.getListItem();
+
             } else {
 
                 $('#t_suministro_marca').prop('disabled', true);
@@ -926,6 +928,23 @@
             }).error(function (res) {
 
             });
+        };
+
+        $scope.getListItem = function () {
+
+            $scope.itemprod = 'itemprod';
+
+            $http.get(API_URL + 'cliente/getItems').success(function(response){
+
+                $scope.items = response;
+
+                $('#modalRegistroItem').modal('show');
+
+            });
+        };
+
+        $scope.assignItem = function () {
+            console.log($scope.itemprod);
         };
 
         /*

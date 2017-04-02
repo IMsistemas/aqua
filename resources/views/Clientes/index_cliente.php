@@ -1611,6 +1611,59 @@
                 </div>
             </div>
 
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalRegistroItem">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Registro de Productos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                                <div class="col-xs-12">
+                                    <div class="form-group  has-feedback">
+                                        <input type="text" class="form-control" id="" ng-model="searchContabilidad" placeholder="BUSCAR..." >
+                                        <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <table style="vertical-align: middle !important;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                        <thead class="bg-primary">
+                                        <tr>
+                                            <th style="width: 5%;"></th>
+                                            <th style="width: 20%;">FOTO</th>
+                                            <th>PRODUCTO</th>
+                                            <th style="width: 15%;">P. VENTA</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in items | filter:searchContabilidad" ng-cloak >
+                                            <td><input type="radio" name="itemprod" ng-model="itemprod" ng-value="item"></td>
+                                            <td><img ng-src="{{item.foto}}" class="img-thumbnail" style="width: 100%;" alt=""></td>
+                                            <td>{{item.nombreproducto}}</td>
+                                            <td>{{item.precioventa}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btn-ok" ng-click="assignItem()">
+                                Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 </body>
 

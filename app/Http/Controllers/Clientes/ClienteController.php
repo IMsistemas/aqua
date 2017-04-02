@@ -110,6 +110,11 @@ class ClienteController extends Controller
         return SRI_TipoImpuestoIva::orderBy('nametipoimpuestoiva', 'asc')->get();
     }
 
+    public function getItems()
+    {
+        return Cont_CatalogItem::where('idclaseitem', 1)->orderBy('codigoproducto', 'asc')->get();
+    }
+
     public function getTipoCliente()
     {
         return TipoCliente::orderBy('nametipocliente', 'asc')->get();
