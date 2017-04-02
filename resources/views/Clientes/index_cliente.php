@@ -1532,6 +1532,8 @@
                                                             <input type="text" class="form-control" id="t_suministro_marca" ng-model="t_suministro_marca" disabled>
                                                         </div>
 
+                                                        <input type="hidden" name="iditem" id="iditem" ng-model="iditem">
+
                                                     </div>
 
                                                     <div class="col-sm-4 col-xs-12 form-group">
@@ -1641,7 +1643,7 @@
                                         </thead>
                                         <tbody>
                                         <tr ng-repeat="item in items | filter:searchContabilidad" ng-cloak >
-                                            <td><input type="radio" name="itemprod" ng-model="itemprod" ng-value="item"></td>
+                                            <td><input type="radio" name="itemprod" ng-click="selectItems(item)"></td>
                                             <td><img ng-src="{{item.foto}}" class="img-thumbnail" style="width: 100%;" alt=""></td>
                                             <td>{{item.nombreproducto}}</td>
                                             <td>{{item.precioventa}}</td>
@@ -1656,7 +1658,7 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
-                            <button type="button" class="btn btn-primary" id="btn-ok" ng-click="assignItem()">
+                            <button type="button" class="btn btn-primary" id="btn-ok" ng-click="assignItems()">
                                 Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>

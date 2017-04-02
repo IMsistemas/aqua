@@ -78,6 +78,7 @@
         $scope.idpersona = 0;
         $scope.id = 0;
         $scope.select_cuenta = null;
+        $scope.select_item = null;
 
         $scope.pageChanged = function(newPage) {
             $scope.initLoad(newPage);
@@ -712,6 +713,7 @@
         $scope.deshabilitarMedidor = function () {
             if ($scope.t_suministro_medidor == true) {
 
+                $scope.iditem = 0;
                 $scope.t_suministro_marca = '';
                 $scope.t_suministro_costomedidor = '';
 
@@ -932,7 +934,7 @@
 
         $scope.getListItem = function () {
 
-            $scope.itemprod = 'itemprod';
+            $scope.select_item = null;
 
             $http.get(API_URL + 'cliente/getItems').success(function(response){
 
@@ -943,8 +945,27 @@
             });
         };
 
-        $scope.assignItem = function () {
-            console.log($scope.itemprod);
+        $scope.selectItems = function (item) {
+            $scope.select_item = item;
+        };
+
+        $scope.assignItems = function () {
+
+            if ($scope.select_item == null) {
+
+                $scope.message_info = 'Seleccione un producto a asignar...';
+                $('#modalMessageInfo').modal('show');
+
+            } else {
+
+                $scope.iditem = $scope.select_item.idcatalogitem;
+                $scope.t_suministro_marca = $scope.select_item.codigoproducto;
+                $scope.t_suministro_costomedidor = $scope.select_item.precioventa;
+
+                $('#modalRegistroItem').modal('hide');
+
+            }
+
         };
 
         /*
