@@ -25,7 +25,7 @@
 
         <div id="dvTab" style="margin-top: 5px;">
             <ul class="nav nav-tabs" role="tablist">
-                <li ng-click="CargadataProvincia()" role="presentation" class="active tabs"><a href="#empresa" aria-controls="empresa" role="tab" data-toggle="tab"> Empresa</a></li>
+                <li ng-click="CargadataProvincia(1)" role="presentation" class="active tabs"><a href="#empresa" aria-controls="empresa" role="tab" data-toggle="tab"> Empresa</a></li>
                 <li ng-click="CargadataFormaPago()" role="presentation" class="tabs"><a href="#contabilidad" aria-controls="contabilidad" role="tab" data-toggle="tab"> Contabilidad</a></li>
                 <li ng-click="CargadataTPdoc()" role="presentation" class="tabs"><a href="#sri" aria-controls="sri" role="tab" data-toggle="tab"> SRI</a></li>
             </ul>
@@ -35,7 +35,7 @@
 
                     <div id="dvTab1" style="margin-top: 5px;">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li ng-click="CargadataProvincia()" role="presentation" class="active tabs"><a href="#provincia" aria-controls="provincia" role="tab" data-toggle="tab">Provincias</a></li>
+                            <li ng-click="CargadataProvincia(1)" role="presentation" class="active tabs"><a href="#provincia" aria-controls="provincia" role="tab" data-toggle="tab">Provincias</a></li>
                             <li ng-click="CargadataCanton(); CargadataProvinciaEX();" role="presentation" class="tabs"><a href="#canton" aria-controls="canton" role="tab" data-toggle="tab">Cantones</a></li>
                             <li ng-click="CargadataParroquia(); CargadataCantonA()" role="presentation" class="tabs"><a href="#parroquia" aria-controls="parroquia" role="tab" data-toggle="tab">Parroquias</a></li>
                         </ul>
