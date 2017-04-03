@@ -230,6 +230,7 @@
     <script src="<?= asset('app/controllers/transportistaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
     <script src="<?= asset('app/controllers/nomencladorController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/guiaremisionController.js') ?>"></script>
 
     
 
