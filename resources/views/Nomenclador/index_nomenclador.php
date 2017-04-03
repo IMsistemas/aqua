@@ -77,6 +77,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                     <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -118,6 +130,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -161,6 +185,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
                         </div>
@@ -223,6 +259,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +344,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -348,6 +408,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -399,6 +471,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -451,6 +535,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -505,6 +601,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -555,6 +663,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -610,6 +730,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -660,6 +792,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -713,6 +857,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -752,6 +908,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
@@ -793,6 +961,18 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <dir-pagination-controls
+
+                                            on-page-change="pageChanged(newPageNumber)"
+
+                                            template-url="dirPagination.html"
+
+                                            class="pull-right"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true" >
+
+                                    </dir-pagination-controls>
                                 </div>
                             </div>
 
