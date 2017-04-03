@@ -830,6 +830,7 @@
 
         $scope.saveSolicitudSuministro = function () {
             $('#btn-save-solsuministro').prop('disabled', true);
+
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,

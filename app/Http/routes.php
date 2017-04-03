@@ -947,3 +947,9 @@ Route::post('Nomenclador/deleteParroquiaEX', 'Nomenclador\NomencladorController@
 
 
 Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
+
+/*
+ * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
+ */
+
+Route::resource('DocumentoCompras', 'Compras\ComprasController');
