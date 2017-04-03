@@ -9,9 +9,11 @@ class Cont_FormaPagoDocumentoVenta extends Model
 
     protected $table = 'cont_formapago_documentoventa';
     public $timestamps = false;
-    protected $fillable = [
+    protected $primaryKey = null;
+
+    /*protected $fillable = [
         'idformapago',
         'iddocumentoventa'
-    ];
+    ];*/
 
 }

@@ -31,7 +31,7 @@ class Cont_ItemVenta extends Model
     }
 
     public function cont_catalogoitem(){
-        return $this->HasMany('App\Modelos\Contabilidad');
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem',"idcatalogitem");
     }
 
 }

@@ -28,12 +28,13 @@
 
 
 
-<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
+<!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
+<div  class="container" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
 <form class="form-horizontal" name="formventa" id="formventa"  novalidate="" >
 <div class="form-group" ng-show="VerFactura!=1" ng-hide="VerFactura==1">
   <div class="row">
     <div class="col-xs-12 text-right" >
-      <button class="btn btn-primary" ng-click="VerFactura=1" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
+      <button class="btn btn-primary" ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
   </div>
   <div class="row">
@@ -52,7 +53,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="v in Allventas">
+          <!--<tr ng-repeat="v in Allventas">-->
+          <tr dir-paginate="v in Allventas | orderBy:sortKey:reverse |filter:busquedaventa| itemsPerPage:10" total-items="totalItems" ng-cloak">
             <td>{{$index+1}}</td>
             <td>{{v.fechaemisionventa}}</td>
             <td>{{v.nroautorizacionventa}}</td>
@@ -60,18 +62,30 @@
             <td>{{v.ivacompra}}</td>
             <td>{{v.valortotalventa}}</td>
             <td>
-              <button type="button" class="btn btn-info">
-                  <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span> 
+              <button type="button" class="btn btn-info" ng-click="ViewVenta(v)">
+                  <span class="glyphicon glyphicon glyphicon-info-sign"   aria-hidden="true"></span> 
               </button>
             </td>
             <td>
-              <button type="button" class="btn btn-default">
+              <button type="button" class="btn btn-default" ng-click="AnularVentaDirecto(v.iddocumentoventa)">
                     <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
               </button>
             </td>
           </tr>
         </tbody>
       </table>
+      <dir-pagination-controls
+
+                        on-page-change="pageChanged(newPageNumber)"
+
+                        template-url="dirPagination.html"
+
+                        class="pull-right"
+                        max-size="10"
+                        direction-links="true"
+                        boundary-links="true" >
+
+    </dir-pagination-controls>
     </div>
   </div>
 </div>
@@ -312,13 +326,13 @@
 
 
     <div class="col-xs-12 text-right" style="margin-top: 20px;">
-    <button type="button" class="btn btn-primary" ng-click="VerFactura=2; AllDocVenta();">
+    <button type="button" class="btn btn-primary" ng-click="VerFactura=2; pageChanged();">
                   Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> 
               </button>
-      <button type="button" class="btn btn-default">
+      <button type="button" ng-click="AnularVenta();" ng-disabled="IdDocumentoVentaedit=='0' " class="btn btn-default">
               Anular <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
           </button>
-      <button type="button" class="btn btn-success" ng-click="IniGuardarFactura()" ng-disabled="formventa.$invalid">
+      <button type="button" class="btn btn-success" ng-click="IniGuardarFactura()" ng-disabled="formventa.$invalid || IdDocumentoVentaedit!='0' ">
               Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> 
           </button>
     </div>
@@ -406,7 +420,25 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="EnviarDatosGuardarVenta();" data-dismiss="modal">Aceptar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+        <button type="button" class="btn btn-success" ng-click="EnviarDatosGuardarVenta();" data-dismiss="modal">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ConfirmarAnulacion" style="z-index: 8000;" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header btn-success" id="ConfirmarVentaH">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Mensaje</h4>
+      </div>
+      <div class="modal-body">
+        <strong>Esta seguro de anular la venta</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+        <button type="button" class="btn btn-primary" ng-click="ConfirmarAnularventa();" data-dismiss="modal">Aceptar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
       </div>
     </div>
   </div>

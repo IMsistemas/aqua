@@ -19,6 +19,7 @@
 		<div class="row">
 			<div class="col-xs-6">
                 <h3><strong>Plan de cuentas</strong></h3>
+                <hr/>
                 <div class="row">
                     <div class="col-xs-4">
                         <div class="input-group">
@@ -53,15 +54,16 @@
                           </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xs-12">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
-                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                </div>
+
+                <div class="row" style="padding-top: 2px;">
+                  <div class="col-xs-12">
+                    <div class="form-group  has-feedback">
+                      <input type="text" class="form-control" id="" ng-model="FiltraCuentaPlan" placeholder="Buscar" >
+                      <span class="glyphicon glyphicon-search form-control-feedback" ></span>
                     </div>
+                  </div>
                 </div>
-                </div>
-
-
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -80,7 +82,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="cuenta in CuentasContables| filter:busqueda" >
+                                <tr ng-repeat="cuenta in CuentasContables | filter:FiltraCuentaPlan " >
                                     <td>
                                         <button class="btn btn-primary btn-sm" ng-click="AgregarCuentahija(cuenta);"><i class="glyphicon glyphicon glyphicon-plus"></i></button>
                                         <button class="btn btn-warning btn-sm" ng-click="ModificarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-edit"></i></button>
@@ -265,7 +267,7 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="input-group">
-                      <span class="input-group-addon">Codigo SRI: </span>
+                      <span class="input-group-addon">Codigo : </span>
                       <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
                     </div>
                 </div>
@@ -299,7 +301,7 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="input-group">
-                      <span class="input-group-addon">Codigo SRI: </span>
+                      <span class="input-group-addon">Codigo : </span>
                       <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
                     </div>
                 </div>
@@ -378,7 +380,7 @@
                 <tr class="btn-primary">
                   <th></th>
                   <th>Descripción</th>
-                  <th>Codigo SRI</th>
+                  <th>Codigo </th>
                   <th></th>
                 </tr>
               </thead>

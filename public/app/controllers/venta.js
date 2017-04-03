@@ -18,6 +18,30 @@ $scope.observacion="";
 $scope.Allventas=[];
 $scope.cmbFormapago="";
 
+$scope.IdDocumentoVentaedit="0";
+    ///---
+    $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
+    $scope.initLoad = function(pageNumber){
+
+        if ($scope.busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.busqueda;
+
+        var filtros = {
+            search: search
+        };
+        $http.get(API_URL + 'DocumentoVenta/getAllFitros?page=' + pageNumber + '&filter=' + JSON.stringify(filtros))
+            .success(function(response){
+                /*$scope.Allventas=response;
+                console.log(response);*/
+                $scope.Allventas = response.data;
+                $scope.totalItems = response.total;
+         });
+    };
+    $scope.initLoad(1);
+    ///---
 	$scope.NumeroRegistroVenta=function() {
         $http.get(API_URL + 'DocumentoVenta/NumRegistroVenta')
         .success(function(response){
@@ -39,7 +63,8 @@ $scope.cmbFormapago="";
         });
     };
 	///---All Facturas
-	$scope.AllDocVenta=function () {
+	$scope.AllDocVenta=function (pageNumber) {
+        
 		$http.get(API_URL + 'DocumentoVenta/getAllFitros')
 	        .success(function(response){
 	            $scope.Allventas=response;
@@ -122,8 +147,8 @@ $scope.cmbFormapago="";
 	///---
 	$scope.items=[];
 	$scope.Agregarfila=function(){
-		console.log($scope.Bodega);
-		if($scope.Bodega!=""){
+		console.log($scope.Cliente.numdocidentific);
+		if($scope.Cliente.numdocidentific!=undefined){
 			var item={
 				productoObj:null,
 				cantidad:0,
@@ -138,7 +163,7 @@ $scope.cmbFormapago="";
 			QuitarClasesMensaje();
 	        $("#titulomsm").addClass("btn-warning");
 	        $("#msm").modal("show");
-	        $scope.Mensaje="Seleccione una bodega";
+	        $scope.Mensaje="Seleccione una cliente";
 		}
 	};
 	///---
@@ -345,7 +370,8 @@ $scope.cmbFormapago="";
     		propina:$scope.ValPropina,
     		otrosventa:0,
     		valortotalventa:$scope.ValorTotal,
-    		estadoanulado:'false'
+    		estadoanulado:'false',
+    		idtransaccion:''
     	};
     	//--Documento de venta
     	//--Items venta
@@ -366,17 +392,18 @@ $scope.cmbFormapago="";
     	}
     	//--Items venta
     	console.log(Contabilidad);
-    	console.log(kardex);
+    	/*console.log(kardex);
     	console.log(DocVenta);
-    	console.log(ItemsVenta);
-    	var transaccion_venta={
+    	console.log(ItemsVenta);*/
+    	var transaccion_venta_full={
     		DataContabilidad:Contabilidad,
     		Datakardex:kardex,
     		DataVenta:DocVenta,
     		Idformapagoventa: $scope.cmbFormapago, 
     		DataItemsVenta:ItemsVenta
     	};
-    	$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta))
+        console.log(transaccion_venta_full);
+    	$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta_full))
                 .success(function (response) {
                     if(parseInt(response)>0){
                     	QuitarClasesMensaje();
@@ -392,6 +419,9 @@ $scope.cmbFormapago="";
 				        $scope.Mensaje="Error al guardar la venta";
 				        $scope.LimiarDataVenta();
                     }
+        })
+        .error(function(err){
+            console.log(err);
         });
     };
     $scope.LimiarDataVenta=function(){
@@ -410,11 +440,11 @@ $scope.cmbFormapago="";
 	    $scope.DICliente="";
 		$scope.Cliente={};
 		$scope.items=[];
-		$scope.Bodegas=[];
+		$scope.Bodega="";
 		$scope.cmbFormapago="";
-		$scope.PuntoVenta=[];
+		$scope.AgenteVenta="";
 		$scope.PuntoVentaSeleccionado={};
-		$scope.Configuracion=[];
+		//$scope.Configuracion=[];
 		$scope.mensaje="";
 		$scope.AgenteVenta="";
 		$scope.t_establ="";
@@ -427,9 +457,94 @@ $scope.cmbFormapago="";
 		$scope.t_secuencial_guia="";
 		$scope.NoAutorizacion="";
 		$scope.t_secuencial="";
+
+        $scope.IdDocumentoVentaedit="0";
     };
+    ///---
+    $scope.ViewVenta=function(venta){
+    	$http.get(API_URL + 'DocumentoVenta/loadEditVenta/'+venta.iddocumentoventa)
+	        .success(function(response){
+	            console.log(response);
+                $scope.VerFactura=1;
+                $scope.Cliente=response.Cliente[0];
+                var aux_ventadata=response.Venta[0];
+                var aux_transaccion=response.Contabilidad[0];
 
+                $scope.AgenteVenta=String(aux_ventadata.idpuntoventa);
+                $scope.DataNoDocumento();
+                $scope.NoAutorizacion=aux_ventadata.nroautorizacionventa;
+                var aux_guiar=aux_ventadata.nroguiaremision.split("-");
+                $scope.t_establ_guia=aux_guiar[0];
+                $scope.t_pto_guia=aux_guiar[1];
+                $scope.t_secuencial_guia=aux_guiar[2];
+                $scope.IdDocumentoVentaedit=String(aux_ventadata.iddocumentoventa);
+                $scope.NoVenta=String(aux_ventadata.iddocumentoventa);
+                $("#t_secuencial").val(aux_ventadata.iddocumentoventa);
+                $scope.calculateLength('t_secuencial', 9);
+                $scope.t_secuencial=$("#t_secuencial").val();
+                $scope.FechaRegistro=convertDatetoDB(aux_ventadata.fecharegistroventa,true);
+                $scope.FechaEmision=convertDatetoDB(aux_ventadata.fechaemisionventa,true);
+                $scope.observacion=aux_transaccion.descripcion;
+                $scope.cmbFormapago=String(aux_ventadata.cont_formapago_documentoventa[0].idformapago);
 
+                var aux_itemsventa=response.Items;
+                $scope.DICliente=$scope.Cliente.numdocidentific;
+                var aux_bodegacont=1;
+                for(x=0;x<aux_itemsventa.length;x++){
+                    if(aux_itemsventa[x].idbodega!="") $scope.Bodega=String(aux_itemsventa[x].idbodega);
+                    var item={
+                        productoObj:{
+                            title:aux_itemsventa[x].cont_catalogoitem.codigoproducto,
+                            originalObject:aux_itemsventa[x].cont_catalogoitem
+                        },
+                        cantidad:aux_itemsventa[x].cantidad,
+                        precioU:aux_itemsventa[x].preciounitario,
+                        descuento:aux_itemsventa[x].descuento,
+                        iva : 0,
+                        ice:0,
+                        total:aux_itemsventa[x].preciototal,
+                        producto: aux_itemsventa[x].cont_catalogoitem.codigoproducto
+                    };
+                    $scope.items.push(item);
+                    aux_bodegacont++;
+                }
+
+                $scope.CalculaValores();
+	    });
+    };
+    ///---
+    $scope.AnularVenta=function(){
+        $("#ConfirmarAnulacion").modal("show");
+    };
+    ///---
+    $scope.ConfirmarAnularventa=function(){
+        $("#ConfirmarAnulacion").modal("hide");
+        $http.get(API_URL+'DocumentoVenta/anularVenta/'+$scope.IdDocumentoVentaedit)
+        .success(function (response) {
+            if(parseInt(response)>0){
+                QuitarClasesMensaje();
+                $("#titulomsm").addClass("btn-success");
+                $("#msm").modal("show");
+                $scope.Mensaje="La venta se anulo correctamente";
+                $scope.LimiarDataVenta();
+                $scope.NumeroRegistroVenta();
+                $scope.pageChanged();
+                $scope.VerFactura=2;
+                $scope.IdDocumentoVentaedit="0";
+            }else{
+                QuitarClasesMensaje();
+                $("#titulomsm").addClass("btn-danger");
+                $("#msm").modal("show");
+                $scope.Mensaje="Error al anular la venta";
+                $scope.LimiarDataVenta();
+            }
+        });
+    };
+    ///---
+    $scope.AnularVentaDirecto=function(id){
+      $("#ConfirmarAnulacion").modal("show"); 
+      $scope.IdDocumentoVentaedit=String(id); 
+    };
 
 
 

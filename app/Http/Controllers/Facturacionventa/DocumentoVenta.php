@@ -14,6 +14,7 @@ use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Nomina\Empleado;
 use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Modelos\Contabilidad\Cont_Transaccion;
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Http\Controllers\CatalogoProductos\CoreKardex;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
@@ -140,10 +141,13 @@ class DocumentoVenta extends Controller
     public function getCofiguracioncontable()
     {               
         //return   configuracioncontable::all();
-        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' ")->get();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' OR optionname='CONT_IVA_VENTA' OR optionname='CONT_ICE_VENTA' ")->get();
         $aux_configcontable=array();
         foreach ($aux_data as $i) {
-            $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            $aux_contable="";
+            if($i->optionvalue!=""){
+                $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            }
             $configventa = array(
                 'Id' => $i->idconfiguracionsystem,
                 'IdContable'=> $i->optionvalue,
@@ -173,7 +177,7 @@ class DocumentoVenta extends Controller
                                 ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
                                 ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                                 ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-                                ->whereRaw("cont_catalogitem.codigoproducto LIKE '%$id%' ")
+                                ->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') ")
                                 ->get();
         //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
         //->get() ;
@@ -258,6 +262,7 @@ class DocumentoVenta extends Controller
     {
         $filtro = json_decode($filtro);
         //--Parte contable
+
         $id_transaccion= CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
         //--Fin parte contable
         //--Parte invetario kardex
@@ -266,6 +271,8 @@ class DocumentoVenta extends Controller
         }
         $id_kardex= CoreKardex::GuardarKardex($filtro->Datakardex);
         //--Fin Parte invetario kardex
+
+        $filtro->DataVenta->idtransaccion=$id_transaccion;
 
         $aux_docventa=(array) $filtro->DataVenta;
         $docventa=Cont_DocumentoVenta::create($aux_docventa);
@@ -288,8 +295,8 @@ class DocumentoVenta extends Controller
             'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."", 
             'estadoanulado' => false);
         $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
-        /*
-        $formapagoventa = array(
+        
+        /*$formapagoventa = array(
             'idformapago' => $filtro->Idformapagoventa, 
             'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa);
         $aux_formapagoVenta=Cont_FormaPagoDocumentoVenta::create($formapagoventa);*/
@@ -297,6 +304,9 @@ class DocumentoVenta extends Controller
         $aux_formapagoVenta->idformapago=$filtro->Idformapagoventa;
         $aux_formapagoVenta->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
         $aux_formapagoVenta->save();*/
+       $aux= DB::table('cont_formapago_documentoventa')->insert([
+            ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
+        ]);
         return 1;
 
         /*$aux_filtro="";
@@ -325,9 +335,23 @@ class DocumentoVenta extends Controller
      * 
      * @return mixed
      */
-    public function getallFitros()
+    //public function getallFitros()
+    public function getallFitros(Request $request)
     {     
-        return Cont_DocumentoVenta::whereRaw(" estadoanulado=false ")->get();
+        //return Cont_DocumentoVenta::whereRaw(" estadoanulado=false ")->get();
+
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+        $data = null;
+
+        /*if ($search != null) {
+            $data = Cont_DocumentoVenta::whereRaw("cargo.namecargo ILIKE '%" . $search . "%'")->orderBy('namecargo', 'asc');
+        } else {
+            $data = Cont_DocumentoVenta::orderBy('namecargo', 'asc');
+        }*/
+        $data= Cont_DocumentoVenta::whereRaw(" estadoanulado=false ");
+        return $data->paginate(10);
+
         /*
         $establecimiento= establecimiento::all();
         $puntoventa=puntoventa::all();
@@ -345,11 +369,18 @@ class DocumentoVenta extends Controller
      */
     public function anularVenta($id)
     {               
-        $aux_prodv= productosenventa:: where("codigoventa","=",$id)->delete();
+        
+        /*$aux_prodv= productosenventa:: where("codigoventa","=",$id)->delete();
         $aux_servv= serviciosenventa:: where("codigoventa","=",$id)->delete();
         $aux_venta= venta::where("codigoventa", $id)
-                    ->update(['estaanulada' => 't']);
-        return  $aux_venta;
+                    ->update(['estaanulada' => 't']);*/
+        Cont_DocumentoVenta::whereRaw("iddocumentoventa=$id")
+                            ->update(['estadoanulado' => 't']);
+        $aux_venta=Cont_DocumentoVenta::find($id);
+        CoreContabilidad::AnularAsientoContable($aux_venta->idtransaccion);
+        /*Cont_Transaccion::whereRaw("idtransaccion=".."")
+                        ->update(['estadoanulado' => 'f']);*/
+        return  1;
     }
      /**
      * anular venta
@@ -372,7 +403,7 @@ class DocumentoVenta extends Controller
      */
     public function getVentaXId($id)
     {               
-        $aux_venta= venta::with('productosenventa.producto','serviciosenventa','cliente','pago','puntoventa.empleado')
+        /*$aux_venta= venta::with('productosenventa.producto','serviciosenventa','cliente','pago','puntoventa.empleado')
         ->where("documentoventa.codigoventa","=", $id)->get();
 
         $aux_puntoVenta= puntoventa::with('empleado', 'establecimiento')->where("idpuntoventa","=",$aux_venta[0]->idpuntoventa)->limit(1)->get();
@@ -382,7 +413,29 @@ class DocumentoVenta extends Controller
             "puntoventa" => $aux_puntoVenta,
             "cliente"=> $aux_cliente
         );
-        return $aux_data;
+        return $aux_data;*/
+        /*return Cont_DocumentoVenta::with("cliente","cont_itemventa.cont_catalogoitem","cont_puntoventa")
+                                    ->whereRaw(" iddocumentoventa='$id' ")
+                                    ->get();*/
+        $datadocventa=Cont_DocumentoVenta::with("cont_formapago_documentoventa")
+                                        ->whereRaw(" iddocumentoventa='$id' ")->get();
+        $dataclient=Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
+                        ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
+                        ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
+                        ->whereRaw(" cliente.idcliente=".$datadocventa[0]->idcliente." ")
+                        ->get();
+        $dataitemventa=Cont_ItemVenta::with("cont_catalogoitem")
+                                ->whereRaw(" iddocumentoventa=$id ")
+                                ->get();
+        $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=".$datadocventa[0]->idtransaccion."")->get();
+        $full_data_venta= array(
+            'Venta' => $datadocventa,
+            'Cliente' => $dataclient,
+            'Items' => $dataitemventa,
+            'Contabilidad'=> $dataConta
+             );
+        return $full_data_venta;
+
     }
     /**
      * Actualiza la venta  

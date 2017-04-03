@@ -34,14 +34,25 @@ class Cont_DocumentoVenta extends Model
         'propina',
         'otrosventa',
         'valortotalventa',
-        'estadoanulado'
+        'estadoanulado',
+        'idtransaccion'
     ];
+
+    public function cliente(){
+        return $this->belongsTo('App\Modelos\Clientes\Cliente',"idcliente");
+    }
 
     public function cont_documentoguiaremision(){
     	return $this->hasMany('App\Modelos\Contabilidad');
     }
     public function cont_itemventa(){
-        return $this->hasMany('App\Modelos\Contabilidad');
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_ItemVenta',"iddocumentoventa");
+    }
+    public function cont_puntoventa(){
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_PuntoDeVenta',"idpuntoventa");
+    }
+    public function cont_formapago_documentoventa(){
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta',"iddocumentoventa");
     }
 
 }
