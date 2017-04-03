@@ -59,6 +59,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 
     $scope.pageChangedProvincia = function(newPage) {
+        console.log(newPage)
         $scope.CargadataProvincia(newPage);
     };
     $scope.pageChangedCanton = function(newPage) {
@@ -109,20 +110,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
     $scope.pageChangedPagoPais = function(newPage) {
         $scope.CargadataPagoPais(newPage);
     };
-
-    $scope.pageChangedProvincia = function(newPage) {
-        $scope.CargadataProvincia(newPage);
-    };
-    $scope.pageChangedCanton = function(newPage) {
-        $scope.CargadataCanton(newPage);
-    };
-    $scope.pageChangedParroquia = function(newPage) {
-        $scope.CargadataParroquia(newPage);
-    };
-    $scope.pageChangedFormaPago = function(newPage) {
-        $scope.CargadataFormaPago(newPage);
-    };
-
 
     $scope.CargadataTPdoc = function (pageNumber){
 
@@ -368,7 +355,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
     };
 
     $scope.CargadataProvincia = function (pageNumber) {
-
+        console.log(pageNumber+'cp');
         if ($scope.busqueda == undefined) {
             var search = null;
         } else var search = $scope.busqueda;
