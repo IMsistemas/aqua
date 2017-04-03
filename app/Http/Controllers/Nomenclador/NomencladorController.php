@@ -196,13 +196,13 @@ class NomencladorController extends Controller
             return SRI_DetalleImpuestoRetencion::join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
                 ->select('sri_detalleimpuestoretencion.*', 'sri_tipoimpuestoretencion.nametipoimpuestoretencion')
                 ->where('sri_detalleimpuestoretencion.namedetalleimpuestoretencion','ILIKE','%' . $search . '%')
-                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(40);
+                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(10);
 
         }
         else{
             return SRI_DetalleImpuestoRetencion::join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
                 ->select('sri_detalleimpuestoretencion.*', 'sri_tipoimpuestoretencion.nametipoimpuestoretencion')
-                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(40);
+                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(10);
 
         }
 
@@ -221,12 +221,12 @@ class NomencladorController extends Controller
 
         if ($search != null) {
             $SRISustento = SRI_SustentoTributario::whereRaw("sri_sustentotributario.namesustento ILIKE '%" . $search . "%'")->orderBy('namesustento', 'asc');
-            return $SRISustento->paginate(15);
+            return $SRISustento->paginate(10);
         }
         else{
 
             $SRISustento = SRI_SustentoTributario::orderBy('namesustento', 'asc');
-            return $SRISustento->paginate(15);
+            return $SRISustento->paginate(10);
         }
     }
 
@@ -241,12 +241,12 @@ class NomencladorController extends Controller
 
         if ($search != null) {
             $SRISustento = SRI_SustentoTributario::whereRaw("sri_sustentotributario.namesustento ILIKE '%" . $search . "%'")->orderBy('namesustento', 'asc');
-            return $SRISustento->paginate(500);
+            return $SRISustento->paginate(10);
         }
         else{
 
             $SRISustento = SRI_SustentoTributario::orderBy('namesustento', 'asc');
-            return $SRISustento->paginate(500);
+            return $SRISustento->paginate(10);
         }
     }
 
@@ -267,7 +267,7 @@ class NomencladorController extends Controller
                 ->select('sri_tipocomprobante.*', 'sri_sustentotributario.namesustento')
                 ->where('sri_tipocomprobante.namecomprobante','ILIKE','%" . $search . "%')
                 ->orderBy('sri_sustentotributario.namesustento', 'asc')
-                ->orderBy('namecomprobante', 'asc')->paginate(20);
+                ->orderBy('namecomprobante', 'asc')->paginate(10);
 
         }
         else{
@@ -278,7 +278,7 @@ class NomencladorController extends Controller
                 ->select('sri_tipocomprobante.*', 'sri_sustentotributario.namesustento')
                 //->select('sri_tipocomprobante.*')->paginate(10);
                 ->orderBy('sri_sustentotributario.namesustento', 'asc')
-                ->orderBy('namecomprobante', 'asc')->paginate(20);
+                ->orderBy('namecomprobante', 'asc')->paginate(10);
 
 
 
@@ -379,12 +379,12 @@ class NomencladorController extends Controller
 
         if ($search != null) {
             $Provin = Provincia::whereRaw("provincia.nameprovincia ILIKE '%" . $search . "%'")->orderBy('nameprovincia', 'asc');
-            return $Provin->paginate(500);
+            return $Provin->paginate(10);
         }
         else{
 
             $Provin = Provincia::orderBy('nameprovincia', 'asc');
-            return $Provin->paginate(500);
+            return $Provin->paginate(10);
         }
 
     }
@@ -428,13 +428,13 @@ class NomencladorController extends Controller
                 ->select('canton.*', 'provincia.idprovincia', 'provincia.nameprovincia')
                 ->where('canton.namecanton','ILIKE','%' . $search . '%')
                 ->orderBy('provincia.nameprovincia', 'asc')
-                ->orderBy ('namecanton','asc')->paginate(500);
+                ->orderBy ('namecanton','asc')->paginate(10);
         }
         else{
             return Canton::join('provincia', 'canton.idprovincia', '=', 'provincia.idprovincia')
                 ->select('canton.*', 'provincia.idprovincia', 'provincia.nameprovincia')
                 ->orderBy('provincia.nameprovincia', 'asc')
-                ->orderBy ('namecanton','asc')->paginate(500);
+                ->orderBy ('namecanton','asc')->paginate(10);
         }
     }
 

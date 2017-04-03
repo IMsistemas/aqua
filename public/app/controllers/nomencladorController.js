@@ -346,6 +346,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
             $scope.sri_pagopais = response.data;
             $scope.totalItems = response.total;
+            console.log($scope.sri_pagopais);
+            console.log($scope.totalItems);
         });
     };
 

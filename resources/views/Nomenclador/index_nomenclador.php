@@ -346,7 +346,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedTPdoc(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -410,7 +410,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedTPident(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -473,7 +473,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedTPimp(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -537,7 +537,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedImpIVA(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -603,7 +603,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedImpICE(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -665,7 +665,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedTipoImpRetenc(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -732,7 +732,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedImpIVARENTA(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -794,7 +794,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedSustentoTrib(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -859,7 +859,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedComprobante(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -910,7 +910,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedPagoResidente(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -963,7 +963,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedPagoPais(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
