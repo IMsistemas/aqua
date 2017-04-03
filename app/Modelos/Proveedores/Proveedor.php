@@ -11,4 +11,9 @@ class Proveedor extends Model
     protected $primaryKey = 'idproveedor';
     public $timestamps = false;
 
+    public function persona()
+    {
+        return $this->belongsTo('App\Modelos\Persona','idpersona');
+    }
+
 }

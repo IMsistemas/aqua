@@ -952,4 +952,5 @@ Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
  */
 
+Route::get('DocumentoCompras/getProveedorByFilter', 'Compras\ComprasController@getProveedorByFilter' );
 Route::resource('DocumentoCompras', 'Compras\ComprasController');
