@@ -34,6 +34,9 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'proveedor/getProveedores?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             $scope.proveedores = response.data;
             $scope.totalItems = response.total;
+            console.log(response);
+            console.log($scope.proveedores);
+            console.log($scope.totalItems);
         });
 
     };

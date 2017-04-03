@@ -35,18 +35,26 @@ class ProveedorController extends Controller
         $search = $filter->search;
         $employee = null;
 
-        $proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
+
+        if ($search != null) {
+            $proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
                         ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'proveedor.idplancuenta')
                         ->join('parroquia', 'proveedor.idparroquia', '=', 'parroquia.idparroquia')
                         ->join('canton', 'canton.idcanton', '=', 'parroquia.idcanton')
                         ->join('provincia', 'provincia.idprovincia', '=', 'canton.idprovincia')
-                        ->select('proveedor.*', 'persona.*', 'cont_plancuenta.*', 'canton.idcanton', 'provincia.idprovincia');
-
-        if ($search != null) {
-            $proveedor = $proveedor->whereRaw("persona.razonsocial LIKE '%" . $search . "%'");
+                        ->select('proveedor.*', 'persona.*', 'cont_plancuenta.*', 'canton.idcanton', 'provincia.idprovincia')
+                        ->whereRaw("persona.razonsocial ILIKE '%". $search ."%'");
+        }else{
+            $proveedor = Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
+                        ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'proveedor.idplancuenta')
+                        ->join('parroquia', 'proveedor.idparroquia', '=', 'parroquia.idparroquia')
+                        ->join('canton', 'canton.idcanton', '=', 'parroquia.idcanton')
+                        ->join('provincia', 'provincia.idprovincia', '=', 'canton.idprovincia')
+                        ->select('proveedor.*', 'persona.*', 'cont_plancuenta.*', 'canton.idcanton', 'provincia.idprovincia')
+                        ->orderBy('proveedor.fechaingreso', 'desc');
         }
 
-        return $proveedor->orderBy('fechaingreso', 'desc')->paginate(10);
+        return $proveedor->paginate(10);
     }
 
 
