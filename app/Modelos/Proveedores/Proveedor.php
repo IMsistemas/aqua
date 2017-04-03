@@ -16,4 +16,9 @@ class Proveedor extends Model
         return $this->belongsTo('App\Modelos\Persona','idpersona');
     }
 
+    public function sri_tipoimpuestoiva()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_TipoImpuestoIva','idtipoimpuestoiva');
+    }
+
 }
