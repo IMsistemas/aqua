@@ -958,3 +958,13 @@ Route::get('DocumentoCompras/getSustentoTributario', 'Compras\ComprasController@
 Route::get('DocumentoCompras/getTipoComprobante/{idsustento}', 'Compras\ComprasController@getTipoComprobante' );
 Route::get('DocumentoCompras/getFormaPago', 'Compras\ComprasController@getFormaPago' );
 Route::resource('DocumentoCompras', 'Compras\ComprasController');
+
+//-------------------------------- Guía Remisión---------------/////////
+Route::resource('guiaremision', 'Guiaremision\GuiaremisionController');
+Route::get('guiaremision/getransportista/{texto}', 'Guiaremision\GuiaremisionController@GetTrasportista');
+Route::get('guiaremision/nuevaguia', 'Guiaremision\GuiaremisionController@geNuevaGuia');
+Route::get('guiaremision/getformguia', 'Guiaremision\GuiaremisionController@formguia');
+Route::get('guiaremision/getdestinatario/{texto}', 'Guiaremision\GuiaremisionController@BuscarDestinatario');
+Route::get('guiaremision/getventa/{idventa}', 'Guiaremision\GuiaremisionController@BuscarVenta');
+Route::get('guiaremision/venta/{texto}', 'Guiaremision\GuiaremisionController@GetVentanro');
+Route::get('guiaremision/getGuia/{idguiaremision}', 'Guiaremision\GuiaremisionController@getGuia');
