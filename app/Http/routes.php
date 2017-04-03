@@ -953,4 +953,5 @@ Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
  */
 
 Route::get('DocumentoCompras/getProveedorByFilter', 'Compras\ComprasController@getProveedorByFilter' );
+Route::get('DocumentoCompras/getBodegas', 'Compras\ComprasController@getBodegas' );
 Route::resource('DocumentoCompras', 'Compras\ComprasController');
