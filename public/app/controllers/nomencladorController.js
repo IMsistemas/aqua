@@ -58,8 +58,69 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 
 
-    $scope.pageChanged = function(newPage) {
-        $scope.initLoad(newPage);
+    $scope.pageChangedProvincia = function(newPage) {
+        $scope.CargadataProvincia(newPage);
+    };
+    $scope.pageChangedCanton = function(newPage) {
+        $scope.CargadataCanton(newPage);
+    };
+    $scope.pageChangedParroquia = function(newPage) {
+        $scope.CargadataParroquia(newPage);
+    };
+    $scope.pageChangedFormaPago = function(newPage) {
+        $scope.CargadataFormaPago(newPage);
+    };
+
+    $scope.pageChangedTPdoc = function(newPage) {
+        $scope.CargadataTPdoc(newPage);
+    };
+    $scope.pageChangedTPident = function(newPage) {
+        $scope.CargadataTPident(newPage);
+    };
+    $scope.pageChangedTPimp = function(newPage) {
+        $scope.CargadataTPimp(newPage);
+    };
+    $scope.pageChangedImpIVA = function(newPage) {
+        $scope.CargadataImpIVA(newPage);
+    };
+
+    $scope.pageChangedImpICE = function(newPage) {
+        $scope.CargadataImpICE(newPage);
+    };
+    $scope.pageChangedTipoImpRetenc = function(newPage) {
+        $scope.CargadataTipoImpRetenc(newPage);
+    };
+    $scope.pageChangedImpIVARENTA = function(newPage) {
+        $scope.CargadataImpIVARENTA(newPage);
+    };
+    $scope.pageChangedSustentoTrib = function(newPage) {
+        $scope.CargadataSustentoTrib(newPage);
+    };
+
+    $scope.pageChangedSustentoTribEX = function(newPage) {
+        $scope.CargadataSustentoTribEX(newPage);
+    };
+    $scope.pageChangedComprobante = function(newPage) {
+        $scope.CargadataComprobante(newPage);
+    };
+    $scope.pageChangedPagoResidente = function(newPage) {
+        $scope.CargadataPagoResidente(newPage);
+    };
+    $scope.pageChangedPagoPais = function(newPage) {
+        $scope.CargadataPagoPais(newPage);
+    };
+
+    $scope.pageChangedProvincia = function(newPage) {
+        $scope.CargadataProvincia(newPage);
+    };
+    $scope.pageChangedCanton = function(newPage) {
+        $scope.CargadataCanton(newPage);
+    };
+    $scope.pageChangedParroquia = function(newPage) {
+        $scope.CargadataParroquia(newPage);
+    };
+    $scope.pageChangedFormaPago = function(newPage) {
+        $scope.CargadataFormaPago(newPage);
     };
 
 

@@ -79,7 +79,7 @@
                                     </table>
                                      <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedProvincia(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -132,7 +132,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedCanton(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -187,7 +187,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedParroquia(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -261,7 +261,7 @@
                                     </table>
                                     <dir-pagination-controls
 
-                                            on-page-change="pageChanged(newPageNumber)"
+                                            on-page-change="pageChangedFormaPago(newPageNumber)"
 
                                             template-url="dirPagination.html"
 
@@ -705,7 +705,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate=" ImpuestoIVARENTA in sri_ImpuestoIVARENTA | orderBy:sortKey:reverse | itemsPerPage:40" total-items="totalItems" ng-cloak >
+                                        <tr dir-paginate=" ImpuestoIVARENTA in sri_ImpuestoIVARENTA | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak >
                                             <td>{{ImpuestoIVARENTA.nametipoimpuestoretencion}}</td>
                                             <td>{{ImpuestoIVARENTA.namedetalleimpuestoretencion}}</td>
                                             <td>{{ImpuestoIVARENTA.codigosri}}</td>
@@ -770,7 +770,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate="SustentoTributario in sri_SustentoTributario | orderBy:sortKey:reverse | itemsPerPage:15" total-items="totalItems" ng-cloak>
+                                        <tr dir-paginate="SustentoTributario in sri_SustentoTributario | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak>
                                             <td>{{SustentoTributario.namesustento}}</td>
                                             <td>{{SustentoTributario.codigosrisustento}}</td>
                                             <td>
@@ -833,7 +833,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate="Comprobante in sri_Comprobante | orderBy:sortKey:reverse | itemsPerPage:20" total-items="totalItems" ng-cloak>
+                                        <tr dir-paginate="Comprobante in sri_Comprobante | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak>
                                             <td>{{Comprobante.namesustento}}</td>
                                             <td>{{Comprobante.namecomprobante}}</td>
                                             <td>{{Comprobante.codigosri}}
