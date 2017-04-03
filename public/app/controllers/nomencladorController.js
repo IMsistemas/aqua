@@ -59,7 +59,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 
     $scope.pageChangedProvincia = function(newPage) {
-        console.log(newPage)
+        console.log(newPage+'a')
         $scope.CargadataProvincia(newPage);
     };
     $scope.pageChangedCanton = function(newPage) {
@@ -316,6 +316,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
             $scope.sri_PagoResidente = response.data;
             $scope.totalItems = response.total;
+            console.log( $scope.sri_PagoResidente);
 
         });
     };
