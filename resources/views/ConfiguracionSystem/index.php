@@ -176,6 +176,42 @@
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
+                                            <span class="input-group-addon">Cuenta IVA: </span>
+                                            <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
+                                            <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-iva-compra" ng-click = "clean('iva_compra', 'iva_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta ICE: </span>
+                                            <input type="text" class="form-control" name="ice_compra" id="ice_compra" ng-model="ice_compra" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="ice_compra_h" id="ice_compra_h" ng-model="ice_compra_h">
+                                            <input type="hidden" name="id_ice_compra_h" id="id_ice_compra_h" ng-model="id_ice_compra_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-ice-compra" ng-click="showPlanCuenta('ice_compra', 'ice_compra_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-ice-compra" ng-click = "clean('ice_compra', 'ice_compra_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
                                             <span class="input-group-addon">Cuenta IRBPNR: </span>
                                             <input type="text" class="form-control" name="irbpnr_compra" id="irbpnr_compra" ng-model="irbpnr_compra" placeholder=""
                                                     readonly>
@@ -261,6 +297,42 @@
                             <div role="tabpanel" class="tab-pane fade" id="cont_venta">
 
                                 <form class="form-horizontal" name="formVentas" novalidate="">
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta IVA: </span>
+                                            <input type="text" class="form-control" name="iva_venta" id="iva_venta" ng-model="iva_venta" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="iva_venta_h" id="iva_venta_h" ng-model="iva_venta_h">
+                                            <input type="hidden" name="id_iva_venta_h" id="id_iva_venta_h" ng-model="id_iva_venta_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-iva-venta" ng-click="showPlanCuenta('iva_venta', 'iva_venta_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-iva-venta" ng-click = "clean('iva_venta', 'iva_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta ICE: </span>
+                                            <input type="text" class="form-control" name="ice_venta" id="ice_venta" ng-model="ice_venta" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="ice_venta_h" id="ice_venta_h" ng-model="ice_venta_h">
+                                            <input type="hidden" name="id_ice_venta_h" id="id_ice_venta_h" ng-model="id_ice_venta_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-ice-venta" ng-click="showPlanCuenta('ice_venta', 'ice_venta_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-ice-venta" ng-click = "clean('ice_venta', 'ice_venta_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
@@ -370,6 +442,42 @@
                             <div role="tabpanel" class="tab-pane fade" id="cont_notacredit">
 
                                 <form class="form-horizontal" name="formNC" novalidate="">
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta IVA: </span>
+                                            <input type="text" class="form-control" name="iva_nc" id="iva_nc" ng-model="iva_nc" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="iva_nc_h" id="iva_nc_h" ng-model="iva_nc_h">
+                                            <input type="hidden" name="id_iva_nc_h" id="id_iva_nc_h" ng-model="id_iva_nc_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-iva-nc" ng-click="showPlanCuenta('iva_nc', 'iva_nc_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-iva-nc" ng-click = "clean('iva_nc', 'iva_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta ICE: </span>
+                                            <input type="text" class="form-control" name="ice_nc" id="ice_nc" ng-model="ice_nc" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="ice_nc_h" id="ice_nc_h" ng-model="ice_nc_h">
+                                            <input type="hidden" name="id_ice_nc_h" id="id_ice_nc_h" ng-model="id_ice_nc_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-ice-nc" ng-click="showPlanCuenta('ice_nc', 'ice_nc_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-ice-nc" ng-click = "clean('ice_nc', 'ice_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
 
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
