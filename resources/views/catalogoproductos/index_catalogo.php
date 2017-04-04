@@ -54,11 +54,12 @@
                     <table class="table table-responsive table-striped table-hover table-condensed">
                         <thead class="bg-primary">
                         <tr>
-                            <th>Foto</th>
+                            <th style="text-align: center;">Foto</th>
                             <th style="text-align: center;">Código</th>
                             <th style="text-align: center;">Producto</th>
+                            <th style="text-align: center;">Tipo Producto</th>
                             <th style="text-align: center;">Fecha Ingreso</th>
-                            <th style="width: 20%;">Acciones</th>
+                            <th style="text-align: center;">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -66,10 +67,11 @@
                             <td style="text-align: center;">
                             <img class="img-circle" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 50px;" >
                             </td>
-                            <td>{{producto.codigoproducto}}</td>
-                            <td>{{producto.nombreproducto}}</td>
-                            <td>{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
-                            <td>
+                            <td style="text-align: center;">{{producto.codigoproducto}}</td>
+                            <td style="text-align: center;">{{producto.nombreproducto}}</td>
+                            <td style="text-align: center;">{{producto.nameclaseitem}}</td>
+                            <td style="text-align: center;">{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
+                            <td style="text-align: center;">
                                 <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
                                         data-toggle="tooltip" data-placement="bottom" title="Editar" >
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

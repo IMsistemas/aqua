@@ -64,7 +64,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate="provi in provincia | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" pagination-id="provincia" ng-cloak">
+                                        <tr dir-paginate="provi in provincia | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItemsPro" current-page="currentPage1" pagination-id="provincia" ng-cloak">
                                         <td>{{provi.nameprovincia}}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning" ng-click="toggle('edit',provi.idprovincia,'prov')">
@@ -118,7 +118,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate="cant in canton | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" pagination-id="canton" ng-cloak" >
+                                        <tr dir-paginate="cant in canton | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItemsCan" current-page="currentPage2" pagination-id="canton" ng-cloak" >
                                         <td>{{cant.nameprovincia}}</td>
                                         <td>{{cant.namecanton}}</td>
                                         <td>
@@ -174,7 +174,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr dir-paginate="parq in parroquia | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" pagination-id="parroquia" ng-cloak" >
+                                        <tr dir-paginate="parq in parroquia | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItemsParro" pagination-id="parroquia" ng-cloak" >
                                         <td>{{parq.namecanton}}</td>
                                         <td>{{parq.nameparroquia}}</td>
                                         <td>

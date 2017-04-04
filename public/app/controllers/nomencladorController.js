@@ -367,7 +367,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getprovincia?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.provincia = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemsPro = response.total;
         });
     };
 
@@ -399,7 +399,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         $http.get(API_URL + 'Nomenclador/getCantonEX?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             $scope.canton = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemsCan = response.total;
 
         });
 
@@ -439,7 +439,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getParroquiaEX?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             //console.log(response);
             $scope.parroquia = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemsParro = response.total;
 
         });
 

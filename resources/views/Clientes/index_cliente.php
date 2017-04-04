@@ -98,7 +98,7 @@
                         template-url="dirPagination.html"
 
                         class="pull-right"
-                        max-size="10"
+                        max-size="1"
                         direction-links="true"
                         boundary-links="true" >
 

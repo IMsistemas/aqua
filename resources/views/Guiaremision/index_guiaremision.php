@@ -42,7 +42,7 @@
 			<div class="col-sm-4 col-xs-6">
 	                <div class="form-group has-feedback">
 	                    <input type="text" class="form-control" id="search" placeholder="BUSCAR..."
-	                           ng-model="search" ng-change="searchByFilter()">
+	                           ng-model="search" ng-change="initLoad(1)">
 	                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
 	                </div>
 	        </div>
@@ -65,7 +65,7 @@
 					</thead>
 					<tbody>
 					<tr>{{item}}</tr>
-						<tr dir-paginate="item in guiaremision|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" ng-cloak>
+						<tr dir-paginate="item in guiaremision|orderBy:sortKey:reverse|itemsPerPage:10" pagination-id="guiaremision" ng-cloak>
 							<td>{{item.iddocumentoguiaremision}}</td>
 							<td>{{item.razonsocial}}</td>
 							<td>{{item.nrodocumentoguiaremision}}</td>
@@ -89,7 +89,9 @@
                     class="pull-right"
                     max-size="10"
                     direction-links="true"
-                    boundary-links="true" >
+                    boundary-links="true"
+                    pagination-id="guiaremision" 
+                    > 
 	            </dir-pagination-controls>
 			</div>
 		</div>
@@ -324,7 +326,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr dir-paginate="item in guia |orderBy:sortKey:reverse | itemsPerPage:3" ng-cloak>
+											<tr dir-paginate="item in guia |orderBy:sortKey:reverse | itemsPerPage:3" pagination-id="item" ng-cloak>
 												<td>{{item.idcatalogitem}}<br></td>
 												<td>{{item.nombrecategoria}}</td>
 												<td>{{item.codigoproducto}}</td>
@@ -341,7 +343,8 @@
 					                    class="pull-right"
 					                    max-size="10"
 					                    direction-links="true"
-					                    boundary-links="true" >
+					                    boundary-links="true" 
+					                    pagination-id="item">
 						            </dir-pagination-controls>
 								</div>
 							</fieldset>
@@ -371,7 +374,7 @@
 										</thead>
 									</table>
 									<div>
-										<div class="table table-responsive table-striped table-hover table-condensed" dir-paginate="itemm in itemguiaretension|itemsPerPage:3" ng-cloak>
+										<div class="table table-responsive table-striped table-hover table-condensed" dir-paginate="itemm in itemguiaretension|itemsPerPage:3" pagination-id="mercaderia" ng-cloak>
 											<div class="col-sm-1 col-xs-1" style="width: 8.33% float: left;">
 												<div>
 												   <input type="number" name='cantidad{{$index}}' class="form-control" 
@@ -440,7 +443,8 @@
 				                    class="pull-right"
 				                    max-size="10"
 				                    direction-links="true"
-				                    boundary-links="true" >
+				                    boundary-links="true" 
+				                    pagination-id="mercaderia">
 			            		</dir-pagination-controls>
 			            	</form>
 							</div>
