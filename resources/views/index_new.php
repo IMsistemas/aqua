@@ -104,7 +104,7 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Ventas</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="">Puntos de Ventas</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
                                             <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
                                             <li><a href="#">Retención Ventas</a></li>
                                             <li><a href="#">Comprobante Ingreso</a></li>
@@ -232,6 +232,7 @@
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
     <script src="<?= asset('app/controllers/nomencladorController.js') ?>"></script>
     <script src="<?= asset('app/controllers/guiaremisionController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/puntoventaController.js') ?>"></script>
 
     
 
