@@ -47,16 +47,16 @@
 							<th>Establecimiento</th>
 							<th>Agente de Venta / Empleado</th>
 							<th>Codigo Emision</th>
-							<th>Accion</th>							
+							<th>Acción</th>							
 						</tr>
 
 					</thead>
 					<tbody>
 						<tr ng-repeat="puntoventa in puntoventas" >
 							<td>{{puntoventa.idpuntoventa}}</td>
-							<td>{{puntoventa.razonzocial}}</td>
+							<td>{{puntoventa.razonsocial}}</td>
 							<td>{{puntoventa.namepersona}}</td>
-							<td>{{puntoventa.codigoemicion}}</td>
+							<td>{{puntoventa.codigoptoemision}}</td>
 							<td>
 								<button type="button" class="btn btn-warning">
 					                <span class="glyphicon glyphicon glyphicon-edit" ng-click="toggle('edit',puntoventa.idpuntoventa)" aria-hidden="true"></span> 
@@ -84,7 +84,7 @@
 													<div class="col-xs-12" style="margin-top: 5px;">
 														<div class="input-group">                        
 											                <span class="input-group-addon">Establecimiento: </span>
-											                <input type="text" class="form-control" ng-medel="estableciminto" disabled/>
+											                <input type="text" class="form-control" ng-model="estableciminto" disabled/>
 											            </div> 
 													</div>
 
@@ -140,33 +140,33 @@
 		        </div>
 			</div>
 
-		<div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-success">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Confirmación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>{{message}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+			<div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+	            <div class="modal-dialog" role="document">
+	                <div class="modal-content">
+	                    <div class="modal-header modal-header-success">
+	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                        <h4 class="modal-title">Confirmación</h4>
+	                    </div>
+	                    <div class="modal-body">
+	                        <span>{{message}}</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-success">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Confirmación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>{{message}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+	        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+	            <div class="modal-dialog" role="document">
+	                <div class="modal-content">
+	                    <div class="modal-header modal-header-success">
+	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                        <h4 class="modal-title">Confirmación</h4>
+	                    </div>
+	                    <div class="modal-body">
+	                        <span>{{message}}</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
 
 		</div>
 </body>

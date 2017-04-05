@@ -972,5 +972,5 @@ Route::get('guiaremision/getGuia/{idguiaremision}', 'Guiaremision\GuiaremisionCo
 Route::resource('puntoventa', 'Contabilidad\PuntoVentaController');
 //Route::get('puntoventa/getpuntoventas', 'PuntoVenta\PuntoVentaController@getPuntoventa');
 Route::get('puntoventa/getempleado/{texto}', 'Contabilidad\PuntoVentaController@getEmpleado');
-Route::get('puntoventa/verificar/{emision}', 'Contabilidad\PuntoVentaController@getEmpleado');
-Route::get('puntoventa/getestablecimiento', 'Contabilidad\PuntoVentaController@getEstablecimiento');
+Route::get('puntoventa/verificaremision/{emision}', 'Contabilidad\PuntoVentaController@verificarCodigo');
+Route::get('puntoventa/cargaestablecimiento', 'Contabilidad\PuntoVentaController@cargaEstablecimiento');

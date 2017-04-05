@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class PuntoVentaController  extends Controller
 {
@@ -35,40 +36,17 @@ class PuntoVentaController  extends Controller
         ->get();
     }
 
-
-    /**
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getpuntoventaByID($id)
-    {
-        return Puntoventa::where('idpuntoventa', $id)->orderBy('namepuntoventa')->get();
-    }
-
     public function verificarCodigo($codigoemision)
     {
-        return Cont_Puntoventa::where('codigoptoemision', $codigoemisión)
+        return Cont_PuntoDeVenta::where('cont_puntoventa.codigoptoemision','=', $codigoemision)
         ->get();
     }
 
-    public function getEstablecimiento()
+    public function cargaEstablecimiento()
     {
-        return SRI_Establecimento::select('sri_establecimiento.razonsocial')->get();
-    }
-
-    /**
-     * Obtener los Puntoventa filtrados
-     *
-     * @param $filter
-     * @return mixed
-     */
-    public function getByFilter($filter)
-    {
-        $filter = json_decode($filter);
-
-        return Puntoventa::orderBy('idpuntoventa', 'asc')
-                      ->whereRaw("puntoventa.namepuntoventa ILIKE '%" . $filter->text . "%' ")
-                      ->get();
+        //return $establecimiento=DB::table('sri_establecimiento')->get();
+        return $establesimiento = SRI_Establecimiento::all();
+        //return response()->json(['establesimiento' => $establesimiento]);
     }
 
     /**
@@ -101,7 +79,7 @@ class PuntoVentaController  extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         $puntoventa = Cont_PuntoDeVenta::join('empleado','empleado.idempleado','=','cont_puntoventa.idempleado')
             ->join('persona','persona.idpersona','=','empleado.idpersona')

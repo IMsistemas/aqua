@@ -12,7 +12,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
             $scope.puntoventas = response;
         });
     };
-
+    $scope.initLoad();
     $scope.verificarEmision = function(){
         $http.get(API_URL + 'puntoventa/verificaremision/'+$scope.codigo).success(function(response){
             if (response!=null) {
@@ -22,7 +22,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
             }
         });
     };
-    $scope.initLoad();
+
     $scope.calculateLength = function(field, length) {
                         var text = $("#" + field).val();
                         var longitud = text.length;
@@ -44,7 +44,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                             return relleno+text;
                         }
                     };
-$scope.onlyNumber = function ($event, length, field) {
+    $scope.onlyNumber = function ($event, length, field) {
 
         if (length != undefined) {
             var valor = $('#' + field).val();
@@ -74,13 +74,12 @@ $scope.onlyNumber = function ($event, length, field) {
                 $scope.$broadcast('angucomplete-alt:clearInput');
                 $scope.form_title = "Nuevo Punto Venta";
                 $scope.codigo = '';
-                $http.get(API_URL + 'puntoventa/getestablecimiento').success(function(response) {
+                $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
                     console.log(response);
-                    $scope.estableciminto = response;
-                    console.log($scope.estableciminto);
+                    console.log(API_URL + 'puntoventa/cargaestablecimiento');
+                    $scope.establecimiento=response.razonsocial;
+                    $('#modalActionPuntoventa').modal('show');
                 });
-                $('#modalActionPuntoventa').modal('show');
-
                 break;
             case 'edit':
 
