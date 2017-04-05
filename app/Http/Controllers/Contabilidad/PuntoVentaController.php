@@ -49,6 +49,19 @@ class PuntoVentaController  extends Controller
         //return response()->json(['establesimiento' => $establesimiento]);
     }
 
+
+    public function cargarPuntoVenta($id)
+    {
+             return Cont_PuntoDeVenta::join('sri_establecimiento','sri_establecimiento.idestablecimiento','=','cont_puntoventa.idestablecimiento')
+             ->join('empleado','empleado.idempleado','=','cont_puntoventa.idempleado')
+             ->join('persona','persona.idpersona','=','empleado.idpersona')
+             ->select('sri_establecimiento.razonsocial','cont_puntoventa.codigoptoemision','persona.numdocidentific','persona.namepersona','persona.lastnamepersona')
+             ->where('cont_puntoventa.idpuntoventa','=',$id)
+             ->get();
+    }
+
+
+
     /**
      * Almacenar un recurso puntoventa recién creado.
      *
@@ -57,20 +70,16 @@ class PuntoVentaController  extends Controller
      */
     public function store(Request $request)
     {
-        $puntoventa1 = Puntoventa::where('namepuntoventa', $request->input('nombrepuntoventa'))->count();
-
-        if ($puntoventa1 > 0) {
-            return response()->json(['success' => false]);
-        } else {
-            $puntoventa = new puntoventa();
-            $puntoventa->namepuntoventa = $request->input('nombrepuntoventa');
-
-            if ($puntoventa->save()) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false]);
-            }
-        }
+             $empleado=DB::table('empleado')
+            ->join('persona','persona.idpersona','=','empleado.idpersona')
+            ->select('empleado.idempleado')
+            ->where('persona.numdocidentific','=',$request->input('identificacionempleado'))->first();
+            $puntoventa = new Cont_PuntoDeVenta();
+            $puntoventa->codigoptoemision = $request->input('codigoemision');
+            $puntoventa->idempleado = $empleado->idempleado;
+            $puntoventa->idestablecimiento = 1;
+            $puntoventa->save();
+            return response()->json(['success' => true]);
     }
 
     /**
@@ -89,6 +98,17 @@ class PuntoVentaController  extends Controller
         return $puntoventa;
     }
 
+     public function getPuntoventa()
+    {
+        $puntoventa = Cont_PuntoDeVenta::join('empleado','empleado.idempleado','=','cont_puntoventa.idempleado')
+            ->join('persona','persona.idpersona','=','empleado.idpersona')
+            ->join('sri_establecimiento','sri_establecimiento.idestablecimiento','=','cont_puntoventa.idestablecimiento')
+            ->select('sri_establecimiento.razonsocial','cont_puntoventa.idpuntoventa','persona.namepersona','cont_puntoventa.codigoptoemision')
+            ->get();
+        return $puntoventa;
+
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -99,8 +119,19 @@ class PuntoVentaController  extends Controller
      */
     public function update(Request $request, $id)
     {
-        $puntoventa = Puntoventa::find($id);
-        $puntoventa->namepuntoventa = $request->input('nombrepuntoventa');
+        $puntoventa = Cont_PuntoDeVenta::find($id);
+        if($request->input('identificacionempleado')!=0){
+             $empleado=DB::table('empleado')
+            ->join('persona','persona.idpersona','=','empleado.idpersona')
+            ->select('empleado.idempleado')
+            ->where('persona.numdocidentific','=',$request->input('identificacionempleado'))->first();
+            $puntoventa->codigoptoemision = $request->input('codigoemision');
+            $puntoventa->idempleado = $empleado->idempleado;
+            $puntoventa->save();
+        }else{
+            $puntoventa->codigoptoemision = $request->input('codigoemision');
+            $puntoventa->save();
+        }
         if ($puntoventa->save()) {
             return response()->json(['success' => true]);
         } else {
@@ -116,13 +147,9 @@ class PuntoVentaController  extends Controller
      */
     public function destroy($id)
     {
-        $empleado = Empleado::where('idpuntoventa',$id)->count();
-        if ($empleado > 0) {
-            return response()->json(['success' => false]);
-        } else {
-            $puntoventa = puntoventa::find($id);
+            $puntoventa = Cont_PuntoDeVenta::find($id);
             $puntoventa->delete();
             return response()->json(['success' => true]);
-        }
+        
     }
 }

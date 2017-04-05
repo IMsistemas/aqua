@@ -62,13 +62,60 @@
 					                <span class="glyphicon glyphicon glyphicon-edit" ng-click="toggle('edit',puntoventa.idpuntoventa)" aria-hidden="true"></span> 
 					            </button>
 					            <button type="button" class="btn btn-danger">
-					                <span class="glyphicon glyphicon glyphicon-trash" ng-click="destroy(puntoventa.idpuntoventa)" aria-hidden="true"></span> 
+					                <span class="glyphicon glyphicon glyphicon-trash" ng-click="showModalConfirm(puntoventa.idpuntoventa)" aria-hidden="true"></span> 
 					            </button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmDelete">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>Realmente desea eliminar el Punto de Venta: <span style="font-weight: bold;">{{cargo_seleccionado}}</span></span>
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="delete()">
+                            Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+				<div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError">
+		            <div class="modal-dialog" role="document">
+		                <div class="modal-content">
+		                    <div class="modal-header modal-header-error">
+		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                        <h4 class="modal-title">Error</h4>
+		                    </div>
+		                    <div class="modal-body">
+		                        <span>{{message}}</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+				<div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+		            <div class="modal-dialog" role="document">
+		                <div class="modal-content">
+		                    <div class="modal-header modal-header-success">
+		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                        <h4 class="modal-title">Confirmación</h4>
+		                    </div>
+		                    <div class="modal-body">
+		                        <span>{{message}}</span>
+		                    </div>
+		            	</div>
+		        	</div>
+	    		</div>
 				 <div class="modal fade" tabindex="-1" role="dialog" id="modalActionPuntoventa">
 				 	<div class="modal-dialog" role="document">
                 		<div class="modal-content">
@@ -84,7 +131,7 @@
 													<div class="col-xs-12" style="margin-top: 5px;">
 														<div class="input-group">                        
 											                <span class="input-group-addon">Establecimiento: </span>
-											                <input type="text" class="form-control" ng-model="estableciminto" disabled/>
+											                <input type="text" class="form-control" ng-model="establecimiento" disabled/>
 											            </div> 
 													</div>
 
@@ -112,12 +159,13 @@
 											            </div> 
 											            <span class="help-block error"
 				                                                  ng-show="formpuntoventa.empleado.$invalid && formpuntoventa.empleado.$touched">El empleado es requerido.</span>
+				                                        <input type="text" class="form-control" ng-show="false" ng-disabled="true" ng-cloak ng-model="Empleado.originalObject.numdocidentific">
 													</div>
 
 													<div class="col-sm-8 col-xs-12" style="margin-top: 	5px;">
 														<div class="input-group">                        
 											                <span class="input-group-addon">Codigo Emision: </span>
-											                <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-keypress="onlyNumber($event,3,'codigo')" ng-blur="t_establ=calculateLength('codigo','3');verificarEmision()" ng-maxlength="3" maxlength="3" required>
+											                <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-keypress="onlyNumber($event,3,'codigo')" ng-blur="t_establ=calculateLength('codigo','3');verificarEmision();" ng-change="verificarEmision();" ng-maxlength="3" maxlength="3" required>
 											            </div>
 											            <span class="help-block error"
 				                                          ng-show="formpuntoventa.codigo.$invalid && formpuntoventa.codigo.$touched">EL código es requerido</span>
@@ -131,42 +179,32 @@
 									<button type="button" class="btn btn-default">
 							            Cancelar <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
 							        </button>
-									<button type="button" class="btn btn-success" ng-disabled="formpuntoventa.$invalid">
+									<button type="button" class="btn btn-success" ng-click="Save()" ng-disabled="formpuntoventa.$invalid">
 							            Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> 
 							        </button>
 								</div>
 						</div>
 					</div>
 		        </div>
+		        
+
+		    	<div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError">
+		            <div class="modal-dialog" role="document">
+		                <div class="modal-content">
+		                    <div class="modal-header modal-header-error">
+		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                        <h4 class="modal-title">Error</h4>
+		                    </div>
+		                    <div class="modal-body">
+		                        <span>{{message}}</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
 			</div>
 
-			<div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
-	            <div class="modal-dialog" role="document">
-	                <div class="modal-content">
-	                    <div class="modal-header modal-header-success">
-	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	                        <h4 class="modal-title">Confirmación</h4>
-	                    </div>
-	                    <div class="modal-body">
-	                        <span>{{message}}</span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-
-	        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
-	            <div class="modal-dialog" role="document">
-	                <div class="modal-content">
-	                    <div class="modal-header modal-header-success">
-	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	                        <h4 class="modal-title">Confirmación</h4>
-	                    </div>
-	                    <div class="modal-body">
-	                        <span>{{message}}</span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+			
+	    </div>
 
 		</div>
 </body>

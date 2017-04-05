@@ -12,7 +12,6 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
             $scope.puntoventas = response;
         });
     };
-    $scope.initLoad();
     $scope.verificarEmision = function(){
         $http.get(API_URL + 'puntoventa/verificaremision/'+$scope.codigo).success(function(response){
             if (response!=null) {
@@ -68,7 +67,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;
 
-
+        console.log($scope.modalstate);
         switch (modalstate) {
             case 'add':
                 $scope.$broadcast('angucomplete-alt:clearInput');
@@ -77,18 +76,19 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
                     console.log(response);
                     console.log(API_URL + 'puntoventa/cargaestablecimiento');
-                    $scope.establecimiento=response.razonsocial;
+                    $scope.establecimiento=response[0].razonsocial;
                     $('#modalActionPuntoventa').modal('show');
                 });
                 break;
             case 'edit':
-
-                $scope.form_title = "Editar puntoventa";
+                $scope.form_title = "Editar Punto Venta";
                 $scope.idc = id;
-
-                $http.get(API_URL + 'puntoventa/getpuntoventaByID/' + id).success(function(response) {
-                    $scope.nombrepuntoventa = response[0].namepuntoventa.trim();
-                    $('#modalActionpuntoventa').modal('show');
+                console.log('editar');
+                $http.get(API_URL + 'puntoventa/cargarpuntoventa/' + id).success(function(response) {
+                    $scope.codigo=response[0].codigoptoemision;
+                    $scope.establecimiento=response[0].razonsocial;
+                    $scope.empleado=response[0].numdocidentific+' '+response[0].namepersona+' '+response[0].lastnamepersona;
+                    $('#modalActionPuntoventa').modal('show');
                 });
                     break;
             default:
@@ -97,23 +97,34 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     };
 
     $scope.Save = function (){
+        console.log($scope.modalstate);
+        if ($scope.Empleado== undefined) {
+            var data = {
+            codigoemision: $scope.codigo,
+            identificacionempleado:0
+            };
+        } else {
+            var data = {
+            codigoemision: $scope.codigo,
+            identificacionempleado: $scope.Empleado.originalObject.numdocidentific
+            };
+        }
+       
 
-        var data = {
-            nombrepuntoventa: $scope.nombrepuntoventa
-        };
+        console.log(data);
 
         switch ( $scope.modalstate) {
             case 'add':
                 $http.post(API_URL + 'puntoventa', data ).success(function (response) {
                     if (response.success == true) {
                         $scope.initLoad();
-                        $('#modalActionpuntoventa').modal('hide');
-                        $scope.message = 'Se insertó correctamente el puntoventa...';
+                        $('#modalActionPuntoventa').modal('hide');
+                        $scope.message = 'Se insertó correctamente el punto de venta...';
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
                     }
                     else {
-                        $('#modalActionpuntoventa').modal('hide');
+                        $('#modalActionPuntoventa').modal('hide');
                         $scope.message_error = 'Ya existe ese puntoventa...';
                         $('#modalMessageError').modal('show');
                     }
@@ -122,7 +133,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
             case 'edit':
                 $http.put(API_URL + 'puntoventa/'+ $scope.idc, data ).success(function (response) {
                     $scope.initLoad();
-                    $('#modalActionpuntoventa').modal('hide');
+                    $('#modalActionPuntoventa').modal('hide');
                     $scope.message = 'Se editó correctamente el puntoventa seleccionado';
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
@@ -133,9 +144,8 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
         }
     };
 
-    $scope.showModalConfirm = function (puntoventa) {
-        $scope.idpuntoventa_del = puntoventa.idpuntoventa;
-        $scope.puntoventa_seleccionado = puntoventa.namepuntoventa;
+    $scope.showModalConfirm = function (idpuntoventa) {
+        $scope.idpuntoventa_del = idpuntoventa;
         $('#modalConfirmDelete').modal('show');
     };
 
