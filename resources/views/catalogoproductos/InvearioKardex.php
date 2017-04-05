@@ -26,7 +26,8 @@
         <div class="row">
             <div class="col-xs-2">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control " id="search" placeholder="BUSCAR..." ng-model="search" ng-keyup="CargarInventario()">
+                    <!--<input type="text" class="form-control " id="search" placeholder="BUSCAR..." ng-model="search" ng-keyup="CargarInventario()">-->
+                    <input type="text" class="form-control " id="search" placeholder="BUSCAR..." ng-model="search" ng-keyup="pageChanged(1)">
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
@@ -64,7 +65,9 @@
                 </div>
             </div>
             <div class="col-xs-2">
-                <button ng-click="CargarInventario()" class="btn btn-primary btn-sm">Actualizar <i class="glyphicon glyphicon glyphicon-refresh"></i></button>
+            
+                <button ng-click="pageChanged(1)" class="btn btn-primary btn-sm">Actualizar <i class="glyphicon glyphicon glyphicon-refresh"></i></button>
+                <!--<button ng-click="CargarInventario()" class="btn btn-primary btn-sm">Actualizar <i class="glyphicon glyphicon glyphicon-refresh"></i></button>-->
             </div>
         </div>
 
@@ -85,7 +88,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in Inventario">
+                        <!--<tr ng-repeat="item in Inventario">-->
+                        <tr dir-paginate="item in Inventario | orderBy:sortKey:reverse |filter:search| itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td>{{$index+1}}</td>
                             <td>
                                 <button class="btn btn-info btn-sm" ng-click="RegistroKardexPP(item)" title="Kardex"><i class="glyphicon glyphicon glyphicon-info-sign"></i></button>
@@ -98,7 +102,18 @@
                         </tr>
                     </tbody>
                 </table>
-                
+      <dir-pagination-controls
+
+                        on-page-change="pageChanged(newPageNumber)"
+
+                        template-url="dirPagination.html"
+
+                        class="pull-right"
+                        max-size="10"
+                        direction-links="true"
+                        boundary-links="true" >
+
+    </dir-pagination-controls>                
             </div>
         </div>
 

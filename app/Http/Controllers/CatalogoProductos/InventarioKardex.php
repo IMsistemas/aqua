@@ -71,9 +71,9 @@ class InventarioKardex extends Controller
      * Cargar invetario
      *
      */
-    public function cargarinvetarioporbodega($filtro)
+    public function cargarinvetarioporbodega(Request $request)
     {
-    	$filtro = json_decode($filtro);
+    	$filtro = json_decode($request->get('filter'));
     	/*return 	Cont_CatalogItem::selectRaw("*")
     							->selectRaw("(SELECT f_cantidaditemxbodega(idcatalogitem,".$filtro->Bodega.",'".$filtro->Fecha."') ) as Cantidad")
     							->selectRaw("(SELECT f_costopromedioitem(idcatalogitem,'".$filtro->Fecha."') ) as CostoPromedio")
@@ -85,14 +85,15 @@ class InventarioKardex extends Controller
     		$aux_subcategoria=" AND cont_catalogitem.idcategoria=".$filtro->SubCategria." ";
     	}
     	if($filtro->Search!=""){
-    		$aux_search=" AND ( cont_catalogitem.nombreproducto LIKE '%".$filtro->Search."%'  OR cont_catalogitem.codigoproducto LIKE '%".$filtro->Search."%') ";
+    		$aux_search=" AND ( upper(cont_catalogitem.nombreproducto) LIKE upper('%".$filtro->Search."%')  OR upper(cont_catalogitem.codigoproducto) LIKE upper('%".$filtro->Search."%') ) ";
     	}
     	return Cont_CatalogItem:: join("cont_producto_bodega","cont_producto_bodega.idcatalogitem","=","cont_catalogitem.idcatalogitem")
     							->selectRaw("*")
     							->selectRaw("(SELECT f_cantidaditemxbodega(cont_catalogitem.idcatalogitem,".$filtro->Bodega.",'".$filtro->Fecha."') ) as Cantidad")
     							->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'".$filtro->Fecha."') ) as CostoPromedio")
     							->whereRaw("cont_catalogitem.idclaseitem=1 AND cont_producto_bodega.idbodega=".$filtro->Bodega." ".$aux_subcategoria." ".$aux_search)
-    							->get();
+                                ->paginate(10);
+    							//->get();
     }
     /**
      *

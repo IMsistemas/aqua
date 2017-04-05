@@ -12,6 +12,56 @@ app.controller('Kardex', function($scope, $http, API_URL) {
 
     $scope.Inventario=[];
     $scope.Kardex=[];
+
+    ///---
+     $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
+    $scope.initLoad = function(pageNumber){
+
+        /*if ($scope.busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.busqueda;
+
+        var filtros = {
+            search: search
+        };*/
+        /*$http.get(API_URL + 'DocumentoVenta/getAllFitros?page=' + pageNumber + '&filter=' + JSON.stringify(filtros))
+            .success(function(response){
+                /*$scope.Allventas=response;
+                console.log(response);*/
+                /*$scope.Allventas = response.data;
+                $scope.totalItems = response.total;
+         });*/
+
+          var filtro={
+            Fecha: convertDatetoDB($("#FechaK").val()),
+            Categoria: $scope.CategoriaItem,
+            SubCategria: $scope.SubCategoriaItem,
+            Bodega : $scope.BodegaItem,
+            Search: $scope.search,
+            Tipo: 'B'
+        };
+        if($("#FechaK").val()!=""){
+            if($scope.BodegaItem!=""){
+                $http.get(API_URL + 'procesoskardex/loadinventario/?page=' + pageNumber + '&filter='+JSON.stringify(filtro))
+                    .success(function(response){
+                        $scope.Inventario=response.data;
+                        $scope.totalItems = response.total;
+                });
+            }else{
+                QuitarClasesMensaje();
+                $("#titulomsm").addClass("btn-warning");
+                $scope.Mensaje="Seleccione Una Bodega";
+                $("#msm").modal("show");   
+            }
+        }else{
+            QuitarClasesMensaje();
+            $("#titulomsm").addClass("btn-warning");
+            $scope.Mensaje="Seleccione Un Fecha";
+            $("#msm").modal("show");   
+        }
+    };
     ///---
     $scope.CargarBodegas=function(){
         $http.get(API_URL + 'procesoskardex/loadbodegas')

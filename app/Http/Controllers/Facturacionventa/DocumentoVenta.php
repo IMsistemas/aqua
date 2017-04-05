@@ -21,6 +21,7 @@ use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Contabilidad\Cont_ItemVenta;
 use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta;
+use App\Modelos\Contabilidad\Cont_Kardex;
 //use App\Modelos\Facturacionventa\puntoventa; 
 
 
@@ -378,6 +379,8 @@ class DocumentoVenta extends Controller
                             ->update(['estadoanulado' => 't']);
         $aux_venta=Cont_DocumentoVenta::find($id);
         CoreContabilidad::AnularAsientoContable($aux_venta->idtransaccion);
+        Cont_Kardex::whereRaw("idtransaccion=".$aux_venta->idtransaccion." ")
+                    ->update(['estadoanulado' => 'f']);
         /*Cont_Transaccion::whereRaw("idtransaccion=".."")
                         ->update(['estadoanulado' => 'f']);*/
         return  1;
