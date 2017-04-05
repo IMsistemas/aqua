@@ -233,6 +233,9 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
+            if($configuracion->optionvalue == ""){
+                $configuracion->optionvalue = null;
+            }
             $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
@@ -263,6 +266,9 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
+            if($configuracion->optionvalue == ""){
+                $configuracion->optionvalue = null;
+            }
             $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
@@ -292,6 +298,9 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
+            if($configuracion->optionvalue == ""){
+                $configuracion->optionvalue = null;
+            }
             $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
