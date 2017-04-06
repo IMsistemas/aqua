@@ -164,7 +164,7 @@
 
 													<div class="col-xs-12" style="margin-top: 	5px;">
 														<div class="input-group">                        
-											                <span class="input-group-addon">Codigo Emision: </span>
+											                <span class="input-group-addon">Codigo Emisión: </span>
 											                <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-keypress="onlyNumber($event,3,'codigo')" ng-blur="verificarEmision();" ng-maxlength="3" maxlength="3" required>
 											            </div>
 											            <span class="help-block error"
