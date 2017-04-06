@@ -46,7 +46,7 @@
 							<th>Nro.</th>
 							<th>Establecimiento</th>
 							<th>Agente de Venta / Empleado</th>
-							<th>Codigo Emisión</th>
+							<th>Código Emisión</th>
 							<th>Acción</th>							
 						</tr>
 
