@@ -135,7 +135,7 @@
 											            </div> 
 													</div>
 
-													<div class="col-sm-8 col-xs-12" style="margin-top: 5px;">
+													<div class="col-xs-12" style="margin-top: 5px;">
 														<div class="input-group">                        
 											                <span class="input-group-addon">Empleado Agente de Ventas: </span>
 											                 <angucomplete-alt 
@@ -162,7 +162,7 @@
 				                                        <input type="text" class="form-control" ng-show="false" ng-disabled="true" ng-cloak ng-model="Empleado.originalObject.numdocidentific">
 													</div>
 
-													<div class="col-sm-8 col-xs-12" style="margin-top: 	5px;">
+													<div class="col-xs-12" style="margin-top: 	5px;">
 														<div class="input-group">                        
 											                <span class="input-group-addon">Codigo Emision: </span>
 											                <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-keypress="onlyNumber($event,3,'codigo')" ng-blur="verificarEmision();" ng-maxlength="3" maxlength="3" required>
