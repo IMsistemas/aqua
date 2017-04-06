@@ -860,6 +860,7 @@ Route::get('procesoskardex/loadkardex/{filtro}', 'CatalogoProductos\InventarioKa
 Route::get('Nomenclador/getTipoDocumento', 'Nomenclador\NomencladorController@getTipoDocumento' );
 Route::get('Nomenclador/gettipoidentificacion', 'Nomenclador\NomencladorController@gettipoidentificacion' );
 Route::get('Nomenclador/getTipoImpuesto', 'Nomenclador\NomencladorController@getTipoImpuesto' );
+Route::get('Nomenclador/getTipoImpuestoEx', 'Nomenclador\NomencladorController@getTipoImpuestoEx' );
 Route::get('Nomenclador/getImpuestoIVA', 'Nomenclador\NomencladorController@getImpuestoIVA' );
 Route::get('Nomenclador/getImpuestoICE', 'Nomenclador\NomencladorController@getImpuestoICE' );
 Route::get('Nomenclador/getTipoImpuestoRetenc', 'Nomenclador\NomencladorController@getTipoImpuestoRetenc' );
@@ -947,6 +948,7 @@ Route::post('Nomenclador/deleteParroquiaEX', 'Nomenclador\NomencladorController@
 
 
 Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
+
 
 /*
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------

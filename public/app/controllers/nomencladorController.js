@@ -54,67 +54,29 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
     $scope.parroquia = [];
     $scope.parroquia_del = 0;
 
+    //$scope.CargadataProvincia();
 
 
 
 
-    $scope.pageChangedProvincia = function(newPage) {
-        console.log(newPage+'a')
-        $scope.CargadataProvincia(newPage);
-    };
-    $scope.pageChangedCanton = function(newPage) {
-        $scope.CargadataCanton(newPage);
-    };
-    $scope.pageChangedParroquia = function(newPage) {
-        $scope.CargadataParroquia(newPage);
-    };
-    $scope.pageChangedFormaPago = function(newPage) {
-        $scope.CargadataFormaPago(newPage);
-    };
 
-    $scope.pageChangedTPdoc = function(newPage) {
-        $scope.CargadataTPdoc(newPage);
-    };
-    $scope.pageChangedTPident = function(newPage) {
-        $scope.CargadataTPident(newPage);
-    };
-    $scope.pageChangedTPimp = function(newPage) {
-        $scope.CargadataTPimp(newPage);
-    };
-    $scope.pageChangedImpIVA = function(newPage) {
-        $scope.CargadataImpIVA(newPage);
-    };
+    /*$scope.pageChanged = function(newPage) {
+     console.log(newPage);
+     $scope.CargadataProvincia(newPage);
+     $scope.CargadataTPident(newPage);
+     $scope.CargadataTPimp(newPage);
+     $scope.CargadataImpIVA(newPage);
+     $scope.CargadataImpICE(newPage);
+     $scope.initLoad(newPage);
+     $scope.initLoad(newPage);
+     $scope.initLoad(newPage);
 
-    $scope.pageChangedImpICE = function(newPage) {
-        $scope.CargadataImpICE(newPage);
-    };
-    $scope.pageChangedTipoImpRetenc = function(newPage) {
-        $scope.CargadataTipoImpRetenc(newPage);
-    };
-    $scope.pageChangedImpIVARENTA = function(newPage) {
-        $scope.CargadataImpIVARENTA(newPage);
-    };
-    $scope.pageChangedSustentoTrib = function(newPage) {
-        $scope.CargadataSustentoTrib(newPage);
-    };
+     };*/
 
-    $scope.pageChangedSustentoTribEX = function(newPage) {
-        $scope.CargadataSustentoTribEX(newPage);
-    };
-    $scope.pageChangedComprobante = function(newPage) {
-        $scope.CargadataComprobante(newPage);
-    };
-    $scope.pageChangedPagoResidente = function(newPage) {
-        $scope.CargadataPagoResidente(newPage);
-    };
-    $scope.pageChangedPagoPais = function(newPage) {
-        $scope.CargadataPagoPais(newPage);
-    };
 
     $scope.CargadataTPdoc = function (pageNumber){
 
 
-        //$scope.initLoad = function(pageNumber) {
 
         if ($scope.busqueda == undefined) {
             var search = null;
@@ -126,13 +88,11 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 
         $http.get(API_URL + 'Nomenclador/getTipoDocumento?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
-
             $scope.sri_tipodocumento = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpdoc = response.total;
         });
-
-
     };
+
 
 
     $scope.CargadataTPident = function (pageNumber) {
@@ -149,7 +109,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/gettipoidentificacion?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_tipoidentificacion = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpident = response.total;
             //console.log($scope.sri_tipoidentificacion);
         });
 
@@ -169,7 +129,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getTipoImpuesto?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_tipoimpuesto = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimp = response.total;
 
         });
     };
@@ -186,7 +146,27 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getImpuestoIVA?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_tipoimpuestoIVA = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimpiva = response.total;
+
+        });
+    };
+
+    $scope.CargadataTPimpEx = function (pageNumber) {
+
+        if ($scope.busqueda == undefined) {
+            var search = null;
+        } else var search = $scope.busqueda;
+
+        var filtros = {
+            search: search
+        };
+
+
+        $http.get(API_URL + 'Nomenclador/getTipoImpuestoEx?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+
+            $scope.sri_tipoimpuesto = response.data;
+            $scope.totalItemstpimpEx = response.total;
+
 
         });
     };
@@ -206,7 +186,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getImpuestoICE?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_tipoimpuestoICE = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimpicepg = response.total;
 
         });
     };
@@ -226,7 +206,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getTipoImpuestoRetenc?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_tipoimpuestoRten = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimpretpg01 = response.total;
+            //console.log($scope.totalItemstpimpretpg01);
 
         });
     };
@@ -244,7 +225,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getImpuestoIVARENTA?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_ImpuestoIVARENTA = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimpretcivapg = response.total;
+            //console.log($scope.totalItemstpimpretcivapg);
         });
     };
 
@@ -260,7 +242,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getSustentoTributario?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_SustentoTributario = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpimpsustpg = response.total;
         });
     };
 
@@ -297,7 +279,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 //            console.log(response);
             $scope.sri_Comprobante = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemstpcomppg = response.total;
 
         });
     };
@@ -315,8 +297,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getPagoResidente?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_PagoResidente = response.data;
-            $scope.totalItems = response.total;
-            console.log( $scope.sri_PagoResidente);
+            $scope.totalItemstpresindentpgs = response.total;
 
         });
     };
@@ -333,9 +314,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getPagoPais?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.sri_pagopais = response.data;
-            $scope.totalItems = response.total;
-            console.log($scope.sri_pagopais);
-            console.log($scope.totalItems);
+            $scope.totalItemstppaispg = response.total;
         });
     };
 
@@ -351,12 +330,12 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getContFormaPago?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
             $scope.Con_FormaPago = response.data;
-            $scope.totalItems = response.total;
+            $scope.totalItemsformapago = response.total;
         });
     };
 
     $scope.CargadataProvincia = function (pageNumber) {
-        console.log(pageNumber+'cp');
+
         if ($scope.busqueda == undefined) {
             var search = null;
         } else var search = $scope.busqueda;
@@ -365,9 +344,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             search: search
         };
         $http.get(API_URL + 'Nomenclador/getprovincia?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
-
             $scope.provincia = response.data;
-            $scope.totalItemsPro = response.total;
+            $scope.totalItemsprv = response.total;
         });
     };
 
@@ -399,7 +377,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         $http.get(API_URL + 'Nomenclador/getCantonEX?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             $scope.canton = response.data;
-            $scope.totalItemsCan = response.total;
+            $scope.totalItemscanton = response.total;
 
         });
 
@@ -439,11 +417,12 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         $http.get(API_URL + 'Nomenclador/getParroquiaEX?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
             //console.log(response);
             $scope.parroquia = response.data;
-            $scope.totalItemsParro = response.total;
+            $scope.totalItemsparroquia = response.total;
 
         });
 
     };
+
 
     $scope.toggle = function(modalstate, id, obafect) {
         $scope.modalstate = modalstate;
@@ -588,8 +567,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                         {
                             $scope.estado = 'false'
                         }
-                        //console.log($scope.estado);
-                        //$scope.estado = response[0].estado;
                         $('#modalActionTipoDoc').modal('show');
                     });
                 }
@@ -599,7 +576,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $http.get(API_URL + 'Nomenclador/getTipoIdentByID/' + id).success(function(response) {
                         $scope.nametipoident = response[0].nameidentificacion.trim();
                         $scope.codigosri = response[0].codigosri.trim();
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -616,7 +592,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $http.get(API_URL + 'Nomenclador/getTipoImpuestoByID/' + id).success(function(response) {
                         $scope.nametipoimpuest = response[0].nameimpuesto.trim();
                         $scope.codigosri = response[0].codigosri.trim();
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -633,12 +608,10 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $scope.idtipodocumento = id;
 
                     $http.get(API_URL + 'Nomenclador/getTipoImpuestoIvaByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.nameimpuestoiva = response[0].nametipoimpuestoiva.trim();
                         $scope.porcentaje = response[0].porcentaje;
                         $scope.codigosri = response[0].codigosri;
                         $scope.TipoImpuesto = response[0].idtipoimpuesto.toString();
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -655,12 +628,10 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $scope.idtipodocumento = id;
                     //console.log(id);
                     $http.get(API_URL + 'Nomenclador/getTipoImpuestoIceByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.nameimpuestoice = response[0].nametipoimpuestoice.trim();
                         $scope.porcentaje = response[0].porcentaje;
                         $scope.codigosri = response[0].codigosri;
                         $scope.TipoImpuesto = response[0].idtipoimpuesto.toString();
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -680,7 +651,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                         //console.log(response);
                         $scope.nametipoimpuestoret = response[0].nametipoimpuestoretencion.trim();
                         $scope.codigosri = response[0].codigosri.trim();
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -693,12 +663,9 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                 }
 
                 if (obafect == "tpimpivaretsri") {
-                    //console.log('aqui')
-                    //console.log(id)
                     $scope.form_title = "Editar Tipo Impuesto Retencion ";
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getTipoImpuestoRetencionIvaRetByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.nametipoimpuestoivaret = response[0].namedetalleimpuestoretencion.trim();
                         $scope.TipoImpuesto = response[0].idtipoimpuestoretencion.toString();
                         $scope.porcentaje = response[0].porcentaje;
@@ -711,21 +678,16 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                         {
                             $scope.estado = 'false'
                         }
-                        //console.log('aqui');
                         $('#modalActionTipoImpIvaRetRenta').modal('show');
                     });
                 }
 
                 if (obafect == "sustrib") {
-                    //console.log('aqui')
-                    //console.log(id)
                     $scope.form_title = "Editar Sustento Tributario ";
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getSustentoTributarioByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.nameSustentoTributario = response[0].namesustento.trim();
                         $scope.codigosrisustento = response[0].codigosrisustento;
-                        //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
                         }
@@ -733,18 +695,14 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                         {
                             $scope.estado = 'false'
                         }
-                        //console.log('aqui');
                         $('#modalActionSustentoTributario').modal('show');
                     });
                 }
 
                 if (obafect == "compsust") {
-                    //console.log('aqui')
-                    //console.log(id)
                     $scope.form_title = "Editar Comprobante Sustento Tributario ";
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getComprobanteTributarioByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.namecomprobante =  response[0].namecomprobante;
                         $scope.codigosri = response[0].codigosri;
 
@@ -769,7 +727,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $scope.form_title = "Editar Tipo de Pago Residente ";
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getPagoResidenteByID/' + id).success(function(response) {
-                        //console.log(response);
                         $scope.tipopagoresidente =  response[0].tipopagoresidente;
 
                         $('#modalActionPagoResidente').modal('show');
@@ -788,8 +745,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                 }
 
                 if (obafect == "formapago") {
-                    //console.log('aqui')
-                    //console.log(id)
                     $scope.form_title = "Editar Forma Pago ";
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getFormaPagoByID/' + id).success(function(response) {
@@ -838,8 +793,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     });
                 }
 
-
-
                 break;
             default:
                 break;
@@ -858,7 +811,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nametipodocumento: $scope.nametipodocumento.toUpperCase(),
+                nametipodocumento: $scope.nametipodocumento,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -872,7 +825,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nameidentificacion: $scope.nametipoident.toUpperCase(),
+                nameidentificacion: $scope.nametipoident,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -886,7 +839,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nameimpuesto: $scope.nametipoimpuest.toUpperCase(),
+                nameimpuesto: $scope.nametipoimpuest,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -900,7 +853,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nameimpuestoiva: $scope.nameimpuestoiva.toUpperCase(),
+                nameimpuestoiva: $scope.nameimpuestoiva,
                 porcentaje: $scope.porcentaje,
                 codigosri: $scope.codigosri,
                 TipoImpuesto: $scope.TipoImpuesto,
@@ -917,7 +870,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nameimpuestoice: $scope.nameimpuestoice.toUpperCase(),
+                nameimpuestoice: $scope.nameimpuestoice,
                 porcentaje: $scope.porcentaje,
                 codigosri: $scope.codigosri,
                 TipoImpuesto: $scope.TipoImpuesto,
@@ -933,7 +886,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nametipoimpuestoretencion: $scope.nametipoimpuestoret.toUpperCase(),
+                nametipoimpuestoretencion: $scope.nametipoimpuestoret,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -946,7 +899,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                namedetalleimpuestoretencion: $scope.nametipoimpuestoivaret.toUpperCase(),
+                namedetalleimpuestoretencion: $scope.nametipoimpuestoivaret,
                 porcentaje: $scope.porcentaje,
                 idtipoimpuestoretencion:$scope.TipoImpuesto,
                 codigosri: $scope.codigosri,
@@ -961,7 +914,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                namesustentotributario: $scope.nameSustentoTributario.toUpperCase(),
+                namesustentotributario: $scope.nameSustentoTributario,
                 codigosrisustento: $scope.codigosrisustento,
                 estado: $scope.estado
             };
@@ -976,7 +929,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
             var data = {
                 idtSustento: $scope.TipoSustento,
-                namecomprobante: $scope.namecomprobante.toUpperCase(),
+                namecomprobante: $scope.namecomprobante,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -984,7 +937,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         if (tbafect == "tppagores"){
             var data = {
-                tipopagoresidente: $scope.tipopagoresidente.toUpperCase()
+                tipopagoresidente: $scope.tipopagoresidente
             };
         }
 
@@ -1002,7 +955,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             }
 
             var data = {
-                nameformapago: $scope.nameformapago.toUpperCase(),
+                nameformapago: $scope.nameformapago,
                 codigosri: $scope.codigosri,
                 estado: $scope.estado
             };
@@ -1010,13 +963,13 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         if (tbafect == "prov"){
             var data = {
-                nameprovincia: $scope.nameprovincia.toUpperCase()
+                nameprovincia: $scope.nameprovincia
             };
         }
 
         if (tbafect == "canton"){
             var data = {
-                namecanton: $scope.namecanton.toUpperCase(),
+                namecanton: $scope.namecanton,
                 idprovincia: $scope.SLprovincia
 
             };
@@ -1024,7 +977,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         if (tbafect == "parroquia"){
             var data = {
-                nameparroquia: $scope.nameparroquia.toUpperCase(),
+                nameparroquia: $scope.nameparroquia,
                 idcanton: $scope.SLcanton
 
             };
@@ -1155,6 +1108,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
                     break;
                 }
+
                 if (tbafect == "tpimpretsri"){
                     $http.post(API_URL + 'Nomenclador/storeTipoImpuestoReten', data ).success(function (response) {
                         if (response.success == true) {
@@ -2192,7 +2146,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
             $http.post(API_URL + 'Nomenclador/deletecantonEX', data).success(function(response) {
 
-
+                //console.log(response);
                 if(response.success == true){
 
                     $scope.CargadataCanton();
@@ -2237,8 +2191,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
     $scope.hideModalMessage = function () {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
-
-    //*--------------------------------final xxx ---------------------------////
 
 
 
