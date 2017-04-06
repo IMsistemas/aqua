@@ -621,12 +621,6 @@ class ClienteController extends Controller
     public function processSolicitudSuministro(Request $request, $id)
     {
 
-        /*$name = date('Ymd') . '_.pdf';
-
-        $url_pdf = 'uploads/' . $name;
-
-        $this->createPDF($request->input('data_to_pdf'), $url_pdf);*/
-
         $fecha_actual = date('Y-m-d');
 
         $suministro = new Suministro();
@@ -637,7 +631,13 @@ class ClienteController extends Controller
         $suministro->telefonosuministro = $request->input('telefonosuministro');
         $suministro->fechainstalacion = $fecha_actual;
 
-        //$suministro->idproducto = $request->input('idproducto');
+        $suministro->valoraguapotable = $request->input('agua_potable');
+        $suministro->valoralcantarillado = $request->input('alcantarillado');
+        $suministro->valorgarantia = $request->input('garantia');
+        $suministro->valorcuotainicial = $request->input('cuota_inicial');
+        $suministro->dividendocredito = $request->input('dividendos');
+
+        //$suministro->idcatalogitem = $request->input('idproducto');
 
         if ($suministro->save()) {
 
@@ -645,10 +645,10 @@ class ClienteController extends Controller
 
             $url_pdf = 'uploads/pdf_suministros/' . $name;
 
-            //$this->createPDF($request->input('data_to_pdf'), $url_pdf);
+            $this->createPDF($request->input('data_to_pdf'), $url_pdf);
 
             $solicitudsuministro = SolicitudSuministro::find($id);
-            /**/
+
             $solicitudsuministro->idsuministro = $suministro->idsuministro;
 
             $solicitudsuministro->rutapdf = $url_pdf;

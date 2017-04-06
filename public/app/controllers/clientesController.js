@@ -864,14 +864,22 @@
             $('#btn-process-solsuministro').prop('disabled', true);
 
             if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
-                var tiene = 'NO'
-            } else {
                 var tiene = 'SI'
+            } else {
+                var tiene = 'NO'
             }
 
             var tarifa = $('#s_suministro_tarifa option:selected').text();
             var zona = $('#s_suministro_zona option:selected').text();
             var transversal = $('#s_suministro_transversal option:selected').text();
+
+            if ($scope.t_suministro_marca == undefined){
+                $scope.t_suministro_marca = '';
+            }
+
+            if ($scope.t_suministro_costomedidor == undefined){
+                $scope.t_suministro_costomedidor = '0.00';
+            }
 
             var data_to_pdf = {
                 tarifa: tarifa,
@@ -899,14 +907,20 @@
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
+
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
                 garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+
                 codigocliente: $scope.objectAction.idcliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
                 idproducto: $scope.idproducto,
-                valor: $scope.total_suministro,
-                dividendos: $scope.s_suministro_credito,
-                valor_partial: $scope.total_partial,
+
                 idsolicitud: $scope.num_solicitud_suministro,
 
                 data_to_pdf: JSON.stringify(data_to_pdf)
