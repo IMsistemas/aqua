@@ -5,6 +5,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     $scope.puntoventa = [];
     $scope.idpuntoventa_del = 0;
     $scope.modalstate = '';
+    $scope.confirmacion=false;
 
 
     $scope.initLoad = function(){
@@ -20,6 +21,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $scope.confirmacion=false;
             }
         });
+        console.log();
     };
 
     $scope.calculateLength = function(field, length) {
