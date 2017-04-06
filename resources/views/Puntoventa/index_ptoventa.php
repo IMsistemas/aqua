@@ -179,7 +179,7 @@
 									<button type="button" class="btn btn-default">
 							            Cancelar <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
 							        </button>
-									<button type="button" class="btn btn-success" ng-click="Save()" ng-disabled="formpuntoventa.$invalid">
+									<button type="button" class="btn btn-success" ng-click="Save()" ng-disabled="formpuntoventa.$invalid || confirmacion">
 							            Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> 
 							        </button>
 								</div>
