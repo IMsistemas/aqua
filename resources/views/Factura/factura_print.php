@@ -135,15 +135,15 @@
             </tbody>
             <tfoot>
             <tr>
-                <th style="text-align: right;">Subtotal USD$: </th>
-                <th style="text-align: right; border-top: solid 1px;"><?= $data['ivafactura'] ?></th>
+                <th style="text-align: right;">Subtotal USD $: </th>
+                <th style="text-align: right; border-top: solid 1px;"><?= $data['subtotalfactura'] ?></th>
             </tr>
             <tr>
-                <th style="text-align: right;">Imponible 0%: </th>
-                <th style="text-align: right;"><?= $data['subtotalfactura'] ?></th>
+                <th style="text-align: right;">Imponible <?= $data['suministro']['cliente']['sri_tipoimpuestoiva']['porcentaje'] ?>%: </th>
+                <th style="text-align: right;"><?= $data['iva'] ?></th>
             </tr>
             <tr>
-                <th style="text-align: right;">Total Factura USD$: </th>
+                <th style="text-align: right;">Total Factura USD $: </th>
                 <th style="text-align: right;"><?= $data['totalfactura'] ?></th>
             </tr>
             </tfoot>
@@ -214,15 +214,15 @@
             </tbody>
             <tfoot>
             <tr>
-                <th style="text-align: right;">Subtotal USD$: </th>
-                <th style="text-align: right; border-top: solid 1px;"><?= $data['ivafactura'] ?></th>
+                <th style="text-align: right;">Subtotal USD $: </th>
+                <th style="text-align: right; border-top: solid 1px;"><?= $data['subtotalfactura'] ?></th>
             </tr>
             <tr>
-                <th style="text-align: right;">Imponible 0%: </th>
-                <th style="text-align: right;"><?= $data['subtotalfactura'] ?></th>
+                <th style="text-align: right;">Imponible <?= $data['suministro']['cliente']['sri_tipoimpuestoiva']['porcentaje'] ?>%: </th>
+                <th style="text-align: right;"><?= $data['iva'] ?></th>
             </tr>
             <tr>
-                <th style="text-align: right;">Total Factura USD$: </th>
+                <th style="text-align: right;">Total Factura USD $: </th>
                 <th style="text-align: right;"><?= $data['totalfactura'] ?></th>
             </tr>
             </tfoot>

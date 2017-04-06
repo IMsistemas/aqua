@@ -21,6 +21,11 @@ class Cliente extends Model
         return $this->belongsTo('App\Modelos\Clientes\TipoCliente','id');
     }
 
+    public function sri_tipoimpuestoiva()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_TipoImpuestoIva','idtipoimpuestoiva');
+    }
+
     public function servicioscliente()
     {
         return $this->hasMany('App\Modelos\Servicios\ServiciosCliente', 'idcliente');

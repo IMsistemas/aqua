@@ -431,6 +431,8 @@
 
         $scope.actionOtro = function (solicitud) {
 
+            console.log(solicitud);
+
             $scope.idsolicitud_to_process = solicitud.idsolicitud;
 
             $http.get(API_URL + 'solicitud/getSolicitudOtro/' + solicitud.tipo_id).success(function(response){
@@ -438,13 +440,13 @@
                 $scope.num_solicitud_otro = solicitud.tipo_id;
 
                 $scope.t_fecha_otro = solicitud.fechasolicitud;
-                $scope.h_codigocliente_otro = solicitud.cliente.idcliente;
-                $scope.documentoidentidad_cliente_otro = solicitud.cliente.persona.numdocidentific;
-                $scope.nom_cliente_otro = solicitud.cliente.persona.razonsocial;
-                $scope.direcc_cliente_otro = solicitud.cliente.persona.direccion;
-                $scope.telf_cliente_otro = solicitud.cliente.telefonoprincipaldomicilio;
-                $scope.celular_cliente_otro = solicitud.cliente.persona.celphone;
-                $scope.telf_trab_cliente_otro = solicitud.cliente.telefonoprincipaltrabajo;
+                $scope.h_codigocliente_otro = solicitud.idcliente;
+                $scope.documentoidentidad_cliente_otro = solicitud.numdocidentific;
+                $scope.nom_cliente_otro = solicitud.razonsocial;
+                $scope.direcc_cliente_otro = solicitud.direccion;
+                $scope.telf_cliente_otro = solicitud.telefonoprincipaldomicilio;
+                $scope.celular_cliente_otro = solicitud.celphone;
+                $scope.telf_trab_cliente_otro = solicitud.telefonoprincipaltrabajo;
 
                 $scope.t_observacion_otro = response[0].descripcion;
 
@@ -534,7 +536,7 @@
 
             //$scope.getSuministros(solicitud.cliente.idcliente, solicitud.data.numerosuministro);
 
-            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.cliente.idcliente).success(function(response){
+            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
 
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
@@ -551,13 +553,13 @@
 
                     $scope.num_solicitud_mant = solicitud.tipo_id;
                     $scope.t_fecha_mant = solicitud.fechasolicitud;
-                    $scope.h_codigocliente_mant = solicitud.cliente.idcliente;
-                    $scope.documentoidentidad_cliente_mant = solicitud.cliente.persona.numdocidentific;
-                    $scope.nom_cliente_mant = solicitud.cliente.persona.razonsocial;
-                    $scope.direcc_cliente_mant = solicitud.cliente.persona.direccion;
-                    $scope.telf_cliente_mant = solicitud.cliente.telefonoprincipaldomicilio;
-                    $scope.celular_cliente_mant = solicitud.cliente.persona.celphone;
-                    $scope.telf_trab_cliente_mant = solicitud.cliente.telefonoprincipaltrabajo;
+                    $scope.h_codigocliente_mant = solicitud.idcliente;
+                    $scope.documentoidentidad_cliente_mant = solicitud.numdocidentific;
+                    $scope.nom_cliente_mant = solicitud.razonsocial;
+                    $scope.direcc_cliente_mant = solicitud.direccion;
+                    $scope.telf_cliente_mant = solicitud.telefonoprincipaldomicilio;
+                    $scope.celular_cliente_mant = solicitud.celphone;
+                    $scope.telf_trab_cliente_mant = solicitud.telefonoprincipaltrabajo;
 
                     $scope.s_suministro_mant = response[0].suministro.idsuministro;
 
@@ -768,12 +770,12 @@
             $scope.num_solicitud_setnombre = solicitud.solicitudcambionombre;
             $scope.t_fecha_setnombre = solicitud.fechasolicitud;
             $scope.h_codigocliente_setnombre = solicitud.idcliente;
-            $scope.documentoidentidad_cliente_setnombre = solicitud.cliente.persona.numdocidentific;
-            $scope.nom_cliente_setnombre = solicitud.cliente.persona.razonsocial;
-            $scope.direcc_cliente_setnombre = solicitud.cliente.persona.direccion;
-            $scope.telf_cliente_setnombre = solicitud.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente_setnombre = solicitud.cliente.persona.celphone;
-            $scope.telf_trab_cliente_setnombre = solicitud.cliente.telefonoprincipaltrabajo;
+            $scope.documentoidentidad_cliente_setnombre = solicitud.numdocidentific;
+            $scope.nom_cliente_setnombre = solicitud.razonsocial;
+            $scope.direcc_cliente_setnombre = solicitud.direccion;
+            $scope.telf_cliente_setnombre = solicitud.telefonoprincipaldomicilio;
+            $scope.celular_cliente_setnombre = solicitud.celphone;
+            $scope.telf_trab_cliente_setnombre = solicitud.telefonoprincipaltrabajo;
 
             $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
 
@@ -785,8 +787,6 @@
                     $scope.list_suministros.push(response[i]);
                 }
                 $scope.suministro_setN = array_temp;
-
-
 
                 $http.get(API_URL + 'solicitud/getSolicitudSetN/' + solicitud.tipo_id).success(function(response){
 
@@ -909,12 +909,12 @@
             $scope.num_solicitud_servicio = solicitud.solicitudservicio;
             $scope.t_fecha_process = solicitud.fechasolicitud;
             $scope.h_codigocliente = solicitud.idcliente;
-            $scope.documentoidentidad_cliente = solicitud.cliente.persona.numdocidentific;
-            $scope.nom_cliente = solicitud.cliente.persona.razonsocial;
-            $scope.direcc_cliente = solicitud.cliente.persona.direccion;
-            $scope.telf_cliente = solicitud.cliente.telefonoprincipaldomicilio;
-            $scope.celular_cliente = solicitud.cliente.persona.celphone;
-            $scope.telf_trab_cliente = solicitud.cliente.telefonoprincipaltrabajo;
+            $scope.documentoidentidad_cliente = solicitud.numdocidentific;
+            $scope.nom_cliente = solicitud.razonsocial;
+            $scope.direcc_cliente = solicitud.direccion;
+            $scope.telf_cliente = solicitud.telefonoprincipaldomicilio;
+            $scope.celular_cliente = solicitud.celphone;
+            $scope.telf_trab_cliente = solicitud.telefonoprincipaltrabajo;
 
             $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
 

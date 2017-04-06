@@ -1061,8 +1061,6 @@
                 servicios: $scope.services
             };
 
-            console.log(solicitud);
-
             $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad(1);

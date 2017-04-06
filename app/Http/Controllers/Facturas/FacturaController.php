@@ -52,7 +52,7 @@ class FacturaController extends Controller
         $facturas = CobroAgua::with(
             [
                 'suministro.tarifaaguapotable', 'lectura', 'catalogoitem_cobroagua.cont_catalogitem', 'otrosvalores_cobroagua.otrosvalores',
-
+                'suministro.cliente.sri_tipoimpuestoiva',
                 'suministro' => function ($query_suministro) use ($search) {
                     return $query_suministro->with([
                         'cliente' => function ($query_cliente) use ($search) {

@@ -106,7 +106,6 @@
 
             </div>
 
-
             <div class="modal fade" tabindex="-1" role="dialog" id="modalAddCliente">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -1612,7 +1611,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modalRegistroItem">
                 <div class="modal-dialog" role="document">
