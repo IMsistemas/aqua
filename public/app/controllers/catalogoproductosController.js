@@ -309,7 +309,12 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             url += "/" + id;
             $scope.producto._method= 'PUT'; 
 
-        }    	       	
+        }  
+
+        if ($scope.producto.idtipoimpuestoice!=null){
+           $scope.producto.idtipoimpuestoice=undefined; 
+
+        }   	       	
         	
         
         console.log($scope.producto);
