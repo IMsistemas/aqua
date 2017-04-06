@@ -105,24 +105,59 @@ class CatalogoProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $catalogo = new Cont_CatalogItem();
     	$image = Input::file('foto');
-    	$data = $request->all();
+    	//$data = $request->all();
     	$date = Carbon::Today();
-    	$data['created_at'] = $data['updated_at']  = $date;
-    
-    
+    	//$data['created_at'] = $data['updated_at']  = $date;
+        /*if ($request->input('codigoemision'==null)) {
+            $data['idtipoimpuestoice'] =undefined;
+        }*/
+            $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
+            if ($request->input('idtipoimpuestoice')!=null) {
+               $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
+            }
+            
+            $catalogo->idplancuenta = $request->input('idplancuenta');
+            if ($request->input('idplancuenta_ingreso')!=null) {
+                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            }
+            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            $catalogo->idclaseitem = $request->input('idclaseitem');
+            $catalogo->idcategoria = $request->input('idcategoria');
+            $catalogo->nombreproducto = $request->input('nombreproducto');
+            $catalogo->codigoproducto = $request->input('codigoproducto');
+            $catalogo->precioventa = $request->input('precioventa');
+            $catalogo->created_at = $date;
+            $catalogo->updated_at = $date;
     	if(is_object($image)){
     		$destinationPath = 'uploads/productos';
     		$name = rand(0, 9999).'_'.$image->getClientOriginalName();
     		if(!$image->move($destinationPath, $name)) {
     			return response()->json(['success' => false]);
     		}
-    		$data['foto'] = $destinationPath.'/'. $name;
+            $catalogo->foto = $destinationPath.'/'. $name;
+    		//$data['foto'] = $destinationPath.'/'. $name;
     	}
+
+
+            /*$catalogo = new Cont_CatalogItem();
+            $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');;
+            //$catalogo->idtipoimpuestoice = $request->input('codigoemision');;
+            $catalogo->idplancuenta = $request->input('idplancuenta');
+            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');;
+            $catalogo->idclaseitem = $request->input('idclaseitem');;
+            $catalogo->idcategoria = $request->input('idcategoria');
+            $catalogo->nombreproducto = $request->input('nombreproducto');;
+            $catalogo->idestablecimiento = $request->input('idestablecimiento');;
+            $catalogo->codigoproducto = $request->input('codigoproducto');
+            $catalogo->precioventa = $request->input('precioventa');;
+            $catalogo->save();**/
+            $catalogo->save();
+    	    //$result = Cont_CatalogItem::create($data);
     	 
-    	$result = Cont_CatalogItem::create($data);
-    	 
-    	return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+    	//return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+            return response()->json(['success' => true]);
     	 
     }
     
@@ -158,30 +193,44 @@ class CatalogoProductoController extends Controller
     public function update(Request $request, $id)
     {
     	$image = Input::file('foto');
-    	$producto = Cont_CatalogItem::find($id);
+    	$catalogo = Cont_CatalogItem::find($id);
     	$date = Carbon::Today();
-    	$data = $request->all();
-    	$data['updated_at']  = $date;
+    	//$data = $request->all();
+    	//$data['updated_at']  = $date;
     	
     	
     	if(is_object($image)){
-    		if (file_exists($producto->foto)) {
-    			unlink($producto->foto);
+    		if (file_exists($catalogo->foto)) {
+    			unlink($catalogo->foto);
     		}
     		$destinationPath = 'uploads/productos';
     		$name = rand(0, 9999).'_'.$image->getClientOriginalName();
     		if(!$image->move($destinationPath, $name)) {
     			return response()->json(['success' => false]);
     		}
-    		$data['foto'] = $destinationPath.'/'. $name;
+            $catalogo->foto = $destinationPath.'/'. $name;
+    		//$data['foto'] = $destinationPath.'/'. $name;
     	}   	 
-    	if(!($data['idplancuenta_ingreso']>0)){
+    	/*if(!($data['idplancuenta_ingreso']>0)){
     		unset($data['idplancuenta_ingreso']);
-    	}
+    	}*/
+            $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
+            $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
+            $catalogo->idplancuenta = $request->input('idplancuenta');
+            if ($request->input('idplancuenta_ingreso')!=null) {
+                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            }
+            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            $catalogo->idclaseitem = $request->input('idclaseitem');
+            $catalogo->idcategoria = $request->input('idcategoria');
+            $catalogo->nombreproducto = $request->input('nombreproducto');
+            $catalogo->codigoproducto = $request->input('codigoproducto');
+            $catalogo->precioventa = $request->input('precioventa');
+            $catalogo->updated_at = $date;
     	
-    	    	
-    	$producto->fill($data);
-    	$producto->update();
+    	   $catalogo->update();
+    	//$catalogo->fill($data);
+    	//$catalogo->update();
     	return response()->json(['success' => true]);
     }
     
