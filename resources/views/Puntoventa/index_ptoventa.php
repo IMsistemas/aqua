@@ -55,7 +55,7 @@
 						<tr ng-repeat="puntoventa in puntoventas" >
 							<td>{{puntoventa.idpuntoventa}}</td>
 							<td>{{puntoventa.razonsocial}}</td>
-							<td>{{puntoventa.namepersona}}</td>
+							<td>{{puntoventa.namepersona+' '+puntoventa.lastnamepersona}}</td>
 							<td>{{puntoventa.codigoptoemision}}</td>
 							<td>
 								<button type="button" class="btn btn-warning">

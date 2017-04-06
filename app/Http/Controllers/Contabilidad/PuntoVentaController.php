@@ -93,7 +93,7 @@ class PuntoVentaController  extends Controller
         $puntoventa = Cont_PuntoDeVenta::join('empleado','empleado.idempleado','=','cont_puntoventa.idempleado')
             ->join('persona','persona.idpersona','=','empleado.idpersona')
             ->join('sri_establecimiento','sri_establecimiento.idestablecimiento','=','cont_puntoventa.idestablecimiento')
-            ->select('sri_establecimiento.razonsocial','cont_puntoventa.idpuntoventa','persona.namepersona','cont_puntoventa.codigoptoemision')
+            ->select('sri_establecimiento.razonsocial','cont_puntoventa.idpuntoventa','persona.namepersona','persona.lastnamepersona','cont_puntoventa.codigoptoemision')
             ->get();
         return $puntoventa;
     }
