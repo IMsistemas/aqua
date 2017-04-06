@@ -14,16 +14,11 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
         });
     };
     $scope.verificarEmision = function(){
-        console.log($scope.confirmacion);
-        console.log('Hola validación');
         $http.get(API_URL + 'puntoventa/verificaremision/'+$scope.codigo).success(function(response){
-            console.log(response.length);
             if (response.length!=0) {
                 $scope.confirmacion=true;
-                console.log('lleno');
             }else{
                 $scope.confirmacion=false;
-                console.log('vacio');
             }
         });
         console.log($scope.confirmacion);
