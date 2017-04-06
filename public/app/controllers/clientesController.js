@@ -717,8 +717,8 @@
                 $scope.t_suministro_marca = '';
                 $scope.t_suministro_costomedidor = '';
 
-                $('#t_suministro_marca').prop('disabled', false);
-                $('#t_suministro_costomedidor').prop('disabled', false);
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
 
                 $scope.getListItem();
 
@@ -881,6 +881,10 @@
                 $scope.t_suministro_costomedidor = '0.00';
             }
 
+            if ($scope.iditem == undefined) {
+                $scope.iditem = null;
+            }
+
             var data_to_pdf = {
                 tarifa: tarifa,
                 zona: zona,
@@ -919,7 +923,7 @@
                 codigocliente: $scope.objectAction.idcliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
-                idproducto: $scope.idproducto,
+                idproducto: $scope.iditem,
 
                 idsolicitud: $scope.num_solicitud_suministro,
 
@@ -1042,6 +1046,9 @@
             $scope.celular_cliente = $scope.objectAction.celphone;
             $scope.telf_trab_cliente = $scope.objectAction.telefonoprincipaltrabajo;
             /*$scope.tipo_tipo_cliente = $scope.objectAction.tipocliente.nombretipo;*/
+
+            $('#btn-save-servicio').prop('disabled', false);
+            $('#btn-process-servicio').prop('disabled', true);
 
             $('#modalActionServicio').modal('show');
         };

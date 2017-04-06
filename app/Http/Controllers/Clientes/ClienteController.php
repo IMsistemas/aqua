@@ -637,7 +637,7 @@ class ClienteController extends Controller
         $suministro->valorcuotainicial = $request->input('cuota_inicial');
         $suministro->dividendocredito = $request->input('dividendos');
 
-        //$suministro->idcatalogitem = $request->input('idproducto');
+        $suministro->idcatalogitem = $request->input('idproducto');
 
         if ($suministro->save()) {
 

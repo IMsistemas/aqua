@@ -556,7 +556,7 @@
                         <div class="modal-header modal-header-primary">
 
                             <div class="col-md-5 col-xs-12">
-                                <h4 class="modal-title">Solicitud de Servicio Nro: {{num_solicitud_servicio}}</h4>
+                                <h4 class="modal-title">Solicitud de Servicio {{num_solicitud_servicio}}</h4>
                             </div>
                             <div class="col-md-7 col-xs-12">
                                 <div class="form-group">
