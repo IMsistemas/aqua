@@ -49,7 +49,7 @@ class SuministroController extends Controller
 
     public function getSuministrosByCalle($id)
     {
-        return $sumi = Suministro::with('cliente', 'calle.barrio', 'producto')->where('idcalle', $id)->orderBy('numerosuministro', 'asc')->get();
+        return $sumi = Suministro::with('cliente', 'calle.barrio')->where('idcalle', $id)->orderBy('idsuministro', 'asc')->get();
     }
 
 
@@ -70,10 +70,8 @@ class SuministroController extends Controller
 
     public function suministroById($id)
     {
-        return Suministro::with('cliente', 'calle.barrio', 'producto')->where('numerosuministro', $id)->orderBy('numerosuministro')->get();
+        return Suministro::with('cliente.persona', 'calle.barrio')->where('idsuministro', $id)->orderBy('idsuministro')->get();
     }
-
-
 
 
     /**
@@ -94,17 +92,7 @@ class SuministroController extends Controller
      */
     public function store(Request $request)
     {
-        $calle = new Calle();
-
-        $calle->idbarrio = $request->input('idbarrio');
-        $calle->nombrecalle = $request->input('nombrecalle');
-        $calle->observacion = $request->input('observacion');
-        $calle->fechaingreso = date('Y-m-d');
-
-        $calle->save();
-
-        return response()->json(['success' => true]);
-
+        //
     }
 
 
@@ -161,15 +149,7 @@ class SuministroController extends Controller
      */
     public function destroy($id)
     {
-       $aux =  Canal::where ('idcalle',$id)->count('idcanal');
-
-        if ($aux > 0){
-            return response()->json(['success' => false, 'msg' => 'exist_canales']);
-        } else {
-            $calle = Calle::find($id);
-            $calle->delete();
-            return response()->json(['success' => true]);
-        }
+       //
     }
 
         

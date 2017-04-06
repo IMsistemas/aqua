@@ -74,10 +74,10 @@
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td >
-                        <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.numerosuministro);">
+                        <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.idsuministro);">
                             <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro.numerosuministro);">
+                        <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro);">
                             <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
                         </button>
                     </td>
@@ -103,13 +103,13 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <div class="col-md-6 col-xs-12">
-                        <h4 class="modal-title">Editar suministro Nro. {{suministro.numerosuministro}} </h4>
+                        <h4 class="modal-title">Editar Suministro Nro. {{idsuministro}} </h4>
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
                             <label for="fechaingreso" class="col-sm-5 control-label">Fecha de Ingreso:</label>
                             <div class="col-sm-6" style="padding: 0;">
-                                <label >{{suministro.fechainstalacionsuministro}}</label>
+                                <label >{{fechainstalacionsuministro}}</label>
                             </div>
                             <div class="col-sm-1 col-xs-12 text-right" style="padding: 0;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -121,71 +121,90 @@
 
                     <div class="row">
                         <form class="form-horizontal" name="formNuevaSolicitud" novalidate="">
-                            <fieldset>
-                                <legend style="padding-bottom: 0px; padding-left: 20px">Datos del Cliente</legend>
-                                <div class="col-xs-12" style="margin-top: -20px;">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <h3><span class="col-sm-4 label label-default">CI/Ruc:</span></h3>
-                                            <div class="col-sm-8">
-                                                <label class="control-label">{{suministro.cliente.documentoidentidad}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <h3><span class="col-sm-4 label label-default">Cliente:</span></h3>
-                                            <div class="col-sm-8">
-                                                <label class="control-label">{{suministro.cliente.nombres+" "+suministro.cliente.apellidos}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
 
-                            <fieldset>
-                                <legend style="padding-bottom: 5px; padding-left: 20px">Datos Suministro</legend>
-                                <div class="col-xs-12">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Zona:</label>
-                                            <div class="col-sm-8">
-                                                <select id="calle" class="form-control" ng-model="calle"
-                                                        ng-options="value.id as value.label for value in calles" required></select>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="col-xs-12">
+                                <h4>Datos del Cliente</h4>
+                                <hr>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"> RUC / CI: </span>
+                                    <input type="text" class="form-control" name="t_ruc" id="t_ruc" ng-model="t_ruc" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"> Cliente: </span>
+                                    <input type="text" class="form-control" name="t_cliente" id="t_cliente" ng-model="t_cliente" disabled>
                                 </div>
 
-                                <div class="col-xs-12">
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="form-group error">
-                                            <label class="col-sm-4 control-label">Dirección:</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="direccionsuministro" id="direccionsuministro"
-                                                       ng-model="direccionsuministro" ng-required="true" ng-maxlength="128" >
+                            </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <h4>Datos del Suministro</h4>
+                                <hr>
+                            </div>
 
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
 
-                                            <label for="telefonosuministro" class="col-sm-4 col-xs-12 control-label" style="padding: 5px 0 5px 0;">Teléfono:</label>
-                                            <div class="col-sm-8 col-xs-12">
-                                                <input type="text" class="form-control" name="telefonosuministro" id="telefonosuministro"
-                                                       ng-model="telefonosuministro" ng-minlength="9" ng-pattern="/^([0-9-\(\)]+)$/">
-                                                <span class="help-block error"
-                                                      ng-show="formNuevaSolicitud.telefonosuministro.$invalid && formNuevaSolicitud.telefonosuministro.$error.pattern">Solo números, guiones y paréntesis</span>
-                                                <span class="help-block error"
-                                                      ng-show="formNuevaSolicitud.telefonosuministro.$invalid && formNuevaSolicitud.telefonosuministro.$error.minlength">El Teléfono debe ser mayor a 9 dígitos</span>
+                                <div class="input-group">
+                                    <span class="input-group-addon"> Zona: </span>
+                                    <select name="s_suministro_zona" id="s_suministro_zona" class="form-control" ng-model="s_suministro_zona"
+                                            ng-options="value.id as value.label for value in barrios"
+                                            ng-change="getCalles()" required></select>
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.s_suministro_zona.$invalid && formNuevaSolicitud.s_suministro_zona.$touched">
+                                                                Seleccione una Zona</span>
+                            </div>
 
-                                            </div>
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
 
-                                        </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"> Transversal: </span>
+                                    <select name="s_suministro_transversal" id="s_suministro_transversal" class="form-control" ng-model="s_suministro_transversal"
+                                            ng-options="value.id as value.label for value in calles" required></select>
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.s_suministro_transversal.$invalid && formNuevaSolicitud.s_suministro_transversal.$touched">
+                                                                Seleccione una Transversal</span>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"> Dirección Instalac.: </span>
+                                    <input type="text" class="form-control" name="t_suministro_direccion" id="t_suministro_direccion" ng-model="t_suministro_direccion"
+                                           ng-required="true">
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.t_suministro_direccion.$invalid && formNuevaSolicitud.t_suministro_direccion.$touched">
+                                                            La Dirección es requerida</span>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"> Teléfono Instalac.: </span>
+                                    <input type="text" class="form-control" name="t_suministro_telf" id="t_suministro_telf"
+                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]+)$/">
                                 </div>
 
-                            </fieldset>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.t_suministro_telf.$invalid && formNuevaSolicitud.t_suministro_telf.$error.pattern">Solo números</span>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.t_suministro_telf.$invalid && formNuevaSolicitud.t_suministro_telf.$touched">
+                                                            El Teléfono es requerido</span>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.t_suministro_telf.$invalid && formNuevaSolicitud.t_suministro_telf.$error.maxlength">La longitud máxima es de 9 números</span>
+                                <span class="help-block error"
+                                      ng-show="formNuevaSolicitud.t_suministro_telf.$invalid && formNuevaSolicitud.t_suministro_telf.$error.minlength">La longitud mínima es de 9 números</span>
+                            </div>
+
                         </form>
                     </div>
 
@@ -196,8 +215,10 @@
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
 
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="editarSuministro();" ng-disabled="">Guardar</button>
-
+                    <button type="button" class="btn btn-success" id="btn-save"
+                            ng-click="editarSuministro()" ng-disabled="formNuevaSolicitud.$invalid">
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </div>

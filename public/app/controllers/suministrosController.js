@@ -96,63 +96,75 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 
             $scope.FiltrarPorBarrio();
         }
-    }
+    };
 
     $scope.getSuministro = function (numeroSuministro) {
         $http.get(API_URL + 'suministros/suministroById/' + numeroSuministro).success(function (response) {
 
-            $scope.nombre_apellido = response[0].cliente.nombres + " " + response[0].cliente.apellidos;
-            $scope.numerosuministro = response[0].numerosuministro;
-            $scope.fechainstalacionsuministro = response[0].fechainstalacionsuministro;
-            $scope.zona = response[0].calle.barrio.nombrebarrio;
+            $scope.nombre_apellido = response[0].cliente.persona.razonsocial;
+            $scope.numerosuministro = response[0].idsuministro;
+            $scope.fechainstalacionsuministro = response[0].fechainstalacion;
+            $scope.zona = response[0].calle.barrio.namebarrio;
             $scope.direccionsumnistro = response[0].direccionsumnistro;
             $scope.telefonosuministro = response[0].telefonosuministro;
-            $scope.transversal = response[0].calle.nombrecalle;
+            $scope.transversal = response[0].calle.namecalle;
 
             $('#modalVerSuministro').modal('show');
+
         }).error(function (response) {
             $scope.mensajeError = "Error al cargar el suministro";
             $('#modalError').modal('show');
         });
-    }
+    };
 
-    $scope.modalEditarSuministro = function (id) {
-        $http.get(API_URL + 'suministros/suministroById/' + id).success(function (response) {
+    $scope.modalEditarSuministro = function (object) {
 
-            console.log(response);
+        $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
+            }
+            $scope.barrios = array_temp;
+            $scope.s_suministro_zona = object.calle.idbarrio;
 
-            $scope.suministro = response[0];
-
-            $scope.telefonosuministro = response[0].telefonosuministro;
-            $scope.direccionsuministro = response[0].direccionsumnistro;
-
-            $http.get(API_URL + 'suministros/getCalle').success(function (response) {
-                var longitud = response.length;
-                //var array_temp = [{label: '--Seleccione--', id: 0}];
-                var array_temp = [];
-                for (var i = 0; i < longitud; i++) {
-                    array_temp.push({label: response[i].nombrecalle, id: response[i].idcalle});
-                }
-                $scope.calles = array_temp;
-                $scope.calle = $scope.suministro.calle.idcalle;
-            });
-            $('#editar-suministro').modal('show');
         });
 
+        $http.get(API_URL + 'cliente/getCalles/' + object.calle.idbarrio).success(function(response){
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
+            }
+            $scope.calles = array_temp;
+            $scope.s_suministro_transversal = object.calle.idcalle;
 
-    }
+            $scope.t_ruc = object.cliente.persona.numdocidentific;
+            $scope.t_cliente = object.cliente.persona.razonsocial;
+
+            $scope.t_suministro_telf = object.telefonosuministro;
+            $scope.t_suministro_direccion = object.direccionsumnistro;
+
+            $scope.idsuministro = object.idsuministro;
+            $scope.fechainstalacionsuministro = object.fechainstalacion;
+
+            $('#editar-suministro').modal('show');
+
+        });
+
+    };
 
     $scope.editarSuministro = function () {
         var data = {
-            idcalle: $scope.calle,
-            direccionsuministro: $scope.direccionsuministro,
-            telefonosuministro: $scope.telefonosuministro
+            idcalle: $scope.s_suministro_transversal,
+            direccionsuministro: $scope.t_suministro_direccion,
+            telefonosuministro: $scope.t_suministro_telf
         };
 
-        $http.put(API_URL + 'suministros/' + $scope.suministro.numerosuministro, data).success(function (response) {
+        $http.put(API_URL + 'suministros/' + $scope.idsuministro, data).success(function (response) {
             $scope.initLoad();
             $('#editar-suministro').modal('hide');
-            $scope.message = 'Se editó correctamente el Cliente seleccionado...';
+            $scope.message = 'Se editó correctamente el Suministro seleccionado...';
             $('#modalConfirmacion').modal('show');
             $scope.hideModalMessage();
         });
@@ -162,7 +174,39 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         setTimeout("$('#modalConfirmacion').modal('hide')", 3000);
     };
 
+    $scope.getBarrios = function () {
+        $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namebarrio, id: response[i].idbarrio})
+            }
+            $scope.barrios = array_temp;
+            $scope.s_suministro_zona = '';
 
+            $scope.calles = [{label: '-- Seleccione --', id: ''}];
+            $scope.s_suministro_transversal = '';
+        });
+    };
+
+    $scope.getCalles = function() {
+        var idbarrio = $scope.s_suministro_zona;
+
+        if (idbarrio != 0 && idbarrio != '' && idbarrio != undefined) {
+            $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
+                }
+                $scope.calles = array_temp;
+                $scope.s_suministro_transversal = '';
+            });
+        } else {
+            $scope.calles = [{label: '-- Seleccione --', id: ''}];
+            $scope.s_suministro_transversal = '';
+        }
+    };
 
     $scope.getByFilter = function (aux) {
         if(aux==1) {
