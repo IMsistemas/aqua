@@ -93,7 +93,7 @@
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                                 </button>-->
                                 <span ng-if="solicitud.tipo == 'Suministro'">
-                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.data.rutapdf)" >
+                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" >
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>
                                 </span>

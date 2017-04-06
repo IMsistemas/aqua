@@ -105,6 +105,10 @@
                 $scope.solicitudes = response.data;
                 $scope.totalItems = response.total;
 
+
+                console.log(response.data);
+
+
                 /*var list = [];
 
                 var suministro = response.suministro;
@@ -1449,6 +1453,7 @@
         };
 
         $scope.viewPDF = function (url) {
+            console.log(url);
             window.open(url);
         };
 
