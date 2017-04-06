@@ -969,7 +969,7 @@
                                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-primary" id="btn-process-setnombre"
-                                    ng-click="procesarSolicitud()" disabled>
+                                    ng-click="procesarSolicitudSetName()" disabled>
                                 Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             </button>
                         </div>

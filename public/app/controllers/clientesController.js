@@ -1315,8 +1315,6 @@
                 numerosuministro: $scope.s_suministro_setnombre
             };
 
-            console.log(solicitud);
-
             $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
@@ -1333,7 +1331,7 @@
         $scope.procesarSolicitudSetName = function () {
             $('#btn-process-setnombre').prop('disabled', true);
             var data = {
-                codigoclientenuevo: $scope.s_ident_new_client_setnombre
+                codigoclientenuevo: $scope.h_codigocliente_new
             };
             var numerosuministro = $scope.s_suministro_setnombre;
             var url = API_URL + 'cliente/updateSetNameSuministro/' + numerosuministro;

@@ -515,7 +515,7 @@ class ClienteController extends Controller
     public function updateSetNameSuministro(Request $request, $id)
     {
         $suministro = Suministro::find($id);
-        $suministro->codigocliente = $request->input('codigoclientenuevo');
+        $suministro->idcliente = $request->input('codigoclientenuevo');
 
         if ($suministro->save()){
             return response()->json(['success' => true]);
