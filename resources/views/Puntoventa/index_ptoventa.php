@@ -176,7 +176,7 @@
 						</div>					
 						<div class="modal-footer">
 								<div class="col-xs-12 text-right" style="margin-top: 10px;">
-									<button type="button" class="btn btn-default">
+									<button type="button" class="btn btn-default" data-dismiss="modal">
 							            Cancelar <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
 							        </button>
 									<button type="button" class="btn btn-success" ng-click="Save()" ng-disabled="formpuntoventa.$invalid || confirmacion">
