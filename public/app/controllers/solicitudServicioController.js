@@ -890,6 +890,10 @@
                 servicios: $scope.services
             };
             var idsolicitud = $scope.num_solicitud_servicio;
+
+            console.log(idsolicitud);
+            console.log(solicitud);
+
             $http.put(API_URL + 'solicitud/updateSolicitudServicio/' + idsolicitud, solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();

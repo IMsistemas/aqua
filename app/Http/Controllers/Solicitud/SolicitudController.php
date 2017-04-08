@@ -228,12 +228,11 @@ class SolicitudController extends Controller
      */
     public function updateSolicitudServicio(Request $request, $id)
     {
-        $solicitud = SolicitudServicio::find($id);
         $list_services = $request->input('servicios');
         foreach ($list_services as $item) {
             if ($item['valor'] != 0 && $item['valor'] != '') {
-                $object = ServiciosCliente::where('codigocliente', $solicitud->codigocliente)
-                                            ->where('idserviciojunta', $item['idserviciojunta']);
+                $object = CatalogoItemSolicitudServicio::where('idsolicitudservicio', $id)
+                            ->where('idcatalogitem', $item['idserviciojunta']);
                 if ($object->update(['valor' => $item['valor']]) == false){
                     return response()->json(['success' => false]);
                 }
