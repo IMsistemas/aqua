@@ -42,6 +42,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                                 }
                             }
                             $("#" + field).val(relleno + text);
+                            console.log(relleno+text);
                             return relleno+text;
                         }
                     };
