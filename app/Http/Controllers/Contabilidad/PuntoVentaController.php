@@ -42,6 +42,13 @@ class PuntoVentaController  extends Controller
         ->get();
     }
 
+    public function empleadoVacio($codigoemision)
+    {
+        return Empleado::join('cargo','cargo.idcargo','empleado.idcargo')
+        ->where('cargo.namecargo','=','Bodeguero')
+        ->get();
+    }
+
     public function cargaEstablecimiento()
     {
         //return $establecimiento=DB::table('sri_establecimiento')->get();

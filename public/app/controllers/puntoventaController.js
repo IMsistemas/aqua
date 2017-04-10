@@ -73,9 +73,19 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $scope.$broadcast('angucomplete-alt:clearInput');
                 $scope.form_title = "Nuevo Punto Venta";
                 $scope.codigo = '';
-                $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
-                    $scope.establecimiento=response[0].razonsocial;
-                    $('#modalActionPuntoventa').modal('show');
+
+                $http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
+                    console.log(response);
+                    if (response.length==0) {
+                        $scope.message="Para crear un Punto de Venta primero debe crear Bodeguero";
+                        $('#modalEmpleadoVacio').modal('show');
+                    }else{
+                        $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
+                            $scope.establecimiento=response[0].razonsocial;
+                            $('#modalActionPuntoventa').modal('show');
+                        });
+                    }
+
                 });
                 break;
             case 'edit':
