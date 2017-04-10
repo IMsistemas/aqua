@@ -32,9 +32,19 @@
 <div  class="container" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
 <form class="form-horizontal" name="formventa" id="formventa"  novalidate="" >
 <div class="form-group" ng-show="VerFactura!=1" ng-hide="VerFactura==1">
-  <div class="row">
-    <div class="col-xs-12 text-right" >
-      <button class="btn btn-primary" ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
+  <div class="row-fluid">
+
+    <div class="col-xs-4 ">
+      <div class="form-group has-feedback">
+          <input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa" ng-keyup="pageChanged(1)">
+          <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+      </div>
+    </div>
+    
+    <div class="col-xs-4 ">
+    </div>
+    <div class="col-xs-4 text-right" >
+      <button class="btn btn-primary" ng-disabled="Valida=='1' " ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
   </div>
   <div class="row">
@@ -159,7 +169,7 @@
         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
           <div class="input-group">                        
                     <span class="input-group-addon">Bodega: </span>
-                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-required="true">
+                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " ng-required="true">
                       <option value="">-- Seleccione --</option>
                       <option ng-repeat="b in Bodegas" value="{{b.idbodega}}">{{b.namebodega+" "+b.observacion}}</option>
                     </select>
@@ -281,7 +291,7 @@
                                   disable-input="impreso"
                                   text-searching="Buscando Producto"
                                   text-no-results="Producto no encontrado"
-                                  initial-value="item.producto" />
+                                  initial-value="item.producto" focus-out="AsignarData(item);"; />
                 </div>
                 <span class="help-block error" ng-show="formventa.codigoproducto{{$index}}.$invalid && formventa.codigoproducto{{$index}}.$touched">El producto es requerido.</span> 
           </td>
@@ -289,11 +299,11 @@
             <label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label> 
             <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label> 
           </td>
-          <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.cantidad"/></td>
-          <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
-          <td><input type="text" class="form-control" ng-keyup="CalculaValores()" ng-model="item.descuento"/></td>
-          <td><input type="text" class="form-control" ng-model="item.iva" ng-value="{{item.productoObj.originalObject.porcentaje}}" /></td>
-          <td><input type="text" class="form-control" ng-model="item.ice"/></td>
+          <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
+          <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+          <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
+          <td><input type="text" class="form-control" ng-model="item.iva"  /></td>
+          <td><input type="text" class="form-control" ng-model="item.ice"  /></td>
           <td><input type="text" class="form-control" ng-model="item.total" disabled  ng-value="item.cantidad*item.precioU"/></td>
           <td>
             <button type="button" class="btn btn-danger" ng-click="QuitarItem(item)">
@@ -332,7 +342,7 @@
       <button type="button" ng-click="AnularVenta();" ng-disabled="IdDocumentoVentaedit=='0' " class="btn btn-default">
               Anular <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
           </button>
-      <button type="button" class="btn btn-success" ng-click="IniGuardarFactura()" ng-disabled="formventa.$invalid || IdDocumentoVentaedit!='0' ">
+      <button type="button" class="btn btn-success" ng-click="IniGuardarFactura()" ng-disabled="formventa.$invalid || IdDocumentoVentaedit!='0' || Validabodegaprodct!='0' || ValidacionCueContExt!='0' ">
               Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> 
           </button>
     </div>
@@ -376,11 +386,11 @@
         </tr>
         <tr>
           <td>IRBPNR</td>
-          <td><input type="text" class="form-control input-sm" id="ValIRBPNR"  ng-model="ValIRBPNR"/></td>
+          <td><input type="text" class="form-control input-sm" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
         </tr>
         <tr>
           <td>PROPINA</td>
-          <td><input type="text" class="form-control input-sm" id="ValPropina"  ng-model="ValPropina" /></td>
+          <td><input type="text" class="form-control input-sm" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
         </tr>
         <tr>
           <td>VALOR TOTAL</td>

@@ -17,20 +17,21 @@ $scope.Bodega="";
 $scope.observacion="";
 $scope.Allventas=[];
 $scope.cmbFormapago="";
+$scope.busquedaventa="";
 
 $scope.IdDocumentoVentaedit="0";
+$scope.Valida="0";
+
+$scope.Validabodegaprodct="0";
+$scope.ValidacionCueContExt="0";
     ///---
     $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
     };
     $scope.initLoad = function(pageNumber){
 
-        if ($scope.busqueda == undefined) {
-            var search = null;
-        } else var search = $scope.busqueda;
-
         var filtros = {
-            search: search
+            search: $scope.busquedaventa
         };
         $http.get(API_URL + 'DocumentoVenta/getAllFitros?page=' + pageNumber + '&filter=' + JSON.stringify(filtros))
             .success(function(response){
@@ -38,6 +39,7 @@ $scope.IdDocumentoVentaedit="0";
                 console.log(response);*/
                 $scope.Allventas = response.data;
                 $scope.totalItems = response.total;
+                console.log(response);
          });
     };
     $scope.initLoad(1);
@@ -92,6 +94,26 @@ $scope.IdDocumentoVentaedit="0";
 	        .success(function(response){
 	            $scope.Configuracion=response;
 	            console.log(response);
+                for(x=0;x<$scope.Configuracion.length;x++){
+                    if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
+                        if($scope.Configuracion[x].IdContable==null){
+                            $scope.Valida="1";
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="La venta necesita la cuenta contable de COSTO DE VENTA"; 
+                        }
+                    }
+                    if($scope.Configuracion[x].Descripcion=="CONT_IVA_VENTA"){
+                        if($scope.Configuracion[x].IdContable==null){
+                            $scope.Valida="1";
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="La venta necesita la cuenta contable de IVA DE VENTA"; 
+                        }
+                    }
+                }
 	            if(String($scope.Configuracion[0].IdContable)==""){
 	            	QuitarClasesMensaje();
 			        $("#titulomsm").addClass("btn-danger");
@@ -118,6 +140,11 @@ $scope.IdDocumentoVentaedit="0";
 		$http.get(API_URL + 'DocumentoVenta/formapago')
 	        .success(function(response){
 	            $scope.Formapago=response;
+                if($scope.Formapago.length==0){
+                    $("#titulomsm").addClass("btn-danger");
+                    $("#msm").modal("show");
+                    $scope.Mensaje="La venta necesita que llene las formas de pago";        
+                }
 	            console.log(response);
 	     });
 	};
@@ -126,6 +153,11 @@ $scope.IdDocumentoVentaedit="0";
 		$http.get(API_URL + 'DocumentoVenta/getheaddocumentoventa')
 	        .success(function(response){
 	            $scope.PuntoVenta=response;
+                if($scope.Formapago.length==0){
+                    $("#titulomsm").addClass("btn-danger");
+                    $("#msm").modal("show");
+                    $scope.Mensaje="La venta necesita puntos de venta y agente de venta";        
+                }
 	            console.log(response);
 	    });
 	};
@@ -183,8 +215,37 @@ $scope.IdDocumentoVentaedit="0";
     $scope.ValIRBPNR=0;
     $scope.ValPropina=0;
     $scope.ValorTotal=0;
+    $scope.AsignarData=function(item){
+        if(item!=undefined){
+            if(item.productoObj!=undefined){
+                if(item.productoObj.originalObject.porcentiva!=undefined){
+                    item.iva=item.productoObj.originalObject.porcentiva;
+                }
+                if(item.productoObj.originalObject.porcentice!=undefined){
+                    item.ice=item.productoObj.originalObject.porcentice;
+                }
+            }
+        }
+    };
+    $scope.ValidaProducto=function(){
+        for(x=0;x<$scope.items.length;x++){
+            if( parseInt($scope.items[x].productoObj.originalObject.idclaseitem)==1){ //producto
+                if($scope.Bodega==""){
+                    QuitarClasesMensaje();
+                    $("#titulomsm").addClass("btn-danger");
+                    $("#msm").modal("show");
+                    $scope.Mensaje="Seleccione una bodega para el producto";
+                    $scope.Validabodegaprodct="1";
+                }else{
+                    $scope.Validabodegaprodct="0";
+                }
+            }
+        }
+    };
     $scope.CalculaValores=function(){
     	var aux_subtotalconimpuestos=0;
+        var aux_totaldescuento=0;
+        var aux_totalIce=0;
 
     	for(x=0;x<$scope.items.length;x++){
     		console.log($scope.items[x]);
@@ -192,11 +253,16 @@ $scope.IdDocumentoVentaedit="0";
     			if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
     				if(parseFloat($scope.items[x].descuento)>0){
     					var aux_descuento=(((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*(parseFloat($scope.items[x].descuento)))/100);
+                        aux_totaldescuento+=aux_descuento;
     					var preciouxcantida=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
     					$scope.items[x].total=(preciouxcantida-aux_descuento).toFixed(4);
     				}else{
     					$scope.items[x].total=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
     				}
+                    if(parseFloat($scope.items[x].ice)>0){
+                        var aux_totalaplicaice=((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*((parseFloat($scope.items[x].ice)))/100);
+                        aux_totalIce+=aux_totalaplicaice;
+                    }
     			}
     		}
     	}
@@ -205,14 +271,65 @@ $scope.IdDocumentoVentaedit="0";
     		console.log($scope.items[x]);
     		if(parseInt($scope.items[x].iva)==0 ){
     			if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
-    				aux_subtotalconimpuestos+=parseFloat($scope.items[x].total);
+    				aux_subtotalconimpuestos+=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
     			}
     		}
     	}
     	
+        $scope.Totaldescuento=aux_totaldescuento.toFixed(4);
+        $scope.ValICE=aux_totalIce.toFixed(4);
+
+        if(parseFloat($scope.ValICE)>0){
+            for(x=0;x<$scope.Configuracion.length;x++){
+                    if($scope.Configuracion[x].Descripcion=="CONT_ICE_VENTA"){
+                        if($scope.Configuracion[x].IdContable==null){
+                            $scope.ValidacionCueContExt="1";
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="La venta necesita la cuenta contable de ICE"; 
+                        }else{
+                            $scope.ValidacionCueContExt="0";
+                        }
+                    }
+            }
+        }
+        if(parseFloat($scope.ValIRBPNR)>0){
+            for(x=0;x<$scope.Configuracion.length;x++){
+                    if($scope.Configuracion[x].Descripcion=="CONT_IRBPNR_VENTA"){
+                        if($scope.Configuracion[x].IdContable==null){
+                            $scope.ValidacionCueContExt="1";
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="La venta necesita la cuenta contable de IRBPNR"; 
+                        }else{
+                            $scope.ValidacionCueContExt="0";
+                        }
+                    }
+            }
+        }
+
+        if(parseFloat($scope.ValPropina)>0){
+            for(x=0;x<$scope.Configuracion.length;x++){
+                    if($scope.Configuracion[x].Descripcion=="CONT_PROPINA_VENTA"){
+                        if($scope.Configuracion[x].IdContable==null){
+                            $scope.ValidacionCueContExt="1";
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="La venta necesita la cuenta contable de PROPINA"; 
+                        }else{
+                            $scope.ValidacionCueContExt="0";
+                        }
+                    }
+            }
+        }
+
     	$scope.Subtotalconimpuestos= aux_subtotalconimpuestos.toFixed(4);
     	$scope.ValIVA=(($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100).toFixed(4);
-    	$scope.ValorTotal=(parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA)).toFixed(4);
+
+    	$scope.ValorTotal=((parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA) + parseFloat($scope.ValICE) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina) )   - ($scope.Totaldescuento)).toFixed(4);
     };
     ///---
     $scope.IniGuardarFactura=function(){
@@ -303,10 +420,78 @@ $scope.IdDocumentoVentaedit="0";
     		}	
     	}
     	//--Ingreso del item producto o servicio
+
+        //-- ICE venta
+        if(parseFloat($scope.ValICE)>0){
+            var iceventa={};
+            for(i=0;i<$scope.Configuracion.length;i++){
+                if($scope.Configuracion[i].Descripcion=="CONT_ICE_VENTA"){
+                    var auxcosto=$scope.Configuracion[i].Contabilidad;
+                    iceventa=auxcosto[0];
+                }
+            }
+            var ice={
+                    idplancuenta: iceventa.idplancuenta,
+                    concepto: iceventa.concepto,
+                    controlhaber: iceventa.controlhaber,
+                    tipocuenta: iceventa.tipocuenta,
+                    Debe: 0,
+                    Haber: parseFloat($scope.ValICE),
+                    Descipcion:''
+                };
+            RegistroC.push(ice);
+        }
+        //-- ICE venta
+
+        //-- IRBPNR venta
+        if(parseFloat($scope.ValIRBPNR)>0){
+            var irbpnrventa={};
+            for(i=0;i<$scope.Configuracion.length;i++){
+                if($scope.Configuracion[i].Descripcion=="CONT_IRBPNR_VENTA"){
+                    var auxcosto=$scope.Configuracion[i].Contabilidad;
+                    irbpnrventa=auxcosto[0];
+                }
+            }
+            var irbpnr={
+                    idplancuenta: irbpnrventa.idplancuenta,
+                    concepto: irbpnrventa.concepto,
+                    controlhaber: irbpnrventa.controlhaber,
+                    tipocuenta: irbpnrventa.tipocuenta,
+                    Debe: 0,
+                    Haber: parseFloat($scope.ValIRBPNR),
+                    Descipcion:''
+                };
+            RegistroC.push(irbpnr);
+        }
+        //-- IRBPNR venta
+
+        //-- PROPINTA venta
+        if(parseFloat($scope.ValPropina)>0){
+            var propinaventa={};
+            for(i=0;i<$scope.Configuracion.length;i++){
+                if($scope.Configuracion[i].Descripcion=="CONT_PROPINA_VENTA"){
+                    var auxcosto=$scope.Configuracion[i].Contabilidad;
+                    propinaventa=auxcosto[0];
+                }
+            }
+            var propinav={
+                    idplancuenta: propinaventa.idplancuenta,
+                    concepto: propinaventa.concepto,
+                    controlhaber: propinaventa.controlhaber,
+                    tipocuenta: propinaventa.tipocuenta,
+                    Debe: 0,
+                    Haber: parseFloat($scope.ValPropina),
+                    Descipcion:''
+                };
+            RegistroC.push(propinav);
+        }
+        //-- PROPINTA venta
+
+
     	//--Iva venta
     	var ivaventa={};
     	for(i=0;i<$scope.Configuracion.length;i++){
-    		if($scope.Configuracion[i].Descripcion=="SRI_RETEN_IVA_VENTA"){
+    		if($scope.Configuracion[i].Descripcion=="CONT_IVA_VENTA"){
     			var auxcosto=$scope.Configuracion[i].Contabilidad;
     			ivaventa=auxcosto[0];
     		}
@@ -403,7 +588,12 @@ $scope.IdDocumentoVentaedit="0";
     		DataItemsVenta:ItemsVenta
     	};
         console.log(transaccion_venta_full);
-    	$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta_full))
+    	//$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta_full))
+        //$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(2))
+        var transaccionfactura={
+            datos:JSON.stringify(transaccion_venta_full)
+        }
+        $http.post(API_URL+'DocumentoVenta',transaccionfactura)
                 .success(function (response) {
                     if(parseInt(response)>0){
                     	QuitarClasesMensaje();
@@ -486,6 +676,8 @@ $scope.IdDocumentoVentaedit="0";
                 $scope.FechaEmision=convertDatetoDB(aux_ventadata.fechaemisionventa,true);
                 $scope.observacion=aux_transaccion.descripcion;
                 $scope.cmbFormapago=String(aux_ventadata.cont_formapago_documentoventa[0].idformapago);
+                $scope.ValIRBPNR=parseFloat(aux_ventadata.irbpnrventa);
+                $scope.ValPropina=parseFloat(aux_ventadata.propina);
 
                 var aux_itemsventa=response.Items;
                 $scope.DICliente=$scope.Cliente.numdocidentific;
@@ -494,8 +686,10 @@ $scope.IdDocumentoVentaedit="0";
                     if(aux_itemsventa[x].idbodega!="") $scope.Bodega=String(aux_itemsventa[x].idbodega);
                     var item={
                         productoObj:{
-                            title:aux_itemsventa[x].cont_catalogoitem.codigoproducto,
-                            originalObject:aux_itemsventa[x].cont_catalogoitem
+                            /*title:aux_itemsventa[x].cont_catalogoitem.codigoproducto,
+                            originalObject:aux_itemsventa[x].cont_catalogoitem*/
+                            title:aux_itemsventa[x].codigoproducto,
+                            originalObject:aux_itemsventa[x]
                         },
                         cantidad:aux_itemsventa[x].cantidad,
                         precioU:aux_itemsventa[x].preciounitario,
@@ -503,7 +697,8 @@ $scope.IdDocumentoVentaedit="0";
                         iva : 0,
                         ice:0,
                         total:aux_itemsventa[x].preciototal,
-                        producto: aux_itemsventa[x].cont_catalogoitem.codigoproducto
+                      //  producto: aux_itemsventa[x].cont_catalogoitem.codigoproducto
+                        producto: aux_itemsventa[x].codigoproducto
                     };
                     $scope.items.push(item);
                     aux_bodegacont++;

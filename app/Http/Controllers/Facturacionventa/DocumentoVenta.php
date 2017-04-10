@@ -169,8 +169,10 @@ class DocumentoVenta extends Controller
     {   
 
         return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
-                                //->join("cont_plancuenta","cont_plancuenta.idplancuenta","=","cont_catalogitem.idplancuenta")
+                                //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
                                 ->selectRaw("*")
+                                ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
                                 ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
                                 ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
                                 ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
@@ -223,7 +225,50 @@ class DocumentoVenta extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->all();
+        $aux = $request->all();
+        $filtro=json_decode($aux["datos"]);
+        //--Parte contable
+        $id_transaccion= CoreContabilidad::SaveAsientoContable( $filtro->DataContabilidad);
+        //--Fin parte contable
+
+
+        //--Parte invetario kardex
+        for($x=0;$x<count($filtro->Datakardex);$x++){
+            $filtro->Datakardex[$x]->idtransaccion=$id_transaccion;
+        }
+        $id_kardex= CoreKardex::GuardarKardex($filtro->Datakardex);
+        //--Fin Parte invetario kardex
+
+        $filtro->DataVenta->idtransaccion=$id_transaccion;
+
+        $aux_docventa=(array) $filtro->DataVenta;
+        $docventa=Cont_DocumentoVenta::create($aux_docventa);
+        $aux_addVenta=Cont_DocumentoVenta::all();
+        for($x=0;$x<count($filtro->DataItemsVenta);$x++){
+            $filtro->DataItemsVenta[$x]->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
+        }
+        $aux_itemventa=(array) $filtro->DataItemsVenta;
+        //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+        for($x=0;$x<count($filtro->DataItemsVenta);$x++){
+            Cont_ItemVenta::create((array) $filtro->DataItemsVenta[$x]);
+        }
+
+        $registrocliente = array(
+            'idcliente' => $docventa->idcliente,
+            'idtransaccion' => $id_transaccion,
+            'fecha' => $docventa->fecharegistroventa,
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente 
+            'haber' => 0,
+            'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."", 
+            'estadoanulado' => false);
+        $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
+
+        
+        $aux= DB::table('cont_formapago_documentoventa')->insert([
+            ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
+        ]);
+
+        return 1;
 
         //$datos["documentoventa"]
         //$datos["productosenventa"]
@@ -261,11 +306,11 @@ class DocumentoVenta extends Controller
      */
     public function getVentas($filtro)
     {
-        $filtro = json_decode($filtro);
+        //$filtro = json_decode($filtro);
         //--Parte contable
 
-        $id_transaccion= CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
-        //--Fin parte contable
+        //$id_transaccion= CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
+       /* //--Fin parte contable
         //--Parte invetario kardex
         for($x=0;$x<count($filtro->Datakardex);$x++){
             $filtro->Datakardex[$x]->idtransaccion=$id_transaccion;
@@ -296,7 +341,9 @@ class DocumentoVenta extends Controller
             'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."", 
             'estadoanulado' => false);
         $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
-        
+        */
+
+
         /*$formapagoventa = array(
             'idformapago' => $filtro->Idformapagoventa, 
             'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa);
@@ -305,9 +352,12 @@ class DocumentoVenta extends Controller
         $aux_formapagoVenta->idformapago=$filtro->Idformapagoventa;
         $aux_formapagoVenta->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
         $aux_formapagoVenta->save();*/
-       $aux= DB::table('cont_formapago_documentoventa')->insert([
+       
+
+
+       /*$aux= DB::table('cont_formapago_documentoventa')->insert([
             ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
-        ]);
+        ]);*/
         return 1;
 
         /*$aux_filtro="";
@@ -344,13 +394,12 @@ class DocumentoVenta extends Controller
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
         $data = null;
+        $aux_query="";
+        if ($search!="") {
+            $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
+        } 
 
-        /*if ($search != null) {
-            $data = Cont_DocumentoVenta::whereRaw("cargo.namecargo ILIKE '%" . $search . "%'")->orderBy('namecargo', 'asc');
-        } else {
-            $data = Cont_DocumentoVenta::orderBy('namecargo', 'asc');
-        }*/
-        $data= Cont_DocumentoVenta::whereRaw(" estadoanulado=false ");
+        $data= Cont_DocumentoVenta::whereRaw(" estadoanulado=false ".$aux_query."" );
         return $data->paginate(10);
 
         /*
@@ -427,9 +476,17 @@ class DocumentoVenta extends Controller
                         ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
                         ->whereRaw(" cliente.idcliente=".$datadocventa[0]->idcliente." ")
                         ->get();
-        $dataitemventa=Cont_ItemVenta::with("cont_catalogoitem")
+        /*$dataitemventa=Cont_ItemVenta::with("cont_catalogoitem")
+                                ->whereRaw(" iddocumentoventa=$id ")
+                                ->get();*/
+        $dataitemventa=Cont_ItemVenta::join("cont_catalogitem","cont_catalogitem.idcatalogitem","=","cont_itemventa.idcatalogitem")
+                                ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                                ->selectRaw("*")
+                                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                                ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
                                 ->whereRaw(" iddocumentoventa=$id ")
                                 ->get();
+
         $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=".$datadocventa[0]->idtransaccion."")->get();
         $full_data_venta= array(
             'Venta' => $datadocventa,
