@@ -1228,7 +1228,7 @@
             });
         };
 
-        $scope.getCalles = function() {
+        $scope.getCalles = function(idcalle) {
             var idbarrio = $scope.s_suministro_zona;
 
             if (idbarrio != 0) {
@@ -1239,7 +1239,13 @@
                         array_temp.push({label: response[i].namecalle, id: response[i].idcalle})
                     }
                     $scope.calles = array_temp;
-                    $scope.s_suministro_transversal = '';
+
+                    if (idcalle != undefined) {
+                        $scope.s_suministro_transversal = idcalle;
+                    } else {
+                        $scope.s_suministro_transversal = '';
+                    }
+
                 });
             } else {
                 $scope.calles = [{label: '-- Seleccione --', id: 0}];
@@ -1285,9 +1291,13 @@
 
                 if(solicitud.estadoprocesada == true) {
 
+
+
                     $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
                     $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
-                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+
+                    $scope.getCalles(response[0].suministro.calle.idcalle);
+
                     $scope.s_suministro_transversal = response[0].suministro.calle.idcalle;
 
                     $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
