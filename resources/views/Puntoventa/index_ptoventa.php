@@ -119,9 +119,9 @@
 	    		<div class="modal fade" tabindex="-1" role="dialog" id="modalEmpleadoVacio">
 		            <div class="modal-dialog" role="document">
 		                <div class="modal-content">
-		                    <div class="modal-header modal-header-info">
+		                    <div class="modal-header modal-header-error">
 		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		                        <h4 class="modal-title">Confirmación</h4>
+		                        <h4 class="modal-title">Mensaje</h4>
 		                    </div>
 		                    <div class="modal-body">
 		                        <span>{{message}}</span>
