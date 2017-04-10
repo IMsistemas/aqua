@@ -1189,7 +1189,6 @@
             }
         };
 
-
         $scope.getLastIDSolSuministro = function () {
             $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
                 $scope.num_solicitud_suministro = response.id;
@@ -1264,7 +1263,6 @@
             });
         };
 
-
         $scope.actionSuministro = function (solicitud) {
             //$scope.getInfoMedidor();
             //$scope.getLastIDSolSuministro();
@@ -1294,14 +1292,33 @@
 
                     $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
 
+                    $scope.t_suministro_aguapotable = response[0].suministro.valoraguapotable;
+                    $scope.t_suministro_alcantarillado = response[0].suministro.valoralcantarillado;
+                    $scope.t_suministro_garantia = response[0].suministro.valorgarantia;
+                    $scope.t_suministro_cuota = response[0].suministro.valorcuotainicial;
+
+                    $scope.s_suministro_credito = response[0].suministro.dividendocredito;
+
+                    if(response[0].suministro.cont_catalogitem != null) {
+                        $scope.t_suministro_medidor = true;
+                        $scope.t_suministro_marca = response[0].suministro.cont_catalogitem.nombreproducto;
+                        $scope.t_suministro_costomedidor = response[0].suministro.cont_catalogitem.precioventa;
+                    } else {
+                        $scope.t_suministro_medidor = false;
+                        $scope.t_suministro_marca = '';
+                        $scope.t_suministro_costomedidor = '';
+                    }
 
                     $('#btn-save-solsuministro').prop('disabled', true);
                     $('#btn-process-solsuministro').prop('disabled', true);
                     $('#modal-footer-suministro').hide();
+
                 } else {
+
                     $('#btn-save-solsuministro').prop('disabled', false);
                     $('#btn-process-solsuministro').prop('disabled', false);
                     $('#modal-footer-suministro').show();
+
                 }
 
                 $('#modalActionSuministro').modal('show');

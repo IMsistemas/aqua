@@ -1501,7 +1501,7 @@
                                                     <div class="col-sm-4 col-xs-12">
 
                                                         <div class="input-group">
-                                                            <span class="input-group-addon"> ¿Cliente tiene Medidor?: </span>
+                                                            <span class="input-group-addon"> ¿Cliente no tiene Medidor?: </span>
                                                             <input type="checkbox" id="t_suministro_medidor" ng-model="t_suministro_medidor"
                                                                    ng-click="deshabilitarMedidor()">
                                                         </div>

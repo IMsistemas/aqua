@@ -99,7 +99,7 @@ class SolicitudController extends Controller
 
     public function getSolicitudSuministro($id)
     {
-        return SolicitudSuministro::with('suministro.tarifaaguapotable', 'suministro.calle.barrio')
+        return SolicitudSuministro::with('suministro.tarifaaguapotable', 'suministro.calle.barrio', 'suministro.cont_catalogitem')
                                         ->where('idsolicitudsuministro', $id)->get();
     }
 

@@ -26,5 +26,5 @@ class Cont_CatalogItem extends Model
         return $this->belongsTo('App\Modelos\Contabilidad');
     }
 
-   
+
 }

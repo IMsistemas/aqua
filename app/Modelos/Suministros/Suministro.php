@@ -20,9 +20,9 @@ class Suministro extends Model
     	return $this->belongsTo('App\Modelos\Sectores\Calle','idcalle');
     }
 
-    public function producto()
+    public function cont_catalogitem()
     {
-    	return $this->belongsTo('App\Modelos\Suministros\Producto','idproducto');
+    	return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem','idcatalogitem');
     }
 
     public function tarifaaguapotable()
