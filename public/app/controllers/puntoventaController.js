@@ -82,8 +82,8 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                         $('#modalEmpleadoVacio').modal('show');
                     }else{
                         $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
-                            $scope.establecimiento=response[0].razonsocial;
-                            $('#modalActionPuntoventa').modal('show');
+                            $scope.establecimiento=response[0].razonsocial;*/
+                            $('#modalActionPuntoventa').modal('show');/*
                         });
                     }
 
