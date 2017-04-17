@@ -44,7 +44,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use DateTime;
 use DB;
-
+use Illuminate\Support\Facades\Session;
 
 
 class DocumentoVenta extends Controller
@@ -58,7 +58,14 @@ class DocumentoVenta extends Controller
      */
     public function index()
     {
-        return view('Facturacionventa/venta');
+
+        if (Session::has('suministro_to_facturar')) {
+            return view('Facturacionventa/venta', ['viewFactura' => 'true']);
+        } else {
+            return view('Facturacionventa/venta', ['viewFactura' => 'false']);
+        }
+
+
         //return view('Facturacionventa/index');
         //return view('Facturacionventa/aux_index');
     }
@@ -196,6 +203,39 @@ class DocumentoVenta extends Controller
         ])->get();
     */
                 
+    }
+
+    public function getProductoPorSuministro($id)
+    {
+
+        return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                        //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
+                        ->selectRaw("*")
+                        ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                        ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                        ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                        ->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+                        ->get();
+        //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
+        //->get() ;
+
+        //return  catalogoproducto::join('productoenbodega', 'productoenbodega.codigoproducto', '=', 'catalogoproducto.codigoproducto')
+        //->where("productoenbodega.idbodega", $id)->get();
+        /*return productoenbodega::with(
+           [
+               'bodega', 'catalogoproducto',
+               'bodega' => function ($query) use ($id){
+                           $query->where('idbodega',$id);
+                       }
+           ])->get();
+       */
+
     }
     /**
      * Obtener todos los servicios
@@ -632,5 +672,10 @@ class DocumentoVenta extends Controller
         return $pdf->stream('documentoventa');
     }        
 
+
+    public function getSuministroByFactura()
+    {
+        return Session::get('suministro_to_facturar');
+    }
 
 }

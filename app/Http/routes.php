@@ -211,7 +211,7 @@ Route::get('suministros/getCallesByBarrio/{id}', 'Suministros\SuministroControll
 Route::get('suministros/getSuministrosByBarrio/{filter}', 'Suministros\SuministroController@getSuministrosByBarrio');
 
 Route::get('suministros/getSuministrosByCalle/{id}', 'Suministros\SuministroController@getSuministrosByCalle');
-
+Route::get('suministros/getSuministroForFactura/{id}', 'Suministros\SuministroController@getSuministroForFactura');
 
 Route::resource('/suministros', 'Suministros\SuministroController');
 
@@ -752,8 +752,8 @@ Route::resource('/transportista', 'Transportista\TransportistaController');
 	return view('Facturacionventa/index');
 });*/
 
-
-
+Route::get('DocumentoVenta/getSuministroByFactura', 'Facturacionventa\DocumentoVenta@getSuministroByFactura');
+Route::get('DocumentoVenta/getProductoPorSuministro/{id}', 'Facturacionventa\DocumentoVenta@getProductoPorSuministro');
 Route::get('DocumentoVenta/getInfoClienteXCIRuc/{getInfoCliente}', 'Facturacionventa\DocumentoVenta@getInfoClienteXCIRuc');
 Route::get('DocumentoVenta/getBodega/{texto}', 'Facturacionventa\DocumentoVenta@getinfoBodegas');
 Route::get('DocumentoVenta/getProducto/{texto}', 'Facturacionventa\DocumentoVenta@getinfoProducto');

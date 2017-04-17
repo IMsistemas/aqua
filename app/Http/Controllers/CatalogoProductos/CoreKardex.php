@@ -50,7 +50,7 @@ class CoreKardex extends Controller
 			'idbodega' => $item->idbodega 
 			 );
 		$aux_nuevoitembodega=Cont_ProductoBodega::create($aux_itembodega);
-		$aux_kardex->RegistroKardex($$aux_nuevoitembodega->idproducto_bodega,$item);
+		$aux_kardex->RegistroKardex($aux_nuevoitembodega->idproducto_bodega,$item);
 	}
 	/**
 	 *

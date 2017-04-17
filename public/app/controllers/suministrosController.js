@@ -267,6 +267,23 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         }
     };
 
+    $scope.loadViewFactura = function (idsuministro) {
+
+        /*$( "#bodyfactura" ).load( "DocumentoVenta", function( response, status, xhr ) {
+            if ( status == "error" ) {
+                var msg = "Sorry but there was an error: ";
+                $( "#error" ).html( msg + xhr.status + " " + xhr.statusText );
+            }
+        });*/
+
+
+        $http.get(API_URL + 'suministros/getSuministroForFactura/' + idsuministro).success(function(response){
+            $scope.currentProjectUrl = API_URL + 'DocumentoVenta';
+
+            $('#modalFactura').modal('show');
+        });
+
+    };
 
     $scope.initLoad();
     $scope.Filtro();

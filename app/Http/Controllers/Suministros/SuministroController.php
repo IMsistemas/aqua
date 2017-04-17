@@ -12,6 +12,7 @@ use App\Modelos\Servicios\ServicioAguaPotable;
 use App\Modelos\Suministros\Producto;
 
 use App\Modelos\Suministros\Suministro;
+use Illuminate\Support\Facades\Session;
 
 
 class SuministroController extends Controller
@@ -71,6 +72,19 @@ class SuministroController extends Controller
     public function suministroById($id)
     {
         return Suministro::with('cliente.persona', 'calle.barrio')->where('idsuministro', $id)->orderBy('idsuministro')->get();
+    }
+
+
+    public function getSuministroForFactura($id)
+    {
+        $suministro = Suministro::with('cliente.persona', 'calle.barrio', 'cont_catalogitem')
+                                    ->where('idsuministro', $id)->orderBy('idsuministro')->get();
+
+        $_SESSION['suministro_to_facturar'] = $suministro;
+
+        Session::put('suministro_to_facturar', $suministro);
+
+        return response()->json(['success' => true]);
     }
 
 

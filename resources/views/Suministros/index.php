@@ -80,6 +80,9 @@
                         <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro);">
                             <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
                         </button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="loadViewFactura(suministro.idsuministro);">
+                            <i class="fa fa-lg fa-usd" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -290,6 +293,21 @@
         </div>
     </div>
 
+
+    <!--=================================Modal FACTURA====================================-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura">
+        <div class="modal-dialog modal-lg" role="document"  style="height: 90%; width: 90%;">
+            <div class="modal-content" style="height: 90%;">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Factura</h4>
+                </div>
+                <div class="modal-body" id="bodyfactura">
+                    <iframe frameborder="0" height="450px" width="100%" ng-src="{{currentProjectUrl}}"> <!--content--> </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

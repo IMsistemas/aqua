@@ -332,7 +332,7 @@ app.controller('facturacioventa', function($scope, $http, API_URL) {
             productosenventa : $scope.productosenventa,
             serviciosenventa : $scope.serviciosenventa
         };
-    
+
         if($scope.CodigoDocumentoVenta==""){ //si el documento venta es nuevo  isNaN($scope.CodigoDocumentoVenta
             $http.post(API_URL+'DocumentoVenta',$scope.Venta)
                 .success(function (response) {
