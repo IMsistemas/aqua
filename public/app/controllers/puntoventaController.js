@@ -75,7 +75,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $scope.form_title = "Nuevo Punto Venta";
                 $scope.codigo = '';
 
-                $http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
+                /*$http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
                     console.log(response);
                     if (response.length==0) {
                         $scope.message="Para crear un Punto de Venta primero debe crear Bodeguero";
@@ -87,7 +87,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                         });
                     }
 
-                });
+                });*/
                 break;
             case 'edit':
                 $scope.form_title = "Editar Punto Venta";
