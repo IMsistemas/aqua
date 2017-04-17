@@ -1302,7 +1302,10 @@
             //$scope.getLastIDSolSuministro();
             //$scope.getLastIDSuministro();
 
-            $scope.getLastIDSolSuministro();
+            //$scope.getLastIDSolSuministro();
+
+            $scope.num_solicitud_suministro = solicitud.tipo_id;
+
             $scope.getLastIDSuministro();
             $scope.getTarifas();
             $scope.getBarrios();
@@ -1466,7 +1469,7 @@
 
         $scope.saveSolicitudSuministro = function () {
 
-            /*var data = {
+            var data = {
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
             };
@@ -1479,11 +1482,11 @@
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
-            });*/
+            });
 
-            $('#btn-save-solsuministro').prop('disabled', true);
+            //$('#btn-save-solsuministro').prop('disabled', true);
 
-            var data = {
+            /*var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
@@ -1508,7 +1511,7 @@
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
-            });
+            });*/
         };
 
         $scope.procesarSolicitudSuministro = function () {
@@ -1585,7 +1588,7 @@
 
             console.log(data);
 
-            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
+            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
