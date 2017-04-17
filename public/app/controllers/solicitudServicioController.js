@@ -34,6 +34,12 @@
 
         $scope.tasainteres = 0;
 
+        $scope.marcaproducto = '';
+        $scope.precioproducto = '';
+        $scope.idproducto = '';
+
+        $scope.solicitudSuministro = '';
+
         $scope.pageChanged = function(newPage) {
             $scope.initLoad(newPage);
         };
@@ -1109,15 +1115,37 @@
         };
 
         $scope.deshabilitarMedidor = function () {
-            if ($scope.t_suministro_medidor == true) {
+            /*if ($scope.t_suministro_medidor == true) {
                 $scope.t_suministro_marca = '';
                 $scope.t_suministro_costomedidor = '';
 
                 $('#t_suministro_marca').prop('disabled', true);
                 $('#t_suministro_costomedidor').prop('disabled', true);
             } else {
-                $('#t_suministro_marca').prop('disabled', false);
-                $('#t_suministro_costomedidor').prop('disabled', false);
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
+
+                $scope.t_suministro_marca = $scope.marcaproducto;
+                $scope.t_suministro_costomedidor = $scope.precioproducto;
+            }
+
+            $scope.calculateTotalSuministro();*/
+
+            if ($scope.t_suministro_medidor == true) {
+
+                $scope.iditem = 0;
+                $scope.t_suministro_marca = '';
+                $scope.t_suministro_costomedidor = '';
+
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
+
+                $scope.getListItem();
+
+            } else {
+
+                $('#t_suministro_marca').prop('disabled', true);
+                $('#t_suministro_costomedidor').prop('disabled', true);
 
                 $scope.t_suministro_marca = $scope.marcaproducto;
                 $scope.t_suministro_costomedidor = $scope.precioproducto;
@@ -1280,7 +1308,13 @@
             $scope.getBarrios();
             $scope.getDividendo();
 
+            console.log(solicitud);
+
+            $scope.solicitudSuministro = solicitud;
+
             $scope.codigoclienteSuministro = solicitud.idcliente;
+
+            $scope.nom_cliente_suministro = solicitud.razonsocial;
 
             $http.get(API_URL + 'solicitud/getSolicitudSuministro/' + solicitud.tipo_id).success(function(response){
 
@@ -1290,8 +1324,6 @@
                 $scope.t_suministro_direccion = response[0].direccioninstalacion;
 
                 if(solicitud.estadoprocesada == true) {
-
-
 
                     $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
                     $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
@@ -1319,11 +1351,49 @@
                         $scope.t_suministro_costomedidor = '';
                     }
 
+                    $('#s_suministro_tarifa').prop('disabled', true);
+                    $('#s_suministro_zona').prop('disabled', true);
+                    $('#s_suministro_transversal').prop('disabled', true);
+                    $('#t_suministro_direccion').prop('disabled', true);
+                    $('#t_suministro_telf').prop('disabled', true);
+                    $('#t_suministro_aguapotable').prop('disabled', true);
+                    $('#t_suministro_alcantarillado').prop('disabled', true);
+                    $('#t_suministro_garantia').prop('disabled', true);
+                    $('#t_suministro_medidor').prop('disabled', true);
+                    $('#t_suministro_marca').prop('disabled', true);
+                    $('#t_suministro_costomedidor').prop('disabled', true);
+                    $('#t_suministro_cuota').prop('disabled', true);
+                    $('#s_suministro_credito').prop('disabled', true);
+
+
                     $('#btn-save-solsuministro').prop('disabled', true);
                     $('#btn-process-solsuministro').prop('disabled', true);
                     $('#modal-footer-suministro').hide();
 
                 } else {
+
+                    $scope.t_suministro_aguapotable = '';
+                    $scope.t_suministro_alcantarillado = '';
+                    $scope.t_suministro_garantia = '';
+                    $scope.t_suministro_medidor = false;
+                    $scope.t_suministro_marca = '';
+                    $scope.t_suministro_costomedidor = '';
+                    $scope.t_suministro_cuota = '';
+
+                    $('#s_suministro_tarifa').prop('disabled', false);
+                    $('#s_suministro_zona').prop('disabled', false);
+                    $('#s_suministro_transversal').prop('disabled', false);
+                    $('#t_suministro_direccion').prop('disabled', false);
+                    $('#t_suministro_telf').prop('disabled', false);
+                    $('#t_suministro_aguapotable').prop('disabled', false);
+                    $('#t_suministro_alcantarillado').prop('disabled', false);
+                    $('#t_suministro_garantia').prop('disabled', false);
+                    $('#t_suministro_medidor').prop('disabled', false);
+                    $('#t_suministro_marca').prop('disabled', true);
+                    $('#t_suministro_costomedidor').prop('disabled', true);
+                    $('#t_suministro_cuota').prop('disabled', false);
+                    $('#s_suministro_credito').prop('disabled', false);
+
 
                     $('#btn-save-solsuministro').prop('disabled', false);
                     $('#btn-process-solsuministro').prop('disabled', false);
@@ -1396,7 +1466,7 @@
 
         $scope.saveSolicitudSuministro = function () {
 
-            var data = {
+            /*var data = {
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
             };
@@ -1409,20 +1479,63 @@
                     $('#modalMessage').modal('show');
                     $scope.hideModalMessage();
                 }
+            });*/
+
+            $('#btn-save-solsuministro').prop('disabled', true);
+
+            var data = {
+                idtarifa: $scope.s_suministro_tarifa,
+                idcalle: $scope.s_suministro_transversal,
+                garantia: $scope.t_suministro_garantia,
+                codigocliente: $scope.codigoclienteSuministro,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+                idproducto: $scope.idproducto,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial
+            };
+
+            console.log(data);
+
+            $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.idsolicitud_to_process = response.idsolicitud;
+
+                    $('#btn-process-solsuministro').prop('disabled', false);
+                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
             });
         };
 
         $scope.procesarSolicitudSuministro = function () {
 
+            $('#btn-process-solsuministro').prop('disabled', true);
+
             if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
-                var tiene = 'NO'
-            } else {
                 var tiene = 'SI'
+            } else {
+                var tiene = 'NO'
             }
 
             var tarifa = $('#s_suministro_tarifa option:selected').text();
             var zona = $('#s_suministro_zona option:selected').text();
             var transversal = $('#s_suministro_transversal option:selected').text();
+
+            if ($scope.t_suministro_marca == undefined){
+                $scope.t_suministro_marca = '';
+            }
+
+            if ($scope.t_suministro_costomedidor == undefined){
+                $scope.t_suministro_costomedidor = '0.00';
+            }
+
+            if ($scope.iditem == undefined) {
+                $scope.iditem = null;
+            }
 
             var data_to_pdf = {
                 tarifa: tarifa,
@@ -1430,7 +1543,7 @@
                 transversal: transversal,
                 no_suministro: $scope.t_suministro_nro,
                 nomcliente: $scope.nom_cliente_suministro,
-                ci: '',
+                ci: $scope.solicitudSuministro.numdocidentific,
                 telefono: $scope.t_suministro_telf,
                 direccion: $scope.t_suministro_direccion,
                 agua_potable: $scope.t_suministro_aguapotable,
@@ -1450,28 +1563,36 @@
             var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
+
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
                 garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.codigoclienteSuministro,
-                direccionsuministro: $scope.t_suministro_direccion,
-                telefonosuministro: $scope.t_suministro_telf,
-                idproducto: $scope.idproducto,
+                cuota_inicial: $scope.t_suministro_cuota,
                 valor: $scope.total_suministro,
                 dividendos: $scope.s_suministro_credito,
                 valor_partial: $scope.total_partial,
+
+                codigocliente: $scope.solicitudSuministro.idcliente,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+                idproducto: $scope.iditem,
+
                 idsolicitud: $scope.num_solicitud_suministro,
 
                 data_to_pdf: JSON.stringify(data_to_pdf)
             };
 
-            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
+
+            console.log(data);
+
+            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
-                $scope.initLoad();
-                $scope.codigoclienteSuministro = 0;
-                //$('#btn-process-solsuministro').prop('disabled', true);
+                $scope.idsolicitud_to_process = 0;
+                $scope.solicitudSuministro = '';
 
                 $('#modalActionSuministro').modal('hide');
-                //$('#modalAction').modal('hide');
+                $('#modalAction').modal('hide');
 
                 $scope.message = 'Se procesó correctamente la solicitud...';
                 $('#modalMessage').modal('show');
@@ -1486,6 +1607,42 @@
         $scope.viewPDF = function (url) {
             console.log(url);
             window.open(url);
+        };
+
+        $scope.getListItem = function () {
+
+            $scope.select_item = null;
+
+            $http.get(API_URL + 'cliente/getItems').success(function(response){
+
+                $scope.items = response;
+
+                $('#modalRegistroItem').modal('show');
+
+            });
+        };
+
+        $scope.selectItems = function (item) {
+            $scope.select_item = item;
+        };
+
+        $scope.assignItems = function () {
+
+            if ($scope.select_item == null) {
+
+                $scope.message_info = 'Seleccione un producto a asignar...';
+                $('#modalMessageInfo').modal('show');
+
+            } else {
+
+                $scope.iditem = $scope.select_item.idcatalogitem;
+                $scope.t_suministro_marca = $scope.select_item.codigoproducto;
+                $scope.t_suministro_costomedidor = $scope.select_item.precioventa;
+
+                $('#modalRegistroItem').modal('hide');
+
+            }
+
         };
 
         /*
