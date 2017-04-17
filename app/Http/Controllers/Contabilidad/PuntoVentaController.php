@@ -45,7 +45,7 @@ class PuntoVentaController  extends Controller
     public function empleadoVacio($codigoemision)
     {
         return Empleado::join('cargo','cargo.idcargo','empleado.idcargo')
-        ->where('cargo.namecargo','=','Bodeguero')
+        ->whereRaw("persona.namepersona ilike '%Bodeguero%'")
         ->get();
     }
 
