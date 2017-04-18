@@ -233,7 +233,7 @@
     <script src="<?= asset('app/controllers/nomencladorController.js') ?>"></script>
     <script src="<?= asset('app/controllers/guiaremisionController.js') ?>"></script>
     <script src="<?= asset('app/controllers/puntoventaController.js') ?>"></script>
-
+    <script src="<?= asset('app/controllers/InvetarioItemKardex.js') ?>"></script>
     
 
 
