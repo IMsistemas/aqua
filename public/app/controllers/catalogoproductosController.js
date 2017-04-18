@@ -311,7 +311,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         }  
 
-        if ($scope.producto.idtipoimpuestoice!=null){
+        if ($scope.producto.idtipoimpuestoice==null){
            $scope.producto.idtipoimpuestoice=undefined; 
 
         }   	       	
