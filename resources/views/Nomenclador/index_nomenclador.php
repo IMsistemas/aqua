@@ -921,12 +921,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Tipo Documento: </span>
                                         <input type="text" class="form-control" name="nametipodocumento" id="nametipodocumento" ng-model="nametipodocumento" placeholder=""
-                                               ng-required="true" ng-maxlength="50">
+                                               ng-required="true" ng-maxlength="25">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsritipodoc.nametipodocumento.$invalid && formsritipodoc.nametipodocumento.$touched">El nombre del Tipo Documento es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsritipodoc.nametipodocumento.$invalid && formsritipodoc.nametipodocumento.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                          ng-show="formsritipodoc.nametipodocumento.$invalid && formsritipodoc.nametipodocumento.$error.maxlength">La longitud máxima es de 25 caracteres</span>
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
@@ -1108,12 +1108,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto Iva: </span>
                                         <input type="text" class="form-control" name="nameimpuestoiva" id="nameimpuestoiva" ng-model="nameimpuestoiva" placeholder=""
-                                               ng-required="true" ng-maxlength="50">
+                                               ng-required="true" ng-maxlength="10">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsriImpuestoIva.nameimpuestoiva.$invalid && formsriImpuestoIva.nameimpuestoiva.$touched">El nombre del Tipo Impuesto Iva es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsriImpuestoIva.nameimpuestoiva.$invalid && formsriImpuestoIva.nameimpuestoiva.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                          ng-show="formsriImpuestoIva.nameimpuestoiva.$invalid && formsriImpuestoIva.nameimpuestoiva.$error.maxlength">La longitud máxima es de 10 caracteres</span>
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
@@ -1276,12 +1276,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto de Retención: </span>
                                         <input type="text" class="form-control" name="nametipoimpuestoret" id="nametipoimpuestoret" ng-model="nametipoimpuestoret" placeholder=""
-                                               ng-required="true" ng-maxlength="50">
+                                               ng-required="true" ng-maxlength="25">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsritipoimpuestoRetRenta.nametipoimpuestoret.$invalid && formsritipoimpuestoRetRenta.nametipoimpuestoret.$touched">El nombre del Tipo Impuesto es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsritipoimpuestoRetRenta.nametipoimpuestoret.$invalid && formsritipoimpuestoRetRenta.nametipoimpuestoret.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                          ng-show="formsritipoimpuestoRetRenta.nametipoimpuestoret.$invalid && formsritipoimpuestoRetRenta.nametipoimpuestoret.$error.maxlength">La longitud máxima es de 25 caracteres</span>
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
@@ -1347,12 +1347,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto de Iva - Rtencion: </span>
                                         <input type="text" class="form-control" name="nametipoimpuestoivaret" id="nametipoimpuestoivaret" ng-model="nametipoimpuestoivaret" placeholder=""
-                                               ng-required="true" ng-maxlength="10">
+                                               ng-required="true" ng-maxlength="200">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$invalid && formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$touched">El nombre del Tipo Impuesto es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$invalid && formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                          ng-show="formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$invalid && formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$error.maxlength">La longitud máxima es de 200 caracteres</span>
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
