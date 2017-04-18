@@ -1193,12 +1193,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto Ice: </span>
                                         <input type="text" class="form-control" name="nameimpuestoice" id="nameimpuestoice" ng-model="nameimpuestoice" placeholder=""
-                                               ng-required="true" ng-maxlength="200">
+                                               ng-required="true" ng-maxlength="250">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsriImpuestoIce.nameimpuestoice.$invalid && formsriImpuestoIce.nameimpuestoiva.$touched">El nombre del Tipo Impuesto Ice es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsriImpuestoIce.nameimpuestoice.$invalid && formsriImpuestoIce.nameimpuestoice.$error.maxlength">La longitud máxima es de 200 caracteres</span>
+                                          ng-show="formsriImpuestoIce.nameimpuestoice.$invalid && formsriImpuestoIce.nameimpuestoice.$error.maxlength">La longitud máxima es de 250 caracteres</span>
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
@@ -1219,7 +1219,7 @@
                                     <span class="help-block error"
                                           ng-show="formsriImpuestoIce.codigosri.$invalid && formsriImpuestoIce.codigosri.$touched">El código SRI es requerido</span>
                                     <span class="help-block error"
-                                          ng-show="formsriImpuestoIce.codigosri.$invalid && formsriImpuestoIce.codigosri.$error.maxlength">La longitud máxima es de 2 caracteres</span>
+                                          ng-show="formsriImpuestoIce.codigosri.$invalid && formsriImpuestoIce.codigosri.$error.maxlength">La longitud máxima es de 5 caracteres</span>
                                 </div>
 
                                 <div class="col-xs-12 error">
