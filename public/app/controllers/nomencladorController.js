@@ -1636,7 +1636,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     break;
                 }
 
-                if (tbafect == "prov"){
+                /*if (tbafect == "prov"){
                     url += "/updateProvincia/" + $scope.idc
 
                     Upload.upload({
@@ -1661,7 +1661,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     });
 
                     break;
-                }
+                }*/
 
                 if (tbafect == "canton"){
                     url += "/updatecantonEX/" + $scope.idc
@@ -1692,7 +1692,9 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
 
                 if (tbafect == "parroquia"){
+                    //console.log($scope.idc);
                     url += "/updateparroquiaEX/" + $scope.idc
+                    console.log(data);
 
                     Upload.upload({
                         url: url,

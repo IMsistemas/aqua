@@ -71,7 +71,7 @@ class NomencladorController extends Controller
         $SRItipoidentificacion = null;
 
         if ($search != null) {
-            $SRItipoidentificacion = sri_tipoidentificacion::whereRaw("sri_tipodocumento.nameidentificacion ILIKE '%" . $search . "%'")->orderBy('nameidentificacion', 'asc');
+            $SRItipoidentificacion = sri_tipoidentificacion::whereRaw("sri_tipoidentificacion.nameidentificacion ILIKE '%" . $search . "%'")->orderBy('nameidentificacion', 'asc');
             return $SRItipoidentificacion->paginate(8);
         }
         else{
