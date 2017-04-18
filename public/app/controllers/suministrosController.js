@@ -278,7 +278,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 
 
         $http.get(API_URL + 'suministros/getSuministroForFactura/' + idsuministro).success(function(response){
-            $scope.currentProjectUrl = API_URL + 'DocumentoVenta';
+            $scope.currentProjectUrl = API_URL + 'DocumentoVenta?flag_suministro=1';
 
             $('#modalFactura').modal('show');
         });

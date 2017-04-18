@@ -59,6 +59,10 @@ class DocumentoVenta extends Controller
     public function index()
     {
 
+        if (isset($_GET['flag_suministro']) == false) {
+            Session::forget('suministro_to_facturar');
+        }
+
         if (Session::has('suministro_to_facturar')) {
             return view('Facturacionventa/venta', ['viewFactura' => 'true']);
         } else {

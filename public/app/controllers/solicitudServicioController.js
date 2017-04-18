@@ -821,12 +821,13 @@
 
                         $scope.disableInput = true;
 
-                        $('#s_suministro_setnombre').prop('disabled', true);
+                        $('#s_suministro_setnombre').prop('disabled', false);
                         $('#s_ident_new_client_setnombre').prop('disabled', true);
 
                         $('#btn-save-setnombre').prop('disabled', true);
                         $('#btn-process-setnombre').prop('disabled', true);
                         $('#modal-footer-setnombre').hide();
+
                     } else {
 
                         $scope.disableInput = false;
