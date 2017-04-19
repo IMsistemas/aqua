@@ -261,6 +261,7 @@ $scope.ValidacionCueContExt="0";
     $scope.QuitarItem=function (item) {
         var posicion= $scope.items.indexOf(item);
          $scope.items.splice(posicion,1);
+         $scope.CalculaValores();
     };
     ///---
     $scope.Subtotalconimpuestos=0;
@@ -753,8 +754,10 @@ $scope.ValidacionCueContExt="0";
                         cantidad:aux_itemsventa[x].cantidad,
                         precioU:aux_itemsventa[x].preciounitario,
                         descuento:aux_itemsventa[x].descuento,
-                        iva : 0,
-                        ice:0,
+                        iva : aux_itemsventa[x].porcentiva,
+                        ice: aux_itemsventa[x].porcentice,
+                        //iva : 0,
+                        //ice:0,
                         total:aux_itemsventa[x].preciototal,
                       //  producto: aux_itemsventa[x].cont_catalogoitem.codigoproducto
                         producto: aux_itemsventa[x].codigoproducto
