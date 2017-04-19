@@ -64,7 +64,7 @@
                             <tr>
                                 <th></th>
                                 <th>Fecha Emision</th>
-                                <th>Numero Autorizacion</th>
+                                <th>Número Factura</th>
                                 <th>SubTotal</th>
                                 <th>IVA</th>
                                 <th>Total</th>
@@ -77,7 +77,7 @@
                             <tr dir-paginate="v in Allventas | orderBy:sortKey:reverse |filter:busquedaventa| itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td>{{$index+1}}</td>
                             <td>{{v.fechaemisionventa}}</td>
-                            <td>{{v.nroautorizacionventa}}</td>
+                            <td>{{numFactura(v)}}</td>
                             <td>{{v.subtotalconimpuestoventa}}</td>
                             <td>{{v.ivacompra}}</td>
                             <td>{{v.valortotalventa}}</td>

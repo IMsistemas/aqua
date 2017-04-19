@@ -459,7 +459,8 @@ class DocumentoVenta extends Controller
             $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
         } 
 
-        $data= Cont_DocumentoVenta::whereRaw(" estadoanulado=false ".$aux_query."" );
+        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento')
+                                ->whereRaw(" estadoanulado=false ".$aux_query."" );
         return $data->paginate(10);
 
         /*

@@ -805,7 +805,32 @@ $scope.ValidacionCueContExt="0";
 
 
 
+    $scope.numFactura = function (v) {
+        var establecimiento = (v.cont_puntoventa.sri_establecimiento.ruc).split('-')[0];
+        var ptoemision = v.cont_puntoventa.codigoptoemision;
+        var secuencial = v.iddocumentoventa;
 
+        var num_factura = establecimiento + '-' + ptoemision + '-' + $scope.calculateLength2(String(secuencial), 9);
+
+        return num_factura;
+    };
+
+    $scope.calculateLength2 = function(text, length) {
+
+        var longitud = text.length;
+        var diferencia = parseInt(length) - parseInt(longitud);
+        var relleno = '';
+        if (diferencia == 1) {
+            relleno = '0';
+        } else {
+            var i = 0;
+            while (i < diferencia) {
+                relleno += '0';
+                i++;
+            }
+        }
+        return relleno + text;
+    };
 
 
 
