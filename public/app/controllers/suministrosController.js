@@ -15,7 +15,21 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
             }*/
             $scope.suministros = response;
         });
-    }
+    };
+
+    $scope.numFactura = function (suministro) {
+        if (suministro.cont_documentoventa != null) {
+            var establecimiento = (suministro.cont_documentoventa.cont_puntoventa.sri_establecimiento.ruc).split('-')[0];
+            var ptoemision = suministro.cont_documentoventa.cont_puntoventa.codigoptoemision;
+            var secuencial = suministro.cont_documentoventa.iddocumentoventa;
+
+            var num_factura = establecimiento + '-' + ptoemision + '-' + $scope.calculateLength(String(secuencial), 9);
+
+            return num_factura;
+        } else {
+            return '';
+        }
+    };
 
     $scope.Filtro = function () {
         $http.get(API_URL + 'calle/getBarrio').success(function (response) {
@@ -283,6 +297,23 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
             $('#modalFactura').modal('show');
         });
 
+    };
+
+    $scope.calculateLength = function(text, length) {
+
+        var longitud = text.length;
+        var diferencia = parseInt(length) - parseInt(longitud);
+        var relleno = '';
+        if (diferencia == 1) {
+            relleno = '0';
+        } else {
+            var i = 0;
+            while (i < diferencia) {
+                relleno += '0';
+                i++;
+            }
+        }
+        return relleno + text;
     };
 
     $scope.initLoad();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Facturacionventa;
 
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
 
@@ -311,6 +312,21 @@ class DocumentoVenta extends Controller
         $aux= DB::table('cont_formapago_documentoventa')->insert([
             ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
         ]);
+
+        if (Session::has('suministro_to_facturar')) {
+
+            $object_s = Session::get('suministro_to_facturar');
+
+            //dd(Session::get('suministro_to_facturar'));
+
+            $suministro = Suministro::find($object_s[0]->idsuministro);
+
+            $suministro->iddocumentoventa = $aux_addVenta->last()->iddocumentoventa;
+
+            $suministro->save();
+
+        }
+
 
         return 1;
 

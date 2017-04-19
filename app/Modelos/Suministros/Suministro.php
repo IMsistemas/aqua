@@ -25,6 +25,11 @@ class Suministro extends Model
     	return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem','idcatalogitem');
     }
 
+    public function cont_documentoventa()
+    {
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_DocumentoVenta','iddocumentoventa');
+    }
+
     public function tarifaaguapotable()
     {
     	return $this->belongsTo('App\Modelos\Servicios\AguaPotable','idtarifaaguapotable');

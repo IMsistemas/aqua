@@ -20,6 +20,10 @@ class Cont_PuntoDeVenta extends Model
         'idempleado',
         'codigoptoemision'
     ];
+
+    public function sri_establecimiento(){
+        return $this->belongsTo('App\Modelos\SRI\SRI_Establecimiento',"idestablecimiento");
+    }
     
     public function empleado(){
     	return $this->belongsTo('App\Modelos\Empleado');
