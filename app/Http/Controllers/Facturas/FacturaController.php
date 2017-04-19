@@ -124,6 +124,16 @@ class FacturaController extends Controller
             $activate = false;
         }
 
+
+        $countClientes = Cliente::whereRaw('idcliente NOT IN (SELECT idcliente FROM suministro)')->count();
+
+        if ($countClientes > 0) {
+            $activate = true;
+        } else {
+            $activate = false;
+        }
+
+
         return response()->json(['success' => $activate]);
 
         /*$countCobroAgua = CobroAgua::whereRaw('EXTRACT( MONTH FROM fecha ) = ' . date('m'))

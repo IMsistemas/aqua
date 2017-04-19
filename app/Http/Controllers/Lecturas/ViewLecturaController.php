@@ -33,10 +33,11 @@ class ViewLecturaController extends Controller
     	return Lectura::join('suministro', 'lectura.idsuministro', '=', 'suministro.idsuministro')
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
     						->join('cliente', 'suministro.idcliente', '=', 'cliente.idcliente')
+                            ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
                             ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
                             //->join('facturacobro', 'facturacobro.idcobroagua', '=', 'cobroagua.idcobroagua')
-                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.namecalle')
+                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'lectura.observacion', 'fechalectura',
+                                        'lecturaactual', 'consumo', 'calle.namecalle', 'suministro.*', 'cliente.*', 'persona.*')
                             ->whereRaw('EXTRACT( MONTH FROM fechalectura) = ' . date('m'))
                             ->whereRaw('EXTRACT( YEAR FROM fechalectura) = ' . date('Y'))
                             ->get();
@@ -53,7 +54,6 @@ class ViewLecturaController extends Controller
         
         $filter = json_decode($filter);
 
-
         $array_filters = [];
 
         if($filter->barrio != null && $filter->barrio != ''){
@@ -64,15 +64,13 @@ class ViewLecturaController extends Controller
             $array_filters[] = ['calle.idcalle', '=', $filter->calle];       
         }
 
-        $lecturas = Lectura::join('suministro', 'lectura.numerosuministro', '=', 'suministro.numerosuministro')
+        $lecturas = Lectura::join('suministro', 'lectura.idsuministro', '=', 'suministro.idsuministro')
                             ->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
-                            ->join('cliente', 'suministro.codigocliente', '=', 'cliente.codigocliente')
-                            ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
+                            ->join('cliente', 'suministro.idcliente', '=', 'cliente.idcliente')
+                            ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
                             ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
-                            ->join('facturacobro', 'facturacobro.idcobroagua', '=', 'cobroagua.idcobroagua')
-                            ->select('lectura.idlectura', 'lectura.numerosuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.nombrecalle', 'cliente.nombres',
-                                        'cliente.apellidos', 'facturacobro.estapagado');
+                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'lectura.observacion', 'fechalectura',
+                                'lecturaactual', 'consumo', 'calle.namecalle', 'suministro.*', 'cliente.*', 'persona.*');
 
         if(count($array_filters) == 1){
             $array_filters[0][2] = "'" . $array_filters[0][2] . "'";
@@ -90,7 +88,7 @@ class ViewLecturaController extends Controller
         }
 
         if($filter->text != null && $filter->text != ''){
-            $lecturas->whereRaw("cliente.nombre LIKE '%" . $filter->text . "%' OR cliente.apellido LIKE '%" . $filter->text . "%' ");       
+            $lecturas->whereRaw("persona.namepersona ILIKE '%" . $filter->text . "%' OR persona.lastnamepersona ILIKE '%" . $filter->text . "%' ");
         }
 
         return $lecturas->get();

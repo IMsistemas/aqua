@@ -64,7 +64,7 @@
                             <tr>
                                 <th></th>
                                 <th>Fecha Emision</th>
-                                <th>Numero Autorizacion</th>
+                                <th>Número Factura</th>
                                 <th>SubTotal</th>
                                 <th>IVA</th>
                                 <th>Total</th>
@@ -77,7 +77,7 @@
                             <tr dir-paginate="v in Allventas | orderBy:sortKey:reverse |filter:busquedaventa| itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td>{{$index+1}}</td>
                             <td>{{v.fechaemisionventa}}</td>
-                            <td>{{v.nroautorizacionventa}}</td>
+                            <td>{{numFactura(v)}}</td>
                             <td>{{v.subtotalconimpuestoventa}}</td>
                             <td>{{v.ivacompra}}</td>
                             <td>{{v.valortotalventa}}</td>
@@ -272,12 +272,12 @@
                         <tr>
                             <td>Código Item</td>
                             <td>Detalle</td>
-                            <td>Cantidad</td>
-                            <td>Precio Unitario</td>
-                            <td>Descuento</td>
-                            <td>IVA</td>
-                            <td>ICE</td>
-                            <td>Total</td>
+                            <td style="width: 150px;" >Cantidad</td>
+                            <td style="width: 150px;" >Precio Unitario</td>
+                            <td style="width: 150px;" >Descuento</td>
+                            <td style="width: 70px;">IVA</td>
+                            <td style="width: 70px;">ICE</td>
+                            <td style="width: 150px;" >Total</td>
                             <td></td>
                         </tr>
                         </thead>
@@ -306,14 +306,16 @@
                                 <span class="help-block error" ng-show="formventa.codigoproducto{{$index}}.$invalid && formventa.codigoproducto{{$index}}.$touched">El producto es requerido.</span>
                             </td>
                             <td>
-                                <label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label>
-                                <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>
+                                <input type="text" class="form-control" ng-show="!read"  disabled ng-value="item.productoObj.originalObject.nombreproducto" />
+                                <input type="text" class="form-control" ng-show="read"  disabled ng-value="item.producto.nombreproducto" />
+                                <!--<label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label>
+                                <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                             </td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
-                            <td><input type="text" class="form-control" ng-model="item.iva"  /></td>
-                            <td><input type="text" class="form-control" ng-model="item.ice"  /></td>
+                            <td><input type="text" class="form-control" disabled ng-model="item.iva"  /></td>
+                            <td><input type="text" class="form-control" disabled ng-model="item.ice"  /></td>
                             <td><input type="text" class="form-control" ng-model="item.total" disabled  ng-value="item.cantidad*item.precioU"/></td>
                             <td>
                                 <button type="button" class="btn btn-danger" ng-click="QuitarItem(item)">
@@ -346,7 +348,7 @@
 
 
                     <div class="col-xs-12 text-right" style="margin-top: 20px;">
-                        <button type="button" class="btn btn-primary" ng-click="VerFactura=2; pageChanged();">
+                        <button type="button" class="btn btn-primary" ng-click="VerFactura=2; pageChanged(); LimiarDataVenta();">
                             Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         </button>
                         <button type="button" ng-click="AnularVenta();" ng-disabled="IdDocumentoVentaedit=='0' " class="btn btn-default">

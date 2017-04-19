@@ -23,7 +23,8 @@ class SuministroController extends Controller
 
     public function getsuministros()
     {
-       return Suministro::with('cliente.persona', 'calle.barrio')->orderBy('idsuministro', 'asc')->get();
+       return Suministro::with('cliente.persona', 'calle.barrio', 'cont_documentoventa.cont_puntoventa.sri_establecimiento')
+                                    ->orderBy('idsuministro', 'asc')->get();
     }
 
     public function getSuministrosByBarrio($filter)

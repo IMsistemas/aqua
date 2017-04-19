@@ -62,6 +62,9 @@
                         <a href="#" style="text-decoration:none; color:white;" >Teléfono</a>
                     </th>
                     <th>
+                        <a href="#" style="text-decoration:none; color:white;" >Factura</a>
+                    </th>
+                    <th>
                         <a href="#" style="text-decoration:none; color:white;" >Acciones</a>
                     </th>
                 </tr>
@@ -73,6 +76,7 @@
                     <td>{{suministro.calle.barrio.namebarrio}}</td>
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
+                    <td>{{numFactura(suministro)}}</td>
                     <td >
                         <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.idsuministro);">
                             <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
@@ -80,7 +84,7 @@
                         <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro);">
                             <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm" ng-click="loadViewFactura(suministro.idsuministro);">
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="loadViewFactura(suministro.idsuministro);" ng-disabled="suministro.cont_documentoventa">
                             <i class="fa fa-lg fa-usd" aria-hidden="true"></i>
                         </button>
                     </td>

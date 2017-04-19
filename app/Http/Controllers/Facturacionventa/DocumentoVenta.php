@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Facturacionventa;
 
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
 
@@ -312,6 +313,21 @@ class DocumentoVenta extends Controller
             ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
         ]);
 
+        if (Session::has('suministro_to_facturar')) {
+
+            $object_s = Session::get('suministro_to_facturar');
+
+            //dd(Session::get('suministro_to_facturar'));
+
+            $suministro = Suministro::find($object_s[0]->idsuministro);
+
+            $suministro->iddocumentoventa = $aux_addVenta->last()->iddocumentoventa;
+
+            $suministro->save();
+
+        }
+
+
         return 1;
 
         //$datos["documentoventa"]
@@ -443,7 +459,8 @@ class DocumentoVenta extends Controller
             $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
         } 
 
-        $data= Cont_DocumentoVenta::whereRaw(" estadoanulado=false ".$aux_query."" );
+        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento')
+                                ->whereRaw(" estadoanulado=false ".$aux_query."" );
         return $data->paginate(10);
 
         /*
@@ -526,10 +543,20 @@ class DocumentoVenta extends Controller
         $dataitemventa=Cont_ItemVenta::join("cont_catalogitem","cont_catalogitem.idcatalogitem","=","cont_itemventa.idcatalogitem")
                                 ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
                                 ->selectRaw("*")
-                                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
                                 ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                                ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
                                 ->whereRaw(" iddocumentoventa=$id ")
                                 ->get();
+
+
+
 
         $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=".$datadocventa[0]->idtransaccion."")->get();
         $full_data_venta= array(

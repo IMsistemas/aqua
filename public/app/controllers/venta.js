@@ -261,6 +261,7 @@ $scope.ValidacionCueContExt="0";
     $scope.QuitarItem=function (item) {
         var posicion= $scope.items.indexOf(item);
          $scope.items.splice(posicion,1);
+         $scope.CalculaValores();
     };
     ///---
     $scope.Subtotalconimpuestos=0;
@@ -753,8 +754,10 @@ $scope.ValidacionCueContExt="0";
                         cantidad:aux_itemsventa[x].cantidad,
                         precioU:aux_itemsventa[x].preciounitario,
                         descuento:aux_itemsventa[x].descuento,
-                        iva : 0,
-                        ice:0,
+                        iva : aux_itemsventa[x].porcentiva,
+                        ice: aux_itemsventa[x].porcentice,
+                        //iva : 0,
+                        //ice:0,
                         total:aux_itemsventa[x].preciototal,
                       //  producto: aux_itemsventa[x].cont_catalogoitem.codigoproducto
                         producto: aux_itemsventa[x].codigoproducto
@@ -802,7 +805,32 @@ $scope.ValidacionCueContExt="0";
 
 
 
+    $scope.numFactura = function (v) {
+        var establecimiento = (v.cont_puntoventa.sri_establecimiento.ruc).split('-')[0];
+        var ptoemision = v.cont_puntoventa.codigoptoemision;
+        var secuencial = v.iddocumentoventa;
 
+        var num_factura = establecimiento + '-' + ptoemision + '-' + $scope.calculateLength2(String(secuencial), 9);
+
+        return num_factura;
+    };
+
+    $scope.calculateLength2 = function(text, length) {
+
+        var longitud = text.length;
+        var diferencia = parseInt(length) - parseInt(longitud);
+        var relleno = '';
+        if (diferencia == 1) {
+            relleno = '0';
+        } else {
+            var i = 0;
+            while (i < diferencia) {
+                relleno += '0';
+                i++;
+            }
+        }
+        return relleno + text;
+    };
 
 
 

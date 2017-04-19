@@ -203,13 +203,17 @@ class LecturaController extends Controller
             $object = CatalogoItemTarifaAguapotable::where('idtarifaaguapotable', $idtarifa)
                                                     ->where('idcatalogitem', $servicio->idcatalogitem)
                                                     ->get();
-            if ($object[0]->esporcentaje == true) {
-                $value = ($valueTarifa + $valueExcedente) * $object[0]->valor;
-            } else {
-                $value = $object[0]->valor;
+
+            if (isset($object[0])) {
+                if ($object[0]->esporcentaje == true) {
+                    $value = ($valueTarifa + $valueExcedente) * $object[0]->valor;
+                } else {
+                    $value = $object[0]->valor;
+                }
+                settype($value, 'float');
+                $array_servicios[] = ['nombreservicio' => $servicio->nombreproducto, 'valor' => $value, 'id' => $object[0]->idcatalogitem];
             }
-            settype($value, 'float');
-            $array_servicios[] = ['nombreservicio' => $servicio->nombreproducto, 'valor' => $value, 'id' => $object[0]->idcatalogitem];
+
         }
 
         return $array_servicios;
