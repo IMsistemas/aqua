@@ -98,9 +98,9 @@
                         <tbody>
                             <tr dir-paginate="lectura in lecturas | orderBy:sortKey:reverse |itemsPerPage:4 | filter : t_search" ng-cloak>
                                 <td class="text-right">{{lectura.idlectura}}</td>
-                                <td><i class="fa fa-user" ></i> {{lectura.complete_name}}</td>
-                                <td class="text-center">{{lectura.numerosuministro}}</td>
-                                <td>{{lectura.nombrecalle}}</td>
+                                <td><i class="fa fa-user" ></i> {{lectura.razonsocial}}</td>
+                                <td class="text-center">{{lectura.idsuministro}}</td>
+                                <td>{{lectura.namecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
                                 <td  class="text-right">
                                    <span ng-if="verifyDate(lectura.fechalectura, lectura.estapagado) == true">

@@ -33,10 +33,11 @@ class ViewLecturaController extends Controller
     	return Lectura::join('suministro', 'lectura.idsuministro', '=', 'suministro.idsuministro')
     						->join('calle', 'suministro.idcalle', '=', 'calle.idcalle')
     						->join('cliente', 'suministro.idcliente', '=', 'cliente.idcliente')
+                            ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
                             ->join('cobroagua', 'lectura.idlectura', '=', 'cobroagua.idlectura')
                             //->join('facturacobro', 'facturacobro.idcobroagua', '=', 'cobroagua.idcobroagua')
-                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'observacion', 'fechalectura',
-                                        'lecturaactual', 'consumo', 'calle.namecalle')
+                            ->select('lectura.idlectura', 'lectura.idsuministro', 'lecturaanterior', 'lectura.observacion', 'fechalectura',
+                                        'lecturaactual', 'consumo', 'calle.namecalle', 'suministro.*', 'cliente.*', 'persona.*')
                             ->whereRaw('EXTRACT( MONTH FROM fechalectura) = ' . date('m'))
                             ->whereRaw('EXTRACT( YEAR FROM fechalectura) = ' . date('Y'))
                             ->get();
