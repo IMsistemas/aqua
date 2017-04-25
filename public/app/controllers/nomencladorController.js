@@ -1196,26 +1196,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     break;
                 }
 
-                /*if (tbafect == "tppagores"){
-                 $http.post(API_URL + 'Nomenclador/storeTipoPagoResidente', data ).success(function (response) {
-                 if (response.success == true) {
-
-                 $scope.CargadataPagoResidente();
-                 $('#modalActionPagoResidente').modal('hide');
-                 $scope.message = 'Se insertó correctamente el Registro Correctamente...';
-                 $('#modalMessage').modal('show');
-                 $scope.hideModalMessage();
-                 }
-                 else {
-
-                 $('#modalActionPagoResidente').modal('hide');
-                 $scope.message_error = 'Ya existe ese  Registro...';
-                 $('#modalMessageError').modal('show');
-                 }
-                 });
-
-                 break;
-                 }*/
 
                 if (tbafect == "pagopais"){
                     $http.post(API_URL + 'Nomenclador/storepagopais', data ).success(function (response) {
@@ -1636,32 +1616,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     break;
                 }
 
-                /*if (tbafect == "prov"){
-                    url += "/updateProvincia/" + $scope.idc
 
-                    Upload.upload({
-                        url: url,
-                        method: method,
-                        data: data
-                    }).success(function(data, status, headers, config) {
-                        if (data.success == true) {
-
-                            $scope.CargadataProvincia();
-                            $('#modalActionProvincia').modal('hide');
-                            $scope.message = 'Se editó correctamente el Registro seleccionado';
-                            $('#modalMessage').modal('show');
-                            $scope.hideModalMessage();
-                        }
-                        else {
-                            $('#modalActionProvincia').modal('hide');
-                            $scope.message_error = 'Ya existe el Registro...';
-                            $('#modalMessage').modal('show');
-                            $scope.hideModalMessage();
-                        }
-                    });
-
-                    break;
-                }*/
 
                 if (tbafect == "canton"){
                     url += "/updatecantonEX/" + $scope.idc
