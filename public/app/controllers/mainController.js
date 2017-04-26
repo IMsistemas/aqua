@@ -84,6 +84,10 @@ app.controller('mainController',['$scope','$route', function($scope, $http, API_
 		$scope.prepareListBreadcrumb(list);
 	}
 
+    $scope.toModuloDepartamento = function(){
+        $scope.titulo = "Departamento";
+        $scope.toModulo = "departamento";
+    }
 
 	$scope.toModuloLectura = function(){		
 		$scope.titulo = "Lecturas";

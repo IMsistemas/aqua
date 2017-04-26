@@ -126,6 +126,7 @@
                                     Recursos Humanos <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
+                                    <li><a href = "#" ng-click="toModuloDepartamento();">Departamentos</a></li>
                                     <li><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
                                     <li><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
                                     <li><a href = "#" ng-click="">Nómina</a></li>
@@ -234,7 +235,7 @@
     <script src="<?= asset('app/controllers/guiaremisionController.js') ?>"></script>
     <script src="<?= asset('app/controllers/puntoventaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/InvetarioItemKardex.js') ?>"></script>
-    
+    <script src="<?= asset('app/controllers/departamentosController.js') ?>"></script>
 
 
     <script type="text/javascript">
