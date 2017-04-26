@@ -55,6 +55,27 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
         });
     };
 
+    $scope.listCargosForModal = function(idcargo){
+
+        var iddepartamento = $scope.departamento;
+
+        $http.get(API_URL + 'empleado/getCargos/' + iddepartamento).success(function(response){
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecargo, id: response[i].idcargo})
+            }
+            $scope.idcargos = array_temp;
+
+            if (idcargo != undefined) {
+                $scope.idcargo = idcargo;
+            } else {
+                $scope.idcargo = '';
+            }
+
+        });
+    };
+
     $scope.searchPosition = function(){
         $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
             var longitud = response.length;
@@ -101,6 +122,9 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     }
                     $scope.iddepartamentos = array_temp;
                     $scope.departamento = '';
+
+                    $scope.idcargos = [{label: '-- Seleccione --', id: ''}];
+                    $scope.idcargo = '';
                 });
 
                 $http.get(API_URL + 'empleado/getTipoIdentificacion').success(function(response){
@@ -111,16 +135,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     }
                     $scope.idtipoidentificacion = array_temp;
                     $scope.tipoidentificacion = '';
-                });
 
-                $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
-                    var longitud = response.length;
-                    var array_temp = [{label: '-- Seleccione --', id: ''}];
-                    for(var i = 0; i < longitud; i++){
-                        array_temp.push({label: response[i].namecargo, id: response[i].idcargo})
-                    }
-                    $scope.idcargos = array_temp;
-                    $scope.idcargo = '';
 
                     $scope.documentoidentidadempleado = '';
                     $('#documentoidentidadempleado').val('');
@@ -145,6 +160,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.url_foto = 'img/empleado.png';
 
                     $('#modalAction').modal('show');
+
                 });
 
                 break;
@@ -159,7 +175,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                         array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
                     }
                     $scope.iddepartamentos = array_temp;
-                    $scope.departamento = '';
+                    //$scope.departamento = '';
+
+                    $scope.departamento = item.iddepartamento;
+
+                    $scope.listCargosForModal(item.idcargo);
+
                 });
 
                 $http.get(API_URL + 'empleado/getTipoIdentificacion').success(function(response){
@@ -171,55 +192,45 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.idtipoidentificacion = array_temp;
                     $scope.tipoidentificacion = '';
 
-                    $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
-                        var longitud = response.length;
-                        var array_temp = [];
-                        for(var i = 0; i < longitud; i++){
-                            array_temp.push({label: response[i].namecargo, id: response[i].idcargo})
-                        }
+                    $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
+                    $scope.documentoidentidadempleado = item.numdocidentific;
 
-                        $scope.idcargos = array_temp;
+                    $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
 
-                        $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
-                        $scope.documentoidentidadempleado = item.numdocidentific;
 
-                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
+                    $scope.apellido = item.lastnamepersona;
+                    $scope.nombre = item.namepersona;
+                    $scope.telefonoprincipal = item.telefprincipaldomicilio;
+                    $scope.telefonosecundario = item.telefsecundariodomicilio;
+                    $scope.celular = item.celphone;
+                    $scope.direccion = item.direccion;
+                    $scope.correo = item.email;
+                    $scope.salario = item.salario;
 
-                        $scope.idcargo = item.idcargo;
-                        $scope.apellido = item.lastnamepersona;
-                        $scope.nombre = item.namepersona;
-                        $scope.telefonoprincipal = item.telefprincipaldomicilio;
-                        $scope.telefonosecundario = item.telefsecundariodomicilio;
-                        $scope.celular = item.celphone;
-                        $scope.direccion = item.direccion;
-                        $scope.correo = item.email;
-                        $scope.salario = item.salario;
+                    $scope.idpersona = item.idpersona;
+                    console.log(item);
 
-                        $scope.idpersona = item.idpersona;
-                        console.log(item);
+                    if (item.rutafoto != null && item.rutafoto != ''){
+                        $scope.url_foto = API_URL+item.rutafoto;
 
-                        if (item.rutafoto != null && item.rutafoto != ''){
-                            $scope.url_foto = API_URL+item.rutafoto;
-                            
-                        } else {
-                            $scope.url_foto = 'img/empleado.png';
-                        }
-                        console.log( $scope.url_foto);
-                        $scope.departamento = item.iddepartamento;
+                    } else {
+                        $scope.url_foto = 'img/empleado.png';
+                    }
 
-                        $scope.cuenta_employee = item.concepto;
 
-                        $scope.tipoidentificacion = item.idtipoidentificacion;
 
-                        var objectPlan = {
-                            idplancuenta: item.idplancuenta,
-                            concepto: item.concepto
-                        };
+                    $scope.cuenta_employee = item.concepto;
 
-                        $scope.select_cuenta = objectPlan;
+                    $scope.tipoidentificacion = item.idtipoidentificacion;
 
-                        $('#modalAction').modal('show');
-                    });
+                    var objectPlan = {
+                        idplancuenta: item.idplancuenta,
+                        concepto: item.concepto
+                    };
+
+                    $scope.select_cuenta = objectPlan;
+
+                    $('#modalAction').modal('show');
 
                 });
 

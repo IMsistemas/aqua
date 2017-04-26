@@ -69,6 +69,15 @@ class EmpleadoController extends Controller
         return Cargo::orderBy('namecargo', 'asc')->get();
     }
 
+    /**
+     * Obtener todos los cargos
+     *
+     * @return mixed
+     */
+    public function getCargos($id)
+    {
+        return Cargo::orderBy('namecargo', 'asc')->where('iddepartamento', $id)->get();
+    }
 
     /**
      * Obtener todos los departamentos

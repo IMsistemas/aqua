@@ -402,6 +402,7 @@ Route::get('cargo/getCargoByID/{id}', 'Nomina\CargoController@getCargoByID');
 Route::resource('/cargo', 'Nomina\CargoController');
 
 Route::get('empleado/getEmployees', 'Nomina\EmpleadoController@getEmployees');
+Route::get('empleado/getCargos/{id}', 'Nomina\EmpleadoController@getCargos');
 Route::get('empleado/getAllPositions', 'Nomina\EmpleadoController@getAllPositions');
 Route::get('empleado/getDepartamentos', 'Nomina\EmpleadoController@getDepartamentos');
 Route::get('empleado/getPlanCuenta', 'Nomina\EmpleadoController@getPlanCuenta');

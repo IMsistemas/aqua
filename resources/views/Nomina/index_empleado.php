@@ -142,7 +142,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Departamento: </span>
                                         <select class="form-control" name="departamento" id="departamento" ng-model="departamento"
-                                                ng-options="value.id as value.label for value in iddepartamentos" required></select>
+                                                ng-options="value.id as value.label for value in iddepartamentos" ng-change="listCargosForModal()" required></select>
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formEmployee.departamento.$invalid && formEmployee.departamento.$touched">El Departamento es requerido</span>
