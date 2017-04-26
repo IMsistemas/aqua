@@ -11,13 +11,19 @@
 |
 */
 
-Route::get('/inicio', function () {
+/*Route::get('/inicio', function () {
     return view('index_new');
 });
 
 Route::get('/', function () {
     return view('index_new');
-});
+});*/
+
+Route::get('/logout', 'Index\IndexController@logout');
+
+Route::resource('/', 'Index\IndexController');
+
+Route::resource('/inicio', 'Index\IndexController');
 
 /*--------------------------------------Raidel-------------------------------------------------*/
 /*===================================Solicitud=================================================*/

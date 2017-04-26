@@ -160,7 +160,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#profile"><i class="fa fa-pencil-square-o fa-lg" ></i> Perfil</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>
+                                    <li><a href="#" ng-click="toLogout();"><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -179,6 +179,29 @@
         </div>
 
 
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmLogout">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>¿Realmente desea cerrar sesión y salir del Sistema?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="logoutSystem()">
+                        Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>

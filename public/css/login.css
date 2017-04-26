@@ -15,16 +15,16 @@ img{
 	margin-bottom: 30px;
 }
 
-.has-feedback-left input.form-control {
-	padding-left: 34px; /* @input-height-base; */
-	padding-right: 12px; /* @padding-base-horizontal */
+/*.has-feedback-left input.form-control {
+	padding-left: 34px;
+	padding-right: 12px;
 }
 
 .has-feedback-left .form-control-feedback {
 	left: 0;
 }
 .form-horizontal .has-feedback-left .form-control-feedback {
-	left: 12px; /* @grid-gutter-width / 2 */
+	left: 12px;
 }
 
 .has-feedback-left input.input-sm {
@@ -57,7 +57,7 @@ input{
 	color: black !important;
 	font-weight: bold;
 	background: transparent;
-}
+}*/
 
 footer {
 	width: 100%;
@@ -66,4 +66,21 @@ footer {
 	height: 90px;
 	display: table-row;
 	margin:0 auto auto auto;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+.panel{
+	margin-top: 15%;
+	border-radius: 0px !important;
+	box-shadow: 0px 2px 31px 5px rgba(0,0,0,0.75);
+}
+
+.modal-dialog{
+	margin-top: 10%;
+	border-radius: 0px !important;
+}
+
+button{
+	border-radius: 0px !important;
 }
