@@ -27,8 +27,13 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             var search = null;
         } else var search = $scope.busqueda;
 
+        if ($scope.searchCargo == undefined) {
+            var cargo = null;
+        } else var cargo = $scope.searchCargo;
+
         var filtros = {
-            search: search
+            search: search,
+            cargo: cargo
         };
 
         $http.get(API_URL + 'empleado/getEmployees?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
@@ -36,6 +41,18 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             $scope.totalItems = response.total;
         });
 
+    };
+
+    $scope.searchListCargos = function(){
+        $http.get(API_URL + 'empleado/getAllPositions').success(function(response){
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione Cargo --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecargo, id: response[i].idcargo})
+            }
+            $scope.search_cargos = array_temp;
+            $scope.searchCargo = '';
+        });
     };
 
     $scope.searchPosition = function(){
@@ -390,6 +407,8 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
     };
 
     $scope.initLoad(1, true);
+
+    $scope.searchListCargos();
 
     $('.datepicker').datetimepicker({
         locale: 'es',

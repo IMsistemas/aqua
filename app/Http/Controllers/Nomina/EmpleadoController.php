@@ -38,6 +38,7 @@ class EmpleadoController extends Controller
     {
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
+        $cargo = $filter->cargo;
         $employee = null;
 
         $employees = Empleado::join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
@@ -47,7 +48,11 @@ class EmpleadoController extends Controller
                                 ->select('empleado.*', 'departamento.namedepartamento', 'cargo.namecargo', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $employees = $employees->whereRaw("persona.razonsocial ILIKE '%" . $search . "%'");
+            $employees = $employees->whereRaw("persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific LIKE '%" . $search . "%'");
+        }
+
+        if ($cargo != null) {
+            $employees = $employees->whereRaw('empleado.idcargo = ' . $cargo);
         }
 
         return $employees->orderBy('fechaingreso', 'desc')->paginate(10);

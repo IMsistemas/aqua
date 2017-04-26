@@ -35,14 +35,19 @@
 
     <div class="col-xs-12" style="margin-top: 5px;">
 
-        <div class="col-sm-6 col-xs-8">
+        <div class="col-sm-6 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
 
-        <div class="col-sm-6 col-xs-4">
+        <div class="col-md-3 col-xs-3">
+            <select class="form-control" name="searchCargo" id="searchCargo" ng-model="searchCargo"
+                    ng-options="value.id as value.label for value in search_cargos" ng-change="initLoad(1)"></select>
+        </div>
+
+        <div class="col-sm-3 col-xs-3">
             <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="toggle('add', 0)">Agregar  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
 
