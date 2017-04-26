@@ -77,10 +77,21 @@ app.controller('departamentosController', function($scope, $http, API_URL) {
                 break;
             case 'edit':
                 $http.put(API_URL + 'departamento/'+ $scope.idc, data ).success(function (response) {
-                    $scope.initLoad(1);
-                    $('#modalActionCargo').modal('hide');
-                    $scope.message = 'Se editó correctamente el Departamento seleccionado';
-                    $('#modalMessage').modal('show');
+
+                    if (response.success == true) {
+                        $scope.initLoad(1);
+                        $('#modalActionCargo').modal('hide');
+                        $scope.message = 'Se editó correctamente el Departamento seleccionado';
+                        $('#modalMessage').modal('show');
+                    } else {
+                        if (response.repeat == true) {
+                            $scope.message_error = 'Ya existe ese Departamento...';
+                        } else {
+                            $scope.message_error = 'Ha ocurrido un error al intentar editar el departamento seleccionado...';
+                        }
+                        $('#modalMessageError').modal('show');
+                    }
+
                     $scope.hideModalMessage();
                 }).error(function (res) {
 
@@ -89,26 +100,32 @@ app.controller('departamentosController', function($scope, $http, API_URL) {
         }
     };
 
-    $scope.showModalConfirm = function (cargo) {
-        $scope.idcargo_del = cargo.idcargo;
-        $scope.cargo_seleccionado = cargo.namecargo;
+    $scope.showModalConfirm = function (departamento) {
+        $scope.idcargo_del = departamento.iddepartamento;
+        $scope.cargo_seleccionado = departamento.namedepartamento;
         $('#modalConfirmDelete').modal('show');
     };
 
     $scope.delete = function(){
-        $http.delete(API_URL + 'cargo/' + $scope.idcargo_del).success(function(response) {
+        $http.delete(API_URL + 'departamento/' + $scope.idcargo_del).success(function(response) {
             if(response.success == true){
-                $scope.initLoad();
+                $scope.initLoad(1);
                 $('#modalConfirmDelete').modal('hide');
                 $scope.idcargo_del = 0;
-                $scope.message = 'Se eliminó correctamente el Cargo seleccionado...';
+                $scope.message = 'Se eliminó correctamente el Departamento seleccionado...';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
 
             } else {
-                $scope.message_error = 'El Cargo no puede ser eliminado porque esta asignado a un colaborador...';
+
+                if (response.exists == true) {
+                    $scope.message_error = 'El Departamento no puede ser eliminado porque esta asignado a un Cargo...';
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al intentar eliminar el departamento seleccionado...';
+                }
+
                 $('#modalMessageError').modal('show');
-                $('#modalConfirmDelete').modal('hide');
+                //$('#modalConfirmDelete').modal('hide');
             }
         });
 

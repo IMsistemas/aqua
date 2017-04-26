@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Modelos\Nomina\Cargo;
 use App\Modelos\Nomina\Departamento;
 use Illuminate\Http\Request;
 
@@ -115,7 +116,19 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $count = Departamento::where('namedepartamento', $request->input('namedepartamento'))->count();
+
+        if ($count > 0) {
+            return response()->json(['success' => false, 'repeat' => true]);
+        } else {
+            $departamento = Departamento::find($id);
+            $departamento->namedepartamento = $request->input('namedepartamento');
+            if ($departamento->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'repeat' => false]);
+            }
+        }
     }
 
     /**
@@ -126,6 +139,17 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $count = Cargo::where('iddepartamento',$id)->count();
+        if ($count > 0) {
+            return response()->json(['success' => false, 'exists' => true]);
+        } else {
+            $departamento = Departamento::find($id);
+
+            if ($departamento->delete()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'exists' => false]);
+            }
+        }
     }
 }
