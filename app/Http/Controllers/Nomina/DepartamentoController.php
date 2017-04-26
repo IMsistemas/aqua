@@ -42,6 +42,15 @@ class DepartamentoController extends Controller
     }
 
     /**
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDepartamentoByID($id)
+    {
+        return Departamento::where('iddepartamento', $id)->get();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -59,7 +68,20 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $count = Departamento::where('namedepartamento', $request->input('namedepartamento'))->count();
+
+        if ($count > 0) {
+            return response()->json(['success' => false]);
+        } else {
+            $cargo = new Departamento();
+            $cargo->namedepartamento = $request->input('namedepartamento');
+
+            if ($cargo->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        }
     }
 
     /**

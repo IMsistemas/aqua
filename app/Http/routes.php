@@ -393,6 +393,7 @@ Route::resource('/editTerreno', 'Terreno\TerrenoController');
  * -------------------------Modulo Nomina (Yamilka)---------------------------------------------------------------------
  */
 
+Route::get('departamento/getDepartamentoByID/{id}', 'Nomina\DepartamentoController@getDepartamentoByID');
 Route::get('departamento/getDepartamentos', 'Nomina\DepartamentoController@getDepartamentos');
 Route::resource('/departamento', 'Nomina\DepartamentoController');
 
