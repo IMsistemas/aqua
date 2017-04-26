@@ -30,12 +30,14 @@
                     <thead class="bg-primary">
                     <tr>
                         <th>Nombre Cargo</th>
+                        <th>Departamento</th>
                         <th style="width: 200px;">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr dir-paginate="cargo in cargos | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                         <td>{{cargo.namecargo}}</td>
+                        <td>{{cargo.departamento.namedepartamento}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-warning" ng-click="toggle('edit', cargo.idcargo)">
                                 Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -73,7 +75,18 @@
                     <div class="modal-body">
                         <form class="form-horizontal" name="formCargo" novalidate="">
                             <div class="row">
+
                                 <div class="col-xs-12 error">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Departamento: </span>
+                                        <select class="form-control" name="departamento" id="departamento" ng-model="departamento"
+                                                ng-options="value.id as value.label for value in iddepartamentos" required></select>
+                                    </div>
+                                    <span class="help-block error"
+                                          ng-show="formCargo.departamento.$invalid && formCargo.departamento.$touched">El Departamento es requerido</span>
+                                </div>
+
+                                <div class="col-xs-12 error" style="margin-top: 5px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Cargo: </span>
                                         <input type="text" class="form-control" name="nombrecargo" id="nombrecargo" ng-model="nombrecargo" placeholder=""

@@ -33,20 +33,47 @@ app.controller('cargosController', function($scope, $http, API_URL) {
 
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Nuevo Cargo";
-                $scope.nombrecargo = '';
-                $('#modalActionCargo').modal('show');
+
+                $http.get(API_URL + 'empleado/getDepartamentos').success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
+                    }
+                    $scope.iddepartamentos = array_temp;
+                    $scope.departamento = '';
+
+                    $scope.form_title = "Nuevo Cargo";
+                    $scope.nombrecargo = '';
+                    $('#modalActionCargo').modal('show');
+
+                });
 
                 break;
             case 'edit':
 
-                $scope.form_title = "Editar Cargo";
-                $scope.idc = id;
+                $http.get(API_URL + 'empleado/getDepartamentos').success(function(response){
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
+                    }
+                    $scope.iddepartamentos = array_temp;
 
-                $http.get(API_URL + 'cargo/getCargoByID/' + id).success(function(response) {
-                    $scope.nombrecargo = response[0].namecargo.trim();
-                    $('#modalActionCargo').modal('show');
+
+                    $scope.form_title = "Editar Cargo";
+                    $scope.idc = id;
+
+                    $http.get(API_URL + 'cargo/getCargoByID/' + id).success(function(response) {
+
+                        $scope.departamento = response[0].iddepartamento;
+                        $scope.nombrecargo = response[0].namecargo.trim();
+                        $('#modalActionCargo').modal('show');
+                    });
+
                 });
+
+
                     break;
             default:
                 break;
@@ -56,7 +83,8 @@ app.controller('cargosController', function($scope, $http, API_URL) {
     $scope.Save = function (){
 
         var data = {
-            nombrecargo: $scope.nombrecargo
+            nombrecargo: $scope.nombrecargo,
+            iddepartamento: $scope.departamento
         };
 
         switch ( $scope.modalstate) {

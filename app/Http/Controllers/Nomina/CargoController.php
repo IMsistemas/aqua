@@ -33,9 +33,10 @@ class CargoController extends Controller
         $cargo = null;
 
         if ($search != null) {
-            $cargo = Cargo::whereRaw("cargo.namecargo ILIKE '%" . $search . "%'")->orderBy('namecargo', 'asc');
+            $cargo = Cargo::with('departamento')->whereRaw("cargo.namecargo ILIKE '%" . $search . "%'")
+                                ->orderBy('namecargo', 'asc');
         } else {
-            $cargo = Cargo::orderBy('namecargo', 'asc');
+            $cargo = Cargo::with('departamento')->orderBy('namecargo', 'asc');
         }
 
         return $cargo->paginate(10);
@@ -80,6 +81,7 @@ class CargoController extends Controller
         } else {
             $cargo = new Cargo();
             $cargo->namecargo = $request->input('nombrecargo');
+            $cargo->iddepartamento = $request->input('iddepartamento');
 
             if ($cargo->save()) {
                 return response()->json(['success' => true]);
@@ -112,7 +114,10 @@ class CargoController extends Controller
     public function update(Request $request, $id)
     {
         $cargo = Cargo::find($id);
+
         $cargo->namecargo = $request->input('nombrecargo');
+        $cargo->iddepartamento = $request->input('iddepartamento');
+
         if ($cargo->save()) {
             return response()->json(['success' => true]);
         } else {
