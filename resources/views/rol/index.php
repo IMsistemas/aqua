@@ -30,13 +30,16 @@
                 <thead class="bg-primary">
                 <tr>
                     <th>Nombre Rol</th>
-                    <th style="width: 200px;">Acciones</th>
+                    <th style="width: 25%;">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="item in roles | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                 <td>{{item.namerol}}</td>
                 <td class="text-center">
+                    <button type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
+                        Permisos <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    </button>
                     <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
                         Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </button>

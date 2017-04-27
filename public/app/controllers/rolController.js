@@ -135,6 +135,6 @@ app.controller('rolController', function($scope, $http, API_URL) {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
-
     $scope.initLoad();
+
 });
