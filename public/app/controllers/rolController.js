@@ -47,6 +47,16 @@ app.controller('rolController', function($scope, $http, API_URL) {
                     $('#modalActionCargo').modal('show');
                 });
                 break;
+            case 'perm':
+
+                $http.get(API_URL + 'rol/getPermisos').success(function(response){
+
+                    $scope.permisos = response;
+                    $('#modalPermisos').modal('show');
+
+                });
+
+                break;
             default:
                 break;
         }

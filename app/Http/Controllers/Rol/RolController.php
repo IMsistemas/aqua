@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rol;
 
+use App\Modelos\Rol\Permiso;
 use App\Modelos\Rol\Rol;
 use App\Modelos\Usuario\Usuario;
 use Illuminate\Http\Request;
@@ -48,6 +49,11 @@ class RolController extends Controller
     public function getRolByID($id)
     {
         return Rol::where('idrol', $id)->get();
+    }
+
+    public function getPermisos()
+    {
+        return Permiso::orderBy('namepermiso', 'asc')->get();
     }
 
     /**
