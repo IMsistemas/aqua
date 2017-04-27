@@ -1,6 +1,6 @@
 
 
-<div ng-controller="departamentosController">
+<div ng-controller="rolController">
 
     <div class="col-xs-12">
 

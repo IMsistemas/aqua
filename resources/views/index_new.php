@@ -160,7 +160,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#profile"><i class="fa fa-pencil-square-o fa-lg" ></i> Perfil</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#" ng-click="">Roles</a></li>
+                                    <li><a href="#" ng-click="toModuloRol()">Roles</a></li>
                                     <li><a href="#" ng-click="">Gestión de Usuarios</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#" ng-click="toLogout();"><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>

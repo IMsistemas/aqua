@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Rol;
 
+use App\Modelos\Rol\Rol;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -28,15 +29,15 @@ class RolController extends Controller
     {
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
-        $cargo = null;
+        $rol = null;
 
         if ($search != null) {
-            $cargo = Departamento::whereRaw("rol.namerol ILIKE '%" . $search . "%'")->orderBy('namerol', 'asc');
+            $rol = Rol::whereRaw("rol.namerol ILIKE '%" . $search . "%'")->orderBy('namerol', 'asc');
         } else {
-            $cargo = Departamento::orderBy('namerol', 'asc');
+            $rol = Rol::orderBy('namerol', 'asc');
         }
 
-        return $cargo->paginate(10);
+        return $rol->paginate(10);
     }
 
     /**

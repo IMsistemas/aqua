@@ -24,6 +24,10 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $('#modalConfirmLogout').modal('show');
     };
 
+    $scope.toModuloRol = function(){
+        $scope.titulo = "Rol";
+        $scope.toModulo = "rol";
+    };
 
     $scope.toModuloEmpleado = function(){
         $scope.titulo = "Colaboradores";
