@@ -262,6 +262,7 @@
     <script src="<?= asset('app/controllers/puntoventaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/InvetarioItemKardex.js') ?>"></script>
     <script src="<?= asset('app/controllers/departamentosController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/rolController.js') ?>"></script>
 
 
     <script type="text/javascript">

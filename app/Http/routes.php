@@ -960,6 +960,14 @@ Route::post('Nomenclador/deleteParroquiaEX', 'Nomenclador\NomencladorController@
 
 Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
 
+/*
+ * ------------------------------------- Modulo Rol---------------------------------------------------------------------
+ */
+
+//Route::get('departamento/getDepartamentoByID/{id}', 'Nomina\DepartamentoController@getDepartamentoByID');
+Route::get('rol/getRoles', 'Rol\RolController@getRoles');
+
+Route::resource('/rol', 'Rol\RolController');
 
 /*
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
