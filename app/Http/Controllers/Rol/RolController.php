@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rol;
 
 use App\Modelos\Rol\Rol;
+use App\Modelos\Usuario\Usuario;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -41,6 +42,15 @@ class RolController extends Controller
     }
 
     /**
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRolByID($id)
+    {
+        return Rol::where('idrol', $id)->get();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -58,7 +68,20 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $count = Rol::where('namerol', $request->input('namerol'))->count();
+
+        if ($count > 0) {
+            return response()->json(['success' => false]);
+        } else {
+            $cargo = new Rol();
+            $cargo->namerol = $request->input('namerol');
+
+            if ($cargo->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        }
     }
 
     /**
@@ -92,7 +115,19 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $count = Rol::where('namerol', $request->input('namerol'))->count();
+
+        if ($count > 0) {
+            return response()->json(['success' => false, 'repeat' => true]);
+        } else {
+            $rol = Rol::find($id);
+            $rol->namerol = $request->input('namerol');
+            if ($rol->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'repeat' => false]);
+            }
+        }
     }
 
     /**
@@ -103,6 +138,17 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $count = Usuario::where('idrol',$id)->count();
+        if ($count > 0) {
+            return response()->json(['success' => false, 'exists' => true]);
+        } else {
+            $rol = Rol::find($id);
+
+            if ($rol->delete()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'exists' => false]);
+            }
+        }
     }
 }

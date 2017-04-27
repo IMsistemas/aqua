@@ -32,18 +32,18 @@ app.controller('rolController', function($scope, $http, API_URL) {
 
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Nuevo Departamento";
-                $scope.nombrecargo = '';
+                $scope.form_title = "Nuevo Rol";
+                $scope.nombrerol = '';
                 $('#modalActionCargo').modal('show');
 
                 break;
             case 'edit':
 
-                $scope.form_title = "Editar Departamento";
+                $scope.form_title = "Editar Rol";
                 $scope.idc = id;
 
-                $http.get(API_URL + 'departamento/getDepartamentoByID/' + id).success(function(response) {
-                    $scope.nombrecargo = response[0].namedepartamento.trim();
+                $http.get(API_URL + 'rol/getRolByID/' + id).success(function(response) {
+                    $scope.nombrerol = response[0].namerol.trim();
                     $('#modalActionCargo').modal('show');
                 });
                 break;
@@ -55,39 +55,39 @@ app.controller('rolController', function($scope, $http, API_URL) {
     $scope.Save = function (){
 
         var data = {
-            namedepartamento: $scope.nombrecargo
+            namerol: $scope.nombrerol
         };
 
         switch ( $scope.modalstate) {
             case 'add':
-                $http.post(API_URL + 'departamento', data ).success(function (response) {
+                $http.post(API_URL + 'rol', data ).success(function (response) {
                     if (response.success == true) {
                         $scope.initLoad(1);
                         $('#modalActionCargo').modal('hide');
-                        $scope.message = 'Se insertó correctamente el Departamento...';
+                        $scope.message = 'Se insertó correctamente el Rol...';
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
                     }
                     else {
                         $('#modalActionCargo').modal('hide');
-                        $scope.message_error = 'Ya existe ese Departamento...';
+                        $scope.message_error = 'Ya existe ese Rol...';
                         $('#modalMessageError').modal('show');
                     }
                 });
                 break;
             case 'edit':
-                $http.put(API_URL + 'departamento/'+ $scope.idc, data ).success(function (response) {
+                $http.put(API_URL + 'rol/'+ $scope.idc, data ).success(function (response) {
 
                     if (response.success == true) {
                         $scope.initLoad(1);
                         $('#modalActionCargo').modal('hide');
-                        $scope.message = 'Se editó correctamente el Departamento seleccionado';
+                        $scope.message = 'Se editó correctamente el Rol seleccionado';
                         $('#modalMessage').modal('show');
                     } else {
                         if (response.repeat == true) {
-                            $scope.message_error = 'Ya existe ese Departamento...';
+                            $scope.message_error = 'Ya existe ese Rol...';
                         } else {
-                            $scope.message_error = 'Ha ocurrido un error al intentar editar el departamento seleccionado...';
+                            $scope.message_error = 'Ha ocurrido un error al intentar editar el Rol seleccionado...';
                         }
                         $('#modalMessageError').modal('show');
                     }
@@ -100,28 +100,28 @@ app.controller('rolController', function($scope, $http, API_URL) {
         }
     };
 
-    $scope.showModalConfirm = function (departamento) {
-        $scope.idcargo_del = departamento.iddepartamento;
-        $scope.cargo_seleccionado = departamento.namedepartamento;
+    $scope.showModalConfirm = function (rol) {
+        $scope.idcargo_del = rol.idrol;
+        $scope.cargo_seleccionado = rol.namerol;
         $('#modalConfirmDelete').modal('show');
     };
 
     $scope.delete = function(){
-        $http.delete(API_URL + 'departamento/' + $scope.idcargo_del).success(function(response) {
+        $http.delete(API_URL + 'rol/' + $scope.idcargo_del).success(function(response) {
             if(response.success == true){
                 $scope.initLoad(1);
                 $('#modalConfirmDelete').modal('hide');
                 $scope.idcargo_del = 0;
-                $scope.message = 'Se eliminó correctamente el Departamento seleccionado...';
+                $scope.message = 'Se eliminó correctamente el Rol seleccionado...';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
 
             } else {
 
                 if (response.exists == true) {
-                    $scope.message_error = 'El Departamento no puede ser eliminado porque esta asignado a un Cargo...';
+                    $scope.message_error = 'El Rol no puede ser eliminado porque esta asignado a un Usuario...';
                 } else {
-                    $scope.message_error = 'Ha ocurrido un error al intentar eliminar el departamento seleccionado...';
+                    $scope.message_error = 'Ha ocurrido un error al intentar eliminar el rol seleccionado...';
                 }
 
                 $('#modalMessageError').modal('show');

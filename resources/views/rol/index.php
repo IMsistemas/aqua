@@ -75,14 +75,14 @@
                         <div class="row">
                             <div class="col-xs-12 error">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Nombre del Departamento: </span>
-                                    <input type="text" class="form-control" name="nombrecargo" id="nombrecargo" ng-model="nombrecargo" placeholder=""
+                                    <span class="input-group-addon">Nombre del Rol: </span>
+                                    <input type="text" class="form-control" name="nombrerol" id="nombrerol" ng-model="nombrerol" placeholder=""
                                            ng-required="true" ng-maxlength="150">
                                 </div>
                                 <span class="help-block error"
-                                      ng-show="formCargo.nombrecargo.$invalid && formCargo.nombrecargo.$touched">El nombre del Departamento es requerido</span>
+                                      ng-show="formCargo.nombrerol.$invalid && formCargo.nombrerol.$touched">El nombre del Rol es requerido</span>
                                 <span class="help-block error"
-                                      ng-show="formCargo.nombrecargo.$invalid && formCargo.nombrecargo.$error.maxlength">La longitud máxima es de 150 caracteres</span>
+                                      ng-show="formCargo.nombrerol.$invalid && formCargo.nombrerol.$error.maxlength">La longitud máxima es de 50 caracteres</span>
                             </div>
                         </div>
                     </form>
@@ -135,7 +135,7 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Realmente desea eliminar el Departamento: <span style="font-weight: bold;">{{cargo_seleccionado}}</span></span>
+                    <span>Realmente desea eliminar el Rol: <span style="font-weight: bold;">{{cargo_seleccionado}}</span></span>
 
                 </div>
                 <div class="modal-footer">

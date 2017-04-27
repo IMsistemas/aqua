@@ -964,7 +964,7 @@ Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
  * ------------------------------------- Modulo Rol---------------------------------------------------------------------
  */
 
-//Route::get('departamento/getDepartamentoByID/{id}', 'Nomina\DepartamentoController@getDepartamentoByID');
+Route::get('rol/getRolByID/{id}', 'Rol\RolController@getRolByID');
 Route::get('rol/getRoles', 'Rol\RolController@getRoles');
 
 Route::resource('/rol', 'Rol\RolController');
