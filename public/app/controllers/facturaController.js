@@ -12,7 +12,7 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function (pageNumber) {
         $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
-            (response.success == false) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', true);
+            (response.success == false) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', false);
         });
 
         $('.datepicker_a').datetimepicker({
