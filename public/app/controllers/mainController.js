@@ -151,7 +151,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
 
     $scope.toModuloCompras = function(){
         $scope.titulo = "Compras Inventario";
-        $scope.toModulo = "compras";
+        $scope.toModulo = "DocumentoCompras";
     }
 
     $scope.toModuloVentas = function(){

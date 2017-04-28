@@ -114,7 +114,7 @@
                         <td>{{ sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra) }}</td>
                         <td>{{item.ivacompra  }}</td>
                         <td>{{item.valortotalcompra}}</td>
-                        <td>{{(item.estaAnulada)?'Anulada':'No Anulada'}}</td>
+                        <td>{{(item.estadoanulado)?'Anulada':'No Anulada'}}</td>
                         <td>
                             <button type="button" class="btn btn-warning" ng-click="openForm(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
                                     data-toggle="tooltip" data-placement="bottom" >

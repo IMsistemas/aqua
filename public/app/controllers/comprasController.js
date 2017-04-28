@@ -595,10 +595,63 @@
             ------------------------------------------------------------------------------------------        NEW
          */
 
+        $scope.searchByFilter = function(){
+
+            var t_search = null;
+            var t_proveedorId = null;
+            var t_estado = null;
+
+            if($scope.search != undefined && $scope.search != ''){
+                t_search = $scope.search;
+                var last = t_search.substring(t_search.length -1);
+                if (last === "."){
+                    t_search = t_search.substring(0,t_search.length -1);
+                }
+            }
+
+            if($scope.proveedorFiltro != undefined && $scope.proveedorFiltro != ''){
+                t_proveedorId = $scope.proveedorFiltro;
+            }
+
+            if($scope.estadoFiltro != undefined && $scope.estadoFiltro != ''){
+                t_estado = $scope.estadoFiltro;
+            }
+
+            var filter = {
+                text: t_search,
+                proveedorId: t_proveedorId,
+                estado: t_estado
+            };
+
+            $http.get(API_URL + 'compras/getCompras/' + JSON.stringify(filter)).success(function(response){
+                $scope.compras = response;
+            });
+        }
+
         $scope.initLoad = function () {
             $scope.ConfigContable();
             $scope.getProveedorByFilter();
+            $scope.searchByFilter();
         };
+
+        $scope.sumar = function(v1,v2){
+            return $scope.roundToTwo(parseFloat(v1) + parseFloat(v2)).toFixed(2);
+        }
+
+        $scope.formatoFecha = function(fecha){
+            if(typeof fecha != 'undefined'){
+                var t = fecha.split('-');
+                var meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+                return t[2] + '-' + meses[t[1]-1] + '-' + t[0];
+            } else {
+                return '';
+            }
+
+        }
+
+        $scope.roundToTwo = function (num) {
+            return +(Math.round(num + "e+2")  + "e-2");
+        }
 
         $scope.initLoad();
 

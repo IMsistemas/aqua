@@ -243,8 +243,7 @@
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/comprasproductoController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/comprasproductoIngresoController.js') ?>"></script>
+
     <script src="<?= asset('app/controllers/comprasImprimirController.js') ?>"></script>
     <script src="<?= asset('app/controllers/categoriasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/catalogoproductosController.js') ?>"></script>
@@ -263,6 +262,7 @@
     <script src="<?= asset('app/controllers/InvetarioItemKardex.js') ?>"></script>
     <script src="<?= asset('app/controllers/departamentosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/rolController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
 
 
     <script type="text/javascript">
