@@ -114,9 +114,9 @@
                                     </li>
 
                                     <!--<li role="separator" class="divider"></li>
-                                    <li><a href = "#">Nota de Crédito</a></li><-->
+                                    <li><a href = "#">Nota de Crédito</a></li>-->
 
-                                    <!--><li role="separator" class="divider"></li>
+                                    <!--<li role="separator" class="divider"></li>
                                         <li><a href = "#">Activos Fijos</a></li>-->
                                 </ul>
                             </li>
