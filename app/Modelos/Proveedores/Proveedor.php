@@ -21,4 +21,9 @@ class Proveedor extends Model
         return $this->belongsTo('App\Modelos\SRI\SRI_TipoImpuestoIva','idtipoimpuestoiva');
     }
 
+    public function cont_plancuenta()
+    {
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_PlanCuenta','idplancuenta');
+    }
+
 }

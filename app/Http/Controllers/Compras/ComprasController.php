@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Compras;
 
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_Bodega;
 use App\Modelos\Contabilidad\Cont_FormaPago;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\SRI\SRI_Sustento_Comprobante;
@@ -55,10 +57,37 @@ class ComprasController extends Controller
 
     public function getProveedorByIdentify($identify)
     {
-        return Persona::with('proveedor.sri_tipoimpuestoiva')
+        return Persona::with('proveedor.sri_tipoimpuestoiva', 'proveedor.cont_plancuenta')
                         ->whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")
                         ->whereRaw('idpersona IN (SELECT idpersona FROM proveedor)')
                         ->get();
+    }
+
+    /**
+     * Obtener configuracion contable
+     *
+     *
+     * @return mixed
+     */
+    public function getCofiguracioncontable()
+    {
+        //return   configuracioncontable::all();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_COMPRA' OR optionname='SRI_RETEN_IVA_COMPRA' OR optionname='CONT_PROPINA_COMPRA' OR optionname='SRI_RETEN_RENTA_COMPRA' OR optionname='CONT_IVA_COMPRA' OR optionname='CONT_ICE_COMPRA' ")->get();
+        $aux_configcontable=array();
+        foreach ($aux_data as $i) {
+            $aux_contable="";
+            if($i->optionvalue!=""){
+                $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            }
+            $configventa = array(
+                'Id' => $i->idconfiguracionsystem,
+                'IdContable'=> $i->optionvalue,
+                'Descripcion'=>$i->optionname,
+                'Contabilidad'=>$aux_contable );
+            array_push($aux_configcontable, $configventa);
+        }
+        return $aux_configcontable;
+
     }
 
     /**
