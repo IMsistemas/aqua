@@ -121,12 +121,12 @@
                                     <div class="col-sm-5 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">Código Item: </span>
-                                            <input type="text" class="form-control" name="t_codigoitem" id="t_codigoitem" ng-model="producto.codigoproducto" ng-required="true" ng-maxlength="20" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
+                                            <input type="text" class="form-control" name="t_codigoitem" id="t_codigoitem" ng-model="producto.codigoproducto" ng-required="true" ng-maxlength="200" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
                                         </div>
                                         <span class="help-block error"
                                                       ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$touched">El Código es requerido</span>
                                                 <span class="help-block error"
-                                                      ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$error.maxlength">La longitud máxima es de 20 caracteres</span>
+                                                      ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$error.maxlength">La longitud máxima es de 200 caracteres</span>
                                                 <span class="help-block error"
                                                       ng-show="formProducto.t_codigoitem.$invalid && formProducto.t_codigoitem.$error.pattern">El Código debe ser solo letras y espacios</span>
                                     </div>
@@ -134,12 +134,12 @@
                                     <div class="col-sm-7 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">Detalle Item: </span>
-                                            <input type="text" class="form-control" name="t_detalleitem" id="t_detalleitem" ng-model="producto.nombreproducto" ng-required="true" ng-maxlength="50" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
+                                            <input type="text" class="form-control" name="t_detalleitem" id="t_detalleitem" ng-model="producto.nombreproducto" ng-required="true" ng-maxlength="200" ng-pattern="/[a-zA-ZáéíóúñÑ0-9 ]+/"/>
                                         </div>
                                         <span class="help-block error"
                                                       ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$touched">El Detalle es requerido</span>
                                                 <span class="help-block error"
-                                                      ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                                      ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$error.maxlength">La longitud máxima es de 200 caracteres</span>
                                                 <span class="help-block error"
                                                       ng-show="formProducto.t_detalleitem.$invalid && formProducto.t_detalleitem.$error.pattern">El Detalle debe ser solo letras y espacios</span>
                                     </div>
