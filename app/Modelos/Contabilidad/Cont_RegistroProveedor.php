@@ -21,7 +21,8 @@ class Cont_RegistroProveedor extends Model
         'fecha',
         'debe',
         'haber',
-        'numerodocumento'
+        'numerodocumento',
+        'estadoanulado'
     ];
 
     public function proveedor()

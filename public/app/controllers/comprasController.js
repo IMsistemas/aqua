@@ -510,17 +510,19 @@
                 idsustentotributario: $scope.sustentotributario,
                 idtipocomprobante: $scope.tipocomprobante,
 
-                subtotalconimpuestoventa:$scope.Subtotalconimpuestos,
-                subtotalceroventa:$scope.Subtotalcero,
-                subtotalnoobjivaventa:$scope.Subtotalnobjetoiva,
-                subtotalexentivaventa:$scope.Subototalexentoiva,
-                subtotalsinimpuestoventa:$scope.Subtotalsinimpuestos,
+                //idcomprobanteretencion: null,
+
+                subtotalconimpuestocompra:$scope.Subtotalconimpuestos,
+                subtotalcerocompra:$scope.Subtotalcero,
+                subtotalnoobjivacompra:$scope.Subtotalnobjetoiva,
+                subtotalexentivacompra:$scope.Subototalexentoiva,
+                subtotalsinimpuestocompra:$scope.Subtotalsinimpuestos,
                 totaldescuento:$scope.Totaldescuento,
                 icecompra:$scope.ValICE,
                 ivacompra:$scope.ValIVA,
-                irbpnrventa:$scope.ValIRBPNR,
-                propina:$scope.ValPropina,
-                otrosventa:0,
+                irbpnrcompra:$scope.ValIRBPNR,
+                propinacompra:$scope.ValPropina,
+                otroscompra:0,
                 valortotalcompra:$scope.ValorTotal,
                 estadoanulado:'false',
                 idtransaccion:''
@@ -566,7 +568,10 @@
 
             $http.post(API_URL+'DocumentoCompras',transaccionfactura)
                 .success(function (response) {
-                    if(parseInt(response)>0){
+
+                    console.log(response);
+
+                    /*if(parseInt(response)>0){
                         QuitarClasesMensaje();
                         $("#titulomsm").addClass("btn-success");
                         $("#msm").modal("show");
@@ -579,7 +584,7 @@
                         $("#msm").modal("show");
                         $scope.Mensaje="Error al guardar la venta";
                         $scope.LimiarDataVenta();
-                    }
+                    }*/
                 })
                 .error(function(err){
                     console.log(err);

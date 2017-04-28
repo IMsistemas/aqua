@@ -15,12 +15,12 @@ class Cont_DocumentoCompra extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'iddocumentocompra', 
+        'iddocumentocompra', 'idtransaccion',
     		'idproveedor','idtipocomprobante','idsustentotributario','idcomprobanteretencion','idtipoimpuestoiva','numdocumentocompra',
     		'fecharegistrocompra','fechaemisioncompra','nroautorizacioncompra','subtotalconimpuestocompra',
     		'subtotalcerocompra','subtotalnoobjivacompra','subtotalexentivacompra','subtotalsinimpuestocompra',
-    		'totaldescuento','icecompra numeric','ivacompra','irbpnrcompra','propinacompra','otroscompra',
-    		'valortotalcompra','estaAnulada'    		    
+    		'totaldescuento','icecompra','ivacompra','irbpnrcompra','propinacompra','otroscompra',
+    		'valortotalcompra','estadoanulado'
     ];
     
     
