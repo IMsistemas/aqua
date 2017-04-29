@@ -106,18 +106,18 @@
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
                                             <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
-                                            <!--<li><a href="#">Retención Ventas</a></li>
+                                            <li><a href="#">Retención Ventas</a></li>
                                             <li><a href="#">Comprobante Ingreso</a></li>
                                             <li><a href="#">Cuentas por Cobrar</a></li>
-                                            <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>-->
+                                            <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                         </ul>
                                     </li>
 
-                                    <!--<li role="separator" class="divider"></li>
-                                    <li><a href = "#">Nota de Crédito</a></li>-->
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href = "#">Nota de Crédito</a></li>
 
-                                    <!--<li role="separator" class="divider"></li>
-                                        <li><a href = "#">Activos Fijos</a></li>-->
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href = "#">Activos Fijos</a></li>
                                 </ul>
                             </li>
 
@@ -129,7 +129,7 @@
                                     <li><a href = "#" ng-click="toModuloDepartamento();">Departamentos</a></li>
                                     <li><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
                                     <li><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
-                                    <!--<li><a href = "#" ng-click="">Nómina</a></li>-->
+                                    <li><a href = "#" ng-click="">Nómina</a></li>
                                 </ul>
                             </li>
 

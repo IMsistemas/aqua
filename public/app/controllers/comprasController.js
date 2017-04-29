@@ -653,6 +653,11 @@
             return +(Math.round(num + "e+2")  + "e-2");
         }
 
+        $scope.InicioList=function() {
+            $scope.listado =  true;
+            $scope.initLoad();
+        }
+
         $scope.initLoad();
 
         $scope.newRow = function(){
