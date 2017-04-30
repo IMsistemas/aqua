@@ -122,8 +122,12 @@
                                     data-toggle="tooltip" data-placement="bottom" >
                                 Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
                             </button>
+
+
+
+
                             <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item,0)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estaAnulada==1">
+                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1">
                                 Anular <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                             </button>
 

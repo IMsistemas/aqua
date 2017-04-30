@@ -630,18 +630,19 @@
             };
 
             $http.post(API_URL + 'DocumentoCompras/anularCompra', object).success(function(response) {
-                $scope.initLoad();
-                $scope.compra_anular = 0;
 
-                $scope.message = 'La compra se ha Anulado.';
-                if(!response.success){
-                    $scope.compra_anular = anular;
-                    $scope.message = 'Ocurrio un error intentelo mas tarde';
-                }
                 $('#modalConfirmAnular').modal('hide');
-                $('#modalConfirmAnular1').modal('hide');
-                $('#modalMessage').modal('show');
-                $('#modalMessage1').modal('show');
+
+                if(response.success == true){
+                    $scope.initLoad();
+                    $scope.compra_anular = 0;
+                    $scope.message = 'Se ha anulado la compra seleccionada...';
+                    $('#modalMessage1').modal('show');
+
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al intentar anular la Compra seleccionada...';
+                    $('#modalMessageError').modal('show');
+                }
 
             });
         };

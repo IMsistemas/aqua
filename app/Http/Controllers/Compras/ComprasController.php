@@ -10,6 +10,7 @@ use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_FormaPago;
 use App\Modelos\Contabilidad\Cont_ItemCompra;
 use App\Modelos\Contabilidad\Cont_ItemVenta;
+use App\Modelos\Contabilidad\Cont_Kardex;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
 use App\Modelos\Persona;
@@ -111,9 +112,19 @@ class ComprasController extends Controller
         $compra->estadoanulado =  true;
 
         if ($compra->save()) {
-            return response()->json(['success' => true]) ;
+
+            CoreContabilidad::AnularAsientoContable($compra->idtransaccion);
+
+            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $compra->idtransaccion)
+                                        ->update(['estadoanulado' => true]);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
         } else {
-            return response()->json(['success' => false]) ;
+            return response()->json(['success' => false]);
         }
     }
 
