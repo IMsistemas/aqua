@@ -13,18 +13,17 @@
             {id: 0, nombre: 'NO ANULADO'}
         ];
 
-
-        $scope.Subtotalconimpuestos='0.00';
-        $scope.Subtotalcero=0.00;
-        $scope.Subtotalnobjetoiva=0.00;
-        $scope.Subototalexentoiva=0.00;
-        $scope.Subtotalsinimpuestos=0.00;
-        $scope.Totaldescuento=0.00;
-        $scope.ValICE=0.00;
-        $scope.ValIVA=0.00;
-        $scope.ValIRBPNR=0.00;
-        $scope.ValPropina=0.00;
-        $scope.ValorTotal=0.00;
+        $scope.Subtotalconimpuestos = '0.00';
+        $scope.Subtotalcero = '0.00';
+        $scope.Subtotalnobjetoiva = '0.00';
+        $scope.Subototalexentoiva = '0.00';
+        $scope.Subtotalsinimpuestos = '0.00';
+        $scope.Totaldescuento = '0.00';
+        $scope.ValICE = '0.00';
+        $scope.ValIVA = '0.00';
+        $scope.ValIRBPNR = '0.00';
+        $scope.ValPropina = '0.00';
+        $scope.ValorTotal = '0.00';
 
         $scope.Bodegas=[];
         $scope.Configuracion=[];
@@ -656,7 +655,7 @@
         $scope.InicioList=function() {
             $scope.listado =  true;
             $scope.initLoad();
-        }
+        };
 
         $scope.initLoad();
 
@@ -684,20 +683,21 @@
                 $scope.t_pto = '000';
                 $scope.t_secuencial = '000000000';
 
-
-
                 $scope.getBodegas();
                 $scope.getSustentoTributario();
                 $scope.getFormaPago();
 
-
-                $scope.subtotalconimpuestocompra = '0.00';
-                $scope.subtotalcerocompra = '0.00';
-                $scope.subtotalnoobjivacompra = '0.00';
-                $scope.subtotalexentivacompra = '0.00';
-                $scope.subtotalsinimpuestocompra = '0.00';
-                $scope.totaldescuento = '0.00';
-                $scope.valortotalcompra = '0.00';
+                $scope.Subtotalconimpuestos = '0.00';
+                $scope.Subtotalcero = '0.00';
+                $scope.Subtotalnobjetoiva = '0.00';
+                $scope.Subototalexentoiva = '0.00';
+                $scope.Subtotalsinimpuestos = '0.00';
+                $scope.Totaldescuento = '0.00';
+                $scope.ValICE = '0.00';
+                $scope.ValIVA = '0.00';
+                $scope.ValIRBPNR = '0.00';
+                $scope.ValPropina = '0.00';
+                $scope.ValorTotal = '0.00';
 
                 $scope.createRow();
 

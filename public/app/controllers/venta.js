@@ -264,17 +264,17 @@ $scope.ValidacionCueContExt="0";
          $scope.CalculaValores();
     };
     ///---
-    $scope.Subtotalconimpuestos=0.00;
-    $scope.Subtotalcero=0.00;
-    $scope.Subtotalnobjetoiva=0.00;
-    $scope.Subototalexentoiva=0.00;
-    $scope.Subtotalsinimpuestos=0.00;
-    $scope.Totaldescuento=0.00;
-    $scope.ValICE=0.00;
-    $scope.ValIVA=0.00;
-    $scope.ValIRBPNR=0.00;
-    $scope.ValPropina=0.00;
-    $scope.ValorTotal=0.00;
+    $scope.Subtotalconimpuestos = '0.00';
+    $scope.Subtotalcero = '0.00';
+    $scope.Subtotalnobjetoiva = '0.00';
+    $scope.Subototalexentoiva = '0.00';
+    $scope.Subtotalsinimpuestos = '0.00';
+    $scope.Totaldescuento = '0.00';
+    $scope.ValICE = '0.00';
+    $scope.ValIVA = '0.00';
+    $scope.ValIRBPNR = '0.00';
+    $scope.ValPropina = '0.00';
+    $scope.ValorTotal = '0.00';
     $scope.AsignarData=function(item){
         if(item!=undefined){
             if(item.productoObj!=undefined){

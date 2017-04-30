@@ -462,12 +462,12 @@
                             <!--<label class="control-label" ng-show="!read">{{ item.productoObj.originalObject.nombreproducto }}</label>
                             <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                         </td>
-                        <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
-                        <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
-                        <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
-                        <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
-                        <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>
-                        <td><input type="text" class="form-control" ng-model="item.total" disabled  ng-value="item.cantidad*item.precioU"/></td>
+                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
+                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
+                        <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
+                        <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>
+                        <td><input type="text" class="form-control text-right" ng-model="item.total" disabled  ng-value="item.cantidad*item.precioU"/></td>
                         <td>
                             <button type="button" class="btn btn-danger" ng-click="QuitarItem(item)">
                                 <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -602,47 +602,47 @@
                     <tbody>
                     <tr>
                         <td style="width: 60%;">SubTotal con Impuesto</td>
-                        <td>{{Subtotalconimpuestos}}</td>
+                        <td class="text-right">{{Subtotalconimpuestos}}</td>
                     </tr>
                     <tr>
                         <td>SubTotal 0%</td>
-                        <td>{{Subtotalcero}}</td>
+                        <td class="text-right">{{Subtotalcero}}</td>
                     </tr>
                     <tr>
                         <td>SubTotal No Objeto IVA</td>
-                        <td>{{Subtotalnobjetoiva}}</td>
+                        <td class="text-right">{{Subtotalnobjetoiva}}</td>
                     </tr>
                     <tr>
                         <td>SubTotal Exento IVA</td>
-                        <td>{{Subototalexentoiva}}</td>
+                        <td class="text-right">{{Subototalexentoiva}}</td>
                     </tr>
                     <tr>
                         <td>SubTotal Sin Impuestos</td>
-                        <td>{{Subtotalsinimpuestos}}</td>
+                        <td class="text-right">{{Subtotalsinimpuestos}}</td>
                     </tr>
                     <tr>
                         <td>Total Descuento</td>
-                        <td>{{Totaldescuento}}</td>
+                        <td class="text-right">{{Totaldescuento}}</td>
                     </tr>
                     <tr>
                         <td>ICE</td>
-                        <td><input type="text" class="form-control input-sm" id="ValICE"  ng-model="ValICE"  /></td>
+                        <td><input type="text" class="form-control input-sm text-right" id="ValICE"  ng-model="ValICE"  /></td>
                     </tr>
                     <tr>
                         <td>IVA</td>
-                        <td><input type="text" class="form-control input-sm" id="ValIVA"  ng-model="ValIVA" /></td>
+                        <td><input type="text" class="form-control input-sm text-right" id="ValIVA"  ng-model="ValIVA" /></td>
                     </tr>
                     <tr>
                         <td>IRBPNR</td>
-                        <td><input type="text" class="form-control input-sm" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
+                        <td><input type="text" class="form-control input-sm text-right" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
                     </tr>
                     <tr>
                         <td>PROPINA</td>
-                        <td><input type="text" class="form-control input-sm" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
+                        <td><input type="text" class="form-control input-sm text-right" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
                     </tr>
                     <tr>
                         <td>VALOR TOTAL</td>
-                        <td>{{ValorTotal}}</td>
+                        <td class="text-right">{{ValorTotal}}</td>
                     </tr>
                     </tbody>
                 </table>
