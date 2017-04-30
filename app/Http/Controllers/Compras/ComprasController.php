@@ -103,6 +103,20 @@ class ComprasController extends Controller
         return $result;
     }
 
+    public function anularCompra(Request $request)
+    {
+        $iddocumentocompra = $request->input('iddocumentocompra');
+
+        $compra = Cont_DocumentoCompra::find($iddocumentocompra);
+        $compra->estadoanulado =  true;
+
+        if ($compra->save()) {
+            return response()->json(['success' => true]) ;
+        } else {
+            return response()->json(['success' => false]) ;
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

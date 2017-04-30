@@ -974,6 +974,7 @@ Route::resource('/rol', 'Rol\RolController');
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
  */
 
+Route::post('DocumentoCompras/anularCompra', 'Compras\ComprasController@anularCompra');
 Route::get('DocumentoCompras/getLastIDCompra', 'Compras\ComprasController@getLastIDCompra');
 Route::get('DocumentoCompras/porcentajeivaiceotro', 'Compras\ComprasController@getCofiguracioncontable');
 Route::get('DocumentoCompras/getProveedorByIdentify/{identify}', 'Compras\ComprasController@getProveedorByIdentify');

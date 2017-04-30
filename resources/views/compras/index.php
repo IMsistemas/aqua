@@ -93,6 +93,7 @@
                             Proveedor
                             <span class="glyphicon sort-icon" ng-show="sortKey=='razonsocialproveedor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
+                        <th style="text-align: center;">NO.</th>
                         <th style="text-align: center;">Subtotal</th>
                         <th style="text-align: center;">IVA</th>
                         <th style="text-align: center;" ng-click="sort('totalcompra')">
@@ -111,7 +112,8 @@
                         <td style="text-align: center;">{{item.iddocumentocompra}}</td>
                         <td>{{formatoFecha(item.fecharegistrocompra)}}</td>
                         <td>{{item.razonsocial}}</td>
-                        <td>{{ sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra) }}</td>
+                        <td>{{item.numdocumentocompra}}</td>
+                        <td>{{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
                         <td>{{item.ivacompra  }}</td>
                         <td>{{item.valortotalcompra}}</td>
                         <td>{{(item.estadoanulado)?'Anulada':'No Anulada'}}</td>
@@ -120,7 +122,7 @@
                                     data-toggle="tooltip" data-placement="bottom" >
                                 Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
                             </button>
-                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item.iddocumentocompra,0)"
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item,0)"
                                     data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estaAnulada==1">
                                 Anular <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                             </button>
@@ -163,11 +165,16 @@
                         <h4 class="modal-title">Confirmación</h4>
                     </div>
                     <div class="modal-body">
-                        <span>Está seguro que desea Anular la compra seleccionada?</span>
+                        <span>Está seguro que desea Anular la compra: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">Anular</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
+                            Anular
+                        </button>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,8 @@
         $scope.list_item = [];
         $scope.listado = true;
 
+        $scope.compra_anular = 0;
+
         $scope.proveedor = '';
 
         $scope.estados = [
@@ -619,7 +621,30 @@
 
         $scope.confirmSave = function() {
             $('#modalConfirmSave').modal('show');
-        }
+        };
+
+        $scope.anularCompra = function(){
+
+            var object = {
+                iddocumentocompra: $scope.compra_anular
+            };
+
+            $http.post(API_URL + 'DocumentoCompras/anularCompra', object).success(function(response) {
+                $scope.initLoad();
+                $scope.compra_anular = 0;
+
+                $scope.message = 'La compra se ha Anulado.';
+                if(!response.success){
+                    $scope.compra_anular = anular;
+                    $scope.message = 'Ocurrio un error intentelo mas tarde';
+                }
+                $('#modalConfirmAnular').modal('hide');
+                $('#modalConfirmAnular1').modal('hide');
+                $('#modalMessage').modal('show');
+                $('#modalMessage1').modal('show');
+
+            });
+        };
 
         /*
             ------------------------------------------------------------------------------------------        NEW
@@ -703,6 +728,12 @@
                 testObj:null
             }
         };
+
+        $scope.showModalConfirm = function(item){
+            $scope.compra_anular = item.iddocumentocompra;
+            $scope.numseriecompra = item.numdocumentocompra;
+            $('#modalConfirmAnular').modal('show');
+        }
 
         $scope.activeForm = function (action) {
 
