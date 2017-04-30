@@ -96,6 +96,13 @@ class ComprasController extends Controller
 
     }
 
+    public function getLastIDCompra()
+    {
+        $result = Cont_DocumentoCompra::max('iddocumentocompra');
+
+        return $result;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

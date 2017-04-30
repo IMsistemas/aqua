@@ -67,6 +67,19 @@
             });
         };
 
+        $scope.getLastIDCompra = function () {
+
+            $http.get(API_URL + 'DocumentoCompras/getLastIDCompra').success(function(response){
+
+                if (response != null && response != 0) {
+                    $scope.numcompra = response;
+                } else {
+                    $scope.numcompra = 1;
+                }
+
+            });
+        };
+
         $scope.getSustentoTributario = function () {
             $http.get(API_URL + 'DocumentoCompras/getSustentoTributario').success(function(response){
 
@@ -683,6 +696,7 @@
                 $scope.t_pto = '000';
                 $scope.t_secuencial = '000000000';
 
+                $scope.getLastIDCompra();
                 $scope.getBodegas();
                 $scope.getSustentoTributario();
                 $scope.getFormaPago();
@@ -698,6 +712,9 @@
                 $scope.ValIRBPNR = '0.00';
                 $scope.ValPropina = '0.00';
                 $scope.ValorTotal = '0.00';
+
+                $scope.fecharegistrocompra = $scope.fecha();
+                $scope.fechaemisioncompra = $scope.fecha();
 
                 $scope.createRow();
 
@@ -772,5 +789,20 @@
                 }
                 $("#" + field).val(relleno + text);
             }
+        };
+
+        $scope.fecha = function(){
+
+            var f = new Date();
+
+            var dd = f.getDate();
+            if (dd < 10) dd = '0' + dd;
+            var mm = f.getMonth() + 1;
+            if (mm < 10) mm = '0' + mm;
+            var yyyy = f.getFullYear();
+            //var fecha_actual = dd + "\/" + mm + "\/" + yyyy;
+
+            return yyyy + '-' + mm + '-' + dd;
+
         };
     });

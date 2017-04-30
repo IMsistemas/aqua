@@ -260,7 +260,7 @@
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">No. Compra: </span>
-                                <input type="text" class="form-control" value="{{('000000'+compra.codigocompra).slice(-7)}}" readonly >
+                                <input type="text" class="form-control" id="numcompra" ng-model="numcompra" readonly >
                             </div>
                         </div>
 
