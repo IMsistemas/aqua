@@ -582,14 +582,12 @@
                 </div>
 
 
-
-
                 <div class="col-xs-12 text-right" style="margin-top: 20px;">
                     <button type="button" class="btn btn-warning" id="btn-anular" ng-click="showModalConfirm1()" ng-disabled="!guardado" >
                         Anular <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
 
-                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="save()" ng-disabled="formCompra.$invalid" >
+                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="confirmSave()" ng-disabled="formCompra.$invalid" >
                         Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                     <button class="btn btn-success" ng-click="InicioList();"> Regresar</button>
@@ -667,6 +665,20 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -680,6 +692,29 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">Anular</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmSave">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>¿Desea guardar la compra?... </span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="save()">
+                        Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </div>

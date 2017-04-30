@@ -486,7 +486,7 @@
             //--proceso kardex
             var kardex=[];
             for(x=0;x<$scope.items.length;x++){
-                if($scope.items[x].productoObj.originalObject.idclaseitem==1){
+                if($scope.items[x].productoObj.originalObject.idclaseitem == 1){
                     var producto={
                         idtransaccion: 0,
                         idcatalogitem: $scope.items[x].productoObj.originalObject.idcatalogitem,
@@ -576,10 +576,10 @@
 
             var transaccionfactura={
                 datos:JSON.stringify(transaccion_venta_full)
+                //datos: transaccion_venta_full
             };
 
-            $http.post(API_URL+'DocumentoCompras',transaccionfactura)
-                .success(function (response) {
+            $http.post(API_URL+'DocumentoCompras',transaccionfactura).success(function (response) {
 
                     console.log(response);
 
@@ -597,11 +597,29 @@
                         $scope.Mensaje="Error al guardar la venta";
                         $scope.LimiarDataVenta();
                     }*/
-                })
-                .error(function(err){
-                    console.log(err);
-                });
+
+                if (response.success == true) {
+
+                    $('#modalConfirmSave').modal('hide');
+                    $scope.message = 'Se insertó correctamente la Compra...';
+                    $('#modalMessage1').modal('show');
+
+                }
+                else {
+                    $('#modalConfirmSave').modal('hide');
+                    $scope.message_error = 'Ha ocurrido un error al intentar guardar la Compra...';
+                    $('#modalMessageError').modal('show');
+                }
+
+            })
+            .error(function(err){
+                console.log(err);
+            });
         };
+
+        $scope.confirmSave = function() {
+            $('#modalConfirmSave').modal('show');
+        }
 
         /*
             ------------------------------------------------------------------------------------------        NEW
