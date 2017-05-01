@@ -228,6 +228,7 @@
                 year: ($scope.t_fechaingreso).split('/')[2],
                 codigo: '',
                 detalle: '',
+                tipo: '',
                 id:0,
                 baseimponible: '0.00',
                 porciento: '0.00',
@@ -334,10 +335,14 @@
         $scope.showInfoRetencion = function (object, data) {
 
             if (object.originalObject != undefined) {
-                data.id = object.originalObject.iddetalleretencion;
+
+                console.log(object.originalObject);
+
+                data.id = object.originalObject.iddetalleimpuestoretencion;
                 data.codigo = object.originalObject.codigosri;
-                data.detalle = object.originalObject.concepto;
-                data.porciento = object.originalObject.porcentajevigente;
+                data.detalle = object.originalObject.namedetalleimpuestoretencion;
+                data.tipo = object.originalObject.sri_tipoimpuestoretencion.nametipoimpuestoretencion;
+                data.porciento = object.originalObject.porcentaje;
 
                 var porciento = parseFloat(data.porciento);
 
@@ -379,6 +384,7 @@
                 data.codigo = '';
                 data.id = 0;
                 data.detalle = '';
+                data.tipo = '';
                 data.porciento = '0.00';
                 data.baseimponible = '0.00';
             }
@@ -387,19 +393,32 @@
 
         $scope.showDataPurchase = function (object) {
 
+            console.log(object);
+
             if (object.originalObject != undefined) {
-                $scope.t_rucci = object.originalObject.numerodocumentoproveedor;
-                $scope.t_razonsocial = object.originalObject.razonsocialproveedor;
-                $scope.t_phone = object.originalObject.telefonoproveedor;
+
+                $scope.t_rucci = object.originalObject.proveedor.persona.numdocidentific;
+                $scope.t_razonsocial = object.originalObject.proveedor.persona.razonsocial;
+                $scope.t_nroautorizacion = object.originalObject.sri_comprobanteretencion.noauthcomprobante;
+                var nocomprobante = object.originalObject.sri_comprobanteretencion.nocomprobante;
+
+                nocomprobante = nocomprobante.split('-');
+
+                $scope.t_establ = nocomprobante[0];
+                $scope.t_pto = nocomprobante[1];
+                $scope.t_secuencial = nocomprobante[2];
+
+                /*$scope.t_phone = object.originalObject.telefonoproveedor;
                 $scope.t_direccion = object.originalObject.direccionproveedor;
                 $scope.t_tipocomprobante = object.originalObject.nombretipocomprobante;
-                $scope.t_ciudad = object.originalObject.nombreciudad;
+                $scope.t_ciudad = object.originalObject.nombreciudad;*/
 
-                $scope.baseimponible = object.originalObject.subtotalnoivacompra;
+                //$scope.baseimponible = object.originalObject.subtotalnoivacompra;
+                $scope.baseimponible = object.originalObject.subtotalconimpuestocompra;
 
                 $scope.baseimponibleIVA = object.originalObject.ivacompra;
 
-                $('#t_nrocompra').val(object.originalObject.codigocompra);
+                //$('#t_nrocompra').val(object.originalObject.codigocompra);
 
                 $('#btn-createrow').prop('disabled', false);
             }
@@ -513,8 +532,6 @@
                 return t[2] + '/' + t[1] + '/' + t[0];
             }
         };
-
-
 
     });
 

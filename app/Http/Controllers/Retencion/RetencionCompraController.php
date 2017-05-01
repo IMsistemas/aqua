@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Retencion;
 
 use App\Modelos\Compras\CompraProducto;
+use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Retencion\DetalleRetencion;
 use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
 use App\Modelos\Retencion\RetencionCompra;
 use App\Modelos\Retencion\RetencionFuenteCompra;
+use App\Modelos\SRI\SRI_DetalleImpuestoRetencion;
 use App\Modelos\SRI\SRI_RetencionCompra;
 use Illuminate\Http\Request;
 
@@ -75,18 +77,18 @@ class RetencionCompraController extends Controller
 
     public function getCodigos($codigo)
     {
-        return DetalleRetencion::where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
-
-        //return DetalleRetencionFuente::where('codigoSRI', 'LIKE', '%' . $codigo . '%')->get();
+        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion')
+                    ->where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
     }
 
     public function getCompras($codigo)
     {
-        return CompraProducto::join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
-                            ->join('sector', 'proveedor.idsector', '=', 'sector.idsector')
-                            ->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
-                            ->join('tipocomprobante', 'tipocomprobante.codigocomprbante', '=', 'documentocompra.codigocomprbante')
-                            ->whereRaw("documentocompra.codigocompra::text ILIKE '%" . $codigo . "%'")->get();
+        $compra = Cont_DocumentoCompra::with('proveedor.persona', 'sri_comprobanteretencion')
+                            ->where('idcomprobanteretencion', '!=', null)
+                            ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $codigo . "%'")
+                            ->get();
+
+        return $compra;
     }
 
     public function getCodigosRetencion($tipo)

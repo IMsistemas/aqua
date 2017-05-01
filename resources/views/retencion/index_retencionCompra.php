@@ -188,7 +188,7 @@
 
                                         remote-url = "{{API_URL}}retencionCompra/getCompras/"
 
-                                        title-field="codigocompra"
+                                        title-field="numdocumentocompra"
 
                                         minlength="1"
                                         input-class="form-control"
@@ -226,7 +226,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12" style="margin-top: 5px;">
+                                <!--<div class="col-xs-12" style="margin-top: 5px;">
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Télefono: </span>
@@ -253,24 +253,24 @@
                                             <input type="text" class="form-control" id="t_tipocomprobante" name="t_tipocomprobante" ng-model="t_tipocomprobante" disabled />
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-xs-12" style="margin-top: 5px;">
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nro. Documento: </span>
                                             <span class="input-group-btn" style="width: 15%;">
-                                        <input type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
+                                        <input disabled type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
                                     </span>
                                             <span class="input-group-btn" style="width: 15%;" >
-                                        <input type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
+                                        <input disabled type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
                                     </span>
-                                            <input type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
+                                            <input disabled type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 error">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Autorización: </span>
-                                            <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
+                                            <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion" disabled
                                                    ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
                                         </div>
                                         <span class="help-block error" style="text-align: right !important; color: red;"
@@ -309,6 +309,7 @@
                                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                             </th>
+                                            <th style="width: 5%;">Tipo</th>
                                             <th class="text-center" style="width: 15%;" ng-click="sort('')">
                                                 Base Imponible
                                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
@@ -359,6 +360,7 @@
                                                 Es requerido</span>
                                             </td>
                                             <td>{{item.detalle}}</td>
+                                            <td>{{item.tipo}}</td>
                                             <td class="text-right">$ {{item.baseimponible}}</td>
                                             <td>
                                                 <input type="text" class="form-control" style="text-align: right !important;" ng-model="item.porciento" ng-blur="recalculateRow(item)" ng-keypress="onlyDecimal($event)">
