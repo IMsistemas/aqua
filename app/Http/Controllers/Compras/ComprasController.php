@@ -38,6 +38,27 @@ class ComprasController extends Controller
         return view('compras.index');
     }
 
+    public function getCompras($filter)
+    {
+        $filter = json_decode($filter);
+        $filterCombo = ($filter->proveedorId != null) ? " and cont_documentocompra.idproveedor = " . $filter->proveedorId : "";
+
+        if($filter->estado != null){
+            $opcion = boolval($filter->estado)? "true" : "false";
+            $filterCombo .= ' and cont_documentocompra."estaAnulada" = '.$opcion;
+        }
+
+        return  Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+            ->join('persona','persona.idpersona','=','proveedor.idpersona')
+            ->select('persona.razonsocial', 'cont_documentocompra.*')
+            ->whereRaw("(cont_documentocompra.iddocumentocompra::text ILIKE '%" . $filter->text . "%'
+                            or persona.razonsocial ILIKE '%" . $filter->text . "%' )
+                            		".$filterCombo)
+            ->orderBy('cont_documentocompra.iddocumentocompra', 'desc')
+            ->get();
+
+    }
+
     public function getProveedorByFilter()
     {
         return Proveedor::with('persona')->get();

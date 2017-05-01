@@ -722,7 +722,7 @@
                 estado: t_estado
             };
 
-            $http.get(API_URL + 'compras/getCompras/' + JSON.stringify(filter)).success(function(response){
+            $http.get(API_URL + 'DocumentoCompras/getCompras/' + JSON.stringify(filter)).success(function(response){
                 $scope.compras = response;
             });
         }
