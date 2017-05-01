@@ -69,6 +69,24 @@
             });
         };
 
+        $scope.getTipoPagoComprobante = function () {
+
+             $http.get(API_URL + 'DocumentoCompras/getTipoPagoComprobante').success(function(response){
+
+                 var longitud = response.length;
+                 var array_temp = [];
+
+                 for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namebodega, id: response[i].idbodega})
+                 }
+
+                 $scope.listbodegas = array_temp;
+                 $scope.bodega = array_temp[0].id
+
+             });
+
+        };
+
         $scope.getLastIDCompra = function () {
 
             $http.get(API_URL + 'DocumentoCompras/getLastIDCompra').success(function(response){
