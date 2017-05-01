@@ -51,11 +51,9 @@
                 </div>
             </div>
             <div class="col-sm-3 col-xs-3">
-                <div class="form-group has-feedback">
-                    <select class="form-control" name="proveedorFiltro" id="proveedorFiltro" ng-model="proveedorFiltro"
-                            ng-change="searchByFilter()" ng-options="value.id as value.label for value in proveedor">
-                    </select>
-                </div>
+                <select class="form-control" name="proveedorFiltro0" id="proveedorFiltro0" ng-model="proveedorFiltro0"
+                        ng-change="searchByFilter()" ng-options="value.id as value.label for value in proveedor0" >
+                </select>
             </div>
 
             <div class="col-sm-3 col-xs-3">
@@ -81,11 +79,11 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                     <tr>
-                        <th style="text-align: center;" ng-click="sort('codigocompra')">
+                        <th style="text-align: center; width: 4%;" ng-click="sort('codigocompra')">
                             Código
                             <span class="glyphicon sort-icon" ng-show="sortKey=='codigocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="text-align: center;" ng-click="sort('fecharegistrocompra')">
+                        <th style="text-align: center; width: 10%;" ng-click="sort('fecharegistrocompra')">
                             Fecha Ingreso
                             <span class="glyphicon sort-icon" ng-show="sortKey=='fecharegistrocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -93,39 +91,39 @@
                             Proveedor
                             <span class="glyphicon sort-icon" ng-show="sortKey=='razonsocialproveedor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="text-align: center;">NO.</th>
-                        <th style="text-align: center;">Subtotal</th>
-                        <th style="text-align: center;">IVA</th>
-                        <th style="text-align: center;" ng-click="sort('totalcompra')">
+                        <th style="text-align: center; width: 14%;">NO.</th>
+                        <th style="text-align: center; width: 8%;">Subtotal</th>
+                        <th style="text-align: center; width: 8%;">IVA</th>
+                        <th style="text-align: center; width: 10%;" ng-click="sort('totalcompra')">
                             Total
                             <span class="glyphicon sort-icon" ng-show="sortKey=='totalcompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="text-align: center;" ng-click="sort('estapagada')">
+                        <th style="text-align: center; width: 9%;" ng-click="sort('estapagada')">
                             Estado
                             <span class="glyphicon sort-icon" ng-show="sortKey=='estapagada'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="width: 20%;">Acciones</th>
+                        <th class="text-center" style="width: 9%;">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                         <td style="text-align: center;">{{item.iddocumentocompra}}</td>
-                        <td>{{formatoFecha(item.fecharegistrocompra)}}</td>
-                        <td>{{item.razonsocial}}</td>
-                        <td>{{item.numdocumentocompra}}</td>
-                        <td>{{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
-                        <td>{{item.ivacompra  }}</td>
-                        <td>{{item.valortotalcompra}}</td>
-                        <td>{{(item.estadoanulado)?'Anulada':'No Anulada'}}</td>
-                        <td>
-                            <button type="button" class="btn btn-warning" ng-click="openForm(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
+                        <td class="text-center">{{formatoFecha(item.fecharegistrocompra)}}</td>
+                        <td class="text-left">{{item.razonsocial}}</td>
+                        <td class="text-center">{{item.numdocumentocompra}}</td>
+                        <td class="text-right">{{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
+                        <td class="text-right">{{item.ivacompra  }}</td>
+                        <td class="text-right">{{item.valortotalcompra}}</td>
+                        <td class="text-right">{{(item.estadoanulado)?'ANULADA':'NO ANULADA'}}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
                                     data-toggle="tooltip" data-placement="bottom" >
-                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                             </button>
 
-                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item,0)"
+                            <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
                                     data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1">
-                                Anular <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
 
                         </td>

@@ -40,11 +40,13 @@
 
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
+
                 for (var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].persona.razonsocial, id: response[i].idproveedor})
                 }
-                $scope.proveedor = array_temp;
-                $scope.proveedoresFiltro = array_temp[0].id;
+
+                $scope.proveedor0 = array_temp;
+                $scope.proveedoresFiltro0 = array_temp[0].id;
 
             });
         };
@@ -65,7 +67,7 @@
 
             $http.get(API_URL + 'DocumentoVenta/AllBodegas').success(function(response){
                     $scope.Bodegas=response;
-                    console.log(response);
+                    //console.log(response);
             });
         };
 
@@ -230,7 +232,7 @@
             $http.get(API_URL + 'DocumentoCompras/porcentajeivaiceotro')
                 .success(function(response){
                     $scope.Configuracion=response;
-                    console.log(response);
+                    //console.log(response);
                     for(x=0;x<$scope.Configuracion.length;x++){
                         if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
                             if($scope.Configuracion[x].IdContable==null){
@@ -690,6 +692,58 @@
             });
         };
 
+        $scope.viewInfoCompra = function (idcompra) {
+
+            $scope.activeForm(0);
+
+            $http.get(API_URL + 'DocumentoCompras/' + idcompra).success(function (response) {
+
+                console.log(response);
+
+                response = response[0];
+
+                var numdocumentocompra = (response.numdocumentocompra).split('-')
+
+                $scope.t_establ = numdocumentocompra[0];
+                $scope.t_pto = numdocumentocompra[1];
+                $scope.t_secuencial = numdocumentocompra[2];
+
+                $scope.Subtotalconimpuestos = response.subtotalconimpuestocompra;
+                $scope.Subtotalcero = response.subtotalcerocompra;
+                $scope.Subtotalnobjetoiva = response.subtotalnoobjivacompra;
+                $scope.Subototalexentoiva = response.subtotalexentivacompra;
+                $scope.Subtotalsinimpuestos = response.subtotalsinimpuestocompra;
+                $scope.Totaldescuento = response.totaldescuento;
+                $scope.ValICE = response.icecompra;
+                $scope.ValIVA = response.ivacompra;
+                $scope.ValIRBPNR = response.irbpnrcompra;
+                $scope.ValPropina = response.propinacompra;
+                $scope.ValorTotal = response.valortotalcompra;
+
+                $scope.fecharegistrocompra = response.fecharegistrocompra;
+                $scope.fechaemisioncompra = response.fechaemisioncompra;
+
+                // Campos de Comprobante-------
+
+                /*$scope.regimenfiscal = 1;
+                $scope.convenio = 1;
+                $scope.normalegal = 1;
+
+                $('#fechaemisioncomprobante').val('');
+
+                $('#t_establ_c').val('000');
+                $('#t_pto_c').val('000');
+                $('#t_secuencial_c').val('000000000');
+                $scope.noauthcomprobante = '';*/
+
+
+            })
+            .error(function(err){
+                console.log(err);
+            });
+
+        };
+
         /*
             ------------------------------------------------------------------------------------------        NEW
          */
@@ -708,8 +762,8 @@
                 }
             }
 
-            if($scope.proveedorFiltro != undefined && $scope.proveedorFiltro != ''){
-                t_proveedorId = $scope.proveedorFiltro;
+            if($scope.proveedorFiltro0 != undefined && $scope.proveedorFiltro0 != ''){
+                t_proveedorId = $scope.proveedorFiltro0;
             }
 
             if($scope.estadoFiltro != undefined && $scope.estadoFiltro != ''){

@@ -24,8 +24,24 @@ class Cont_DocumentoCompra extends Model
     ];
 
 
-    public function sri_comprobanteretencion(){
+    public function sri_comprobanteretencion()
+    {
         return $this->belongsTo('App\Modelos\SRI\SRI_ComprobanteRetencion',"idcomprobanteretencion");
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Modelos\Proveedores\Proveedor',"idproveedor");
+    }
+
+    public function sri_sustentotributario()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_SustentoTributario',"idsustentotributario");
+    }
+
+    public function sri_tipocomprobante()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_TipoComprobante',"idtipocomprobante");
     }
    
 }

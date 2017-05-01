@@ -304,7 +304,11 @@ class ComprasController extends Controller
      */
     public function show($id)
     {
-        //
+        $compra = Cont_DocumentoCompra::with('proveedor', 'sri_comprobanteretencion', 'sri_sustentotributario',
+                        'sri_tipocomprobante')
+                    ->where('iddocumentocompra', $id)->get();
+
+        return $compra;
     }
 
     /**
