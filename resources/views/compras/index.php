@@ -532,18 +532,16 @@
                         <div class="col-xs-6" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Régimen Fiscal?: </span>
-                                <select class="form-control">
-                                    <option value="1">SI</option>
-                                    <option value="2">NO</option>
+                                <select class="form-control" name="regimenfiscal" id="regimenfiscal" ng-model="regimenfiscal"
+                                        ng-options="value.id as value.name for value in estados" >
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-6" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Convenio doble Tributación?: </span>
-                                <select class="form-control">
-                                    <option value="1">SI</option>
-                                    <option value="2">NO</option>
+                                <select class="form-control" name="convenio" id="convenio" ng-model="convenio"
+                                        ng-options="value.id as value.name for value in estados">
                                 </select>
                             </div>
                         </div>
@@ -551,34 +549,33 @@
                         <div class="col-xs-6" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Aplicación de Norma Legal?: </span>
-                                <select class="form-control">
-                                    <option value="1">SI</option>
-                                    <option value="2">NO</option>
+                                <select class="form-control" name="normalegal" id="normalegal" ng-model="normalegal"
+                                        ng-options="value.id as value.name for value in estados">
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-6" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Fecha Emisión Comprobante: </span>
-                                <input type="text" class="form-control datepicker" />
+                                <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" />
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Nro. Comprobante Retención: </span>
                                 <span class="input-group-btn" style="width: 15%;">
-	                    <input type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
+	                    <input type="text" class="form-control" id="t_establ_c" name="t_establ_c" ng-model="t_establ_c" ng-keypress="onlyNumber($event, 3, 't_establ_c')" ng-blur="calculateLength('t_establ_c', 3)" />
 	                </span>
                                 <span class="input-group-btn" style="width: 15%;" >
-	                    <input type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
+	                    <input type="text" class="form-control" id="t_pto_c" name="t_pto_c" ng-model="t_pto_c" ng-keypress="onlyNumber($event, 3, 't_pto_c')" ng-blur="calculateLength('t_pto_c', 3)" />
 	                </span>
-                                <input type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
+                                <input type="text" class="form-control" id="t_secuencial_c" name="t_secuencial_c" ng-model="t_secuencial_c" ng-keypress="onlyNumber($event, 9, 't_secuencial_c')" ng-blur="calculateLength('t_secuencial_c', 9)" />
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Nro Autorización Comprobante: </span>
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control" name="noauthcomprobante" id="noauthcomprobante" ng-model="noauthcomprobante" />
                             </div>
                         </div>
 

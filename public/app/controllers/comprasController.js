@@ -370,16 +370,17 @@
                 descripcion: $scope.observacion
             };
 
-            //Asiento contable Partida doble 	ay123
+            //Asiento contable Partida doble
             var RegistroC=[];
 
             //Asiento contable cliente -- el cliente por lo genearal es un activo entonces el cliente aumenta una deuda por el debe
             var aux_bodegaseleccionada={};
             for(var i=0;i<$scope.Bodegas.length;i++){
-                if(parseInt($scope.Bodegas[i].idbodega)==parseInt($scope.Bodega)){
+                if(parseInt($scope.Bodegas[i].idbodega) == parseInt($scope.Bodega)){
                     aux_bodegaseleccionada=$scope.Bodegas[i];
                 }
             }
+
             var cliente = {
                 idplancuenta: $scope.proveedor.originalObject.proveedor[0].cont_plancuenta.idplancuenta,
                 concepto: $scope.proveedor.originalObject.proveedor[0].cont_plancuenta.concepto,
@@ -595,22 +596,36 @@
                 ItemsVenta.push(itemsdocventa);
             }
             //--Items venta
-            //console.log(Contabilidad);
-            /*console.log(kardex);
-             console.log(DocVenta);
-             console.log(ItemsVenta);*/
+
+            var dataComprobante = null;
+
+            if ($scope.tipopago != '' && $scope.tipopago != undefined) {
+                dataComprobante = {
+                    tipopago: $scope.tipopago,
+                    paispago: $scope.paispago,
+                    regimenfiscal: $scope.regimenfiscal,
+                    convenio: $scope.convenio,
+                    normalegal: $scope.normalegal,
+                    fechaemisioncomprobante: $('#fechaemisioncomprobante').val(),
+                    nocomprobante: $('#t_establ_c').val() + '-' + $('#t_pto_c').val() + '-' + $('#t_secuencial_c').val(),
+                    noauthcomprobante: $scope.noauthcomprobante
+                }
+            }
+
+            console.log(dataComprobante);
+
             var transaccion_venta_full={
-                DataContabilidad:Contabilidad,
-                Datakardex:kardex,
-                DataCompra:DocVenta,
+                DataContabilidad: Contabilidad,
+                Datakardex: kardex,
+                DataCompra: DocVenta,
                 Idformapagocompra: $scope.formapago,
-                DataItemsCompra:ItemsVenta
+                DataItemsCompra: ItemsVenta,
+                dataComprobante: dataComprobante
             };
 
-            console.log(transaccion_venta_full);
+            //console.log(transaccion_venta_full);
 
-            //$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(transaccion_venta_full))
-            //$http.get(API_URL+'DocumentoVenta/getVentas/'+JSON.stringify(2))
+
 
             var transaccionfactura={
                 datos:JSON.stringify(transaccion_venta_full)
@@ -620,21 +635,6 @@
             $http.post(API_URL+'DocumentoCompras',transaccionfactura).success(function (response) {
 
                     console.log(response);
-
-                    /*if(parseInt(response)>0){
-                        QuitarClasesMensaje();
-                        $("#titulomsm").addClass("btn-success");
-                        $("#msm").modal("show");
-                        $scope.Mensaje="La venta se guardo correctamente";
-                        $scope.LimiarDataVenta();
-                        $scope.NumeroRegistroVenta();
-                    }else{
-                        QuitarClasesMensaje();
-                        $("#titulomsm").addClass("btn-danger");
-                        $("#msm").modal("show");
-                        $scope.Mensaje="Error al guardar la venta";
-                        $scope.LimiarDataVenta();
-                    }*/
 
                 if (response.success == true) {
 
@@ -803,6 +803,24 @@
 
                 $scope.fecharegistrocompra = $scope.fecha();
                 $scope.fechaemisioncompra = $scope.fecha();
+
+                // Campos de Comprobante-------
+
+                $scope.estados = [
+                    { id: 1, name: 'SI' },
+                    { id: 2, name: 'NO' }
+                ];
+
+                $scope.regimenfiscal = 1;
+                $scope.convenio = 1;
+                $scope.normalegal = 1;
+
+                $('#fechaemisioncomprobante').val('');
+
+                $('#t_establ_c').val('000');
+                $('#t_pto_c').val('000');
+                $('#t_secuencial_c').val('000000000');
+                $scope.noauthcomprobante = '';
 
                 $scope.createRow();
 

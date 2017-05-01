@@ -15,6 +15,7 @@ use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\Proveedor;
+use App\Modelos\SRI\SRI_ComprobanteRetencion;
 use App\Modelos\SRI\SRI_PagoPais;
 use App\Modelos\SRI\SRI_PagoResidente;
 use App\Modelos\SRI\SRI_Sustento_Comprobante;
@@ -189,10 +190,12 @@ class ComprasController extends Controller
 
             $aux_addVenta = Cont_DocumentoCompra::all();
 
+            $lastIDCompra = $aux_addVenta->last()->iddocumentocompra;
+
             $longitud_items = count($filtro->DataItemsCompra);
 
             for($x = 0; $x < $longitud_items; $x++) {
-                $filtro->DataItemsCompra[$x]->iddocumentocompra=$aux_addVenta->last()->iddocumentocompra;
+                $filtro->DataItemsCompra[$x]->iddocumentocompra = $lastIDCompra;
             }
 
             $aux_itemventa = (array) $filtro->DataItemsCompra;
@@ -213,7 +216,7 @@ class ComprasController extends Controller
                 'fecha' => $docventa->fecharegistrocompra,
                 'haber' => $filtro->DataContabilidad->registro[0]->Haber, //primera posicion es cliente
                 'debe' => 0,
-                'numerodocumento' => "".$aux_addVenta->last()->iddocumentocompra."",
+                'numerodocumento' => "" . $lastIDCompra."",
                 'estadoanulado' => false
             ];
 
@@ -222,6 +225,38 @@ class ComprasController extends Controller
             if ($aux_registrocliente == false) {
                 return response()->json(['success' => false]);
             }
+
+            //----------Insert data Comprobante retencion--------------------------------
+
+            if ($filtro->dataComprobante != null) {
+
+                $comprobante = new SRI_ComprobanteRetencion();
+
+                $comprobante->idpagoresidente = $filtro->dataComprobante->tipopago;
+                $comprobante->idpagopais = $filtro->dataComprobante->paispago;
+                $comprobante->regimenfiscal = $filtro->dataComprobante->regimenfiscal;
+                $comprobante->conveniotributacion = $filtro->dataComprobante->convenio;
+                $comprobante->normalegal = $filtro->dataComprobante->normalegal;
+                $comprobante->fechaemisioncomprob = $filtro->dataComprobante->fechaemisioncomprobante;
+                $comprobante->nocomprobante = $filtro->dataComprobante->nocomprobante;
+                $comprobante->noauthcomprobante = $filtro->dataComprobante->noauthcomprobante;
+
+                if ($comprobante->save()) {
+
+                    $last_c = Cont_DocumentoCompra::find($lastIDCompra);
+                    $last_c->idcomprobanteretencion = $comprobante->idcomprobanteretencion;
+
+                    if ($last_c->save == false) {
+                        return response()->json(['success' => false]);
+                    }
+
+                } else {
+                    return response()->json(['success' => false]);
+                }
+
+            }
+
+
 
 
 
