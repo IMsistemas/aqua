@@ -305,7 +305,7 @@ class ComprasController extends Controller
     public function show($id)
     {
         $compra = Cont_DocumentoCompra::with('proveedor.persona', 'proveedor.sri_tipoimpuestoiva', 'sri_comprobanteretencion', 'sri_sustentotributario',
-                        'sri_tipocomprobante')
+                        'sri_tipocomprobante', 'cont_formapago_documentocompra')
                     ->where('iddocumentocompra', $id)->get();
 
         return $compra;

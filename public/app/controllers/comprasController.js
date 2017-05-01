@@ -715,11 +715,15 @@
 
                 $scope.getTipoComprobante(response.idtipocomprobante);
 
+                $scope.numcompra = response.iddocumentocompra;
                 $scope.razon = response.proveedor.persona.razonsocial;
                 $scope.direccion =response.proveedor.persona.direccion;
                 $scope.telefono = response.proveedor.telefonoprincipal;
                 $scope.iva = response.proveedor.sri_tipoimpuestoiva.nametipoimpuestoiva;
 
+                if (response.cont_formapago_documentocompra.length > 0) {
+                    $scope.formapago = response.cont_formapago_documentocompra[0].idformapago;
+                }
 
                 $scope.Subtotalconimpuestos = response.subtotalconimpuestocompra;
                 $scope.Subtotalcero = response.subtotalcerocompra;

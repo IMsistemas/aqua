@@ -43,5 +43,10 @@ class Cont_DocumentoCompra extends Model
     {
         return $this->belongsTo('App\Modelos\SRI\SRI_TipoComprobante',"idtipocomprobante");
     }
+
+    public function cont_formapago_documentocompra()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_FormaPagoDocumentoCompra', 'iddocumentocompra');
+    }
    
 }
