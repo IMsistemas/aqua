@@ -45,7 +45,7 @@ class ComprasController extends Controller
 
         if($filter->estado != null){
             $opcion = boolval($filter->estado)? "true" : "false";
-            $filterCombo .= ' and cont_documentocompra."estaAnulada" = '.$opcion;
+            $filterCombo .= ' and cont_documentocompra.estadoanulado = '.$opcion;
         }
 
         return  Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
