@@ -694,7 +694,7 @@
             ------------------------------------------------------------------------------------------        NEW
          */
 
-        $scope.searchByFilter = function(){
+        $scope.searchByFilter = function(pageNumber){
 
             var t_search = null;
             var t_proveedorId = null;
@@ -722,15 +722,20 @@
                 estado: t_estado
             };
 
-            $http.get(API_URL + 'DocumentoCompras/getCompras/' + JSON.stringify(filter)).success(function(response){
-                $scope.compras = response;
+            $http.get(API_URL + 'DocumentoCompras/getCompras?page=' + pageNumber + '&filter=' + JSON.stringify(filter)).success(function(response){
+                $scope.compras = response.data;
+                $scope.totalItems = response.total;
             });
-        }
+        };
+
+        $scope.pageChanged = function(newPage) {
+            $scope.searchByFilter(newPage);
+        };
 
         $scope.initLoad = function () {
             $scope.ConfigContable();
             $scope.getProveedorByFilter();
-            $scope.searchByFilter();
+            $scope.searchByFilter(1);
         };
 
         $scope.sumar = function(v1,v2){

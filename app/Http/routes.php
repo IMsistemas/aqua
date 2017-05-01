@@ -985,7 +985,7 @@ Route::get('DocumentoCompras/getBodegas', 'Compras\ComprasController@getBodegas'
 Route::get('DocumentoCompras/getSustentoTributario', 'Compras\ComprasController@getSustentoTributario' );
 Route::get('DocumentoCompras/getTipoComprobante/{idsustento}', 'Compras\ComprasController@getTipoComprobante' );
 Route::get('DocumentoCompras/getFormaPago', 'Compras\ComprasController@getFormaPago' );
-Route::get('DocumentoCompras/getCompras/{filters}', 'Compras\ComprasController@getCompras');
+Route::get('DocumentoCompras/getCompras', 'Compras\ComprasController@getCompras');
 Route::resource('DocumentoCompras', 'Compras\ComprasController');
 
 //-------------------------------- Guía Remisión---------------/////////

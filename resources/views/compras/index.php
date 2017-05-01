@@ -108,7 +108,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr dir-paginate="item in compras|orderBy:sortKey:reverse|itemsPerPage:10" >
+                    <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                         <td style="text-align: center;">{{item.iddocumentocompra}}</td>
                         <td>{{formatoFecha(item.fecharegistrocompra)}}</td>
                         <td>{{item.razonsocial}}</td>
@@ -123,9 +123,6 @@
                                 Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
                             </button>
 
-
-
-
                             <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item,0)"
                                     data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1">
                                 Anular <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
@@ -136,10 +133,16 @@
                     </tbody>
                 </table>
                 <dir-pagination-controls
-                    max-size="5"
-                    class="pull-left"
-                    direction-links="true"
-                    boundary-links="true" >
+
+                        on-page-change="pageChanged(newPageNumber)"
+
+                        template-url="dirPagination.html"
+
+                        class="pull-right"
+                        max-size="10"
+                        direction-links="true"
+                        boundary-links="true" >
+
                 </dir-pagination-controls>
 
             </div>

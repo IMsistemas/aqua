@@ -38,9 +38,9 @@ class ComprasController extends Controller
         return view('compras.index');
     }
 
-    public function getCompras($filter)
+    public function getCompras(Request $request)
     {
-        $filter = json_decode($filter);
+        $filter = json_decode($request->get('filter'));
         $filterCombo = ($filter->proveedorId != null) ? " and cont_documentocompra.idproveedor = " . $filter->proveedorId : "";
 
         if($filter->estado != null){
@@ -52,10 +52,10 @@ class ComprasController extends Controller
             ->join('persona','persona.idpersona','=','proveedor.idpersona')
             ->select('persona.razonsocial', 'cont_documentocompra.*')
             ->whereRaw("(cont_documentocompra.iddocumentocompra::text ILIKE '%" . $filter->text . "%'
-                            or persona.razonsocial ILIKE '%" . $filter->text . "%' )
+                            or persona.razonsocial ILIKE '%" . $filter->text . "%' OR cont_documentocompra.numdocumentocompra ILIKE '%" . $filter->text . "%')
                             		".$filterCombo)
             ->orderBy('cont_documentocompra.iddocumentocompra', 'desc')
-            ->get();
+            ->paginate(10);
 
     }
 
