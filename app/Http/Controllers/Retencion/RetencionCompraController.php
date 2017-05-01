@@ -8,6 +8,7 @@ use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
 use App\Modelos\Retencion\RetencionCompra;
 use App\Modelos\Retencion\RetencionFuenteCompra;
+use App\Modelos\SRI\SRI_RetencionCompra;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,31 +34,33 @@ class RetencionCompraController extends Controller
     public function getRetenciones(Request $request)
     {
 
-        $filter = json_decode($request->get('filter'));
+        /*$filter = json_decode($request->get('filter'));
 
         $retencion = null;
 
         if ($filter->year != null && $filter->month != null) {
-            $retencion = RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year . ' AND EXTRACT( MONTH FROM fecha) = ' . $filter->month);
+            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year . ' AND EXTRACT( MONTH FROM fecha) = ' . $filter->month);
         } else if ($filter->year != null) {
-            $retencion = RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year);
+            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year);
         } else if ($filter->month != null) {
-            $retencion = RetencionCompra::whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->month);
+            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->month);
         }
 
         if ($filter->search != null) {
             if ($retencion != null) {
                 $retencion->whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
             } else {
-                $retencion = RetencionCompra::whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
+                $retencion = SRI_RetencionCompra::whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
             }
         }
 
         if ($retencion != null) {
             $retencion = $retencion->orderBy('fecha', 'desc')->paginate(10);
         } else {
-            $retencion = RetencionCompra::orderBy('fecha', 'desc')->paginate(10);
-        }
+            $retencion = SRI_RetencionCompra::orderBy('fecha', 'desc')->paginate(10);
+        }*/
+
+        $retencion = SRI_RetencionCompra::orderBy('fechaemision', 'desc')->paginate(10);
 
         return $retencion;
 
