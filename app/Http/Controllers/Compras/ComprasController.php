@@ -8,6 +8,7 @@ use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_Bodega;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_FormaPago;
+use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoCompra;
 use App\Modelos\Contabilidad\Cont_ItemCompra;
 use App\Modelos\Contabilidad\Cont_ItemVenta;
 use App\Modelos\Contabilidad\Cont_Kardex;
@@ -258,14 +259,14 @@ class ComprasController extends Controller
 
             }
 
+            $formapago = new Cont_FormaPagoDocumentoCompra();
 
+            $formapago->idformapago = $filtro->Idformapagocompra;
+            $formapago->iddocumentocompra = $lastIDCompra;
 
-
-
-            /*$aux= DB::table('cont_formapago_documentoventa')->insert([
-                ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
-            ]);*/
-
+            if ($formapago->save() == false){
+                return response()->json(['success' => false]);
+            }
 
             return response()->json(['success' => true]);
 
