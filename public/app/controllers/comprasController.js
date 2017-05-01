@@ -74,16 +74,34 @@
              $http.get(API_URL + 'DocumentoCompras/getTipoPagoComprobante').success(function(response){
 
                  var longitud = response.length;
-                 var array_temp = [];
+                 var array_temp = [{label: '-- Seleccione --', id: ''}];
 
                  for (var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].namebodega, id: response[i].idbodega})
+                    array_temp.push({label: response[i].tipopagoresidente, id: response[i].idpagoresidente})
                  }
 
-                 $scope.listbodegas = array_temp;
-                 $scope.bodega = array_temp[0].id
+                 $scope.listtipopago = array_temp;
+                 $scope.tipopago = array_temp[0].id
 
              });
+
+        };
+
+        $scope.getPaisPagoComprobante = function () {
+
+            $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+                for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].pais, id: response[i].idpagopais})
+                }
+
+                $scope.listpaispago = array_temp;
+                $scope.paispago = array_temp[0].id
+
+            });
 
         };
 
@@ -768,6 +786,8 @@
                 $scope.getBodegas();
                 $scope.getSustentoTributario();
                 $scope.getFormaPago();
+                $scope.getTipoPagoComprobante();
+                $scope.getPaisPagoComprobante();
 
                 $scope.Subtotalconimpuestos = '0.00';
                 $scope.Subtotalcero = '0.00';

@@ -975,6 +975,7 @@ Route::resource('/rol', 'Rol\RolController');
  */
 
 Route::post('DocumentoCompras/anularCompra', 'Compras\ComprasController@anularCompra');
+Route::get('DocumentoCompras/getPaisPagoComprobante', 'Compras\ComprasController@getPaisPagoComprobante');
 Route::get('DocumentoCompras/getTipoPagoComprobante', 'Compras\ComprasController@getTipoPagoComprobante');
 Route::get('DocumentoCompras/getLastIDCompra', 'Compras\ComprasController@getLastIDCompra');
 Route::get('DocumentoCompras/porcentajeivaiceotro', 'Compras\ComprasController@getCofiguracioncontable');

@@ -15,6 +15,8 @@ use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\Proveedor;
+use App\Modelos\SRI\SRI_PagoPais;
+use App\Modelos\SRI\SRI_PagoResidente;
 use App\Modelos\SRI\SRI_Sustento_Comprobante;
 use App\Modelos\SRI\SRI_SustentoTributario;
 use Illuminate\Http\Request;
@@ -68,6 +70,16 @@ class ComprasController extends Controller
                         ->whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")
                         ->whereRaw('idpersona IN (SELECT idpersona FROM proveedor)')
                         ->get();
+    }
+
+    public function getTipoPagoComprobante()
+    {
+        return SRI_PagoResidente::orderBy('idpagoresidente', 'asc')->get();
+    }
+
+    public function getPaisPagoComprobante()
+    {
+        return SRI_PagoPais::orderBy('pais', 'asc')->get();
     }
 
     /**

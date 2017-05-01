@@ -513,11 +513,8 @@
                         <div class="col-xs-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Tipo de Pago: </span>
-                                <select class="form-control" name="codigoformapago" id="codigoformapago" ng-model="compra.codigoformapago3">
-                                    <option value="">-- Seleccione --</option>
-                                    <option ng-repeat="item in TiposPago"
-                                            value="{{item.idpagoresidente}}">{{item.tipopagoresidente}}
-                                    </option>
+                                <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
+                                        ng-options="value.id as value.label for value in listtipopago">
                                 </select>
 
                             </div>
@@ -525,12 +522,8 @@
                         <div class="col-xs-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Pais Pago: </span>
-                                <select class="form-control" name="pais" id="pais" ng-model="compra.codigopais"  >
-                                    <option value="">-- Seleccione --</option>
-                                    <option value="999">-- Seleccione --</option>
-                                    <option ng-repeat="item in paises"
-                                            value="{{item.idpagopais}}">{{item.pais }}
-                                    </option>
+                                <select class="form-control" name="paispago" id="paispago" ng-model="paispago"
+                                        ng-options="value.id as value.label for value in listpaispago">
                                 </select>
 
                             </div>
@@ -567,7 +560,7 @@
                         <div class="col-xs-6" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Fecha Emisión Comprobante: </span>
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control datepicker" />
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: 5px;">
