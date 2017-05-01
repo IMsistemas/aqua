@@ -110,7 +110,7 @@
             $http.get(API_URL + 'DocumentoCompras/getLastIDCompra').success(function(response){
 
                 if (response != null && response != 0) {
-                    $scope.numcompra = response;
+                    $scope.numcompra = parseInt(response) + 1;
                 } else {
                     $scope.numcompra = 1;
                 }
@@ -600,9 +600,16 @@
             var dataComprobante = null;
 
             if ($scope.tipopago != '' && $scope.tipopago != undefined) {
+
+                var pais = null;
+
+                if ($scope.paispago != null && $scope.paispago != undefined && $scope.paispago != '') {
+                    pais = $scope.paispago;
+                }
+
                 dataComprobante = {
                     tipopago: $scope.tipopago,
-                    paispago: $scope.paispago,
+                    paispago: pais,
                     regimenfiscal: $scope.regimenfiscal,
                     convenio: $scope.convenio,
                     normalegal: $scope.normalegal,

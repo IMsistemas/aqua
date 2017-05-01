@@ -22,8 +22,10 @@ class Cont_DocumentoCompra extends Model
     		'totaldescuento','icecompra','ivacompra','irbpnrcompra','propinacompra','otroscompra',
     		'valortotalcompra','estadoanulado'
     ];
-    
-    
 
+
+    public function sri_comprobanteretencion(){
+        return $this->belongsTo('App\Modelos\SRI\SRI_ComprobanteRetencion',"idcomprobanteretencion");
+    }
    
 }

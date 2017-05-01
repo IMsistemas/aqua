@@ -243,10 +243,12 @@ class ComprasController extends Controller
 
                 if ($comprobante->save()) {
 
-                    $last_c = Cont_DocumentoCompra::find($lastIDCompra);
-                    $last_c->idcomprobanteretencion = $comprobante->idcomprobanteretencion;
+                    $id = $comprobante->idcomprobanteretencion;
 
-                    if ($last_c->save == false) {
+                    $last_c = Cont_DocumentoCompra::find($lastIDCompra);
+                    $last_c->idcomprobanteretencion = $id;
+
+                    if ($last_c->save() == false) {
                         return response()->json(['success' => false]);
                     }
 

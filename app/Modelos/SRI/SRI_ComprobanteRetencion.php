@@ -22,4 +22,9 @@ class SRI_ComprobanteRetencion extends Model
         return $this->belongsTo('App\Modelos\SRI\SRI_PagoPais','idpagopais');
     }
 
+    public function cont_itemventa()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_DocumentoCompra',"idcomprobanteretencion");
+    }
+
 }
