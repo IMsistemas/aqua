@@ -138,7 +138,7 @@
             });
         };
 
-        $scope.getTipoComprobante = function () {
+        $scope.getTipoComprobante = function (idtipocomprobante) {
 
             var idsustento = $scope.sustentotributario;
 
@@ -157,6 +157,9 @@
 
                     $scope.listtipocomprobante = array_temp;
 
+                    if (idtipocomprobante != undefined){
+                        $scope.tipocomprobante = idtipocomprobante;
+                    }
 
                 });
             }
@@ -702,11 +705,21 @@
 
                 response = response[0];
 
-                var numdocumentocompra = (response.numdocumentocompra).split('-')
+                var numdocumentocompra = (response.numdocumentocompra).split('-');
 
                 $scope.t_establ = numdocumentocompra[0];
                 $scope.t_pto = numdocumentocompra[1];
                 $scope.t_secuencial = numdocumentocompra[2];
+                $scope.nroautorizacioncompra = response.nroautorizacioncompra;
+                $scope.sustentotributario = response.idsustentotributario;
+
+                $scope.getTipoComprobante(response.idtipocomprobante);
+
+                $scope.razon = response.proveedor.persona.razonsocial;
+                $scope.direccion =response.proveedor.persona.direccion;
+                $scope.telefono = response.proveedor.telefonoprincipal;
+                $scope.iva = response.proveedor.sri_tipoimpuestoiva.nametipoimpuestoiva;
+
 
                 $scope.Subtotalconimpuestos = response.subtotalconimpuestocompra;
                 $scope.Subtotalcero = response.subtotalcerocompra;
