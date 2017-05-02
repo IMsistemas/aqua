@@ -64,6 +64,11 @@
 
         $scope.iddocumentocompra = 0;
 
+        $scope.ConfiguracionContable = null;
+        $scope.ConfiguracionContableRetenIVA = null;
+        $scope.ConfiguracionContableRetenRENTA = null;
+        $scope.ProveedorContable = null;
+
         $scope.initLoad = function (pageNumber) {
             $scope.idretencion = 0;
 
@@ -100,7 +105,7 @@
                     }
 
                     var total_retenido = {
-                        value: total,
+                        value: total.toFixed(2),
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -203,8 +208,32 @@
             }
         };
 
+        $scope.getConfigContabilidad = function () {
+            $http.get(API_URL + 'retencionCompra/getConfigContabilidad').success(function(response){
+
+                //console.log(response);
+
+                var longitud = response.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (response[i].optionname == 'SRI_RETEN_IVA_COMPRA') {
+                        $scope.ConfiguracionContableRetenIVA = response[i];
+                    } else if (response[i].optionname == 'SRI_RETEN_RENTA_COMPRA') {
+                        $scope.ConfiguracionContableRetenRENTA = response[i];
+                    }
+                }
+
+                //console.log($scope.ConfiguracionContableRetenRENTA);
+
+                $scope.ConfiguracionContable = response;
+
+            });
+        };
 
         $scope.newForm = function () {
+
+            $scope.getConfigContabilidad();
+
             $scope.t_fechaingreso = $scope.nowDate();
             $scope.t_nroretencion = '';
 
@@ -310,17 +339,101 @@
             $scope.t_pto = $('#t_pto').val();
             $scope.t_secuencial = $('#t_secuencial').val();
 
-            var data = {
+
+
+            //console.log($scope.itemretencion);
+
+            /*
+             * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
+             */
+
+            var transaccion = {
+                fecha: $scope.t_fechaingreso,
+                idtipotransaccion: 7,
+                numcomprobante: 1,
+                descripcion: 'RETENCIONES COMPRA'
+            };
+
+            var registroC = [];
+
+            var proveedor = {
+                idplancuenta: $scope.ProveedorContable.idplancuenta,
+                concepto: $scope.ProveedorContable.concepto,
+                controlhaber: $scope.ProveedorContable.controlhaber,
+                tipocuenta: $scope.ProveedorContable.tipocuenta,
+                Debe: 0,
+                Haber: $scope.t_total,
+                Descipcion: ''
+            };
+
+            registroC.push(proveedor);
+
+            var longitud_item = $scope.itemretencion.length;
+
+            for (var i = 0; i < longitud_item; i++) {
+
+                var item = null;
+
+                if ($scope.itemretencion[i].tipo == 'RENTA') {
+
+                    item = {
+                        idplancuenta: $scope.ConfiguracionContableRetenRENTA.idplancuenta,
+                        concepto: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].concepto,
+                        controlhaber: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].controlhaber,
+                        tipocuenta: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].tipocuenta,
+                        Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                        Debe: 0,
+                        Descipcion: ''
+                    };
+
+                    registroC.push(item);
+
+                } else if ($scope.itemretencion[i].tipo == 'IVA') {
+
+                    item = {
+                        idplancuenta: $scope.ConfiguracionContableRetenIVA.idplancuenta,
+                        concepto: $scope.ConfiguracionContableRetenIVA.contabilidad[0].concepto,
+                        controlhaber: $scope.ConfiguracionContableRetenIVA.contabilidad[0].controlhaber,
+                        tipocuenta: $scope.ConfiguracionContableRetenIVA.contabilidad[0].tipocuenta,
+                        Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                        Debe: 0,
+                        Descipcion: ''
+                    };
+
+                    registroC.push(item);
+
+                }
+
+            }
+
+            var Contabilidad={
+                transaccion: transaccion,
+                registro: registroC
+            };
+
+
+            /*
+             * -------------------------FIN CONTABILIDAD----------------------------------------------------------------
+             */
+
+            /*var data = {
+                iddocumentocompra: $scope.iddocumentocompra,
+                retenciones: $scope.itemretencion
+            };*/
+
+            var data_full = {
+                //dataContabilidad: Contabilidad,
+                dataContabilidad: JSON.stringify(Contabilidad),
                 iddocumentocompra: $scope.iddocumentocompra,
                 retenciones: $scope.itemretencion
             };
 
-            //console.log(data);
+            console.log(data_full);
 
             var url = API_URL + 'retencionCompras';
 
             if ($scope.idretencion == 0) {
-                $http.post(url, data).success(function (response) {
+                $http.post(url, data_full).success(function (response) {
                     if (response.success == true) {
                         $scope.idretencion = response.idretencioncompra;
                         //$('#btn-export').show();
@@ -410,6 +523,8 @@
             console.log(object);
 
             if (object.originalObject != undefined) {
+
+                $scope.ProveedorContable = object.originalObject.proveedor.cont_plancuenta;
 
                 $scope.iddocumentocompra = object.originalObject.iddocumentocompra;
 

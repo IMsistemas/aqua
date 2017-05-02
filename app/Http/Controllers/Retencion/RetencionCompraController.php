@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Retencion;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Compras\CompraProducto;
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Retencion\DetalleRetencion;
 use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
@@ -71,6 +74,32 @@ class RetencionCompraController extends Controller
 
     }
 
+    public function getConfigContabilidad()
+    {
+        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_COMPRA' OR optionname = 'SRI_RETEN_RENTA_COMPRA'")->get();
+
+        $configcontable = [];
+
+        foreach ($config as $item) {
+            $aux_contable = null;
+
+            if($item->optionvalue != '' && $item->optionvalue != null){
+                $aux_contable = Cont_PlanCuenta::where('idplancuenta', $item->optionvalue)->get();
+            }
+
+            $configventa = [
+                'idconfiguracionsystem' => $item->idconfiguracionsystem,
+                'idplancuenta' => $item->optionvalue,
+                'optionname' => $item->optionname,
+                'contabilidad'=> $aux_contable
+            ];
+
+            $configcontable[] = $configventa;
+        }
+
+        return response()->json($configcontable);
+    }
+
     public function getRetencionesByCompra($id)
     {
         return RetencionFuenteCompra::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuentecompra.iddetalleretencion')
@@ -85,7 +114,7 @@ class RetencionCompraController extends Controller
 
     public function getCompras($codigo)
     {
-        $compra = Cont_DocumentoCompra::with('proveedor.persona', 'sri_comprobanteretencion')
+        $compra = Cont_DocumentoCompra::with('proveedor.persona', 'proveedor.cont_plancuenta', 'sri_comprobanteretencion')
                             ->where('idcomprobanteretencion', '!=', null)
                             ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $codigo . "%'")
                             ->get();
@@ -121,9 +150,15 @@ class RetencionCompraController extends Controller
      */
     public function store(Request $request)
     {
+
+        $dataContabilidad = json_decode($request->input('dataContabilidad'));
+
+        $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
+
         $retencionCompra = new SRI_RetencionCompra();
 
         $retencionCompra->iddocumentocompra = $request->input('iddocumentocompra');
+        $retencionCompra->idtransaccion = $id_transaccion;
 
         if ($retencionCompra->save()) {
 
