@@ -88,6 +88,9 @@
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
+                            <th style="text-align: center; width: 9%;">
+                                Estado
+                            </th>
                             <th class="text-center" style="width: 10%;">Acciones</th>
                         </tr>
                         </thead>
@@ -98,11 +101,12 @@
                             <td style="font-weight: bold;">{{item.cont_documentocompra.proveedor.persona.razonsocial}}</td>
                             <td class="text-center">{{item.cont_documentocompra.sri_comprobanteretencion.nocomprobante}}</td>
                             <td class="text-right">$ {{item.total_retenido}}</td>
+                            <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idretencioncompra)">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                                <button type="button" class="btn btn-default btn-sm" ng-click="showModalConfirmAnular(item)" ng-disabled="item.estadoanulado==1">
                                     <i class="fa fa-lg fa-ban" aria-hidden="true"></i>
                                 </button>
                             </td>
@@ -121,6 +125,29 @@
                             boundary-links="true" >
 
                     </dir-pagination-controls>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span>Está seguro que desea Anular el Comprobante de Retención: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularRetencion()">
+                                Anular
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -406,30 +433,33 @@
                     </div>
                 </form>
 
-                <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 99999;">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Confirmación</h4>
-                            </div>
-                            <div class="modal-body">
-                                <span>{{message}}</span>
-                            </div>
+
+            </div>
+
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage" style="z-index: 99999;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Confirmación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span>{{message}}</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-danger">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Información</h4>
-                            </div>
-                            <div class="modal-body">
-                                <span>{{message_error}}</span>
-                            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Información</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span>{{message_error}}</span>
                         </div>
                     </div>
                 </div>

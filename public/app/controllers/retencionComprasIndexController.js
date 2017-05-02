@@ -459,6 +459,36 @@
             }
         };
 
+        $scope.anularRetencion = function(){
+
+            var object = {
+                idretencion: $scope.idretencion
+            };
+
+            $http.post(API_URL + 'retencionCompra/anularRetencion', object).success(function(response) {
+
+                $('#modalConfirmAnular').modal('hide');
+
+                if(response.success == true){
+                    $scope.idretencion = 0;
+                    $scope.initLoad(1);
+                    $scope.message = 'Se ha anulado la Retención seleccionada...';
+                    $('#modalMessage').modal('show');
+
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al intentar anular la Retención seleccionada...';
+                    $('#modalMessageError').modal('show');
+                }
+
+            });
+        };
+
+        $scope.showModalConfirmAnular = function(item){
+            $scope.idretencion = item.idretencioncompra;
+            $scope.numseriecompra = item.cont_documentocompra.sri_comprobanteretencion.nocomprobante;
+            $('#modalConfirmAnular').modal('show');
+        };
+
         $scope.showInfoRetencion = function (object, data) {
 
             if (object.originalObject != undefined) {

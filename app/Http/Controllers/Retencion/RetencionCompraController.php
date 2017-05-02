@@ -116,6 +116,7 @@ class RetencionCompraController extends Controller
     {
         $compra = Cont_DocumentoCompra::with('proveedor.persona', 'proveedor.cont_plancuenta', 'sri_comprobanteretencion')
                             ->where('idcomprobanteretencion', '!=', null)
+                            ->whereRaw('cont_documentocompra.iddocumentocompra NOT IN (SELECT sri_retencioncompra.iddocumentocompra FROM sri_retencioncompra)')
                             ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $codigo . "%'")
                             ->get();
 
@@ -129,6 +130,28 @@ class RetencionCompraController extends Controller
             //return DetalleRetencionFuente::orderBy('codigoSRI', 'asc')->get();
         } else {
             return [];
+        }
+    }
+
+    public function anularRetencion(Request $request)
+    {
+        $idretencion = $request->input('idretencion');
+
+        $retencionCompra = SRI_RetencionCompra::find($idretencion);
+        $retencionCompra->estadoanulado = true;
+
+        if ($retencionCompra->save()) {
+
+            $result = CoreContabilidad::AnularAsientoContable($retencionCompra->idtransaccion);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
+
+        } else {
+            return response()->json(['success' => false]);
         }
     }
 
@@ -159,6 +182,7 @@ class RetencionCompraController extends Controller
 
         $retencionCompra->iddocumentocompra = $request->input('iddocumentocompra');
         $retencionCompra->idtransaccion = $id_transaccion;
+        $retencionCompra->estadoanulado = false;
 
         if ($retencionCompra->save()) {
 
