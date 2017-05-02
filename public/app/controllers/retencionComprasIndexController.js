@@ -88,6 +88,26 @@
             };
 
             $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+
+                var longitud = response.data.length;
+                for (var i = 0; i < longitud; i++) {
+
+                    var longitud_sri_retenciondetallecompra = (response.data[i].sri_retenciondetallecompra).length;
+                    var total = 0;
+
+                    for (var j = 0; j < longitud_sri_retenciondetallecompra; j++) {
+                        total += parseFloat(response.data[i].sri_retenciondetallecompra[j].valorretenido);
+                    }
+
+                    var total_retenido = {
+                        value: total,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response.data[i], 'total_retenido', total_retenido);
+                }
+
                 $scope.retencion = response.data;
                 $scope.totalItems = response.total;
             });
@@ -292,28 +312,18 @@
 
             var data = {
                 iddocumentocompra: $scope.iddocumentocompra,
-                numeroretencion: $scope.t_nroretencion,
-                codigocompra: $('#t_nrocompra').val(),
-                numerodocumentoproveedor: $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial,
-                fecha: $scope.convertDatetoDB($scope.t_fechaingreso),
-                razonsocial: $scope.t_razonsocial,
-                documentoidentidad: $scope.t_rucci,
-                direccion: $scope.t_direccion,
-                ciudad: $scope.t_ciudad,
-                autorizacion: $scope.t_nroautorizacion,
-                totalretencion: $scope.t_total,
                 retenciones: $scope.itemretencion
             };
 
-            console.log(data);
+            //console.log(data);
 
             var url = API_URL + 'retencionCompras';
 
-            /*if ($scope.idretencion == 0) {
+            if ($scope.idretencion == 0) {
                 $http.post(url, data).success(function (response) {
                     if (response.success == true) {
                         $scope.idretencion = response.idretencioncompra;
-                        $('#btn-export').show();
+                        //$('#btn-export').show();
                         $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
@@ -333,7 +343,7 @@
                         $('#modalMessageError').modal('show');
                     }
                 }).error(function (res) {});
-            }*/
+            }
         };
 
         $scope.showInfoRetencion = function (object, data) {

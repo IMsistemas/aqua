@@ -69,7 +69,7 @@
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
                             <th class="text-center" style="width: 10%;" ng-click="sort('')">
-                                Fecha Ingreso
+                                Fecha Emisión
                                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
@@ -93,11 +93,11 @@
                         </thead>
                         <tbody>
                         <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:10 " total-items="totalItems" ng-cloak>
-                            <td>{{item.numeroretencion}}</td>
-                            <td class="text-center">{{item.fecha | formatDate}}</td>
-                            <td style="font-weight: bold;"><i class="fa fa-user fa-lg" aria-hidden="true"></i> {{item.razonsocial}}</td>
-                            <td class="text-center">{{item.numerodocumentoproveedor}}</td>
-                            <td class="text-right">$ {{item.totalretencion}}</td>
+                            <td>{{item.idretencioncompra}}</td>
+                            <td class="text-center">{{item.cont_documentocompra.sri_comprobanteretencion.fechaemisioncomprob | formatDate}}</td>
+                            <td style="font-weight: bold;">{{item.cont_documentocompra.proveedor.persona.razonsocial}}</td>
+                            <td class="text-center">{{item.cont_documentocompra.sri_comprobanteretencion.nocomprobante}}</td>
+                            <td class="text-right">$ {{item.total_retenido}}</td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idretencioncompra)">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>

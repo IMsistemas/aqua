@@ -11,6 +11,7 @@ use App\Modelos\Retencion\RetencionCompra;
 use App\Modelos\Retencion\RetencionFuenteCompra;
 use App\Modelos\SRI\SRI_DetalleImpuestoRetencion;
 use App\Modelos\SRI\SRI_RetencionCompra;
+use App\Modelos\SRI\SRI_RetencionDetalleCompra;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -62,11 +63,12 @@ class RetencionCompraController extends Controller
             $retencion = SRI_RetencionCompra::orderBy('fecha', 'desc')->paginate(10);
         }*/
 
-        $retencion = SRI_RetencionCompra::orderBy('fechaemision', 'desc')->paginate(10);
+        $retencion = SRI_RetencionCompra::with('cont_documentocompra.sri_comprobanteretencion',
+                                    'cont_documentocompra.proveedor.persona', 'sri_retenciondetallecompra')
+                        ->orderBy('idretencioncompra', 'desc')->paginate(10);
 
         return $retencion;
 
-        //return RetencionCompra::orderBy('fecha', 'desc')->paginate(5);
     }
 
     public function getRetencionesByCompra($id)
@@ -119,35 +121,19 @@ class RetencionCompraController extends Controller
      */
     public function store(Request $request)
     {
-        $retencionCompra = new RetencionCompra();
+        $retencionCompra = new SRI_RetencionCompra();
 
-        $retencionCompra->numeroretencion = $request->input('numeroretencion');
-        $retencionCompra->codigocompra = $request->input('codigocompra');
-        $retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
-        $retencionCompra->fecha = $request->input('fecha');
-        $retencionCompra->razonsocial = $request->input('razonsocial');
-        $retencionCompra->documentoidentidad = $request->input('documentoidentidad');
-        $retencionCompra->direccion = $request->input('direccion');
-        $retencionCompra->ciudad = $request->input('ciudad');
-        $retencionCompra->autorizacion = $request->input('autorizacion');
-        $retencionCompra->totalretencion = $request->input('totalretencion');
+        $retencionCompra->iddocumentocompra = $request->input('iddocumentocompra');
 
         if ($retencionCompra->save()) {
 
             $retenciones = $request->input('retenciones');
 
             foreach ($retenciones as $item) {
-                $retencion = new RetencionFuenteCompra();
-                //$retencion->numeroretencion = $request->input('numeroretencion');
+                $retencion = new SRI_RetencionDetalleCompra();
                 $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
-                /*$retencion->iddetalleretencionfuente = $item->id;
-                $retencion->descripcion = $item->detalle;
-                $retencion->poecentajeretencion = $item->porciento;
-                $retencion->valorretenido = $item->valor;*/
-
-                $retencion->iddetalleretencion = $item['id'];
-                $retencion->descripcion = $item['detalle'];
-                $retencion->poecentajeretencion = $item['porciento'];
+                $retencion->iddetalleimpuestoretencion = $item['id'];
+                $retencion->porcentajeretenido = $item['porciento'];
                 $retencion->valorretenido = $item['valor'];
 
                 if ($retencion->save() == false) {
