@@ -518,7 +518,7 @@
 
                 var porciento = parseFloat(data.porciento);
 
-                if (object.originalObject.idtiporetencion == 1) {
+                if (object.originalObject.idtipoimpuestoretencion == 1) {
                     var baseimponible = parseFloat($scope.baseimponible);
                     data.baseimponible = $scope.baseimponible;
                 } else {
@@ -590,7 +590,7 @@
                 $scope.t_ciudad = object.originalObject.nombreciudad;*/
 
                 //$scope.baseimponible = object.originalObject.subtotalnoivacompra;
-                $scope.baseimponible = object.originalObject.subtotalconimpuestocompra;
+                $scope.baseimponible = object.originalObject.subtotalsinimpuestocompra;
 
                 $scope.baseimponibleIVA = object.originalObject.ivacompra;
 

@@ -354,10 +354,24 @@
                 }
             }*/
 
-            $scope.Subtotalconimpuestos= aux_subtotalconimpuestos.toFixed(4);
+            var subtotalsinimp = parseFloat($scope.Subtotalconimpuestos) + parseFloat($scope.Subtotalcero);
+            subtotalsinimp += parseFloat($scope.Subtotalnobjetoiva) + parseFloat($scope.Subototalexentoiva);
+
+            subtotalsinimp -= parseFloat($scope.ValICE);
+
+            $scope.Subtotalsinimpuestos = subtotalsinimp.toFixed(4);
+
+            $scope.Subtotalconimpuestos= (aux_subtotalconimpuestos - parseFloat($scope.Totaldescuento)).toFixed(4);
+
             $scope.ValIVA=(($scope.Subtotalconimpuestos*parseInt($scope.proveedor.originalObject.proveedor[0].sri_tipoimpuestoiva.porcentaje))/100).toFixed(4);
 
-            $scope.ValorTotal=((parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA) + parseFloat($scope.ValICE) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina) )   - ($scope.Totaldescuento)).toFixed(4);
+            var totalFC = parseFloat($scope.Subtotalconimpuestos) + parseFloat($scope.Subtotalcero);
+            totalFC += parseFloat($scope.Subtotalnobjetoiva) + parseFloat($scope.Subototalexentoiva);
+            totalFC += parseFloat($scope.ValIVA) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina);
+
+            $scope.ValorTotal = totalFC.toFixed(4);
+
+            //$scope.ValorTotal=((parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA) + parseFloat($scope.ValICE) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina) )   - ($scope.Totaldescuento)).toFixed(4);
         };
 
         $scope.QuitarItem=function (item) {
