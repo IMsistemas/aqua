@@ -24,6 +24,14 @@
 
         <div ng-controller="retencionComprasController" ng-cloak>
 
+            <div class="col-xs-12">
+
+                <h4>Retención de Compras</h4>
+
+                <hr>
+
+            </div>
+
             <div ng-show="active=='0'" ng-hide="active=='1'">
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <div class="col-sm-7 col-xs-12">
@@ -161,8 +169,8 @@
 
                     <div class="col-xs-12" style="padding-top: 5px;">
                         <div class="col-sm-4 col-xs-12"></div>
-                        <div class="col-sm-4 col-xs-12 text-center" style="padding-top: 3%; font-weight: bold; font-size: 24px;"></div>
-                        <div class="col-sm-4 col-xs-12" style="padding-top: 2%;">
+                        <div class="col-sm-4 col-xs-12 text-center" style="padding-top: 3%; display: none; font-weight: bold; font-size: 24px;"></div>
+                        <div class="col-sm-4 col-xs-12" style="padding-top: 2%; display: none;">
 
                             <div id="btn-export" style="display: none;">
                                 <div style="float: right">
@@ -196,7 +204,7 @@
                         <div class="col-sm-4 col-xs-12 error">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Retención Nro.: </span>
-                                <input type="text" class="form-control" id="t_nroretencion" name="t_nroretencion"
+                                <input type="text" class="form-control" id="t_nroretencion" name="t_nroretencion" disabled
                                        ng-model="t_nroretencion" ng-required="true" ng-keypress="onlyNumber($event, 12, 't_nroretencion')" placeholder="" />
 
                             </div>

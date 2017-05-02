@@ -208,6 +208,19 @@
             }
         };
 
+        $scope.getLastIDRetencion = function () {
+
+            $http.get(API_URL + 'retencionCompra/getLastIDRetencion').success(function(response){
+
+                if (response != null && response != 0) {
+                    $scope.t_nroretencion = parseInt(response) + 1;
+                } else {
+                    $scope.t_nroretencion = 1;
+                }
+
+            });
+        };
+
         $scope.getConfigContabilidad = function () {
             $http.get(API_URL + 'retencionCompra/getConfigContabilidad').success(function(response){
 
@@ -231,6 +244,8 @@
         };
 
         $scope.newForm = function () {
+
+            $scope.getLastIDRetencion();
 
             $scope.getConfigContabilidad();
 

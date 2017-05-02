@@ -94,7 +94,7 @@
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Compras</a>
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
-                                            <li><a href="#">Retención Compras</a></li>
+                                            <li><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
                                             <li><a href="#">Comprobante Egreso</a></li>
                                             <li><a href="#">Cuentas por Pagar</a></li>
                                         </ul>
@@ -252,7 +252,7 @@
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
     <script src="<?= asset('app/controllers/venta.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/retencionCompraController.js') ?>"></script>
+
     <script src="<?= asset('app/controllers/configuracionSystemController.js') ?>"></script>
     <script src="<?= asset('app/controllers/transportistaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>

@@ -106,6 +106,7 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
  * ---------------------------------------Raidel Berrillo Gonzalez------------------------------------------------------
  */
 Route::post('retencionCompra/anularRetencion', 'Retencion\RetencionCompraController@anularRetencion');
+Route::get('retencionCompra/getLastIDRetencion', 'Retencion\RetencionCompraController@getLastIDRetencion');
 Route::get('retencionCompra/getConfigContabilidad', 'Retencion\RetencionCompraController@getConfigContabilidad');
 Route::get('retencionCompra/getRetenciones', 'Retencion\RetencionCompraController@getRetenciones');
 Route::get('retencionCompra/getRetencionesByCompra/{id}', 'Retencion\RetencionCompraController@getRetencionesByCompra');

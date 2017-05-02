@@ -133,6 +133,13 @@ class RetencionCompraController extends Controller
         }
     }
 
+    public function getLastIDRetencion()
+    {
+        $result = SRI_RetencionCompra::max('idretencioncompra');
+
+        return $result;
+    }
+
     public function anularRetencion(Request $request)
     {
         $idretencion = $request->input('idretencion');
