@@ -62,6 +62,7 @@
         $scope.baseimponibleIVA = 0;
         $scope.idretencion = 0;
 
+        $scope.iddocumentocompra = 0;
 
         $scope.initLoad = function (pageNumber) {
             $scope.idretencion = 0;
@@ -290,6 +291,7 @@
             $scope.t_secuencial = $('#t_secuencial').val();
 
             var data = {
+                iddocumentocompra: $scope.iddocumentocompra,
                 numeroretencion: $scope.t_nroretencion,
                 codigocompra: $('#t_nrocompra').val(),
                 numerodocumentoproveedor: $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial,
@@ -303,9 +305,11 @@
                 retenciones: $scope.itemretencion
             };
 
+            console.log(data);
+
             var url = API_URL + 'retencionCompras';
 
-            if ($scope.idretencion == 0) {
+            /*if ($scope.idretencion == 0) {
                 $http.post(url, data).success(function (response) {
                     if (response.success == true) {
                         $scope.idretencion = response.idretencioncompra;
@@ -329,7 +333,7 @@
                         $('#modalMessageError').modal('show');
                     }
                 }).error(function (res) {});
-            }
+            }*/
         };
 
         $scope.showInfoRetencion = function (object, data) {
@@ -396,6 +400,8 @@
             console.log(object);
 
             if (object.originalObject != undefined) {
+
+                $scope.iddocumentocompra = object.originalObject.iddocumentocompra;
 
                 $scope.t_rucci = object.originalObject.proveedor.persona.numdocidentific;
                 $scope.t_razonsocial = object.originalObject.proveedor.persona.razonsocial;
