@@ -376,8 +376,8 @@
                 concepto: $scope.ProveedorContable.concepto,
                 controlhaber: $scope.ProveedorContable.controlhaber,
                 tipocuenta: $scope.ProveedorContable.tipocuenta,
-                Debe: 0,
-                Haber: $scope.t_total,
+                Debe: $scope.t_total,
+                Haber: 0,
                 Descipcion: ''
             };
 
