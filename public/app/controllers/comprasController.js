@@ -275,6 +275,8 @@
             var aux_totaldescuento=0;
             var aux_totalIce=0;
 
+
+
             for(x=0;x<$scope.items.length;x++){
                 console.log($scope.items[x]);
                 if(parseInt($scope.items[x].iva)==0 ){
