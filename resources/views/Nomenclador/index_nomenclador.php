@@ -921,7 +921,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Tipo Documento: </span>
                                         <input type="text" class="form-control" name="nametipodocumento" id="nametipodocumento" ng-model="nametipodocumento" placeholder=""
-                                               ng-required="true" ng-maxlength="50">
+                                               ng-required="true" ng-maxlength="25">
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsritipodoc.nametipodocumento.$invalid && formsritipodoc.nametipodocumento.$touched">El nombre del Tipo Documento es requerido</span>
@@ -1193,7 +1193,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto Ice: </span>
                                         <input type="text" class="form-control" name="nameimpuestoice" id="nameimpuestoice" ng-model="nameimpuestoice" placeholder=""
-                                               ng-required="true" ng-maxlength="200">
+                                               ng-required="true" >
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsriImpuestoIce.nameimpuestoice.$invalid && formsriImpuestoIce.nameimpuestoiva.$touched">El nombre del Tipo Impuesto Ice es requerido</span>
@@ -1347,7 +1347,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto de Iva - Retencion: </span>
                                         <input type="text" class="form-control" name="nametipoimpuestoivaret" id="nametipoimpuestoivaret" ng-model="nametipoimpuestoivaret" placeholder=""
-                                               ng-required="true" ng-maxlength="10">
+                                               ng-required="true" >
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$invalid && formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$touched">El nombre del Tipo Impuesto es requerido</span>
@@ -1483,14 +1483,14 @@
                                         </select>
                                     </div>
                                     <span class="help-block error"
-                                          ng-show="formsriImpuestoIce.TipoImpuesto.$invalid && formsriImpuestoIce.TipoImpuesto==''">El Tipo Impuesto es requerido</span>
+                                          ng-show="formsriCompSustTributario.TipoImpuesto.$invalid && formsriCompSustTributario.TipoImpuesto==''">El Tipo Impuesto es requerido</span>
 
                                 </div>
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Comprobante: </span>
                                         <input type="text" class="form-control" name="namecomprobante" id="namecomprobante" ng-model="namecomprobante" placeholder=""
-                                               ng-required="true" ng-maxlength="50">
+                                               ng-required="true" >
                                     </div>
                                     <span class="help-block error"
                                           ng-show="formsriCompSustTributario.nametipoimpuestoivaret.$invalid && formsriCompSustTributario.nametipoimpuestoivaret.$touched">El nombre Comprobante de pago es requerido</span>

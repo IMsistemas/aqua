@@ -923,7 +923,7 @@ Route::post('Nomenclador/updateSustento_Comprobante/{id}', 'Nomenclador\Nomencla
 Route::post('Nomenclador/updatePagoResidente/{id}', 'Nomenclador\NomencladorController@updatePagoResidente' );
 Route::post('Nomenclador/updatePagoPais/{id}', 'Nomenclador\NomencladorController@updatePagoPais' );
 Route::post('Nomenclador/updateFormaPago/{id}', 'Nomenclador\NomencladorController@updateFormaPago' );
-Route::post('Nomenclador/updateProvincia/{id}', 'Nomenclador\NomencladorController@updateProvincia' );
+Route::post('Nomenclador/updateprovincia/{id}', 'Nomenclador\NomencladorController@updateprovincia' );
 Route::post('Nomenclador/updatecantonEX/{id}', 'Nomenclador\NomencladorController@updatecantonEX' );
 Route::post('Nomenclador/updateparroquiaEX/{id}', 'Nomenclador\NomencladorController@updateparroquiaEX' );
 
