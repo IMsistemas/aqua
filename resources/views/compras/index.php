@@ -504,7 +504,7 @@
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">
-                    <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion"></textarea>
+                    <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion" ng-required="true"></textarea>
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">
