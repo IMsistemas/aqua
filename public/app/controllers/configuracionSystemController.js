@@ -418,6 +418,10 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_retrenta_nc_h = response[i].idconfiguracionsystem;
                     $scope.retrenta_nc_h = parseInt(response[i].optionvalue);
                     $scope.retrenta_nc = response[i].concepto;
+                } else if (response[i].optionname == 'CONT_COSTO_NC') {
+                    $scope.id_costo_nc_h = response[i].idconfiguracionsystem;
+                    $scope.costo_nc_h = parseInt(response[i].optionvalue);
+                    $scope.costo_nc = response[i].concepto;
                 }
             }
 
@@ -453,8 +457,13 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             optionvalue: $scope.retrenta_nc_h
         };
 
+        var costo = {
+            idconfiguracionsystem: $scope.id_costo_nc_h,
+            optionvalue: $scope.costo_nc_h
+        };
+
         var data = {
-            array_data: [iva, ice, irbpnr, retiva, propina, retrenta]
+            array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
         };
 
         $http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {

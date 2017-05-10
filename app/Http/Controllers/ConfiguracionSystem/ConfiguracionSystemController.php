@@ -286,6 +286,7 @@ class ConfiguracionSystemController extends Controller
             ->orWhere('optionname','CONT_ICE_NC')
             ->orWhere('optionname','CONT_IRBPNR_NC')
             ->orWhere('optionname','CONT_PROPINA_NC')
+            ->orWhere('optionname','CONT_COSTO_NC')
             ->orWhere('optionname','SRI_RETEN_IVA_NC')
             ->orWhere('optionname','SRI_RETEN_RENTA_NC')
             ->selectRaw('*, (SELECT concepto FROM cont_plancuenta WHERE cont_plancuenta.idplancuenta = (configuracionsystem.optionvalue)::INT) ')

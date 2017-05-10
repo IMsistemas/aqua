@@ -141,6 +141,7 @@
                         </ul>
                         <!-- Tab panels -->
                         <div class="tab-content" style="padding-top: 10px;">
+
                             <div role="tabpanel" class="tab-pane fade active in" id="cont_general">
 
                                 <form class="form-horizontal" name="formContGeneral" novalidate="">
@@ -545,6 +546,24 @@
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                                 <button type="button" class="btn btn-default" id="btn-l-retrenta_nc" ng-click = "clean('retrenta_nc', 'retrenta_nc_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Costo de Venta: </span>
+                                            <input type="text" class="form-control" name="costo_venta" id="costo_nc" ng-model="costo_nc" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="costo_nc_h" id="costo_nc_h" ng-model="costo_nc_h">
+                                            <input type="hidden" name="id_costo_nc_h" id="id_costo_venta_h" ng-model="id_costo_venta_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuenta('costo_nc', 'costo_nc_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-costo_venta" ng-click = "clean('costo_nc', 'costo_nc_h')">
                                                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                                 </button>
                                             </span>
