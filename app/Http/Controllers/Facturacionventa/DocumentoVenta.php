@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Facturacionventa;
 
+use App\Modelos\Bodegas\Bodega;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 

@@ -184,6 +184,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "retencionCompras";
     }
 
+    $scope.toModuloReporteCompras = function(){
+        $scope.titulo = "Reporte Compras";
+        $scope.toModulo = "reportecompra";
+    }
+
     $scope.toModuloPortafolioProductos = function(){
         $scope.titulo = "Portafolio de Productos";
         $scope.toModulo = "categoria";

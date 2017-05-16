@@ -97,6 +97,7 @@
                                             <li><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
                                             <li><a href="#">Comprobante Egreso</a></li>
                                             <li><a href="#">Cuentas por Pagar</a></li>
+                                            <li><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
                                     </li>
 
@@ -263,6 +264,7 @@
     <script src="<?= asset('app/controllers/departamentosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/rolController.js') ?>"></script>
     <script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
 
 
     <script type="text/javascript">
