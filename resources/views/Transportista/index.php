@@ -54,7 +54,7 @@
                 <tr>
                     <th style="width: 4%">NO</th>
                     <th style="width: 10%">RUC / CI</th>
-                    <th>RAZON Social</th>
+                    <th>RAZON SOCIAL</th>
                     <th style="width: 8%">PLACA</th>
                     <th style="width: 15%">EMAIL</th>
                     <th style="width: 8%">CELULAR</th>

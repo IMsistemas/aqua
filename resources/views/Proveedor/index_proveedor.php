@@ -48,21 +48,23 @@
             <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="toggle('add', 0)">Agregar  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
 
-        <div class="col-xs-12">
+        <div class="col-xs-12" style="font-size: 12px !important;">
 
-            <table class="table table-responsive table-striped table-hover table-condensed">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                 <tr>
-                    <th>RUC</th>
-                    <th>Razón Social</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Celular</th>
-                    <th style="width: 160px;">Acciones</th>
+                    <th style="width: 4%">NO</th>
+                    <th style="width: 10%">RUC / CI</th>
+                    <th>RAZON SOCIAL</th>
+                    <th>DIRECCION</th>
+                    <th style="width: 8%">TELEFONO</th>
+                    <th style="width: 8%">CELULAR</th>
+                    <th style="width: 24%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr dir-paginate="proveedor in proveedores|orderBy:sortKey:reverse| itemsPerPage:10"  total-items="totalItems" ng-cloak >
+                        <td>{{$index + 1}}</td>
                         <td>{{proveedor.numdocidentific}}</td>
                         <td>{{proveedor.razonsocial}}</td>
                         <td>{{proveedor.direccion}}</td>
@@ -71,15 +73,15 @@
                         <td>
                             <button type="button" class="btn btn-info" ng-click="toggle('info', proveedor)"
                                     data-toggle="tooltip" data-placement="bottom" title="Contactos">
-                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                Información <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-warning" ng-click="toggle('edit', proveedor)"
                                     data-toggle="tooltip" data-placement="bottom" title="Editar" >
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </button>
                             <button type="button" class="btn btn-danger" ng-click="showModalConfirm(proveedor)"
                                     data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
                         </td>
                     </tr>
