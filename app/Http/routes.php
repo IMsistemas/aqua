@@ -1022,3 +1022,10 @@ Route::resource('reportecompra', 'Reportes\ReporteCompraController');
 
 Route::get('reporteventa/getVentas', 'Reportes\ReporteVentaController@getVentas');
 Route::resource('reporteventa', 'Reportes\ReporteVentaController');
+
+/*
+ * ------------------------------REPORTE NC-----------------------------------------------------------------------------
+ */
+
+Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
+Route::resource('reportenc', 'Reportes\ReporteNCController');

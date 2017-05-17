@@ -194,6 +194,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "reporteventa";
     }
 
+    $scope.toModuloReporteNC = function(){
+        $scope.titulo = "Reporte Nota Credito";
+        $scope.toModulo = "reportenc";
+    }
+
     $scope.toModuloPortafolioProductos = function(){
         $scope.titulo = "Portafolio de Productos";
         $scope.toModulo = "categoria";

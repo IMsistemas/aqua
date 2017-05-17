@@ -118,7 +118,14 @@
                                     </li>
 
                                     <li role="separator" class="divider"></li>
-                                    <li><a href = "#">Nota de Crédito</a></li>
+
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Nota de Crédito</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" ng-click="">Facturación Nota de Crédito</a></li>
+                                            <li><a href="#" ng-click="toModuloReporteNC();">Reporte Nota de Crédito</a></li>
+                                        </ul>
+                                    </li>
 
                                     <li role="separator" class="divider"></li>
                                     <li><a href = "#">Activos Fijos</a></li>
@@ -269,7 +276,7 @@
     <script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
-
+    <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>
 
 
 
