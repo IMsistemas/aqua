@@ -1015,3 +1015,10 @@ Route::resource('puntoventa', 'Contabilidad\PuntoVentaController');
 
 Route::get('reportecompra/getCompras', 'Reportes\ReporteCompraController@getCompras');
 Route::resource('reportecompra', 'Reportes\ReporteCompraController');
+
+/*
+ * ------------------------------REPORTE VENTA--------------------------------------------------------------------------
+ */
+
+Route::get('reporteventa/getVentas', 'Reportes\ReporteVentaController@getVentas');
+Route::resource('reporteventa', 'Reportes\ReporteVentaController');

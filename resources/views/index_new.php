@@ -111,6 +111,7 @@
                                             <li><a href="#">Comprobante Ingreso</a></li>
                                             <li><a href="#">Cuentas por Cobrar</a></li>
                                             <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
+                                            <li><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
                                         </ul>
                                     </li>
 
@@ -265,18 +266,18 @@
     <script src="<?= asset('app/controllers/rolController.js') ?>"></script>
     <script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
 
 
     <script type="text/javascript">
-        /* $(function() {
-         $(document).keydown(function(e){
-         var code = (e.keyCode ? e.keyCode : e.which);
-         if(code == 116) {
-         e.preventDefault();
-         alert('no puedes we');
-         }
-         });
-         });*/
+
+        $(function () {
+            $('.datepicker').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
+        });
+
     </script>
 
     </body>

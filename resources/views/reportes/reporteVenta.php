@@ -22,11 +22,11 @@
 
 <body>
 
-<div ng-controller="reporteComprasController">
+<div ng-controller="reporteVentaController">
 
     <div class="col-xs-12">
 
-        <h4>Reporte de Compras</h4>
+        <h4>Reporte de Ventas</h4>
 
         <hr>
 
@@ -62,7 +62,7 @@
                 <thead class="bg-primary">
                     <tr>
                         <th>NO.</th>
-                        <th>PROVEEDOR</th>
+                        <th>CLIENTE</th>
                         <th style="width: 8%;">FECHA INGRESO</th>
                         <th style="width: 11%;">NO FACTURA</th>
                         <th style="width: 6%;">SUBTOTAL C/I</th>
@@ -81,32 +81,32 @@
 
                         <td>{{$index + 1}}</td>
                         <td>{{item.razonsocial}}</td>
-                        <td class="text-center">{{item.fecharegistrocompra}}</td>
-                        <td class="text-center">{{item.numdocumentocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalconimpuestocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalsinimpuestocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalcerocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalnoobjivacompra}}</td>
-                        <td class="text-right">$ {{item.subtotalexentivacompra}}</td>
+                        <td class="text-center">{{item.fecharegistroventa}}</td>
+                        <td class="text-center">{{item.numdocumentoventa}}</td>
+                        <td class="text-right">$ {{item.subtotalconimpuestoventa}}</td>
+                        <td class="text-right">$ {{item.subtotalsinimpuestoventa}}</td>
+                        <td class="text-right">$ {{item.subtotalceroventa}}</td>
+                        <td class="text-right">$ {{item.subtotalnoobjivaventa}}</td>
+                        <td class="text-right">$ {{item.subtotalexentivaventa}}</td>
                         <td class="text-right">$ {{item.ivacompra}}</td>
                         <td class="text-right">$ {{item.icecompra}}</td>
                         <td class="text-right">$ {{item.totaldescuento}}</td>
-                        <td class="text-right" style="font-weight: bold;">$ {{item.valortotalcompra}}</td>
+                        <td class="text-right" style="font-weight: bold;">$ {{item.valortotalventa}}</td>
 
                     </tr>
                 </tbody>
                 <tfoot class="bg-primary">
                     <tr>
                         <th colspan="4" class="text-right">TOTALES</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalsubconimp}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalsubsinimp}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalsubcero}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalsubnoobj}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalsubex}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totaliva}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totalice}}</th>
-                        <th class="text-right btn-warning" style="color: #000;">{{totaldesc}}</th>
-                        <th class="text-right btn-danger" style="font-weight: bold;">{{total}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalsubconimp}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalsubsinimp}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalsubcero}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalsubnoobj}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalsubex}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totaliva}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totalice}}</th>
+                        <th class="text-right btn-info" style="color: #000;">{{totaldesc}}</th>
+                        <th class="text-right btn-success" style="font-weight: bold;">{{total}}</th>
                     </tr>
                 </tfoot>
             </table>
@@ -134,6 +134,6 @@
 <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
 <script src="<?= asset('app/app.js') ?>"></script>
 
-<script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
+<script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
 </html>
 

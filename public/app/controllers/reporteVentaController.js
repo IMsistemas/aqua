@@ -6,7 +6,7 @@ $(function () {
     });
 });
 
-app.controller('reporteComprasController',  function($scope, $http, API_URL) {
+app.controller('reporteVentaController',  function($scope, $http, API_URL) {
 
 
     $scope.initLoad = function(){
@@ -16,9 +16,11 @@ app.controller('reporteComprasController',  function($scope, $http, API_URL) {
             fin: $('#fechafin').val()
         };
 
-        $http.get(API_URL + 'reportecompra/getCompras?filter=' + JSON.stringify(filter)).success(function(response){
+        $http.get(API_URL + 'reporteventa/getVentas?filter=' + JSON.stringify(filter)).success(function(response){
 
             var longitud = response.length;
+
+            console.log(response);
 
             $scope.totalsubconimp = 0;
             $scope.totalsubsinimp = 0;
@@ -31,15 +33,15 @@ app.controller('reporteComprasController',  function($scope, $http, API_URL) {
             $scope.total = 0;
 
             for (var i = 0; i < longitud; i++) {
-                $scope.totalsubconimp += parseFloat(response[i].subtotalconimpuestocompra);
-                $scope.totalsubsinimp += parseFloat(response[i].subtotalsinimpuestocompra);
-                $scope.totalsubcero += parseFloat(response[i].subtotalcerocompra);
-                $scope.totalsubnoobj += parseFloat(response[i].subtotalnoobjivacompra);
-                $scope.totalsubex += parseFloat(response[i].subtotalexentivacompra);
+                $scope.totalsubconimp += parseFloat(response[i].subtotalconimpuestoventa);
+                $scope.totalsubsinimp += parseFloat(response[i].subtotalsinimpuestoventa);
+                $scope.totalsubcero += parseFloat(response[i].subtotalceroventa);
+                $scope.totalsubnoobj += parseFloat(response[i].subtotalnoobjivaventa);
+                $scope.totalsubex += parseFloat(response[i].subtotalexentivaventa);
                 $scope.totaliva += parseFloat(response[i].ivacompra);
                 $scope.totalice += parseFloat(response[i].icecompra);
                 $scope.totaldesc += parseFloat(response[i].totaldescuento);
-                $scope.total += parseFloat(response[i].valortotalcompra);
+                $scope.total += parseFloat(response[i].valortotalventa);
             }
 
             $scope.totalsubconimp = '$ ' + $scope.totalsubconimp.toFixed(2);
