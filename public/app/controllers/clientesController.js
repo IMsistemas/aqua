@@ -350,6 +350,11 @@
 
         $scope.showModalEditCliente = function (item) {
 
+            $('.datepicker').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY'
+            });
+
             $http.get(API_URL + 'cliente/getTipoIdentificacion').success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
