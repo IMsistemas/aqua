@@ -1,30 +1,5 @@
-<!doctype html>
-<html lang="es-ES" ng-app="softver-aqua">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cliente</title>
 
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-    <style>
-        .modal-body {
-            max-height: calc(100vh - 210px);
-            overflow-y: auto;
-        }
-    </style>
-
-</head>
-
-<body>
-        <div ng-controller="clientesController">
+<div ng-controller="clientesController">
 
             <div class="col-xs-12">
 
@@ -49,20 +24,22 @@
             </div>
 
             <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
-                        <th class="text-center" style="width: 10%;">CI / RUC</th>
-                        <th class="text-center" style="width: 10%;">Fecha Ingreso</th>
-                        <th class="text-center" style="">Razón Social / Nombre y Apellidos</th>
-                        <th class="text-center" style="width: 8%;">Celular</th>
-                        <th class="text-center" style="width: 20%;">Dirección</th>
-                        <th class="text-center" style="width: 7%;">Estado</th>
-                        <th class="text-center" style="width: 16%;">Acciones</th>
+                        <th style="width: 5%;">NO</th>
+                        <th style="width: 10%;">CI / RUC</th>
+                        <th style="width: 10%;">FECHA INGRESO</th>
+                        <th style="">RAZON SOCIAL / NOMBRE Y APELLIDOS</th>
+                        <th style="width: 8%;">CELULAR</th>
+                        <th style="width: 20%;">DIRECCION</th>
+                        <th style="width: 7%;">ESTADO</th>
+                        <th style="width: 16%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
                         <tr dir-paginate="item in clientes|orderBy:sortKey:reverse| itemsPerPage:10" total-items="totalItems" ng-cloak >
+                            <td>{{$index + 1}}</td>
                             <td>{{item.numdocidentific}}</td>
                             <td>{{item.fechaingreso | formatDate}}</td>
                             <td>{{item.razonsocial}}</td>
@@ -142,7 +119,7 @@
                                                   ng-show="formEmployee.tipoidentificacion.$invalid && formEmployee.tipoidentificacion.$touched">El Tipo de Identificación es requerido</span>
                                         </div>
 
-                                        <div class="col-md-6 col-xs-12">
+                                        <div class="col-md-6 col-xs-12 row-fluid">
                                             <div class="input-group">
                                                 <span class="input-group-addon">RUC / CI:</span>
                                                 <!--<input type="text" class="form-control" name="documentoidentidadempleado" id="documentoidentidadempleado"
@@ -260,8 +237,10 @@
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">E-mail: </span>
-                                                <input type="text" class="form-control" name="correo" id="correopersona" ng-model="correo" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" placeholder="" >
+                                                <input type="text" class="form-control" name="correo" id="correopersona" ng-model="correo" ng-required="true" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" placeholder="" >
                                             </div>
+                                            <span class="help-block error"
+                                                  ng-show="formEmployee.correo.$invalid && formEmployee.correo.$touched">El E-mail es requerido</span>
                                             <span class="help-block error"
                                                   ng-show="formEmployee.correo.$invalid && formEmployee.correo.$error.pattern">Formato de email no es correcto</span>
                                         </div>
@@ -1665,27 +1644,3 @@
             </div>
 
         </div>
-</body>
-
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-
-
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-
-<script src="<?= asset('app/app.js') ?>"></script>
-<script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
-
-
-</html>

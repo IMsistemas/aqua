@@ -16,9 +16,21 @@
         <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
 
         <style>
+
             .dataclient{
                 font-weight: bold;
             }
+
+            .modal-body {
+                max-height: calc(100vh - 210px);
+                overflow-y: auto;
+            }
+
+            .modal-body .angucomplete-dropdown {
+                margin-top: 35px !important;
+                width: 100% !important;
+            }
+
         </style>
 
 
