@@ -11,6 +11,11 @@ app.controller('reporteVentaController',  function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
 
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD'
+        });
+
         var filter = {
             inicio: $('#fechainicio').val(),
             fin: $('#fechafin').val()
@@ -19,8 +24,6 @@ app.controller('reporteVentaController',  function($scope, $http, API_URL) {
         $http.get(API_URL + 'reporteventa/getVentas?filter=' + JSON.stringify(filter)).success(function(response){
 
             var longitud = response.length;
-
-            console.log(response);
 
             $scope.totalsubconimp = 0;
             $scope.totalsubsinimp = 0;

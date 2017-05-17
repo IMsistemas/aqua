@@ -11,6 +11,11 @@ app.controller('reporteComprasController',  function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
 
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD'
+        });
+
         var filter = {
             inicio: $('#fechainicio').val(),
             fin: $('#fechafin').val()

@@ -21,6 +21,8 @@
             }
         </style>
 
+
+
     </head>
     <body ng-controller="mainController">
 
@@ -269,16 +271,7 @@
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
 
 
-    <script type="text/javascript">
 
-        $(function () {
-            $('.datepicker').datetimepicker({
-                locale: 'es',
-                format: 'YYYY-MM-DD'
-            });
-        });
-
-    </script>
 
     </body>
 </html>
