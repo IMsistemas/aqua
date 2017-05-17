@@ -86,6 +86,8 @@
 
         $scope.initLoad = function (pageNumber) {
 
+
+
             $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
@@ -178,6 +180,11 @@
         };
 
         $scope.showModalAddCliente = function () {
+
+            $('.datepicker').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY'
+            });
 
             $http.get(API_URL + 'cliente/getTipoIdentificacion').success(function(response){
                 var longitud = response.length;
@@ -275,8 +282,13 @@
 
             };
 
+            $('#btn-saveCliente').prop('disabled', true);
+
             if ($scope.idcliente == 0) {
                 $http.post(url, data ).success(function (response) {
+
+                    $('#btn-saveCliente').prop('disabled', false);
+
                     if (response.success == true) {
                         $scope.initLoad(1);
                         $scope.message = 'Se guardó correctamente la información del Cliente...';
@@ -292,9 +304,10 @@
                 });
             } else {
 
-                console.log(data);
-
                 $http.put(url + '/' + $scope.idcliente, data ).success(function (response) {
+
+                    $('#btn-saveCliente').prop('disabled', false);
+
                     if (response.success == true) {
                         $scope.idpersona = 0;
                         $scope.idcliente = 0;

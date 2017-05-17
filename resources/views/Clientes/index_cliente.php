@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="font-size: 12px !important;">
                 <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
@@ -346,7 +346,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="saveCliente()" ng-disabled="formEmployee.$invalid">
+                        <button type="button" class="btn btn-success" id="btn-saveCliente" ng-click="saveCliente()" ng-disabled="formEmployee.$invalid">
                             Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                         </button>
                     </div>
