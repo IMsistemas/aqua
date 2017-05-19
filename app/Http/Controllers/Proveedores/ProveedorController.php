@@ -107,6 +107,14 @@ class ProveedorController extends Controller
         return ContactoProveedor::where('idproveedor', $idproveedor)->orderBy('namecontacto', 'asc')->get();
     }
 
+    private function searchExist($numidentific)
+    {
+        $count = Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')
+                                ->where('persona.numdocidentific', $numidentific)->count();
+
+        return ($count == 1) ? true : false;
+    }
+
     /**
      * Store a newly created proveedor in storage.
      *
@@ -115,42 +123,52 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        $state = false;
 
-        if ($request->input('idpersona') == 0) {
-            $persona = new Persona();
+        if ($this->searchExist($request->input('documentoidentidadempleado'))) {
+
+            return response()->json(['success' => false, 'type_error_exists' => true]);
+
         } else {
-            $persona = Persona::find($request->input('idpersona'));
-            $state = true;
-        }
 
-        $persona->numdocidentific = $request->input('documentoidentidadempleado');
-        $persona->email = $request->input('correo');
-        $persona->celphone = $request->input('celular');
-        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
-        $persona->razonsocial = $request->input('razonsocial');
-        $persona->direccion = $request->input('direccion');
+            $state = false;
 
-        if ($state == false) {
-            $persona->lastnamepersona = $request->input('razonsocial');
-            $persona->namepersona = $request->input('razonsocial');
-        }
+            if ($request->input('idpersona') == 0) {
+                $persona = new Persona();
+            } else {
+                $persona = Persona::find($request->input('idpersona'));
+                $state = true;
+            }
 
-        if ($persona->save()) {
-            $proveedor = new Proveedor();
-            $proveedor->fechaingreso = $request->input('fechaingreso');
-            $proveedor->estado = true;
-            $proveedor->idpersona = $persona->idpersona;
-            $proveedor->telefonoprincipal = $request->input('telefonoprincipal');
-            $proveedor->idparroquia = $request->input('parroquia');
-            $proveedor->idplancuenta = $request->input('cuentacontable');
-            $proveedor->idtipoimpuestoiva = $request->input('impuesto_iva');
+            $persona->numdocidentific = $request->input('documentoidentidadempleado');
+            $persona->email = $request->input('correo');
+            $persona->celphone = $request->input('celular');
+            $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+            $persona->razonsocial = $request->input('razonsocial');
+            $persona->direccion = $request->input('direccion');
 
-            if ($proveedor->save()) {
-                return response()->json(['success' => true]);
+            if ($state == false) {
+                $persona->lastnamepersona = $request->input('razonsocial');
+                $persona->namepersona = $request->input('razonsocial');
+            }
+
+            if ($persona->save()) {
+                $proveedor = new Proveedor();
+                $proveedor->fechaingreso = $request->input('fechaingreso');
+                $proveedor->estado = true;
+                $proveedor->idpersona = $persona->idpersona;
+                $proveedor->telefonoprincipal = $request->input('telefonoprincipal');
+                $proveedor->idparroquia = $request->input('parroquia');
+                $proveedor->idplancuenta = $request->input('cuentacontable');
+                $proveedor->idtipoimpuestoiva = $request->input('impuesto_iva');
+
+                if ($proveedor->save()) {
+                    return response()->json(['success' => true]);
+                } else return response()->json(['success' => false]);
+
             } else return response()->json(['success' => false]);
 
-        } else return response()->json(['success' => false]);
+        }
+
     }
 
     /**
