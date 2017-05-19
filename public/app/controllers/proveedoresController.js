@@ -340,12 +340,12 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                 }
                 else {
 
-                    $('#modalAction').modal('hide');
-
                     if (response.type_error_exists != undefined) {
                         $scope.message_error = 'Ya existe un proveedor insertado con ese mismo Número de Identificación';
                     } else {
+                        $('#modalAction').modal('hide');
                         $scope.message_error = 'Ha ocurrido un error..';
+
                     }
 
                     $('#modalMessageError').modal('show');
