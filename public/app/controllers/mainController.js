@@ -109,6 +109,10 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "departamento";
     }
 
+    $scope.toModuloNewLectura = function(){
+        window.open(API_URL + '/nuevaLectura');
+    }
+
     $scope.toModuloLectura = function(){
         $scope.titulo = "Lecturas";
         $scope.toModulo = "verLectura";

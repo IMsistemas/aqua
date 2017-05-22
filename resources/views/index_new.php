@@ -69,6 +69,7 @@
                                     <li><a href = "#" ng-click="toModuloSuministro();">Suministro</a></li>
                                     <li><a href = "#" ng-click="toModuloRecaudacion();">Registro Cobro Agua y Servicios</a></li>
                                     <li><a href = "#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
+                                    <li><a href = "#" ng-click="toModuloNewLectura();">Crear Lecturas</a></li>
                                 </ul>
                             </li>
 
