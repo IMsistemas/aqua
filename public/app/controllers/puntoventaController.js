@@ -29,6 +29,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                         var longitud = text.length;
                         if (longitud == length) {
                             $("#" + field).val(text);
+                            return text;
                         } else {
                             var diferencia = parseInt(length) - parseInt(longitud);
                             var relleno = '';
