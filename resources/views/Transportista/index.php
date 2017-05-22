@@ -109,7 +109,7 @@
                 <form class="form-horizontal" name="formEmployee" novalidate="">
                     <div class="modal-header modal-header-primary">
                         <div class="col-md-6 col-xs-12">
-                            <h4 class="modal-title">{{form_title}}</h4>
+                            <h4 class="modal-title">{{form_title}}. (Chofer)</h4>
                         </div>
                         <div class="col-md-5 col-xs-12">
                             <div class="input-group">
@@ -178,17 +178,28 @@
                             </div>
 
                             <div class="col-xs-12" style="margin-top: 5px;">
-                                <div class="col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Razón Social: </span>
+                                        <span class="input-group-addon">Nombre y Apellidos: </span>
                                         <input type="text" class="form-control" name="razonsocial" id="razonsocial"
                                                ng-model="razonsocial" ng-required="true" ng-maxlength="200" >
                                     </div>
                                     <span class="help-block error"
-                                          ng-show="formEmployee.razonsocial.$invalid && formEmployee.razonsocial.$touched">La Razón Social es requerida</span>
+                                          ng-show="formEmployee.razonsocial.$invalid && formEmployee.razonsocial.$touched">Nombre y Apellidos es requerida</span>
                                     <span class="help-block error"
                                           ng-show="formEmployee.razonsocial.$invalid && formEmployee.razonsocial.$error.maxlength">La longitud máxima es de 200 caracteres</span>
                                 </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Proveedor: </span>
+                                        <select class="form-control" name="proveedor" id="proveedor" ng-model="proveedor"
+                                                ng-options="value.id as value.label for value in proveedores" required></select>
+                                    </div>
+                                    <span class="help-block error"
+                                          ng-show="formEmployee.proveedor.$invalid && formEmployee.proveedor.$touched">El Proveedor es requerido</span>
+                                </div>
+
                             </div>
 
                             <div class="col-xs-12" style="margin-top: 5px;">

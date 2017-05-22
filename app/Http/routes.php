@@ -750,6 +750,7 @@ Route::post('proveedor/storeContactos', 'Proveedores\ProveedorController@storeCo
 Route::delete('proveedor/destroyContacto/{idcontacto}', 'Proveedores\ProveedorController@destroyContacto');
 Route::resource('proveedor', 'Proveedores\ProveedorController');
 
+Route::get('transportista/getProveedores', 'Transportista\TransportistaController@getProveedores');
 Route::get('transportista/getTransportista', 'Transportista\TransportistaController@getTransportista');
 Route::get('transportista/getTipoIdentificacion', 'Transportista\TransportistaController@getTipoIdentificacion');
 Route::get('transportista/getIdentify/{identify}', 'Transportista\TransportistaController@getIdentify');

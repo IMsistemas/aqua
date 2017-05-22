@@ -44,10 +44,33 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
     };
 
+    $scope.getProveedores = function (idproveedor) {
+        $http.get(API_URL + 'transportista/getProveedores').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].razonsocial, id: response[i].idproveedor})
+            }
+
+            $scope.proveedores = array_temp;
+
+            $scope.proveedor = '';
+
+            if (idproveedor != undefined) {
+                $scope.proveedor = idproveedor;
+            }
+
+        });
+    };
+
     $scope.toggle = function(modalstate, item) {
         $scope.modalstate = modalstate;
         switch (modalstate) {
             case 'add':
+
+                $scope.getProveedores();
 
                 $http.get(API_URL + 'transportista/getTipoIdentificacion').success(function(response){
                     var longitud = response.length;
@@ -82,6 +105,8 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
             case 'edit':
                 $scope.form_title = "Editar Transportista";
                 $scope.id = item.idempleado;
+
+                $scope.getProveedores(item.idproveedor);
 
                 $http.get(API_URL + 'transportista/getTipoIdentificacion').success(function(response){
                     var longitud = response.length;
@@ -173,7 +198,8 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
             placa: $scope.placa,
             direccion: $scope.direccion,
             telefonoprincipal: $scope.telefonoprincipal,
-            razonsocial: $scope.razonsocial
+            razonsocial: $scope.razonsocial,
+            idproveedor: $scope.proveedor
         };
 
         console.log(data);
