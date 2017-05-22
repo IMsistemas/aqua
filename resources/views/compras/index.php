@@ -75,34 +75,34 @@
                 </button>
             </div>
 
-            <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+            <div class="col-xs-12" style="font-size: 12px !important;">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
                         <th style="text-align: center; width: 4%;" ng-click="sort('codigocompra')">
-                            Código
+                            NO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='codigocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center; width: 10%;" ng-click="sort('fecharegistrocompra')">
-                            Fecha Ingreso
+                            FECHA INGRESO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='fecharegistrocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center;" ng-click="sort('razonsocialproveedor')">
-                            Proveedor
+                            PROVEEDOR
                             <span class="glyphicon sort-icon" ng-show="sortKey=='razonsocialproveedor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="text-align: center; width: 14%;">NO.</th>
-                        <th style="text-align: center; width: 8%;">Subtotal</th>
+                        <th style="text-align: center; width: 14%;">NO. FACTURA</th>
+                        <th style="text-align: center; width: 8%;">SUBTOTAL</th>
                         <th style="text-align: center; width: 8%;">IVA</th>
                         <th style="text-align: center; width: 10%;" ng-click="sort('totalcompra')">
-                            Total
+                            TOTAL
                             <span class="glyphicon sort-icon" ng-show="sortKey=='totalcompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center; width: 9%;" ng-click="sort('estapagada')">
-                            Estado
+                            ESTADO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='estapagada'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th class="text-center" style="width: 9%;">Acciones</th>
+                        <th class="text-center" style="width: 9%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -111,9 +111,9 @@
                         <td class="text-center">{{formatoFecha(item.fecharegistrocompra)}}</td>
                         <td class="text-left">{{item.razonsocial}}</td>
                         <td class="text-center">{{item.numdocumentocompra}}</td>
-                        <td class="text-right">{{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
-                        <td class="text-right">{{item.ivacompra  }}</td>
-                        <td class="text-right">{{item.valortotalcompra}}</td>
+                        <td class="text-right">$ {{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
+                        <td class="text-right">$ {{item.ivacompra  }}</td>
+                        <td class="text-right">$ {{item.valortotalcompra}}</td>
                         <td class="text-right">{{(item.estadoanulado)?'ANULADA':'NO ANULADA'}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
@@ -500,11 +500,13 @@
                         </select>
                     </div>
                     <span class="help-block error"
-                          ng-show="formCompra.idformapago.$invalid && formCompra.idformapago.$touched">La Forma Pago es requerida</span>
+                          ng-show="formCompra.formapago.$invalid && formCompra.formapago.$touched">La Forma Pago es requerida</span>
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion" ng-required="true"></textarea>
+                    <span class="help-block error"
+                          ng-show="formCompra.observacion.$invalid && formCompra.observacion.$touched">La Observación es requerida</span>
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">

@@ -61,17 +61,17 @@
             </div>
 
             <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
-                        <th style="text-align: center;">Código</th>
+                        <th style="text-align: center;">CODIGO</th>
                         
-                        <th style="text-align: center;">Ubicación</th>     
-                        <th style="text-align: center;">Bodeguero</th>   
-                        <th style="text-align: center;">Teléfonos</th> 
-                        <th style="text-align: center;">Dirección</th>
-                        <th style="text-align: center;">Nombre</th>
-                        <th style="width: 10%;">Acciones</th>
+                        <th style="text-align: center;">UBICACION</th>
+                        <th style="text-align: center;">BODEGUERO</th>
+                        <th style="text-align: center;">TELEFONO(s)</th>
+                        <th style="text-align: center;">DIRECCION</th>
+                        <th style="text-align: center;">NOMBRE</th>
+                        <th style="width: 10%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
