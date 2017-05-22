@@ -50,26 +50,26 @@
                     </button>
                 </div>
 
-                <div class="col-xs-12">
-                    <table class="table table-responsive table-striped table-hover table-condensed">
+                <div class="col-xs-12" style="font-size: 12px !important;">
+                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
                         <tr>
-                            <th style="text-align: center;">Foto</th>
-                            <th style="text-align: center;">Código</th>
-                            <th style="text-align: center;">Producto</th>
-                            <th style="text-align: center;">Tipo Producto</th>
-                            <th style="text-align: center;">Fecha Ingreso</th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th style="text-align: center;">FOTO</th>
+                            <th style="text-align: center; width: 15%;"">CODIGO</th>
+                            <th style="text-align: center; width: 35%;"">DETALLE ITEM</th>
+                            <th style="text-align: center; width: 15%;"">TIPO ITEM</th>
+                            <th style="text-align: center; width: 10%;">FECHA INGRESO</th>
+                            <th style="text-align: center; width: 15%;">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10"  >
                             <td style="text-align: center;">
-                            <img class="img-circle" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 50px;" >
+                                <img class="img-thumbnail" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 100%;" >
                             </td>
-                            <td style="text-align: center;">{{producto.codigoproducto}}</td>
-                            <td style="text-align: center;">{{producto.nombreproducto}}</td>
-                            <td style="text-align: center;">{{producto.nameclaseitem}}</td>
+                            <td style="">{{producto.codigoproducto}}</td>
+                            <td style="">{{producto.nombreproducto}}</td>
+                            <td style="">{{producto.nameclaseitem}}</td>
                             <td style="text-align: center;">{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
                             <td style="text-align: center;">
                                 <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
@@ -215,7 +215,7 @@
                                               ng-show="formProducto.s_ice.$invalid && formProducto.s_ice.$touched">El Impuesto ICE es requerido</span>
                                     </div>
 
-                                    <div class="col-xs-12" style="margin-top: 5px;">
+                                    <!--<div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Contable: </span>
                                             <input type="text" class="form-control" name="t_cuentacontable" id="t_cuentacontable" ng-model="t_cuentacontable" placeholder=""
@@ -228,7 +228,7 @@
                                             </span>
                                         </div>
                                         <span class="help-block error" ng-show="formProducto.t_cuentacontable.$error.required">La asignación de una cuenta es requerida</span>
-                                    </div>
+                                    </div>-->
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
@@ -435,7 +435,7 @@
                             <img ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)" class="img-circle" style="width:150px" >
 
                         </div>
-                        <div class="row text-center">
+                        <div class="row">
                             <div class="col-xs-12 text-center" style="font-size: 18px;">{{producto.nombreproducto}}</div>
 
                             <div class="col-xs-12">
@@ -459,9 +459,7 @@
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">ICE: </span>{{producto.nametipoimpuestoice}}
                             </div>
-                            <div class="col-xs-12">
-                                <span style="font-weight: bold">Cuenta Contable: </span>{{producto.concepto}}                                
-                            </div>
+
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">Cuenta contable Ingreso: </span>{{producto.c2}}
                             </div>

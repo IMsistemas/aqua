@@ -114,15 +114,19 @@ class CatalogoProductoController extends Controller
             $data['idtipoimpuestoice'] =undefined;
         }*/
             $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
+
             if ($request->input('idtipoimpuestoice')!=null) {
                $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
             }
             
-            $catalogo->idplancuenta = $request->input('idplancuenta');
-            if ($request->input('idplancuenta_ingreso')!=null) {
-                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            //$catalogo->idplancuenta = $request->input('idplancuenta');
+
+            if ($request->input('idplancuenta_ingreso') != null) {
+                $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
             }
-            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+            //$catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
             $catalogo->idclaseitem = $request->input('idclaseitem');
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
@@ -172,15 +176,13 @@ class CatalogoProductoController extends Controller
      	
      	return Cont_CatalogItem::join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'cont_catalogitem.idtipoimpuestoiva')
 		     	->leftJoin('sri_tipoimpuestoice', 'sri_tipoimpuestoice.idtipoimpuestoice', '=', 'cont_catalogitem.idtipoimpuestoice')
-		     	->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
+		     	//->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
 		     	->leftJoin('cont_plancuenta as p2', 'p2.idplancuenta', '=', 'cont_catalogitem.idplancuenta_ingreso')
 		     	->join('cont_claseitem', 'cont_claseitem.idclaseitem', '=', 'cont_catalogitem.idclaseitem')
 		     	->join('cont_categoria', 'cont_categoria.idcategoria', '=', 'cont_catalogitem.idcategoria')
-		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia','p1.concepto', 'p2.concepto as c2')
+		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia', 'p2.concepto as c2')
 		     	->whereRaw("cont_catalogitem.idcatalogitem = '".$id."'")
-		     	->first() ;
-	
-     	
+		     	->first();
      }
     
     /**
@@ -215,12 +217,19 @@ class CatalogoProductoController extends Controller
     		unset($data['idplancuenta_ingreso']);
     	}*/
             $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
-            $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
-            $catalogo->idplancuenta = $request->input('idplancuenta');
-            if ($request->input('idplancuenta_ingreso')!=null) {
-                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+            if ($request->input('idtipoimpuestoice') != null && $request->input('idtipoimpuestoice') != 'null') {
+                $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
             }
-            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+
+            //$catalogo->idplancuenta = $request->input('idplancuenta');
+
+            if ($request->input('idplancuenta_ingreso') != null && $request->input('idplancuenta_ingreso')!= 'null') {
+                $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
+            }
+
+            //$catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
             $catalogo->idclaseitem = $request->input('idclaseitem');
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
