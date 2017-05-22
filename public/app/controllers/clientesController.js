@@ -859,7 +859,8 @@
                 idproducto: $scope.idproducto,
                 valor: $scope.total_suministro,
                 dividendos: $scope.s_suministro_credito,
-                valor_partial: $scope.total_partial
+                valor_partial: $scope.total_partial,
+                formapago: $scope.s_suministro_formapago
             };
 
             console.log(data);
@@ -881,27 +882,27 @@
 
             $('#btn-process-solsuministro').prop('disabled', true);
 
-            if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
+            /*if ($scope.t_suministro_medidor == false || $scope.t_suministro_medidor == 0 || $scope.t_suministro_medidor == 'off') {
                 var tiene = 'SI'
             } else {
                 var tiene = 'NO'
-            }
+            }*/
 
             var tarifa = $('#s_suministro_tarifa option:selected').text();
             var zona = $('#s_suministro_zona option:selected').text();
             var transversal = $('#s_suministro_transversal option:selected').text();
 
-            if ($scope.t_suministro_marca == undefined){
+            /*if ($scope.t_suministro_marca == undefined){
                 $scope.t_suministro_marca = '';
-            }
+            }*/
 
-            if ($scope.t_suministro_costomedidor == undefined){
+            /*if ($scope.t_suministro_costomedidor == undefined){
                 $scope.t_suministro_costomedidor = '0.00';
-            }
+            }*/
 
-            if ($scope.iditem == undefined) {
+            /*if ($scope.iditem == undefined) {
                 $scope.iditem = null;
-            }
+            }*/
 
             var data_to_pdf = {
                 tarifa: tarifa,
@@ -921,9 +922,9 @@
                 valor_partial: $scope.total_partial,
                 total_suministro: $scope.total_suministro,
 
-                tiene_medidor: tiene,
+                /*tiene_medidor: tiene,
                 marca_medidor: $scope.t_suministro_marca,
-                costo_medidor: $scope.t_suministro_costomedidor,
+                costo_medidor: $scope.t_suministro_costomedidor,*/
             };
 
             var data = {
@@ -941,9 +942,12 @@
                 codigocliente: $scope.objectAction.idcliente,
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
-                idproducto: $scope.iditem,
+
+                //idproducto: $scope.iditem,
 
                 idsolicitud: $scope.num_solicitud_suministro,
+
+                formapago: $scope.s_suministro_formapago,
 
                 data_to_pdf: JSON.stringify(data_to_pdf)
             };

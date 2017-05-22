@@ -1446,7 +1446,7 @@
                                         <fieldset>
                                             <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
+                                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Acometida</legend>
 
@@ -1489,7 +1489,7 @@
                                                 </fieldset>
                                             </div>
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
+                                            <!--<div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
 
@@ -1525,13 +1525,13 @@
                                                     </div>
 
                                                 </fieldset>
-                                            </div>
+                                            </div>-->
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -40px;">
+                                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Total</legend>
 
-                                                    <div class="col-sm-6 col-xs-12 error">
+                                                    <div class="col-sm-4 col-xs-12 error">
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon"> Cuota Inicial: </span>
@@ -1543,7 +1543,7 @@
                                                             La Couta Inicial es requerida</span>
                                                     </div>
 
-                                                    <div class="col-sm-6 col-xs-12 error">
+                                                    <div class="col-sm-4 col-xs-12 error">
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon"> Crédito: </span>
@@ -1554,6 +1554,24 @@
                                                         <span class="help-block error"
                                                               ng-show="formProcessSuministro.s_suministro_credito.$invalid && formProcessSuministro.s_suministro_credito.$touched">
                                                                 Seleccione un Crédito</span>
+                                                    </div>
+
+                                                    <div class="col-sm-4 col-xs-12 error">
+
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Forma Pago: </span>
+                                                            <select name="s_suministro_formapago" id="s_suministro_formapago" class="form-control" ng-model="s_suministro_formapago"
+                                                                    required>
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option value="1">EFECTIVO</option>
+                                                                <option value="2">COUTAS</option>
+                                                                <option value="3">RECARGAR</option>
+
+                                                            </select>
+                                                        </div>
+                                                        <span class="help-block error"
+                                                              ng-show="formProcessSuministro.s_suministro_formapago.$invalid && formProcessSuministro.s_suministro_formapago.$touched">
+                                                                Seleccione una Forma de Pago</span>
                                                     </div>
                                                 </fieldset>
                                             </div>
