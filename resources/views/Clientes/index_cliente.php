@@ -514,13 +514,13 @@
                             <button type="button" class="btn btn-primary btn-block" ng-click="actionServicio()">
                                 Servicios
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
+                            <button id="btnSetName" type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
                                 Cambio de Nombre
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionMantenimiento()">
+                            <button id="btnMantenimiento" type="button" class="btn btn-primary btn-block" ng-click="actionMantenimiento()">
                                 Mantenimiento
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
+                            <button id="btnOtras" type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
                                 Otras Solicitudes
                             </button>
                         </div>

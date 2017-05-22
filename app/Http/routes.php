@@ -201,6 +201,7 @@ Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 
 Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
 
+Route::get('cliente/getSuministroByClient/{idcliente}', 'Clientes\ClienteController@getSuministroByClient');
 Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
 Route::get('cliente/getTipoIdentificacion', 'Clientes\ClienteController@getTipoIdentificacion');
 Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA');

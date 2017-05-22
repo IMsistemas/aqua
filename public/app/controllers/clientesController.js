@@ -1446,7 +1446,24 @@
 
         $scope.showModalAction = function (item) {
             $scope.objectAction = item;
-            $('#modalAction').modal('show');
+
+            $http.get(API_URL + 'cliente/getSuministroByClient/' + item.idcliente).success(function(response){
+
+                if (response == 0) {
+                    $('#btnSetName').prop('disabled', true);
+                    $('#btnMantenimiento').prop('disabled', true);
+                    $('#btnOtras').prop('disabled', true);
+                } else {
+                    $('#btnSetName').prop('disabled', false);
+                    $('#btnMantenimiento').prop('disabled', false);
+                    $('#btnOtras').prop('disabled', false);
+                }
+
+                $('#modalAction').modal('show');
+
+            });
+
+
         };
 
         $scope.sort = function(keyname){

@@ -120,6 +120,9 @@ class ClienteController extends Controller
         return TipoCliente::orderBy('nametipocliente', 'asc')->get();
     }
 
+
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -235,6 +238,15 @@ class ClienteController extends Controller
     /*
      * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES-----------------------------------------
      */
+
+
+    public function getSuministroByClient($idcliente)
+    {
+        return Solicitud::whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudsuministro)')
+                            ->where('idcliente', $idcliente)
+                            ->where('estadoprocesada', true)
+                            ->count();
+    }
 
     /**
      * Obtener todos los clientes diferentes al id por parametro
