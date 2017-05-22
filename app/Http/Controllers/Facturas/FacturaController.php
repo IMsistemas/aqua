@@ -352,7 +352,7 @@ class FacturaController extends Controller
 
         return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf']);*/
 
-        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['idsuministro'] . '.pdf');
+        $pdf->setPaper('a4', 'portrait')->save(public_path() . '/uploads/factura/' . $data['idsuministro'] . '.pdf');
 
         return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['idsuministro'] . '.pdf']);
     }
