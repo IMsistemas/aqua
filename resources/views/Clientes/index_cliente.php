@@ -53,19 +53,19 @@
                             </td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfoCliente(item)">
-                                    <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-info-circle" aria-hidden="true" title="Información"></i>
                                 </button>
                                 <button type="button" class="btn btn-warning btn-sm" ng-click="showModalEditCliente(item)">
-                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" title="Editar"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDeleteCliente(item)">
-                                    <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-trash" aria-hidden="true" title="Eliminar"></i>
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
-                                    <i class="fa fa-lg fa-cogs" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-cogs" aria-hidden="true" title="Solicitudes"></i>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> title="Contactos"
                     </tbody>
                 </table>
                 <dir-pagination-controls
