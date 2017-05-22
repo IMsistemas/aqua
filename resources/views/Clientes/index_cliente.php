@@ -65,7 +65,7 @@
                                     <i class="fa fa-lg fa-cogs" aria-hidden="true" title="Solicitudes"></i>
                                 </button>
                             </td>
-                        </tr> title="Contactos"
+                        </tr>
                     </tbody>
                 </table>
                 <dir-pagination-controls
