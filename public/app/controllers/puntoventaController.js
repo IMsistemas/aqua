@@ -7,6 +7,10 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     $scope.modalstate = '';
     $scope.confirmacion=false;
 
+     $scope.bloquearGuardar = function(){
+       document.formpuntoventa.guardar.disabled=true;
+    };
+
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'puntoventa/getpuntoventas').success(function(response){
