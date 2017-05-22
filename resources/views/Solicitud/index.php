@@ -40,8 +40,8 @@
 
             </div>
 
-            <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+            <div class="col-xs-12" style="font-size: 12px;">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                         <tr>
                             <th style="width: 5%;" ng-click="sort('data.idsolicitud')">
