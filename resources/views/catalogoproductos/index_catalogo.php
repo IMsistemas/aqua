@@ -63,7 +63,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10"  >
+                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:5"  >
                             <td style="text-align: center;">
                                 <img class="img-thumbnail" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 100%;" >
                             </td>
@@ -90,8 +90,8 @@
                     </table>
                     <dir-pagination-controls                           
                             template-url="dirPagination.html"
-                            class="pull-left"
-                            max-size="10"
+                            class="pull-right"
+                            max-size="5"
                             direction-links="true"
                             boundary-links="true" >
                     </dir-pagination-controls>
@@ -400,6 +400,20 @@
                     </div>
                     <div class="modal-body">
                         <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Información</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message_error}}</span>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@ class CatalogoProductoController extends Controller
         $search = $filter->search;
         $cliente = null;
 
-        return Cont_CatalogItem::orderBy('idcatalogitem', 'desc')->paginate(10);
+        return Cont_CatalogItem::orderBy('idcatalogitem', 'desc')->paginate(5);
 
 
         /*$cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
@@ -251,15 +251,36 @@ class CatalogoProductoController extends Controller
      */
     public function destroy($id)
     {
-    	$producto = Cont_CatalogItem::find($id);
-    	if (file_exists($producto->foto)) {
-    		unlink($producto->foto);
-    	}
-    	$producto->delete();
-    	return response()->json(['success' => true]);
+
+        if ($this->getCountItemUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+            $producto = Cont_CatalogItem::find($id);
+            if (file_exists($producto->foto)) {
+                unlink($producto->foto);
+            }
+            $producto->delete();
+            return response()->json(['success' => true]);
+        }
+
+
     }
     
-    
+    private function getCountItemUtilizado($id)
+    {
+        $whereRaw = '(idcatalogitem IN (SELECT idcatalogitem FROM cont_itemcompra) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemventa) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemactivofijo) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemnotacreditfactura) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_producto_bodega))';
+
+        $count = Cont_CatalogItem::where('idcatalogitem', $id)
+                                    ->whereRaw($whereRaw)->count();
+
+        return $count;
+    }
     
     
     /**

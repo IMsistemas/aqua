@@ -370,12 +370,35 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     $scope.destroyProducto = function(){
         $http.delete(API_URL + 'catalogoproducto/' + $scope.empleado_del).success(function(response) {
-            $scope.initLoad();
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.empleado_del = 0;
-            $scope.message = 'Se eliminó correctamente el Item seleccionado...';
-            $('#modalMessage').modal('show');
-            setTimeout("$('#modalMessage').modal('hide')",3000);
+
+            if (response.success === true) {
+
+                $scope.initLoad();
+                $scope.empleado_del = 0;
+                $scope.message = 'Se eliminó correctamente el Item seleccionado...';
+                $('#modalMessage').modal('show');
+                setTimeout("$('#modalMessage').modal('hide')",3000);
+
+            } else {
+
+                if (response.exists != undefined) {
+
+                    $scope.message_error = 'No se puede eliminar el item, ya que ha sido utilizado en el sistema...';
+
+                } else {
+
+                    $scope.message_error = 'Ha ocurrido un error al intentar eliminar el item seleccionado...';
+
+                }
+
+                $('#modalMessageError').modal('show');
+
+            }
+
+
+
         });
     }   
     
