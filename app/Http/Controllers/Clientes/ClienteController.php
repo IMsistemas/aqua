@@ -60,7 +60,7 @@ class ClienteController extends Controller
                             ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific LIKE '%" . $search . "%')");
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
         }
 
         return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);
