@@ -165,7 +165,7 @@ class SolicitudController extends Controller
         }
 
         if ($search != null) {
-            $solicitud->whereRaw("(persona.lastnamepersona LIKE '%" . $search . "%' OR persona.namepersona LIKE '%" . $search . "%')");
+            $solicitud->whereRaw("(persona.lastnamepersona ILIKE '%" . $search . "%' OR persona.namepersona ILIKE '%" . $search . "%')");
         }
 
         return $solicitud->orderBy('fechasolicitud', 'asc')->paginate(10);
