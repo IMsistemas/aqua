@@ -117,12 +117,12 @@
                         <td class="text-right">{{(item.estadoanulado)?'ANULADA':'NO ANULADA'}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
-                                    data-toggle="tooltip" data-placement="bottom" >
+                                    data-toggle="tooltip" data-placement="bottom" title="Información">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                             </button>
 
                             <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1">
+                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1" title="Anular">
                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
 
@@ -162,28 +162,7 @@
             </div>
         </div>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-danger">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Confirmación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>Está seguro que desea Anular la compra: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
-                            Anular
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoEmpleado">
             <div class="modal-dialog modal-sm" role="document">
@@ -587,14 +566,19 @@
 
 
                 <div class="col-xs-12 text-right" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-warning" id="btn-anular" ng-click="showModalConfirm1()" ng-disabled="!guardado" >
+
+                    <button class="btn btn-primary" ng-click="InicioList();">
+                        Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-default" id="btn-anular" ng-click="anular()" ng-disabled="guardado" >
                         Anular <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
 
-                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="confirmSave()" ng-disabled="formCompra.$invalid" >
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="confirmSave()" ng-disabled="formCompra.$invalid" >
                         Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-success" ng-click="InicioList();"> Regresar</button>
+
                 </div>
 
             </div>
@@ -654,6 +638,28 @@
 
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Está seguro que desea Anular la compra: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
+                        Anular
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage1">
         <div class="modal-dialog" role="document">

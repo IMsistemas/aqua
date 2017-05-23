@@ -26,11 +26,13 @@ class Cont_ItemCompra extends Model
         'preciototal'
     ];
 
-    public function cont_documentocompra(){
+    public function cont_documentocompra()
+    {
     	return $this->belongsTo('App\Modelos\Contabilidad');
     }
 
-    public function cont_catalogoitem(){
+    public function cont_catalogitem()
+    {
         return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem',"idcatalogitem");
     }
 

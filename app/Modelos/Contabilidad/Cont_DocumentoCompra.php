@@ -48,5 +48,10 @@ class Cont_DocumentoCompra extends Model
     {
         return $this->hasMany('App\Modelos\Contabilidad\Cont_FormaPagoDocumentoCompra', 'iddocumentocompra');
     }
+
+    public function cont_itemcompra()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_ItemCompra', 'iddocumentocompra');
+    }
    
 }

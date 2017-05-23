@@ -14,6 +14,7 @@ use App\Modelos\Contabilidad\Cont_ItemVenta;
 use App\Modelos\Contabilidad\Cont_Kardex;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
+use App\Modelos\Contabilidad\Cont_Transaccion;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\SRI\SRI_ComprobanteRetencion;
@@ -308,7 +309,28 @@ class ComprasController extends Controller
                         'sri_tipocomprobante', 'cont_formapago_documentocompra')
                     ->where('iddocumentocompra', $id)->get();
 
-        return $compra;
+        $dataitemcompra = Cont_ItemCompra::join("cont_catalogitem","cont_catalogitem.idcatalogitem","=","cont_itemcompra.idcatalogitem")
+            ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+            ->selectRaw("*")
+            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+            ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+            ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+            ->whereRaw(" iddocumentocompra=$id ")
+            ->get();
+
+        $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=" . $compra[0]->idtransaccion."")->get();
+
+        $full_data= [
+            'Compra' => $compra, 'Items' => $dataitemcompra,'Contabilidad'=> $dataConta
+        ];
+
+        return $full_data;
     }
 
     /**
