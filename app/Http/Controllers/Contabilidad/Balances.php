@@ -204,6 +204,23 @@ class Balances extends Controller
     	return $datos_estado_resultados;
     }
     /**
+     * Calcular el cambio del patrimonio entre 2 fechas seleccionadas solo calcula las transacciones activas
+     * 
+     * 
+     */
+    public function estado_cambio_patrimonio($parametro)
+    {
+        $filtro = json_decode($parametro);
+        return Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."') balance1")
+                                ->selectRaw("f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."') balance2")
+                                ->selectRaw("(CASE WHEN f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."')>f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."') THEN ((f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."'))- (f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."'))) WHEN f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."')=f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."') THEN 0 END ) AS Incremento")
+                                ->selectRaw("(CASE WHEN f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."')<f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."') THEN ((f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."'))- (f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."'))) WHEN f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaF."')=f_balancecuentacontable(cont_plancuenta.idplancuenta,'','".$filtro->FechaI."') THEN 0 END ) AS Disminucion")
+                                ->whereRaw("tipocuenta='PT' AND (SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ cont_plancuenta.jerarquia)=1  ")
+                                ->orderBy("cont_plancuenta.jerarquia","ASC")
+                                ->get();
+    }
+    /**
      * Imprimir libro diario
      * 
      * 
@@ -221,7 +238,7 @@ class Balances extends Controller
         return $pdf->stream("libro_diario_".$today."");
     }
     /**
-     * Imprimir libro diario
+     * Imprimir libro mayor
      * 
      * 
      */
@@ -237,6 +254,11 @@ class Balances extends Controller
         $pdf->setPaper('A4', 'landscape');
         return $pdf->stream("libro_mayor_".$today."");
     }
+     /**
+     * Imprimir estado de resultados
+     * 
+     * 
+     */
     public function print_estado_resultados($parametro)
     {
     	ini_set('max_execution_time', 300);
@@ -248,5 +270,22 @@ class Balances extends Controller
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
         return $pdf->stream("estado_resultados_".$today."");
+    }
+      /**
+     * Imprimir estado de cambios en el patrimonio
+     * 
+     * 
+     */
+    public function print_estado_cambios_patrimonio($parametro)
+    {
+        ini_set('max_execution_time', 300);
+        $filtro = json_decode($parametro);
+        $estado_patrimonio=$this->estado_cambio_patrimonio($parametro);
+        $today=date("Y-m-d H:i:s");
+        $view =  \View::make('Estadosfinancieros.cambios_patrimonio', compact('filtro','estado_patrimonio','today'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       // $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream("estado_patrimonio_".$today."");
     }
 }

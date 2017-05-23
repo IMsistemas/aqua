@@ -23,9 +23,12 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
     $scope.titulo_balance="";
     $scope.titulo_resultados="";
 
+    $scope.cambio_patrimonio=[];
+
     $scope.filtro_diario={};
     $scope.filtro_mayor={};
     $scope.filtro_estado_resultado={};
+    $scope.filtro_cambios_patrimonio={};
 
     ///---generar reporte segun la opcion que seleecione 
     $scope.genera_report=function() {
@@ -38,6 +41,8 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         $("#procesarinfomracion").modal("show");
         switch($scope.cmb_generar){
             case "1": ///Estados Cambios Patrimonio
+                $scope.aux_render="1";
+                $scope.estado_cambio_patrimonio();
             break;
             case "2": ///Estados Situacion Finaciera
                 $scope.aux_render="2";
@@ -131,14 +136,31 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         });  
     };
     ///---Fin proceso estado de resultados
+    ///--- proceso estado de cambios en el patrimonio
+    $scope.estado_cambio_patrimonio=function() {
+        $scope.filtro_cambios_patrimonio={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val())
+        };
+        $scope.titulo_head_report="Estado De Cambios En El Patrimonio en el Perdio : "+convertDatetoDB($("#txt_fechaI").val())+" y "+convertDatetoDB($("#txt_fechaF").val());
+        $scope.aux_Fecha_I=convertDatetoDB($("#txt_fechaI").val());
+        $scope.aux_Fecha_F=convertDatetoDB($("#txt_fechaF").val());
 
-
+        $http.get(API_URL + 'Balance/estado_cambio_patrimonio/'+JSON.stringify($scope.filtro_cambios_patrimonio))
+        .success(function(response){
+            console.log(response);
+            $scope.cambio_patrimonio=response;
+            $("#procesarinfomracion").modal("hide");
+        }); 
+    };
+    ///---Fin proceso estado de cambios en el patrimonio
 
 
     ///--- Imprimir reportes
     $scope.print_report=function(){
         switch($scope.cmb_generar){
             case "1": ///Estados Cambios Patrimonio
+                $scope.print_estado_cambios_patrimonio();
             break;
             case "2": ///Estados Situacion Finaciera
                 $scope.print_estado_finaciero();
@@ -197,6 +219,18 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
 
       var accion = API_URL + "Balance/estado_resultados_print/"+JSON.stringify($scope.filtro_estado_resultado);
         $("#WPrint_head").html("Estado De Situación Finaciera");
+        $("#WPrint").modal("show");
+        $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");  
+    };
+    ///---
+    $scope.print_estado_cambios_patrimonio=function() {
+       $scope.filtro_cambios_patrimonio={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val())
+        };
+
+      var accion = API_URL + "Balance/estado_cambios_patrimonio_print/"+JSON.stringify($scope.filtro_cambios_patrimonio);
+        $("#WPrint_head").html("Estado De Cambios En El Patrimonio");
         $("#WPrint").modal("show");
         $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");  
     };

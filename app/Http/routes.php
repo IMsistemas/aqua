@@ -1048,4 +1048,6 @@ Route::get('Balance/estado_resultados/{filtro}', 'Contabilidad\Balances@get_esta
 Route::get('Balance/libro_diario_print/{filtro}', 'Contabilidad\Balances@print_libro_diario');
 Route::get('Balance/libro_mayor_print/{filtro}', 'Contabilidad\Balances@print_libro_mayor');
 Route::get('Balance/estado_resultados_print/{filtro}', 'Contabilidad\Balances@print_estado_resultados');
+Route::get('Balance/estado_cambio_patrimonio/{filtro}', 'Contabilidad\Balances@estado_cambio_patrimonio');
+Route::get('Balance/estado_cambios_patrimonio_print/{filtro}', 'Contabilidad\Balances@print_estado_cambios_patrimonio');
 //-------------------------------- Balances Contabilidad---------------/////////
