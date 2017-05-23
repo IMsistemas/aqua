@@ -241,6 +241,36 @@
     </div>
     <!--Fin estado de situacion finaciera-->
 
+    <!--estado de cambios del patrimonio-->
+    <div class="row" ng-hide="aux_render!='1' " ng-show=" aux_render=='1'">
+      <table class="table">
+        <thead class="bg-primary">
+          <tr>
+            <th colspan="6">{{titulo_head_report}}</th>
+          </tr>
+          <tr>
+           <th></th>
+           <th>Concepto</th>
+           <th>Saldo {{aux_Fecha_I}}</th>
+           <th>Incremento</th>
+           <th>Disminución</th>
+           <th>Saldo {{aux_Fecha_F}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="cp in cambio_patrimonio">
+            <td>{{$index+1}}</td>
+            <td>{{cp.concepto}}</td>
+            <td>{{cp.balance1}}</td>
+            <td>{{cp.incremento}}</td>
+            <td>{{cp.disminucion}}</td>
+            <td>{{cp. balance2}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--estado de cambios del patrimonio-->
+
 
 
 <div class="modal fade"  id="WPrint" tabindex="-1" role="dialog">
