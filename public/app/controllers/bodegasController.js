@@ -98,17 +98,38 @@ app.controller('bodegasController',  function($scope, $http, API_URL) {
 
                     console.log(response);
 
-                	$scope.bodega = response;     
+                	$scope.bodega = response;
+
+                	var idparroquia = response.idparroquia;
+
                 	$http.get(API_URL + 'bodega/getEmpleadoByBodega/' + $scope.bodega.idbodega).success(function(response){
                 		$scope.empleado = response;	                                   		     
 	                }); 
-                	$http.get(API_URL + 'bodega/getProvincias').success(function(response){
+                	/*$http.get(API_URL + 'bodega/getProvincias').success(function(response){
 	                    $scope.provincias = response;                   
 	                });  
                 	$scope.provincia = parseInt($scope.bodega.idprovincia);
 	                $scope.loadCiudad($scope.provincia,false);
 	                $scope.ciudad = parseInt($scope.bodega.idcanton);
-	                $scope.loadSector($scope.ciudad,false,$scope.bodega.idparroquia );
+	                $scope.loadSector($scope.ciudad,false,$scope.bodega.idparroquia );*/
+
+                    $http.get(API_URL + 'bodega/getProvincias').success(function(response){
+                        $scope.provincias = response;
+                        $scope.provincia = parseInt($scope.bodega.idprovincia);
+
+                        $http.get(API_URL + 'bodega/getCiudad/' + $scope.provincia).success(function(response){
+                            $scope.ciudades = response;
+                            $scope.ciudad = parseInt($scope.bodega.idcanton);
+                            $scope.sectores = [];
+
+                            $http.get(API_URL + 'bodega/getSector/' + $scope.ciudad).success(function(response){
+                                $scope.sectores = response;
+                                $scope.bodega.idparroquia = idparroquia;
+                            });
+
+                        });
+
+                    });
 
                     $scope.select_cuenta = {
                         idplancuenta: $scope.bodega.idplancuenta,

@@ -87,11 +87,11 @@
                         <td>
                             <button type="button" class="btn btn-warning" ng-click="toggle('edit', bodega.idbodega)"
                                     data-toggle="tooltip" data-placement="bottom" >
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Editar">
                             </button>
                             <button type="button" class="btn btn-danger" ng-click="showModalConfirm(bodega.idbodega,0)"
                                     data-toggle="tooltip" data-placement="bottom"  >
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"  title="Eliminar"></span>
                             </button>
                             
                         </td>
