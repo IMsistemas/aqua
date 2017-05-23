@@ -73,14 +73,14 @@
                         <td>{{$index + 1}}</td>
                         <td>{{item.jerarquia}}</td>
                         <td>{{item.concepto}}</td>
-                        <td>{{item.totalfactura}}</td>
+                        <td class="text-right">$ {{item.totalfactura}}</td>
 
                     </tr>
                 </tbody>
                 <tfoot class="bg-primary">
                     <tr>
                         <th colspan="3" class="text-right">TOTALES</th>
-                        <th class="text-right btn-success" style="font-weight: bold;">{{total}}</th>
+                        <th class="text-right btn-success" style="font-weight: bold;">$ {{total}}</th>
                     </tr>
                 </tfoot>
             </table>
