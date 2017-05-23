@@ -1009,3 +1009,24 @@ Route::get('puntoventa/verificaremision/{emision}', 'Contabilidad\PuntoVentaCont
 Route::get('puntoventa/cargaestablecimiento', 'Contabilidad\PuntoVentaController@cargaEstablecimiento');
 Route::get('puntoventa/cargarpuntoventa/{id}', 'Contabilidad\PuntoVentaController@cargarPuntoVenta');
 Route::get('puntoventa/verificarvacio', 'Contabilidad\PuntoVentaController@empleadoVacio');
+
+/*
+ * ------------------------------REPORTE COMPRA-------------------------------------------------------------------------
+ */
+
+Route::get('reportecompra/getCompras', 'Reportes\ReporteCompraController@getCompras');
+Route::resource('reportecompra', 'Reportes\ReporteCompraController');
+
+/*
+ * ------------------------------REPORTE VENTA--------------------------------------------------------------------------
+ */
+
+Route::get('reporteventa/getVentas', 'Reportes\ReporteVentaController@getVentas');
+Route::resource('reporteventa', 'Reportes\ReporteVentaController');
+
+/*
+ * ------------------------------REPORTE NC-----------------------------------------------------------------------------
+ */
+
+Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
+Route::resource('reportenc', 'Reportes\ReporteNCController');
