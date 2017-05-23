@@ -1031,6 +1031,14 @@ Route::resource('reporteventa', 'Reportes\ReporteVentaController');
 Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
 Route::resource('reportenc', 'Reportes\ReporteNCController');
 
+
+/*
+ * ------------------------------REPORTE VENTA/BALANCE------------------------------------------------------------------
+ */
+
+Route::get('reporteventabalance/getVentasBalance', 'Reportes\ReporteVentaBalanceController@getVentasBalance');
+Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController');
+
 //-------------------------------- Balances Contabilidad---------------/////////
 
 Route::resource('Balance', 'Contabilidad\Balances');
