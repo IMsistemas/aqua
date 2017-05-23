@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-xs-12" style="margin-top: 5px;">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Contribuyente Especial: </span>
+                                        <span class="input-group-addon">No. Contribuyente Especial (si presenta): </span>
                                         <input type="text" class="form-control" name="t_contribuyente" id="t_contribuyente" ng-model="t_contribuyente" />
                                     </div>
                                 </div>

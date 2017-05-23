@@ -67,8 +67,8 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12">
-                    <table class="table table-responsive table-striped table-hover table-condensed">
+                <div class="col-xs-12" style="font-size: 12px !important;">
+                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
                         <tr>
                             <th class="text-center" style="width: 10%;" ng-click="sort('')">

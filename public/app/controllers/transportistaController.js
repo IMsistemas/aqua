@@ -271,7 +271,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
             } else {
 
                 if (response.exists != undefined) {
-                    $scope.message_error = 'No se puede eliminar el transportista seleccionado, ya que esa siendo usado en el sistema...';
+                    $scope.message_error = 'No se puede eliminar el transportista seleccionado, ya que está siendo usado en el sistema...';
                 } else {
                     $scope.message_error = 'Ha ocurrido un error..';
                 }

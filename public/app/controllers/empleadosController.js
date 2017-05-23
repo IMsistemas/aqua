@@ -4,6 +4,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
     $scope.empleados = [];
     $scope.empleado_del = 0;
     $scope.idpersona = 0;
+    $scope.idpersona_edit = 0;
     $scope.id = 0;
 
     $scope.select_cuenta = null;
@@ -208,6 +209,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.salario = item.salario;
 
                     $scope.idpersona = item.idpersona;
+                    $scope.idpersona_edit = item.idpersona;
                     console.log(item);
 
                     if (item.rutafoto != null && item.rutafoto != ''){
@@ -315,6 +317,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             documentoidentidadempleado: $scope.documentoidentidadempleado,
 
             idpersona:  $scope.idpersona,
+            idpersona_edit: $scope.idpersona_edit,
 
             departamento: $scope.departamento,
             tipoidentificacion: $scope.tipoidentificacion,
@@ -343,9 +346,17 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                 $scope.hideModalMessage();
             }
             else {
-                $('#modalAction').modal('hide');
-                $scope.message_error = 'Ya existe ese Colaborador...';
+
+                if (data.type_error_exists != undefined) {
+                    $scope.message_error = 'Ya existe un empleado(colaborador) insertado con ese mismo Número de Identificación';
+                } else {
+                    $('#modalAction').modal('hide');
+                    $scope.message_error = 'Ha ocurrido un error..';
+                }
+
                 $('#modalMessageError').modal('show');
+
+
             }
         });
 
@@ -359,12 +370,28 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     $scope.destroy = function(){
         $http.delete(API_URL + 'empleado/' + $scope.empleado_del).success(function(response) {
-            $scope.initLoad(1);
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.empleado_del = 0;
-            $scope.message = 'Se eliminó correctamente el Colaborador seleccionado';
-            $('#modalMessage').modal('show');
-            $scope.hideModalMessage();
+
+            if (response.success == true) {
+                $scope.initLoad(1);
+
+                $scope.empleado_del = 0;
+                $scope.message = 'Se eliminó correctamente el Colaborador seleccionado';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+
+                if (response.exists != undefined) {
+                    $scope.message_error = 'No se puede eliminar el empleado(colaborador) seleccionado, ya que está siendo usado en el sistema...';
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error..';
+                }
+
+                $('#modalMessageError').modal('show');
+            }
+
+
         });
     };
 

@@ -80,9 +80,7 @@ class ConfiguracionSystemController extends Controller
         $configuracion->direccionestablecimiento = $request->input('direccionestablecimiento');
         $configuracion->rutalogo = $request->input('rutalogo');
 
-        if ($request->input('contribuyenteespecial') == '') {
-            $configuracion->contribuyenteespecial = null;
-        } else {
+        if ($request->input('contribuyenteespecial') != '' && $request->input('contribuyenteespecial') != null) {
             $configuracion->contribuyenteespecial = $request->input('contribuyenteespecial');
         }
 
@@ -156,13 +154,11 @@ class ConfiguracionSystemController extends Controller
         $configuracion->direccionestablecimiento = $request->input('direccionestablecimiento');
         $configuracion->rutalogo = $request->input('rutalogo');
 
-        if ($request->input('contribuyenteespecial') == '') {
-            $configuracion->contribuyenteespecial = null;
-        } else {
+        if ($request->input('contribuyenteespecial') != '' && $request->input('contribuyenteespecial') != null) {
             $configuracion->contribuyenteespecial = $request->input('contribuyenteespecial');
         }
 
-        if ($request->input('obligadocontabilidad') == '1') {
+         if ($request->input('obligadocontabilidad') == '1') {
             $configuracion->obligadocontabilidad = true;
         } else {
             $configuracion->obligadocontabilidad = false;
@@ -233,10 +229,16 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ''){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
+
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);
@@ -266,10 +268,15 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ""){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);
@@ -299,10 +306,15 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ""){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);

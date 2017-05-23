@@ -140,6 +140,15 @@ class EmpleadoController extends Controller
     }
 
 
+    private function searchExist($numidentific)
+    {
+        $count = Empleado::join('persona', 'empleado.idpersona', '=', 'persona.idpersona')
+                            ->where('persona.numdocidentific', $numidentific)->count();
+
+        return ($count == 1) ? true : false;
+    }
+
+
     /**
      * Almacenar el recurso empleado
      *
@@ -148,53 +157,63 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $url_file = null;
 
-        if ($request->hasFile('file')) {
-            $image = $request->file('file');
-            $destinationPath = public_path() . '/uploads/empleados';
-            $name = rand(0, 9999) . '_' . $image->getClientOriginalName();
-            if(!$image->move($destinationPath, $name)) {
-                return response()->json(['success' => false]);
+        if ($this->searchExist($request->input('documentoidentidadempleado'))) {
+
+            return response()->json(['success' => false, 'type_error_exists' => true]);
+
+        } else {
+
+            $url_file = null;
+
+            if ($request->hasFile('file')) {
+                $image = $request->file('file');
+                $destinationPath = public_path() . '/uploads/empleados';
+                $name = rand(0, 9999) . '_' . $image->getClientOriginalName();
+                if(!$image->move($destinationPath, $name)) {
+                    return response()->json(['success' => false]);
+                } else {
+                    $url_file = '/uploads/empleados/' . $name;
+                }
+
+            }
+            if ($request->input('idpersona') == 0) {
+                $persona = new Persona();
             } else {
-                $url_file = '/uploads/empleados/' . $name;
+                $persona = Persona::find($request->input('idpersona'));
             }
+            $persona->lastnamepersona = $request->input('apellidos');
+            $persona->namepersona = $request->input('nombres');
+            $persona->numdocidentific = $request->input('documentoidentidadempleado');
+            $persona->email = $request->input('correo');
+            $persona->celphone = $request->input('celular');
+            $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+            $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+            $persona->direccion = $request->input('direcciondomicilio');
 
-        }
-        if ($request->input('idpersona') == 0) {
-            $persona = new Persona();
-        } else {
-            $persona = Persona::find($request->input('idpersona'));
-        }
-        $persona->lastnamepersona = $request->input('apellidos');
-        $persona->namepersona = $request->input('nombres');
-        $persona->numdocidentific = $request->input('documentoidentidadempleado');
-        $persona->email = $request->input('correo');
-        $persona->celphone = $request->input('celular');
-        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
-        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
-        $persona->direccion = $request->input('direcciondomicilio');
+            if ($persona->save()) {
+                $empleado = new Empleado();
+                $empleado->idpersona = $persona->idpersona;
+                $empleado->idcargo = $request->input('idcargo');
+                $empleado->iddepartamento = $request->input('departamento');
+                $empleado->idplancuenta = $request->input('cuentacontable');
+                $empleado->estado = true;
+                $empleado->fechaingreso = $request->input('fechaingreso');
+                $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+                $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
+                $empleado->salario = $request->input('salario');
 
-        if ($persona->save()) {
-            $empleado = new Empleado();
-            $empleado->idpersona = $persona->idpersona;
-            $empleado->idcargo = $request->input('idcargo');
-            $empleado->iddepartamento = $request->input('departamento');
-            $empleado->idplancuenta = $request->input('cuentacontable');
-            $empleado->estado = true;
-            $empleado->fechaingreso = $request->input('fechaingreso');
-            $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
-            $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
-            $empleado->salario = $request->input('salario');
-
-            if ($url_file != null) {
-                $empleado->rutafoto = $url_file;
+                if ($url_file != null) {
+                    $empleado->rutafoto = $url_file;
+                }
+                $empleado->save();
+            } else {
+                return response()->json(['success' => false]);
             }
-            $empleado->save();
-        } else {
-            return response()->json(['success' => false]);
+            return response()->json(['success' => true]);
+
         }
-        return response()->json(['success' => true]);
+
     }
 
 
@@ -232,7 +251,7 @@ class EmpleadoController extends Controller
             }
         }
 
-        $persona = Persona::find($request->input('idpersona'));;
+        $persona = Persona::find($request->input('idpersona_edit'));;
         $persona->lastnamepersona = $request->input('apellidos');
         $persona->namepersona = $request->input('nombres');
         $persona->numdocidentific = $request->input('documentoidentidadempleado');
@@ -271,11 +290,30 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        $empleado = Empleado::find($id);
-        if ($empleado->delete()) {
-            return response()->json(['success' => true]);
+
+        if ($this->getCountEmpleadoaUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+
+            $empleado = Empleado::find($id);
+            if ($empleado->delete()) {
+                return response()->json(['success' => true]);
+            }
+            else return response()->json(['success' => false]);
+
         }
-        else return response()->json(['success' => false]);
+
+    }
+
+    private function getCountEmpleadoaUtilizado($id)
+    {
+        $whereRaw = 'idempleado IN (SELECT idempleado FROM cont_puntoventa) ';
+
+        $count = Empleado::where('idempleado', $id)->whereRaw($whereRaw)->count();
+
+        return $count;
     }
 
 }

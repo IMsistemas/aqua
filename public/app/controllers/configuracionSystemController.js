@@ -78,7 +78,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.saveEstablecimiento = function () {
 
-        var ruc = $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial;
+        //var ruc = $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial;
+
+        var ruc = $('#t_establ').val() + '-' + $('#t_pto').val() + '-' + $('#t_secuencial').val();
 
         var data = {
             razonsocial: $scope.t_razonsocial,
