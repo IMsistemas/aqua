@@ -93,6 +93,15 @@
                                     <li role="separator" class="divider"></li>
 
                                     <li><a href = "#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
+
+
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes Contabilidad</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloBalance();">Estados Financieros</a></li>
+                                        </ul>
+                                    </li>
+
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Inventario</a>
@@ -290,7 +299,7 @@
     <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>
-
+    <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
 
 
     </body>

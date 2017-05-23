@@ -223,6 +223,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "Contabilidad";
     }
 
+    $scope.toModuloBalance = function(){
+        $scope.titulo = "Estados Financieros";
+        $scope.toModulo = "Balance";
+    }
+
     $scope.toModuloInventario = function(){
         $scope.titulo = "Inventario";
         $scope.toModulo = "Inventario";
