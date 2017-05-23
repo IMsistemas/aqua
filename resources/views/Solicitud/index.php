@@ -45,33 +45,33 @@
                     <thead class="bg-primary">
                         <tr>
                             <th style="width: 5%;" ng-click="sort('data.idsolicitud')">
-                                Nro.
+                                NO.
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.idsolicitud'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
                             <th style="width: 10%;" ng-click="sort('data.fechasolicitud')">
-                                Fecha
+                                FECHA
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.fechasolicitud'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
                             <th ng-click="sort('data.cliente.complete_name')">
-                                Cliente
+                                CLIENTE
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.complete_name'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
                             <th ng-click="sort('data.cliente.direcciondomicilio')">
-                                Dirección
+                                DIRECCION
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.direcciondomicilio'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
                             <th style="width: 10%;" ng-click="sort('data.cliente.telefonoprincipaldomicilio')">
-                                Teléfono
+                                TELEFONO
                                 <span class="glyphicon sort-icon" ng-show="sortKey=='data.cliente.telefonoprincipaldomicilio'"
                                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th style="width: 10%;">Tipo Solicitud</th>
-                            <th style="width: 10%;">Estado</th>
-                            <th style="width: 10%;">Acciones</th>
+                            <th style="width: 10%;">TIPO DE SOLICITUD</th>
+                            <th style="width: 10%;">ESTADO</th>
+                            <th style="width: 10%;">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,14 +86,14 @@
                             <td ng-if="solicitud.estadoprocesada == true"><span class="label label-primary" style="font-size: 14px !important;">Procesada</span></td>
                             <td ng-if="solicitud.estadoprocesada == false"><span class="label label-warning" style="font-size: 14px !important;">En Espera</span></td>
                             <td ng-if="solicitud.estadoprocesada == true">
-                                <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
+                                <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" title="Información">
                                     <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                 </button>
                                 <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="" disabled>
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                                 </button>-->
                                 <span ng-if="solicitud.tipo == 'Suministro'">
-                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" >
+                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" title="Archivo de Solicitud">
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>
                                 </span>
