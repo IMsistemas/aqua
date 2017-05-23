@@ -203,6 +203,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "reportenc";
     }
 
+    $scope.toModuloReporteVentasBalance = function(){
+        $scope.titulo = "Reporte Ventas Balance";
+        $scope.toModulo = "reporteventabalance";
+    }
+
     $scope.toModuloPortafolioProductos = function(){
         $scope.titulo = "Portafolio de Productos";
         $scope.toModulo = "categoria";

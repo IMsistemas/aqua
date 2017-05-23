@@ -99,6 +99,7 @@
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes Contabilidad</a>
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="#" ng-click="toModuloBalance();">Estados Financieros</a></li>
+                                            <li><a tabindex="-1" href="#" ng-click="toModuloReporteVentasBalance();">Ventas / Balance</a></li>
                                         </ul>
                                     </li>
 
@@ -300,7 +301,7 @@
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>
     <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
-
+    <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
 
     </body>
 </html>
