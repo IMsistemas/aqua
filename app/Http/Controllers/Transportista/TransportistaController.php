@@ -154,14 +154,16 @@ class TransportistaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $state = false;
+        //$state = false;
 
-        if ($request->input('idpersona') == 0) {
+        /*if ($request->input('idpersona') == 0) {
             $persona = new Persona();
         } else {
             $persona = Persona::find($request->input('idpersona'));
             $state = true;
-        }
+        }*/
+
+        $persona = Persona::find($request->input('idpersona_edit'));
 
         $persona->numdocidentific = $request->input('documentoidentidadempleado');
         $persona->email = $request->input('correo');
@@ -170,10 +172,13 @@ class TransportistaController extends Controller
         $persona->razonsocial = $request->input('razonsocial');
         $persona->direccion = $request->input('direccion');
 
-        if ($state == false) {
+        $persona->lastnamepersona = $request->input('razonsocial');
+        $persona->namepersona = $request->input('razonsocial');
+
+        /*if ($state == false) {
             $persona->lastnamepersona = $request->input('razonsocial');
             $persona->namepersona = $request->input('razonsocial');
-        }
+        }*/
 
         if ($persona->save()) {
             $transportista = Transportista::find($id);
@@ -200,10 +205,29 @@ class TransportistaController extends Controller
      */
     public function destroy($id)
     {
-        $transportista = Transportista::find($id);
-        if ($transportista->delete()) {
-            return response()->json(['success' => true]);
+
+        if ($this->getCountTransportistaUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+
+            $transportista = Transportista::find($id);
+            if ($transportista->delete()) {
+                return response()->json(['success' => true]);
+            }
+            else return response()->json(['success' => false]);
+
         }
-        else return response()->json(['success' => false]);
+
+    }
+
+    private function getCountTransportistaUtilizado($id)
+    {
+        $whereRaw = 'idtransportista IN (SELECT idtransportista FROM cont_documentoguiaremision) ';
+
+        $count = Transportista::where('idtransportista', $id)->whereRaw($whereRaw)->count();
+
+        return $count;
     }
 }

@@ -212,7 +212,7 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $persona = Persona::find($request->input('idpersona'));
+        $persona = Persona::find($request->input('idpersona_edit'));
         $state = true;
 
         $persona->numdocidentific = $request->input('documentoidentidadempleado');
@@ -252,13 +252,23 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        ContactoProveedor::where('idproveedor', $id)->delete();
 
-        $proveedor = Proveedor::find($id);
-        if ($proveedor->delete()) {
-            return response()->json(['success' => true]);
+        if ($this->getCountProveedorUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+
+            ContactoProveedor::where('idproveedor', $id)->delete();
+
+            $proveedor = Proveedor::find($id);
+            if ($proveedor->delete()) {
+                return response()->json(['success' => true]);
+            }
+            else return response()->json(['success' => false]);
+
         }
-        else return response()->json(['success' => false]);
+
     }
 
     public function destroyContacto($idcontacto)
@@ -268,5 +278,15 @@ class ProveedorController extends Controller
             return response()->json(['success' => true]);
         }
         else return response()->json(['success' => false]);
+    }
+
+    private function getCountProveedorUtilizado($id)
+    {
+        $whereRaw = '(idproveedor IN (SELECT idproveedor FROM cont_documentocompra) ';
+        $whereRaw .= 'OR idproveedor IN (SELECT idproveedor FROM transportista)) ';
+
+        $count = Proveedor::where('idproveedor', $id)->whereRaw($whereRaw)->count();
+
+        return $count;
     }
 }

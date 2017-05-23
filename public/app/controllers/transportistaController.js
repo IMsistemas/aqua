@@ -4,6 +4,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
     $scope.transportistas = [];
     $scope.transportista_del = 0;
     $scope.idpersona = 0;
+    $scope.idpersona_edit = 0;
     $scope.id = 0;
 
     $scope.pageChanged = function(newPage) {
@@ -128,6 +129,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                     $scope.correo = item.email;
                     $scope.placa = item.placa;
                     $scope.idpersona = item.idpersona;
+                    $scope.idpersona_edit = item.idpersona;
                     $scope.tipoidentificacion = item.idtipoidentificacion;
 
                     $scope.id = item.idtransportista;
@@ -188,21 +190,20 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
         var fechaingreso = $('#fechaingreso').val();
 
-        var data ={
+        var data = {
             fechaingreso: convertDatetoDB(fechaingreso),
             celular: $scope.celular,
             correo: $scope.correo,
             tipoidentificacion: $scope.tipoidentificacion,
             documentoidentidadempleado: $scope.documentoidentidadempleado,
             idpersona:  $scope.idpersona,
+            idpersona_edit:  $scope.idpersona_edit,
             placa: $scope.placa,
             direccion: $scope.direccion,
             telefonoprincipal: $scope.telefonoprincipal,
             razonsocial: $scope.razonsocial,
             idproveedor: $scope.proveedor
         };
-
-        console.log(data);
 
         if ($scope.modalstate == 'add') {
             $http.post(url, data ).success(function (response) {
@@ -214,15 +215,23 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                     $scope.hideModalMessage();
                 }
                 else {
-                    $('#modalAction').modal('hide');
-                    $scope.message_error = 'Ha ocurrido un error..';
+
+                    if (response.type_error_exists != undefined) {
+                        $scope.message_error = 'Ya existe un transportista insertado con ese mismo Número de Identificación';
+                    } else {
+                        $('#modalAction').modal('hide');
+                        $scope.message_error = 'Ha ocurrido un error..';
+                    }
+
                     $('#modalMessageError').modal('show');
+
                 }
             });
         } else {
             $http.put(url + '/' + $scope.id, data ).success(function (response) {
                 if (response.success == true) {
                     $scope.idpersona = 0;
+                    $scope.idpersona_edit = 0;
                     $scope.id = 0;
                     $scope.initLoad(1);
                     $scope.message = 'Se editó correctamente la información del Transportista...';
@@ -250,12 +259,26 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
     $scope.destroy = function(){
         $http.delete(API_URL + 'transportista/' + $scope.transportista_del).success(function(response) {
-            $scope.initLoad(1);
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.transportista_del = 0;
-            $scope.message = 'Se eliminó correctamente el Transportista seleccionado...';
-            $('#modalMessage').modal('show');
-            $scope.hideModalMessage();
+
+            if (response.success == true) {
+                $scope.initLoad(1);
+                $scope.transportista_del = 0;
+                $scope.message = 'Se eliminó correctamente el Transportista seleccionado...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+
+                if (response.exists != undefined) {
+                    $scope.message_error = 'No se puede eliminar el transportista seleccionado, ya que esa siendo usado en el sistema...';
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error..';
+                }
+
+                $('#modalMessageError').modal('show');
+            }
+
         });
     };
 

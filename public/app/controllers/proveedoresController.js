@@ -4,6 +4,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
     $scope.proveedores = [];
     $scope.proveedor_del = 0;
     $scope.idpersona = 0;
+    $scope.idpersona_edit = 0;
     $scope.id = 0;
     $scope.select_cuenta = null;
     $scope.idproveedor = null;
@@ -189,6 +190,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                         $scope.salario = item.salario;
 
                         $scope.idpersona = item.idpersona;
+                        $scope.idpersona_edit = item.idpersona;
 
                         $scope.cuenta_employee = item.concepto;
 
@@ -304,7 +306,6 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
     };
 
-
     $scope.inputChanged = function (str) {
         $scope.documentoidentidadempleado = str;
     };
@@ -323,11 +324,14 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
             documentoidentidadempleado: $scope.documentoidentidadempleado,
             razonsocial: $scope.razonsocial,
             idpersona:  $scope.idpersona,
+            idpersona_edit:  $scope.idpersona_edit,
             tipoidentificacion: $scope.tipoidentificacion,
             cuentacontable: $scope.select_cuenta.idplancuenta,
             impuesto_iva: $scope.iva,
             parroquia: $scope.parroquia
         };
+
+        console.log(data);
 
         if ($scope.modalstate == 'add') {
             $http.post(url, data ).success(function (response) {
@@ -356,6 +360,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
             $http.put(url + '/' + $scope.id, data ).success(function (response) {
                 if (response.success == true) {
                     $scope.idpersona = 0;
+                    $scope.idpersona_edit = 0;
                     $scope.id = 0;
                     $scope.initLoad(1);
                     $scope.message = 'Se editó correctamente la información del Proveedor...';
@@ -393,7 +398,13 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
             } else {
-                $scope.message_error = 'Ha ocurrido un error..';
+
+                if (response.exists != undefined) {
+                    $scope.message_error = 'No se puede eliminar el proveedor seleccionado, ya que esa siendo usado en el sistema...';
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error..';
+                }
+
                 $('#modalMessageError').modal('show');
             }
 
