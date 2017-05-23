@@ -1030,3 +1030,14 @@ Route::resource('reporteventa', 'Reportes\ReporteVentaController');
 
 Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
 Route::resource('reportenc', 'Reportes\ReporteNCController');
+
+//-------------------------------- Balances Contabilidad---------------/////////
+
+Route::resource('Balance', 'Contabilidad\Balances');
+Route::get('Balance/libro_diario/{filtro}', 'Contabilidad\Balances@get_libro_diario');
+Route::get('Balance/libro_mayor/{filtro}', 'Contabilidad\Balances@get_libro_mayor');
+Route::get('Balance/estado_resultados/{filtro}', 'Contabilidad\Balances@get_estado_resultados');
+Route::get('Balance/libro_diario_print/{filtro}', 'Contabilidad\Balances@print_libro_diario');
+Route::get('Balance/libro_mayor_print/{filtro}', 'Contabilidad\Balances@print_libro_mayor');
+Route::get('Balance/estado_resultados_print/{filtro}', 'Contabilidad\Balances@print_estado_resultados');
+//-------------------------------- Balances Contabilidad---------------/////////
