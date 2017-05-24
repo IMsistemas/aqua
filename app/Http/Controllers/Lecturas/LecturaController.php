@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Lecturas;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Cuentas\CatalogoItemCobroAgua;
 use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
@@ -138,13 +140,26 @@ class LecturaController extends Controller
 
     public function getConfiguracionServicio()
     {
-        return ConfiguracionSystem::where('optionname','SERV_TARIFAB_LECT')
+        $configuracion = ConfiguracionSystem::where('optionname','SERV_TARIFAB_LECT')
                                         ->orWhere('optionname','SERV_EXCED_LECT')
                                         ->orWhere('optionname','SERV_ALCANT_LECT')
                                         ->orWhere('optionname','SERV_RRDDSS_LECT')
                                         ->orWhere('optionname','SERV_MEDAMB_LECT')
                                         ->select('*')
                                         ->get();
+
+        $array_result = [];
+
+        foreach ($configuracion as $item) {
+            $result = Cont_CatalogItem::join('cont_plancuenta', 'cont_catalogitem.idplancuenta_ingreso', '=', 'cont_plancuenta.idplancuenta')
+                                        ->join('sri_tipoimpuestoiva', 'cont_catalogitem.idtipoimpuestoiva', '=', 'sri_tipoimpuestoiva.idtipoimpuestoiva')
+                                        ->where('idcatalogitem', $item->optionvalue)
+                                        ->get();
+
+            $array_result[] = ['configuracion' => $item, 'contabilidad' => $result];
+        }
+
+        return $array_result;
     }
 
     /**
@@ -326,6 +341,40 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
+
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+
+        //  $aux = $request->all();
+        $filtro = json_decode($request->input('contabilidad'));
+
+
+        //--Parte contable
+        $id_transaccion = CoreContabilidad::SaveAsientoContable( $filtro->DataContabilidad);
+        //--Fin parte contable
+
+
+        $registrocliente = array(
+            'idcliente' => $request->input('idcliente'),
+            'idtransaccion' => $id_transaccion,
+            'fecha' => date('Y-m-d'),
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente
+            'haber' => 0,
+            'numerodocumento' => "",
+            'estadoanulado' => false);
+
+        $aux_registrocliente  = Cont_RegistroCliente::create($registrocliente);
+
+
+
+
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+
         $lectura = new Lectura();
         $lectura->idsuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');

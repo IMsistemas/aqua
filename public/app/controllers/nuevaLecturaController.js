@@ -229,7 +229,7 @@
              */
 
             var Transaccion = {
-                fecha: '2017-02-02',
+                fecha: convertDatetoDB($scope.t_fecha_ing),
                 idtipotransaccion: 6,
                 numcomprobante: 1,
                 descripcion: 'Registro de Nueva Lectura'
@@ -254,20 +254,80 @@
 
             //--Ingreso del item servicio
 
-            /*for(var x = 0; x < $scope.items.length; x++){
+            for (var x = 0; x < $scope.rubros.length; x++){
 
-                var itemproductoservicio={
-                    idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
-                    concepto: $scope.items[x].productoObj.originalObject.conceptoingreso,
-                    controlhaber: $scope.items[x].productoObj.originalObject.controlhaberingreso,
-                    tipocuenta: $scope.items[x].productoObj.originalObject.tipocuentaingreso,
-                    Debe: 0,
-                    Haber: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
-                    Descipcion:''
-                };
-                RegistroC.push(itemproductoservicio);
+                for(var z = 0; z < $scope.ConfiguracionServicios.length; z++){
 
-            }*/
+                    if ($scope.rubros[x].nombreservicio === 'Consumo Tarifa Básica' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_TARIFAB_LECT') {
+
+                        var itemproductoservicio = {
+                            idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
+                            concepto: $scope.ConfiguracionServicios[z].contabilidad[0].concepto,
+                            controlhaber: $scope.ConfiguracionServicios[z].contabilidad[0].controlhaber,
+                            tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
+                            Debe: 0,
+                            Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
+                            Descipcion:''
+                        };
+                        RegistroC.push(itemproductoservicio);
+
+                    } else if ($scope.rubros[x].nombreservicio === 'Excedente' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_EXCED_LECT') {
+
+                        var itemproductoservicio = {
+                            idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
+                            concepto: $scope.ConfiguracionServicios[z].contabilidad[0].concepto,
+                            controlhaber: $scope.ConfiguracionServicios[z].contabilidad[0].controlhaber,
+                            tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
+                            Debe: 0,
+                            Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
+                            Descipcion:''
+                        };
+                        RegistroC.push(itemproductoservicio);
+
+                    } else if ($scope.rubros[x].nombreservicio === 'ALCANTARILLADO' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_ALCANT_LECT') {
+
+                        var itemproductoservicio = {
+                            idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
+                            concepto: $scope.ConfiguracionServicios[z].contabilidad[0].concepto,
+                            controlhaber: $scope.ConfiguracionServicios[z].contabilidad[0].controlhaber,
+                            tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
+                            Debe: 0,
+                            Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
+                            Descipcion:''
+                        };
+                        RegistroC.push(itemproductoservicio);
+
+                    } else if ($scope.rubros[x].nombreservicio === 'RECOGIDA DESECHOS SOLIDOS' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_RRDDSS_LECT') {
+
+                        var itemproductoservicio = {
+                            idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
+                            concepto: $scope.ConfiguracionServicios[z].contabilidad[0].concepto,
+                            controlhaber: $scope.ConfiguracionServicios[z].contabilidad[0].controlhaber,
+                            tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
+                            Debe: 0,
+                            Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
+                            Descipcion:''
+                        };
+                        RegistroC.push(itemproductoservicio);
+
+                    } else if ($scope.rubros[x].nombreservicio === 'MEDIO AMBIENTE' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_MEDAMB_LECT') {
+
+                        var itemproductoservicio = {
+                            idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
+                            concepto: $scope.ConfiguracionServicios[z].contabilidad[0].concepto,
+                            controlhaber: $scope.ConfiguracionServicios[z].contabilidad[0].controlhaber,
+                            tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
+                            Debe: 0,
+                            Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
+                            Descipcion:''
+                        };
+                        RegistroC.push(itemproductoservicio);
+
+                    }
+
+                }
+
+            }
 
 
             //--Ingreso del item producto o servicio
@@ -324,12 +384,12 @@
             };
 
             var transaccion_venta_full={
-                DataContabilidad:Contabilidad
+                DataContabilidad: Contabilidad
             };
 
-            var transaccionfactura = {
+            /*var transaccionfactura = {
                 datos: JSON.stringify(transaccion_venta_full)
-            };
+            };*/
 
             /*
              * --------------------------------- FIN CONTABILIDAD ------------------------------------------------------
@@ -372,15 +432,19 @@
                 total: $scope.total,
                 rubros: $scope.rubros,
 
+                idcliente: $scope.Cliente.idcliente,
+                contabilidad: JSON.stringify(transaccion_venta_full),
+
                 pdf: JSON.stringify(filters)
 
             };
 
-            console.log(lectura_data);
+            //console.log(lectura_data);
 
-            //var url = API_URL + "nuevaLectura";
 
-            /*$http.post(url, lectura_data ).success(function (response) {
+            var url = API_URL + "nuevaLectura";
+
+            $http.post(url, lectura_data ).success(function (response) {
 
                 $('#myModalProgressBar').modal('hide');
                 $('#btn_save').prop('disabled', true);
@@ -408,7 +472,7 @@
 
             }).error(function (res) {
                 console.log(res);
-            });*/
+            });
 
         };
 
