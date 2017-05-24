@@ -23,6 +23,8 @@
         $scope.excedente = 0;
         $scope.valormesesatrasados = 0;
 
+        $scope.Cliente = 0;
+
         $scope.initData = function(){
 
             //$scope.createTableRubros();
@@ -60,13 +62,22 @@
             };
 
             $http.get(API_URL + 'nuevaLectura/getInfo/' + JSON.stringify(filter)).success(function(response) {
-                //console.log(response);
+                console.log(response);
 
                 if (response.success == true) {
                     if (response.suministro.length == 0){
                         $scope.message = 'No existe registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
                     } else {
+
+                        $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ response.suministro[0].cliente.idcliente)
+                            .success(function(response){
+
+                                $scope.Cliente = response[0];
+                                console.log($scope.Cliente);
+
+                        });
+
                         var lectura_anterior = 0;
                         var lectura_actual = 0;
 
@@ -130,6 +141,8 @@
             });
         }*/
 
+
+
         $scope.getValueRublos = function(consumo, tarifa){
             var id = $scope.t_no_suministro;
             var url = API_URL + 'nuevaLectura/calculate/' + consumo + '/' + tarifa + '/' + id;
@@ -155,6 +168,7 @@
         };
 
         $scope.save = function(){
+
             $('#modalConfirm').modal('hide');
             $('#myModalProgressBar').modal('show');
 
@@ -176,6 +190,115 @@
                 }
                 array_rubros.push(object);
             }*/
+
+            /*
+             * --------------------------------- CONTABILIDAD ----------------------------------------------------------
+             */
+
+            var Transaccion = {
+                fecha: '2017-02-02',
+                idtipotransaccion: 6,
+                numcomprobante: 1,
+                descripcion: 'Registro de Nueva Lectura'
+            };
+
+            //Asiento contable Partida doble 	ay123
+            var RegistroC = [];
+
+
+            //Asiento contable cliente -- el cliente por lo genearal es un activo entonces el cliente aumenta una deuda por el debe
+            var cliente = {
+                idplancuenta: $scope.Cliente.idplancuenta,
+                concepto: $scope.Cliente.concepto,
+                controlhaber: $scope.Cliente.controlhaber,
+                tipocuenta: $scope.Cliente.tipocuenta,
+                Debe: $scope.total,
+                Haber: 0,
+                Descipcion: ''
+            };
+
+            RegistroC.push(cliente);
+
+            //--Ingreso del item servicio
+            for(var x = 0; x < $scope.items.length; x++){
+
+                var itemproductoservicio={
+                    idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
+                    concepto: $scope.items[x].productoObj.originalObject.conceptoingreso,
+                    controlhaber: $scope.items[x].productoObj.originalObject.controlhaberingreso,
+                    tipocuenta: $scope.items[x].productoObj.originalObject.tipocuentaingreso,
+                    Debe: 0,
+                    Haber: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+                    Descipcion:''
+                };
+                RegistroC.push(itemproductoservicio);
+
+            }
+            //--Ingreso del item producto o servicio
+
+            //-- ICE venta
+            /*if(parseFloat($scope.ValICE)>0){
+                var iceventa={};
+                for(i=0;i<$scope.Configuracion.length;i++){
+                    if($scope.Configuracion[i].Descripcion=="CONT_ICE_VENTA"){
+                        var auxcosto=$scope.Configuracion[i].Contabilidad;
+                        iceventa=auxcosto[0];
+                    }
+                }
+                var ice={
+                    idplancuenta: iceventa.idplancuenta,
+                    concepto: iceventa.concepto,
+                    controlhaber: iceventa.controlhaber,
+                    tipocuenta: iceventa.tipocuenta,
+                    Debe: 0,
+                    Haber: parseFloat($scope.ValICE),
+                    Descipcion: ''
+                };
+                RegistroC.push(ice);
+            }*/
+            //-- ICE venta
+
+
+            //--Iva venta
+            var ivaventa = {};
+
+            for(var i = 0; i < $scope.Configuracion.length; i++){
+                if($scope.Configuracion[i].Descripcion === "CONT_IVA_VENTA"){
+                    var auxcosto = $scope.Configuracion[i].Contabilidad;
+                    ivaventa = auxcosto[0];
+                }
+            }
+
+            var iva = {
+                idplancuenta: ivaventa.idplancuenta,
+                concepto: ivaventa.concepto,
+                controlhaber: ivaventa.controlhaber,
+                tipocuenta: ivaventa.tipocuenta,
+                Debe: 0,
+                Haber: parseFloat($scope.ValIVA),
+                Descipcion:''
+            };
+
+            RegistroC.push(iva);
+            //--Iva venta
+
+            var Contabilidad={
+                transaccion: Transaccion,
+                registro: RegistroC
+            };
+
+            var transaccion_venta_full={
+                DataContabilidad:Contabilidad
+            };
+
+            var transaccionfactura = {
+                datos: JSON.stringify(transaccion_venta_full)
+            };
+
+            /*
+             * --------------------------------- FIN CONTABILIDAD ------------------------------------------------------
+             */
+
 
             var filters = {
                  fecha: $scope.t_fecha_ing,

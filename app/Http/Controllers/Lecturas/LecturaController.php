@@ -66,13 +66,19 @@ class LecturaController extends Controller
             $result_array = ['success' => false, 'flag' => 'no_exists'];
         } else {
             if ($count[0]->idlectura == null) {
+
                 $suministro = Suministro::with('cliente.persona', 'tarifaaguapotable', 'calle.barrio')
                     ->where('suministro.idsuministro', $filter->id)
                     ->get();
+
                 $lectura = Lectura::where('idsuministro', $filter->id)
                     ->orderBy('idlectura', 'desc')
                     ->take(1)
                     ->get();
+
+
+
+
                 $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
             } else {
                 $result_array = ['success' => false, 'flag' => 'exists'];
@@ -81,6 +87,25 @@ class LecturaController extends Controller
 
         return response()->json($result_array);
     }
+
+    /**
+     * Obtener la informacion de un cliente en especifico
+     *
+     * @param $idcliente
+     * @return mixed
+     */
+    public function getInfoClienteByID($idcliente)
+    {
+
+        return Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
+            ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
+            ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
+            ->whereRaw("cliente.idcliente = ".$idcliente)
+            ->limit(1)
+            ->get();
+
+    }
+
 
     /**
      * Calcular el valor de la Tarifa Basica
