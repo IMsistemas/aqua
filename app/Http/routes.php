@@ -856,6 +856,12 @@ Route::put('configuracion/updateConfigVenta/{id}', 'ConfiguracionSystem\Configur
 
 Route::put('configuracion/updateConfigCompra/{id}', 'ConfiguracionSystem\ConfiguracionSystemController@updateConfigCompra');
 
+Route::put('configuracion/updateListServicio/{id}', 'ConfiguracionSystem\ConfiguracionSystemController@updateListServicio');
+
+Route::get('configuracion/getSaveServicio', 'ConfiguracionSystem\ConfiguracionSystemController@getSaveServicio');
+
+Route::get('configuracion/getListServicio', 'ConfiguracionSystem\ConfiguracionSystemController@getListServicio');
+
 Route::resource('configuracion', 'ConfiguracionSystem\ConfiguracionSystemController');
 
 
