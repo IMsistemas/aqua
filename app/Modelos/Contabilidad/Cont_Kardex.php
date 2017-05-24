@@ -10,7 +10,7 @@ class Cont_Kardex extends Model
 
     protected $primaryKey = "idkardex";
 
-    public $incrementing = false;
+    public $incrementing = true;
 
     public $timestamps = false;
 
