@@ -24,6 +24,8 @@
         $scope.valormesesatrasados = 0;
 
         $scope.Cliente = 0;
+        $scope.Configuracion = '';
+        $scope.ConfiguracionServicios = '';
 
         $scope.initData = function(){
 
@@ -76,6 +78,37 @@
                                 $scope.Cliente = response[0];
                                 console.log($scope.Cliente);
 
+                        });
+
+                        $http.get(API_URL + 'nuevaLectura/getConfiguracionContable').success(function(response){
+
+                                $scope.Configuracion = response;
+                                console.log(response);
+
+                                /*for(var x = 0; x < $scope.Configuracion.length; x++){
+
+                                    if($scope.Configuracion[x].Descripcion === "CONT_IVA_VENTA"){
+                                        if($scope.Configuracion[x].IdContable === null){
+                                            $scope.Valida="1";
+                                            QuitarClasesMensaje();
+                                            $("#titulomsm").addClass("btn-danger");
+                                            $("#msm").modal("show");
+                                            $scope.Mensaje="La venta necesita la cuenta contable de IVA DE VENTA";
+                                        }
+                                    }
+                                }
+                                if(String($scope.Configuracion[0].IdContable)==""){
+                                    QuitarClasesMensaje();
+                                    $("#titulomsm").addClass("btn-danger");
+                                    $("#msm").modal("show");
+                                    $scope.Mensaje="La venta necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
+                                }*/
+
+                        });
+
+                        $http.get(API_URL + 'nuevaLectura/getConfiguracionServicio').success(function(response){
+                                $scope.ConfiguracionServicios = response;
+                                console.log($scope.ConfiguracionServicios);
                         });
 
                         var lectura_anterior = 0;
@@ -220,7 +253,8 @@
             RegistroC.push(cliente);
 
             //--Ingreso del item servicio
-            for(var x = 0; x < $scope.items.length; x++){
+
+            /*for(var x = 0; x < $scope.items.length; x++){
 
                 var itemproductoservicio={
                     idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
@@ -233,7 +267,9 @@
                 };
                 RegistroC.push(itemproductoservicio);
 
-            }
+            }*/
+
+
             //--Ingreso del item producto o servicio
 
             //-- ICE venta
@@ -275,7 +311,7 @@
                 controlhaber: ivaventa.controlhaber,
                 tipocuenta: ivaventa.tipocuenta,
                 Debe: 0,
-                Haber: parseFloat($scope.ValIVA),
+                Haber: 0, //parseFloat($scope.ValIVA),
                 Descipcion:''
             };
 
@@ -342,9 +378,9 @@
 
             console.log(lectura_data);
 
-            var url = API_URL + "nuevaLectura";
+            //var url = API_URL + "nuevaLectura";
 
-            $http.post(url, lectura_data ).success(function (response) {
+            /*$http.post(url, lectura_data ).success(function (response) {
 
                 $('#myModalProgressBar').modal('hide');
                 $('#btn_save').prop('disabled', true);
@@ -372,7 +408,7 @@
 
             }).error(function (res) {
                 console.log(res);
-            });
+            });*/
 
         };
 

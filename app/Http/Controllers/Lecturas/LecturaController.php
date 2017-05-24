@@ -136,6 +136,17 @@ class LecturaController extends Controller
     }
 
 
+    public function getConfiguracionServicio()
+    {
+        return ConfiguracionSystem::where('optionname','SERV_TARIFAB_LECT')
+                                        ->orWhere('optionname','SERV_EXCED_LECT')
+                                        ->orWhere('optionname','SERV_ALCANT_LECT')
+                                        ->orWhere('optionname','SERV_RRDDSS_LECT')
+                                        ->orWhere('optionname','SERV_MEDAMB_LECT')
+                                        ->select('*')
+                                        ->get();
+    }
+
     /**
      * Calcular el valor de la Tarifa Basica
      *
