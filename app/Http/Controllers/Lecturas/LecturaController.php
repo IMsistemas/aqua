@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Lecturas;
 
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Cuentas\CatalogoItemCobroAgua;
 use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
@@ -103,6 +105,33 @@ class LecturaController extends Controller
             ->whereRaw("cliente.idcliente = ".$idcliente)
             ->limit(1)
             ->get();
+
+    }
+
+    /**
+     * Obtener configuracion contable
+     *
+     *
+     * @return mixed
+     */
+    public function getConfiguracionContable()
+    {
+        //return   configuracioncontable::all();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' OR optionname='CONT_IVA_VENTA' OR optionname='CONT_ICE_VENTA' ")->get();
+        $aux_configcontable = array();
+        foreach ($aux_data as $i) {
+            $aux_contable = "";
+            if($i->optionvalue != ""){
+                $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            }
+            $configventa = array(
+                'Id' => $i->idconfiguracionsystem,
+                'IdContable'=> $i->optionvalue,
+                'Descripcion'=>$i->optionname,
+                'Contabilidad'=>$aux_contable );
+            array_push($aux_configcontable, $configventa);
+        }
+        return $aux_configcontable;
 
     }
 

@@ -72,6 +72,8 @@ Route::resource('/solicitud', 'Solicitud\SolicitudController');
 
 /*===================================Módulo Lectura===========================================*/
 
+Route::get('nuevaLectura/getConfiguracionContable', 'Lecturas\LecturaController@getConfiguracionContable');
+
 Route::get('nuevaLectura/getInfoClienteByID/{idcliente}', 'Lecturas\LecturaController@getInfoClienteByID');
 
 Route::get('nuevaLectura/getInfo/{filter}', 'Lecturas\LecturaController@getInfo');
