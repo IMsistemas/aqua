@@ -13,13 +13,13 @@
     body {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
         font-size: 16px;
-        padding-top: 18%;
+        padding-top: 10%;
     }
 
     .subcontainer1 {
         position: relative;
         float: left;
-        width: 90%;
+        width: 70%;
     }
 
     .subcontainer2 {
