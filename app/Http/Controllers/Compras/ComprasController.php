@@ -193,12 +193,14 @@ class ComprasController extends Controller
     public function store(Request $request)
     {
 
-        if ($this->getDuplicateNumber() == 0) {
-
-        }
-
-
         $aux = $request->all();
+
+        /*if ($this->getDuplicateNumber() == 0) {
+
+        }*/
+
+
+
         $filtro = json_decode($aux["datos"]);
 
         //$filtro = $request->input('datos');
