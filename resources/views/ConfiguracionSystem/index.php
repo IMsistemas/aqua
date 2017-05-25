@@ -621,7 +621,7 @@
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">Tasa Interés: </span>
+                                <span class="input-group-addon">Tasa Interés (%): </span>
                                 <input type="text" class="form-control" placeholder="Para sistema AYORA"
                                        name="t_ayora_tasainteres" id="t_ayora_tasainteres" ng-model="t_ayora_tasainteres" required
                                        ng-keypress="onlyDecimal($event)" />

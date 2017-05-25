@@ -776,7 +776,7 @@
                 var n = $scope.s_suministro_credito / 12;
 
 
-                console.log($scope.t_suministro_costomedidor);
+                //console.log($scope.t_suministro_costomedidor);
 
                 var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
                 if ($scope.t_suministro_costomedidor != '' && $scope.t_suministro_costomedidor != undefined){
@@ -787,7 +787,15 @@
 
                 var M = C + I;
 
-                var cuotas = (M - parseFloat($scope.t_suministro_cuota)) / $scope.s_suministro_credito;
+                //var cuotas = (M - parseFloat($scope.t_suministro_cuota)) / $scope.s_suministro_credito;
+
+                var cuotas = M / $scope.s_suministro_credito;
+
+                M = M - parseFloat($scope.t_suministro_cuota);
+
+
+
+
 
 
                 $scope.total_partial = M.toFixed(2);
