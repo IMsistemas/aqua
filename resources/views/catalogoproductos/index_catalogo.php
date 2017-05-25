@@ -234,7 +234,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Contable Ingreso: </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
-                                                   ng-model="t_cuentacontableingreso" placeholder=""  readonly >
+                                                   ng-model="t_cuentacontableingreso" placeholder=""  readonly ng-required="true">
                                             <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
@@ -242,7 +242,7 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        
+                                        <span class="help-block error" ng-show="formProducto.t_cuentacontableingreso.$error.required">La asignación de una cuenta es requerida</span>
                                     </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
