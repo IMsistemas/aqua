@@ -31,6 +31,11 @@
                 width: 100% !important;
             }
 
+            .angucomplete-dropdown {
+                margin-top: 35px !important;
+                width: 100% !important;
+            }
+
         </style>
 
 
