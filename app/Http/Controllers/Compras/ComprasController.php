@@ -164,6 +164,16 @@ class ComprasController extends Controller
         }
     }
 
+
+    private function getDuplicateNumber($idproveedor, $number)
+    {
+        $count = Cont_DocumentoCompra::where('idproveedor', $idproveedor)
+                                        ->where('numdocumentocompra', $number)->count();
+
+        return $count;
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -182,6 +192,12 @@ class ComprasController extends Controller
      */
     public function store(Request $request)
     {
+
+        if ($this->getDuplicateNumber() == 0) {
+
+        }
+
+
         $aux = $request->all();
         $filtro = json_decode($aux["datos"]);
 
