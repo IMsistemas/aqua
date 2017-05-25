@@ -44,7 +44,10 @@ app.controller('Kardex', function($scope, $http, API_URL) {
         };
         if($("#FechaK").val()!=""){
             if($scope.BodegaItem!=""){
-                $http.get(API_URL + 'procesoskardex/loadinventario/?page=' + pageNumber + '&filter='+JSON.stringify(filtro))
+
+                console.log(API_URL);
+
+                $http.get(API_URL + 'procesoskardex/loadinventario?page=' + pageNumber + '&filter='+JSON.stringify(filtro))
                     .success(function(response){
                         $scope.Inventario=response.data;
                         $scope.totalItems = response.total;
