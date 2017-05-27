@@ -1056,6 +1056,7 @@ Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController')
  * ------------------------------CUENTAS POR COBRAR---------------------------------------------------------------------
  */
 
+Route::get('cuentasxcobrar/getFacturas', 'Cuentas\CuentasPorCobrarController@getFacturas');
 Route::resource('cuentasxcobrar', 'Cuentas\CuentasPorCobrarController');
 
 //-------------------------------- Balances Contabilidad---------------/////////

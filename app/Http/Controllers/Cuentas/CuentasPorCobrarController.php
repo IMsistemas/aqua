@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cuentas;
 
+use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,6 +18,16 @@ class CuentasPorCobrarController extends Controller
     public function index()
     {
         return view('Cuentas.cuentasxcobrar');
+    }
+
+    public function getFacturas(Request $request)
+    {
+        $filter = json_decode($request->get('filter'));
+
+        return  Cont_DocumentoVenta::join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
+                        ->join('persona','persona.idpersona','=','cliente.idpersona')
+                        ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
+                        ->get();
     }
 
     /**

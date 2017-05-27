@@ -57,24 +57,29 @@
             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                     <tr>
-                        <th>NO.</th>
-                        <th style="width: 8%;">FECHA</th>
+                        <th style="width: 4%;">NO.</th>
+                        <th style="width: 10%;">FECHA</th>
                         <th>CLIENTE</th>
+                        <th style="width: 11%;">NO FACTURA</th>
                         <th style="width: 11%;">VALOR TOTAL</th>
-                        <th style="width: 6%;">VALOR COBRADO</th>
-                        <th style="width: 6%;">PENDIENTE</th>
+                        <th style="width: 11%;">VALOR COBRADO</th>
+                        <th style="width: 11%;">PENDIENTE</th>
+                        <th style="width: 11%;">ACCION</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in list | filter : busqueda" ng-cloak">
 
                         <td>{{$index + 1}}</td>
-                        <td class="text-center">{{item.fecharegistrocompra}}</td>
+                        <td class="text-center">{{item.fecharegistroventa}}</td>
                         <td>{{item.razonsocial}}</td>
-                        <td class="text-center">{{item.numdocumentocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalconimpuestocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalsinimpuestocompra}}</td>
-                        <td class="text-right">$ {{item.subtotalcerocompra}}</td>
+                        <td class="text-center">{{item.numdocumentoventa}}</td>
+                        <td class="text-right">$ {{item.valortotalventa}}</td>
+                        <td class="text-right">$</td>
+                        <td class="text-right">$</td>
+                        <td class="text-right">
+
+                        </td>
 
                     </tr>
                 </tbody>
