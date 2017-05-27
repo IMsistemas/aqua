@@ -1052,6 +1052,12 @@ Route::resource('reportenc', 'Reportes\ReporteNCController');
 Route::get('reporteventabalance/getVentasBalance', 'Reportes\ReporteVentaBalanceController@getVentasBalance');
 Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController');
 
+/*
+ * ------------------------------CUENTAS POR COBRAR---------------------------------------------------------------------
+ */
+
+Route::resource('cuentasxcobrar', 'Cuentas\CuentasPorCobrarController');
+
 //-------------------------------- Balances Contabilidad---------------/////////
 
 Route::resource('Balance', 'Contabilidad\Balances');
