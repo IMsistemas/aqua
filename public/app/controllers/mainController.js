@@ -258,6 +258,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "cuentasxcobrar";
     }
 
+        $scope.toModuloActivosFijos = function(){
+        $scope.titulo = "Crear Transportistas";
+        $scope.toModulo = "cuentasxcobrar";
+    }
+
     $scope.prepareListBreadcrumb = function (list_module) {
         $scope.list_breadcrumb = [
             "<li><img src='img/ico-aqua.png'></li>",

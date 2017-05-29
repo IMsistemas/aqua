@@ -139,7 +139,7 @@
                                             <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
                                             <li><a href="#">Retención Ventas</a></li>
                                             <li><a href="#">Comprobante Ingreso</a></li>
-                                            <li><a href="#" ng-click="cuentasxCobrar();">Cuentas por Cobrar</a></li>
+                                            <li><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar</a></li>
                                             <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                             <li><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
                                         </ul>
@@ -156,7 +156,7 @@
                                     </li>
 
                                     <li role="separator" class="divider"></li>
-                                    <li><a href = "#" ng-click="toModuloCuentasxCobrar();">Activos Fijos</a></li>
+                                    <li><a href = "#" ng-click="toModuloActivosFijos();">Activos Fijos</a></li>
                                 </ul>
                             </li>
 
