@@ -1071,3 +1071,55 @@ Route::get('Balance/estado_resultados_print/{filtro}', 'Contabilidad\Balances@pr
 Route::get('Balance/estado_cambio_patrimonio/{filtro}', 'Contabilidad\Balances@estado_cambio_patrimonio');
 Route::get('Balance/estado_cambios_patrimonio_print/{filtro}', 'Contabilidad\Balances@print_estado_cambios_patrimonio');
 //-------------------------------- Balances Contabilidad---------------/////////
+
+
+//-------------------------------- MÓDULO ACTIVOS FIJOS--------------------------/////////
+
+//-------------------------------Gesrtionar registro de Activos Fijos---------------//
+
+Route::resource('Activosfijos/activosfijos','ActivosFijos\activosfijosController');
+Route::post('Activosfijos/guardaractivosfijos','ActivosFijos\activosfijosController@store');
+Route::get('Activosfijos/getactivosfijos','ActivosFijos\activosfijosController@getClaseItem');
+Route::get('Activosfijos/getCategorias','ActivosFijos\activosfijosController@getCategorias');
+Route::get('Activosfijos/getLinea/{jerarquia}','ActivosFijos\activosfijosController@getLinea');
+Route::get('Activosfijos/GetIdLinea/{idlinea}','ActivosFijos\activosfijosController@GetIdLinea');
+Route::get('Activosfijos/getSubLinea/{subjerarquia}','ActivosFijos\activosfijosController@getSubLinea');
+Route::get('Activosfijos/getTipoIva','ActivosFijos\activosfijosController@getTipoIva');
+Route::get('Activosfijos/getTipoIce','ActivosFijos\activosfijosController@getTipoIce');
+Route::get('Activosfijos/getPlanCuentas','ActivosFijos\activosfijosController@getPlanCuentas');
+Route::get('Activosfijos/getAllActivosfijos','ActivosFijos\activosfijosController@getAllActivosfijos');
+Route::get('Activosfijos/deleteactivofijo/{iditemactivofijo}/{Idcatal}/{NomImg}','ActivosFijos\activosfijosController@destroy');
+Route::get('Activosfijos/showactivofijo/{id}','ActivosFijos\activosfijosController@show');
+Route::get('Activosfijos/getAllActivosfijosfiltrados/{palabra}','ActivosFijos\activosfijosController@getAllActivosfijosfiltradosbusqueda');
+Route::get('Activosfijos/getAllActivosfijoscodigo/{codigo}','ActivosFijos\activosfijosController@getCodigo');
+Route::post('Activosfijos/actualizaractivosfijos/{id}','ActivosFijos\activosfijosController@update');
+
+
+//-------------------------------Gesrtionar depreciación de Activos Fijos---------------//
+
+Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciacionActivosFijosController');
+Route::get('Activosfijos/AllActivosfijosAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosAlta');
+Route::get('Activosfijos/AllActivosfijosSinAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosSinAlta');
+Route::get('Activosfijos/ActivoFijoIndividual/{idactivo}','ActivosFijos\depreciacionActivosFijosController@ActivoFijoIndividual');
+Route::get('Activosfijos/AllResponsable/{responsable}','ActivosFijos\depreciacionActivosFijosController@Responsable');
+Route::post('Activosfijos/GuardarAltaActivosfijos/{numero}','ActivosFijos\depreciacionActivosFijosController@store');
+Route::get('Activosfijos/VerificarAltaCompra/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@VerificarAltaCompra');
+Route::get('Activosfijos/ObtenerDatosAlta/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosAlta');
+Route::get('Activosfijos/ObtenerPlanCuentaGasto/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerPlanCuentaGasto');
+Route::get('Activosfijos/ObtenerDemasDatos/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerDemasDAtos');
+Route::get('Activosfijos/ObtenerTiposMantencion','ActivosFijos\depreciacionActivosFijosController@ObtenerTiposMantencion');
+Route::get('Activosfijos/ObtenerNumActivo/{numactivo}','ActivosFijos\depreciacionActivosFijosController@ObtenerNumActivo');
+Route::get('Activosfijos/ObtenerIncidencia/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerIncidencia');
+Route::get('Activosfijos/ObtenerMantencion/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerMantencion');
+Route::get('Activosfijos/ObtenerTraslados/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerTraslados');
+Route::get('Activosfijos/ObtenerConceptoBaja','ActivosFijos\depreciacionActivosFijosController@ObtenerConceptoBaja');
+Route::get('Activosfijos/ObtenerBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerBaja');
+Route::get('Activosfijos/VerificaDepreciacion/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificaDepreciacion');
+Route::get('Activosfijos/DevolverDatosDeDetealleItemActivosFijos/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@DevolverDatosDeDetealleItemActivosFijos');
+Route::post('Activosfijos/ActualizarCampoDepreciado/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ActualizarCampoDepreciado');
+Route::post('Activosfijos/ActualizarCampoBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ActualizarCampoBaja');
+Route::get('Activosfijos/ObtenerDepreciados','ActivosFijos\depreciacionActivosFijosController@ObtenerDepreciados');
+Route::get('Activosfijos/ObtenerNoDepreciados','ActivosFijos\depreciacionActivosFijosController@ObtenerNoDepreciados');
+Route::post('Activosfijos/GuardarAsientoContable','ActivosFijos\depreciacionActivosFijosController@GuardarAsientoContable');
+Route::get('Activosfijos/VerificarBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificarBaja');
+Route::get('Activosfijos/ObtenerUltimaDepreciacion','ActivosFijos\depreciacionActivosFijosController@ObtenerUltimaDepreciacion');
