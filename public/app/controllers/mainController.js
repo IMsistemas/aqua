@@ -260,7 +260,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
 
         $scope.toModuloActivosFijos = function(){
         $scope.titulo = "Crear Transportistas";
-        $scope.toModulo = "cuentasxcobrar";
+        $scope.toModulo = "Activosfijos";
     }
 
     $scope.prepareListBreadcrumb = function (list_module) {
