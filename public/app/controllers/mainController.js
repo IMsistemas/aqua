@@ -252,8 +252,8 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.titulo = "Crear Transportistas";
         $scope.toModulo = "puntoventa";
     }
-    
-    $scope.toModuloPuntoVenta = function(){
+
+    $scope.cuentasxCobrar = function(){
         $scope.titulo = "Crear Transportistas";
         $scope.toModulo = "cuentasxcobrar";
     }
