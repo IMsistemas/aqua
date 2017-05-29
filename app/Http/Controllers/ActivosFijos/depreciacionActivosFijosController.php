@@ -16,7 +16,7 @@ use App\Modelos\Contabilidad\cont_incidenciaaf;
 use App\Modelos\Contabilidad\Cont_Mantencionaf;
 use App\Modelos\Contabilidad\Cont_Tipomantencionaf;
 use App\Modelos\Contabilidad\Cont_trasladoaf;
-use App\Modelos\Contabilidad\Cont_conceptobajaaf;
+use App\Modelos\Contabilidad\Cont_Conceptobajaaf;
 use App\Modelos\Contabilidad\Cont_Bajaaf;
 use App\Modelos\Contabilidad\Cont_RegistroActivoFijo;
 use DB;
