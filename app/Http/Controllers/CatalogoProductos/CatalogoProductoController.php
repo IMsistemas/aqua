@@ -159,6 +159,14 @@ class CatalogoProductoController extends Controller
             $catalogo->save();**/
             $catalogo->save();
     	    //$result = Cont_CatalogItem::create($data);
+            if ($catalogo->idclaseitem==3) {
+                $id = $catalogo::all();
+                     
+                $guardarItemactivofijo = new  Cont_Itemactivofijo($request->all());
+                $guardarItemactivofijo->idcatalogitem =$id->last()->idcatalogitem;
+                $guardarItemactivofijo->save();
+            }
+            
     	 
     	//return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
             return response()->json(['success' => true]);
