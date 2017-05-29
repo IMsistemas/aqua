@@ -139,8 +139,8 @@
                                             <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
                                             <li><a href="#">Retención Ventas</a></li>
                                             <li><a href="#">Comprobante Ingreso</a></li>
-                                            <li><a href="#">Cuentas por Cobrar</a></li>
-                                            <li><a href="#" ng-click="cuentasxCobrar();">Guía de Remisión</a></li>
+                                            <li><a href="#" ng-click="cuentasxCobrar();">Cuentas por Cobrar</a></li>
+                                            <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                             <li><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
                                         </ul>
                                     </li>
