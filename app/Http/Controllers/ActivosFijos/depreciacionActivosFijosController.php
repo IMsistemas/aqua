@@ -10,7 +10,7 @@ use App\Modelos\Contabilidad\Cont_ItemCompra;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Persona;
-use App\Modelos\Nomina\empleado;
+use App\Modelos\Nomina\Empleado;
 use App\Modelos\Contabilidad\Cont_detalleitemactivofijo;
 use App\Modelos\Contabilidad\Cont_incidenciaaf;
 use App\Modelos\Contabilidad\Cont_mantencionaf;
@@ -289,7 +289,7 @@ class depreciacionActivosFijosController extends Controller
     public function Responsable($responsable)
     {
        
-        return  $AllResponsable = empleado::join('persona','persona.idpersona','=','empleado.idpersona')
+        return  $AllResponsable = Empleado::join('persona','persona.idpersona','=','empleado.idpersona')
                                             ->whereRaw("namepersona::text iLIKE  '%". $responsable ."%'")
                                             ->select('persona.namepersona','empleado.idempleado')
                                             ->get();
