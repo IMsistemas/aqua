@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CatalogoProductos;
 
 use App\Modelos\CatalogoProductos\CatalogoProducto;
 use App\Modelos\Categoria;
-
+use App\Modelos\Contabilidad\Cont_Itemactivofijo;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_ClaseItem;
 use App\Modelos\SRI\SRI_TipoImpuestoIce;
