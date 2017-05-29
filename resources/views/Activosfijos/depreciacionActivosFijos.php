@@ -72,7 +72,7 @@
 			</thead>
 			<tbody dir-paginate="activos in AllActivosFijos | itemsPerPage:6" ng-cloak>
 				<tr>
-					<th><img style="width: 100px; height: 80px;"  src="/aqua/public/uploads/productos/{{activos.foto}}"></th>
+					<th><img style="width: 100px; height: 80px;"  src="/aqua/public{{activos.foto}}"></th>
 					<td>{{activos.codigoproducto}}</td>
 					<td>{{activos.numdocumentocompra}}</td>
 					<td>{{activos.preciounitario}}</td>
