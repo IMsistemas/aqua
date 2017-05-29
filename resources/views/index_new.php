@@ -307,6 +307,7 @@
     <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>
     <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
 
     </body>
 </html>
