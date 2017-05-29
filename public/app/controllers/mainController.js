@@ -253,7 +253,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "puntoventa";
     }
 
-    $scope.cuentasxCobrar = function(){
+    $scope.toModuloCuentasxCobrar = function(){
         $scope.titulo = "Crear Transportistas";
         $scope.toModulo = "cuentasxcobrar";
     }

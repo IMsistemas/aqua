@@ -156,7 +156,7 @@
                                     </li>
 
                                     <li role="separator" class="divider"></li>
-                                    <li><a href = "#">Activos Fijos</a></li>
+                                    <li><a href = "#" ng-click="toModuloCuentasxCobrar();">Activos Fijos</a></li>
                                 </ul>
                             </li>
 
@@ -308,6 +308,7 @@
     <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
 
     </body>
 </html>
