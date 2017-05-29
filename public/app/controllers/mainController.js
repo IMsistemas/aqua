@@ -252,6 +252,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.titulo = "Crear Transportistas";
         $scope.toModulo = "puntoventa";
     }
+    
+    $scope.toModuloPuntoVenta = function(){
+        $scope.titulo = "Crear Transportistas";
+        $scope.toModulo = "cuentasxcobrar";
+    }
 
     $scope.prepareListBreadcrumb = function (list_module) {
         $scope.list_breadcrumb = [
