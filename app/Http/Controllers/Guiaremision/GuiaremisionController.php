@@ -37,16 +37,19 @@ class GuiaremisionController extends Controller
     public function show()
     {
         $guiassinfactura=Cont_DocumentoGuiaRemision::
-        ->join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
+        join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
         ->join('persona','persona.idpersona','=','cliente.idpersona')
-        ->where();
+        ->where('iddocumentoventa','=',NULL)
         ->get();
-        $guiassinfactura=Cont_DocumentoGuiaRemision::
-        ->join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
+        $guiasconfactura=Cont_DocumentoGuiaRemision::
+        join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
         ->join('persona','persona.idpersona','=','cliente.idpersona')
-        ->where();
+        ->join('cont_documentoventa','cont_documentoventa.iddocumentoventa','=','cont_documentoguiaremision.iddocumentoventa')
         ->get();
-         return;
+        return response()->json([
+                'guiassinfactura' => $guiassinfactura,
+                'guiassinfactura' => $guiassinfactura
+                ]);
 
 
     }
