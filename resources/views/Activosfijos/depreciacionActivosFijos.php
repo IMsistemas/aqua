@@ -616,11 +616,11 @@
 	                					<span class="help-block error" ng-show="formularioTrasladoActivoFijo.fechaTraslado{{$index}}.$invalid && formularioTrasladoActivoFijo.fechaTraslado{{$index}}.$touched">el campo es requerido
 		                				</span>
 
-	                						<input type="text" class="form-control" name="iddetalleitemactivofijo{{$index}}" ng-model="iddetalleitemactivofijo" id="iddetalleitemactivofijo" string-to-iddetalleitemactivofijo{{$index}} readonly/></td>
+	                						<input type="hidden" class="form-control" name="iddetalleitemactivofijo{{$index}}" ng-model="iddetalleitemactivofijo" id="iddetalleitemactivofijo" string-to-iddetalleitemactivofijo{{$index}} readonly/></td>
 
 	                				</td>
 									<td>
-											
+											<div>
 									
 										 <angucomplete-alt 
                                         	id="Origen{{$index}}"
@@ -643,16 +643,23 @@
 									        ng-model="itemm.ResponsableOrigen"
 									       
 									        />	
+
+									       </div>
 									
 									     <span class="help-block error" ng-show="formularioTrasladoActivoFijo.ResponsableOrigen{{$index}}.$invalid && formularioTrasladoActivoFijo.ResponsableOrigen{{$index}}.$touched">el campo es requerido
 		                				</span>
+
+		                				
+
+		                				<!--<input type="text" name="ResponsableOrigen2{{$index}}" ng-model="idresponsableorigen" 
+		                				id="idresponsableorigen{{$index}}"  readonly>-->
 
 									</td>
 										
 									<td> 
 
 										
-
+									<div>
 											<angucomplete-alt 
 	                                         	id="Destino{{$index}}"
 										        pause="100"
@@ -675,9 +682,13 @@
 										       
 										        />
 										
-
+										       </div>
 										 <span class="help-block error" ng-show="formularioTrasladoActivoFijo.ResponsableDestino{{$index}}.$invalid && formularioTrasladoActivoFijo.ResponsableDestino{{$index}}.$touched">el campo es requerido
 		                				</span>
+		                			
+
+		                				<!--<input type="text" name="ResponsableDestino2{{$index}}" ng-model="idresponsabledestino"
+		                				 id="idresponsabledestino{{$index}}"  readonly>-->
 
 									</td>
 

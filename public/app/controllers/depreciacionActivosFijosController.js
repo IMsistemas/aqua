@@ -11,11 +11,11 @@
 
 //obtener la fecha actual
 	var hoy = new Date();
-	var dd = hoy.getDate();
+	var dd =hoy.getDay();
 	var mm = hoy.getMonth()+1; 
 	var mm2 = hoy.getMonth()+2; 
 	var yyyy = hoy.getFullYear();
-	var FechaDepreciacion = dd+'-0'+mm2+'-'+yyyy;
+	var FechaDepreciacion = $scope.DiaDepreciacion+'-0'+mm2+'-'+yyyy;
 
 	//Formatear la fecha
 	var DiaActual = yyyy+'-'+mm+'-'+dd;
@@ -51,6 +51,8 @@
 
 					var AnoMes = ArrayAnoMes[0] +'-'+ ArrayAnoMes[1];
 
+					$scope.DiaDepreciacion  =  ArrayAnoMes[2];
+
 					console.log(AnoMes);
 
 					var DiaActual = yyyy+'-0'+mm;
@@ -59,7 +61,7 @@
 
 
 						$scope.BotonDepreciacion= true;
-						$('#palabraejecutar').html("El <b>"+dd+'-0'+mm2+'-'+yyyy+"</b> se debrá ejecutar la proxima depreciación");
+						$('#palabraejecutar').html("El <b>"+$scope.DiaDepreciacion+'-0'+mm2+'-'+yyyy+"</b> se debrá ejecutar la proxima depreciación");
 						$('#iconok').removeClass('glyphicon glyphicon glyphicon-ok');
 						$('#iconok').addClass('glyphicon glyphicon-calendar');
 						
@@ -219,29 +221,70 @@
 
 													var Depreciacion = DepreciacionDiaria * DepreciacionTotalEnDias;
 
-													console.log('Dias totales de depreciacion: '+DepreciacionTotalEnDias);
-													console.log('cantidad de dinero para la depreciacion: '+Depreciacion);
-													console.log('los años son diferentes');
+													//console.log('Dias totales de depreciacion: '+DepreciacionTotalEnDias);
+													//console.log('cantidad de dinero para la depreciacion: '+Depreciacion);
+													//console.log('los años son diferentes');
 
 
 												}
 
+												var DatosTablaRegistroActivoFijo = {
 
-											//-----------CREAR ASIENTO CONTABLE -----------//
+												iddetalleitemactivofijo : responsedatosdepreciados[i].iddetalleitemactivofijo,
+												idtransaccion 			: 1,
+												fecha 					: DiaActual, 
+												debe 					: Depreciacion,
+												haber					: 0,	
+												numerodocumento			: responsedatosdepreciados[i].numdocumentocompra,
+
+											}
+
+											$scope.idplancuentagasto = responsedatosdepreciados[i].idplancuentagasto;
 											
-											var RegistroC = [];	
+											//-----------CREAR ASIENTO CONTABLE -----------//
 
-												var activofijo = {																				// todo es igual en aplicar que el de arriba
-												    idplancuenta 		: responsedatosdepreciados[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
-												    concepto 			: responsedatosdepreciados[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
-												    controlhaber 		: responsedatosdepreciados[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
-												    tipocuenta 			: responsedatosdepreciados[i].tipocuenta,                    															// idem a tipocuenta
-												    Debe 				: Depreciacion,                                                                                     // este total,
-												    Haber 				: 0,
-												    Descipcion 			: ''                                                                               // si quieres dejalo asi
-												};
+											$http.get(API_URL + 'Activosfijos/ObtenerDatosCuentaDepreciacion/' + responsedatosdepreciados[i].idplancuentadepreciacion).success(function (responsedatosdepreciacion) {
 
-											RegistroC.push(activofijo);
+													$http.get(API_URL + 'Activosfijos/ObtenerDatosCuentaGasto/' +$scope.idplancuentagasto).success(function (responsedatosgastos) {
+												
+												var RegistroC = [];	
+													
+													for (var i = 0; i < responsedatosdepreciacion.length; i++) {
+														responsedatosdepreciacion[i]	
+
+														var activofijo1 = {																				// todo es igual en aplicar que el de arriba
+														    idplancuenta 		: responsedatosdepreciacion[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
+														    concepto 			: responsedatosdepreciacion[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
+														    controlhaber 		: responsedatosdepreciacion[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
+														    tipocuenta 			: responsedatosdepreciacion[i].tipocuenta,                    															// idem a tipocuenta
+														    Debe 				: 0,                                                                                     // este total,
+														    Haber 				: Depreciacion,
+														    Descipcion 			: ''                                                                               // si quieres dejalo asi
+														}
+
+													}
+
+																								
+											
+												for (var i = 0; i < responsedatosgastos.length; i++) {
+													
+													var activofijo2 = {																				// todo es igual en aplicar que el de arriba
+													    idplancuenta 		: responsedatosgastos[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
+													    concepto 			: responsedatosgastos[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
+													    controlhaber 		: responsedatosgastos[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
+													    tipocuenta 			: responsedatosgastos[i].tipocuenta,                    															// idem a tipocuenta
+													    Debe 				: Depreciacion,                                                                                     // este total,
+													    Haber 				: 0,
+													    Descipcion 			: ''                                                                               // si quieres dejalo asi
+													}
+												}
+
+												
+
+											RegistroC.push(activofijo1);
+
+											RegistroC.push(activofijo2);
+
 
 
 											//------esto es para preparar los datos para su envio------//
@@ -263,21 +306,7 @@
 
 											//----------- FIN ASIENTO CONTABLE -----------//
 
-											//--------datos a guardar en la tabla Cont_registroactivofijo--------//
-
-
-											var DatosTablaRegistroActivoFijo = {
-
-												iddetalleitemactivofijo : responsedatosdepreciados[i].iddetalleitemactivofijo,
-												idtransaccion 			: 1,
-												fecha 					: DiaActual, 
-												debe 					: Depreciacion,
-												haber					: 0,	
-												numerodocumento			: responsedatosdepreciados[i].numdocumentocompra,
-
-											}
-
-										
+											//--------datos a guardar en la tabla Cont_registroactivofijo--------//								
 											
 											$http.post(API_URL+ 'Activosfijos/GuardarAsientoContable', transaccionfactura).success(function (responseidtransaccion) {
 											
@@ -303,7 +332,8 @@
 												
 											})	
 
-
+										});//
+												});//
 										
 																					
 										}
@@ -317,8 +347,14 @@
 							}else{
 								
 							}
+
+
 							});	
+
+
+
 						});
+
 
 					//-----------------------CALCULO DEPRECIACION ACTIVOS FIJO QUE NUNCA SE HAN DEPRECIADO-------------------//
 
@@ -332,10 +368,16 @@
 									$http.get(API_URL + 'Activosfijos/DevolverDatosDeDetealleItemActivosFijos/' + responsenodepreciados[i].iddetalleitemactivofijo).success(function (responsedatosnodepreciados) {
 										
 										for (var i = 0; i < responsedatosnodepreciados.length; i++) {
+
+											//$scope.iddetalleitemactivofijo = responsedatosnodepreciados[i].iddetalleitemactivofijo;
+											//$scope.numdocumentocompra = responsedatosnodepreciados[i].numdocumentocompra;
+
 											var dataresponsedatosnodepreciados =[];
 											var DepreciacionAnual = responsedatosnodepreciados[i].preciounitario/responsedatosnodepreciados[i].vidautil;
 
 											var DepreciacionMensual = DepreciacionAnual/12;
+											//console.log(responsedatosnodepreciados[i]);
+
 
 											//console.log(responsedatosnodepreciados[i].preciounitario);
 
@@ -351,22 +393,64 @@
 											var DiasRestantesDelMes = DiasDelMes - dd;
 											var DepreciacionPorDiasRestantes = DepreciacionDiario * DiasRestantesDelMes;
 											
+											$scope.idplancuentagasto = responsedatosnodepreciados[i].idplancuentagasto;
+											$scope.idplancuentadepreciacion = responsedatosnodepreciados[i].idplancuentadepreciacion;
 
+												var DatosTablaRegistroActivoFijo = {
+
+												iddetalleitemactivofijo : responsedatosnodepreciados[i].iddetalleitemactivofijo,
+												idtransaccion 			: 1,
+												fecha 					: DiaActual, 
+												debe 					: DepreciacionPorDiasRestantes,
+												haber					: 0,	
+												numerodocumento			: responsedatosnodepreciados[i].numdocumentocompra,
+
+											}
 											//-----------CREAR ASIENTO CONTABLE -----------//
-
 											var RegistroC = [];	
 
-												var activofijo = {																				// todo es igual en aplicar que el de arriba
-												    idplancuenta 		: responsedatosnodepreciados[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
-												    concepto 			: responsedatosnodepreciados[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
-												    controlhaber 		: responsedatosnodepreciados[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
-												    tipocuenta 			: responsedatosnodepreciados[i].tipocuenta,                    															// idem a tipocuenta
-												    Debe 				: DepreciacionPorDiasRestantes,                                                                                     // este total,
-												    Haber 				: 0,
-												    Descipcion 			: ''                                                                               // si quieres dejalo asi
-												};
+											$http.get(API_URL + 'Activosfijos/ObtenerDatosCuentaGasto/' + $scope.idplancuentagasto).success(function (responsedatosgastos) {
+												
+												$http.get(API_URL + 'Activosfijos/ObtenerDatosCuentaDepreciacion/' + $scope.idplancuentadepreciacion).success(function (responsedatosdepreciacion) {
+	
+													for (var i = 0; i < responsedatosdepreciacion.length; i++) {
+													
 
-											RegistroC.push(activofijo);
+														var activofijo1 = {																				// todo es igual en aplicar que el de arriba
+														    idplancuenta 		: responsedatosdepreciacion[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
+														    concepto 			: responsedatosdepreciacion[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
+														    controlhaber 		: responsedatosdepreciacion[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
+														    tipocuenta 			: responsedatosdepreciacion[i].tipocuenta,                    															// idem a tipocuenta
+														    Debe 				: 0,                                                                                     // este total,
+														    Haber 				: DepreciacionPorDiasRestantes,
+														    Descipcion 			: ''                                                                               // si quieres dejalo asi
+														}
+
+													}
+
+																								
+											
+												for (var i = 0; i < responsedatosgastos.length; i++) {
+													
+													var activofijo2 = {																				// todo es igual en aplicar que el de arriba
+													    idplancuenta 		: responsedatosgastos[i].idplancuenta,        																		// eso es un ejemplo, lo cual debes poner el idplancuenta de quien pertenece...es decir si aplica a empleado por ejemplo
+													    concepto 			: responsedatosgastos[i].concepto,                       															// es el concepto de ese idplancuenta de la tabla cont_plancuenta
+													    controlhaber 		: responsedatosgastos[i].controlhaber,               																// lo mismo, el campo controlhaber de cont_plancuenta
+													    tipocuenta 			: responsedatosgastos[i].tipocuenta,                    															// idem a tipocuenta
+													    Debe 				: DepreciacionPorDiasRestantes,                                                                                     // este total,
+													    Haber 				: 0,
+													    Descipcion 			: ''                                                                               // si quieres dejalo asi
+													}
+												}
+
+												
+
+												RegistroC.push(activofijo1);
+
+												RegistroC.push(activofijo2);
+
+												console.log(RegistroC);
+
 
 
 											//------esto es para preparar los datos para su envio------//
@@ -388,19 +472,9 @@
 
 											//----------- FIN ASIENTO CONTABLE -----------//
 
+											//--------datos a guardar en la tabla Cont_registroactivofijo--------//										
 
-											//--------datos a guardar en la tabla Cont_registroactivofijo--------//
-											
-												var DatosTablaRegistroActivoFijo = {
-
-													iddetalleitemactivofijo : responsedatosnodepreciados[i].iddetalleitemactivofijo,
-													idtransaccion 			: 1,
-													fecha 					: DiaActual, 
-													debe 					: DepreciacionPorDiasRestantes,
-													haber					: 0,
-													numerodocumento			: responsedatosnodepreciados[i].numdocumentocompra
-
-												}
+										
 											$http.post(API_URL+ 'Activosfijos/GuardarAsientoContable', transaccionfactura).success(function (responseidtransaccion) {
 												
 												var objetonuevo =Object.defineProperty(DatosTablaRegistroActivoFijo,'idtransaccion',{value:responseidtransaccion});
@@ -410,21 +484,23 @@
 												console.log(dataresponsedatosnodepreciados);
 
 												for (var i = 0; i < dataresponsedatosnodepreciados.length; i++) {
-												//$scope.dataresponsedatosnodepreciados= dataresponsedatosnodepreciados[i].idtransaccion;
-												var guardardepreciados= 6;
-												$http.post(API_URL + 'Activosfijos/GuardarAltaActivosfijos/'+guardardepreciados,dataresponsedatosnodepreciados[i])
+													//$scope.dataresponsedatosnodepreciados= dataresponsedatosnodepreciados[i].idtransaccion;
+													var guardardepreciados= 6;
+													$http.post(API_URL + 'Activosfijos/GuardarAltaActivosfijos/'+guardardepreciados,dataresponsedatosnodepreciados[i])
 
 
-												$http.post(API_URL + 'Activosfijos/ActualizarCampoDepreciado/' + dataresponsedatosnodepreciados[i].iddetalleitemactivofijo, dataDerepciado)
+													$http.post(API_URL + 'Activosfijos/ActualizarCampoDepreciado/' + dataresponsedatosnodepreciados[i].iddetalleitemactivofijo, dataDerepciado)
 												
-												$('#iconok').removeClass('fa fa-refresh fa-spin fa-fw');
-												$('#iconok').addClass('glyphicon glyphicon-calendar');;
-												$('#palabraejecutar').html("El <b>"+FechaDepreciacion+"</b> se debrá ejecutar la proxima depreciación");
+													$('#iconok').removeClass('fa fa-refresh fa-spin fa-fw');
+													$('#iconok').addClass('glyphicon glyphicon-calendar');;
+													$('#palabraejecutar').html("El <b>"+FechaDepreciacion+"</b> se debrá ejecutar la proxima depreciación");
 												}
 
-												
-											})
-														
+													});//
+												});//	
+											});
+
+													
 										}
 
 										
@@ -438,6 +514,7 @@
 
 
 							}
+
 						});
 
 						//--------coloca el compo DEPRECIADO de la tabla Cont_detalleitemactivofijo en 1--------//
@@ -454,7 +531,6 @@
 
 
 		$scope.ShowModalGestionActivo = function (idcatalogitem,iditemcompra) {
-
 
 			$scope.CamposIncidencias=false;
 			//verificar si la compra tiene alta
@@ -1003,7 +1079,9 @@
 				
 				$http.get(API_URL + 'Activosfijos/AllResponsable/' + responsable).success(function (response) {
 
-					$scope.idresponsable = response[0].idempleado;				
+					$scope.idresponsable = response[0].idempleado;	
+
+
 				
 				});
 
@@ -1019,13 +1097,27 @@
 			 	
 			 	var responsable = $('#Origen'+index+'_value').val();
 
+			 	if (responsable == '' ) { 
+
+			 		$('#idresponsableorigen').val('');
+			 	}
+
 			 	
 				$http.get(API_URL + 'Activosfijos/AllResponsable/' + responsable).success(function (response) {
 
 					$scope.idresponsableorigen = response[0].idempleado;
 
-					$('#idresponsableorigen'+index).val($scope.idresponsableorigen);
-			
+				$scope.origen=	$('#idresponsableorigen'+index).val($scope.idresponsableorigen);
+
+
+				
+					if ($scope.origen != '' || $scope.destino !=  ''  || $scope.itemm.fechaTraslado != '' ) {
+
+						$scope.formularioTrasladoActivoFijo = false;
+					}else{
+
+						$scope.formularioTrasladoActivoFijo = true;
+					}
 				
 				});
 
@@ -1040,13 +1132,26 @@
 			 $('#Destino'+index+'_dropdown').click(function () {
 			 	
 			 	var responsable = $('#Destino'+index+'_value').val();
-			
+
+			 	if (responsable == '' ) { 
+
+			 		$('#idresponsabledestino').val('');	
+			 	}
+
 			 	
 				$http.get(API_URL + 'Activosfijos/AllResponsable/' + responsable).success(function (response) {
 
 					$scope.idresponsabledestino = response[0].idempleado;
 
-					$('#idresponsabledestino'+index).val($scope.idresponsabledestino)		
+				$scope.destino=	$('#idresponsabledestino'+index).val($scope.idresponsabledestino);		
+
+					if ($scope.origen != '' || $scope.destino !=  ''  || $scope.itemm.fechaTraslado != '' ) {
+
+						$scope.formularioTrasladoActivoFijo = false;
+					}else{
+
+						$scope.formularioTrasladoActivoFijo = true;
+					}
 				});
 
 			});

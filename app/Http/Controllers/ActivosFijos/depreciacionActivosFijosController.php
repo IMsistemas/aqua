@@ -10,15 +10,15 @@ use App\Modelos\Contabilidad\Cont_ItemCompra;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Persona;
-use App\Modelos\Nomina\Empleado;
-use App\Modelos\Contabilidad\Cont_Detalleitemactivofijo;
-use App\Modelos\Contabilidad\cont_incidenciaaf;
-use App\Modelos\Contabilidad\Cont_Mantencionaf;
-use App\Modelos\Contabilidad\Cont_Tipomantencionaf;
-use App\Modelos\Contabilidad\Cont_trasladoaf;
-use App\Modelos\Contabilidad\Cont_Conceptobajaaf;
-use App\Modelos\Contabilidad\Cont_Bajaaf;
-use App\Modelos\Contabilidad\Cont_RegistroActivoFijo;
+use App\Modelos\Nomina\empleado;
+use App\Modelos\Contabilidad\Cont_detalleitemactivofijo;
+use App\Modelos\Contabilidad\Cont_incidenciaaf;
+use App\Modelos\Contabilidad\Cont_mantencionaf;
+use App\Modelos\Contabilidad\Cont_tipomantencionaf;
+use App\Modelos\Contabilidad\Cont_Trasladoaf;
+use App\Modelos\Contabilidad\Cont_conceptobajaaf;
+use App\Modelos\Contabilidad\Cont_bajaaf;
+use App\Modelos\Contabilidad\Cont_registroactivofijo;
 use DB;
 //use StdClass;
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
@@ -163,7 +163,8 @@ class depreciacionActivosFijosController extends Controller
             $GuardarActivoFijoDepreciado ->haber = $request->input('haber');
             $GuardarActivoFijoDepreciado ->numerodocumento = $request->input('numerodocumento');
              $GuardarActivoFijoDepreciado ->save();
-        }
+
+}
 
          if ($numero== 7) {
            
@@ -176,6 +177,8 @@ class depreciacionActivosFijosController extends Controller
             $GuardarActivoFijoNoDepreciado ->haber = $request->input('haber');
             $GuardarActivoFijoNoDepreciado ->numerodocumento = $request->input('numerodocumento');
             $GuardarActivoFijoNoDepreciado ->save();
+
+
         }
 
 
@@ -289,7 +292,7 @@ class depreciacionActivosFijosController extends Controller
     public function Responsable($responsable)
     {
        
-        return  $AllResponsable = Empleado::join('persona','persona.idpersona','=','empleado.idpersona')
+        return  $AllResponsable = empleado::join('persona','persona.idpersona','=','empleado.idpersona')
                                             ->whereRaw("namepersona::text iLIKE  '%". $responsable ."%'")
                                             ->select('persona.namepersona','empleado.idempleado')
                                             ->get();
@@ -478,6 +481,7 @@ class depreciacionActivosFijosController extends Controller
     }
 
 
+  
     public function DevolverDatosDeDetealleItemActivosFijos($iddetalleitemactivofijo)
     {
          return  $ObtenerDatosDeDetealleItemActivosFijos = DB::table('cont_detalleitemactivofijo')
@@ -485,8 +489,22 @@ class depreciacionActivosFijosController extends Controller
          ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')
          ->join('cont_plancuenta','cont_plancuenta.idplancuenta','=','cont_detalleitemactivofijo.idplancuentadepreciacion')
          ->where('iddetalleitemactivofijo','=',$iddetalleitemactivofijo)
-         ->select('cont_detalleitemactivofijo.iddetalleitemactivofijo','cont_detalleitemactivofijo.vidautil','cont_itemcompra.preciounitario','cont_documentocompra.numdocumentocompra','cont_plancuenta.idplancuenta','cont_plancuenta.concepto','cont_plancuenta.controlhaber','cont_plancuenta.tipocuenta')->get();
+         ->select('cont_detalleitemactivofijo.iddetalleitemactivofijo','cont_detalleitemactivofijo.vidautil','cont_itemcompra.preciounitario','cont_documentocompra.numdocumentocompra','cont_detalleitemactivofijo.idplancuentadepreciacion','cont_detalleitemactivofijo.idplancuentagasto')->get();
     }
+
+
+
+        public function ObtenerDatosCuentaDepreciacion($iddepreciacion)
+    {
+      return  $ObtenerDatosCuentaDepreciacion = DB::table('cont_plancuenta')->where('idplancuenta','=',$iddepreciacion)->get();
+    }
+
+
+     public function ObtenerDatosCuentaGasto($idgasto)
+    {
+       return $ObtenerDatosCuentaDepreciacion = DB::table('cont_plancuenta')->where('idplancuenta','=',$idgasto)->get();
+    }
+
 
 
 
