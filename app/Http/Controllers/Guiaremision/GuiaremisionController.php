@@ -36,13 +36,17 @@ class GuiaremisionController extends Controller
 
     public function show()
     {
-        return $guias=DB::table('cont_documentoguiaremision')
+        $guiassinfactura=Cont_DocumentoGuiaRemision::
         ->join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
         ->join('persona','persona.idpersona','=','cliente.idpersona')
-        ->select(DB::raw("persona.razonsocial,cont_documentoguiaremision.iddocumentoguiaremision,cont_documentoguiaremision.nrodocumentoguiaremision,cont_documentoguiaremision.iddocumentoventa, (select cont_documentoventa.numdocumentoventa  from  cont_documentoventa  join cont_documentoguiaremision on cont_documentoventa.iddocumentoventa= cont_documentoguiaremision.iddocumentoventa 
-            where cont_documentoguiaremision.iddocumentoventa = cont_documentoventa.iddocumentoventa   limit 1
-        )"))
+        ->where();
         ->get();
+        $guiassinfactura=Cont_DocumentoGuiaRemision::
+        ->join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
+        ->join('persona','persona.idpersona','=','cliente.idpersona')
+        ->where();
+        ->get();
+         return;
 
 
     }
@@ -112,7 +116,7 @@ class GuiaremisionController extends Controller
             $guiaremision->motivotraslado = $request->input('motivotraslado');
             $guiaremision->direccdestinatario = $request->input('direccdestinatario');
             $guiaremision->puntopartida = $request->input('puntopartida');
-            $guiaremision->estaanulada = false;
+            $guiaremision->estadoanulado = false;
             $guiaremision->save();
 
             $guia=Cont_DocumentoGuiaRemision::orderBy('iddocumentoguiaremision', 'desc')->first();
@@ -160,7 +164,7 @@ class GuiaremisionController extends Controller
             $guiaremision->motivotraslado = $request->input('motivotraslado');
             $guiaremision->direccdestinatario = $request->input('direccdestinatario');
             $guiaremision->puntopartida = $request->input('puntopartida');
-            $guiaremision->estaanulada = false;
+            $guiaremision->estadoanulado = false;
             $guiaremision->save();
 
             $guia=Cont_DocumentoGuiaRemision::orderBy('iddocumentoguiaremision', 'desc')->first();
@@ -264,7 +268,7 @@ class GuiaremisionController extends Controller
             $guiaremision->motivotraslado = $request->input('motivotraslado');
             $guiaremision->direccdestinatario = $request->input('direccdestinatario');
             $guiaremision->puntopartida = $request->input('puntopartida');
-            $guiaremision->estaanulada = false;
+            $guiaremision->estadoanulado = false;
             $guiaremision->save();
 
             $detallemer=$request->input('detallemer');
@@ -315,7 +319,7 @@ class GuiaremisionController extends Controller
             $guiaremision->motivotraslado = $request->input('motivotraslado');
             $guiaremision->direccdestinatario = $request->input('direccdestinatario');
             $guiaremision->puntopartida = $request->input('puntopartida');
-            $guiaremision->estaanulada = false;
+            $guiaremision->estadoanulado = false;
             $guiaremision->save();
 
             $detallemer=$request->input('detallemer');

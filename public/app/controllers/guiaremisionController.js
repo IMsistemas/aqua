@@ -84,11 +84,12 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
         };
 
-    $scope.calculateLength = function(field, length) {
+   $scope.calculateLength = function(field, length) {
                         var text = $("#" + field).val();
                         var longitud = text.length;
                         if (longitud == length) {
                             $("#" + field).val(text);
+                            return text;
                         } else {
                             var diferencia = parseInt(length) - parseInt(longitud);
                             var relleno = '';
@@ -102,6 +103,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                                 }
                             }
                             $("#" + field).val(relleno + text);
+                            console.log(relleno+text);
                             return relleno+text;
                         }
                     };
