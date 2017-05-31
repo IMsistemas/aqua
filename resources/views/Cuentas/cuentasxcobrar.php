@@ -75,8 +75,8 @@
                         <td>{{item.razonsocial}}</td>
                         <td class="text-center">{{item.numdocumentoventa}}</td>
                         <td class="text-right">$ {{item.valortotalventa}}</td>
-                        <td class="text-right">$</td>
-                        <td class="text-right">$</td>
+                        <td class="text-right">$ {{item.valorcobrado}}</td>
+                        <td class="text-right">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right">
                             <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
                                Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
@@ -101,7 +101,7 @@
                     <div class="row">
 
                         <div class="col-xs-12 text-right">
-                            <button type="button" class="btn btn-primary" ng-click="showModalFormaCobro()">
+                            <button type="button" id="btn-cobrar" class="btn btn-primary" ng-click="showModalFormaCobro()">
                                 Cobrar <span class="glyphicon glyphicon-usd" aria-hidden="true">
                             </button>
                         </div>
@@ -115,7 +115,7 @@
                                         <th style="width: 10%;">FECHA</th>
                                         <th>FORMA PAGO</th>
                                         <th style="width: 11%;">VALOR</th>
-                                        <th style="width: 11%;">ACCION</th>
+                                        <th style="width: 5%;">ACCION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,10 +124,10 @@
                                         <td>{{item.nocomprobante}}</td>
                                         <td class="text-center">{{item.fecharegistro}}</td>
                                         <td>{{item.nameformapago}}</td>
-                                        <td class="text-center">{{item.valorpagado}}</td>
-                                        <td class="text-right">
+                                        <td class="text-right">$ {{item.valorpagado}}</td>
+                                        <td class="text-center">
                                             <button type="button" class="btn btn-delete" ng-click="" title="Anular">
-                                                <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
                                             </button>
                                         </td>
 
@@ -180,7 +180,7 @@
                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                         <div class="input-group">
                             <span class="input-group-addon">A Cobrar: </span>
-                            <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" >
+                            <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
                         </div>
                     </div>
 
@@ -268,6 +268,34 @@
                     <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message}}</span>
                 </div>
             </div>
         </div>

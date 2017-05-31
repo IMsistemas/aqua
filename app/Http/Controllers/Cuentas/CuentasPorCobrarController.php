@@ -25,7 +25,8 @@ class CuentasPorCobrarController extends Controller
     {
         $filter = json_decode($request->get('filter'));
 
-        return  Cont_DocumentoVenta::join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
+        return  Cont_DocumentoVenta::with('cont_cuentasporcobrar')
+                        ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
                         ->join('persona','persona.idpersona','=','cliente.idpersona')
                         ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
                         ->get();

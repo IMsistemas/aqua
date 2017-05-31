@@ -29,6 +29,29 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             $scope.list = response;
 
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+                var longitud_cobros = response[i].cont_cuentasporcobrar.length;
+
+                var suma = 0;
+
+                for (var j = 0; j < longitud_cobros; j++) {
+                    suma += parseFloat(response[i].cont_cuentasporcobrar[j].valorpagado);
+                }
+
+                var complete_name = {
+                    value: suma.toFixed(2),
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i], 'valorcobrado', complete_name);
+            }
+
+
+
+
         });
 
     };
@@ -59,9 +82,17 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $scope.item_select = item;
 
+        if (item.valortotalventa !== item.valorcobrado) {
+            $('#btn-cobrar').prop('disabled', false);
+        } else {
+            $('#btn-cobrar').prop('disabled', true);
+        }
+
         $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
             $scope.listcobro = response;
+
+            $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
 
             $('#listCobros').modal('show');
 
@@ -72,6 +103,13 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     $scope.showModalFormaCobro = function () {
 
         $scope.getFormaPago();
+
+        $scope.select_cuenta = null;
+
+        $scope.nocomprobante = '';
+        $scope.valorrecibido = '';
+        $scope.cuenta_employee = '';
+        $('#fecharegistro').val('');
 
         $('#formCobros').modal('show');
     };
@@ -103,33 +141,45 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             iddocumentoventa = $scope.item_select.iddocumentoventa;
         }
 
-        var data = {
-            nocomprobante: $scope.nocomprobante,
-            fecharegistro: $('#fecharegistro').val(),
-            idformapago: $scope.formapago,
-            cobrado: $scope.valorrecibido,
-            cuenta: $scope.select_cuenta.idplancuenta,
-            iddocumentoventa: iddocumentoventa
-        };
 
-        console.log(data);
+        if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
-        $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
+            var data = {
+                nocomprobante: $scope.nocomprobante,
+                fecharegistro: $('#fecharegistro').val(),
+                idformapago: $scope.formapago,
+                cobrado: $scope.valorrecibido,
+                cuenta: $scope.select_cuenta.idplancuenta,
+                iddocumentoventa: iddocumentoventa
+            };
 
-            $('#formCobros').modal('hide');
+            console.log(data);
 
-            if (response.success == true) {
-                $scope.showModalListCobro($scope.item_select);
+            $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
 
-                $scope.message = 'Se insertó correctamente el Cobro...';
-                $('#modalMessage').modal('show');
-                //$scope.hideModalMessage();
-            }
-            else {
-                $scope.message_error = 'Ya existe ese Cargo...';
-                $('#modalMessageError').modal('show');
-            }
-        });
+                $('#formCobros').modal('hide');
+
+                if (response.success == true) {
+                    $scope.initLoad();
+                    $scope.showModalListCobro($scope.item_select);
+
+                    $scope.message = 'Se insertó correctamente el Cobro...';
+                    $('#modalMessage').modal('show');
+                    //$scope.hideModalMessage();
+                }
+                else {
+                    $scope.message_error = 'Ha ocurrido un error...';
+                    $('#modalMessageError').modal('show');
+                }
+            });
+
+        } else {
+
+            $scope.message_error = 'El valor del Cobrado no puede ser superior al A Cobrar...';
+            $('#modalMessageError').modal('show');
+
+        }
+
 
     };
 
