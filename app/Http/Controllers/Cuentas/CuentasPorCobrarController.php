@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Cuentas\CuentasporCobrar;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,6 +31,12 @@ class CuentasPorCobrarController extends Controller
                         ->get();
     }
 
+    public function getCobros($id)
+    {
+        return CuentasporCobrar::join('cont_formapago', 'cont_formapago.idformapago', '=', 'cont_cuentasporcobrar.idformapago')
+                                    ->where('iddocumentoventa', $id)->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,7 +55,23 @@ class CuentasPorCobrarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cuenta = new CuentasporCobrar();
+
+        $cuenta->nocomprobante = $request->input('nocomprobante');
+        $cuenta->idformapago = $request->input('idformapago');
+        $cuenta->valorpagado = $request->input('cobrado');
+        $cuenta->fecharegistro = $request->input('fecharegistro');
+        $cuenta->idplancuenta = $request->input('cuenta');
+
+        if ($request->input('iddocumentoventa') != 0) {
+            $cuenta->iddocumentoventa = $request->input('iddocumentoventa');
+        }
+
+        if ($cuenta->save()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
     /**
