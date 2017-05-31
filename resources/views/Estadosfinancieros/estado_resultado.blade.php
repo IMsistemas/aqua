@@ -139,9 +139,10 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th colspan="2">Balance Hasta: <?= $filtro->FechaF ?> </th>
+					<th colspan="3">Balance Hasta: <?= $filtro->FechaF ?> </th>
 				</tr>
 				<tr>
+					<th>Código</th>
 					<th>Cuenta</th>
 	        		<th>Balance</th>
 				</tr>
@@ -149,8 +150,9 @@
 			<tbody>
 				<?php foreach ($estado_finaciero[0] as $item):?>
 		 			<tr>
-		 				<td class=""><?= $item->concepto ?></td>
-		 				<td class=""><?= $item->balance ?></td>
+		 				<td class=""><?= $item["aux_jerarquia"] ?></td>
+		 				<td class=""><?= $item["concepto"] ?></td>
+		 				<td class="text-right"><?= $item["balance"] ?></td>
 		 			</tr>
 		 		<?php  endforeach;?>
 			</tbody>
@@ -161,9 +163,10 @@
 			<table class="table table-bordered" >
 				<thead >
 					<tr >
-						<th colspan="2">Estado De Resultados Desde: <?= $filtro->FechaI ?>  Hasta: <?= $filtro->FechaF ?> </th>
+						<th colspan="3">Estado De Resultados Desde: <?= $filtro->FechaI ?>  Hasta: <?= $filtro->FechaF ?> </th>
 					</tr>
 					<tr>
+						<th>Código</th>
 						<th>Cuenta</th>
                 		<th>Balance</th>
 					</tr>
@@ -171,8 +174,9 @@
 				<tbody>
 					<?php foreach ($estado_finaciero[1] as $item1):?>
 			 			<tr>
-			 				<td class=""><?= $item1->concepto ?></td>
-			 				<td class=""><?= $item1->balance ?></td>
+			 				<td class=""><?= $item1["aux_jerarquia"] ?></td>
+			 				<td class=""><?= $item1["concepto"] ?></td>
+			 				<td class="text-right"><?= $item1["balance"] ?></td>
 			 			</tr>
 			 		<?php  endforeach;?>
 				</tbody>

@@ -81,15 +81,21 @@
     <!--Libro diario-->
     <div class="row" ng-hide="aux_render!='3' " ng-show=" aux_render=='3'">
       <div class="col-md-12 col-xs-12">
-        <table class="table ">
+        <table class="table " ng-repeat="libro in libro_diario">
           <thead class="bg-primary">
             <tr>
-              <th colspan="9" class="text-center" >{{titulo_head_report}}</th>
+              <!--<th colspan="9" class="text-center" >{{titulo_head_report}}</th>-->
+              <th colspan="6" class="text-center" >{{titulo_head_report}}</th>
             </tr>
             <tr>
-              <th></th>
-              <th>Tipo</th>
-              <th>Fecha</th>
+              <th>Tipo : {{libro.cont_tipotransaccion.descripcion+" ("+libro.cont_tipotransaccion.siglas+") "}}</th> 
+              <th colspan="4" class="text-center">Asineto Nro: {{libro.idtransaccion}}</th>
+              <th>Fecha: {{libro.fechatransaccion}}</th>
+            </tr>
+            <tr>
+              <!--<th></th>-->
+              <!--<th>Tipo</th>-->
+              <!--<th>Fecha</th>-->
               <th>Número</th>
               <th>Cuenta</th>
               <th>Descripción</th>
@@ -99,27 +105,29 @@
             </tr>
           </thead>
           <tbody >
-            <tr ng-repeat="reg in libro_diario">
-              <td>{{$id+1}}</td>
-              <td>{{reg.cont_transaccion.cont_tipotransaccion.siglas}}</td>
-              <td>{{reg.fecha}}</td>
-              <td>{{reg.idtransaccion}}</td>
+            <tr ng-repeat="reg in libro.cont_registrocontable">
+              <!--<td>{{$id+1}}</td>-->
+              <!--<td>{{reg.cont_transaccion.cont_tipotransaccion.siglas}}</td>-->
+              <!--<td>{{libro.cont_tipotransaccion.siglas}}</td>-->
+              <!--<td>{{reg.fecha}}</td>-->
+              <td>{{orden_plan_cuenta(reg.cont_plancuentas.jerarquia)}}</td>
               <td>{{reg.cont_plancuentas.concepto}}</td>
               <td>{{reg.descripcion}}</td>
               <td>{{reg.debe_c}}</td>
-              <td>{{reg.haber_c}}</td>
+              <td>{{reg.haber_c}} </td>
               <td ng-show="reg.estadoanulado" ng-hide="!reg.estadoanulado" class="bg-success">Activa</td>
               <td ng-show="!reg.estadoanulado" ng-hide="reg.estadoanulado" class="bg-warning">Anulada</td>
             </tr>
           </tbody>
-          <tfoot>
-            <tr class="bg-primary">
-              <th colspan="6" class="text-right" >Total</th>
+          <!--<tfoot>
+            <tr class="bg-primary">-->
+              <!--<th colspan="6" class="text-right" >Total</th>-->
+          <!--    <th colspan="4" class="" >{{libro.descripcion}}</th>
               <th>{{aux_tot_libroD_debe}}</th>
               <th>{{aux_tot_libroD_haber}}</th>
               <th class="text-left" >Total</th>
             </tr>
-          </tfoot>
+          </tfoot>-->
         </table>
       </div>
     </div>
@@ -177,17 +185,19 @@
           <table class="table">
             <thead class="bg-primary">
               <tr>
-                <th colspan="2" class="text-center">{{titulo_balance}}</th>
+                <th colspan="3" class="text-center">{{titulo_balance}}</th>
               </tr>
               <tr>
+                <th>Código</th>
                 <th>Cuenta</th>
                 <th>Balance</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="b in Balance_finaciero">
+                <td>{{b.aux_jerarquia}}</td>
                 <td>{{b.concepto}}</td>
-                <td>{{b.balance}}</td>
+                <td class="text-right">{{b.balance}}</td>
               </tr>
             </tbody>
           </table>
@@ -196,17 +206,19 @@
           <table class="table">
             <thead class="bg-primary">
               <tr>
-                <th colspan="2" class="text-center">{{titulo_resultados}}</th>
+                <th colspan="3" class="text-center">{{titulo_resultados}}</th>
               </tr>
               <tr>
+                <th>Código</th>
                 <th>Cuenta</th>
                 <th>Balance</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="e in Estado_resultados_finaciero">
+                <td>{{e.aux_jerarquia}}</td>
                 <td>{{e.concepto}}</td>
-                <td>{{e.balance}}</td>
+                <td class="text-right">{{e.balance}}</td>
               </tr>
             </tbody>
           </table>

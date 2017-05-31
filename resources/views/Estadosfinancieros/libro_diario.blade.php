@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <title></title>
 
 <style type="text/css">
-	body{
+    body{
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 12px;
         }
@@ -101,91 +101,124 @@
             background-color: #f9f9f9;
         }
         .text-right
-		{
-		    text-align: right !important;
-		}
+        {
+            text-align: right !important;
+        }
 
-		.text-center
-		{
-		    text-align: center !important;
-		}
+        .text-center
+        {
+            text-align: center !important;
+        }
 
-		.text-left
-		{
-		    text-align: left !important;
-		}
-		.bg-primary{
-		    background:#2F70A8 !important;
-		}
-		.bg-success{
-		    background:#DFF0D8 !important;
-		}
-		.bg-warning{
-		    background:#FCF8E3 !important;
-		}
+        .text-left
+        {
+            text-align: left !important;
+        }
+        .bg-primary{
+            background:#2F70A8 !important;
+        }
+        .bg-success{
+            background:#DFF0D8 !important;
+        }
+        .bg-warning{
+            background:#FCF8E3 !important;
+        }
 </style>
 
 </head>
 <body>
-	<div class="col-xs-12 text-center">
-		<h3><strong>Libro Diario </strong></h3>
-	</div>
-	<div class="col-xs-12 text-center">
-		<h4><strong>En El Periodo Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>
-	</div>
-	<div class="col-xs-12 text-right">
-		<h4><strong>Fecha: <?= $today ?> </strong></h4>
-	</div>
-	
-	<div class="col-xs-12">
-		<table class="table">
-			<thead class="">
-				<tr>
-					<th>Tipo</th>
-					<th>Fecha</th>
-					<th>Número</th>
-					<th>Cuenta</th>
-					<th>Descripción</th>
-					<th>Debe</th>
-					<th>Haber</th>
-					<th>Estado</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php $aux_debe=0; $aux_haber=0; ?>
-				<?php foreach ($libro_diario as $item):?>
-		 			<tr>
-		 				<td class=""><?= $item->cont_transaccion->cont_tipotransaccion->siglas ?></td>
-		 				<td class=""><?= $item->fecha ?></td>
-		 				<td class=""><?= $item->idtransaccion ?></td>
-		 				<td class=""><?= $item->cont_plancuentas->concepto ?></td>
-		 				<td class=""><?= $item->descripcion ?></td>
-		 				<td class=""><?= $item->debe_c ?></td>
-		 				<td class=""><?= $item->haber_c ?></td>
-		 				<?php if($item->estadoanulado==true){
-		 					 echo "<td class='bg-success'>Activo</td>";
-		 					}
-		 					elseif ($item->estadoanulado==false) {
-		 						echo "<td class='bg-warning'>Anulado</td>";
-		 					}
-		 				?>
-		 				<?php 
-		 					$aux_debe+=$item->debe_c; 
-		 					$aux_haber+=$item->haber_c;
-		 				?>
-		 				
-		 			</tr>
-		 		<?php  endforeach;?>
-			</tbody>
-			<tfoot class="">
-				<tr>
-					<th colspan="5" class="text-right">Total</th>
-					<th colspan="" class="text-center"><?= $aux_debe ?></th>
-					<th colspan="" class="text-center"><?= $aux_haber ?></th>
-					<th colspan="" class="text-left">Total</th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+    <div class="col-xs-12 text-center">
+        <h3><strong>Libro Diario </strong></h3>
+    </div>
+    <div class="col-xs-12 text-center">
+        <h4><strong>En El Periodo Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>
+    </div>
+    <div class="col-xs-12 text-right">
+        <h4><strong>Fecha: <?= $today ?> </strong></h4>
+    </div>
+    
+    <div class="col-xs-12">
+
+        <?php
+            function orden_plan_cuenta($orden)
+            {
+                $aux_orden=explode('.', $orden);
+                $aux_numero_orden="";
+                $aux_numero_completar="";
+                $tam=count($aux_orden);
+                if($tam>0){
+                      for($x=0;$x<$tam;$x++){
+                        if($x<3){
+                            $aux_numero_orden.=$aux_orden[$x];
+                        }elseif($x>=3){
+                            if($x==3){
+                                $aux_numero_completar=$aux_orden[$x];
+                                if(strlen ((string)$aux_numero_completar)==1){
+                                    $aux_numero_completar="0".$aux_numero_completar;
+                                }
+                                $aux_numero_orden.=$aux_numero_completar;
+                            }elseif($x>3){
+                                $aux_numero_orden.=$aux_orden[$x];
+                            }
+
+                        }
+                    }
+                }else{
+                   $aux_numero_orden=$orden;
+                }
+                
+                return $aux_numero_orden;
+            }
+            $aux_debe=0; $aux_haber=0;
+            foreach ($libro_diario as $libro) {
+                echo "<table class='table table-bordered'>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th>Tipo: ".$libro->cont_tipotransaccion->descripcion."(".$libro->cont_tipotransaccion->siglas.")</th>";
+                echo "<th colspan='4'>Asineto Nro: ".$libro->idtransaccion."</th>";
+                echo "<th>Fecha : ".$libro->fechatransaccion."</th>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<th>Numero</th>";
+                echo "<th>Cuenta</th>";
+                echo "<th>Descripción</th>";
+                echo "<th>Debe</th>";
+                echo "<th>Haber</th>";
+                echo "<th>Estado</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                    $aux_debe=0; $aux_haber=0;
+                    foreach ($libro["cont_registrocontable"] as $reg) {
+                        echo "<tr>";
+                        echo "<td>".orden_plan_cuenta($reg["cont_plancuentas"]["jerarquia"])."</td>";
+                        echo "<td>".$reg["cont_plancuentas"]["concepto"]."</td>";
+                        echo "<td>".$reg["descripcion"]."</td>";
+                        echo "<td>".$reg["debe_c"]."</td>";
+                        echo "<td>".$reg["haber_c"]."</td>";
+                        if($reg["estadoanulado"]==true){
+                         echo "<td class='bg-success'>Activo</td>";
+                        }
+                        elseif ($reg["estadoanulado"]==false) {
+                            echo "<td class='bg-warning'>Anulado</td>";
+                        }
+                        echo "</tr>";
+                        $aux_debe+=$reg["debe_c"]; 
+                        $aux_haber+=$reg["haber_c"];
+                        echo "</tbody>";
+                    }
+                    echo "<tfoot>";
+                    echo "<tr>";
+                    echo "<th class='text-left' colspan='3'>".$libro->descripcion."</th>";
+                    echo "<th>".$aux_debe."</th>";
+                    echo "<th>".$aux_haber."</th>";
+                    echo "<th></th>";
+                    echo "</tr>";
+                    echo "<tfoot>";
+                echo "</table><br/>";
+            }
+        ?>
+        
+    </div>
 </body>
 </html>

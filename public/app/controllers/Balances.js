@@ -76,11 +76,30 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             console.log(response);
             $scope.libro_diario=response;
             $scope.libro_diario.forEach(function(item){
+                var total_debe=0;
+                var total_haber=0;
+                var estado;
+                item.cont_registrocontable.forEach(function(reg){
+                    total_debe+= parseFloat(reg.debe_c);
+                    total_haber+=parseFloat(reg.haber_c);
+                    estado=reg.estadoanulado;
+                });
+                var aux_total_debe={
+                    debe_c:total_debe.toFixed(4),
+                    haber_c:total_haber.toFixed(4),
+                    estadoanulado:estado,
+                    descripcion:item.descripcion,
+                    cont_plancuentas:{jerarquia :''}
+                };
+                item.cont_registrocontable.push(aux_total_debe);
+            });
+            console.log($scope.libro_diario);
+           /* $scope.libro_diario.forEach(function(item){
                 $scope.aux_tot_libroD_debe+= parseFloat(item.debe_c);
                 $scope.aux_tot_libroD_haber+=parseFloat(item.haber_c);
             });
             $scope.aux_tot_libroD_debe=$scope.aux_tot_libroD_debe.toFixed(4);
-            $scope.aux_tot_libroD_haber=$scope.aux_tot_libroD_haber.toFixed(4);
+            $scope.aux_tot_libroD_haber=$scope.aux_tot_libroD_haber.toFixed(4);*/
             $("#procesarinfomracion").modal("hide");
         });
     };
@@ -153,6 +172,34 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             $("#procesarinfomracion").modal("hide");
         }); 
     };
+    $scope.orden_plan_cuenta=function(orden){
+        var aux_orden=orden.split(".");
+        var aux_numero_orden="";
+        var aux_numero_completar="";
+        var tam=aux_orden.length;
+        if(tam>0){
+            for(var x=0;x<tam;x++){
+                if(x<3){
+                    aux_numero_orden+=aux_orden[x];
+                }else if(x>=3){
+                    if(x==3){
+                        aux_numero_completar=aux_orden[x];
+                        if( aux_numero_completar.length==1){
+                            aux_numero_completar="0"+aux_numero_completar;
+                        }
+                        aux_numero_orden+=aux_numero_completar;
+                    }else if(x>3){
+                        aux_numero_orden+=aux_orden[x];
+                    }
+
+                }
+            }
+        }else{
+           aux_numero_orden=orden; 
+        }
+        return aux_numero_orden;
+    };
+
     ///---Fin proceso estado de cambios en el patrimonio
 
 

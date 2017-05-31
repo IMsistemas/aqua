@@ -39,15 +39,35 @@ class Balances extends Controller
     	$filtro = json_decode($parametro);
     	$aux_estado="";
     	if($filtro->Estado=="1"){ //true
-    		$aux_estado=" AND cont_registrocontable.estadoanulado='true' ";
+    		$aux_estado=" AND cont_transaccion.estadoanulado='true' ";
     	}elseif($filtro->Estado=="2"){
-    		$aux_estado=" AND cont_registrocontable.estadoanulado='false' ";
+    		$aux_estado=" AND cont_transaccion.estadoanulado='false' ";
     	}
-    	return Cont_RegistroContable::with("cont_transaccion.cont_tipotransaccion","cont_plancuentas")
+    	/*return Cont_RegistroContable::with("cont_transaccion.cont_tipotransaccion","cont_plancuentas")
     								->whereRaw(" cont_registrocontable.fecha >='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ".$aux_estado." ")
     								->orderBy('cont_registrocontable.fecha', 'ASC')
     								->orderBy('cont_registrocontable.idtransaccion', 'ASC')
-    								->get();
+    								->get();*/
+        return Cont_Transaccion::with("cont_registrocontable","cont_tipotransaccion", "cont_registrocontable.cont_plancuentas")
+                           ->whereRaw(" cont_transaccion.fechatransaccion >='".$filtro->FechaI."' AND cont_transaccion.fechatransaccion<='".$filtro->FechaF."' ".$aux_estado." ")
+                           ->orderBy('cont_transaccion.fechatransaccion', 'ASC')
+                           ->orderBy('cont_transaccion.idtransaccion', 'ASC')
+                           ->get();
+    }
+    public function get_libro_diario_vprint($parametro)
+    {
+        $filtro = json_decode($parametro);
+        $aux_estado="";
+        if($filtro->Estado=="1"){ //true
+            $aux_estado=" AND cont_registrocontable.estadoanulado='true' ";
+        }elseif($filtro->Estado=="2"){
+            $aux_estado=" AND cont_registrocontable.estadoanulado='false' ";
+        }
+        return Cont_RegistroContable::with("cont_transaccion.cont_tipotransaccion","cont_plancuentas")
+                                    ->whereRaw(" cont_registrocontable.fecha >='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ".$aux_estado." ")
+                                    ->orderBy('cont_registrocontable.fecha', 'ASC')
+                                    ->orderBy('cont_registrocontable.idtransaccion', 'ASC')
+                                    ->get();
     }
     /**
      * Consultar libro mayor por parametro de 2 fechas
@@ -145,13 +165,56 @@ class Balances extends Controller
     							->whereRaw("tipoestadofinanz='B'  AND (jerarquia ~ '*.*{1}' OR jerarquia ~ '*.*{2}' )")
     							->orderBy("jerarquia","ASC")
     							->get();
+        $aux_data_plan=array();
+        foreach ($balance as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'balance' => $item->balance ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_plan, $aux_item); 
+        }
+
+
     	$estado_resultados=Cont_PlanCuenta::selectRaw("*")
     							->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
     							->whereRaw("tipoestadofinanz='E'  AND (jerarquia ~ '*.*{1}' )")
     							->orderBy("jerarquia","ASC")
     							->get();
-    	array_push($datos_estado_resultados, $balance);
-    	array_push($datos_estado_resultados, $estado_resultados);
+        $aux_data_plan_estador=array();
+        foreach ($estado_resultados as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'balance' => $item->balance ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_plan_estador, $aux_item); 
+        }
+    	//array_push($datos_estado_resultados, $balance);
+        //array_push($datos_estado_resultados, $estado_resultados);
+        array_push($datos_estado_resultados, $aux_data_plan); //balance
+        array_push($datos_estado_resultados, $aux_data_plan_estador);//estado resultados
+    	
 
     	///activo aumenta por el debe y se calcula todo 
     	$aux_total_activo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
@@ -203,6 +266,36 @@ class Balances extends Controller
 
     	return $datos_estado_resultados;
     }
+    public function orden_plan_cuenta($orden)
+    {
+        $aux_orden=explode('.', $orden);
+        $aux_numero_orden="";
+        $aux_numero_completar="";
+        $tam=count($aux_orden);
+        if($tam>0){
+              for($x=0;$x<$tam;$x++){
+                if($x<3){
+                    $aux_numero_orden.=$aux_orden[$x];
+                }elseif($x>=3){
+                    if($x==3){
+                        $aux_numero_completar=$aux_orden[$x];
+                        if(strlen ((string)$aux_numero_completar)==1){
+                            $aux_numero_completar="0".$aux_numero_completar;
+                        }
+                        $aux_numero_orden.=$aux_numero_completar;
+                    }elseif($x>3){
+                        $aux_numero_orden.=$aux_orden[$x];
+                    }
+
+                }
+            }
+        }else{
+           $aux_numero_orden=$orden;
+        }
+        
+        return $aux_numero_orden;
+    }
+
     /**
      * Calcular el cambio del patrimonio entre 2 fechas seleccionadas solo calcula las transacciones activas
      * 
@@ -229,7 +322,8 @@ class Balances extends Controller
     {
     	ini_set('max_execution_time', 300);
     	$filtro = json_decode($parametro);
-    	$libro_diario=$this->get_libro_diario($parametro);
+    	$libro_diario=$this->get_libro_diario($parametro); 
+        //$libro_diario=$this->get_libro_diario_vprint($parametro);
         $today=date("Y-m-d H:i:s");
         $view =  \View::make('Estadosfinancieros.libro_diario', compact('filtro','libro_diario','today'))->render();
         $pdf = \App::make('dompdf.wrapper');
