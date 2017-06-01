@@ -39,18 +39,18 @@ class GuiaremisionController extends Controller
         $guiassinfactura=Cont_DocumentoGuiaRemision::
         join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
         ->join('persona','persona.idpersona','=','cliente.idpersona')
-        ->where('iddocumentoventa','=',NULL)
-        ->select('persona.lastnamepersona','persona.namepersona','cont_documentoguiaremision.iddocumentoguiaremision')
+        ->whereNull('cont_documentoguiaremision.iddocumentoventa')
+        ->select('persona.razonsocial','cont_documentoguiaremision.iddocumentoguiaremision','cont_documentoguiaremision.nrodocumentoguiaremision')
         ->get();
         $guiasconfactura=Cont_DocumentoGuiaRemision::
         join('cliente','cliente.idcliente','=','cont_documentoguiaremision.idcliente')
         ->join('persona','persona.idpersona','=','cliente.idpersona')
         ->join('cont_documentoventa','cont_documentoventa.iddocumentoventa','=','cont_documentoguiaremision.iddocumentoventa')
-        ->select('persona.namepersona','persona.lastnamepersona','cont_documentoguiaremision.iddocumentoguiaremision','cont_documentoventa.iddocumentoventa')
+        ->select('persona.razonsocial','cont_documentoguiaremision.iddocumentoguiaremision','cont_documentoguiaremision.nrodocumentoguiaremision','cont_documentoventa.iddocumentoventa','cont_documentoventa.numdocumentoventa')
         ->get();
         return response()->json([
                 'guiassinfactura' => $guiassinfactura,
-                'guiassinfactura' => $guiasconfactura
+                'guiasconfactura' => $guiasconfactura
                 ]);
 
 

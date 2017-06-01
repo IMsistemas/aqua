@@ -15,6 +15,8 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
+            console.log(response.guiassinfactura);
+            console.log(response.guiasconfactura);
             $scope.guiaremision = response.guiassinfactura.concat(response.guiasconfactura);
             console.log($scope.guiaremision);
         });
