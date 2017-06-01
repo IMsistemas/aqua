@@ -11,7 +11,7 @@ use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Persona;
 use App\Modelos\Nomina\empleado;
-use App\Modelos\Contabilidad\Cont_detalleitemactivofijo;
+use App\Modelos\Contabilidad\Cont_Detalleitemactivofijo;
 use App\Modelos\Contabilidad\Cont_incidenciaaf;
 use App\Modelos\Contabilidad\Cont_mantencionaf;
 use App\Modelos\Contabilidad\Cont_tipomantencionaf;
