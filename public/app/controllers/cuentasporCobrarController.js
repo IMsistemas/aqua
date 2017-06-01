@@ -167,7 +167,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             controlhaber: $scope.Cliente.controlhaber,
             tipocuenta: $scope.Cliente.tipocuenta,
             Debe: 0,
-            Haber: $scope.total,
+            Haber: parseFloat($scope.valorrecibido),
             Descipcion: ''
         };
 
@@ -206,6 +206,9 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
             var data = {
+
+                idcliente: $scope.Cliente.idcliente,
+
                 nocomprobante: $scope.nocomprobante,
                 fecharegistro: $('#fecharegistro').val(),
                 idformapago: $scope.formapago,
@@ -219,7 +222,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             console.log($scope.select_cuenta);
 
-            /*$http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
+            $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
 
                 $('#formCobros').modal('hide');
 
@@ -235,7 +238,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     $scope.message_error = 'Ha ocurrido un error...';
                     $('#modalMessageError').modal('show');
                 }
-            });*/
+            });
 
         } else {
 
