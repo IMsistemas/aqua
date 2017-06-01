@@ -1,43 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="softver-aqua">
-<head>
-	<meta charset="UTF-8" >
-	<title>Depreciación activos fijos</title>
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
-        <style>
-            .dataclient{
-                font-weight: bold;
-            }
-
-            td{
-                vertical-align: middle !important;
-            }
-
-            .datepicker{
-                color:#6E6E6E !important;
-            }
-            
-            td,th{
-            	text-align:	center;
-            }
-
-            .ocultar{
-
-            display: none;
-
-            }
-
-        </style>
-	
-
-</head>
-<body ng-controller="depreciacionActivosFijosController" ng-init="GetAllActivosFijos()">
+<div ng-controller="depreciacionActivosFijosController" ng-init="GetAllActivosFijos()">
 
   		<div class="col-xs-12">
 	  		<h4>Depreciación de Activos Fijos</h4>	
@@ -46,7 +8,7 @@
 	    	<hr>
 	
 	<div class="col-xs-12 text-right" style="margin-top: 0px;">
-		<button type="button"  class="btn btn-primary" ng-click="EjecuatarDepreciacion()" ng-disabled="BotonDepreciacion">
+		<button type="button"  class="btn btn-primary" ng-click="EjecuatarDepreciacion()" >
            <span id="palabraejecutar"> Ejecutar Depreciación </span> <span id="iconok" class="glyphicon glyphicon glyphicon-ok" aria-hidden="true" ></span> 
         </button>
         <button type="button" id="buttom" class="btn btn-info" ng-click="GetAllActivosFijos()">
@@ -892,25 +854,12 @@
  
 
 
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-	<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-	<script src="<?= asset('app/app.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-    <script src="<?= asset('js/menuLateral.js') ?>"></script>
-    <script src="<?= asset('js/moment.min.js') ?>"></script>
-    <script src="<?= asset('js/es.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-	<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-    <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
+   
 
 
-</body>
+</div>
 
 	
 
-</html>
+
 
