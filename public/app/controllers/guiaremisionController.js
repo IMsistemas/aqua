@@ -15,10 +15,8 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
-            console.log(response.guiassinfactura);
-            console.log(response.guiasconfactura);
             $scope.guiaremision = response.guiassinfactura.concat(response.guiasconfactura);
-            console.log($scope.guiaremision);
+            console.log('hola');
         });
     }
     $scope.initLoad();
@@ -26,7 +24,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
      $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
     };
-    $scope.initLoad = function(pageNumber){
+    /*$scope.initLoadd = function(pageNumber){
 
         if ($scope.busqueda == undefined) {
             var search = null;
@@ -40,7 +38,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
             $scope.cargos = response.data;
             $scope.totalItems = response.total;
         });
-    };
+    };*/
 
     $scope.editarGuia = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
@@ -244,6 +242,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                     $scope.guiaventa=0;
 
                 }
+                $scope.initLoad();
             });   
         } else {
             console.log(guiaremisionsave);
@@ -268,6 +267,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                     $scope.guiaventa=0;
                     $scope.edit=0;
                 }
+                $scope.initLoad();
             });  
         }
     };
@@ -308,6 +308,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
             } else {
                 $scope.message_error = 'La Guía de Remisión no puede ser eliminada porque esta asignado a un colaborador...';
+                $scope.initLoad();
                 $('#modalMessageError').modal('show');
                 $('#modalConfirmDelete').modal('hide');
             }
