@@ -245,7 +245,8 @@ Route::post('factura/print/', 'Facturas\FacturaController@printer');
 Route::resource('/factura', 'Facturas\FacturaController');
 
 
-
+Route::get('cobroservicio/generate', 'Facturas\CobroServicioController@generate');
+Route::resource('/cobroservicio', 'Facturas\CobroServicioController');
 
 /*--------------------------------------Yamilka-------------------------------------------------*/
 /*===================================Sectores===========================================*/
