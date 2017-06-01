@@ -15,10 +15,11 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
-            $scope.guiaremision = response;
-            console.log(response);
+            $scope.guiaremision = response.guiassinfactura.concat(response.guiasconfactura);
+            console.log($scope.guiaremision);
         });
     }
+    $scope.initLoad();
 
      $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
@@ -44,8 +45,6 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
             $scope.guiaremision = response;
         });
     }
-
-    $scope.initLoad();
 
     $scope.createRow = function() {     
         $scope.editar=false;

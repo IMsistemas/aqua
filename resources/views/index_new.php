@@ -291,7 +291,6 @@
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
     <script src="<?= asset('app/controllers/venta.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
-
     <script src="<?= asset('app/controllers/configuracionSystemController.js') ?>"></script>
     <script src="<?= asset('app/controllers/transportistaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
