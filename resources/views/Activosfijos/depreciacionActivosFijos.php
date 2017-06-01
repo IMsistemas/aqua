@@ -181,7 +181,7 @@
 									              selected-object="responsable"						
 									              input-changed="idempleado"
 												  focus-out="focusOut()"
-									              remote-url="{{API_URL}}AllResponsable/"
+									              remote-url="{{API_URL}}/Activosfijos/AllResponsable/"
 									              title-field="namepersona"
 									              description-field="twitter"   
 									              minlength="1"								              

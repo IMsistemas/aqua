@@ -1079,7 +1079,7 @@ Route::get('Balance/estado_cambios_patrimonio_print/{filtro}', 'Contabilidad\Bal
 //-------------------------------- MÓDULO ACTIVOS FIJOS--------------------------/////////
 
 //-------------------------------Gesrtionar registro de Activos Fijos---------------//
-
+/*
 Route::resource('Activosfijos/activosfijos','ActivosFijos\activosfijosController');
 Route::post('Activosfijos/guardaractivosfijos','ActivosFijos\activosfijosController@store');
 Route::get('Activosfijos/getactivosfijos','ActivosFijos\activosfijosController@getClaseItem');
@@ -1095,7 +1095,7 @@ Route::get('Activosfijos/deleteactivofijo/{iditemactivofijo}/{Idcatal}/{NomImg}'
 Route::get('Activosfijos/showactivofijo/{id}','ActivosFijos\activosfijosController@show');
 Route::get('Activosfijos/getAllActivosfijosfiltrados/{palabra}','ActivosFijos\activosfijosController@getAllActivosfijosfiltradosbusqueda');
 Route::get('Activosfijos/getAllActivosfijoscodigo/{codigo}','ActivosFijos\activosfijosController@getCodigo');
-Route::post('Activosfijos/actualizaractivosfijos/{id}','ActivosFijos\activosfijosController@update');
+Route::post('Activosfijos/actualizaractivosfijos/{id}','ActivosFijos\activosfijosController@update');*/
 
 
 //-------------------------------Gesrtionar depreciación de Activos Fijos---------------//
