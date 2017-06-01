@@ -125,8 +125,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
                                             <li><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
-                                            <li><a href="#">Comprobante Egreso</a></li>
-                                            <li><a href="#">Cuentas por Pagar</a></li>
+                                            <li><a href="#">Cuentas por Pagar (Comprobante Egreso)</a></li>
                                             <li><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
                                     </li>
@@ -138,8 +137,7 @@
                                             <li><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
                                             <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
                                             <li><a href="#">Retención Ventas</a></li>
-                                            <li><a href="#">Comprobante Ingreso</a></li>
-                                            <li><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar</a></li>
+                                            <li><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar (Comprobante Ingreso)</a></li>
                                             <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                             <li><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
                                         </ul>
@@ -280,7 +278,9 @@
     <script src="<?= asset('app/controllers/suministrosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/esperaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
-    <script src="<?= asset('app/controllers/ccClienteController.js') ?>"></script>
+
+    <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
+
     <script src="<?= asset('app/controllers/cpClienteController.js') ?>"></script>
 
     <script src="<?= asset('app/controllers/comprasImprimirController.js') ?>"></script>

@@ -10,7 +10,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
 
     $scope.item_select = 0;
-
+    $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
     $scope.initLoad = function(){
@@ -88,6 +88,8 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             $('#btn-cobrar').prop('disabled', true);
         }
 
+        $scope.infoCliente(item.idcliente);
+
         $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
             $scope.listcobro = response;
@@ -133,9 +135,68 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     -----------------------------------------------------------------------------------------------------------------
      */
 
+    $scope.infoCliente = function (idcliente) {
+        $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ idcliente).success(function(response){
+
+            $scope.Cliente = response[0];
+            console.log($scope.Cliente);
+
+        });
+    };
+
     $scope.saveCobro = function () {
 
         var iddocumentoventa = 0;
+
+        /*
+         * --------------------------------- CONTABILIDAD --------------------------------------------------------------
+         */
+
+        var Transaccion = {
+            fecha: $('#fecharegistro').val(),
+            idtipotransaccion: 4,
+            numcomprobante: 1,
+            descripcion: 'Cuenta x Cobrar'
+        };
+
+        var RegistroC = [];
+
+        var cliente = {
+            idplancuenta: $scope.Cliente.idplancuenta,
+            concepto: $scope.Cliente.concepto,
+            controlhaber: $scope.Cliente.controlhaber,
+            tipocuenta: $scope.Cliente.tipocuenta,
+            Debe: 0,
+            Haber: $scope.total,
+            Descipcion: ''
+        };
+
+        RegistroC.push(cliente);
+
+        var cobro = {
+            idplancuenta: $scope.select_cuenta.idplancuenta,
+            concepto: $scope.select_cuenta.concepto,
+            controlhaber: $scope.select_cuenta.controlhaber,
+            tipocuenta: $scope.select_cuenta.tipocuenta,
+            Debe: parseFloat($scope.valorrecibido),
+            Haber: 0,
+            Descipcion: ''
+        };
+
+        RegistroC.push(cobro);
+
+        var Contabilidad = {
+            transaccion: Transaccion,
+            registro: RegistroC
+        };
+
+        var transaccion_venta_full = {
+            DataContabilidad: Contabilidad
+        };
+
+        /*
+         * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
+         */
 
         if ($scope.item_select.iddocumentoventa !== null && $scope.item_select.iddocumentoventa !== undefined) {
             iddocumentoventa = $scope.item_select.iddocumentoventa;
@@ -150,12 +211,15 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 idformapago: $scope.formapago,
                 cobrado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
-                iddocumentoventa: iddocumentoventa
+                iddocumentoventa: iddocumentoventa,
+                contabilidad: JSON.stringify(transaccion_venta_full)
             };
 
             console.log(data);
 
-            $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
+            console.log($scope.select_cuenta);
+
+            /*$http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
 
                 $('#formCobros').modal('hide');
 
@@ -171,7 +235,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     $scope.message_error = 'Ha ocurrido un error...';
                     $('#modalMessageError').modal('show');
                 }
-            });
+            });*/
 
         } else {
 

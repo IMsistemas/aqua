@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Cuentas;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
+use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Cuentas\CuentasporCobrar;
 use Illuminate\Http\Request;
 
@@ -39,6 +42,24 @@ class CuentasPorCobrarController extends Controller
     }
 
     /**
+     * Obtener la informacion de un cliente en especifico
+     *
+     * @param $idcliente
+     * @return mixed
+     */
+    public function getInfoClienteByID($idcliente)
+    {
+
+        return Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
+            ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
+            ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
+            ->whereRaw("cliente.idcliente = ".$idcliente)
+            ->limit(1)
+            ->get();
+
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -56,6 +77,33 @@ class CuentasPorCobrarController extends Controller
      */
     public function store(Request $request)
     {
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+        $filtro = json_decode($request->input('contabilidad'));
+
+        //--Parte contable
+        $id_transaccion = CoreContabilidad::SaveAsientoContable( $filtro->DataContabilidad);
+        //--Fin parte contable
+
+        $registrocliente = [
+            'idcliente' => $request->input('idcliente'),
+            'idtransaccion' => $id_transaccion,
+            'fecha' => date('Y-m-d'),
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente
+            'haber' => 0,
+            'numerodocumento' => "",
+            'estadoanulado' => false
+        ];
+
+        $aux_registrocliente  = Cont_RegistroCliente::create($registrocliente);
+
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+
         $cuenta = new CuentasporCobrar();
 
         $cuenta->nocomprobante = $request->input('nocomprobante');
@@ -63,6 +111,7 @@ class CuentasPorCobrarController extends Controller
         $cuenta->valorpagado = $request->input('cobrado');
         $cuenta->fecharegistro = $request->input('fecharegistro');
         $cuenta->idplancuenta = $request->input('cuenta');
+        $cuenta->idtransaccion = $id_transaccion;
 
         if ($request->input('iddocumentoventa') != 0) {
             $cuenta->iddocumentoventa = $request->input('iddocumentoventa');
