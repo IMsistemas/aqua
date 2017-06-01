@@ -82,6 +82,7 @@
 		}
 
 		$scope.GetAllActivosFijos = function () {
+			console.log("hola");
 
 			$scope.VerificarUltimaDepreciacion();
 			//quitar la clase de la imagen y la palabra del boton actualizar y colocar la imagen animada y la palabra Actualizando...

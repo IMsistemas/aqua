@@ -249,7 +249,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
     }
 
     $scope.toModuloPuntoVenta = function(){
-        $scope.titulo = "Crear Transportistas";
+        
         $scope.toModulo = "puntoventa";
     }
 
@@ -258,8 +258,8 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "cuentasxcobrar";
     }
 
-        $scope.toModuloActivosFijos = function(){
-        $scope.titulo = "Crear Transportistas";
+    $scope.toModuloActivosFijos = function(){
+        
         $scope.toModulo = "Activosfijos/depreciacionActivosFijos";
     }
 
