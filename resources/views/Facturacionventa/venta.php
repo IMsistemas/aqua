@@ -36,7 +36,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
+    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init=";GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
 
         <input type="hidden" ng-model="otherFactura" id="otherFactura" value="<?= $viewFactura ?>">
 
@@ -46,12 +46,20 @@
 
                     <div class="col-xs-4 ">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa" ng-keyup="pageChanged(1)">
+                            <!--<input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa" ng-keyup="pageChanged(1)">-->
+                            <input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa">
                             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
 
                     <div class="col-xs-4 ">
+                        <div class="input-group">
+                            <span class="input-group-addon">Estado: </span>
+                            <select ng-model="cmb_estado_fact" name="cmb_estado_fact" id="cmb_estado_fact" class="form-control" ng-change="pageChanged(1)">
+                                <option value="A">Activas</option>
+                                <option value="I">Anuladas</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-xs-4 text-right" >
                         <button class="btn btn-primary" ng-disabled="Valida=='1' " ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
@@ -65,6 +73,7 @@
                                 <th></th>
                                 <th>Fecha Emision</th>
                                 <th>Número Factura</th>
+                                <th>Cliente</th>
                                 <th>SubTotal</th>
                                 <th>IVA</th>
                                 <th>Total</th>
@@ -78,6 +87,7 @@
                             <td>{{$index+1}}</td>
                             <td>{{v.fechaemisionventa}}</td>
                             <td>{{numFactura(v)}}</td>
+                            <td>{{v.cliente.persona.lastnamepersona+" "+v.cliente.persona.namepersona}}</td>
                             <td>{{v.subtotalconimpuestoventa}}</td>
                             <td>{{v.ivacompra}}</td>
                             <td>{{v.valortotalventa}}</td>
@@ -312,7 +322,7 @@
                                 <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                             </td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
-                            <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+                            <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}"  /></td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
                             <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
                             <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>

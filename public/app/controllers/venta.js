@@ -25,6 +25,7 @@ $scope.Valida="0";
 $scope.Validabodegaprodct="0";
 $scope.ValidacionCueContExt="0";
 
+$scope.cmb_estado_fact="A";
     $scope.verifySuministroFactura = function () {
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
             console.log(response);
@@ -90,7 +91,8 @@ $scope.ValidacionCueContExt="0";
         }
 
         var filtros = {
-            search: $scope.busquedaventa
+            search: $scope.busquedaventa,
+            estado: $scope.cmb_estado_fact
         };
         $http.get(API_URL + 'DocumentoVenta/getAllFitros?page=' + pageNumber + '&filter=' + JSON.stringify(filtros))
             .success(function(response){
@@ -212,7 +214,8 @@ $scope.ValidacionCueContExt="0";
 		$http.get(API_URL + 'DocumentoVenta/getheaddocumentoventa')
 	        .success(function(response){
 	            $scope.PuntoVenta=response;
-                if($scope.Formapago.length==0){
+                console.log($scope.PuntoVenta);
+                if($scope.Formapago.PuntoVenta==0){
                     $("#titulomsm").addClass("btn-danger");
                     $("#msm").modal("show");
                     $scope.Mensaje="La venta necesita puntos de venta y agente de venta";        
@@ -278,6 +281,9 @@ $scope.ValidacionCueContExt="0";
     $scope.AsignarData=function(item){
         if(item!=undefined){
             if(item.productoObj!=undefined){
+                if(item.productoObj.originalObject.precioventa!=undefined){
+                    item.precioU=item.productoObj.originalObject.precioventa;
+                }
                 if(item.productoObj.originalObject.porcentiva!=undefined){
                     item.iva=item.productoObj.originalObject.porcentiva;
                 }
@@ -289,16 +295,18 @@ $scope.ValidacionCueContExt="0";
     };
     $scope.ValidaProducto=function(){
         for(x=0;x<$scope.items.length;x++){
-            if( parseInt($scope.items[x].productoObj.originalObject.idclaseitem)==1){ //producto
-                if($scope.Bodega==""){
-                    QuitarClasesMensaje();
-                    $("#titulomsm").addClass("btn-danger");
-                    $("#msm").modal("show");
-                    $scope.Mensaje="Seleccione una bodega para el producto";
-                    $scope.Validabodegaprodct="1";
-                }else{
-                    $scope.Validabodegaprodct="0";
-                }
+            if($scope.items[x].productoObj!=undefined){
+                if( parseInt($scope.items[x].productoObj.originalObject.idclaseitem)==1){ //producto
+                    if($scope.Bodega==""){
+                        QuitarClasesMensaje();
+                        $("#titulomsm").addClass("btn-danger");
+                        $("#msm").modal("show");
+                        $scope.Mensaje="Seleccione una bodega para el producto";
+                        $scope.Validabodegaprodct="1";
+                    }else{
+                        $scope.Validabodegaprodct="0";
+                    }
+                }    
             }
         }
     };

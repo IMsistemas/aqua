@@ -162,7 +162,8 @@ class Balances extends Controller
     	$datos_estado_resultados = array();
     	$balance=Cont_PlanCuenta::selectRaw("*")
     							->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
-    							->whereRaw("tipoestadofinanz='B'  AND (jerarquia ~ '*.*{1}' OR jerarquia ~ '*.*{2}' )")
+    							//->whereRaw("tipoestadofinanz='B'  AND (jerarquia ~ '*.*{1}' OR jerarquia ~ '*.*{2}' )") // primer y segundo nivel
+                                ->whereRaw("tipoestadofinanz='B' ")
     							->orderBy("jerarquia","ASC")
     							->get();
         $aux_data_plan=array();
@@ -188,7 +189,8 @@ class Balances extends Controller
 
     	$estado_resultados=Cont_PlanCuenta::selectRaw("*")
     							->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
-    							->whereRaw("tipoestadofinanz='E'  AND (jerarquia ~ '*.*{1}' )")
+    							//->whereRaw("tipoestadofinanz='E'  AND (jerarquia ~ '*.*{1}' )") // primer y segundo nivel 
+                                ->whereRaw("tipoestadofinanz='E'  ")
     							->orderBy("jerarquia","ASC")
     							->get();
         $aux_data_plan_estador=array();

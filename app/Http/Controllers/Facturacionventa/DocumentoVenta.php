@@ -454,14 +454,20 @@ class DocumentoVenta extends Controller
 
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
+        $estado = $filter->estado;
         $data = null;
         $aux_query="";
         if ($search!="") {
             $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
+        }
+        $aux_estado="false";
+        if($estado=="I"){
+            $aux_estado="true";
         } 
 
-        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento')
-                                ->whereRaw(" estadoanulado=false ".$aux_query."" );
+        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento','cliente.persona')
+                               // ->whereRaw(" estadoanulado=false ".$aux_query."" );
+                                ->whereRaw(" estadoanulado=".$aux_estado." ".$aux_query."" );
         return $data->paginate(10);
 
         /*

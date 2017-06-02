@@ -145,7 +145,7 @@
               <th colspan="10" class="text-center" >{{aux_cuenta_select.concepto}}</th>
             </tr>
             <tr>
-              <th></th>
+              <!--<th></th>-->
               <th>Tipo</th>
               <th>Fecha</th>
               <th>Número</th>
@@ -159,7 +159,7 @@
           </thead>
           <tbody >
             <tr ng-repeat="regm in libro_mayor">
-              <td>{{$id+1}}</td>
+              <!--<td>{{$id+1}}</td>-->
               <td>{{regm.cont_transaccion.cont_tipotransaccion.siglas}}</td>
               <td>{{regm.fecha}}</td>
               <td>{{regm.idtransaccion}}</td>
