@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Facturas;
 
+use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
 use App\Modelos\Cuentas\CobroServicio;
+use App\Modelos\Solicitud\SolicitudServicio;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,12 +25,60 @@ class CobroServicioController extends Controller
 
     public function getCobrosServicios(Request $request)
     {
-        return CobroServicio::orderBy('fechacobro', 'desc')->get();
+        return CobroServicio::join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitud')
+                                ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
+                                ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
+                                ->orderBy('fechacobro', 'desc')->get();
     }
 
 
     public function generate()
     {
+
+        $elements = CatalogoItemSolicitudServicio::groupBy('idsolicitudservicio')->select('idsolicitudservicio')->get();
+
+        if (count($elements) != 0) {
+
+            foreach ($elements as $item) {
+                $count = CobroServicio::where('idsolicitudservicio', $item->idsolicitudservicio)
+                                        ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . date('m'))
+                                        ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . date('Y'))
+                                        ->count();
+
+                if ($count == 0) {
+
+                    $data_solicitud = SolicitudServicio::join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
+                                                        //->join('cliente', 'solicitud.idcliente', '=', 'cliente.idcliente')
+                                                        ->where('idsolicitudservicio', $item->idsolicitudservicio)
+                                                        ->get();
+
+                    $cobroservicio = new CobroServicio();
+
+                    $cobroservicio->fechacobro = date('Y-m-d');
+                    $cobroservicio->idcliente = $data_solicitud[0]->idcliente;
+                    $cobroservicio->idsolicitudservicio = $data_solicitud[0]->idsolicitudservicio;
+
+                    $itemsolicitudservicio = CatalogoItemSolicitudServicio::where('idsolicitudservicio', $item->idsolicitudservicio)
+                                                                                ->get();
+
+                    $total = 0;
+
+                    foreach ($itemsolicitudservicio as $value) {
+                        $total = $total + $value->valor;
+                    }
+
+                    $cobroservicio->total = $total;
+
+                    if ( ! $cobroservicio->save()) {
+                        return response()->json( [ 'success' => false ] );
+                    }
+                }
+
+            }
+
+            return response()->json( [ 'success' => true ] );
+
+        }
 
     }
 

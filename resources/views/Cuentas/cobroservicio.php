@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-sm-4 col-xs-2">
-            <button type="button" class="btn btn-primary" ng-click="">
+            <button type="button" class="btn btn-primary" ng-click="generate()">
                 Generar <span class="glyphicon glyphicon-refresh" aria-hidden="true">
             </button>
         </div>
@@ -60,10 +60,10 @@
                     <tr ng-repeat="item in list | filter : busqueda" ng-cloak">
 
                         <td>{{$index + 1}}</td>
-                        <td class="text-center">{{item.fecharegistroventa}}</td>
+                        <td class="text-center">{{item.fechacobro}}</td>
                         <td>{{item.razonsocial}}</td>
-                        <td class="text-center">{{item.numdocumentoventa}}</td>
-                        <td class="text-right">$ {{item.valortotalventa}}</td>
+                        <td class="text-right">$ {{item.total}}</td>
+                        <td class="text-right"></td>
                         <td class="text-right">
 
                         </td>

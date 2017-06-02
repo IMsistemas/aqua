@@ -28,6 +28,8 @@ class CuentasPorCobrarController extends Controller
     {
         $filter = json_decode($request->get('filter'));
 
+
+
         return  Cont_DocumentoVenta::with('cont_cuentasporcobrar')
                         ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
                         ->join('persona','persona.idpersona','=','cliente.idpersona')

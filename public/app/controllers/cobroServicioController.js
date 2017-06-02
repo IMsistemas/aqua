@@ -21,6 +21,8 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'cobroservicio/getCobrosServicios').success(function(response){
 
+            console.log(response);
+
             $scope.list = response;
 
         });
