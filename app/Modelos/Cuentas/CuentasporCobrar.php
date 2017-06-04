@@ -11,4 +11,6 @@ class CuentasporCobrar extends Model
     protected $primaryKey = "idcuentasporcobrar";
 
     public $timestamps = false;
+
+
 }

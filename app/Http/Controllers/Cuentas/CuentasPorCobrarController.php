@@ -6,6 +6,7 @@ use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Contabilidad\Cont_RegistroCliente;
+use App\Modelos\Cuentas\CobroServicio;
 use App\Modelos\Cuentas\CuentasporCobrar;
 use Illuminate\Http\Request;
 
@@ -28,13 +29,33 @@ class CuentasPorCobrarController extends Controller
     {
         $filter = json_decode($request->get('filter'));
 
-
-
-        return  Cont_DocumentoVenta::with('cont_cuentasporcobrar')
+        $factura = Cont_DocumentoVenta::with('cont_cuentasporcobrar')
                         ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
                         ->join('persona','persona.idpersona','=','cliente.idpersona')
                         ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
                         ->get();
+
+        $cobroservicio = CobroServicio::with('cont_cuentasporcobrar')
+                                        ->join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
+                                        ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
+                                        ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')
+                                        ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
+                                        ->whereRaw("cobroservicio.fechacobro BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
+                                        ->orderBy('fechacobro', 'desc')->get();
+
+        //return $factura;
+
+        $result = [];
+
+        foreach ($factura as $item) {
+            $result[] = $item;
+        }
+
+        foreach ($cobroservicio as $item0) {
+            $result[] = $item0;
+        }
+
+        return $result;
     }
 
     public function getCobros($id)

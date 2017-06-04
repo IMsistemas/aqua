@@ -71,10 +71,19 @@
                     <tr ng-repeat="item in list | filter : busqueda" ng-cloak">
 
                         <td>{{$index + 1}}</td>
-                        <td class="text-center">{{item.fecharegistroventa}}</td>
+
+                        <td class="text-center" ng-if="item.fecharegistroventa != undefined">{{item.fecharegistroventa}}</td>
+                        <td class="text-center" ng-if="item.fechacobro != undefined">{{item.fechacobro}}</td>
+
                         <td>{{item.razonsocial}}</td>
-                        <td class="text-center">{{item.numdocumentoventa}}</td>
-                        <td class="text-right">$ {{item.valortotalventa}}</td>
+
+
+                        <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
+                        <td class="text-center" ng-if="item.numdocumentoventa == undefined">Solicitud Servicio</td>
+
+                        <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
+                        <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
+
                         <td class="text-right">$ {{item.valorcobrado}}</td>
                         <td class="text-right">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right">

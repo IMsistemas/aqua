@@ -27,9 +27,11 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'cuentasxcobrar/getFacturas?filter=' + JSON.stringify(filter)).success(function(response){
 
+            console.log(response);
+
             $scope.list = response;
 
-            var longitud = response.length;
+            /*var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
                 var longitud_cobros = response[i].cont_cuentasporcobrar.length;
@@ -47,7 +49,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
-            }
+            }*/
 
 
 
