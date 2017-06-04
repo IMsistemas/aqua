@@ -31,7 +31,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             $scope.list = response;
 
-            /*var longitud = response.length;
+            var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
                 var longitud_cobros = response[i].cont_cuentasporcobrar.length;
@@ -49,10 +49,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
-            }*/
-
-
-
+            }
 
         });
 
@@ -84,24 +81,46 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $scope.item_select = item;
 
-        if (item.valortotalventa !== item.valorcobrado) {
-            $('#btn-cobrar').prop('disabled', false);
+        if (item.valortotalventa !== undefined) {
+            if (item.valortotalventa !== item.valorcobrado) {
+                $('#btn-cobrar').prop('disabled', false);
+            } else {
+                $('#btn-cobrar').prop('disabled', true);
+            }
         } else {
-            $('#btn-cobrar').prop('disabled', true);
+            if (item.total !== item.valorcobrado) {
+                $('#btn-cobrar').prop('disabled', false);
+            } else {
+                $('#btn-cobrar').prop('disabled', true);
+            }
         }
+
+
+
 
         $scope.infoCliente(item.idcliente);
 
-        $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
+        if (item.iddocumentoventa !== undefined) {
+            $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
-            $scope.listcobro = response;
+                $scope.listcobro = response;
 
-            $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
+                $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
 
-            $('#listCobros').modal('show');
+                $('#listCobros').modal('show');
 
-        });
+            });
+        } else {
+            $http.get(API_URL + 'cuentasxcobrar/getCobrosServices/' + item.idcobroservicio).success(function(response){
 
+                $scope.listcobro = response;
+
+                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                $('#listCobros').modal('show');
+
+            });
+        }
     };
 
     $scope.showModalFormaCobro = function () {
@@ -148,7 +167,17 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
     $scope.saveCobro = function () {
 
-        var iddocumentoventa = 0;
+        var id = 0;
+        var type = '';
+
+        var descripcion = '';
+
+        if ($scope.item_select.iddocumentoventa !== undefined) {
+            descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
+        } else {
+            descripcion = 'Cuentas x Cobrar Solicitud Servicio';
+        }
+
 
         /*
          * --------------------------------- CONTABILIDAD --------------------------------------------------------------
@@ -158,7 +187,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             fecha: $('#fecharegistro').val(),
             idtipotransaccion: 4,
             numcomprobante: 1,
-            descripcion: 'Cuenta x Cobrar'
+            descripcion: descripcion
         };
 
         var RegistroC = [];
@@ -200,23 +229,26 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.iddocumentoventa !== null && $scope.item_select.iddocumentoventa !== undefined) {
-            iddocumentoventa = $scope.item_select.iddocumentoventa;
+        if ($scope.item_select.iddocumentoventa !== undefined) {
+            id = $scope.item_select.iddocumentoventa;
+            type = 'venta';
+        } else {
+            id = $scope.item_select.idcobroservicio;
+            type = 'servicio';
         }
 
 
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
             var data = {
-
                 idcliente: $scope.Cliente.idcliente,
-
                 nocomprobante: $scope.nocomprobante,
                 fecharegistro: $('#fecharegistro').val(),
                 idformapago: $scope.formapago,
                 cobrado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
-                iddocumentoventa: iddocumentoventa,
+                iddocumentoventa: id,
+                type: type,
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
 

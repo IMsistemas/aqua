@@ -64,6 +64,12 @@ class CuentasPorCobrarController extends Controller
                                     ->where('iddocumentoventa', $id)->get();
     }
 
+    public function getCobrosServices($id)
+    {
+        return CuentasporCobrar::join('cont_formapago', 'cont_formapago.idformapago', '=', 'cont_cuentasporcobrar.idformapago')
+                                    ->where('idcobroservicio', $id)->get();
+    }
+
     /**
      * Obtener la informacion de un cliente en especifico
      *
@@ -136,9 +142,15 @@ class CuentasPorCobrarController extends Controller
         $cuenta->idplancuenta = $request->input('cuenta');
         $cuenta->idtransaccion = $id_transaccion;
 
-        if ($request->input('iddocumentoventa') != 0) {
-            $cuenta->iddocumentoventa = $request->input('iddocumentoventa');
+        if ($request->input('type') == 'venta') {
+            if ($request->input('iddocumentoventa') != 0) {
+                $cuenta->iddocumentoventa = $request->input('iddocumentoventa');
+            }
+        } else {
+            $cuenta->idcobroservicio = $request->input('iddocumentoventa');
         }
+
+
 
         if ($cuenta->save()) {
             return response()->json(['success' => true]);

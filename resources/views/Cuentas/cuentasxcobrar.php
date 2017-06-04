@@ -85,7 +85,10 @@
                         <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
 
                         <td class="text-right">$ {{item.valorcobrado}}</td>
-                        <td class="text-right">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
+
+                        <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
+                        <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
+
                         <td class="text-right">
                             <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
                                Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
