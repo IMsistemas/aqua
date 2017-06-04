@@ -82,7 +82,7 @@ class FacturaController extends Controller
             $facturas->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . $filter->anio);
         }
 
-        return $facturas->orderBy('fechacobro','asc')->paginate(5);
+        return $facturas->orderBy('fechacobro','desc')->paginate(5);
     }
 
     public function Filtrar($filter)

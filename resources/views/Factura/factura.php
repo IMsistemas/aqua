@@ -4,7 +4,7 @@
 
     <div class="col-xs-12">
 
-        <h4>Gestión de Cobros y Servicios</h4>
+        <h4>Gestión de Cobros de Agua (Lecturas)</h4>
 
         <hr>
 
@@ -45,41 +45,37 @@
 
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-xs-12" style="font-size: 12px !important;">
         <table class="auto table table-responsive table-striped table-hover table-condensed table-bordered ">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 5%;">No. Factura</th>
-                <th style="width: 8%;">Fecha</th>
-                <th style="width: 10%;">Periodo</th>
-                <th>Cliente</th>
-                <th>Servicios</th>
-                <th style="width: 5%;">Suministro</th>
-                <th style="width: 8%;">Tarifa</th>
-                <th style="width: 12%;">Dirección Suministro</th>
-                <th style="width: 5%;">Teléfono Suministro</th>
-                <th style="width: 5%;">Consumo (m3)</th>
-                <th style="width: 5%;">Estado</th>
-                <th style="width: 5%;">Total</th>
-                <th style="width: 4%;">Acc.</th>
+                <th style="width: 4%;">NO.</th>
+                <th style="width: 7%;">FECHA</th>
+                <th style="width: 7%;">PERIODO</th>
+                <th>CLIENTE</th>
+                <th style="width: 8%;">NO. SUMINIST.</th>
+                <th style="width: 8%;">TARIFA</th>
+                <th style="width: 12%;">DIRECC. SUMINIST.</th>
+                <th style="width: 5%;">TELF. SUMINIST.</th>
+                <th style="width: 5%;">CONSUMO(m3)</th>
+                <th style="width: 5%;">ESTADO</th>
+                <th style="width: 5%;">TOTAL</th>
+                <th style="width: 8%;">ACCIONES</th>
             </tr>
             </thead>
             <tbody>
             <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 | filter:t_busqueda" total-items="totalItems" ng-cloak>
-                <td>{{item.idcobroagua}}</td>
+                <td>{{$index + 1}}</td>
                 <td>{{ FormatoFecha(item.fechacobro)}}</td>
                 <td>{{yearmonth (item.fechacobro)}}</td>
                 <td>{{item.suministro.cliente.persona.razonsocial}}</td>
-                <td>
-                    <span ng-repeat="serviciosenfactura in item.serviciosenfactura">{{serviciosenfactura.serviciojunta.nombreservicio}}</span>
-                </td>
                 <td>{{item.suministro.idsuministro}}</td>
                 <td>{{item.suministro.tarifaaguapotable.nametarifaaguapotable}}</td>
                 <td>{{item.suministro.direccionsumnistro}}</td>
                 <td>{{item.suministro.telefonosuministro}}</td>
                 <td>{{item.lectura.consumo}}</td>
                 <td>{{Pagada(item.estadopagado)}}</td>
-                <td>{{item.totalfactura}}</td>
+                <td>{{item.total}}</td>
                 <td>
                     <span ng-if="item.estadopagado == true">
                         <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)">
@@ -227,9 +223,9 @@
                             ng-click="save()" ng-disabled="formProcess.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-pagar" ng-click="pagar()" >
+                    <!--<button type="button" class="btn btn-primary" id="btn-pagar" ng-click="pagar()" >
                         Pagar <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                    </button>
+                    </button>-->
                 </div>
             </div>
         </div>

@@ -123,6 +123,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "factura";
     }
 
+    $scope.toModuloRecaudacionServicio = function(){
+        $scope.titulo = "Recaudación Servicio";
+        $scope.toModulo = "cobroservicio";
+    }
+
     $scope.toModuloSolicitud = function(){
         $scope.titulo = "Solicitudes";
         $scope.toModulo = "solicitud";

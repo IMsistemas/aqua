@@ -95,12 +95,9 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             }
         }
 
-
-
-
         $scope.infoCliente(item.idcliente);
 
-        if (item.iddocumentoventa !== undefined) {
+        if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {
             $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
                 $scope.listcobro = response;
@@ -110,8 +107,18 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 $('#listCobros').modal('show');
 
             });
-        } else {
+        } else if (item.idcobroservicio !== undefined) {
             $http.get(API_URL + 'cuentasxcobrar/getCobrosServices/' + item.idcobroservicio).success(function(response){
+
+                $scope.listcobro = response;
+
+                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                $('#listCobros').modal('show');
+
+            });
+        } else {
+            $http.get(API_URL + 'cuentasxcobrar/getCobrosLecturas/' + item.idcobroagua).success(function(response){
 
                 $scope.listcobro = response;
 
@@ -174,8 +181,10 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         if ($scope.item_select.iddocumentoventa !== undefined) {
             descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
-        } else {
+        } else if ($scope.item_select.idcobroservicio !== undefined) {
             descripcion = 'Cuentas x Cobrar Solicitud Servicio';
+        } else {
+            descripcion = 'Cuentas x Cobrar Toma Lectura';
         }
 
 
@@ -229,12 +238,15 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.iddocumentoventa !== undefined) {
+        if ($scope.item_select.iddocumentoventa !== undefined && $scope.item_select.iddocumentoventa !== null) {
             id = $scope.item_select.iddocumentoventa;
             type = 'venta';
-        } else {
+        } else if ($scope.item_select.idcobroservicio !== undefined) {
             id = $scope.item_select.idcobroservicio;
             type = 'servicio';
+        } else {
+            id = $scope.item_select.idcobroagua;
+            type = 'lectura';
         }
 
 

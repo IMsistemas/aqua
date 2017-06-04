@@ -22,7 +22,7 @@
 
     <div class="col-xs-12">
 
-        <h4>Gestión de Solicitudes de Servicios</h4>
+        <h4>Gestión de Cobro de Solicitudes de Servicios</h4>
 
         <hr>
 

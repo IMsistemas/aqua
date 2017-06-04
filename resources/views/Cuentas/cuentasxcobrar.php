@@ -79,7 +79,8 @@
 
 
                         <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
-                        <td class="text-center" ng-if="item.numdocumentoventa == undefined">Solicitud Servicio</td>
+                        <td class="text-center" ng-if="item.idcobroservicio != undefined">Solicitud Servicio</td>
+                        <td class="text-center" ng-if="item.idcobroagua != undefined">Toma Lectura</td>
 
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>

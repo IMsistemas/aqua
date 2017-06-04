@@ -72,7 +72,8 @@
                                     <li><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
                                     <li><a href="#" ng-click="toModuloSolicitud();">Solicitud</a></li>
                                     <li><a href = "#" ng-click="toModuloSuministro();">Suministro</a></li>
-                                    <li><a href = "#" ng-click="toModuloRecaudacion();">Registro Cobro Agua y Servicios</a></li>
+                                    <li><a href = "#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
+                                    <li><a href = "#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>
                                     <li><a href = "#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
                                     <li><a href = "#" ng-click="toModuloNewLectura();">Crear Lecturas</a></li>
                                 </ul>
@@ -308,6 +309,7 @@
     <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
     <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/cobroServicioController.js') ?>"></script>
 
     </body>
 </html>
