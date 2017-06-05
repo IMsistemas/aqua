@@ -278,7 +278,10 @@ $scope.cmb_estado_fact="A";
     $scope.ValIRBPNR = '0.00';
     $scope.ValPropina = '0.00';
     $scope.ValorTotal = '0.00';
-    $scope.AsignarData=function(item){
+    $scope.AsignarData=function(object, item){
+
+        item.productoObj = object;
+
         if(item!=undefined){
             if(item.productoObj!=undefined){
                 if(item.productoObj.originalObject.precioventa!=undefined){
@@ -343,6 +346,7 @@ $scope.cmb_estado_fact="A";
     	for(x=0;x<$scope.items.length;x++){
     		//console.log($scope.items[x]);
             console.log(parseInt($scope.items[x].iva));
+
             if(parseInt($scope.items[x].iva)==0){ // 0% no objeto , excento
                 switch($scope.items[x].productoObj.originalObject.idtipoimpuestoiva){
                     case 1: // 0%

@@ -236,6 +236,25 @@
              -------------------------------------------------------------------------------------------       NEW
          */
 
+        $scope.AsignarData=function(object, item){
+
+            item.productoObj = object;
+
+            if(item!=undefined){
+                if(item.productoObj!=undefined){
+                    if(item.productoObj.originalObject.precioventa!=undefined){
+                        item.precioU=item.productoObj.originalObject.precioventa;
+                    }
+                    if(item.productoObj.originalObject.porcentiva!=undefined){
+                        item.iva=item.productoObj.originalObject.porcentiva;
+                    }
+                    if(item.productoObj.originalObject.porcentice!=undefined){
+                        item.ice=item.productoObj.originalObject.porcentice;
+                    }
+                }
+            }
+        };
+
         $scope.ConfigContable=function(){
             $http.get(API_URL + 'DocumentoCompras/porcentajeivaiceotro')
                 .success(function(response){
