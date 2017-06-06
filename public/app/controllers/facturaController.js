@@ -1,3 +1,10 @@
+$(function () {
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD'
+    });
+});
+
 app.controller('facturaController', function($scope, $http, API_URL) {
     $scope.cobroagua_aux = [];
 
@@ -64,6 +71,29 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 };
                 Object.defineProperty(response.data[i].cliente, 'complete_name', complete_name);
             }*/
+
+
+
+            var longitud = response.data.length;
+
+            for (var i = 0; i < longitud; i++) {
+                var longitud_cobros = response.data[i].cont_cuentasporcobrar.length;
+
+                var suma = 0;
+
+                for (var j = 0; j < longitud_cobros; j++) {
+                    suma += parseFloat(response.data[i].cont_cuentasporcobrar[j].valorpagado);
+                }
+
+                var complete_name = {
+                    value: suma.toFixed(2),
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response.data[i], 'valorcobrado', complete_name);
+            }
+
             $scope.factura = response.data;
             $scope.totalItems = response.total;
         });
@@ -568,9 +598,11 @@ app.controller('facturaController', function($scope, $http, API_URL) {
         $scope.select_cuenta = item;
     };
 
-    $scope.showModalListCobro = function () {
+    $scope.showModalListCobro = function (item) {
 
-        //$scope.item_select = item;
+        $scope.item_select = item;
+
+        console.log(item);
 
         if (item.valortotalventa !== undefined) {
             if (item.valortotalventa !== item.valorcobrado) {
@@ -586,7 +618,9 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             }
         }
 
-        $scope.infoCliente(item.idcliente);
+
+
+        $scope.infoCliente(item.suministro.idcliente);
 
         if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {
             $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
