@@ -49,6 +49,10 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
+
+                if (response[i].total == null) {
+                    response[i].total = 0.00;
+                }
             }
 
         });
