@@ -31,9 +31,16 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             $scope.list = response;
 
+
+
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
+
+                if (response[i].total == null && response[i].total != undefined ) {
+                    response[i].total = 0;
+                }
+
                 var longitud_cobros = response[i].cont_cuentasporcobrar.length;
 
                 var suma = 0;
@@ -50,9 +57,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
 
-                if (response[i].total == null) {
-                    response[i].total = 0.00;
-                }
+
             }
 
         });
