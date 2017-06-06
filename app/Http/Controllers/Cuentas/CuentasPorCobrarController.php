@@ -49,6 +49,7 @@ class CuentasPorCobrarController extends Controller
                                         ->join('cliente', 'cliente.idcliente', '=', 'suministro.idcliente')
                                         ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
                                         ->whereRaw("cobroagua.fechacobro BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
+                                        ->whereRaw("cobroagua.total IS NOT NULL")
                                         ->orderBy('fechacobro', 'desc')->get();
 
         $result = [];
