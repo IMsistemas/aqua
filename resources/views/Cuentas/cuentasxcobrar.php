@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="es-ES" ng-app="softver-aqua">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Cuentas x Cobrar</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-
-
-</head>
-
-<body>
 
 <div ng-controller="cuentasporCobrarController">
 
@@ -164,62 +146,64 @@
                     <h4 class="modal-title">Forma de Cobro </h4>
                 </div>
                 <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">No. Comprobante: </span>
+                                    <input type="text" class="form-control" id="nocomprobante" ng-model="nocomprobante" >
+                                </div>
+                            </div>
 
-                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">No. Comprobante: </span>
-                            <input type="text" class="form-control" id="nocomprobante" ng-model="nocomprobante" >
-                        </div>
-                    </div>
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group date">
+                                    <span class="input-group-addon">Fecha Cobro: </span>
+                                    <input type="text" class="datepicker form-control" id="fecharegistro" ng-model="fecharegistro" >
+                                </div>
+                            </div>
 
-                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">Fecha Cobro: </span>
-                            <input type="text" class="form-control datepicker" id="fecharegistro" ng-model="fecharegistro" >
-                        </div>
-                    </div>
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Forma Pago: </span>
+                                    <select class="form-control" name="formapago" id="formapago" ng-model="formapago" ng-required="true"
+                                            ng-options="value.id as value.label for value in listformapago">
+                                    </select>
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formCompra.formapago.$invalid && formCompra.formapago.$touched">La Forma Pago es requerida</span>
+                            </div>
 
-                    <div class="col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">Forma Pago: </span>
-                            <select class="form-control" name="formapago" id="formapago" ng-model="formapago" ng-required="true"
-                                    ng-options="value.id as value.label for value in listformapago">
-                            </select>
-                        </div>
-                        <span class="help-block error"
-                              ng-show="formCompra.formapago.$invalid && formCompra.formapago.$touched">La Forma Pago es requerida</span>
-                    </div>
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">A Cobrar: </span>
+                                    <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
+                                </div>
+                            </div>
 
-                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">A Cobrar: </span>
-                            <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
-                        </div>
-                    </div>
+                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Cobrado: </span>
+                                    <input type="text" class="form-control" id="valorrecibido" ng-model="valorrecibido" >
+                                </div>
+                            </div>
 
-                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">Cobrado: </span>
-                            <input type="text" class="form-control" id="valorrecibido" ng-model="valorrecibido" >
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12" style="margin-top: 5px;">
-                        <div class="input-group">
-                            <span class="input-group-addon">C. Contab.: </span>
-                            <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
-                                   ng-required="true" readonly>
-                            <span class="input-group-btn" role="group">
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">C. Contab.: </span>
+                                    <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
+                                           ng-required="true" readonly>
+                                    <span class="input-group-btn" role="group">
                                     <button type="button" class="btn btn-info" id="btn-pcc" ng-click="showPlanCuenta()">
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </button>
                                 </span>
 
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formEmployee.cuenta_employee.$error.required">La asignación de una cuenta es requerida</span>
+                            </div>
                         </div>
-                        <span class="help-block error"
-                              ng-show="formEmployee.cuenta_employee.$error.required">La asignación de una cuenta es requerida</span>
-                    </div>
-
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -316,24 +300,4 @@
 
 </div>
 
-</body>
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/menuLateral.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/app.js') ?>"></script>
-
-<script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
-</html>
 

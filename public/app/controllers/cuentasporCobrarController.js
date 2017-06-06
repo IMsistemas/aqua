@@ -1,10 +1,12 @@
 
-$(function () {
+/*$(function () {
     $('.datepicker').datetimepicker({
         locale: 'es',
         format: 'YYYY-MM-DD'
     });
-});
+
+
+});*/
 
 app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
@@ -140,6 +142,11 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     };
 
     $scope.showModalFormaCobro = function () {
+
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'DD/MM/YYYY'
+        });
 
         $scope.getFormaPago();
 
