@@ -25,7 +25,8 @@ class CobroServicioController extends Controller
 
     public function getCobrosServicios(Request $request)
     {
-        return CobroServicio::join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
+        return CobroServicio::with('cont_cuentasporcobrar')
+                                ->join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
                                 ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
                                 ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')
                                 ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')

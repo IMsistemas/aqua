@@ -12,6 +12,8 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
+
+
     $scope.initLoad = function(){
 
         $('.datepicker').datetimepicker({
@@ -22,6 +24,48 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
         $http.get(API_URL + 'cobroservicio/getCobrosServicios').success(function(response){
 
             console.log(response);
+
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+                var longitud_cobros = response[i].cont_cuentasporcobrar.length;
+
+                var suma = 0;
+
+                for (var j = 0; j < longitud_cobros; j++) {
+                    suma += parseFloat(response[i].cont_cuentasporcobrar[j].valorpagado);
+                }
+
+                var complete_name = {
+                    value: suma.toFixed(2),
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i], 'valorcobrado', complete_name);
+
+                if (suma == response[i].total) {
+
+                    var estado_pago = {
+                        value: 'PAGADO',
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'estado_pago', estado_pago);
+
+                } else {
+
+                    var estado_pago = {
+                        value: 'NO PAGADO',
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'estado_pago', estado_pago);
+
+                }
+            }
 
             $scope.list = response;
 
@@ -34,8 +78,24 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
             console.log(response);
 
+            if (response.success == true) {
+                $scope.initLoad();
+
+                $scope.message = 'Se ha generado los cobros del mes actual correctamente...';
+                $('#modalMessage').modal('show');
+
+            }
+            else {
+                $scope.message_error = 'Ha ocurrido un error...';
+                $('#modalMessageError').modal('show');
+            }
+
         });
     };
+
+    /*
+     ---------------------------------CUENTAS POR COBRAR-----------------------------------------------------------------
+     */
 
     $scope.showPlanCuenta = function () {
 
@@ -63,24 +123,57 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
         $scope.item_select = item;
 
-        if (item.valortotalventa !== item.valorcobrado) {
-            $('#btn-cobrar').prop('disabled', false);
+        console.log(item);
+
+        if (item.valortotalventa !== undefined) {
+            if (item.valortotalventa !== item.valorcobrado) {
+                $('#btn-cobrar').prop('disabled', false);
+            } else {
+                $('#btn-cobrar').prop('disabled', true);
+            }
         } else {
-            $('#btn-cobrar').prop('disabled', true);
+            if (item.total !== item.valorcobrado) {
+                $('#btn-cobrar').prop('disabled', false);
+            } else {
+                $('#btn-cobrar').prop('disabled', true);
+            }
         }
+
+
 
         $scope.infoCliente(item.idcliente);
 
-        $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
+        if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {
+            $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
-            $scope.listcobro = response;
+                $scope.listcobro = response;
 
-            $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
+                $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
 
-            $('#listCobros').modal('show');
+                $('#listCobros').modal('show');
 
-        });
+            });
+        } else if (item.idcobroservicio !== undefined) {
+            $http.get(API_URL + 'cuentasxcobrar/getCobrosServices/' + item.idcobroservicio).success(function(response){
 
+                $scope.listcobro = response;
+
+                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                $('#listCobros').modal('show');
+
+            });
+        } else {
+            $http.get(API_URL + 'cuentasxcobrar/getCobrosLecturas/' + item.idcobroagua).success(function(response){
+
+                $scope.listcobro = response;
+
+                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                $('#listCobros').modal('show');
+
+            });
+        }
     };
 
     $scope.showModalFormaCobro = function () {
@@ -112,9 +205,6 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
         });
     };
 
-    /*
-    -----------------------------------------------------------------------------------------------------------------
-     */
 
     $scope.infoCliente = function (idcliente) {
         $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ idcliente).success(function(response){
@@ -127,7 +217,19 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
     $scope.saveCobro = function () {
 
-        var iddocumentoventa = 0;
+        var id = 0;
+        var type = '';
+
+        var descripcion = '';
+
+        if ($scope.item_select.iddocumentoventa !== undefined) {
+            descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
+        } else if ($scope.item_select.idcobroservicio !== undefined) {
+            descripcion = 'Cuentas x Cobrar Solicitud Servicio';
+        } else {
+            descripcion = 'Cuentas x Cobrar Toma Lectura';
+        }
+
 
         /*
          * --------------------------------- CONTABILIDAD --------------------------------------------------------------
@@ -137,7 +239,7 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
             fecha: $('#fecharegistro').val(),
             idtipotransaccion: 4,
             numcomprobante: 1,
-            descripcion: 'Cuenta x Cobrar'
+            descripcion: descripcion
         };
 
         var RegistroC = [];
@@ -179,23 +281,29 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.iddocumentoventa !== null && $scope.item_select.iddocumentoventa !== undefined) {
-            iddocumentoventa = $scope.item_select.iddocumentoventa;
+        if ($scope.item_select.iddocumentoventa !== undefined && $scope.item_select.iddocumentoventa !== null) {
+            id = $scope.item_select.iddocumentoventa;
+            type = 'venta';
+        } else if ($scope.item_select.idcobroservicio !== undefined) {
+            id = $scope.item_select.idcobroservicio;
+            type = 'servicio';
+        } else {
+            id = $scope.item_select.idcobroagua;
+            type = 'lectura';
         }
 
 
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
             var data = {
-
                 idcliente: $scope.Cliente.idcliente,
-
                 nocomprobante: $scope.nocomprobante,
                 fecharegistro: $('#fecharegistro').val(),
                 idformapago: $scope.formapago,
                 cobrado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
-                iddocumentoventa: iddocumentoventa,
+                iddocumentoventa: id,
+                type: type,
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
 
@@ -231,8 +339,10 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
     };
 
+
+
     /*
-     -----------------------------------------------------------------------------------------------------------------
+     ----------------------------------FIN CUENTAS POR COBRAR------------------------------------------------------------
      */
 
     $scope.fechaByFilter = function(){

@@ -72,8 +72,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                 Object.defineProperty(response.data[i].cliente, 'complete_name', complete_name);
             }*/
 
-
-
             var longitud = response.data.length;
 
             for (var i = 0; i < longitud; i++) {
@@ -92,6 +90,12 @@ app.controller('facturaController', function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response.data[i], 'valorcobrado', complete_name);
+
+                if (suma == response.data[i].total) {
+                    response.data[i].estadopagado = true;
+                } else {
+                    response.data[i].estadopagado = false;
+                }
             }
 
             $scope.factura = response.data;

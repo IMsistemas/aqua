@@ -63,9 +63,11 @@
                         <td class="text-center">{{item.fechacobro}}</td>
                         <td>{{item.razonsocial}}</td>
                         <td class="text-right">$ {{item.total}}</td>
-                        <td class="text-right"></td>
+                        <td class="text-right">{{item.estado_pago}}</td>
                         <td class="text-right">
-
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showModalListCobro(item)" title="Cobros" >
+                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                            </button>
                         </td>
 
                     </tr>
@@ -74,6 +76,37 @@
 
         </div>
     </div>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------- FORMULARIOS DE CUENTAS POR COBRAR ---------------------------------------------->
 
     <div class="modal fade" tabindex="-1" role="dialog" id="listCobros">
         <div class="modal-dialog modal-lg" role="document">
@@ -253,34 +286,6 @@
                     <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header-danger">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Información</h4>
-                </div>
-                <div class="modal-body">
-                    <span>{{message_error}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header-success">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Confirmación</h4>
-                </div>
-                <div class="modal-body">
-                    <span>{{message}}</span>
                 </div>
             </div>
         </div>
