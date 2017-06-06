@@ -371,7 +371,7 @@ class LecturaController extends Controller
 
 
         /*
-         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         * ----------------------------------------FIN CONTABILIDAD-----------------------------------------------------
          */
 
 
@@ -394,6 +394,7 @@ class LecturaController extends Controller
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
         $cobroagua->valortarifabasica = $request->input('tarifa_basica');
+        $cobroagua->total = $request->input('total');
         $cobroagua->estadopagado = false;
         $cobroagua->save();
 

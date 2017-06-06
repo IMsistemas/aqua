@@ -431,7 +431,6 @@
                 mesesatrasados: parseInt($scope.meses_atrasados),
                 total: $scope.total,
                 rubros: $scope.rubros,
-
                 idcliente: $scope.Cliente.idcliente,
                 contabilidad: JSON.stringify(transaccion_venta_full),
 
