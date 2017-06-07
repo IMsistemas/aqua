@@ -297,6 +297,194 @@ class Balances extends Controller
         
         return $aux_numero_orden;
     }
+    /**
+     * Consultar balance contable  por parametro de 2 fechas
+     * analiza el comportamiento de la contabilidad 
+     * 
+     */
+    public function get_balance_contable($parametro)
+    {
+        $filtro = json_decode($parametro);
+        $balance_activo=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='B' AND tipocuenta='A'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+        $aux_data_plan=array();
+        $aux_data_balance_activo=array();
+        foreach ($balance_activo as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_activo, $aux_item); 
+        }
+
+        $balance_pasivo=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='B' AND tipocuenta='P'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+
+        $aux_data_balance_pasivo=array();
+        foreach ($balance_pasivo as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_pasivo, $aux_item); 
+        }
+
+        $balance_patrimonio=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='B' AND tipocuenta='PT'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+        $aux_data_balance_patrimonio=array();
+        foreach ($balance_patrimonio as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_patrimonio, $aux_item); 
+        }
+        $aux_data_plan = array(
+            'Activo' => $aux_data_balance_activo,
+            'Pasivo' => $aux_data_balance_pasivo,
+            'Patrimonio' => $aux_data_balance_patrimonio 
+            );
+        return $aux_data_plan;
+    }
+    /**
+     * Consultar estado de resultados  por parametro de 2 fechas
+     * analiza el comportamiento de la contabilidad 
+     * 
+     */
+    public function get_estado_de_resultados($parametro)
+    {
+        $filtro = json_decode($parametro);
+        $balance_ingreso=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='E' AND tipocuenta='I'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+        $aux_data_plan=array();
+        $aux_data_balance_ingreso=array();
+        foreach ($balance_ingreso as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_ingreso, $aux_item); 
+        }
+
+        $balance_costo=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='E' AND tipocuenta='C'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+
+        $aux_data_balance_costo=array();
+        foreach ($balance_costo as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_costo, $aux_item); 
+        }
+
+        $balance_gasto=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("tipoestadofinanz='E' AND tipocuenta='G'  AND  (f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 OR f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."')!=0 ) ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+        $aux_data_balance_gasto=array();
+        foreach ($balance_gasto as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'saldo' => $item->saldo ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_balance_gasto, $aux_item); 
+        }
+        $aux_data_plan = array(
+            'Ingreso' => $aux_data_balance_ingreso,
+            'Costo' => $aux_data_balance_costo,
+            'Gasto' => $aux_data_balance_gasto 
+            );
+        return $aux_data_plan;
+    }
 
     /**
      * Calcular el cambio del patrimonio entre 2 fechas seleccionadas solo calcula las transacciones activas
@@ -383,5 +571,39 @@ class Balances extends Controller
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
         return $pdf->stream("estado_patrimonio_".$today."");
+    }
+    /**
+     * Imprimir balance general 
+     * 
+     * 
+     */
+    public function print_balace_general($parametro)
+    {
+        ini_set('max_execution_time', 300);
+        $filtro = json_decode($parametro);
+        $balance_general_contable =$this->get_balance_contable($parametro);
+        $today=date("Y-m-d H:i:s");
+        $view =  \View::make('Estadosfinancieros.balance_general', compact('filtro','balance_general_contable','today'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       // $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream("balance_general_".$today."");
+    }
+    /**
+     * Imprimir estado de resultados
+     * 
+     * 
+     */
+    public function print_estado_de_resultados($parametro)
+    {
+        ini_set('max_execution_time', 300);
+        $filtro = json_decode($parametro);
+        $estador =$this->get_estado_de_resultados($parametro);
+        $today=date("Y-m-d H:i:s");
+        $view =  \View::make('Estadosfinancieros.estado_de_resultados', compact('filtro','estador','today'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       // $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream("estado_resultados_".$today."");
     }
 }

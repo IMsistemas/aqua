@@ -35,6 +35,7 @@
             <select class="form-control" name="cmb_generar" id="cmb_generar" ng-model="cmb_generar"> 
               <option value="1" >Estados Cambios Patrimonio</option>
               <option value="2" >Estados Situacion Finaciera</option>
+              <option value="5" >Balance General</option>
               <option value="3" >Libro Diario</option>
               <option value="4" >Libro Mayor</option>
             </select>
@@ -178,7 +179,7 @@
     <!--libro mayor fin-->
 
     <!--estado de situacion finaciera-->
-    <div class="row" ng-hide="aux_render!='2' " ng-show=" aux_render=='2'">
+    <div class="row" ng-hide="aux_render!='10' " ng-show=" aux_render=='10'">
       
       <div class="row">
         <div class="col-md-6 col-xs-12">  <!--Balance-->
@@ -283,6 +284,113 @@
     </div>
     <!--estado de cambios del patrimonio-->
 
+    <!--balance general-->
+    <div class="row" ng-hide="aux_render!='5' " ng-show=" aux_render=='5'">
+      <div class="col-xs-12">
+        <table class="table table-bordered">
+          <thead class="bg-primary">
+            <tr>
+              <th colspan="3" class="text-center">{{titulo_head_report}}</th>
+            </tr>
+            <tr>
+              <th>Código</th>
+              <th>Cuenta</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="activo in list_activo">
+              <th>{{activo.aux_jerarquia}}</th>
+              <th>{{activo.concepto}}</th>
+              <th class="text-right">{{Valida_numero(activo.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Activo</th>
+              <th class="text-right">{{total_activo}}</th>
+            </tr>
+            <tr><th colspan="3"></th></tr>
+
+            <tr ng-repeat="pasivo in list_pasivo">
+              <th>{{pasivo.aux_jerarquia}}</th>
+              <th>{{pasivo.concepto}}</th>
+              <th class="text-right">{{Valida_numero(pasivo.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Pasivo</th>
+              <th class="text-right">{{total_pasivo}}</th>
+            </tr>
+            <tr><th colspan="3"></th></tr>
+
+            <tr ng-repeat="patrimonio in list_patrimonio">
+              <th>{{patrimonio.aux_jerarquia}}</th>
+              <th>{{patrimonio.concepto}}</th>
+              <th class="text-right">{{Valida_numero(patrimonio.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Patrimonio</th>
+              <th class="text-right">{{total_patrimonio}}</th>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--balance general-->
+
+    <!--estado de resultados-->
+    <div class="row" ng-hide="aux_render!='2' " ng-show=" aux_render=='2'">
+      <div class="col-xs-12">
+        <table class="table table-bordered">
+          <thead class="bg-primary">
+            <tr>
+              <th colspan="3" class="text-center">{{titulo_head_report}}</th>
+            </tr>
+            <tr>
+              <th>Código</th>
+              <th>Cuenta</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="ingreso in list_ingreso">
+              <th>{{ingreso.aux_jerarquia}}</th>
+              <th>{{ingreso.concepto}}</th>
+              <th class="text-right">{{Valida_numero(ingreso.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Ingresos</th>
+              <th class="text-right">{{total_ingreso}}</th>
+            </tr>
+            <tr><th colspan="3"></th></tr>
+
+            <tr ng-repeat="costo in list_costo">
+              <th>{{costo.aux_jerarquia}}</th>
+              <th>{{costo.concepto}}</th>
+              <th class="text-right">{{Valida_numero(costo.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Costos</th>
+              <th class="text-right">{{total_costo}}</th>
+            </tr>
+            <tr><th colspan="3"></th></tr>
+
+            <tr ng-repeat="gasto in list_gasto">
+              <th>{{gasto.aux_jerarquia}}</th>
+              <th>{{gasto.concepto}}</th>
+              <th class="text-right">{{Valida_numero(gasto.saldo)}}</th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-right">Total Gastos</th>
+              <th class="text-right">{{total_gasto}}</th>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--estado de resultados-->
 
 
 <div class="modal fade"  id="WPrint" tabindex="-1" role="dialog">

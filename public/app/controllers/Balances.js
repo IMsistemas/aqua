@@ -30,6 +30,20 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
     $scope.filtro_estado_resultado={};
     $scope.filtro_cambios_patrimonio={};
 
+    $scope.list_activo=[];
+    $scope.total_activo=0.0;
+    $scope.list_pasivo=[];
+    $scope.total_pasivo=0.0;
+    $scope.list_patrimonio=[];
+    $scope.total_patrimonio=0.0;
+
+    $scope.list_ingreso=[];
+    $scope.total_ingreso=0.0;
+    $scope.list_costo=[];
+    $scope.total_costo=0.0;
+    $scope.list_gasto=[];
+    $scope.total_gasto=0.0;
+
     ///---generar reporte segun la opcion que seleecione 
     $scope.genera_report=function() {
         $scope.libro_mayor=[];
@@ -46,7 +60,8 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             break;
             case "2": ///Estados Situacion Finaciera
                 $scope.aux_render="2";
-                $scope.generar_estado_resultados();
+                //$scope.generar_estado_resultados();
+                $scope.generar_de_estado_resultados();
             break;
             case "3": ///Libro Diario
                 $scope.aux_render="3";
@@ -58,7 +73,62 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                 $scope.titulo_head_report="Libro Mayor Desde: "+convertDatetoDB($("#txt_fechaI").val())+" Hasta: "+convertDatetoDB($("#txt_fechaF").val());
                 $scope.BuscarCuentaContable();
             break;
+            case "5": // balance general 
+                $scope.aux_render="5";
+                $scope.titulo_head_report="Balance General Desde: "+convertDatetoDB($("#txt_fechaI").val())+" Hasta: "+convertDatetoDB($("#txt_fechaF").val());
+                $scope.generar_balance_general();
+            break;
         };
+    };
+    ///--- Valida numero
+    $scope.Valida_numero=function(valor) {
+        if(parseFloat(valor)==0){
+            return '';
+        }else{
+            return  valor;
+        }
+    }
+    ///---proceso estado de resultados (ingresos costos gastos)
+    $scope.generar_de_estado_resultados=function () {
+        $scope.filtro_estado_resultados={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val()),
+            Estado: $scope.cmb_estado
+        };
+        $http.get(API_URL + 'Balance/estado_de_resultados/'+JSON.stringify($scope.filtro_estado_resultados))
+        .success(function(response){
+               console.log(response);
+               $scope.list_ingreso=response.Ingreso;
+               $scope.total_ingreso=$scope.list_ingreso[0].balance;
+
+               $scope.list_costo=response.Costo;
+               $scope.total_costo=$scope.list_costo[0].balance;
+               
+               $scope.list_gasto=response.Gasto;
+               $scope.total_gasto=$scope.list_gasto[0].balance;
+            $("#procesarinfomracion").modal("hide");
+        });
+    };
+    ///---proceso balance general
+    $scope.generar_balance_general=function () {
+        $scope.filtro_balance_general={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val()),
+            Estado: $scope.cmb_estado
+        };
+        $http.get(API_URL + 'Balance/balance_general/'+JSON.stringify($scope.filtro_balance_general))
+        .success(function(response){
+               console.log(response);
+               $scope.list_activo=response.Activo;
+               $scope.total_activo=$scope.list_activo[0].balance;
+
+               $scope.list_pasivo=response.Pasivo;
+               $scope.total_pasivo=$scope.list_pasivo[0].balance;
+               
+               $scope.list_patrimonio=response.Patrimonio;
+               $scope.total_patrimonio=$scope.list_patrimonio[0].balance;
+            $("#procesarinfomracion").modal("hide");
+        });
     };
     ///---proceso libro diario
     $scope.generar_libro_diario=function () {
@@ -225,10 +295,26 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                     $scope.Mensaje="Debe generar el reporte para imprimir";
                 }
             break;
+            case "5":
+                $scope.print_balance_reporte();
+            break;
         };
     };
     ///---Fin imprimir reportes
 
+    ///---- prit balance 
+    $scope.print_balance_reporte=function() {
+        $scope.filtro_balance_general={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val()),
+            Estado: $scope.cmb_estado
+        };
+        var accion = API_URL + "Balance/balance_general_print/"+JSON.stringify($scope.filtro_balance_general);
+        $("#WPrint_head").html("Balance General");
+        $("#WPrint").modal("show");
+        $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");
+    };
+    ///---- prit balance 
 
     ///--- print libro diario
     $scope.print_libro_diario=function () {
@@ -264,8 +350,10 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             FechaF:convertDatetoDB($("#txt_fechaF").val())
         };
 
-      var accion = API_URL + "Balance/estado_resultados_print/"+JSON.stringify($scope.filtro_estado_resultado);
-        $("#WPrint_head").html("Estado De Situación Finaciera");
+      //var accion = API_URL + "Balance/estado_resultados_print/"+JSON.stringify($scope.filtro_estado_resultado);
+      var accion = API_URL + "Balance/estado_de_resultados_print/"+JSON.stringify($scope.filtro_estado_resultado);
+        //$("#WPrint_head").html("Estado De Situación Finaciera");
+        $("#WPrint_head").html("Estado De Resultados");
         $("#WPrint").modal("show");
         $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");  
     };
