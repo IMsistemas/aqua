@@ -168,22 +168,19 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
                 item: item
              };
 
-            var accion = API_URL + "cobroservicio/print/" + JSON.stringify(a);
+            var accion = API_URL + "cobroservicio/print/" + JSON.stringify(item);
 
-            $("#WPrint_head").html("Libro Diario");
+            /*$("#WPrint_head").html("Libro Diario");
             $("#WPrint").modal("show");
-            $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");
+            $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");*/
 
-             /*$http.post(API_URL + 'cobroservicio/print', a).success(function(response){
-                 console.log(response);
+             $http.post(API_URL + 'cobroservicio/print', a).success(function(response){
+                  console.log(response);
 
+                  var ventana = window.open(response.url);
+                  setTimeout(function(){ ventana.print(); }, 2000);
 
-
-                 $("#WPrint_head").html("Libro Diario");
-                 $("#WPrint").modal("show");
-                 $("#bodyprint").html("<object width='100%' height='600' data='"+response+"'></object>");
-
-             });*/
+             });
 
         }, 3000);
 

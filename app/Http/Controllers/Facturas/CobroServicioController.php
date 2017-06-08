@@ -150,7 +150,7 @@ class CobroServicioController extends Controller
         //
     }
 
-    public function printer($filter)
+    /*public function printer($filter)
     {
 
         //$data =  json_decode($filter);
@@ -164,19 +164,29 @@ class CobroServicioController extends Controller
 
         return $pdf->stream("estado_resultados");
 
+    }*/
 
-        /*if (! is_dir(public_path().'/uploads/')){
+    public function printer(Request $request)
+    {
+        $values = $request->input('item');
+
+        $plantilla = 'Cuentas.cobroservicio_print';
+        $view = \View::make($plantilla, compact('values'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        if (! is_dir(public_path().'/uploads/')){
             mkdir(public_path().'/uploads/');
         }
 
-        if (! is_dir(public_path().'/uploads/cobroservicio/')){
-            mkdir(public_path().'/uploads/cobroservicio/');
+        if (! is_dir(public_path().'/uploads/cobroservicios/')){
+            mkdir(public_path().'/uploads/cobroservicios/');
         }
 
 
 
-        $pdf->setPaper('a4', 'portrait')->save(public_path() . '/uploads/factura/' . $data['idcobroservicio'] . '.pdf');
+        $pdf->setPaper('a4', 'portrait')->save(public_path() . '/uploads/factura/' . $values['idcobroservicio'] . '.pdf');
 
-        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['idcobroservicio'] . '.pdf']);*/
+        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $values['idcobroservicio'] . '.pdf']);
     }
 }

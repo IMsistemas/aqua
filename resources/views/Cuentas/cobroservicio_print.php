@@ -86,12 +86,12 @@
 
                 <?php
 
-                    /*foreach ($values['solicitudservicio']['catalogoitem_solicitudservicio'] as $item) {
+                    foreach ($values['solicitudservicio']['catalogoitem_solicitudservicio'] as $item) {
                         echo '<tr>';
                         echo '<td>' . ucwords(strtolower($item['cont_catalogitem']['nombreproducto'])) . '</td>';
                         echo '<td style="text-align: right;">' . $item['valor'] . '</td>';
                         echo '</tr>';
-                    }*/
+                    }
 
 
 
