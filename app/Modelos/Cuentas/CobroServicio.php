@@ -15,4 +15,9 @@ class CobroServicio extends Model
         return $this->hasMany('App\Modelos\Cuentas\CuentasporCobrar',"idcobroservicio");
     }
 
+    public function solicitudservicio ()
+    {
+        return $this->belongsTo('App\Modelos\Solicitud\SolicitudServicio', 'idsolicitudservicio');
+    }
+
 }

@@ -246,6 +246,7 @@ Route::resource('/factura', 'Facturas\FacturaController');
 
 Route::get('cobroservicio/getCobrosServicios', 'Facturas\CobroServicioController@getCobrosServicios');
 Route::get('cobroservicio/generate', 'Facturas\CobroServicioController@generate');
+Route::get('cobroservicio/print/{filtro}', 'Facturas\CobroServicioController@printer');
 Route::resource('/cobroservicio', 'Facturas\CobroServicioController');
 
 /*--------------------------------------Yamilka-------------------------------------------------*/

@@ -12,8 +12,6 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
-
-
     $scope.initLoad = function(){
 
         $('.datepicker').datetimepicker({
@@ -91,6 +89,104 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
             }
 
         });
+    };
+
+    $scope.printer = function (item) {
+
+        $scope.infoCliente(item.idcliente);
+
+        var subtotal = 0;
+
+        setTimeout(function(){
+
+            var longitud_i = item.solicitudservicio.catalogoitem_solicitudservicio.length;
+
+            if (longitud_i > 0) {
+
+                for (var i = 0; i < longitud_i; i++) {
+                    subtotal += parseFloat(item.solicitudservicio.catalogoitem_solicitudservicio[i].valor);
+                }
+
+            }
+
+            var porcentaje_iva_cliente = parseFloat($scope.Cliente.porcentaje);
+
+            var total_iva = 0;
+
+            if(porcentaje_iva_cliente != 0){
+                total_iva = (subtotal * porcentaje_iva_cliente) / 100;
+            }
+
+            var total = subtotal + total_iva;
+
+            var date_p = (item.fechacobro).split('-');
+            var date_p0 = date_p[1] + '/' + date_p[0];
+
+            var partial_date = {
+                value: date_p0,
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+            Object.defineProperty(item, 'partial_date', partial_date);
+
+            var subtotalfactura = {
+                value: subtotal.toFixed(2),
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+            Object.defineProperty(item, 'subtotalfactura', subtotalfactura);
+
+            var iva = {
+                value: total_iva.toFixed(2),
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+            Object.defineProperty(item, 'iva', iva);
+
+            var porcentaje_iva = {
+                value: porcentaje_iva_cliente.toFixed(2),
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+            Object.defineProperty(item, 'porcentaje_iva', porcentaje_iva);
+
+            var totalfactura = {
+                value: total.toFixed(2),
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+            Object.defineProperty(item, 'totalfactura', totalfactura);
+
+            console.log(item);
+
+             var a = {
+                item: item
+             };
+
+            var accion = API_URL + "cobroservicio/print/" + JSON.stringify(a);
+
+            $("#WPrint_head").html("Libro Diario");
+            $("#WPrint").modal("show");
+            $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");
+
+             /*$http.post(API_URL + 'cobroservicio/print', a).success(function(response){
+                 console.log(response);
+
+
+
+                 $("#WPrint_head").html("Libro Diario");
+                 $("#WPrint").modal("show");
+                 $("#bodyprint").html("<object width='100%' height='600' data='"+response+"'></object>");
+
+             });*/
+
+        }, 3000);
+
     };
 
     /*
@@ -338,8 +434,6 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
 
     };
-
-
 
     /*
      ----------------------------------FIN CUENTAS POR COBRAR------------------------------------------------------------

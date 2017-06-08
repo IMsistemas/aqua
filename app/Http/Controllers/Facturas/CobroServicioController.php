@@ -25,7 +25,7 @@ class CobroServicioController extends Controller
 
     public function getCobrosServicios(Request $request)
     {
-        return CobroServicio::with('cont_cuentasporcobrar')
+        return CobroServicio::with('cont_cuentasporcobrar', 'solicitudservicio.catalogoitem_solicitudservicio.cont_catalogitem')
                                 ->join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
                                 ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
                                 ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')
@@ -102,7 +102,7 @@ class CobroServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -148,5 +148,35 @@ class CobroServicioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function printer($filter)
+    {
+
+        //$data =  json_decode($filter);
+
+        $values = json_decode($filter);
+
+        $plantilla = 'Cuentas.cobroservicio_print';
+        $view = \View::make($plantilla, compact('values'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+
+        return $pdf->stream("estado_resultados");
+
+
+        /*if (! is_dir(public_path().'/uploads/')){
+            mkdir(public_path().'/uploads/');
+        }
+
+        if (! is_dir(public_path().'/uploads/cobroservicio/')){
+            mkdir(public_path().'/uploads/cobroservicio/');
+        }
+
+
+
+        $pdf->setPaper('a4', 'portrait')->save(public_path() . '/uploads/factura/' . $data['idcobroservicio'] . '.pdf');
+
+        return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['idcobroservicio'] . '.pdf']);*/
     }
 }

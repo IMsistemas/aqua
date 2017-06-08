@@ -15,4 +15,14 @@ class SolicitudServicio extends Model
         return $this->belongsTo('App\Modelos\Clientes\Cliente', 'codigocliente');
     }
 
+    public function cont_cuentasporcobrar()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CuentasporCobrar',"idcobroservicio");
+    }
+
+    public function catalogoitem_solicitudservicio()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CatalogoItemSolicitudServicio', 'idsolicitudservicio');
+    }
+
 }
