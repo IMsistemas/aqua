@@ -34,7 +34,9 @@ $scope.cmb_estado_fact="A";
             $scope.DICliente = response[0].cliente.persona.numdocidentific;
             $scope.BuscarCliente();
 
-            $http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro/' + response[0].cont_catalogitem.codigoproducto).success(function(response0){
+
+            //$http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro/' + response[0].cont_catalogitem.codigoproducto).success(function(response0){
+            $http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro').success(function(response0){
                 console.log(response0);
 
                 var longitud = response0.length;
