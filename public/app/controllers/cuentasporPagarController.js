@@ -8,14 +8,12 @@
 
 });*/
 
-app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
+app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
 
     $scope.item_select = 0;
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
-
-    $scope.fecha_i = '';
 
     $scope.initLoad = function(){
 
@@ -29,7 +27,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             fin: $('#fechafin').val()
         };
 
-        $http.get(API_URL + 'cuentasxcobrar/getFacturas?filter=' + JSON.stringify(filter)).success(function(response){
+        $http.get(API_URL + 'cuentasxpagar/getFacturas?filter=' + JSON.stringify(filter)).success(function(response){
 
             console.log(response);
 
@@ -92,16 +90,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
     $scope.showModalListCobro = function (item) {
 
-        console.log(item);
-
         $scope.item_select = item;
-
-        if (item.fecharegistroventa !== undefined) {
-            $scope.fecha_i = item.fecharegistroventa;
-        } else {
-            $scope.fecha_i = item.fechacobro;
-        }
-
 
         if (item.valortotalventa !== undefined) {
             if (item.valortotalventa !== item.valorcobrado) {
@@ -156,16 +145,8 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $('.datepicker').datetimepicker({
             locale: 'es',
-            format: 'YYYY-MM-DD',
-            //format: 'DD/MM/YYYY',
-            minDate: $scope.fecha_i
+            format: 'DD/MM/YYYY'
         });
-
-        console.log($scope.fecha_i);
-
-        $('#fecharegistro').val($scope.fecha_i);
-
-        $scope.fecharegistro = $scope.fecha_i;
 
         $scope.getFormaPago();
 
