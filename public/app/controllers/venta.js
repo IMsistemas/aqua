@@ -26,6 +26,7 @@ $scope.Validabodegaprodct="0";
 $scope.ValidacionCueContExt="0";
 
 $scope.cmb_estado_fact="A";
+
     $scope.verifySuministroFactura = function () {
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
             console.log(response);
