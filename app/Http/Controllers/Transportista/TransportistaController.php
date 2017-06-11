@@ -76,7 +76,6 @@ class TransportistaController extends Controller
         return Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')->get();
     }
 
-
     private function searchExist($numidentific)
     {
         $count = Transportista::join('persona', 'transportista.idpersona', '=', 'persona.idpersona')
@@ -84,10 +83,6 @@ class TransportistaController extends Controller
 
         return ($count == 1) ? true : false;
     }
-
-
-
-
 
     /**
      * Store a newly created resource in storage.

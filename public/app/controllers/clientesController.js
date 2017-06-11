@@ -298,7 +298,14 @@
                     }
                     else {
                         $('#modalAddCliente').modal('hide');
-                        $scope.message_error = 'Ha ocurrido un error..';
+
+                        if (response.type_error_exists !== undefined) {
+                            $scope.message_error = 'Ya existe un cliente insertado con el mismo Número de Identificación';
+                        } else {
+                            $('#modalAction').modal('hide');
+                            $scope.message_error = 'Ha ocurrido un error..';
+                        }
+
                         $('#modalMessageError').modal('show');
                     }
                 });
