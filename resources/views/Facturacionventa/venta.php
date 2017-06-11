@@ -232,13 +232,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Nro Autorización: </span>
                                     <input type="text" class="form-control" name="NoAutorizacion" id="NoAutorizacion" ng-keypress="onlyNumber($event, 49, 'NoAutorizacion')" ng-model="NoAutorizacion" required="true" />
                                 </div>
                                 <span class="help-block error" ng-show="formventa.NoAutorizacion.$invalid && formventa.NoAutorizacion.$touched">Es requerido el Nro Autorización</span>
-                            </div>
+                            </div>-->
 
 
                             <div class="col-xs-12" style="margin-top: 5px;">
