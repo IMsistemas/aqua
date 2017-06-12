@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Cuentas;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
+use App\Modelos\Contabilidad\Cont_CuentasPorPagar;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\Contabilidad\Cont_RegistroProveedor;
+use App\Modelos\Proveedores\Proveedor;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,6 +35,31 @@ class CuentasPorPagarController extends Controller
                             ->get();
     }
 
+    public function getCobros($id)
+    {
+        return Cont_CuentasPorPagar::join('cont_formapago', 'cont_formapago.idformapago', '=', 'cont_cuentasporpagar.idformapago')
+                                        ->where('iddocumentocompra', $id)->get();
+    }
+
+
+    /**
+     * Obtener la informacion de un proveedor en especifico
+     *
+     * @param $idcliente
+     * @return mixed
+     */
+    public function getInfoClienteByID($idcliente)
+    {
+
+        return Proveedor::join("persona","persona.idpersona","=","proveedor.idpersona")
+                            ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "proveedor.idtipoimpuestoiva")
+                            ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","proveedor.idplancuenta")
+                            ->whereRaw("proveedor.idproveedor = ".$idcliente)
+                            ->limit(1)
+                            ->get();
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +78,48 @@ class CuentasPorPagarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+        $filtro = json_decode($request->input('contabilidad'));
+
+        //--Parte contable
+        $id_transaccion = CoreContabilidad::SaveAsientoContable( $filtro->DataContabilidad);
+        //--Fin parte contable
+
+        $registrocliente = [
+            'idproveedor' => $request->input('idproveedor'),
+            'idtransaccion' => $id_transaccion,
+            'fecha' => date('Y-m-d'),
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente
+            'haber' => 0,
+            'numerodocumento' => "",
+            'estadoanulado' => false
+        ];
+
+        $aux_registrocliente  = Cont_RegistroProveedor::create($registrocliente);
+
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+        $cuenta = new Cont_CuentasPorPagar();
+
+        $cuenta->nocomprobante = $request->input('nocomprobante');
+        $cuenta->idformapago = $request->input('idformapago');
+        $cuenta->valorpagado = $request->input('pagado');
+        $cuenta->fecharegistro = $request->input('fecharegistro');
+        $cuenta->idplancuenta = $request->input('cuenta');
+        $cuenta->idtransaccion = $id_transaccion;
+
+        $cuenta->iddocumentocompra = $request->input('iddocumentocompra');
+
+        if ($cuenta->save()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
     /**

@@ -54,27 +54,22 @@
 
                         <td>{{$index + 1}}</td>
 
-                        <td class="text-center" ng-if="item.fecharegistroventa != undefined">{{item.fecharegistroventa}}</td>
-                        <td class="text-center" ng-if="item.fechacobro != undefined">{{item.fechacobro}}</td>
+                        <td class="text-center">{{item.fecharegistrocompra}}</td>
 
                         <td>{{item.razonsocial}}</td>
 
 
-                        <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
-                        <td class="text-center" ng-if="item.idcobroservicio != undefined">Solicitud Servicio</td>
-                        <td class="text-center" ng-if="item.idcobroagua != undefined">Toma Lectura</td>
+                        <td class="text-center">{{item.numdocumentocompra}}</td>
 
-                        <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
-                        <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
+                        <td class="text-right">$ {{item.valortotalcompra }}</td>
 
                         <td class="text-right">$ {{item.valorcobrado}}</td>
 
-                        <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
-                        <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
+                        <td class="text-right">$ {{(item.valortotalcompra - item.valorcobrado).toFixed(2)}}</td>
 
                         <td class="text-right">
                             <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
-                               Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
+                               Pagos <span class="glyphicon glyphicon-usd" aria-hidden="true">
                             </button>
                         </td>
 
@@ -90,14 +85,14 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Listado de Cobros x Factura </h4>
+                    <h4 class="modal-title">Listado de Pagos x Factura de Compra</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
 
                         <div class="col-xs-12 text-right">
                             <button type="button" id="btn-cobrar" class="btn btn-primary" ng-click="showModalFormaCobro()">
-                                Cobrar <span class="glyphicon glyphicon-usd" aria-hidden="true">
+                                Pagar <span class="glyphicon glyphicon-usd" aria-hidden="true">
                             </button>
                         </div>
 
@@ -143,7 +138,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-info">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Forma de Cobro </h4>
+                    <h4 class="modal-title">Forma de Pago </h4>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -157,7 +152,7 @@
 
                             <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group date">
-                                    <span class="input-group-addon">Fecha Cobro: </span>
+                                    <span class="input-group-addon">Fecha Pago: </span>
                                     <input type="text" class="datepicker form-control" id="fecharegistro" ng-model="fecharegistro" >
                                 </div>
                             </div>
@@ -175,14 +170,14 @@
 
                             <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
-                                    <span class="input-group-addon">A Cobrar: </span>
+                                    <span class="input-group-addon">A Pagar: </span>
                                     <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Cobrado: </span>
+                                    <span class="input-group-addon">Pagado: </span>
                                     <input type="text" class="form-control" id="valorrecibido" ng-model="valorrecibido" >
                                 </div>
                             </div>

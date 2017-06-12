@@ -33,22 +33,20 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
             $scope.list = response;
 
-
-
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
 
-                if (response[i].total == null && response[i].total != undefined ) {
+                if (response[i].total === null && response[i].total !== undefined ) {
                     response[i].total = 0;
                 }
 
-                var longitud_cobros = response[i].cont_cuentasporcobrar.length;
+                var longitud_cobros = response[i].cont_cuentasporpagar.length;
 
                 var suma = 0;
 
                 for (var j = 0; j < longitud_cobros; j++) {
-                    suma += parseFloat(response[i].cont_cuentasporcobrar[j].valorpagado);
+                    suma += parseFloat(response[i].cont_cuentasporpagar[j].valorpagado);
                 }
 
                 var complete_name = {
@@ -58,7 +56,6 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
-
 
             }
 
@@ -92,8 +89,8 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
         $scope.item_select = item;
 
-        if (item.valortotalventa !== undefined) {
-            if (item.valortotalventa !== item.valorcobrado) {
+        if (item.valortotalcompra !== undefined) {
+            if (item.valortotalcompra !== item.valorcobrado) {
                 $('#btn-cobrar').prop('disabled', false);
             } else {
                 $('#btn-cobrar').prop('disabled', true);
@@ -106,34 +103,14 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             }
         }
 
-        $scope.infoCliente(item.idcliente);
+        $scope.infoCliente(item.idproveedor);
 
-        if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {
-            $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
-
-                $scope.listcobro = response;
-
-                $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
-
-                $('#listCobros').modal('show');
-
-            });
-        } else if (item.idcobroservicio !== undefined) {
-            $http.get(API_URL + 'cuentasxcobrar/getCobrosServices/' + item.idcobroservicio).success(function(response){
+        if (item.iddocumentocompra !== undefined && item.iddocumentocompra !== null) {
+            $http.get(API_URL + 'cuentasxpagar/getCobros/' + item.iddocumentocompra).success(function(response){
 
                 $scope.listcobro = response;
 
-                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
-
-                $('#listCobros').modal('show');
-
-            });
-        } else {
-            $http.get(API_URL + 'cuentasxcobrar/getCobrosLecturas/' + item.idcobroagua).success(function(response){
-
-                $scope.listcobro = response;
-
-                $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+                $scope.valorpendiente = (item.valortotalcompra - item.valorcobrado).toFixed(2);
 
                 $('#listCobros').modal('show');
 
@@ -180,7 +157,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
      */
 
     $scope.infoCliente = function (idcliente) {
-        $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ idcliente).success(function(response){
+        $http.get(API_URL + 'cuentasxpagar/getInfoClienteByID/'+ idcliente).success(function(response){
 
             $scope.Cliente = response[0];
             console.log($scope.Cliente);
@@ -190,19 +167,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
     $scope.saveCobro = function () {
 
-        var id = 0;
-        var type = '';
-
-        var descripcion = '';
-
-        if ($scope.item_select.iddocumentoventa !== undefined) {
-            descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
-        } else if ($scope.item_select.idcobroservicio !== undefined) {
-            descripcion = 'Cuentas x Cobrar Solicitud Servicio';
-        } else {
-            descripcion = 'Cuentas x Cobrar Toma Lectura';
-        }
-
+        var descripcion = 'Cuentas x Pagar Factura de Compra';
 
         /*
          * --------------------------------- CONTABILIDAD --------------------------------------------------------------
@@ -210,14 +175,14 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
         var Transaccion = {
             fecha: $('#fecharegistro').val(),
-            idtipotransaccion: 4,
+            idtipotransaccion: 5,
             numcomprobante: 1,
             descripcion: descripcion
         };
 
         var RegistroC = [];
 
-        var cliente = {
+        var proveedor = {
             idplancuenta: $scope.Cliente.idplancuenta,
             concepto: $scope.Cliente.concepto,
             controlhaber: $scope.Cliente.controlhaber,
@@ -227,7 +192,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             Descipcion: ''
         };
 
-        RegistroC.push(cliente);
+        RegistroC.push(proveedor);
 
         var cobro = {
             idplancuenta: $scope.select_cuenta.idplancuenta,
@@ -254,29 +219,16 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.iddocumentoventa !== undefined && $scope.item_select.iddocumentoventa !== null) {
-            id = $scope.item_select.iddocumentoventa;
-            type = 'venta';
-        } else if ($scope.item_select.idcobroservicio !== undefined) {
-            id = $scope.item_select.idcobroservicio;
-            type = 'servicio';
-        } else {
-            id = $scope.item_select.idcobroagua;
-            type = 'lectura';
-        }
-
-
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
             var data = {
-                idcliente: $scope.Cliente.idcliente,
+                idproveedor: $scope.Cliente.idproveedor,
                 nocomprobante: $scope.nocomprobante,
                 fecharegistro: $('#fecharegistro').val(),
                 idformapago: $scope.formapago,
-                cobrado: $scope.valorrecibido,
+                pagado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
-                iddocumentoventa: id,
-                type: type,
+                iddocumentocompra: $scope.item_select.iddocumentocompra,
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
 
@@ -284,7 +236,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
             console.log($scope.select_cuenta);
 
-            $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
+            $http.post(API_URL + 'cuentasxpagar', data ).success(function (response) {
 
                 $('#formCobros').modal('hide');
 
@@ -292,7 +244,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
                     $scope.initLoad();
                     $scope.showModalListCobro($scope.item_select);
 
-                    $scope.message = 'Se insertó correctamente el Cobro...';
+                    $scope.message = 'Se insertó correctamente el Pago...';
                     $('#modalMessage').modal('show');
                     //$scope.hideModalMessage();
                 }
@@ -304,7 +256,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
         } else {
 
-            $scope.message_error = 'El valor del Cobrado no puede ser superior al A Cobrar...';
+            $scope.message_error = 'El valor del Pagado no puede ser superior al A Pagar...';
             $('#modalMessageError').modal('show');
 
         }
