@@ -44,6 +44,8 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
     $scope.list_gasto=[];
     $scope.total_gasto=0.0;
 
+    $scope.list_balance_comprobacion=[];
+
     ///---generar reporte segun la opcion que seleecione 
     $scope.genera_report=function() {
         $scope.libro_mayor=[];
@@ -78,6 +80,11 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                 $scope.titulo_head_report="Balance General Desde: "+convertDatetoDB($("#txt_fechaI").val())+" Hasta: "+convertDatetoDB($("#txt_fechaF").val());
                 $scope.generar_balance_general();
             break;
+            case "6": // balance comprobacion 
+                $scope.aux_render="6";
+                $scope.titulo_head_report="Balance De Comprobacion ";
+                $scope.generar_balance_de_comprobacion();
+            break;
         };
     };
     ///--- Valida numero
@@ -88,6 +95,30 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             return  valor;
         }
     }
+    ///---  generar balance de comprobacion
+    $scope.aux_total_debe_balance=0;
+    $scope.aux_total_haber_balance=0;
+    $scope.aux_total_sdebe_balance=0;
+    $scope.aux_total_shaber_balance=0;
+    $scope.generar_balance_de_comprobacion=function() {
+        $scope.filtro_balance_de_comprobacion={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val()),
+            Estado: $scope.cmb_estado
+        };
+        $http.get(API_URL + 'Balance/balance_de_comprobacion/'+JSON.stringify($scope.filtro_balance_de_comprobacion))
+        .success(function(response){
+               console.log(response);
+               $scope.list_balance_comprobacion=response;
+               $scope.list_balance_comprobacion.forEach(function (item) {
+                   $scope.aux_total_debe_balance+=parseFloat(item.debe);
+                   $scope.aux_total_haber_balance+=parseFloat(item.haber);
+                   $scope.aux_total_sdebe_balance+=parseFloat(item.saldo_debe);
+                   $scope.aux_total_shaber_balance+=parseFloat(item.saldo_haber);
+               });
+            $("#procesarinfomracion").modal("hide");
+        });
+    };
     ///---proceso estado de resultados (ingresos costos gastos)
     $scope.generar_de_estado_resultados=function () {
         $scope.filtro_estado_resultados={
@@ -99,13 +130,17 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         .success(function(response){
                console.log(response);
                $scope.list_ingreso=response.Ingreso;
-               $scope.total_ingreso=$scope.list_ingreso[0].balance;
-
+               if($scope.list_ingreso[0]!=undefined || $scope.list_ingreso[0]!=null){
+                $scope.total_ingreso=$scope.list_ingreso[0].balance; 
+               }
                $scope.list_costo=response.Costo;
-               $scope.total_costo=$scope.list_costo[0].balance;
-               
+               if($scope.list_costo[0]!=undefined || $scope.list_costo[0]!=null){
+                $scope.total_costo=$scope.list_costo[0].balance;
+               }
                $scope.list_gasto=response.Gasto;
-               $scope.total_gasto=$scope.list_gasto[0].balance;
+               if($scope.list_gasto[0]!=undefined || $scope.list_gasto[0]!=null){
+                 $scope.total_gasto=$scope.list_gasto[0].balance;
+               }
             $("#procesarinfomracion").modal("hide");
         });
     };
@@ -120,13 +155,21 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         .success(function(response){
                console.log(response);
                $scope.list_activo=response.Activo;
-               $scope.total_activo=$scope.list_activo[0].balance;
+               if($scope.list_activo[0]!=undefined || $scope.list_activo[0]!= null ){
+                $scope.total_activo=$scope.list_activo[0].balance;
+               }
+               
 
                $scope.list_pasivo=response.Pasivo;
-               $scope.total_pasivo=$scope.list_pasivo[0].balance;
+               if($scope.list_pasivo[0]!=undefined || $scope.list_pasivo[0]!= null ){
+                $scope.total_pasivo=$scope.list_pasivo[0].balance;
+               }
+               
                
                $scope.list_patrimonio=response.Patrimonio;
-               $scope.total_patrimonio=$scope.list_patrimonio[0].balance;
+               if($scope.list_patrimonio[0]!=undefined || $scope.list_patrimonio[0]!= null ){
+                $scope.total_patrimonio=$scope.list_patrimonio[0].balance;
+               }
             $("#procesarinfomracion").modal("hide");
         });
     };
@@ -298,10 +341,24 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             case "5":
                 $scope.print_balance_reporte();
             break;
+            case "6":
+                $scope.print_balance_de_comprobacion();
+            break;
         };
     };
     ///---Fin imprimir reportes
-
+    ///--- print balance de comprobacion
+    $scope.print_balance_de_comprobacion=function() {
+        $scope.filtro_balance_de_comprobacion={
+            FechaI:convertDatetoDB($("#txt_fechaI").val()),
+            FechaF:convertDatetoDB($("#txt_fechaF").val()),
+            Estado: $scope.cmb_estado
+        };
+        var accion = API_URL + "Balance/balance_de_comprobacion_print/"+JSON.stringify($scope.filtro_balance_de_comprobacion);
+        $("#WPrint_head").html("Balance De Comprobación");
+        $("#WPrint").modal("show");
+        $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");
+    };
     ///---- prit balance 
     $scope.print_balance_reporte=function() {
         $scope.filtro_balance_general={

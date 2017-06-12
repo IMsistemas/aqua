@@ -1093,6 +1093,8 @@ Route::get('Balance/balance_general/{filtro}', 'Contabilidad\Balances@get_balanc
 Route::get('Balance/balance_general_print/{filtro}', 'Contabilidad\Balances@print_balace_general');
 Route::get('Balance/estado_de_resultados/{filtro}', 'Contabilidad\Balances@get_estado_de_resultados');
 Route::get('Balance/estado_de_resultados_print/{filtro}', 'Contabilidad\Balances@print_estado_de_resultados');
+Route::get('Balance/balance_de_comprobacion/{filtro}', 'Contabilidad\Balances@get_balance_de_comprobacion');
+Route::get('Balance/balance_de_comprobacion_print/{filtro}', 'Contabilidad\Balances@print_balance_de_comprobacion');
 //-------------------------------- Balances Contabilidad---------------/////////
 
 

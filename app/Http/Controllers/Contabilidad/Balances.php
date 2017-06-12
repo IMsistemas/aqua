@@ -298,6 +298,24 @@ class Balances extends Controller
         return $aux_numero_orden;
     }
     /**
+     * Consultar balance de comprobacion  por parametro de 2 fechas
+     * analiza el comportamiento de la contabilidad 
+     * 
+     */
+    public function get_balance_de_comprobacion($parametro)
+    {
+        $filtro = json_decode($parametro);
+        return Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."') aux_saldo")
+                                ->selectRaw("f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',1) debe")
+                                ->selectRaw("f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',2) haber")
+                                ->selectRaw("(CASE WHEN f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',1) > f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',2) THEN (CASE WHEN f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."')<0 THEN (f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."')*(-1)) ELSE f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."') END) ELSE 0 END) saldo_debe")
+                                ->selectRaw("(CASE WHEN f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',1) < f_saldo_debehaber_cuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."',2) THEN (CASE WHEN f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."')<0 THEN (f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."')*(-1)) ELSE f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."') END) ELSE 0 END) saldo_haber")
+                                ->whereRaw("f_saldocuentacontable(idplancuenta, '".$filtro->FechaI."', '".$filtro->FechaF."')<>0 ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+    }
+    /**
      * Consultar balance contable  por parametro de 2 fechas
      * analiza el comportamiento de la contabilidad 
      * 
@@ -601,6 +619,23 @@ class Balances extends Controller
         $estador =$this->get_estado_de_resultados($parametro);
         $today=date("Y-m-d H:i:s");
         $view =  \View::make('Estadosfinancieros.estado_de_resultados', compact('filtro','estador','today'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       // $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream("estado_resultados_".$today."");
+    }
+    /**
+     * Imprimir balance de comprobacion
+     * 
+     * 
+     */
+    public function print_balance_de_comprobacion($parametro)
+    {
+        ini_set('max_execution_time', 300);
+        $filtro = json_decode($parametro);
+        $comprobacion =$this->get_balance_de_comprobacion($parametro);
+        $today=date("Y-m-d H:i:s");
+        $view =  \View::make('Estadosfinancieros.balance_de_comprobacion', compact('filtro','comprobacion','today'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
