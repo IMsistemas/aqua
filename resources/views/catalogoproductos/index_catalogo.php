@@ -185,10 +185,10 @@
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Precio Venta: </span>
-                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
+                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
                                         </div>
-                                        <span class="help-block error"
-                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>
+                                        <!--<span class="help-block error"
+                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>-->
                                         <span class="help-block error"
                                                       ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$error.pattern">El Precio Venta debe ser solo numeros</span>
                                     </div>
@@ -232,7 +232,7 @@
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Cuenta Contable Ingreso: </span>
+                                            <span class="input-group-addon">Cuenta Contable: </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
                                                    ng-model="t_cuentacontableingreso" placeholder=""  readonly ng-required="true">
                                             <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
