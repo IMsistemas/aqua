@@ -128,7 +128,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
                                             <li><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
-                                            <li><a href="#">Cuentas por Pagar (Comprobante Egreso)</a></li>
+                                            <li><a href="#" ng-click="toModuloCuentasxPagar();">Cuentas por Pagar (Comprobante Egreso)</a></li>
                                             <li><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
                                     </li>
@@ -310,6 +310,7 @@
     <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/cuentasporPagarController.js') ?>"></script>
     <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cobroServicioController.js') ?>"></script>
 

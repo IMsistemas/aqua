@@ -1067,6 +1067,17 @@ Route::get('cuentasxcobrar/getCobros/{id}', 'Cuentas\CuentasPorCobrarController@
 Route::get('cuentasxcobrar/getFacturas', 'Cuentas\CuentasPorCobrarController@getFacturas');
 Route::resource('cuentasxcobrar', 'Cuentas\CuentasPorCobrarController');
 
+/*
+ * ------------------------------CUENTAS POR PAGAR----------------------------------------------------------------------
+ */
+
+Route::get('cuentasxpagar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorPagarController@getInfoClienteByID');
+Route::get('cuentasxpagar/getCobrosLecturas/{id}', 'Cuentas\CuentasPorPagarController@getCobrosLecturas');
+Route::get('cuentasxpagar/getCobrosServices/{id}', 'Cuentas\CuentasPorPagarController@getCobrosServices');
+Route::get('cuentasxpagar/getCobros/{id}', 'Cuentas\CuentasPorPagarController@getCobros');
+Route::get('cuentasxpagar/getFacturas', 'Cuentas\CuentasPorPagarController@getFacturas');
+Route::resource('cuentasxpagar', 'Cuentas\CuentasPorPagarController');
+
 //-------------------------------- Balances Contabilidad---------------/////////
 
 Route::resource('Balance', 'Contabilidad\Balances');

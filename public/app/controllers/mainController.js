@@ -132,6 +132,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.titulo = "Solicitudes";
         $scope.toModulo = "solicitud";
     }
+
     $scope.toModuloSolicitudEspera = function(){
         $scope.titulo = "Solicitudes";
         $scope.toModulo = "suministros/espera";
@@ -151,7 +152,6 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.titulo = "Cuentas por cobrar al cliente";
         $scope.toModulo = "cuentascobrarcliente";
     }
-
 
     $scope.toModuloProveedores = function(){
         $scope.titulo = "Proveedores";
@@ -261,6 +261,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
     $scope.toModuloCuentasxCobrar = function(){
         $scope.titulo = "Crear Transportistas";
         $scope.toModulo = "cuentasxcobrar";
+    }
+
+    $scope.toModuloCuentasxPagar = function(){
+        $scope.titulo = "Crear Transportistas";
+        $scope.toModulo = "cuentasxpagar";
     }
 
     $scope.toModuloActivosFijos = function(){
