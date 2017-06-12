@@ -303,6 +303,12 @@
 
             for(x=0;x<$scope.items.length;x++){
                 console.log($scope.items[x]);
+
+                if ($scope.items[x].precioU === undefined || $scope.items[x].precioU === '') {
+                    $scope.items[x].precioU = 0;
+                }
+
+
                 //if(parseInt($scope.items[x].iva)==0 ){
                     if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
                         if(parseFloat($scope.items[x].descuento)>0){

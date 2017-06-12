@@ -426,7 +426,7 @@
                             <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                         </td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
-                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-keypress="onlyNumber($event, undefined, undefined)" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
                         <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
                         <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>
