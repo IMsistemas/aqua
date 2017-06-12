@@ -468,7 +468,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon">Tipo de Pago: </span>
                                 <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
-                                        ng-options="value.id as value.label for value in listtipopago">
+                                        ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()">
                                 </select>
 
                             </div>

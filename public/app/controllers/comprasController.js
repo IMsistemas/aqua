@@ -1177,4 +1177,19 @@
             return yyyy + '-' + mm + '-' + dd;
 
         };
+
+        $scope.typeResident = function () {
+
+            $scope.paispago = '';
+
+            if ($scope.tipopago == '1') {
+
+                $('#paispago').prop('disabled', true);
+
+            } else {
+
+                $('#paispago').prop('disabled', false);
+
+            }
+        };
     });
