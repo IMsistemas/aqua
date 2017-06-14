@@ -11,6 +11,8 @@ use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroContable;
 use App\Modelos\Contabilidad\Cont_Transaccion;
 
+use App\Modelos\SRI\SRI_Establecimiento;
+
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 
 use Carbon\Carbon;
@@ -530,10 +532,11 @@ class Balances extends Controller
     {
     	ini_set('max_execution_time', 300);
     	$filtro = json_decode($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
     	$libro_diario=$this->get_libro_diario($parametro); 
         //$libro_diario=$this->get_libro_diario_vprint($parametro);
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.libro_diario', compact('filtro','libro_diario','today'))->render();
+        $view =  \View::make('Estadosfinancieros.libro_diario', compact('filtro','libro_diario','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->setPaper('A4', 'landscape');
@@ -549,8 +552,9 @@ class Balances extends Controller
     	ini_set('max_execution_time', 300);
     	$filtro = json_decode($parametro);
     	$libro_mayor=$this->get_libro_mayor($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.libro_mayor', compact('filtro','libro_mayor','today'))->render();
+        $view =  \View::make('Estadosfinancieros.libro_mayor', compact('filtro','libro_mayor','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->setPaper('A4', 'landscape');
@@ -583,8 +587,9 @@ class Balances extends Controller
         ini_set('max_execution_time', 300);
         $filtro = json_decode($parametro);
         $estado_patrimonio=$this->estado_cambio_patrimonio($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.cambios_patrimonio', compact('filtro','estado_patrimonio','today'))->render();
+        $view =  \View::make('Estadosfinancieros.cambios_patrimonio', compact('filtro','estado_patrimonio','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
@@ -600,8 +605,9 @@ class Balances extends Controller
         ini_set('max_execution_time', 300);
         $filtro = json_decode($parametro);
         $balance_general_contable =$this->get_balance_contable($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.balance_general', compact('filtro','balance_general_contable','today'))->render();
+        $view =  \View::make('Estadosfinancieros.balance_general', compact('filtro','balance_general_contable','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
@@ -617,8 +623,9 @@ class Balances extends Controller
         ini_set('max_execution_time', 300);
         $filtro = json_decode($parametro);
         $estador =$this->get_estado_de_resultados($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.estado_de_resultados', compact('filtro','estador','today'))->render();
+        $view =  \View::make('Estadosfinancieros.estado_de_resultados', compact('filtro','estador','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');
@@ -633,9 +640,10 @@ class Balances extends Controller
     {
         ini_set('max_execution_time', 300);
         $filtro = json_decode($parametro);
+        $aux_empresa =SRI_Establecimiento::all();
         $comprobacion =$this->get_balance_de_comprobacion($parametro);
         $today=date("Y-m-d H:i:s");
-        $view =  \View::make('Estadosfinancieros.balance_de_comprobacion', compact('filtro','comprobacion','today'))->render();
+        $view =  \View::make('Estadosfinancieros.balance_de_comprobacion', compact('filtro','comprobacion','today','aux_empresa'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
        // $pdf->setPaper('A4', 'landscape');

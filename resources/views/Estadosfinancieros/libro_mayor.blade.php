@@ -126,7 +126,7 @@
 </head>
 <body>
 	<div class="col-xs-12 text-center">
-		<h3><strong>Libro Mayor:  <?= $filtro->Cuenta->concepto ?>  </strong></h3>
+		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Libro Mayor:  <?= $filtro->Cuenta->concepto ?>  </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>En El Periodo Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>

@@ -126,7 +126,7 @@
 </head>
 <body>
  	<div class="col-xs-12 text-center">
-		<h3><strong>Estado De Resultados </strong></h3>
+		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Estado De Resultados </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>Desde : <?= $filtro->FechaI ?> Hasta : <?= $filtro->FechaF ?> </strong></h4>
