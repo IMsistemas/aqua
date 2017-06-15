@@ -208,6 +208,16 @@
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
+                                    <span class="input-group-addon">Agente Venta: </span>
+                                    <select class="form-control" id="AgenteVenta" ng-change="DataNoDocumento();" ng-model="AgenteVenta">
+                                        <option value="">-- Seleccione --</option>
+                                        <option ng-repeat=" p in PuntoVenta"  value="{{p.idpuntoventa}}">{{p.lastnamepersona+' '+p.namepersona}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
                                     <span class="input-group-addon">Nro. Documento: </span>
                                     <span class="input-group-btn" style="width: 15%;">
                         <input type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" required="true" />
@@ -241,15 +251,7 @@
                             </div>-->
 
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Agente Venta: </span>
-                                    <select class="form-control" id="AgenteVenta" ng-change="DataNoDocumento();" ng-model="AgenteVenta">
-                                        <option value="">-- Seleccione --</option>
-                                        <option ng-repeat=" p in PuntoVenta"  value="{{p.idpuntoventa}}">{{p.lastnamepersona+' '+p.namepersona}}</option>
-                                    </select>
-                                </div>
-                            </div>
+
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">

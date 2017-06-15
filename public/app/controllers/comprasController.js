@@ -459,6 +459,8 @@
 
         $scope.save = function(){
 
+            $('#btn-save').prop('disabled', true);
+
             var Transaccion={
                 fecha:$("#fechaemisioncompra").val(),
                 idtipotransaccion: 7,
@@ -789,7 +791,6 @@
         };
 
         $scope.viewInfoCompra = function (idcompra) {
-
 
             $scope.activeForm(0);
 
