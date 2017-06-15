@@ -274,7 +274,12 @@ class Plandecuetas extends Controller
      */
     public function DatosAsientoContable($id)
     {
-        return Cont_Transaccion::with("cont_registrocontable.cont_plancuentas")
+        /*return Cont_Transaccion::with("cont_registrocontable.cont_plancuentas")
+                                ->whereRaw("cont_transaccion.idtransaccion=".$id."")
+                                ->get();*/
+        return Cont_Transaccion::with(["cont_registrocontable.cont_plancuentas","cont_registrocontable"=>function($query){
+                                    $query->orderBy("debe","DESC");
+                                }])
                                 ->whereRaw("cont_transaccion.idtransaccion=".$id."")
                                 ->get();
     }
