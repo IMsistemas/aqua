@@ -29,6 +29,11 @@ class Cont_DocumentoCompra extends Model
         return $this->belongsTo('App\Modelos\SRI\SRI_ComprobanteRetencion',"idcomprobanteretencion");
     }
 
+    public function sri_retencioncompra()
+    {
+        return $this->hasMany('App\Modelos\SRI\SRI_RetencionCompra','iddocumentocompra');
+    }
+
     public function proveedor()
     {
         return $this->belongsTo('App\Modelos\Proveedores\Proveedor',"idproveedor");

@@ -12,6 +12,7 @@ use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
 use App\Modelos\Retencion\RetencionCompra;
 use App\Modelos\Retencion\RetencionFuenteCompra;
+use App\Modelos\SRI\SRI_ComprobanteRetencion;
 use App\Modelos\SRI\SRI_DetalleImpuestoRetencion;
 use App\Modelos\SRI\SRI_RetencionCompra;
 use App\Modelos\SRI\SRI_RetencionDetalleCompra;
@@ -69,6 +70,12 @@ class RetencionCompraController extends Controller
         $retencion = SRI_RetencionCompra::with('cont_documentocompra.sri_comprobanteretencion',
                                     'cont_documentocompra.proveedor.persona', 'sri_retenciondetallecompra')
                         ->orderBy('idretencioncompra', 'desc')->paginate(10);
+
+
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra')
+            ->orderBy('fechaemisioncomprob', 'desc')
+            ->paginate(8);
 
         return $retencion;
 
@@ -220,7 +227,15 @@ class RetencionCompraController extends Controller
      */
     public function show($id)
     {
-        return RetencionCompra::join('documentocompra', 'documentocompra.codigocompra', '=', 'retencioncompra.codigocompra')
+
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra.sri_detalleimpuestoretencion')
+            ->orderBy('fechaemisioncomprob', 'desc')
+            ->where('sri_comprobanteretencion.idcomprobanteretencion', $id)->get();
+
+        return $retencion;
+
+        /*return RetencionCompra::join('documentocompra', 'documentocompra.codigocompra', '=', 'retencioncompra.codigocompra')
                                 ->join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
                                 ->join('sector', 'proveedor.idsector', '=', 'sector.idsector')
                                 ->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
@@ -228,7 +243,7 @@ class RetencionCompraController extends Controller
                                 ->select('documentocompra.*', 'tipocomprobante.nombretipocomprobante', 'retencioncompra.numeroretencion',
                                             'retencioncompra.fecha AS fecharetencion', 'retencioncompra.autorizacion', 'retencioncompra.totalretencion',
                                             'retencioncompra.numerodocumentoproveedor AS serialretencion', 'ciudad.nombreciudad','proveedor.*')
-                                ->where('idretencioncompra', $id)->get();
+                                ->where('idretencioncompra', $id)->get();*/
 
     }
 
