@@ -611,8 +611,11 @@
         };
 
         $scope.showModalConfirmAnular = function(item){
-            $scope.idretencion = item.idretencioncompra;
-            $scope.numseriecompra = item.cont_documentocompra.sri_comprobanteretencion.nocomprobante;
+
+            console.log(item);
+
+            $scope.idretencion = item.cont_documentocompra[0].sri_retencioncompra[0].idretencioncompra;
+            $scope.numseriecompra = item.nocomprobante;
             $('#modalConfirmAnular').modal('show');
         };
 

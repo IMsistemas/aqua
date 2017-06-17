@@ -60,10 +60,10 @@
                         </select>
                     </div>
                     <div class="col-sm-1 col-xs-12">
-                        <button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
+                        <!--<button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
                                 data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Compra">
                             <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
-                        </button>
+                        </button>-->
                     </div>
                 </div>
 
@@ -124,17 +124,17 @@
 
                             -->
 
-
                             <td class="text-center">{{item.fechaemisioncomprob | formatDate}}</td>
                             <td style="font-weight: bold;">{{item.cont_documentocompra[0].proveedor.persona.razonsocial}}</td>
                             <td class="text-center">{{item.nocomprobante}}</td>
                             <td class="text-right">$ {{item.total_retenido}}</td>
-                            <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
+                            <td class="text-right">{{(item.cont_documentocompra[0].sri_retencioncompra[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
                                     <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm" ng-click="showModalConfirmAnular(item)" ng-disabled="item.estadoanulado==1">
+
+                                <button type="button" class="btn btn-default btn-sm" ng-click="showModalConfirmAnular(item)" ng-disabled="item.cont_documentocompra[0].sri_retencioncompra[0].estadoanulado==true">
                                     <i class="fa fa-lg fa-ban" aria-hidden="true"></i>
                                 </button>
                             </td>
