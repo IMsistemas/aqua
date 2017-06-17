@@ -282,6 +282,8 @@
 
             };
 
+            console.log(data);
+
             $('#btn-saveCliente').prop('disabled', true);
 
             if ($scope.idcliente == 0) {
@@ -290,13 +292,12 @@
                     console.log(response);
 
                     $('#btn-saveCliente').prop('disabled', false);
-
-                    debugger;
+                    $('#modalAction').modal('hide');
 
                     if (response.success === true) {
                         $scope.initLoad(1);
                         $scope.message = 'Se guardó correctamente la información del Cliente...';
-                        $('#modalAddCliente').modal('hide');
+                        //$('#modalAddCliente').modal('hide');
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
                     }
@@ -304,10 +305,9 @@
 
                         $('#modalAddCliente').modal('hide');
 
-                        if (response.type_error_exists === true) {
+                        if (response.type_error_exists == true) {
                             $scope.message_error = 'Ya existe un cliente insertado con el mismo Número de Identificación';
                         } else {
-                            $('#modalAction').modal('hide');
                             $scope.message_error = 'Ha ocurrido un error..';
                         }
 
