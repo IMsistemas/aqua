@@ -229,7 +229,7 @@ class RetencionCompraController extends Controller
     {
 
         $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
-            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra.sri_detalleimpuestoretencion')
+            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.proveedor.cont_plancuenta', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra.sri_detalleimpuestoretencion.sri_tipoimpuestoretencion')
             ->orderBy('fechaemisioncomprob', 'desc')
             ->where('sri_comprobanteretencion.idcomprobanteretencion', $id)->get();
 

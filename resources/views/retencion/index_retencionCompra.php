@@ -445,7 +445,7 @@
                                             data-toggle="tooltip" data-placement="bottom" title="Anular la Retención de la Compra">
                                         Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                     </button>
-                                    <button type="button" class="btn btn-success" style="float: right;" ng-click="save()" ng-disabled="formRteCompras.$invalid"
+                                    <button type="button" class="btn btn-success" id="btn_save" style="float: right;" ng-click="save()" ng-disabled="formRteCompras.$invalid"
                                             data-toggle="tooltip" data-placement="left" title="Guardar la Retención de la Compra" >
                                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                                     </button>

@@ -159,11 +159,17 @@
 
         $scope.loadFormPage = function(id){
 
+            $scope.getConfigContabilidad();
+
             $scope.idretencion = id;
 
             $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
 
                 console.log(response);
+
+                $scope.ProveedorContable = response[0].cont_documentocompra[0].proveedor.cont_plancuenta;
+
+                $scope.iddocumentocompra = response[0].cont_documentocompra[0].iddocumentocompra;
 
                 $scope.t_fechaingreso = $scope.convertDatetoDB(response[0].fechaemisioncomprob, true);
                 //$scope.t_nroretencion = (response[0].numeroretencion).trim();
@@ -187,12 +193,12 @@
 
                 $scope.t_nroautorizacion = response[0].noauthcomprobante;
 
-                $('#btn-createrow').prop('disabled', false);
-
                 $scope.baseimponible = response[0].cont_documentocompra[0].subtotalsinimpuestocompra;
                 $scope.baseimponibleIVA = response[0].cont_documentocompra[0].ivacompra;
 
                 var longitud_r = response[0].cont_documentocompra[0].sri_retencioncompra.length;
+
+                $scope.itemretencion = [];
 
                 if (longitud_r > 0) {
 
@@ -205,6 +211,7 @@
                         var object_row = {
                             year: (response[0].fechaemisioncomprob).split('-')[0],
                             codigo: item.sri_detalleimpuestoretencion.codigosri,
+                            tipo: item.sri_detalleimpuestoretencion.sri_tipoimpuestoretencion.nametipoimpuestoretencion,
                             detalle: item.sri_detalleimpuestoretencion.namedetalleimpuestoretencion,
                             id: item.iddetalleimpuestoretencion,
                             baseimponible: '0.00',
@@ -223,10 +230,19 @@
 
                     }
 
-                    $scope.recalculateTotal();
+
                     $('#btn-export').show();
 
+                    $('#btn_save').prop('disabled', true);
+
+                    $('#btn-createrow').prop('disabled', true);
+
+                } else {
+                    $('#btn-createrow').prop('disabled', false);
+                    $('#btn_save').prop('disabled', false);
                 }
+
+                $scope.recalculateTotal();
 
                 $scope.active = '1';
 
@@ -424,6 +440,8 @@
 
         $scope.save = function () {
 
+            $('#btn_save').prop('disabled', true);
+
             $scope.t_establ = $('#t_establ').val();
             $scope.t_pto = $('#t_pto').val();
             $scope.t_secuencial = $('#t_secuencial').val();
@@ -463,7 +481,7 @@
 
                 var item = null;
 
-                if ($scope.itemretencion[i].tipo == 'RENTA') {
+                if ($scope.itemretencion[i].tipo === 'RENTA') {
 
                     item = {
                         idplancuenta: $scope.ConfiguracionContableRetenRENTA.idplancuenta,
@@ -477,7 +495,7 @@
 
                     registroC.push(item);
 
-                } else if ($scope.itemretencion[i].tipo == 'IVA') {
+                } else if ($scope.itemretencion[i].tipo === 'IVA') {
 
                     item = {
                         idplancuenta: $scope.ConfiguracionContableRetenIVA.idplancuenta,
@@ -519,9 +537,29 @@
 
             console.log(data_full);
 
+
+
             var url = API_URL + 'retencionCompras';
 
-            if ($scope.idretencion == 0) {
+            $http.post(url, data_full).success(function (response) {
+                if (response.success == true) {
+                    $scope.idretencion = response.idretencioncompra;
+                    //$('#btn-export').show();
+                    $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+
+                    $('#btn-createrow').prop('disabled', true);
+
+
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al intentar guardar las Retenciones...';
+                    $('#modalMessageError').modal('show');
+                }
+            }).error(function (res) {});
+
+
+            /*if ($scope.idretencion == 0) {
                 $http.post(url, data_full).success(function (response) {
                     if (response.success == true) {
                         $scope.idretencion = response.idretencioncompra;
@@ -535,7 +573,7 @@
                     }
                 }).error(function (res) {});
             } else {
-                $http.put(url + '/' + $scope.idretencion, data).success(function (response) {
+                $http.put(url + '/' + $scope.idretencion, data_full).success(function (response) {
                     if (response.success == true) {
                         $scope.message = 'Se actualizó correctamente las Retenciones seleccionadas...';
                         $('#modalMessage').modal('show');
@@ -545,7 +583,7 @@
                         $('#modalMessageError').modal('show');
                     }
                 }).error(function (res) {});
-            }
+            }*/
         };
 
         $scope.anularRetencion = function(){
