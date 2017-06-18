@@ -7,6 +7,7 @@
 
         <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 
@@ -91,7 +92,7 @@
 
                             <div class="input-group">
                                 <span class="input-group-addon">Lectura: </span>
-                                <input type="number" class="form-control" name="t_lectura" id="t_lectura"
+                                <input type="number" class="form-control" name="t_lectura" id="t_lectura" min="1"
                                        ng-model="t_lectura" onkeypress="return isOnlyNumberPto(this, event);" ng-required="true" />
                             </div>
                             <span class="help-block error"

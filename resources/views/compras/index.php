@@ -415,7 +415,8 @@
                                                   disable-input="impreso"
                                                   text-searching="Buscando Producto"
                                                   text-no-results="Producto no encontrado"
-                                                  initial-value="item.producto"; />
+                                                  initial-value="item.producto";
+                                />
                             </div>
                             <span class="help-block error" ng-show="formventa.codigoproducto{{$index}}.$invalid && formventa.codigoproducto{{$index}}.$touched">El producto es requerido.</span>
                         </td>
