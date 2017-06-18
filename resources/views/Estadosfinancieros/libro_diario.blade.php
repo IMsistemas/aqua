@@ -128,7 +128,10 @@
 </head>
 <body>
     <div class="col-xs-12 text-center">
-        <h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Libro Diario </strong></h3>
+        <h3><strong><?= $aux_empresa[0]->nombrecomercial ?> </strong></h3>
+    </div>
+    <div class="col-xs-12 text-center">
+        <h3><strong> Libro Diario </strong></h3>
     </div>
     <div class="col-xs-12 text-center">
         <h4><strong>En El Periodo Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>
@@ -170,6 +173,7 @@
                 return $aux_numero_orden;
             }
             $aux_debe=0; $aux_haber=0;
+            $total_aux_debe=0; $total_aux_haber=0;
             foreach ($libro_diario as $libro) {
                 echo "<table class='table table-bordered'>";
                 echo "<thead>";
@@ -194,8 +198,8 @@
                         echo "<td>".orden_plan_cuenta($reg["cont_plancuentas"]["jerarquia"])."</td>";
                         echo "<td>".$reg["cont_plancuentas"]["concepto"]."</td>";
                         echo "<td>".$reg["descripcion"]."</td>";
-                        echo "<td>".$reg["debe_c"]."</td>";
-                        echo "<td>".$reg["haber_c"]."</td>";
+                        echo "<td>"."$ ".number_format($reg["debe_c"],4,'.',',')."</td>";
+                        echo "<td>"."$ ".number_format($reg["haber_c"],4,'.',',')."</td>";
                         if($reg["estadoanulado"]==true){
                          echo "<td class='bg-success'>Activo</td>";
                         }
@@ -205,13 +209,16 @@
                         echo "</tr>";
                         $aux_debe+=$reg["debe_c"]; 
                         $aux_haber+=$reg["haber_c"];
+
+                        $total_aux_debe+=$reg["debe_c"]; 
+                        $total_aux_haber+=$reg["haber_c"];
                         echo "</tbody>";
                     }
                     echo "<tfoot>";
                     echo "<tr>";
                     echo "<th class='text-left' colspan='3'>".$libro->descripcion."</th>";
-                    echo "<th>".$aux_debe."</th>";
-                    echo "<th>".$aux_haber."</th>";
+                    echo "<th>"."$ ".number_format($aux_debe,4,'.',',')."</th>";
+                    echo "<th>"."$ ".number_format($aux_haber,4,'.',',')."</th>";
                     echo "<th></th>";
                     echo "</tr>";
                     echo "<tfoot>";
@@ -219,6 +226,18 @@
             }
         ?>
         
+    </div>
+    <div class="col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-right">Total Debe</th>
+                    <th><?= "$ ".number_format($total_aux_debe,4,'.',',') ?></th>
+                    <th><?= "$ ".number_format($total_aux_haber,4,'.',',') ?></th>
+                    <th class="text-left">Total Haber</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </body>
 </html>

@@ -60,7 +60,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                 $scope.aux_render="1";
                 $scope.estado_cambio_patrimonio();
             break;
-            case "2": ///Estados Situacion Finaciera
+            case "2": ///Estados Situación Financiera
                 $scope.aux_render="2";
                 //$scope.generar_estado_resultados();
                 $scope.generar_de_estado_resultados();
@@ -77,7 +77,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             break;
             case "5": // balance general 
                 $scope.aux_render="5";
-                $scope.titulo_head_report="Balance General Desde: "+convertDatetoDB($("#txt_fechaI").val())+" Hasta: "+convertDatetoDB($("#txt_fechaF").val());
+                $scope.titulo_head_report="Estados Situación Financiera Desde: "+convertDatetoDB($("#txt_fechaI").val())+" Hasta: "+convertDatetoDB($("#txt_fechaF").val());
                 $scope.generar_balance_general();
             break;
             case "6": // balance comprobacion 
@@ -145,7 +145,9 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         });
     };
     ///---proceso balance general
+    $scope.aux_formula_patrimonial=0;
     $scope.generar_balance_general=function () {
+        $scope.aux_formula_patrimonial=0;
         $scope.filtro_balance_general={
             FechaI:convertDatetoDB($("#txt_fechaI").val()),
             FechaF:convertDatetoDB($("#txt_fechaF").val()),
@@ -170,6 +172,8 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                if($scope.list_patrimonio[0]!=undefined || $scope.list_patrimonio[0]!= null ){
                 $scope.total_patrimonio=$scope.list_patrimonio[0].balance;
                }
+               $scope.aux_formula_patrimonial=parseFloat($scope.total_pasivo) + parseFloat($scope.total_patrimonio);
+               $scope.aux_formula_patrimonial=$scope.aux_formula_patrimonial.toFixed(4);
             $("#procesarinfomracion").modal("hide");
         });
     };
@@ -197,6 +201,10 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                     total_haber+=parseFloat(reg.haber_c);
                     estado=reg.estadoanulado;
                 });
+
+                $scope.aux_tot_libroD_debe+= parseFloat(total_debe);
+                $scope.aux_tot_libroD_haber+=parseFloat(total_haber);
+
                 var aux_total_debe={
                     debe_c:total_debe.toFixed(4),
                     haber_c:total_haber.toFixed(4),
@@ -210,9 +218,9 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
            /* $scope.libro_diario.forEach(function(item){
                 $scope.aux_tot_libroD_debe+= parseFloat(item.debe_c);
                 $scope.aux_tot_libroD_haber+=parseFloat(item.haber_c);
-            });
+            });*/
             $scope.aux_tot_libroD_debe=$scope.aux_tot_libroD_debe.toFixed(4);
-            $scope.aux_tot_libroD_haber=$scope.aux_tot_libroD_haber.toFixed(4);*/
+            $scope.aux_tot_libroD_haber=$scope.aux_tot_libroD_haber.toFixed(4);
             $("#procesarinfomracion").modal("hide");
         });
     };
@@ -322,7 +330,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             case "1": ///Estados Cambios Patrimonio
                 $scope.print_estado_cambios_patrimonio();
             break;
-            case "2": ///Estados Situacion Finaciera
+            case "2": ///Estados Situación Financiera
                 $scope.print_estado_finaciero();
             break;
             case "3": ///Libro Diario
@@ -367,7 +375,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             Estado: $scope.cmb_estado
         };
         var accion = API_URL + "Balance/balance_general_print/"+JSON.stringify($scope.filtro_balance_general);
-        $("#WPrint_head").html("Balance General");
+        $("#WPrint_head").html("Estados Situación Financiera");
         $("#WPrint").modal("show");
         $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");
     };
@@ -425,6 +433,21 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         $("#WPrint_head").html("Estado De Cambios En El Patrimonio");
         $("#WPrint").modal("show");
         $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>");  
+    };
+    ///---
+    $scope.formato_dinero=function(amount, signo){
+        if(amount==""){
+            return "";
+        }
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(4);
+        var amount_parts = amount.split('.'),
+            regexp = /(\d+)(\d{3})/;
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+        return signo+" "+amount_parts.join('.')
     };
 });
 

@@ -126,8 +126,11 @@
 </head>
 <body>
 	<div class="col-xs-12 text-center">
-		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Libro Mayor:  <?= $filtro->Cuenta->concepto ?>  </strong></h3>
+		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?>   </strong></h3>
 	</div>
+    <div class="col-xs-12 text-center">
+        <h3><strong> Libro Mayor:  <?= $filtro->Cuenta->concepto ?>  </strong></h3>
+    </div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>En El Periodo Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>
 	</div>
@@ -158,9 +161,9 @@
 		 				<td class=""><?= $item["idtransaccion"] ?></td>
 		 				<td class=""><?= $item["cont_plancuentas"]["concepto"] ?></td>
 		 				<td class=""><?= $item["descripcion"] ?></td>
-		 				<td class=""><?= $item["debe_c"] ?></td>
-		 				<td class=""><?= $item["haber_c"] ?></td>
-		 				<td class=""><?= $item["saldo"] ?></td>
+		 				<td class=""><?= "$ ".number_format($item["debe_c"],4,'.',',') ?></td>
+		 				<td class=""><?= "$ ".number_format($item["haber_c"],4,'.',',') ?></td>
+		 				<td class=""><?= "$ ".number_format($item["saldo"],4,'.',',') ?></td>
 		 				<?php if($item["estadoanulado"]==true){
 		 					 echo "<td class='bg-success'>Activo</td>";
 		 					}

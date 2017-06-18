@@ -125,8 +125,11 @@
 </style>	
 </head>
 <body>
+	<div class="col-xs-12 text-center">
+		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?></strong></h3>
+	</div>
  	<div class="col-xs-12 text-center">
-		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Balance General </strong></h3>
+		<h3><strong>Estados Situacion Finaciera </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>Hasta : <?= $filtro->FechaF ?> </strong></h4>
@@ -139,7 +142,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th colspan="3">Balance General: <?= $filtro->FechaF ?> </th>
+					<th colspan="3">Estados Situacion Finaciera: <?= $filtro->FechaF ?> </th>
 				</tr>
 				<tr>
 					<th>Código</th>
@@ -162,7 +165,7 @@
 		 					if(((float) $item["saldo"] )==0){
 		 						echo '';
 		 					}else{
-		 						echo $item["saldo"];
+		 						echo "$ ".number_format($item["saldo"],4,'.',',');
 		 					}
 		 					$aux_cont++;
 		 				 ?></td>
@@ -170,7 +173,7 @@
 		 		<?php  endforeach;?>
 		 		<tr>
 		 			<th colspan="2" class="text-right">Total Activo</th>
-		 			<th class="text-right"><?=  $aux_total_activo ?></th>
+		 			<th class="text-right"><?=  "$ ".number_format($aux_total_activo,4,'.',',') ?></th>
 		 		</tr>
 		 		<tr>
 		 			<th colspan="3"></th>
@@ -190,7 +193,7 @@
 		 					if(((float) $item1["saldo"] )==0){
 		 						echo '';
 		 					}else{
-		 						echo $item1["saldo"];
+		 						echo "$ ".number_format($item1["saldo"],4,'.',',');
 		 					}
 		 					$aux_cont2++;
 		 				 ?></td>
@@ -198,7 +201,7 @@
 		 		<?php  endforeach;?>
 		 		<tr>
 		 			<th colspan="2" class="text-right">Total Pasivo</th>
-		 			<th class="text-right"><?=  $aux_total_pasivo ?></th>
+		 			<th class="text-right"><?=  "$ ".number_format($aux_total_pasivo,4,'.',',') ?></th>
 		 		</tr>
 		 		<tr>
 		 			<th colspan="3"></th>
@@ -218,7 +221,7 @@
 		 					if(((float) $item2["saldo"] )==0){
 		 						echo '';
 		 					}else{
-		 						echo $item2["saldo"];
+		 						echo "$ ".number_format($item2["saldo"],4,'.',',');
 		 					}
 		 					$aux_cont3++;
 		 				 ?></td>
@@ -226,7 +229,7 @@
 		 		<?php  endforeach;?>
 		 		<tr>
 		 			<th colspan="2" class="text-right">Total Patrimonio</th>
-		 			<th class="text-right"><?=  $aux_total_patrimonio ?></th>
+		 			<th class="text-right"><?=  "$ ".number_format($aux_total_patrimonio,4,'.',',') ?></th>
 		 		</tr>
 
 		 		<tr>
@@ -234,10 +237,10 @@
 		 		</tr>
 
 		 		<tr>
-		 			<th colspan="2">Total Pasivo Patrimonio</th>
+		 			<th colspan="2">Total Pasivo + Patrimonio</th>
 		 			<th class="text-right">
 		 				<?php 
-		 					echo ( ((float) $aux_total_pasivo) + ((float) $aux_total_patrimonio) );
+		 					echo "$ ".number_format(( ((float) $aux_total_pasivo) + ((float) $aux_total_patrimonio) ),4,'.',',');
 		 				?>
 		 			</th>
 		 		</tr>

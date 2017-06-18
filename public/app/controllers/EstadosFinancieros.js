@@ -479,7 +479,13 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
         $scope.LoadRegistroCuenta();
     };
     ///---
+    $scope.aux_total_debe=0;
+    $scope.aux_total_haber=0;
+    $scope.aux_total_saldo=0;
     $scope.LoadRegistroCuenta=function() {
+        $scope.aux_total_debe=0;
+        $scope.aux_total_haber=0;
+        $scope.aux_total_saldo=0;
         if($scope.aux_CuentaContableSelc.idplancuenta!=undefined){
             var aux_estado=$("#EstadoAsc").val();
             var estado='true';
@@ -498,7 +504,16 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             };
           $http.get(API_URL + 'estadosfinacieros/registrocuenta/'+JSON.stringify(filtroregistro))
             .success(function(response){
+                //console.log(response);
                 $scope.RegistroCuentaContable=response;
+                $scope.RegistroCuentaContable.forEach(function(item){
+                    $scope.aux_total_debe+=parseFloat(item.debe_c);
+                    $scope.aux_total_haber+=parseFloat(item.haber_c);
+                    $scope.aux_total_saldo+=parseFloat(item.saldo);
+                });
+                $scope.aux_total_debe=$scope.aux_total_debe.toFixed(4);
+                $scope.aux_total_haber=$scope.aux_total_haber.toFixed(4);
+                $scope.aux_total_saldo=$scope.aux_total_saldo.toFixed(4);
                 $("#procesarinfomracion").modal("hide");
             });
         }else{
@@ -617,6 +632,18 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
                 $("#msm").modal("show");
             }
         });
+    };
+    ///---
+    $scope.formato_dinero=function(amount, signo){
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(4);
+        var amount_parts = amount.split('.'),
+            regexp = /(\d+)(\d{3})/;
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+        return signo+" "+amount_parts.join('.')
     };
 });
 

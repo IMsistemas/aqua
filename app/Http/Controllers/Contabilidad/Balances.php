@@ -50,7 +50,14 @@ class Balances extends Controller
     								->orderBy('cont_registrocontable.fecha', 'ASC')
     								->orderBy('cont_registrocontable.idtransaccion', 'ASC')
     								->get();*/
-        return Cont_Transaccion::with("cont_registrocontable","cont_tipotransaccion", "cont_registrocontable.cont_plancuentas")
+        /*return Cont_Transaccion::with("cont_registrocontable","cont_tipotransaccion", "cont_registrocontable.cont_plancuentas")
+                           ->whereRaw(" cont_transaccion.fechatransaccion >='".$filtro->FechaI."' AND cont_transaccion.fechatransaccion<='".$filtro->FechaF."' ".$aux_estado." ")
+                           ->orderBy('cont_transaccion.fechatransaccion', 'ASC')
+                           ->orderBy('cont_transaccion.idtransaccion', 'ASC')
+                           ->get();*/
+        return Cont_Transaccion::with(["cont_registrocontable","cont_tipotransaccion", "cont_registrocontable.cont_plancuentas","cont_registrocontable"                    =>function($query){
+                                    $query->orderBy("debe","DESC");
+                                }])
                            ->whereRaw(" cont_transaccion.fechatransaccion >='".$filtro->FechaI."' AND cont_transaccion.fechatransaccion<='".$filtro->FechaF."' ".$aux_estado." ")
                            ->orderBy('cont_transaccion.fechatransaccion', 'ASC')
                            ->orderBy('cont_transaccion.idtransaccion', 'ASC')

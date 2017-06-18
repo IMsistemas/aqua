@@ -126,7 +126,10 @@
 </head>
 <body>
  	<div class="col-xs-12 text-center">
-		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Balance De Comprobación </strong></h3>
+		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> </strong></h3>
+	</div>
+ 	<div class="col-xs-12 text-center">
+		<h3><strong> Balance De Comprobación </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong></h4>
@@ -194,10 +197,10 @@
 		 			<tr>
 		 				<td class=""><?= orden_plan_cuenta($item->jerarquia)  ?></td>
 		 				<td class=""><?= $item->concepto ?></td>
-		 				<td class="text-right"><?= $item->debe ?></td>
-		 				<td class="text-right"><?= $item->haber ?></td>
-		 				<td class="text-right"><?= $item->saldo_debe ?></td>
-		 				<td class="text-right"><?= $item->saldo_haber ?></td>
+		 				<td class="text-right"><?= "$ ".number_format($item->debe,4,'.',',') ?></td>
+		 				<td class="text-right"><?= "$ ".number_format($item->haber,4,'.',',') ?></td>
+		 				<td class="text-right"><?= "$ ".number_format($item->saldo_debe,4,'.',',') ?></td>
+		 				<td class="text-right"><?= "$ ".number_format($item->saldo_haber,4,'.',',') ?></td>
 		 				<?php 
 		 					$aux_debe+=((float) $item->debe);
 		 					$aux_haber+=((float) $item->haber);
@@ -210,10 +213,10 @@
 			<tfoot>
 				<tr>
 					<th colspan="2" class="text-center">Total:</th>
-					<th class="text-right"><?= $aux_debe ?></th>
-					<th class="text-right"><?= $aux_haber ?></th>
-					<th class="text-right"><?= $aux_debe_saldo ?></th>
-					<th class="text-right"><?= $aux_haber_saldo ?></th>
+					<th class="text-right"><?= "$ ".number_format($aux_debe,4,'.',',') ?></th>
+					<th class="text-right"><?= "$ ".number_format($aux_haber,4,'.',',') ?></th>
+					<th class="text-right"><?= "$ ".number_format($aux_debe_saldo,4,'.',',') ?></th>
+					<th class="text-right"><?= "$ ".number_format($aux_haber_saldo,4,'.',',') ?></th>
 				</tr>
 			</tfoot>
 		</table>

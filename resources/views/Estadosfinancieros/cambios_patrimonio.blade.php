@@ -127,7 +127,11 @@
 <body>
  
  <div class="col-xs-12 text-center">
-		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> Estado De Cambios En El Patrimonio </strong></h3>
+        <h3><strong><?= $aux_empresa[0]->nombrecomercial ?>  </strong></h3>
+    </div>
+
+ <div class="col-xs-12 text-center">
+		<h3><strong> Estado De Cambios En El Patrimonio </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>En El Periodo De: <?= $filtro->FechaI ?>  y  <?= $filtro->FechaF ?> </strong></h4>
@@ -151,10 +155,10 @@
 				<?php foreach ($estado_patrimonio as $item):?>
 		 			<tr>
 		 				<td class=""><?= $item->concepto ?></td>
-		 				<td class=""><?= $item->balance1 ?></td>
-		 				<td class=""><?= $item->incremento ?></td>
-		 				<td class=""><?= $item->disminucion ?></td>
-		 				<td class=""><?= $item->balance2 ?></td>
+		 				<td class=""><?= "$ ".number_format($item->balance1,4,'.',',') ?></td>
+		 				<td class=""><?= "$ ".number_format($item->incremento,4,'.',',') ?></td>
+		 				<td class=""><?= "$ ".number_format($item->disminucion,4,'.',',') ?></td>
+		 				<td class=""><?= "$ ".number_format($item->balance2,4,'.',',') ?></td>
 		 			</tr>
 		 		<?php  endforeach;?>
 			</tbody>

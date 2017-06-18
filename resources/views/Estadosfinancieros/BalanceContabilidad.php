@@ -34,10 +34,13 @@
             <span class="input-group-addon">Generar: </span>
             <select class="form-control" name="cmb_generar" id="cmb_generar" ng-model="cmb_generar"> 
               <option value="1" >Estados Cambios Patrimonio</option>
-              <option value="2" >Estados Situacion Finaciera</option>
-              <option value="5" >Balance General</option>
+              <!--<option value="2" >Estados Situación Financiera</option>-->
+              <option value="2" >Estados De Resultados</option>
+              <!--<option value="5" >Balance General</option>-->
+              <option value="5" >Estados Situación Financiera</option>
               <option value="3" >Libro Diario</option>
               <option value="4" >Libro Mayor</option>
+              <option value="6" >Balance De Comprobación</option>
             </select>
         </div>
       </div>
@@ -114,8 +117,8 @@
               <td>{{orden_plan_cuenta(reg.cont_plancuentas.jerarquia)}}</td>
               <td>{{reg.cont_plancuentas.concepto}}</td>
               <td>{{reg.descripcion}}</td>
-              <td>{{reg.debe_c}}</td>
-              <td>{{reg.haber_c}} </td>
+              <td>{{formato_dinero(reg.debe_c,"$")}}</td>
+              <td>{{formato_dinero(reg.haber_c,"$")}} </td>
               <td ng-show="reg.estadoanulado" ng-hide="!reg.estadoanulado" class="bg-success">Activa</td>
               <td ng-show="!reg.estadoanulado" ng-hide="reg.estadoanulado" class="bg-warning">Anulada</td>
             </tr>
@@ -129,6 +132,21 @@
               <th class="text-left" >Total</th>
             </tr>
           </tfoot>-->
+        </table>
+      </div>
+      <div class="col-xs-12">
+        <table class="table ">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-right">Total Debe</th>
+              <th>{{formato_dinero(aux_tot_libroD_debe,"$")}}</th>
+              <th>{{formato_dinero(aux_tot_libroD_haber,"$")}}</th>
+              <th class="text-left">Total Haber</th>
+            </tr>
+          </thead>
         </table>
       </div>
     </div>
@@ -166,9 +184,9 @@
               <td>{{regm.idtransaccion}}</td>
               <td>{{regm.cont_plancuentas.concepto}}</td>
               <td>{{regm.descripcion}}</td>
-              <td>{{regm.debe_c}}</td>
-              <td>{{regm.haber_c}}</td>
-              <td>{{regm.saldo}}</td>
+              <td>{{formato_dinero(regm.debe_c,"$")}}</td>
+              <td>{{formato_dinero(regm.haber_c,"$")}}</td>
+              <td>{{formato_dinero(regm.saldo,"$")}}</td>
               <td ng-show="regm.estadoanulado" ng-hide="!regm.estadoanulado" class="bg-success">Activa</td>
               <td ng-show="!regm.estadoanulado" ng-hide="regm.estadoanulado" class="bg-warning">Anulada</td>
             </tr>
@@ -274,10 +292,10 @@
           <tr ng-repeat="cp in cambio_patrimonio">
             <td>{{$index+1}}</td>
             <td>{{cp.concepto}}</td>
-            <td>{{cp.balance1}}</td>
-            <td>{{cp.incremento}}</td>
-            <td>{{cp.disminucion}}</td>
-            <td>{{cp. balance2}}</td>
+            <td>{{formato_dinero(cp.balance1,"$")}}</td>
+            <td>{{formato_dinero(cp.incremento,"$")}}</td>
+            <td>{{formato_dinero(cp.disminucion,"$")}}</td>
+            <td>{{formato_dinero(cp. balance2,"$")}}</td>
           </tr>
         </tbody>
       </table>
@@ -302,37 +320,47 @@
             <tr ng-repeat="activo in list_activo">
               <th>{{activo.aux_jerarquia}}</th>
               <th>{{activo.concepto}}</th>
-              <th class="text-right">{{Valida_numero(activo.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(activo.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Activo</th>
-              <th class="text-right">{{total_activo}}</th>
+              <th class="text-right">{{formato_dinero(total_activo,"$")}}</th>
             </tr>
             <tr><th colspan="3"></th></tr>
 
             <tr ng-repeat="pasivo in list_pasivo">
               <th>{{pasivo.aux_jerarquia}}</th>
               <th>{{pasivo.concepto}}</th>
-              <th class="text-right">{{Valida_numero(pasivo.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(pasivo.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Pasivo</th>
-              <th class="text-right">{{total_pasivo}}</th>
+              <th class="text-right">{{formato_dinero(total_pasivo,"$")}}</th>
             </tr>
             <tr><th colspan="3"></th></tr>
 
             <tr ng-repeat="patrimonio in list_patrimonio">
               <th>{{patrimonio.aux_jerarquia}}</th>
               <th>{{patrimonio.concepto}}</th>
-              <th class="text-right">{{Valida_numero(patrimonio.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(patrimonio.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Patrimonio</th>
-              <th class="text-right">{{total_patrimonio}}</th>
+              <th class="text-right">{{formato_dinero(total_patrimonio,"$")}}</th>
             </tr>
 
 
           </tbody>
+        </table>
+      </div>
+      <div class="col-xs-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-right"> Total Pasivo + Total Patrimonio </th>
+              <th class="text-right"> {{ formato_dinero(aux_formula_patrimonial ,"$")}}</th>
+            </tr>
+          </thead>
         </table>
       </div>
     </div>
@@ -356,33 +384,33 @@
             <tr ng-repeat="ingreso in list_ingreso">
               <th>{{ingreso.aux_jerarquia}}</th>
               <th>{{ingreso.concepto}}</th>
-              <th class="text-right">{{Valida_numero(ingreso.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(ingreso.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Ingresos</th>
-              <th class="text-right">{{total_ingreso}}</th>
+              <th class="text-right">{{formato_dinero(total_ingreso,"$")}}</th>
             </tr>
             <tr><th colspan="3"></th></tr>
 
             <tr ng-repeat="costo in list_costo">
               <th>{{costo.aux_jerarquia}}</th>
               <th>{{costo.concepto}}</th>
-              <th class="text-right">{{Valida_numero(costo.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(costo.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Costos</th>
-              <th class="text-right">{{total_costo}}</th>
+              <th class="text-right">{{formato_dinero(total_costo,"$")}}</th>
             </tr>
             <tr><th colspan="3"></th></tr>
 
             <tr ng-repeat="gasto in list_gasto">
               <th>{{gasto.aux_jerarquia}}</th>
               <th>{{gasto.concepto}}</th>
-              <th class="text-right">{{Valida_numero(gasto.saldo)}}</th>
+              <th class="text-right">{{formato_dinero(Valida_numero(gasto.saldo),"$")}}</th>
             </tr>
             <tr>
               <th colspan="2" class="text-right">Total Gastos</th>
-              <th class="text-right">{{total_gasto}}</th>
+              <th class="text-right">{{formato_dinero(total_gasto,"$")}}</th>
             </tr>
 
 
@@ -392,6 +420,46 @@
     </div>
     <!--estado de resultados-->
 
+    <!--balance de comprobacion-->
+    <div class="row" ng-hide="aux_render!='6' " ng-show=" aux_render=='6'">
+      <table class="table table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th colspan="2" class="text-center">Cuenta</th>
+            <th colspan="2" class="text-center">Sumas</th>
+            <th colspan="2" class="text-center">Saldos</th>
+          </tr>
+          <tr>
+            <th>Código</th>
+            <th>Cuenta</th>
+            <th>Debe</th>
+            <th>Haber</th>
+            <th>Debe</th>
+            <th>Haber</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat=" ba in list_balance_comprobacion">
+            <td>{{orden_plan_cuenta(ba.jerarquia)}}</td>
+            <td>{{ba.concepto}}</td>
+            <td class="text-right">{{formato_dinero(ba.debe,"$")}}</td>
+            <td class="text-right">{{formato_dinero(ba.haber,"$")}}</td>
+            <td class="text-right">{{formato_dinero(ba.saldo_debe,"$")}}</td>
+            <td class="text-right">{{formato_dinero(ba.saldo_haber,"$")}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="2" class="text-right">Total</th>
+            <th class="text-right">{{formato_dinero(aux_total_debe_balance,"$")}}</th>
+            <th class="text-right">{{formato_dinero(aux_total_haber_balance,"$")}}</th>
+            <th class="text-right">{{formato_dinero(aux_total_sdebe_balance,"$")}}</th>
+            <th class="text-right">{{formato_dinero(aux_total_shaber_balance,"$")}}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!--balance de comprobacion-->
 
 <div class="modal fade"  id="WPrint" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
