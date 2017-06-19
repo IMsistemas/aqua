@@ -195,7 +195,7 @@
                                     </select>
                                 </div>
 
-                                <span class="help-block error" ng-show="formventa.Bodega.$invalid && formventa.Bodega.$touched">Seleccione una bodega</span>
+                                <!--<span class="help-block error" ng-show="formventa.Bodega.$invalid && formventa.Bodega.$touched">Seleccione una bodega</span>-->
                             </div>
 
                         </fieldset>

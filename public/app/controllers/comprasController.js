@@ -238,6 +238,25 @@
              -------------------------------------------------------------------------------------------       NEW
          */
 
+        $scope.ValidaProducto=function(){
+            for(x=0;x<$scope.items.length;x++){
+                if($scope.items[x].productoObj!=undefined){
+                    if( parseInt($scope.items[x].productoObj.originalObject.idclaseitem)==1){ //producto
+                        if($scope.Bodega==""){
+                            QuitarClasesMensaje();
+                            $("#titulomsm").addClass("btn-danger");
+                            $("#msm").modal("show");
+                            $scope.Mensaje="Seleccione una bodega para el producto";
+                            $scope.Validabodegaprodct="1";
+
+                        }else{
+                            $scope.Validabodegaprodct="0";
+                        }
+                    }
+                }
+            }
+        };
+
         $scope.AsignarData=function(object, item){
 
             console.log(object);
@@ -1221,3 +1240,12 @@
             }
         };
     });
+
+
+    function QuitarClasesMensaje() {
+        $("#titulomsm").removeClass("btn-primary");
+        $("#titulomsm").removeClass("btn-warning");
+        $("#titulomsm").removeClass("btn-success");
+        $("#titulomsm").removeClass("btn-info");
+        $("#titulomsm").removeClass("btn-danger");
+    }

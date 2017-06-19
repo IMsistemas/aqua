@@ -153,9 +153,6 @@ class SuministroController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -169,4 +166,3 @@ class SuministroController extends Controller
 
         
  }
-       
