@@ -36,7 +36,7 @@
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <div class="col-sm-7 col-xs-12">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="t_busqueda" ng-keypress="initLoad(1)">
+                            <input type="text" class="form-control" id="t_busqueda" placeholder="Buscar por número de comprobante de retención..." ng-model="t_busqueda" ng-keyup="initLoad(1)">
                             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                                 ng-model="s_codigoretencion" ng-options="value.id as value.name for value in codigosretencion" ng-change="">
                         </select>
                     </div>-->
-                    <div class="col-sm-2 col-xs-12">
+                    <!--<div class="col-sm-2 col-xs-12">
                         <input type="text" class="datepicker_a form-control" name="t_year" id="t_year" ng-model="t_year" ng-change="initLoad(1)"
                                 placeholder="-- Año --">
                     </div>
@@ -58,7 +58,7 @@
                         <select class="form-control" name="s_month" id="s_month"
                                 ng-model="s_month" ng-options="value.id as value.name for value in meses" ng-change="initLoad(1)">
                         </select>
-                    </div>
+                    </div>-->
                     <div class="col-sm-1 col-xs-12">
                         <!--<button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
                                 data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Compra">

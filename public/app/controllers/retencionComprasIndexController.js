@@ -92,9 +92,11 @@
                 search: search
             };
 
+            console.log(filtros);
+
             $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
-                console.log(response.data);
+                //console.log(response.data);
 
                 /*var longitud = response.data.length;
                 for (var i = 0; i < longitud; i++) {

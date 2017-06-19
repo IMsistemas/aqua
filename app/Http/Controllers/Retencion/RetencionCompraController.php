@@ -41,43 +41,19 @@ class RetencionCompraController extends Controller
     public function getRetenciones(Request $request)
     {
 
-        /*$filter = json_decode($request->get('filter'));
+        $filter = json_decode($request->get('filter'));
 
-        $retencion = null;
-
-        if ($filter->year != null && $filter->month != null) {
-            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year . ' AND EXTRACT( MONTH FROM fecha) = ' . $filter->month);
-        } else if ($filter->year != null) {
-            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year);
-        } else if ($filter->month != null) {
-            $retencion = SRI_RetencionCompra::whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->month);
-        }
-
-        if ($filter->search != null) {
-            if ($retencion != null) {
-                $retencion->whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
-            } else {
-                $retencion = SRI_RetencionCompra::whereRaw("(razonsocial LIKE '%" . $filter->search . "%' OR numerodocumentoproveedor LIKE '%" . $filter->search . "%')");
-            }
-        }
-
-        if ($retencion != null) {
-            $retencion = $retencion->orderBy('fecha', 'desc')->paginate(10);
-        } else {
-            $retencion = SRI_RetencionCompra::orderBy('fecha', 'desc')->paginate(10);
-        }*/
-
-        $retencion = SRI_RetencionCompra::with('cont_documentocompra.sri_comprobanteretencion',
-                                    'cont_documentocompra.proveedor.persona', 'sri_retenciondetallecompra')
-                        ->orderBy('idretencioncompra', 'desc')->paginate(10);
-
+        $search = $filter->search;
 
         $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
-            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra')
-            ->orderBy('fechaemisioncomprob', 'desc')
-            ->paginate(8);
+            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra');
 
-        return $retencion;
+
+        if ($search != null) {
+            $retencion = $retencion->whereRaw("sri_comprobanteretencion.nocomprobante LIKE '%" . $search . "%'");
+        }
+
+        return $retencion->orderBy('fechaemisioncomprob', 'desc')->paginate(8);
 
     }
 
