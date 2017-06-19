@@ -317,6 +317,10 @@ $scope.cmb_estado_fact="A";
         }
     };
     $scope.CalculaValores=function(){
+
+        $scope.Subtotalconimpuestos = 0;
+
+
     	var aux_subtotalconimpuestos=0;
         var aux_totaldescuento=0;
         var aux_totalIce=0;
@@ -432,18 +436,31 @@ $scope.cmb_estado_fact="A";
         $scope.Subtotalcero=aux_subtoto_cero.toFixed(4);
         $scope.Subtotalnobjetoiva = aux_no_objeto_iva.toFixed(4);
         $scope.Subototalexentoiva = aux_excento_iva.toFixed(4);
+        $scope.Subtotalconimpuestos= (aux_subtotalconimpuestos ).toFixed(4);
+
+        $scope.Subtotalconimpuestos=(isNaN($scope.Subtotalconimpuestos))? 0:$scope.Subtotalconimpuestos;
+        $scope.Subtotalcero=(isNaN($scope.Subtotalcero))? 0:$scope.Subtotalcero;
+        $scope.Subtotalnobjetoiva=(isNaN($scope.Subtotalnobjetoiva))? 0:$scope.Subtotalnobjetoiva;
+        $scope.Subototalexentoiva=(isNaN($scope.Subototalexentoiva))? 0:$scope.Subototalexentoiva;
+        $scope.ValICE=(isNaN($scope.ValICE))? 0:$scope.ValICE;
 
         var subtotalsinimp = parseFloat($scope.Subtotalconimpuestos) + parseFloat($scope.Subtotalcero);
         subtotalsinimp += parseFloat($scope.Subtotalnobjetoiva) + parseFloat($scope.Subototalexentoiva);
 
         subtotalsinimp -= parseFloat($scope.ValICE);
 
+        
+
         $scope.Subtotalsinimpuestos = subtotalsinimp.toFixed(4);
 
         //$scope.Subtotalconimpuestos= (aux_subtotalconimpuestos - parseFloat($scope.Totaldescuento)).toFixed(4);
-        $scope.Subtotalconimpuestos= (aux_subtotalconimpuestos ).toFixed(4);
+        //$scope.Subtotalconimpuestos= (aux_subtotalconimpuestos ).toFixed(4); // cambio
 
         $scope.ValIVA=(parseFloat((($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100)) + (parseFloat(con_iva)) ).toFixed(4);
+
+        $scope.ValIVA=(isNaN($scope.ValIVA))? 0:$scope.ValIVA;
+        $scope.ValIRBPNR=(isNaN($scope.ValIRBPNR))? 0:$scope.ValIRBPNR;
+        $scope.ValPropina=(isNaN($scope.ValPropina))? 0:$scope.ValPropina;
 
         //var totalFC = parseFloat($scope.Subtotalconimpuestos) + parseFloat($scope.Subtotalcero);
         //totalFC += parseFloat($scope.Subtotalnobjetoiva) + parseFloat($scope.Subototalexentoiva);
