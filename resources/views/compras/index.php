@@ -81,7 +81,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                    <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItems" ng-cloak">
                         <td style="text-align: center;">{{item.iddocumentocompra}}</td>
                         <td class="text-center">{{formatoFecha(item.fecharegistrocompra)}}</td>
                         <td class="text-left">{{item.razonsocial}}</td>
@@ -112,7 +112,7 @@
                         template-url="dirPagination.html"
 
                         class="pull-right"
-                        max-size="10"
+                        max-size="8"
                         direction-links="true"
                         boundary-links="true" >
 

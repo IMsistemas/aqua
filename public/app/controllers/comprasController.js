@@ -32,6 +32,8 @@
 
         $scope.itemEditAnular = {};
 
+        $scope.isBodega = false;
+
 
         $scope.pageChanged = function(newPage) {
             $scope.initLoad(newPage);
@@ -237,6 +239,8 @@
          */
 
         $scope.AsignarData=function(object, item){
+
+            console.log(object);
 
             item.productoObj = object;
 
@@ -750,7 +754,13 @@
                 }
                 else {
                     $('#modalConfirmSave').modal('hide');
-                    $scope.message_error = 'Ha ocurrido un error al intentar guardar la Compra...';
+
+                    if (response.document_exist == true) {
+                        $scope.message_error = 'Ya existe un documento de compra con dicho numero de factura insertado con mismo proveedor...';
+                    } else {
+                        $scope.message_error = 'Ha ocurrido un error al intentar guardar la Compra...';
+                    }
+
                     $('#modalMessageError').modal('show');
                 }
 

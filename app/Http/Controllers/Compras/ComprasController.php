@@ -56,7 +56,7 @@ class ComprasController extends Controller
                             or persona.razonsocial ILIKE '%" . $filter->text . "%' OR cont_documentocompra.numdocumentocompra ILIKE '%" . $filter->text . "%')
                             		".$filterCombo)
             ->orderBy('cont_documentocompra.iddocumentocompra', 'desc')
-            ->paginate(10);
+            ->paginate(8);
 
     }
 
@@ -195,124 +195,128 @@ class ComprasController extends Controller
 
         $aux = $request->all();
 
-        /*if ($this->getDuplicateNumber() == 0) {
-
-        }*/
-
-
-
         $filtro = json_decode($aux["datos"]);
 
-        //$filtro = $request->input('datos');
+        if ($this->getDuplicateNumber($filtro->DataCompra->idproveedor, $filtro->DataCompra->numdocumentocompra) == 0) {
 
-        //--Parte contable
-        $id_transaccion = CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
-        //--Fin parte contable
+            //$filtro = $request->input('datos');
+
+            //--Parte contable
+            $id_transaccion = CoreContabilidad::SaveAsientoContable($filtro->DataContabilidad);
+            //--Fin parte contable
 
 
-        //--Parte invetario kardex
+            //--Parte invetario kardex
 
-        $longitud_kardex = count($filtro->Datakardex);
+            $longitud_kardex = count($filtro->Datakardex);
 
-        for($x=0; $x < $longitud_kardex; $x++){
-            $filtro->Datakardex[$x]->idtransaccion=$id_transaccion;
-        }
-        $id_kardex = CoreKardex::GuardarKardex($filtro->Datakardex);
-
-        //--Fin Parte invetario kardex
-
-        $filtro->DataCompra->idtransaccion = $id_transaccion;
-
-        $aux_docventa = (array)$filtro->DataCompra;
-
-        $docventa = Cont_DocumentoCompra::create($aux_docventa);
-
-        if ($docventa != false) {
-
-            $aux_addVenta = Cont_DocumentoCompra::all();
-
-            $lastIDCompra = $aux_addVenta->last()->iddocumentocompra;
-
-            $longitud_items = count($filtro->DataItemsCompra);
-
-            for($x = 0; $x < $longitud_items; $x++) {
-                $filtro->DataItemsCompra[$x]->iddocumentocompra = $lastIDCompra;
+            for($x=0; $x < $longitud_kardex; $x++){
+                $filtro->Datakardex[$x]->idtransaccion=$id_transaccion;
             }
+            $id_kardex = CoreKardex::GuardarKardex($filtro->Datakardex);
 
-            $aux_itemventa = (array) $filtro->DataItemsCompra;
-            //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+            //--Fin Parte invetario kardex
 
-            for($x = 0; $x < $longitud_items; $x++){
-                $result_items = Cont_ItemCompra::create((array) $filtro->DataItemsCompra[$x]);
+            $filtro->DataCompra->idtransaccion = $id_transaccion;
 
-                if ($result_items == false) {
-                    return response()->json(['success' => false]);
+            $aux_docventa = (array)$filtro->DataCompra;
+
+            $docventa = Cont_DocumentoCompra::create($aux_docventa);
+
+            if ($docventa != false) {
+
+                $aux_addVenta = Cont_DocumentoCompra::all();
+
+                $lastIDCompra = $aux_addVenta->last()->iddocumentocompra;
+
+                $longitud_items = count($filtro->DataItemsCompra);
+
+                for($x = 0; $x < $longitud_items; $x++) {
+                    $filtro->DataItemsCompra[$x]->iddocumentocompra = $lastIDCompra;
                 }
 
-            }
+                $aux_itemventa = (array) $filtro->DataItemsCompra;
+                //$itemventa=Cont_ItemVenta::create($aux_itemventa);
 
-            $registrocliente = [
-                'idproveedor' => $docventa->idproveedor,
-                'idtransaccion' => $id_transaccion,
-                'fecha' => $docventa->fecharegistrocompra,
-                'haber' => $filtro->DataContabilidad->registro[0]->Haber, //primera posicion es cliente
-                'debe' => 0,
-                'numerodocumento' => "" . $lastIDCompra."",
-                'estadoanulado' => false
-            ];
+                for($x = 0; $x < $longitud_items; $x++){
+                    $result_items = Cont_ItemCompra::create((array) $filtro->DataItemsCompra[$x]);
 
-            $aux_registrocliente = Cont_RegistroProveedor::create($registrocliente);
-
-            if ($aux_registrocliente == false) {
-                return response()->json(['success' => false]);
-            }
-
-            //----------Insert data Comprobante retencion--------------------------------
-
-            if ($filtro->dataComprobante != null) {
-
-                $comprobante = new SRI_ComprobanteRetencion();
-
-                $comprobante->idpagoresidente = $filtro->dataComprobante->tipopago;
-                $comprobante->idpagopais = $filtro->dataComprobante->paispago;
-                $comprobante->regimenfiscal = $filtro->dataComprobante->regimenfiscal;
-                $comprobante->conveniotributacion = $filtro->dataComprobante->convenio;
-                $comprobante->normalegal = $filtro->dataComprobante->normalegal;
-                $comprobante->fechaemisioncomprob = $filtro->dataComprobante->fechaemisioncomprobante;
-                $comprobante->nocomprobante = $filtro->dataComprobante->nocomprobante;
-                $comprobante->noauthcomprobante = $filtro->dataComprobante->noauthcomprobante;
-
-                if ($comprobante->save()) {
-
-                    $id = $comprobante->idcomprobanteretencion;
-
-                    $last_c = Cont_DocumentoCompra::find($lastIDCompra);
-                    $last_c->idcomprobanteretencion = $id;
-
-                    if ($last_c->save() == false) {
+                    if ($result_items == false) {
                         return response()->json(['success' => false]);
                     }
 
-                } else {
+                }
+
+                $registrocliente = [
+                    'idproveedor' => $docventa->idproveedor,
+                    'idtransaccion' => $id_transaccion,
+                    'fecha' => $docventa->fecharegistrocompra,
+                    'haber' => $filtro->DataContabilidad->registro[0]->Haber, //primera posicion es cliente
+                    'debe' => 0,
+                    'numerodocumento' => "" . $lastIDCompra."",
+                    'estadoanulado' => false
+                ];
+
+                $aux_registrocliente = Cont_RegistroProveedor::create($registrocliente);
+
+                if ($aux_registrocliente == false) {
                     return response()->json(['success' => false]);
                 }
 
-            }
+                //----------Insert data Comprobante retencion--------------------------------
 
-            $formapago = new Cont_FormaPagoDocumentoCompra();
+                if ($filtro->dataComprobante != null) {
 
-            $formapago->idformapago = $filtro->Idformapagocompra;
-            $formapago->iddocumentocompra = $lastIDCompra;
+                    $comprobante = new SRI_ComprobanteRetencion();
 
-            if ($formapago->save() == false){
+                    $comprobante->idpagoresidente = $filtro->dataComprobante->tipopago;
+                    $comprobante->idpagopais = $filtro->dataComprobante->paispago;
+                    $comprobante->regimenfiscal = $filtro->dataComprobante->regimenfiscal;
+                    $comprobante->conveniotributacion = $filtro->dataComprobante->convenio;
+                    $comprobante->normalegal = $filtro->dataComprobante->normalegal;
+                    $comprobante->fechaemisioncomprob = $filtro->dataComprobante->fechaemisioncomprobante;
+                    $comprobante->nocomprobante = $filtro->dataComprobante->nocomprobante;
+                    $comprobante->noauthcomprobante = $filtro->dataComprobante->noauthcomprobante;
+
+                    if ($comprobante->save()) {
+
+                        $id = $comprobante->idcomprobanteretencion;
+
+                        $last_c = Cont_DocumentoCompra::find($lastIDCompra);
+                        $last_c->idcomprobanteretencion = $id;
+
+                        if ($last_c->save() == false) {
+                            return response()->json(['success' => false]);
+                        }
+
+                    } else {
+                        return response()->json(['success' => false]);
+                    }
+
+                }
+
+                $formapago = new Cont_FormaPagoDocumentoCompra();
+
+                $formapago->idformapago = $filtro->Idformapagocompra;
+                $formapago->iddocumentocompra = $lastIDCompra;
+
+                if ($formapago->save() == false){
+                    return response()->json(['success' => false]);
+                }
+
+                return response()->json(['success' => true]);
+
+            } else {
                 return response()->json(['success' => false]);
             }
 
-            return response()->json(['success' => true]);
-
         } else {
-            return response()->json(['success' => false]);
+            return response()->json(['success' => false, 'document_exist' => true]);
         }
+
+
+
+
     }
 
     /**
