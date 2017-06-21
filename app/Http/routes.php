@@ -1148,3 +1148,4 @@ Route::get('Activosfijos/ObtenerNoDepreciados','ActivosFijos\depreciacionActivos
 Route::post('Activosfijos/GuardarAsientoContable','ActivosFijos\depreciacionActivosFijosController@GuardarAsientoContable');
 Route::get('Activosfijos/VerificarBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificarBaja');
 Route::get('Activosfijos/ObtenerUltimaDepreciacion','ActivosFijos\depreciacionActivosFijosController@ObtenerUltimaDepreciacion');
+Route::get('Activosfijos/ObtenerDatosCuentaGasto/{idgasto}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosCuentaGasto');
