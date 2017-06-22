@@ -59,6 +59,10 @@ class CuentasPorPagarController extends Controller
                             ->get();
     }
 
+    public function getLastID()
+    {
+        return Cont_CuentasPorPagar::max('idcuentasporpagar');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -116,7 +120,16 @@ class CuentasPorPagarController extends Controller
         $cuenta->iddocumentocompra = $request->input('iddocumentocompra');
 
         if ($cuenta->save()) {
-            return response()->json(['success' => true]);
+
+            $cuenta2 = Cont_CuentasPorPagar::find($cuenta->idcuentasporpagar);
+            $cuenta2->nocomprobante = $cuenta->idcuentasporpagar;
+
+            if ($cuenta2->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+
         } else {
             return response()->json(['success' => false]);
         }
