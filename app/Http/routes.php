@@ -1060,6 +1060,7 @@ Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController')
  * ------------------------------CUENTAS POR COBRAR---------------------------------------------------------------------
  */
 
+Route::get('cuentasxcobrar/getLastID', 'Cuentas\CuentasPorCobrarController@getLastID');
 Route::get('cuentasxcobrar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorCobrarController@getInfoClienteByID');
 Route::get('cuentasxcobrar/getCobrosLecturas/{id}', 'Cuentas\CuentasPorCobrarController@getCobrosLecturas');
 Route::get('cuentasxcobrar/getCobrosServices/{id}', 'Cuentas\CuentasPorCobrarController@getCobrosServices');

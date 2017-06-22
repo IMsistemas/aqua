@@ -87,6 +87,11 @@ class CuentasPorCobrarController extends Controller
                                     ->where('idcobroagua', $id)->get();
     }
 
+    public function getLastID()
+    {
+        return CuentasporCobrar::max('idcuentasporcobrar');
+    }
+
     /**
      * Obtener la informacion de un cliente en especifico
      *
@@ -149,7 +154,6 @@ class CuentasPorCobrarController extends Controller
          * ----------------------------------------CONTABILIDAD-------------------------------------------------------
          */
 
-
         $cuenta = new CuentasporCobrar();
 
         $cuenta->nocomprobante = $request->input('nocomprobante');
@@ -170,7 +174,17 @@ class CuentasPorCobrarController extends Controller
         }
 
         if ($cuenta->save()) {
-            return response()->json(['success' => true]);
+
+            $cuenta2 = CuentasporCobrar::find($cuenta->idcuentasporcobrar);
+            $cuenta2->nocomprobante = $cuenta->idcuentasporcobrar;
+
+            if ($cuenta2->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+
+
         } else {
             return response()->json(['success' => false]);
         }

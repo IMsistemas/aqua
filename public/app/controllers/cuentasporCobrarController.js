@@ -154,29 +154,32 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
     $scope.showModalFormaCobro = function () {
 
-        $('.datepicker').datetimepicker({
-            locale: 'es',
-            format: 'YYYY-MM-DD',
-            //format: 'DD/MM/YYYY',
-            minDate: $scope.fecha_i
-        });
-
-        console.log($scope.fecha_i);
-
-        $('#fecharegistro').val($scope.fecha_i);
-
-        $scope.fecharegistro = $scope.fecha_i;
-
         $scope.getFormaPago();
 
-        $scope.select_cuenta = null;
+        $http.get(API_URL + 'cuentasxcobrar/getLastID').success(function(response){
 
-        $scope.nocomprobante = '';
-        $scope.valorrecibido = '';
-        $scope.cuenta_employee = '';
-        $('#fecharegistro').val('');
+            $('.datepicker').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD',
+                //format: 'DD/MM/YYYY',
+                minDate: $scope.fecha_i
+            });
 
-        $('#formCobros').modal('show');
+
+            $('#fecharegistro').val($scope.fecha_i);
+
+            $scope.fecharegistro = $scope.fecha_i;
+
+            $scope.select_cuenta = null;
+
+            $scope.nocomprobante = parseInt(response) + 1;
+            $scope.valorrecibido = '';
+            $scope.cuenta_employee = '';
+            $('#fecharegistro').val('');
+
+            $('#formCobros').modal('show');
+        });
+
     };
 
     $scope.getFormaPago = function () {
