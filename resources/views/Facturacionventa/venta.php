@@ -323,7 +323,7 @@
                                                       title-field="codigoproducto"
                                                       description-field="twitter"
                                                       minlength="1"
-                                                      input-class="form-control form-control-small"
+                                                      input-class="form-control form-control-small disabled_enter"
                                                       match-class="highlight"
                                                       field-required="true"
                                                       input-name="codigoproducto{{$index}}"

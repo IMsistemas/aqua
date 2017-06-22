@@ -291,7 +291,12 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         });*/
 
 
+        //console.log(API_URL + 'suministros/getSuministroForFactura/' + idsuministro);
+
         $http.get(API_URL + 'suministros/getSuministroForFactura/' + idsuministro).success(function(response){
+
+            $scope.currentProjectUrl = '';
+
             $scope.currentProjectUrl = API_URL + 'DocumentoVenta?flag_suministro=1';
 
             $('#modalFactura').modal('show');
@@ -318,4 +323,10 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
 
     $scope.initLoad();
     $scope.Filtro();
+
+    /*
+    -------------------------------------------------------------------------------------------------------------------
+     */
+
+
 });

@@ -81,7 +81,9 @@ class SuministroController extends Controller
         $suministro = Suministro::with('cliente.persona', 'calle.barrio', 'cont_catalogitem')
                                     ->where('idsuministro', $id)->orderBy('idsuministro')->get();
 
-        $_SESSION['suministro_to_facturar'] = $suministro;
+        //$_SESSION['suministro_to_facturar'] = $suministro;
+
+        Session::put('suministro_to_facturar', '');
 
         Session::put('suministro_to_facturar', $suministro);
 

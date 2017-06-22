@@ -1,4 +1,8 @@
+
+
 app.controller('Venta', function($scope, $http, API_URL) {
+
+
 $scope.FechaRegistro=now();
 $scope.FechaEmision=now();
 $scope.VerFactura=2;
@@ -1047,5 +1051,12 @@ $(document).ready(function(){
         locale: 'es',
         format: 'DD/MM/YYYY',
         ignoreReadonly: true
+    });
+
+    $(".disabled_enter").keypress(function(e) {
+        alert('b');
+        if (e.which == 13) {
+            return false;
+        }
     });
 });
