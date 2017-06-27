@@ -39,7 +39,7 @@
                     <td>{{item.usuario}}</td>
                     <td>{{item.namerol}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
+                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idusuario)">
                             Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
                         <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">

@@ -56,6 +56,8 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
                         $scope.empleados = array_temp;
                         $scope.empleado = '';
 
+                        $scope.usuario = '';
+                        $scope.password = '';
 
                         $scope.form_title = "Nuevo Usuario";
                         $scope.nombrerol = '';
@@ -71,43 +73,51 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
                 $scope.form_title = "Editar Usuario";
                 $scope.idc = id;
 
-                $http.get(API_URL + 'rol/getRolByID/' + id).success(function(response) {
-                    $scope.nombrerol = response[0].namerol.trim();
-                    $('#modalActionCargo').modal('show');
-                });
-                break;
-            case 'perm':
 
-                $scope.idrol = id;
-
-                $http.get(API_URL + 'rol/getPermisos/' + id).success(function(response){
-
-                    var array_permisos = [];
+                $http.get(API_URL + 'usuario/getRoles').success(function(response){
 
                     var longitud = response.length;
-
-                    for (var i = 0; i < longitud; i++) {
-
-                        var default_state = false;
-
-                        if (response[i].permiso_rol.length > 0) {
-                            default_state = response[i].permiso_rol[0].state;
-                        }
-
-                        var p = {
-                            idpermiso: response[i].idpermiso,
-                            namepermiso: response[i].namepermiso,
-                            state: default_state
-                        };
-                        array_permisos.push(p);
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namerol, id: response[i].idrol})
                     }
+                    $scope.roles = array_temp;
+                    $scope.rol = '';
 
-                    $scope.permisos = array_permisos;
-                    $('#modalPermisos').modal('show');
+                    $http.get(API_URL + 'usuario/getEmpleados').success(function(response){
+
+                        var longitud_e = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud_e; i++){
+                            array_temp.push({label: response[i].persona.lastnamepersona + ' ' + response[i].persona.namepersona, id: response[i].idempleado})
+                        }
+                        $scope.empleados = array_temp;
+                        $scope.empleado = '';
+
+                        $http.get(API_URL + 'usuario/' + id).success(function(response){
+
+                            console.log(response);
+
+                            $scope.rol = response.idrol;
+
+                            if (response.idempleado !== null) {
+                                $scope.empleado = response.idempleado;
+                            }
+
+                            $scope.usuario = response.usuario;
+                            $scope.password = '';
+
+                            $('#modalActionCargo').modal('show');
+
+                        });
+
+                    });
 
                 });
 
+
                 break;
+
             default:
                 break;
         }
@@ -115,23 +125,39 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
     $scope.Save = function (){
 
+        var empleado = null;
+
+        if ($scope.empleado !== '') {
+            empleado = $scope.empleado;
+        }
+
         var data = {
-            namerol: $scope.nombrerol
+            idrol: $scope.rol,
+            usuario: $scope.usuario,
+            password: $scope.password,
+            idempleado: empleado
         };
 
         switch ( $scope.modalstate) {
             case 'add':
-                $http.post(API_URL + 'rol', data ).success(function (response) {
+                $http.post(API_URL + 'usuario', data ).success(function (response) {
+
+                    $('#modalActionCargo').modal('hide');
+
                     if (response.success == true) {
                         $scope.initLoad(1);
-                        $('#modalActionCargo').modal('hide');
-                        $scope.message = 'Se insertó correctamente el Rol...';
+                        $scope.message = 'Se insertó correctamente el Usuario...';
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
                     }
                     else {
-                        $('#modalActionCargo').modal('hide');
-                        $scope.message_error = 'Ya existe ese Rol...';
+
+                        if (response.exists !== undefined) {
+                            $scope.message_error = 'Ya existe ese Usuario...';
+                        } else {
+                            $scope.message_error = 'Ha ocurrido un error..';
+                        }
+
                         $('#modalMessageError').modal('show');
                     }
                 });
