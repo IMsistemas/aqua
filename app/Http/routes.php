@@ -1027,7 +1027,8 @@ Route::resource('/rol', 'Rol\RolController');
  * ------------------------------------- Modulo Usuario-----------------------------------------------------------------
  */
 
-
+Route::get('usuario/getEmpleados', 'Usuario\UsuarioController@getEmpleados');
+Route::get('usuario/getRoles', 'Usuario\UsuarioController@getRoles');
 Route::get('usuario/getUsuarios', 'Usuario\UsuarioController@getUsuarios');
 
 Route::resource('/usuario', 'Usuario\UsuarioController');

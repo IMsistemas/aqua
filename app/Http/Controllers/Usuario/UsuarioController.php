@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Usuario;
 
+use App\Modelos\Nomina\Empleado;
+use App\Modelos\Rol\Rol;
 use App\Modelos\Usuario\Usuario;
 use Illuminate\Http\Request;
 
@@ -40,6 +42,16 @@ class UsuarioController extends Controller
         }
 
         return $user->paginate(10);
+    }
+
+    public function getRoles()
+    {
+        return Rol::orderBy('namerol', 'asc')->get();
+    }
+
+    public function getEmpleados()
+    {
+        return Empleado::with('persona')->get();
     }
 
 

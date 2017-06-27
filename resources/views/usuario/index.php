@@ -75,16 +75,45 @@
                 <div class="modal-body">
                     <form class="form-horizontal" name="formCargo" novalidate="">
                         <div class="row">
+
                             <div class="col-xs-12 error">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Nombre del Rol: </span>
-                                    <input type="text" class="form-control" name="nombrerol" id="nombrerol" ng-model="nombrerol" placeholder=""
-                                           ng-required="true" ng-maxlength="150">
+                                    <span class="input-group-addon">Rol: </span>
+                                    <select class="form-control" name="rol" id="rol" ng-model="rol"
+                                            ng-options="value.id as value.label for value in roles" required></select>
                                 </div>
                                 <span class="help-block error"
-                                      ng-show="formCargo.nombrerol.$invalid && formCargo.nombrerol.$touched">El nombre del Rol es requerido</span>
+                                      ng-show="formCargo.rol.$invalid && formCargo.rol.$touched">El Rol es requerido</span>
+                            </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Empleado: </span>
+                                    <select class="form-control" name="empleado" id="empleado" ng-model="empleado"
+                                            ng-options="value.id as value.label for value in empleados"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Usuario: </span>
+                                    <input type="text" class="form-control" name="usuario" id="usuario" ng-model="usuario" placeholder=""
+                                           ng-required="true" ng-maxlength="20">
+                                </div>
                                 <span class="help-block error"
-                                      ng-show="formCargo.nombrerol.$invalid && formCargo.nombrerol.$error.maxlength">La longitud máxima es de 50 caracteres</span>
+                                      ng-show="formCargo.usuario.$invalid && formCargo.usuario.$touched">El Usuario es requerido</span>
+                                <span class="help-block error"
+                                      ng-show="formCargo.usuario.$invalid && formCargo.usuario.$error.maxlength">La longitud máxima es de 20 caracteres</span>
+                            </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Password: </span>
+                                    <input type="password" class="form-control" name="password" id="password" ng-model="password" placeholder=""
+                                           ng-required="true">
+                                </div>
+                                <span class="help-block error"
+                                      ng-show="formCargo.password.$invalid && formCargo.password.$touched">El Password es requerido</span>
                             </div>
                         </div>
                     </form>

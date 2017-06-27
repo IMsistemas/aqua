@@ -33,14 +33,42 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
         switch (modalstate) {
             case 'add':
-                $scope.form_title = "Nuevo Rol";
-                $scope.nombrerol = '';
-                $('#modalActionCargo').modal('show');
+
+                $http.get(API_URL + 'usuario/getRoles').success(function(response){
+
+                    var longitud = response.length;
+                    var array_temp = [{label: '-- Seleccione --', id: ''}];
+                    for(var i = 0; i < longitud; i++){
+                        array_temp.push({label: response[i].namerol, id: response[i].idrol})
+                    }
+                    $scope.roles = array_temp;
+                    $scope.rol = '';
+
+                    $http.get(API_URL + 'usuario/getEmpleados').success(function(response){
+
+                        console.log(response);
+
+                        var longitud_e = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud_e; i++){
+                            array_temp.push({label: response[i].persona.lastnamepersona + ' ' + response[i].persona.namepersona, id: response[i].idempleado})
+                        }
+                        $scope.empleados = array_temp;
+                        $scope.empleado = '';
+
+
+                        $scope.form_title = "Nuevo Usuario";
+                        $scope.nombrerol = '';
+                        $('#modalActionCargo').modal('show');
+
+                    });
+
+                });
 
                 break;
             case 'edit':
 
-                $scope.form_title = "Editar Rol";
+                $scope.form_title = "Editar Usuario";
                 $scope.idc = id;
 
                 $http.get(API_URL + 'rol/getRolByID/' + id).success(function(response) {
