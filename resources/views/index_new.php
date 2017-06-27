@@ -151,7 +151,7 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Nota de Crédito</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#" ng-click="">Facturación Nota de Crédito</a></li>
+                                            <li><a href="#" ng-click="toModuloNC()">Facturación Nota de Crédito</a></li>
                                             <li><a href="#" ng-click="toModuloReporteNC();">Reporte Nota de Crédito</a></li>
                                         </ul>
                                     </li>
@@ -304,6 +304,7 @@
     <script src="<?= asset('app/controllers/departamentosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/rolController.js') ?>"></script>
     <script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/notaCreditoController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>

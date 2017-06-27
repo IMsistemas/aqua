@@ -782,7 +782,7 @@ Route::get('DocumentoVenta/getProductoPorSuministro', 'Facturacionventa\Document
 Route::get('DocumentoVenta/getInfoClienteXCIRuc/{getInfoCliente}', 'Facturacionventa\DocumentoVenta@getInfoClienteXCIRuc');
 Route::get('DocumentoVenta/getBodega/{texto}', 'Facturacionventa\DocumentoVenta@getinfoBodegas');
 Route::get('DocumentoVenta/getProducto/{texto}', 'Facturacionventa\DocumentoVenta@getinfoProducto');
-Route::get('DocumentoVenta/getheaddocumentoventa', 'Facturacionventa\DocumentoVenta@getPuntoVentaEmpleado'); 
+Route::get('DocumentoVenta/getheaddocumentoventa', 'Facturacionventa\DocumentoVenta@getPuntoVentaEmpleado');
 Route::get('DocumentoVenta/formapago', 'Facturacionventa\DocumentoVenta@getFormaPago');
 Route::get('DocumentoVenta/porcentajeivaiceotro', 'Facturacionventa\DocumentoVenta@getCofiguracioncontable');
 Route::get('DocumentoVenta/AllBodegas', 'Facturacionventa\DocumentoVenta@getAllbodegas');
@@ -799,6 +799,36 @@ Route::get('DocumentoVenta/print/{id}', 'Facturacionventa\DocumentoVenta@imprimi
 
 Route::resource('DocumentoVenta', 'Facturacionventa\DocumentoVenta');
 //------------Modulo documento venta---------------////
+
+//------------Modulo documento nc---------------////
+
+/*Route::get('/DocumentoVenta', function (){
+	return view('DocumentoNC/index');
+});*/
+
+Route::get('DocumentoNC/getSuministroByFactura', 'NotaCredito\NotaCreditoController@getSuministroByFactura');
+//Route::get('DocumentoNC/getProductoPorSuministro/{id}', 'NotaCredito\NotaCreditoController@getProductoPorSuministro');
+Route::get('DocumentoNC/getProductoPorSuministro', 'NotaCredito\NotaCreditoController@getProductoPorSuministro');
+Route::get('DocumentoNC/getInfoClienteXCIRuc/{getInfoCliente}', 'NotaCredito\NotaCreditoController@getInfoClienteXCIRuc');
+Route::get('DocumentoNC/getBodega/{texto}', 'NotaCredito\NotaCreditoController@getinfoBodegas');
+Route::get('DocumentoNC/getProducto/{texto}', 'NotaCredito\NotaCreditoController@getinfoProducto');
+Route::get('DocumentoNC/getheaddocumentoventa', 'NotaCredito\NotaCreditoController@getPuntoVentaEmpleado');
+Route::get('DocumentoNC/formapago', 'NotaCredito\NotaCreditoController@getFormaPago');
+Route::get('DocumentoNC/porcentajeivaiceotro', 'NotaCredito\NotaCreditoController@getCofiguracioncontable');
+Route::get('DocumentoNC/AllBodegas', 'NotaCredito\NotaCreditoController@getAllbodegas');
+Route::get('DocumentoNC/LoadProductos/{id}', 'NotaCredito\NotaCreditoController@getProductoPorBodega');
+Route::get('DocumentoNC/AllServicios', 'NotaCredito\NotaCreditoController@getAllservicios');
+Route::get('DocumentoNC/getVentas/{filtro}', 'NotaCredito\NotaCreditoController@getVentas');
+Route::get('DocumentoNC/getAllFitros', 'NotaCredito\NotaCreditoController@getallFitros');
+Route::get('DocumentoNC/anularVenta/{id}', 'NotaCredito\NotaCreditoController@anularVenta');
+Route::get('DocumentoNC/loadEditVenta/{id}', 'NotaCredito\NotaCreditoController@getVentaXId');
+Route::get('DocumentoNC/excel/{id}', 'NotaCredito\NotaCreditoController@excel');
+Route::get('DocumentoNC/NumRegistroVenta', 'NotaCredito\NotaCreditoController@getDocVenta');
+Route::get('DocumentoNC/cobrar/{id}', 'NotaCredito\NotaCreditoController@confirmarcobro');
+Route::get('DocumentoNC/print/{id}', 'NotaCredito\NotaCreditoController@imprimir');
+
+Route::resource('DocumentoNC', 'NotaCredito\NotaCreditoController');
+//------------Modulo documento nc---------------////
 
 //-------------------------------- Plan Cuentas ---------------/////////
 

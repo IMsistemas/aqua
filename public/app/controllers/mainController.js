@@ -168,6 +168,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "DocumentoVenta";
     }
 
+    $scope.toModuloNC = function(){
+        $scope.titulo = "";
+        $scope.toModulo = "DocumentoNC";
+    }
+
     $scope.toModuloGuiaRemision = function(){
         $scope.titulo = "Ventas";
         $scope.toModulo = "guiaremision";

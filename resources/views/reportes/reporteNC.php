@@ -82,7 +82,7 @@
                         <td>{{$index + 1}}</td>
                         <td>{{item.razonsocial}}</td>
                         <td class="text-center">{{item.fecharegistroncf}}</td>
-                        <td class="text-center">{{item.numdocumentoncf}}</td>
+                        <td class="text-center">{{item.numdocumentonotacredit}}</td>
                         <td class="text-right">$ {{item.subtotalconimpuestoncf}}</td>
                         <td class="text-right">$ {{item.subtotalsinimpuestoncf}}</td>
                         <td class="text-right">$ {{item.subtotalceroncf}}</td>

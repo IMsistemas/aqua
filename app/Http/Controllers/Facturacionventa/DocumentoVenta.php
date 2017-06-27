@@ -75,6 +75,7 @@ class DocumentoVenta extends Controller
         //return view('Facturacionventa/index');
         //return view('Facturacionventa/aux_index');
     }
+
     /**
      * Obtener la informacion de un cliente en especifico
      *
