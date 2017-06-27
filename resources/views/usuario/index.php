@@ -42,7 +42,7 @@
                         <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idusuario)">
                             Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
+                        <button ng-show="item.idusuario != 1" type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
                             Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </td>

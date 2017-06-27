@@ -56,18 +56,41 @@ class IndexController extends Controller
         /*$count = Usuario::where('usuario', $request->input('user'))
                             ->where('password', Hash::make($request->input('pass')))->count();*/
 
-        $count = Usuario::where('usuario', $request->input('user'))
-                            ->where('password', $request->input('pass'))->count();
+        /*$count = Usuario::where('usuario', $request->input('user'))
+                            //->where('password', $request->input('pass'))->count();
+                            ->where('password', Hash::make( $request->input('pass')))->count();
 
         if ($count == 0) {
             return response()->json(['success' => false]);
         } else {
             $usuario = Usuario::where('usuario', $request->input('user'))
-                                ->where('password', $request->input('pass'))->get();
+                                ->where('password', Hash::make( $request->input('pass')))->get();
 
             Session::put('users', $usuario);
 
             return response()->json(['success' => true]);
+        }*/
+
+        $user = Usuario::where( 'usuario', $request->input('user' ) )->get();
+
+        if ( count( $user ) > 0 ) {
+
+            if( Hash::check( $request->input('pass'), $user[0]->password  ) ) {
+
+                Session::put('users', $user);
+
+                return response()->json(['success' => true]);
+
+            } else {
+
+                return response()->json(['success' => false]);
+
+            }
+
+        } else {
+
+            return response()->json(['success' => false]);
+
         }
     }
 
