@@ -206,7 +206,7 @@
                         <fieldset>
                             <legend>Datos Factura de Nota de Crédito</legend>
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Agente Venta: </span>
                                     <select class="form-control" id="AgenteVenta" ng-change="DataNoDocumento();" ng-model="AgenteVenta">
@@ -214,7 +214,7 @@
                                         <option ng-repeat=" p in PuntoVenta"  value="{{p.idpuntoventa}}">{{p.lastnamepersona+' '+p.namepersona}}</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
@@ -253,7 +253,7 @@
 
 
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Nro. Guía Remision: </span>
                                     <span class="input-group-btn" style="width: 15%;">
@@ -264,8 +264,13 @@
                     </span>
                                     <input type="text" class="form-control" id="t_secuencial_guia" name="t_secuencial_guia" ng-model="t_secuencial_guia" ng-keypress="onlyNumber($event, 9, 't_secuencial_guia')" ng-blur="calculateLength('t_secuencial_guia', 9)" />
                                 </div>
-                            </div>
+                            </div>-->
 
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion" ng-required="true"></textarea>
+                                <span class="help-block error"
+                                      ng-show="formventa.observacion.$invalid && formCompra.observacion.$touched">La Observación es requerida</span>
+                            </div>
 
                         </fieldset>
 
@@ -358,7 +363,7 @@
 
                 <div class="col-xs-8">
 
-                    <div class="col-xs-12">
+                    <!--<div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon">Forma Pago: </span>
                             <select class="form-control" id="cmbFormapago" ng-model="cmbFormapago" name="cmbFormapago" required="true">
@@ -367,11 +372,9 @@
                             </select>
                         </div>
                         <span class="help-block error" ng-show="formventa.cmbFormapago.$invalid && formventa.cmbFormapago.$touched">Es requerido la forma de pago</span>
-                    </div>
+                    </div>-->
 
-                    <div class="col-xs-12" style="margin-top: 15px;">
-                        <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion"></textarea>
-                    </div>
+
 
 
 

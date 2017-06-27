@@ -709,7 +709,7 @@ $scope.cmb_estado_fact="A";
             otrosncf:0,
             valortotalncf:$scope.ValorTotal,
     		estadoanulado:'false',
-            motivoncf: 'A',
+            motivoncf: $scope.observacion,
     		idtransaccion:''
     	};
     	//--Documento de venta
