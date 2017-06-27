@@ -454,7 +454,7 @@ class NotaCreditoController extends Controller
         $aux_servv= serviciosenventa:: where("codigoventa","=",$id)->delete();
         $aux_venta= venta::where("codigoventa", $id)
                     ->update(['estaanulada' => 't']);*/
-        Cont_DocumentoNotaCreditFactura::whereRaw("iddocumentoventa=$id")
+        Cont_DocumentoNotaCreditFactura::whereRaw("iddocumentonotacreditfactura=$id")
             ->update(['estadoanulado' => 't']);
         $aux_venta=Cont_DocumentoNotaCreditFactura::find($id);
         CoreContabilidad::AnularAsientoContable($aux_venta->idtransaccion);
@@ -499,8 +499,7 @@ class NotaCreditoController extends Controller
         /*return Cont_DocumentoNotaCreditFactura::with("cliente","Cont_ItemNotaCreditFactura.cont_catalogoitem","cont_puntoventa")
                                     ->whereRaw(" iddocumentoventa='$id' ")
                                     ->get();*/
-        $datadocventa=Cont_DocumentoNotaCreditFactura::with("cont_formapago_documentoventa")
-            ->whereRaw(" iddocumentoventa='$id' ")->get();
+        $datadocventa=Cont_DocumentoNotaCreditFactura::whereRaw(" iddocumentonotacreditfactura='$id' ")->get();
         $dataclient=Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
             ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
             ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
@@ -521,11 +520,8 @@ class NotaCreditoController extends Controller
             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
             ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-            ->whereRaw(" iddocumentoventa=$id ")
+            ->whereRaw(" iddocumentonotacreditfactura=$id ")
             ->get();
-
-
-
 
         $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=".$datadocventa[0]->idtransaccion."")->get();
         $full_data_venta= array(

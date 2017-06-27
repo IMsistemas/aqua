@@ -806,7 +806,7 @@ $scope.cmb_estado_fact="A";
     };
     ///---
     $scope.ViewVenta=function(venta){
-    	$http.get(API_URL + 'DocumentoNC/loadEditVenta/'+venta.iddocumentoventa)
+    	$http.get(API_URL + 'DocumentoNC/loadEditVenta/'+venta.iddocumentonotacreditfactura)
 	        .success(function(response){
 	            console.log(response);
                 $scope.VerFactura=1;
@@ -814,24 +814,30 @@ $scope.cmb_estado_fact="A";
                 var aux_ventadata=response.Venta[0];
                 var aux_transaccion=response.Contabilidad[0];
 
-                $scope.AgenteVenta=String(aux_ventadata.idpuntoventa);
+                //$scope.AgenteVenta=String(aux_ventadata.idpuntoventa);
                 $scope.DataNoDocumento();
-                $scope.NoAutorizacion=aux_ventadata.nroautorizacionventa;
-                var aux_guiar=aux_ventadata.nroguiaremision.split("-");
-                $scope.t_establ_guia=aux_guiar[0];
-                $scope.t_pto_guia=aux_guiar[1];
-                $scope.t_secuencial_guia=aux_guiar[2];
-                $scope.IdDocumentoVentaedit=String(aux_ventadata.iddocumentoventa);
-                $scope.NoVenta=String(aux_ventadata.iddocumentoventa);
+                $scope.NoAutorizacion=aux_ventadata.nroautorizacionncf;
+                //var aux_guiar=aux_ventadata.nroguiaremision.split("-");
+
+                //$scope.t_establ_guia=aux_guiar[0];
+                //$scope.t_pto_guia=aux_guiar[1];
+                //$scope.t_secuencial_guia=aux_guiar[2];
+
+                $scope.IdDocumentoVentaedit=String(aux_ventadata.iddocumentonotacreditfactura);
+                $scope.NoVenta=String(aux_ventadata.iddocumentonotacreditfactura);
+
                 $("#t_secuencial").val(aux_ventadata.iddocumentoventa);
                 $scope.calculateLength('t_secuencial', 9);
                 $scope.t_secuencial=$("#t_secuencial").val();
-                $scope.FechaRegistro=convertDatetoDB(aux_ventadata.fecharegistroventa,true);
-                $scope.FechaEmision=convertDatetoDB(aux_ventadata.fechaemisionventa,true);
+
+                $scope.FechaRegistro=convertDatetoDB(aux_ventadata.fecharegistroncf,true);
+                $scope.FechaEmision=convertDatetoDB(aux_ventadata.fechaemisionncf,true);
+
                 $scope.observacion=aux_transaccion.descripcion;
-                $scope.cmbFormapago=String(aux_ventadata.cont_formapago_documentoventa[0].idformapago);
-                $scope.ValIRBPNR=parseFloat(aux_ventadata.irbpnrventa);
-                $scope.ValPropina=parseFloat(aux_ventadata.propina);
+                //$scope.cmbFormapago=String(aux_ventadata.cont_formapago_documentoventa[0].idformapago);
+
+                $scope.ValIRBPNR=parseFloat(aux_ventadata.irbpnrncf);
+                $scope.ValPropina=parseFloat(aux_ventadata.propinancf);
 
                 var aux_itemsventa=response.Items;
                 $scope.DICliente=$scope.Cliente.numdocidentific;

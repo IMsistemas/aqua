@@ -10,7 +10,7 @@ class Cont_ItemNotaCreditFactura extends Model
     protected $primaryKey = 'iditemnotacreditfactura';
     public $incrementing = true;
 
-    //public $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'iditemnotacreditfactura',

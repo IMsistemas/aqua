@@ -88,9 +88,9 @@
                             <td>{{v.fechaemisionncf}}</td>
                             <td>{{v.numdocumentonotacredit}}</td>
                             <td>{{v.cliente.persona.lastnamepersona+" "+v.cliente.persona.namepersona}}</td>
-                            <td>{{v.subtotalconimpuestoncf}}</td>
-                            <td>{{v.ivancf}}</td>
-                            <td>{{v.valortotalncf}}</td>
+                            <td class="text-right">$ {{v.subtotalconimpuestoncf}}</td>
+                            <td class="text-right">$ {{v.ivancf}}</td>
+                            <td class="text-right">$ {{v.valortotalncf}}</td>
                             <td>
                                 <button type="button" class="btn btn-info" ng-click="ViewVenta(v)">
                                     <span class="glyphicon glyphicon glyphicon-info-sign"   aria-hidden="true"></span>
@@ -488,7 +488,7 @@
                             <h4 class="modal-title">Mensaje</h4>
                         </div>
                         <div class="modal-body">
-                            <strong>Esta seguro de anular la venta</strong>
+                            <strong>Esta seguro de anular la Nota de Crédito</strong>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
