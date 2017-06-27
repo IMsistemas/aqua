@@ -1015,6 +1015,7 @@ Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
  * ------------------------------------- Modulo Rol---------------------------------------------------------------------
  */
 
+Route::get('rol/getPermisosRol', 'Rol\RolController@getPermisosRol');
 Route::get('rol/getPermisos/{id}', 'Rol\RolController@getPermisos');
 Route::get('rol/getRolByID/{id}', 'Rol\RolController@getRolByID');
 Route::get('rol/getRoles', 'Rol\RolController@getRoles');

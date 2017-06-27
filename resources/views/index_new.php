@@ -70,24 +70,24 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Recaudación <b class = "caret"></b>
                                 </a>
-                                <ul class = "dropdown-menu">
-                                    <li><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
-                                    <li><a href="#" ng-click="toModuloSolicitud();">Solicitud</a></li>
-                                    <li><a href = "#" ng-click="toModuloSuministro();">Suministro</a></li>
-                                    <li><a href = "#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
-                                    <li><a href = "#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>
-                                    <li><a href = "#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
-                                    <li><a href = "#" ng-click="toModuloNewLectura();">Crear Lecturas</a></li>
+                                <ul class="dropdown-menu">
+                                    <li id="permiso_30"><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
+                                    <li id="permiso_31"><a href="#" ng-click="toModuloSolicitud();">Solicitud</a></li>
+                                    <li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministro</a></li>
+                                    <li id="permiso_33"><a href="#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
+                                    <li id="permiso_35"><a href="#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>
+                                    <li id="permiso_34"><a href="#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
+                                    <li id="permiso_36"><a href="#" ng-click="toModuloNewLectura();">Crear Lecturas</a></li>
                                 </ul>
                             </li>
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    SRI <b class = "caret"></b>
+                                    SRI <b class="caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#">Anexo Transaccional Simplificado (ATS)</a></li>
-                                    <li><a href = "#">Registro Facturación Electrónica</a></li>
+                                    <li id="permiso_1"><a href = "#">Anexo Transaccional Simplificado (ATS)</a></li>
+                                    <li id="permiso_2"><a href = "#">Registro Facturación Electrónica</a></li>
                                 </ul>
                             </li>
 
@@ -96,18 +96,17 @@
                                     Contabilidad <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#" ng-click="toModuloProveedores();">Gestión de Proveedores</a></li>
-                                    <li><a href = "#" ng-click="toModuloTransportistas();">Gestión de Transportistas</a></li>
+                                    <li id="permiso_3"><a href="#" ng-click="toModuloProveedores();">Gestión de Proveedores</a></li>
+                                    <li id="permiso_4"><a href="#" ng-click="toModuloTransportistas();">Gestión de Transportistas</a></li>
                                     <li role="separator" class="divider"></li>
 
-                                    <li><a href = "#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
-
+                                    <li id="permiso_5"><a href="#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
 
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes Contabilidad</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloBalance();">Estados Financieros</a></li>
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloReporteVentasBalance();">Ventas / Balance</a></li>
+                                            <li id="permiso_37"><a tabindex="-1" href="#" ng-click="toModuloBalance();">Estados Financieros</a></li>
+                                            <li id="permiso_38"><a tabindex="-1" href="#" ng-click="toModuloReporteVentasBalance();">Ventas / Balance</a></li>
                                         </ul>
                                     </li>
 
@@ -115,10 +114,10 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Inventario</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloCrearBodegas();">Bodega</a></li>
-                                            <li><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo Item</a></li>
-                                            <li><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio</a></li>
-                                            <li><a href="#" ng-click="toModuloInventario();">Registro Inventario y Kardex</a></li>
+                                            <li id="permiso_6"><a tabindex="-1" href="#" ng-click="toModuloCrearBodegas();">Bodega</a></li>
+                                            <li id="permiso_7"><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo Item</a></li>
+                                            <li id="permiso_8"><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio</a></li>
+                                            <li id="permiso_9"><a href="#" ng-click="toModuloInventario();">Registro Inventario y Kardex</a></li>
                                         </ul>
                                     </li>
 
@@ -126,10 +125,10 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Compras</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
-                                            <li><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
-                                            <li><a href="#" ng-click="toModuloCuentasxPagar();">Cuentas por Pagar (Comprobante Egreso)</a></li>
-                                            <li><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
+                                            <li id="permiso_10"><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
+                                            <li id="permiso_11"><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
+                                            <li id="permiso_13"><a href="#" ng-click="toModuloCuentasxPagar();">Cuentas por Pagar (Comprobante Egreso)</a></li>
+                                            <li id="permiso_39"><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
                                     </li>
 
@@ -137,12 +136,12 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Ventas</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
-                                            <li><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
-                                            <li><a href="#">Retención Ventas</a></li>
-                                            <li><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar (Comprobante Ingreso)</a></li>
-                                            <li><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
-                                            <li><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
+                                            <li id="permiso_14"><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
+                                            <li id="permiso_15"><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
+                                            <li id="permiso_16"><a href="#">Retención Ventas</a></li>
+                                            <li id="permiso_18"><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar (Comprobante Ingreso)</a></li>
+                                            <li id="permiso_19"><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
+                                            <li id="permiso_40"><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
                                         </ul>
                                     </li>
 
@@ -151,13 +150,13 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Nota de Crédito</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#" ng-click="toModuloNC()">Facturación Nota de Crédito</a></li>
-                                            <li><a href="#" ng-click="toModuloReporteNC();">Reporte Nota de Crédito</a></li>
+                                            <li id="permiso_20"><a href="#" ng-click="toModuloNC()">Facturación Nota de Crédito</a></li>
+                                            <li id="permiso_41"><a href="#" ng-click="toModuloReporteNC();">Reporte Nota de Crédito</a></li>
                                         </ul>
                                     </li>
 
                                     <li role="separator" class="divider"></li>
-                                    <li><a href = "#" ng-click="toModuloActivosFijos();">Activos Fijos</a></li>
+                                    <li id="permiso_21"><a href = "#" ng-click="toModuloActivosFijos();">Activos Fijos</a></li>
                                 </ul>
                             </li>
 
@@ -166,10 +165,10 @@
                                     Recursos Humanos <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#" ng-click="toModuloDepartamento();">Departamentos</a></li>
-                                    <li><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
-                                    <li><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
-                                    <li><a href = "#" ng-click="">Nómina</a></li>
+                                    <li id="permiso_22"><a href = "#" ng-click="toModuloDepartamento();">Departamentos</a></li>
+                                    <li id="permiso_23"><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
+                                    <li id="permiso_24"><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
+                                    <li id="permiso_25"><a href = "#" ng-click="">Nómina</a></li>
                                 </ul>
                             </li>
 
@@ -178,15 +177,15 @@
                                     Configuración <b class = "caret"></b>
                                 </a>
                                 <ul class = "dropdown-menu">
-                                    <li><a href = "#" ng-click="toModuloConfiguracion();">Configuración del Sistema</a></li>
-                                    <li><a href = "#" ng-click="toModuloNomenclador();">Gestión de Nomencladores</a></li>
+                                    <li id="permiso_26"><a href = "#" ng-click="toModuloConfiguracion();">Configuración del Sistema</a></li>
+                                    <li id="permiso_27"><a href = "#" ng-click="toModuloNomenclador();">Gestión de Nomencladores</a></li>
 
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Sectorización</a>
                                         <ul class="dropdown-menu">
-                                            <li><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
-                                            <li><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
+                                            <li id="permiso_28"><a tabindex="-1" href="#" ng-click="toModuloBarrio();">Zonas</a></li>
+                                            <li id="permiso_29"><a href="#" ng-click="toModuloCalle();">Transversales</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -200,7 +199,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="#profile"><i class="fa fa-pencil-square-o fa-lg" ></i> Perfil</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#" ng-click="toModuloRol()">Roles</a></li>
+                                    <li><a href="#" ng-click="toModuloRol()">Gestión de Roles</a></li>
                                     <li><a href="#" ng-click="">Gestión de Usuarios</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#" ng-click="toLogout();"><i class="fa fa-sign-out fa-lg" ></i> Salir</a></li>

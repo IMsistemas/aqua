@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class RolController extends Controller
 {
@@ -54,6 +55,18 @@ class RolController extends Controller
 
     public function getPermisos($id)
     {
+        return Permiso::with([
+            'permiso_rol' => function ($query) use ($id) {
+                $query->where('idrol', $id);
+            }
+
+        ])->orderBy('namepermiso', 'asc')->get();
+    }
+
+    public function getPermisosRol()
+    {
+        $id = Session::get('users')[0]->idrol;
+
         return Permiso::with([
             'permiso_rol' => function ($query) use ($id) {
                 $query->where('idrol', $id);

@@ -19,6 +19,32 @@ app.controller('mainController',function($scope, $http, API_URL) {
 
     };
 
+    $scope.getPermisosRol = function () {
+        $http.get(API_URL + 'rol/getPermisosRol').success(function(response){
+
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                if (response[i].permiso_rol.length > 0) {
+
+                    if (response[i].permiso_rol[0].state === true) {
+
+                        $('#permiso_' + response[i].idpermiso).show();
+
+                    } else {
+
+                        $('#permiso_' + response[i].idpermiso).hide();
+
+                    }
+
+                }
+
+            }
+
+        });
+    };
+
 
     $scope.toLogout = function () {
         $('#modalConfirmLogout').modal('show');
@@ -291,5 +317,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
     }
 
     $scope.prepareListBreadcrumb();
+
+    $scope.getPermisosRol();
 
 });
