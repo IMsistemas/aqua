@@ -189,7 +189,7 @@
                             <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Bodega: </span>
-                                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " ng-required="true">
+                                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " >
                                         <option value="">-- Seleccione --</option>
                                         <option ng-repeat="b in Bodegas" value="{{b.idbodega}}">{{b.namebodega+" "+b.observacion}}</option>
                                     </select>
