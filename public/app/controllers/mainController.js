@@ -28,13 +28,17 @@ app.controller('mainController',function($scope, $http, API_URL) {
 
                 if (response[i].permiso_rol.length > 0) {
 
-                    if (response[i].permiso_rol[0].state === true) {
+                    if (response[i].permiso_rol[0].idrol !== 1) {
 
-                        $('#permiso_' + response[i].idpermiso).show();
+                        if (response[i].permiso_rol[0].state === true) {
 
-                    } else {
+                            $('#permiso_' + response[i].idpermiso).show();
 
-                        $('#permiso_' + response[i].idpermiso).hide();
+                        } else {
+
+                            $('#permiso_' + response[i].idpermiso).hide();
+
+                        }
 
                     }
 
