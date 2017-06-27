@@ -109,11 +109,8 @@
                             <div class="col-xs-12 error" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Password: </span>
-                                    <input type="password" class="form-control" name="password" id="password" ng-model="password" placeholder=""
-                                           ng-required="true">
+                                    <input type="password" class="form-control" name="password" id="password" ng-model="password" placeholder="">
                                 </div>
-                                <span class="help-block error"
-                                      ng-show="formCargo.password.$invalid && formCargo.password.$touched">El Password es requerido</span>
                             </div>
                         </div>
                     </form>
@@ -166,7 +163,7 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Realmente desea eliminar el Rol: <span style="font-weight: bold;">{{cargo_seleccionado}}</span></span>
+                    <span>Realmente desea eliminar el Usuario: <span style="font-weight: bold;">{{cargo_seleccionado}}</span></span>
 
                 </div>
                 <div class="modal-footer">

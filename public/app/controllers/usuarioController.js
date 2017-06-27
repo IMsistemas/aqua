@@ -4,7 +4,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
     $scope.departamentos = [];
     $scope.idcargo_del = 0;
-    $scope.idrol = 0;
+    $scope.idusuario = 0;
     $scope.modalstate = '';
 
     $scope.pageChanged = function(newPage) {
@@ -71,7 +71,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
             case 'edit':
 
                 $scope.form_title = "Editar Usuario";
-                $scope.idc = id;
+                $scope.idusuario = id;
 
 
                 $http.get(API_URL + 'usuario/getRoles').success(function(response){
@@ -95,8 +95,6 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
                         $scope.empleado = '';
 
                         $http.get(API_URL + 'usuario/' + id).success(function(response){
-
-                            console.log(response);
 
                             $scope.rol = response.idrol;
 
@@ -145,6 +143,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
                     $('#modalActionCargo').modal('hide');
 
                     if (response.success == true) {
+                        $scope.idusuario = 0;
                         $scope.initLoad(1);
                         $scope.message = 'Se insertó correctamente el Usuario...';
                         $('#modalMessage').modal('show');
@@ -163,23 +162,24 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
                 });
                 break;
             case 'edit':
-                $http.put(API_URL + 'rol/'+ $scope.idc, data ).success(function (response) {
+                $http.put(API_URL + 'usuario/'+ $scope.idusuario, data ).success(function (response) {
 
                     if (response.success == true) {
                         $scope.initLoad(1);
                         $('#modalActionCargo').modal('hide');
-                        $scope.message = 'Se editó correctamente el Rol seleccionado';
+                        $scope.message = 'Se editó correctamente el Usuario seleccionado';
                         $('#modalMessage').modal('show');
                     } else {
-                        if (response.repeat == true) {
-                            $scope.message_error = 'Ya existe ese Rol...';
+                        if (response.exists !== undefined) {
+                            $scope.message_error = 'Ya existe ese Usuario registrado...';
                         } else {
-                            $scope.message_error = 'Ha ocurrido un error al intentar editar el Rol seleccionado...';
+                            $scope.message_error = 'Ha ocurrido un error al intentar editar el Usuario seleccionado...';
                         }
                         $('#modalMessageError').modal('show');
                     }
 
                     $scope.hideModalMessage();
+
                 }).error(function (res) {
 
                 });
@@ -217,19 +217,19 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
     };
 
-    $scope.showModalConfirm = function (rol) {
-        $scope.idcargo_del = rol.idrol;
-        $scope.cargo_seleccionado = rol.namerol;
+    $scope.showModalConfirm = function (item) {
+        $scope.idusuario = item.idusuario;
+        $scope.cargo_seleccionado = item.usuario;
         $('#modalConfirmDelete').modal('show');
     };
 
     $scope.delete = function(){
-        $http.delete(API_URL + 'rol/' + $scope.idcargo_del).success(function(response) {
+        $http.delete(API_URL + 'usuario/' + $scope.idusuario).success(function(response) {
             if(response.success == true){
                 $scope.initLoad(1);
                 $('#modalConfirmDelete').modal('hide');
-                $scope.idcargo_del = 0;
-                $scope.message = 'Se eliminó correctamente el Rol seleccionado...';
+                $scope.idusuario = 0;
+                $scope.message = 'Se eliminó correctamente el Usuario seleccionado...';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
 

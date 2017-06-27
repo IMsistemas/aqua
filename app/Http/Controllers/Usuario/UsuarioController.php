@@ -128,7 +128,30 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $result = Usuario::where('usuario', $request->input('usuario'))
+                            ->where('idusuario', '!=', $id)->count();
+
+        if ($result == 0) {
+
+            $user = Usuario::find($id);
+            $user->idrol = $request->input('idrol');
+            $user->usuario = $request->input('usuario');
+
+            if ($request->input('idempleado') != null) {
+                $user->idempleado = $request->input('idempleado');
+            }
+
+            $user->password = Hash::make($request->input('password'));
+
+            if ($user->save()) {
+                return response()->json(['success' => true]);
+            } else return response()->json(['success' => false]);
+
+        } else {
+            return response()->json(['success' => false, 'exists' => true]);
+        }
+
     }
 
     /**
@@ -139,6 +162,12 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Usuario::find($id);
+
+        if ($user->delete()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }
