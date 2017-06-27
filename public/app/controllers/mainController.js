@@ -59,6 +59,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "rol";
     };
 
+    $scope.toModuloUsuario = function(){
+        $scope.titulo = "";
+        $scope.toModulo = "usuario";
+    };
+
     $scope.toModuloEmpleado = function(){
         $scope.titulo = "Colaboradores";
         $scope.toModulo = "empleado";

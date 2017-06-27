@@ -1024,6 +1024,16 @@ Route::post('rol/savePermisos', 'Rol\RolController@savePermisos');
 Route::resource('/rol', 'Rol\RolController');
 
 /*
+ * ------------------------------------- Modulo Usuario-----------------------------------------------------------------
+ */
+
+
+Route::get('usuario/getUsuarios', 'Usuario\UsuarioController@getUsuarios');
+
+Route::resource('/usuario', 'Usuario\UsuarioController');
+
+
+/*
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
  */
 

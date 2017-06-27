@@ -1,10 +1,10 @@
 
 
-<div ng-controller="rolController">
+<div ng-controller="usuarioController">
 
     <div class="col-xs-12">
 
-        <h4>Gestión de Roles</h4>
+        <h4>Gestión de Usuarios</h4>
 
         <hr>
 
@@ -29,21 +29,20 @@
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
-                    <th>Nombre Rol</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
                     <th style="width: 35%;">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr dir-paginate="item in roles | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                <tr dir-paginate="item in usuarios | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                    <td>{{item.usuario}}</td>
                     <td>{{item.namerol}}</td>
                     <td class="text-center">
-                        <button ng-show="item.idrol != 1" type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
-                            Permisos <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                        </button>
                         <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
                             Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button ng-show="item.idrol != 1" type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
+                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
                             Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </td>

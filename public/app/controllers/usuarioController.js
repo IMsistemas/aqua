@@ -1,6 +1,6 @@
 
 
-app.controller('rolController', function($scope, $http, API_URL) {
+app.controller('usuarioController', function($scope, $http, API_URL) {
 
     $scope.departamentos = [];
     $scope.idcargo_del = 0;
@@ -21,9 +21,9 @@ app.controller('rolController', function($scope, $http, API_URL) {
             search: search
         };
 
-        $http.get(API_URL + 'rol/getRoles?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).
+        $http.get(API_URL + 'usuario/getUsuarios?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).
         success(function(response){
-            $scope.roles = response.data;
+            $scope.usuarios = response.data;
             $scope.totalItems = response.total;
         });
     };
@@ -198,6 +198,6 @@ app.controller('rolController', function($scope, $http, API_URL) {
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
-    $scope.initLoad();
+    $scope.initLoad(1);
 
 });
