@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rol;
 
 use App\Modelos\Rol\Permiso;
+use App\Modelos\Rol\PermisoRol;
 use App\Modelos\Rol\Rol;
 use App\Modelos\Usuario\Usuario;
 use Illuminate\Http\Request;
@@ -51,9 +52,18 @@ class RolController extends Controller
         return Rol::where('idrol', $id)->get();
     }
 
-    public function getPermisos()
+    public function getPermisos($id)
     {
-        return Permiso::orderBy('namepermiso', 'asc')->get();
+        return Permiso::with([
+            'permiso_rol' => function ($query) use ($id) {
+                return $query->with([
+                    'rol' => function ($query_rol) use ($id) {
+                        $query_rol->whereRaw("rol.idrol = " . $id);
+                    }
+                ]);
+            }
+
+        ])->orderBy('namepermiso', 'asc')->get();
     }
 
     /**
@@ -88,6 +98,42 @@ class RolController extends Controller
                 return response()->json(['success' => false]);
             }
         }
+    }
+
+    public function savePermisos(Request $request)
+    {
+
+        $idrol = $request->input('idrol');
+
+        foreach ($request->input('permisos') as $element) {
+
+            $result = PermisoRol::where('idrol', $idrol)->where('idpermiso', $element['idpermiso'])->get();
+
+            if (count($result) == 0) {
+
+                $permiso_rol = new PermisoRol();
+                $permiso_rol->idrol = $idrol;
+                $permiso_rol->idpermiso = $element['idpermiso'];
+                $permiso_rol->state = $element['state'];
+
+                if ($permiso_rol->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+
+            } else {
+
+                $object = PermisoRol::where('idrol', $idrol)->where('idpermiso', $element['idpermiso']);
+
+                if ($object->update(['state' => $element['state']]) == false){
+                    return response()->json(['success' => false]);
+                }
+
+            }
+
+        }
+
+        return response()->json(['success' => true]);
+
     }
 
     /**
