@@ -56,11 +56,7 @@ class RolController extends Controller
     {
         return Permiso::with([
             'permiso_rol' => function ($query) use ($id) {
-                return $query->with([
-                    'rol' => function ($query_rol) use ($id) {
-                        $query_rol->whereRaw("rol.idrol = " . $id);
-                    }
-                ]);
+                $query->where('idrol', $id);
             }
 
         ])->orderBy('namepermiso', 'asc')->get();
