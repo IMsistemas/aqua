@@ -686,20 +686,21 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
         if (object.originalObject != undefined) {
 
-            $scope.ProveedorContable = object.originalObject.proveedor.cont_plancuenta;
+            $scope.ProveedorContable = object.originalObject.cliente.cont_plancuenta;
 
-            $scope.iddocumentocompra = object.originalObject.iddocumentocompra;
+            $scope.iddocumentocompra = object.originalObject.iddocumentoventa;
 
-            $scope.t_rucci = object.originalObject.proveedor.persona.numdocidentific;
-            $scope.t_razonsocial = object.originalObject.proveedor.persona.razonsocial;
-            $scope.t_nroautorizacion = object.originalObject.sri_comprobanteretencion.noauthcomprobante;
-            var nocomprobante = object.originalObject.sri_comprobanteretencion.nocomprobante;
+            $scope.t_rucci = object.originalObject.cliente.persona.numdocidentific;
+            $scope.t_razonsocial = object.originalObject.cliente.persona.razonsocial;
 
-            nocomprobante = nocomprobante.split('-');
+            //$scope.t_nroautorizacion = object.originalObject.sri_comprobanteretencion.noauthcomprobante;
+            //var nocomprobante = object.originalObject.sri_comprobanteretencion.nocomprobante;
 
-            $scope.t_establ = nocomprobante[0];
-            $scope.t_pto = nocomprobante[1];
-            $scope.t_secuencial = nocomprobante[2];
+            //nocomprobante = nocomprobante.split('-');
+
+            //$scope.t_establ = nocomprobante[0];
+            //$scope.t_pto = nocomprobante[1];
+            //$scope.t_secuencial = nocomprobante[2];
 
             /*$scope.t_phone = object.originalObject.telefonoproveedor;
              $scope.t_direccion = object.originalObject.direccionproveedor;
@@ -707,7 +708,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
              $scope.t_ciudad = object.originalObject.nombreciudad;*/
 
             //$scope.baseimponible = object.originalObject.subtotalnoivacompra;
-            $scope.baseimponible = object.originalObject.subtotalsinimpuestocompra;
+            $scope.baseimponible = object.originalObject.subtotalsinimpuestoventa;
 
             $scope.baseimponibleIVA = object.originalObject.ivacompra;
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Retencion Compras</title>
+    <title>Retencion Ventas</title>
 
     <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
@@ -26,7 +26,7 @@
 
     <div class="col-xs-12">
 
-        <h4>Retención de Compras</h4>
+        <h4>Retención de Ventas</h4>
 
         <hr>
 
@@ -60,10 +60,10 @@
                 </select>
             </div>-->
             <div class="col-sm-1 col-xs-12">
-                <!--<button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
-                        data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Compra">
+                <button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
+                        data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Venta">
                     <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
-                </button>-->
+                </button>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th class="text-center" ng-click="sort('')">
-                        Proveedor
+                        Cliente
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
@@ -235,7 +235,7 @@
 
                 <div class="col-sm-4 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Compra Nro.: </span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Nro. Documento: </span>
                         <!--<input type="text" class="form-control" id="t_nrocompra" name="t_nrocompra" ng-model="t_nrocompra" placeholder="" />-->
 
                         <angucomplete-alt
@@ -245,7 +245,7 @@
 
                                 remote-url = "{{API_URL}}retencionVenta/getCompras/"
 
-                                title-field="numdocumentocompra"
+                                title-field="numdocumentoventa"
 
                                 minlength="1"
                                 input-class="form-control"
@@ -253,8 +253,8 @@
                                 field-required="true"
                                 input-name="t_nrocompra"
                                 disable-input="guardado"
-                                text-searching="Buscando Compras"
-                                text-no-results="Compra no encontrada"
+                                text-searching="Buscando Documentos de Ventas"
+                                text-no-results="Venta no encontrada"
 
                         />
 
@@ -312,18 +312,18 @@
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nro. Documento: </span>
                         <span class="input-group-btn" style="width: 15%;">
-                                        <input disabled type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
+                                        <input  type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
                                     </span>
                         <span class="input-group-btn" style="width: 15%;" >
-                                        <input disabled type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
+                                        <input  type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
                                     </span>
-                        <input disabled type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
+                        <input  type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12 error">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Autorización: </span>
-                        <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion" disabled
+                        <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
                                ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
                     </div>
                     <span class="help-block error" style="text-align: right !important; color: red;"
