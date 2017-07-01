@@ -122,6 +122,17 @@ Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@for
 Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
+Route::post('retencionVenta/anularRetencion', 'Retencion\RetencionVentaController@anularRetencion');
+Route::get('retencionVenta/getLastIDRetencion', 'Retencion\RetencionVentaController@getLastIDRetencion');
+Route::get('retencionVenta/getConfigContabilidad', 'Retencion\RetencionVentaController@getConfigContabilidad');
+Route::get('retencionVenta/getRetenciones', 'Retencion\RetencionVentaController@getRetenciones');
+Route::get('retencionVenta/getRetencionesByCompra/{id}', 'Retencion\RetencionVentaController@getRetencionesByCompra');
+Route::get('retencionVenta/getCompras/{codigo}', 'Retencion\RetencionVentaController@getCompras');
+Route::get('retencionVenta/getCodigos/{codigo}', 'Retencion\RetencionVentaController@getCodigos');
+Route::get('retencionVenta/form/{id}', 'Retencion\RetencionVentaController@form');
+Route::get('retencionVenta/getCodigosRetencion/{tipo}', 'Retencion\RetencionVentaController@getCodigosRetencion');
+Route::resource('retencionVenta', 'Retencion\RetencionVentaController');
+
 /*
  * ---------------------------------------------------------------------------------------------------------------------
  */
