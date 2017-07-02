@@ -117,21 +117,29 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
              Object.defineProperty(response.data[i], 'total_retenido', total_retenido);
              }*/
 
+            $scope.getTipoPagoComprobante();
+            $scope.getPaisPagoComprobante();
+
             var longitud = response.data.length;
             for (var i = 0; i < longitud; i++) {
 
-                var longitud_sri_retenciondetallecompra = (response.data[i].cont_documentocompra[0].sri_retencioncompra).length;
+                //var longitud_sri_retenciondetallecompra = (response.data[i].sri_retenciondetalleventa).length;
+
+                var longitud_sri_retenciondetallecompra = (response.data[i].cont_documentoventa[0].sri_retencionventa).length;
 
                 var total = 0;
 
                 if (longitud_sri_retenciondetallecompra > 0) {
 
-                    var longitud_detalleretencion = response.data[i].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra.length;
+                    //var longitud_detalleretencion = response.data[i].sri_retenciondetalleventa.length;
 
+                    var longitud_detalleretencion = response.data[i].cont_documentoventa[0].sri_retencionventa[0].sri_retenciondetalleventa.length;
 
                     for (var j = 0; j < longitud_detalleretencion; j++) {
 
-                        var valorretenido = response.data[i].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra[j].valorretenido;
+                        //var valorretenido = response.data[i].sri_retenciondetalleventa[j].valorretenido;
+
+                        var valorretenido = response.data[i].cont_documentoventa[0].sri_retencionventa[0].sri_retenciondetalleventa[j].valorretenido;
 
                         total += parseFloat(valorretenido);
                     }
@@ -169,21 +177,66 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
             console.log(response);
 
-            $scope.ProveedorContable = response[0].cont_documentocompra[0].proveedor.cont_plancuenta;
+            $scope.estados = [
+                { id: 1, name: 'SI' },
+                { id: 2, name: 'NO' }
+            ];
 
-            $scope.iddocumentocompra = response[0].cont_documentocompra[0].iddocumentocompra;
+            if (response[0].regimenfiscal === true) {
+                $scope.regimenfiscal = 1;
+            } else {
+                $scope.regimenfiscal = 2;
+            }
+
+            if (response[0].conveniotributacion === true) {
+                $scope.convenio = 1;
+            } else {
+                $scope.convenio = 2;
+            }
+
+            if (response[0].normalegal === true) {
+                $scope.normalegal = 1;
+            } else {
+                $scope.normalegal = 2;
+            }
+
+            if (response[0].idpagoresidente === true) {
+                $scope.tipopago = 1;
+            } else {
+                $scope.tipopago = 2;
+            }
+
+            if (response[0].idpagopais === true) {
+                $scope.paispago = 1;
+            } else {
+                $scope.paispago = 2;
+            }
+
+
+            $('#fechaemisioncomprobante').val(response[0].fechaemisioncomprob);
+
+            $('#t_establ_c').val('000');
+            $('#t_pto_c').val('000');
+            $('#t_secuencial_c').val('000000000');
+
+
+            $scope.t_nroautorizacion = '';
+
+            $scope.ProveedorContable = response[0].cont_documentoventa[0].cliente.cont_plancuenta;
+
+            $scope.iddocumentocompra = response[0].cont_documentoventa[0].iddocumentoventa;
 
             $scope.t_fechaingreso = $scope.convertDatetoDB(response[0].fechaemisioncomprob, true);
             //$scope.t_nroretencion = (response[0].numeroretencion).trim();
 
-            $('#t_nrocompra').val((response[0].numdocumentocompra).toString());
+            $('#t_nrocompra').val((response[0].numdocumentoventa).toString());
 
-            $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (response[0].numdocumentocompra).toString());
+            $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (response[0].numdocumentoventa).toString());
 
-            $scope.t_rucci = response[0].cont_documentocompra[0].proveedor.persona.numdocidentific;
-            $scope.t_razonsocial = response[0].cont_documentocompra[0].proveedor.persona.razonsocial;
-            $scope.t_phone = response[0].cont_documentocompra[0].proveedor.telefonoprincipal;
-            $scope.t_direccion = response[0].cont_documentocompra[0].proveedor.persona.direccion;
+            $scope.t_rucci = response[0].cont_documentoventa[0].cliente.persona.numdocidentific;
+            $scope.t_razonsocial = response[0].cont_documentoventa[0].cliente.persona.razonsocial;
+            $scope.t_phone = response[0].cont_documentoventa[0].cliente.telefonoprincipal;
+            $scope.t_direccion = response[0].cont_documentoventa[0].cliente.persona.direccion;
             //$scope.t_ciudad = response[0].nombreciudad;
             //$scope.t_tipocomprobante = response[0].nombretipocomprobante;
 
@@ -195,20 +248,20 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
             $scope.t_nroautorizacion = response[0].noauthcomprobante;
 
-            $scope.baseimponible = response[0].cont_documentocompra[0].subtotalsinimpuestocompra;
-            $scope.baseimponibleIVA = response[0].cont_documentocompra[0].ivacompra;
+            $scope.baseimponible = response[0].cont_documentoventa[0].subtotalsinimpuestoventa;
+            $scope.baseimponibleIVA = response[0].cont_documentoventa[0].ivacompra;
 
-            var longitud_r = response[0].cont_documentocompra[0].sri_retencioncompra.length;
+            var longitud_r = response[0].cont_documentoventa[0].sri_retencionventa.length;
 
             $scope.itemretencion = [];
 
             if (longitud_r > 0) {
 
-                var longitud = response[0].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra.length;
+                var longitud = response[0].cont_documentoventa[0].sri_retencionventa[0].sri_retenciondetalleventa.length;
 
                 for (var i = 0; i < longitud; i++) {
 
-                    var item = response[0].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra[i];
+                    var item = response[0].cont_documentoventa[0].sri_retencionventa[0].sri_retenciondetalleventa[i];
 
                     var object_row = {
                         year: (response[0].fechaemisioncomprob).split('-')[0],
@@ -321,9 +374,9 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
-                if (response[i].optionname == 'SRI_RETEN_IVA_COMPRA') {
+                if (response[i].optionname == 'SRI_RETEN_IVA_VENTA') {
                     $scope.ConfiguracionContableRetenIVA = response[i];
-                } else if (response[i].optionname == 'SRI_RETEN_RENTA_COMPRA') {
+                } else if (response[i].optionname == 'SRI_RETEN_RENTA_VENTA') {
                     $scope.ConfiguracionContableRetenRENTA = response[i];
                 }
             }
@@ -335,11 +388,49 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         });
     };
 
+    $scope.getTipoPagoComprobante = function () {
+
+        $http.get(API_URL + 'DocumentoCompras/getTipoPagoComprobante').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+            for (var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].tipopagoresidente, id: response[i].idpagoresidente})
+            }
+
+            $scope.listtipopago = array_temp;
+            $scope.tipopago = array_temp[0].id
+
+        });
+
+    };
+
+    $scope.getPaisPagoComprobante = function () {
+
+        $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+            for (var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].pais, id: response[i].idpagopais})
+            }
+
+            $scope.listpaispago = array_temp;
+            $scope.paispago = array_temp[0].id
+
+        });
+
+    };
+
     $scope.newForm = function () {
 
         $scope.getLastIDRetencion();
-
         $scope.getConfigContabilidad();
+
+        $scope.getTipoPagoComprobante();
+        $scope.getPaisPagoComprobante();
 
         $scope.t_fechaingreso = $scope.nowDate();
         $scope.t_nroretencion = '';
@@ -358,6 +449,24 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         $scope.t_establ = '';
         $scope.t_pto = '';
         $scope.t_secuencial = '';
+
+        // Campos de Comprobante-------
+
+        $scope.estados = [
+            { id: 1, name: 'SI' },
+            { id: 2, name: 'NO' }
+        ];
+
+        $scope.regimenfiscal = 1;
+        $scope.convenio = 1;
+        $scope.normalegal = 1;
+
+        $('#fechaemisioncomprobante').val('');
+
+        $('#t_establ_c').val('000');
+        $('#t_pto_c').val('000');
+        $('#t_secuencial_c').val('000000000');
+
 
         $scope.t_nroautorizacion = '';
 
@@ -458,9 +567,9 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
         var transaccion = {
             fecha: $scope.t_fechaingreso,
-            idtipotransaccion: 7,
+            idtipotransaccion: 6,
             numcomprobante: 1,
-            descripcion: 'RETENCIONES COMPRA'
+            descripcion: 'RETENCIONES VENTA'
         };
 
         var registroC = [];
@@ -470,8 +579,8 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
             concepto: $scope.ProveedorContable.concepto,
             controlhaber: $scope.ProveedorContable.controlhaber,
             tipocuenta: $scope.ProveedorContable.tipocuenta,
-            Debe: $scope.t_total,
-            Haber: 0,
+            Debe: 0,
+            Haber: $scope.t_total,
             Descipcion: ''
         };
 
@@ -490,8 +599,8 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
                     concepto: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].concepto,
                     controlhaber: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].controlhaber,
                     tipocuenta: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].tipocuenta,
-                    Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
-                    Debe: 0,
+                    Debe: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                    Haber: 0,
                     Descipcion: ''
                 };
 
@@ -504,8 +613,8 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
                     concepto: $scope.ConfiguracionContableRetenIVA.contabilidad[0].concepto,
                     controlhaber: $scope.ConfiguracionContableRetenIVA.contabilidad[0].controlhaber,
                     tipocuenta: $scope.ConfiguracionContableRetenIVA.contabilidad[0].tipocuenta,
-                    Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
-                    Debe: 0,
+                    Debe: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                    Haber: 0,
                     Descipcion: ''
                 };
 
@@ -530,11 +639,35 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
          retenciones: $scope.itemretencion
          };*/
 
+
+        var dataComprobante = null;
+
+        if ($scope.tipopago != '' && $scope.tipopago != undefined) {
+
+            var pais = null;
+
+            if ($scope.paispago != null && $scope.paispago != undefined && $scope.paispago != '') {
+                pais = $scope.paispago;
+            }
+
+            dataComprobante = {
+                tipopago: $scope.tipopago,
+                paispago: pais,
+                regimenfiscal: $scope.regimenfiscal,
+                convenio: $scope.convenio,
+                normalegal: $scope.normalegal,
+                fechaemisioncomprobante: $('#fechaemisioncomprobante').val(),
+                nocomprobante: $('#t_establ').val() + '-' + $('#t_pto').val() + '-' + $('#t_secuencial').val(),
+                noauthcomprobante: $scope.t_nroautorizacion
+            }
+        }
+
         var data_full = {
             //dataContabilidad: Contabilidad,
             dataContabilidad: JSON.stringify(Contabilidad),
-            iddocumentocompra: $scope.iddocumentocompra,
-            retenciones: $scope.itemretencion
+            iddocumentoventa: $scope.iddocumentocompra,
+            retenciones: $scope.itemretencion,
+            dataComprobante: dataComprobante
         };
 
         console.log(data_full);
@@ -545,7 +678,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
         $http.post(url, data_full).success(function (response) {
             if (response.success == true) {
-                $scope.idretencion = response.idretencioncompra;
+                $scope.idretencion = response.idretencionventa;
                 //$('#btn-export').show();
                 $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
                 $('#modalMessage').modal('show');
@@ -834,7 +967,7 @@ $(function () {
 
     $('.datepicker').datetimepicker({
         locale: 'es',
-        format: 'DD/MM/YYYY',
+        format: 'YYYY-MM-DD',
         ignoreReadonly: false
     });
 

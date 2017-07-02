@@ -27,4 +27,9 @@ class SRI_ComprobanteRetencion extends Model
         return $this->hasMany('App\Modelos\Contabilidad\Cont_DocumentoCompra',"idcomprobanteretencion");
     }
 
+    public function cont_documentoventa()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_DocumentoVenta',"idcomprobanteretencion");
+    }
+
 }

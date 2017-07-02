@@ -58,4 +58,9 @@ class Cont_DocumentoVenta extends Model
         return $this->hasMany('App\Modelos\Cuentas\CuentasporCobrar',"iddocumentoventa");
     }
 
+    public function sri_retencionventa()
+    {
+        return $this->hasMany('App\Modelos\SRI\SRI_RetencionVenta','iddocumentoventa');
+    }
+
 }

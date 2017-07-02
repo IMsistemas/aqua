@@ -125,10 +125,10 @@
                     -->
 
                     <td class="text-center">{{item.fechaemisioncomprob | formatDate}}</td>
-                    <td style="font-weight: bold;">{{item.cont_documentocompra[0].proveedor.persona.razonsocial}}</td>
+                    <td style="font-weight: bold;">{{item.cont_documentoventa[0].cliente.persona.razonsocial}}</td>
                     <td class="text-center">{{item.nocomprobante}}</td>
                     <td class="text-right">$ {{item.total_retenido}}</td>
-                    <td class="text-right">{{(item.cont_documentocompra[0].sri_retencioncompra[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
+                    <td class="text-right">{{(item.cont_documentoventa[0].sri_retencioncompra[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                     <td  class="text-center">
                         <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
                             <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
@@ -214,7 +214,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12" style="margin-top: 15px;">
+            <div class="container" style="margin-bottom: 5px;">
                 <div class="col-sm-4 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Fecha Ingreso: </span>
@@ -265,7 +265,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12" style="margin-top: 5px;">
+            <div class="container" style="margin-top: 5px;">
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> RUC / CI: </span>
@@ -307,8 +307,60 @@
                     </div>
                 </div>
             </div> -->
-            <div class="col-xs-12" style="margin-top: 5px;">
-                <div class="col-sm-6 col-xs-12">
+            <div class="container" style="margin-top: 5px;">
+
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Tipo de Pago: </span>
+                        <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
+                                ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()">
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Pais Pago: </span>
+                        <select class="form-control" name="paispago" id="paispago" ng-model="paispago"
+                                ng-options="value.id as value.label for value in listpaispago">
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-xs-6" style="margin-top: 5px;">
+                    <div class="input-group">
+                        <span class="input-group-addon">Régimen Fiscal?: </span>
+                        <select class="form-control" name="regimenfiscal" id="regimenfiscal" ng-model="regimenfiscal"
+                                ng-options="value.id as value.name for value in estados" >
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6" style="margin-top: 5px;">
+                    <div class="input-group">
+                        <span class="input-group-addon">Convenio doble Tributación?: </span>
+                        <select class="form-control" name="convenio" id="convenio" ng-model="convenio"
+                                ng-options="value.id as value.name for value in estados">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-6" style="margin-top: 5px;">
+                    <div class="input-group">
+                        <span class="input-group-addon">Aplicación de Norma Legal?: </span>
+                        <select class="form-control" name="normalegal" id="normalegal" ng-model="normalegal"
+                                ng-options="value.id as value.name for value in estados">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6" style="margin-top: 5px;">
+                    <div class="input-group">
+                        <span class="input-group-addon">Fecha Emisión Comprobante: </span>
+                        <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nro. Documento: </span>
                         <span class="input-group-btn" style="width: 15%;">
@@ -320,7 +372,7 @@
                         <input  type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-12 error">
+                <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Autorización: </span>
                         <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"

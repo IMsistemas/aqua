@@ -16,6 +16,7 @@ use App\Modelos\SRI\SRI_ComprobanteRetencion;
 use App\Modelos\SRI\SRI_DetalleImpuestoRetencion;
 use App\Modelos\SRI\SRI_RetencionCompra;
 use App\Modelos\SRI\SRI_RetencionDetalleCompra;
+use App\Modelos\SRI\SRI_RetencionDetalleVenta;
 use App\Modelos\SRI\SRI_RetencionVenta;
 use Illuminate\Http\Request;
 
@@ -39,15 +40,15 @@ class RetencionVentaController extends Controller
         return view('retencion.form_retencionCompra', ['idretencioncompra' => $id]);
     }
 
-    /*public function getRetenciones(Request $request)
+    public function getRetenciones(Request $request)
     {
 
         $filter = json_decode($request->get('filter'));
 
         $search = $filter->search;
 
-        $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
-            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra');
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentoventa', 'cont_documentoventa.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentoventa.cliente.persona', 'cont_documentoventa.sri_retencionventa.sri_retenciondetalleventa');
 
 
         if ($search != null) {
@@ -56,9 +57,9 @@ class RetencionVentaController extends Controller
 
         return $retencion->orderBy('fechaemisioncomprob', 'desc')->paginate(8);
 
-    }*/
+    }
 
-    public function getRetenciones(Request $request)
+    /*public function getRetenciones(Request $request)
     {
 
         $filter = json_decode($request->get('filter'));
@@ -75,11 +76,11 @@ class RetencionVentaController extends Controller
 
         return $retencion->paginate(8);
 
-    }
+    }*/
 
     public function getConfigContabilidad()
     {
-        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_COMPRA' OR optionname = 'SRI_RETEN_RENTA_COMPRA'")->get();
+        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_VENTA' OR optionname = 'SRI_RETEN_RENTA_VENTA'")->get();
 
         $configcontable = [];
 
@@ -187,9 +188,9 @@ class RetencionVentaController extends Controller
 
         $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
 
-        $retencionCompra = new SRI_RetencionCompra();
+        $retencionCompra = new SRI_RetencionVenta();
 
-        $retencionCompra->iddocumentocompra = $request->input('iddocumentocompra');
+        $retencionCompra->iddocumentoventa = $request->input('iddocumentoventa');
         $retencionCompra->idtransaccion = $id_transaccion;
         $retencionCompra->estadoanulado = false;
 
@@ -198,8 +199,8 @@ class RetencionVentaController extends Controller
             $retenciones = $request->input('retenciones');
 
             foreach ($retenciones as $item) {
-                $retencion = new SRI_RetencionDetalleCompra();
-                $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
+                $retencion = new SRI_RetencionDetalleVenta();
+                $retencion->idretencionventa = $retencionCompra->idretencionventa;
                 $retencion->iddetalleimpuestoretencion = $item['id'];
                 $retencion->porcentajeretenido = $item['porciento'];
                 $retencion->valorretenido = $item['valor'];
@@ -209,7 +210,35 @@ class RetencionVentaController extends Controller
                 }
             }
 
-            return response()->json(['success' => true, 'idretencioncompra' => $retencionCompra->idretencioncompra]);
+            $dataComprobante = $request->input('dataComprobante');
+
+            $comprobante = new SRI_ComprobanteRetencion();
+
+            $comprobante->idpagoresidente = $dataComprobante['tipopago'];
+            $comprobante->idpagopais = $dataComprobante['paispago'];
+            $comprobante->regimenfiscal = $dataComprobante['regimenfiscal'];
+            $comprobante->conveniotributacion = $dataComprobante['convenio'];
+            $comprobante->normalegal = $dataComprobante['normalegal'];
+            $comprobante->fechaemisioncomprob = $dataComprobante['fechaemisioncomprobante'];
+            $comprobante->nocomprobante = $dataComprobante['nocomprobante'];
+            $comprobante->noauthcomprobante = $dataComprobante['noauthcomprobante'];
+
+            if ($comprobante->save()) {
+
+                $id = $comprobante->idcomprobanteretencion;
+
+                $last_c = Cont_DocumentoVenta::find($request->input('iddocumentoventa'));
+                $last_c->idcomprobanteretencion = $id;
+
+                if ($last_c->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+
+            } else {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true, 'idretencionventa' => $retencionCompra->idretencionventa]);
 
         } else return response()->json(['success' => false]);
     }
@@ -223,8 +252,8 @@ class RetencionVentaController extends Controller
     public function show($id)
     {
 
-        $retencion = SRI_ComprobanteRetencion::join('cont_documentocompra', 'cont_documentocompra.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
-            ->with('cont_documentocompra.proveedor.persona', 'cont_documentocompra.proveedor.cont_plancuenta', 'cont_documentocompra.sri_retencioncompra.sri_retenciondetallecompra.sri_detalleimpuestoretencion.sri_tipoimpuestoretencion')
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentoventa', 'cont_documentoventa.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentoventa.cliente.persona', 'cont_documentoventa.cliente.cont_plancuenta', 'cont_documentoventa.sri_retencionventa.sri_retenciondetalleventa.sri_detalleimpuestoretencion.sri_tipoimpuestoretencion')
             ->orderBy('fechaemisioncomprob', 'desc')
             ->where('sri_comprobanteretencion.idcomprobanteretencion', $id)->get();
 

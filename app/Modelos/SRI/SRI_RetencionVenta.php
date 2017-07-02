@@ -16,7 +16,7 @@ class SRI_RetencionVenta extends Model
     }
 
 
-    public function sri_retenciondetallecompra()
+    public function sri_retenciondetalleventa()
     {
         return $this->hasMany('App\Modelos\SRI\SRI_RetencionDetalleVenta','idretencionventa');
     }

@@ -237,6 +237,8 @@
 
                     $('#btn_save').prop('disabled', true);
 
+                    //$('#btn_save').hide();
+
                     $('#btn-createrow').prop('disabled', true);
 
                 } else {
@@ -247,6 +249,8 @@
                 $scope.recalculateTotal();
 
                 $scope.active = '1';
+
+                $('#btn-createrow').prop('disabled', true);
 
                 /*$http.get(API_URL + 'retencionCompra/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
 
