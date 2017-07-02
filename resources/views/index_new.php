@@ -138,7 +138,7 @@
                                         <ul class="dropdown-menu">
                                             <li id="permiso_14"><a tabindex="-1" href="#" ng-click="toModuloPuntoVenta()">Puntos de Ventas</a></li>
                                             <li id="permiso_15"><a href="#" ng-click="toModuloVentas();">Facturación de Ventas</a></li>
-                                            <li id="permiso_16"><a href="#">Retención Ventas</a></li>
+                                            <li id="permiso_16"><a href="#" ng-click="toModuloRetencionesVentas();">Retención Ventas</a></li>
                                             <li id="permiso_18"><a href="#" ng-click="toModuloCuentasxCobrar();">Cuentas por Cobrar (Comprobante Ingreso)</a></li>
                                             <li id="permiso_19"><a href="#" ng-click="toModuloGuiaRemision();">Guía de Remisión</a></li>
                                             <li id="permiso_40"><a href="#" ng-click="toModuloReporteVentas();">Reporte de Ventas</a></li>
@@ -293,6 +293,7 @@
     <script src="<?= asset('app/controllers/proveedoresController.js') ?>"></script>
     <script src="<?= asset('app/controllers/venta.js') ?>"></script>
     <script src="<?= asset('app/controllers/retencionComprasIndexController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/retencionVentasIndexController.js') ?>"></script>
     <script src="<?= asset('app/controllers/configuracionSystemController.js') ?>"></script>
     <script src="<?= asset('app/controllers/transportistaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>

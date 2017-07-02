@@ -128,7 +128,7 @@
                     <td style="font-weight: bold;">{{item.cont_documentoventa[0].cliente.persona.razonsocial}}</td>
                     <td class="text-center">{{item.nocomprobante}}</td>
                     <td class="text-right">$ {{item.total_retenido}}</td>
-                    <td class="text-right">{{(item.cont_documentoventa[0].sri_retencioncompra[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
+                    <td class="text-right">{{(item.cont_documentoventa[0].sri_retencionventa[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                     <td  class="text-center">
                         <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
                             <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>

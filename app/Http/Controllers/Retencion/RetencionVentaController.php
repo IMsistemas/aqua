@@ -147,7 +147,7 @@ class RetencionVentaController extends Controller
     {
         $idretencion = $request->input('idretencion');
 
-        $retencionCompra = SRI_RetencionCompra::find($idretencion);
+        $retencionCompra = SRI_RetencionVenta::find($idretencion);
         $retencionCompra->estadoanulado = true;
 
         if ($retencionCompra->save()) {

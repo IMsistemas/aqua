@@ -233,6 +233,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "retencionCompras";
     }
 
+    $scope.toModuloRetencionesVentas = function(){
+        $scope.titulo = "Retenciones Ventas";
+        $scope.toModulo = "retencionVenta";
+    }
+
     $scope.toModuloReporteCompras = function(){
         $scope.titulo = "Reporte Compras";
         $scope.toModulo = "reportecompra";

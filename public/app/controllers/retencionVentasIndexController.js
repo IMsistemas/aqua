@@ -749,7 +749,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
         console.log(item);
 
-        $scope.idretencion = item.cont_documentocompra[0].sri_retencioncompra[0].idretencioncompra;
+        $scope.idretencion = item.cont_documentoventa[0].sri_retencionventa[0].idretencionventa;
         $scope.numseriecompra = item.nocomprobante;
         $('#modalConfirmAnular').modal('show');
     };
