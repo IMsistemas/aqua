@@ -1209,4 +1209,4 @@ Route::get('Activosfijos/ObtenerDatosCuentaGasto/{idgasto}','ActivosFijos\deprec
 
 //-------------------------------Rol de Pago----------------------------//
 
-Route::resource('rolPago', 'RolPago\rolPagoController');
+Route::resource('rolPago', 'Nomina\RolPagoController');
