@@ -33,6 +33,7 @@ $scope.cmb_estado_fact="A";
 
     $scope.verifySuministroFactura = function () {
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
+
             console.log(response);
 
             $scope.DICliente = response[0].cliente.persona.numdocidentific;
@@ -41,7 +42,8 @@ $scope.cmb_estado_fact="A";
 
             //$http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro/' + response[0].cont_catalogitem.codigoproducto).success(function(response0){
             $http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro').success(function(response0){
-                console.log(response0);
+
+                //console.log(response0);
 
                 var longitud = response0.length;
 
@@ -85,10 +87,13 @@ $scope.cmb_estado_fact="A";
     };
 
     ///---
+
     $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
     };
     $scope.initLoad = function(pageNumber){
+
+        //console.log($('#otherFactura').val());
 
     	if($('#otherFactura').val() == 'true') {
             $scope.VerFactura = 1;

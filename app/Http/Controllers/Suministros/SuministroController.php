@@ -78,12 +78,14 @@ class SuministroController extends Controller
 
     public function getSuministroForFactura($id)
     {
+
+
         $suministro = Suministro::with('cliente.persona', 'calle.barrio', 'cont_catalogitem')
                                     ->where('idsuministro', $id)->orderBy('idsuministro')->get();
 
         //$_SESSION['suministro_to_facturar'] = $suministro;
 
-        Session::put('suministro_to_facturar', '');
+        Session::forget('suministro_to_facturar');
 
         Session::put('suministro_to_facturar', $suministro);
 

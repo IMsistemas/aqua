@@ -298,7 +298,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
             $scope.currentProjectUrl = '';
 
             $scope.currentProjectUrl = API_URL + 'DocumentoVenta?flag_suministro=1';
-
+            $("#aux_venta").html("<object height='450px' width='100%' data='"+$scope.currentProjectUrl+"'></object>");
             $('#modalFactura').modal('show');
         });
 

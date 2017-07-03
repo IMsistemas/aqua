@@ -36,7 +36,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init=";GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
+    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
 
         <input type="hidden" ng-model="otherFactura" id="otherFactura" value="<?= $viewFactura ?>">
 

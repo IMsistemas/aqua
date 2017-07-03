@@ -307,7 +307,10 @@
                     <h4 class="modal-title">Factura</h4>
                 </div>
                 <div class="modal-body" id="bodyfactura">
-                    <iframe frameborder="0" height="450px" width="100%" ng-src="{{currentProjectUrl}}"> <!--content--> </iframe>
+                    <div id="aux_venta">
+
+                    </div>
+                    <!--<object id="aux_venta" height="450px" width="100%" > <!--content--> <!--/object>-->
                 </div>
             </div>
         </div>
