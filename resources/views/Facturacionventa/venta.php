@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4 text-right" >
-                        <button class="btn btn-primary" ng-disabled="Valida=='1' " ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
+                        <button type="button" class="btn btn-primary" ng-disabled="Valida=='1' " ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
                     </div>
                 </div>
                 <div class="row">

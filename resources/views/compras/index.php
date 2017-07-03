@@ -540,7 +540,7 @@
 
                 <div class="col-xs-12 text-right" style="margin-top: 20px;">
 
-                    <button class="btn btn-primary" ng-click="InicioList();">
+                    <button type="button" class="btn btn-primary" ng-click="InicioList();">
                         Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     </button>
 
