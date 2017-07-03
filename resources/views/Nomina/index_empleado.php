@@ -27,7 +27,7 @@
 
     <div class="col-xs-12">
 
-        <h4>Gestión de Personal</h4>
+        <h4>Gestión de Personal (Colaboradores)</h4>
 
         <hr>
 
@@ -58,17 +58,17 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
+        <div class="col-xs-12" style="font-size: 12px !important;">
 
-            <table class="table table-responsive table-striped table-hover table-condensed">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                 <tr>
                     <th>RUC / CI</th>
-                    <th>Nombre y Apellidos</th>
-                    <th>Cargo</th>
-                    <th>Teléfono</th>
-                    <th>Celular</th>
-                    <th style="width: 160px;">Acciones</th>
+                    <th>NOMBRE Y APELLIDOS</th>
+                    <th>CARGO</th>
+                    <th>TELEFONO</th>
+                    <th>CELULAR</th>
+                    <th style="width: 160px;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>

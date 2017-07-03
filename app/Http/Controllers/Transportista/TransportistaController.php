@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transportista;
 
 use App\Modelos\Persona;
+use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
 use App\Modelos\Transportista\Transportista;
 use Illuminate\Http\Request;
@@ -70,6 +71,19 @@ class TransportistaController extends Controller
     }
 
 
+    public function getProveedores()
+    {
+        return Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')->get();
+    }
+
+    private function searchExist($numidentific)
+    {
+        $count = Transportista::join('persona', 'transportista.idpersona', '=', 'persona.idpersona')
+                                ->where('persona.numdocidentific', $numidentific)->count();
+
+        return ($count == 1) ? true : false;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -78,40 +92,50 @@ class TransportistaController extends Controller
      */
     public function store(Request $request)
     {
-        $state = false;
 
-        if ($request->input('idpersona') == 0) {
-            $persona = new Persona();
+        if ($this->searchExist($request->input('documentoidentidadempleado'))) {
+
+            return response()->json(['success' => false, 'type_error_exists' => true]);
+
         } else {
-            $persona = Persona::find($request->input('idpersona'));
-            $state = true;
-        }
 
-        $persona->numdocidentific = $request->input('documentoidentidadempleado');
-        $persona->email = $request->input('correo');
-        $persona->celphone = $request->input('celular');
-        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
-        $persona->razonsocial = $request->input('razonsocial');
-        $persona->direccion = $request->input('direccion');
+            $state = false;
 
-        if ($state == false) {
-            $persona->lastnamepersona = $request->input('razonsocial');
-            $persona->namepersona = $request->input('razonsocial');
-        }
+            if ($request->input('idpersona') == 0) {
+                $persona = new Persona();
+            } else {
+                $persona = Persona::find($request->input('idpersona'));
+                $state = true;
+            }
 
-        if ($persona->save()) {
-            $transportista = new Transportista();
-            $transportista->fechaingreso = $request->input('fechaingreso');
-            $transportista->estado = true;
-            $transportista->idpersona = $persona->idpersona;
-            $transportista->placa = $request->input('placa');
-            $transportista->telefonoprincipal = $request->input('telefonoprincipal');
+            $persona->numdocidentific = $request->input('documentoidentidadempleado');
+            $persona->email = $request->input('correo');
+            $persona->celphone = $request->input('celular');
+            $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+            $persona->razonsocial = $request->input('razonsocial');
+            $persona->direccion = $request->input('direccion');
 
-            if ($transportista->save()) {
-                return response()->json(['success' => true]);
+            if ($state == false) {
+                $persona->lastnamepersona = $request->input('razonsocial');
+                $persona->namepersona = $request->input('razonsocial');
+            }
+
+            if ($persona->save()) {
+                $transportista = new Transportista();
+                $transportista->fechaingreso = $request->input('fechaingreso');
+                $transportista->estado = true;
+                $transportista->idpersona = $persona->idpersona;
+                $transportista->placa = $request->input('placa');
+                $transportista->telefonoprincipal = $request->input('telefonoprincipal');
+                $transportista->idproveedor = $request->input('idproveedor');
+
+                if ($transportista->save()) {
+                    return response()->json(['success' => true]);
+                } else return response()->json(['success' => false]);
+
             } else return response()->json(['success' => false]);
 
-        } else return response()->json(['success' => false]);
+        }
 
     }
 
@@ -125,14 +149,16 @@ class TransportistaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $state = false;
+        //$state = false;
 
-        if ($request->input('idpersona') == 0) {
+        /*if ($request->input('idpersona') == 0) {
             $persona = new Persona();
         } else {
             $persona = Persona::find($request->input('idpersona'));
             $state = true;
-        }
+        }*/
+
+        $persona = Persona::find($request->input('idpersona_edit'));
 
         $persona->numdocidentific = $request->input('documentoidentidadempleado');
         $persona->email = $request->input('correo');
@@ -141,10 +167,13 @@ class TransportistaController extends Controller
         $persona->razonsocial = $request->input('razonsocial');
         $persona->direccion = $request->input('direccion');
 
-        if ($state == false) {
+        $persona->lastnamepersona = $request->input('razonsocial');
+        $persona->namepersona = $request->input('razonsocial');
+
+        /*if ($state == false) {
             $persona->lastnamepersona = $request->input('razonsocial');
             $persona->namepersona = $request->input('razonsocial');
-        }
+        }*/
 
         if ($persona->save()) {
             $transportista = Transportista::find($id);
@@ -153,6 +182,7 @@ class TransportistaController extends Controller
             $transportista->idpersona = $persona->idpersona;
             $transportista->placa = $request->input('placa');
             $transportista->telefonoprincipal = $request->input('telefonoprincipal');
+            $transportista->idproveedor = $request->input('idproveedor');
 
             if ($transportista->save()) {
                 return response()->json(['success' => true]);
@@ -170,10 +200,29 @@ class TransportistaController extends Controller
      */
     public function destroy($id)
     {
-        $transportista = Transportista::find($id);
-        if ($transportista->delete()) {
-            return response()->json(['success' => true]);
+
+        if ($this->getCountTransportistaUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+
+            $transportista = Transportista::find($id);
+            if ($transportista->delete()) {
+                return response()->json(['success' => true]);
+            }
+            else return response()->json(['success' => false]);
+
         }
-        else return response()->json(['success' => false]);
+
+    }
+
+    private function getCountTransportistaUtilizado($id)
+    {
+        $whereRaw = 'idtransportista IN (SELECT idtransportista FROM cont_documentoguiaremision) ';
+
+        $count = Transportista::where('idtransportista', $id)->whereRaw($whereRaw)->count();
+
+        return $count;
     }
 }

@@ -7,6 +7,10 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     $scope.modalstate = '';
     $scope.confirmacion=false;
 
+     $scope.bloquearGuardar = function(){
+       document.formpuntoventa.guardar.disabled=true;
+    };
+
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'puntoventa/getpuntoventas').success(function(response){
@@ -29,6 +33,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                         var longitud = text.length;
                         if (longitud == length) {
                             $("#" + field).val(text);
+                            return text;
                         } else {
                             var diferencia = parseInt(length) - parseInt(longitud);
                             var relleno = '';
@@ -78,7 +83,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
                     console.log(response);
                     if (response.length==0) {
-                        $scope.message="Para crear un Punto de Venta primero debe crear Bodeguero";
+                        $scope.message="Para crear un Punto de Venta primero debe crear un Empleado";
                         $('#modalEmpleadoVacio').modal('show');
                     }else{
                         $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {

@@ -75,9 +75,9 @@
                                 <tr class="bg-primary">
                                     <th style="width: 20%;"></th>
                                     <th ></th>
-                                    <th style="width: 50%;">Detalle</th>
+                                    <th style="width: 35%;">Detalle</th>
                                     <th style="width: 10%;">Codigo</th>
-                                    <th>Balance</th>
+                                    <th style="width: 15%;">Balance</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -88,10 +88,10 @@
                                         <button class="btn btn-warning btn-sm" ng-click="ModificarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-edit"></i></button>
                                         <button ng-show="cuenta.madreohija=='1' " ng-hide=" cuenta.madreohija!='1' " class="btn btn-danger btn-sm"  ng-click="BorrarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-trash"></i></button>
                                     </td>
-                                    <td>{{cuenta.jerarquia}}</td>
+                                    <td>{{cuenta.aux_jerarquia}}</td>
                                     <td>{{cuenta.concepto}}</td>
                                     <td>{{cuenta.codigosri}}</td>
-                                    <td>{{cuenta.balance}}</td>
+                                    <td>{{formato_dinero(cuenta.balance,"$")}}</td>
                                     <td>
                                       <button ng-click="RegistroContableCuenta(cuenta);"; class="btn btn-primary btn-sm" ng-show="cuenta.madreohija=='1' " ng-hide=" cuenta.madreohija!='1' ">
                                         <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -165,18 +165,24 @@
                       <tr ng-repeat=" registro in RegistroCuentaContable">
                         <td>{{$index+1}}</td>
                         <td>
-                          <button  ng-disabled="EstadoAsc=='An' "   class="btn btn-warning btn-sm" ng-click="ProcesoModificarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-edit"></i></button>
+                          <button    class="btn btn-warning btn-sm" ng-click="ProcesoModificarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-edit"></i></button>
                           <button ng-disabled="EstadoAsc=='An' " class="btn btn-danger btn-sm" ng-click="ProcesoBorrarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
                         </td>
-                        <td>{{ registro.cont_transaccion.cont_tipotransaccion.sigla }}</td>
+                        <td>{{ registro.cont_transaccion.cont_tipotransaccion.siglas }}</td>
                         <td>{{ registro.fecha }}</td>
                         <td>{{ registro.cont_transaccion.numcontable }}</td>
                         <td>{{ registro.descripcion }}</td>
-                        <td>{{ registro.debe_c }}</td>
-                        <td>{{ registro.haber_c }}</td>
-                        <td>{{ registro.saldo }}</td>
+                        <td>{{ formato_dinero(registro.debe_c,"$") }}</td>
+                        <td>{{ formato_dinero(registro.haber_c,"$") }}</td>
+                        <td>{{ formato_dinero(registro.saldo,"$") }}</td>
                       </tr>
                     </tbody>
+                    <tfoot>
+                      <th colspan="6" class="text-right">Total: </th>
+                      <th>{{formato_dinero(aux_total_debe,"$")}}</th>
+                      <th>{{formato_dinero(aux_total_haber,"$")}}</th>
+                      <th>{{formato_dinero(aux_total_saldo,"$")}}</th>
+                    </tfoot>
                   </table>
                 </div>
             </div>
@@ -386,7 +392,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="cuenta in aux_plancuentas | filter:FiltraCuenta">
-                  <td>{{cuenta.jerarquia}}</td>
+                  <td>{{cuenta.aux_jerarquia}}</td>
                   <td>{{cuenta.concepto}}</td>
                   <td>{{cuenta.codigosri}}</td>
                   <td>
@@ -465,6 +471,7 @@
             <thead>
               <tr class="bg-primary">
                 <th></th>
+                <th></th>
                 <th>Cuenta</th>
                 <th>Debe</th>
                 <th>Haber</th>
@@ -475,6 +482,9 @@
               <tr ng-repeat="registro in RegistroC">
                 <td>
                   <button ng-disabled="EstadoSave=='M'"  class="btn btn-danger" ng-click="BorrarFilaAsientoContable(registro);"><i class="glyphicon glyphicon-trash"></i></button>
+                </td>
+                <td>
+                  <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.aux_jerarquia" readonly>
                 </td>
                 <td>
                   <div class="input-group">
@@ -498,15 +508,15 @@
             </tbody>
             <tfoot>
               <tr>
-                <th colspan="2" class="text-right"> Diferencia: </th>
-                <th>{{aux_sumdebedif}}</th>
-                <th>{{aux_sumhaberdif}}</th>
+                <th colspan="3" class="text-right"> Diferencia: </th>
+                <th>{{formato_dinero(aux_sumdebedif,"$")}}</th>
+                <th>{{formato_dinero(aux_sumhaberdif,"$")}}</th>
                 <td></td>
               </tr>
               <tr>
-                <th colspan="2" class="text-right"> Total: </th>
-                <th>{{aux_sumdebe}}</th>
-                <th>{{aux_sumhaber}}</th>
+                <th colspan="3" class="text-right"> Total: </th>
+                <th>{{formato_dinero(aux_sumdebe,"$")}}</th>
+                <th>{{formato_dinero(aux_sumhaber,"$")}}</th>
                 <td></td>
               </tr>
             </tfoot>
@@ -518,7 +528,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="AsientoContable();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+        <button type="button" class="btn btn-success" ng-disabled="EstadoAsc=='An' "   ng-click="AsientoContable();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
       </div>
     </div>
   </div>

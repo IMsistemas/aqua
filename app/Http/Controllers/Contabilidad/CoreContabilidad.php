@@ -97,51 +97,10 @@ class CoreContabilidad extends Controller
 		$aux_controlhabercomanda="";
 		$aux_tipocuentacontablecomanda="";
 		foreach ($aux_registro as  $cuenta) {
-			if($aux_primeracuentacomanda==1){
-				//Se guarda la primera cuenta o asiento que va a comandar para aplicar  la regla contable a las demas cuentas
-				$cuentacomada = array(
-					'idtransaccion' => $idtransaccion ,
-					'idplancuenta'=> $cuenta->idplancuenta,
-					'fecha'=> $fecharegistro,
-					'descripcion'=> $cuenta->Descipcion,
-					'debe'=> $cuenta->Debe,
-					'haber'=> $cuenta->Haber,
-					'debe_c'=> $cuenta->Debe,
-					'haber_c'=> $cuenta->Haber,
-					'estadoanulado'=>true
-					 );
-				$cuentacomandasave=Cont_RegistroContable::create($cuentacomada);
-				if($cuenta->controlhaber=="-"){
-					if($cuenta->Debe>0 & $cuenta->Haber==0){
-						$aux_controlhabercomanda="+"; //la cuenta que comanda esta aumentando
-					}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
-						$aux_controlhabercomanda="-"; //la cuenta que comanda esta disminuye
-					}
-				}elseif ($cuenta->controlhaber=="+") {
-					if($cuenta->Debe>0 & $cuenta->Haber==0){
-						$aux_controlhabercomanda="-"; //la cuenta que comanda esta disminuye
-					}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
-						$aux_controlhabercomanda="+"; //la cuenta que comanda esta aumenta
-					}
-				}
-				$aux_tipocuentacontablecomanda=$cuenta->tipocuenta;
-			}else{
-				$aux_cuentacontrolhaber="";
-				if($cuenta->controlhaber=="-"){
-					if($cuenta->Debe>0 & $cuenta->Haber==0){
-						$aux_cuentacontrolhaber="+"; //la cuenta que comanda esta aumentando
-					}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
-						$aux_cuentacontrolhaber="-"; //la cuenta que comanda esta disminuye
-					}
-				}elseif ($cuenta->controlhaber=="+") {
-					if($cuenta->Debe>0 & $cuenta->Haber==0){
-						$aux_cuentacontrolhaber="-"; //la cuenta que comanda esta disminuye
-					}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
-						$aux_cuentacontrolhaber="+"; //la cuenta que comanda esta aumenta
-					}
-				}
-				if($aux_cuentacontrolhaber==$aux_controlhabercomanda && $aux_tipocuentacontablecomanda==$cuenta->tipocuenta){ // la cuenta o asiento tiene el mismo comportamiento que la que comanda
-					$cuentacontable = array(
+			if( ((float) $cuenta->Debe )!=0 || ((float) $cuenta->Haber )!=0 ){ //validacion de que el debe y el haber esten llenos (esta validacion es para las demas asientos contables porque en el plan de cuentas ya esta validado a nivel del cliente )
+				if($aux_primeracuentacomanda==1){
+					//Se guarda la primera cuenta o asiento que va a comandar para aplicar  la regla contable a las demas cuentas
+					$cuentacomada = array(
 						'idtransaccion' => $idtransaccion ,
 						'idplancuenta'=> $cuenta->idplancuenta,
 						'fecha'=> $fecharegistro,
@@ -152,12 +111,55 @@ class CoreContabilidad extends Controller
 						'haber_c'=> $cuenta->Haber,
 						'estadoanulado'=>true
 						 );
-					$cuentacontablesave=Cont_RegistroContable::create($cuentacontable);
-				}else{ //la cuenta se le aplicara  la regla contable
-					$this->ReglaContable($aux_tipocuentacontablecomanda,$aux_controlhabercomanda,$cuenta,$idtransaccion,$fecharegistro);
+					$cuentacomandasave=Cont_RegistroContable::create($cuentacomada);
+					if($cuenta->controlhaber=="-"){
+						if($cuenta->Debe>0 & $cuenta->Haber==0){
+							$aux_controlhabercomanda="+"; //la cuenta que comanda esta aumentando
+						}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
+							$aux_controlhabercomanda="-"; //la cuenta que comanda esta disminuye
+						}
+					}elseif ($cuenta->controlhaber=="+") {
+						if($cuenta->Debe>0 & $cuenta->Haber==0){
+							$aux_controlhabercomanda="-"; //la cuenta que comanda esta disminuye
+						}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
+							$aux_controlhabercomanda="+"; //la cuenta que comanda esta aumenta
+						}
+					}
+					$aux_tipocuentacontablecomanda=$cuenta->tipocuenta;
+				}else{
+					$aux_cuentacontrolhaber="";
+					if($cuenta->controlhaber=="-"){
+						if($cuenta->Debe>0 & $cuenta->Haber==0){
+							$aux_cuentacontrolhaber="+"; //la cuenta que comanda esta aumentando
+						}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
+							$aux_cuentacontrolhaber="-"; //la cuenta que comanda esta disminuye
+						}
+					}elseif ($cuenta->controlhaber=="+") {
+						if($cuenta->Debe>0 & $cuenta->Haber==0){
+							$aux_cuentacontrolhaber="-"; //la cuenta que comanda esta disminuye
+						}elseif ($cuenta->Debe==0 & $cuenta->Haber>0) {
+							$aux_cuentacontrolhaber="+"; //la cuenta que comanda esta aumenta
+						}
+					}
+					if($aux_cuentacontrolhaber==$aux_controlhabercomanda && $aux_tipocuentacontablecomanda==$cuenta->tipocuenta){ // la cuenta o asiento tiene el mismo comportamiento que la que comanda
+						$cuentacontable = array(
+							'idtransaccion' => $idtransaccion ,
+							'idplancuenta'=> $cuenta->idplancuenta,
+							'fecha'=> $fecharegistro,
+							'descripcion'=> $cuenta->Descipcion,
+							'debe'=> $cuenta->Debe,
+							'haber'=> $cuenta->Haber,
+							'debe_c'=> $cuenta->Debe,
+							'haber_c'=> $cuenta->Haber,
+							'estadoanulado'=>true
+							 );
+						$cuentacontablesave=Cont_RegistroContable::create($cuentacontable);
+					}else{ //la cuenta se le aplicara  la regla contable
+						$this->ReglaContable($aux_tipocuentacontablecomanda,$aux_controlhabercomanda,$cuenta,$idtransaccion,$fecharegistro);
+					}
 				}
+				$aux_primeracuentacomanda++;
 			}
-			$aux_primeracuentacomanda++;
 		}
 		return 1;
 	}

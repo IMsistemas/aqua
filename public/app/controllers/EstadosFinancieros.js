@@ -30,6 +30,7 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
         };
         $http.get(API_URL + 'estadosfinacieros/plancuentastipo/'+JSON.stringify(FiltroCuentasC))
         .success(function(response){
+            console.log(response);
             $scope.CuentasContables=response;
         });
     };
@@ -246,6 +247,7 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
     $scope.AddIntemCotable=function(){
         var item={
             idplancuenta:"",
+            aux_jerarquia:"",
             concepto:"",
             controlhaber:"",
             tipocuenta:'',
@@ -284,6 +286,7 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
     ///---
     $scope.AsignarCuentaContable=function(cuenta){
         $scope.aux_cuentabuscar.idplancuenta=cuenta.idplancuenta;
+        $scope.aux_cuentabuscar.aux_jerarquia=cuenta.aux_jerarquia;
         $scope.aux_cuentabuscar.concepto=cuenta.concepto;
         $scope.aux_cuentabuscar.controlhaber=cuenta.controlhaber;
         $scope.aux_cuentabuscar.tipocuenta=cuenta.tipocuenta;
@@ -416,14 +419,23 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             if($scope.RegistroC[x].Debe!="") aux_debe+=parseFloat($scope.RegistroC[x].Debe);
             if($scope.RegistroC[x].Haber!="") aux_haber+=parseFloat($scope.RegistroC[x].Haber);
         }
-        $scope.aux_sumdebe=aux_debe;
+       /* $scope.aux_sumdebe=aux_debe;
         $scope.aux_sumhaber=aux_haber;
 
         aux_debedif=aux_debe-aux_haber;
         aux_haberdif=aux_haber-aux_debe;
         
         $scope.aux_sumdebedif=aux_debedif;
-        $scope.aux_sumhaberdif=aux_haberdif;        
+        $scope.aux_sumhaberdif=aux_haberdif;*/ 
+
+        $scope.aux_sumdebe=aux_debe.toFixed(4);
+        $scope.aux_sumhaber=aux_haber.toFixed(4);
+
+        aux_debedif=aux_debe-aux_haber;
+        aux_haberdif=aux_haber-aux_debe;
+        
+        $scope.aux_sumdebedif=aux_debedif.toFixed(4);
+        $scope.aux_sumhaberdif=aux_haberdif.toFixed(4);       
 
     };
     ///---
@@ -467,7 +479,13 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
         $scope.LoadRegistroCuenta();
     };
     ///---
+    $scope.aux_total_debe=0;
+    $scope.aux_total_haber=0;
+    $scope.aux_total_saldo=0;
     $scope.LoadRegistroCuenta=function() {
+        $scope.aux_total_debe=0;
+        $scope.aux_total_haber=0;
+        $scope.aux_total_saldo=0;
         if($scope.aux_CuentaContableSelc.idplancuenta!=undefined){
             var aux_estado=$("#EstadoAsc").val();
             var estado='true';
@@ -486,7 +504,16 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             };
           $http.get(API_URL + 'estadosfinacieros/registrocuenta/'+JSON.stringify(filtroregistro))
             .success(function(response){
+                //console.log(response);
                 $scope.RegistroCuentaContable=response;
+                $scope.RegistroCuentaContable.forEach(function(item){
+                    $scope.aux_total_debe+=parseFloat(item.debe_c);
+                    $scope.aux_total_haber+=parseFloat(item.haber_c);
+                    $scope.aux_total_saldo+=parseFloat(item.saldo);
+                });
+                $scope.aux_total_debe=$scope.aux_total_debe.toFixed(4);
+                $scope.aux_total_haber=$scope.aux_total_haber.toFixed(4);
+                $scope.aux_total_saldo=$scope.aux_total_saldo.toFixed(4);
                 $("#procesarinfomracion").modal("hide");
             });
         }else{
@@ -537,6 +564,7 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             var item={
                 idplancuenta:registro[x].cont_plancuentas.idplancuenta,
                 concepto: registro[x].cont_plancuentas.concepto,
+                aux_jerarquia: $scope.orden_plan_cuenta(registro[x].cont_plancuentas.jerarquia),
                 controlhaber: registro[x].cont_plancuentas.controlhaber,
                 tipocuenta: registro[x].cont_plancuentas.tipocuenta,
                 Debe:  parseFloat(registro[x].debe),
@@ -546,6 +574,34 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             $scope.RegistroC.push(item);
         }
         $scope.SumarDebeHaber();
+    };
+
+    $scope.orden_plan_cuenta=function(orden){
+        var aux_orden=orden.split(".");
+        var aux_numero_orden="";
+        var aux_numero_completar="";
+        var tam=aux_orden.length;
+        if(tam>0){
+            for(var x=0;x<tam;x++){
+                if(x<3){
+                    aux_numero_orden+=aux_orden[x];
+                }else if(x>=3){
+                    if(x==3){
+                        aux_numero_completar=aux_orden[x];
+                        if( aux_numero_completar.length==1){
+                            aux_numero_completar="0"+aux_numero_completar;
+                        }
+                        aux_numero_orden+=aux_numero_completar;
+                    }else if(x>3){
+                        aux_numero_orden+=aux_orden[x];
+                    }
+
+                }
+            }
+        }else{
+           aux_numero_orden=orden; 
+        }
+        return aux_numero_orden;
     };
     ///--- 
     $scope.aux_registroBorrar={};
@@ -576,6 +632,18 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
                 $("#msm").modal("show");
             }
         });
+    };
+    ///---
+    $scope.formato_dinero=function(amount, signo){
+        amount += ''; // por si pasan un numero en vez de un string
+        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+        // si es mayor o menor que cero retorno el valor formateado como numero
+        amount = '' + amount.toFixed(4);
+        var amount_parts = amount.split('.'),
+            regexp = /(\d+)(\d{3})/;
+        while (regexp.test(amount_parts[0]))
+            amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+        return signo+" "+amount_parts.join('.')
     };
 });
 

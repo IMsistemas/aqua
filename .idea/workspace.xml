@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc92b6bd-88ac-4176-8987-1f939ea91b36" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/app.js" afterPath="$PROJECT_DIR$/public/app/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controllers/nomencladorController.js" afterPath="$PROJECT_DIR$/public/app/controllers/nomencladorController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php" afterPath="$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php" />
-    </list>
+    <list default="true" id="bc92b6bd-88ac-4176-8987-1f939ea91b36" name="Default" comment="SubModulo Cobro de Agua + Nuevo INDEX" />
     <ignored path="aqua.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -24,6 +16,7 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
     <option name="GROUP_CONTENTS" value="false" />
     <option name="SORT_POSITIONED" value="false" />
@@ -37,43 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <file leaf-file-name="Balances.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Contabilidad/Balances.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="950" column="0" lean-forward="false" selection-start-line="950" selection-start-column="0" selection-end-line="950" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NomencladorController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23783">
-              <caret line="1422" column="0" lean-forward="false" selection-start-line="1422" selection-start-column="0" selection-end-line="1422" selection-end-column="0" />
-              <folding>
-                <element signature="e#52#90#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_nomenclador.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33303">
-              <caret line="1959" column="7" lean-forward="false" selection-start-line="1959" selection-start-column="7" selection-end-line="1959" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nomencladorController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/controllers/nomencladorController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37366">
-              <caret line="2198" column="0" lean-forward="false" selection-start-line="2198" selection-start-column="0" selection-end-line="2198" selection-end-column="0" />
+            <state relative-caret-position="739">
+              <caret line="650" column="5" lean-forward="false" selection-start-line="650" selection-start-column="5" selection-end-line="650" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -92,85 +53,112 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onlyDecimal</find>
-      <find>factura/getCobroAgua</find>
-      <find>s_ident_new_client_setnombre</find>
-      <find>getInfoCliente</find>
-      <find>getIdentifyClientes</find>
-      <find>only</find>
-      <find>blu</find>
-      <find>reCalculateTotal</find>
-      <find>factura</find>
-      <find>getMultas</find>
-      <find>otrosvalores</find>
-      <find>estapagada</find>
-      <find>getCobroAgua</find>
-      <find>pageChanged</find>
-      <find>loadFormPage</find>
-      <find>formulario</find>
-      <find>put</find>
-      <find>deleterow</find>
-      <find>gettipodoc</find>
-      <find>getimpuesto</find>
+      <find>cuentasxcobrar</find>
+      <find>Calcula</find>
+      <find>LoadProductos</find>
+      <find>getProductoPorBodega</find>
+      <find>calcu</find>
+      <find>showDataPurchase</find>
+      <find>AsignarData</find>
+      <find>ShowModalFactura</find>
+      <find>infoCliente</find>
+      <find>modalPlanCuenta</find>
+      <find>setT</find>
+      <find>printer</find>
+      <find>WPrint</find>
+      <find>factura/print</find>
+      <find>print</find>
+      <find>cobro</find>
+      <find>data</find>
+      <find>getVentaXId</find>
+      <find>verifySuministroFactura</find>
+      <find>getSuministroByFactura</find>
+      <find>DocumentoVenta/loadEditVenta</find>
+      <find>getProductoPorSuministro</find>
+      <find>DocumentoVenta/getProductoPorSuministro</find>
+      <find>getSuministroForFactura</find>
+      <find>cuentasx</find>
+      <find>CalculaValores</find>
+      <find>saveCliente</find>
+      <find>getConfigContabilidad</find>
+      <find>newForm</find>
+      <find>ProveedorContable</find>
     </findStrings>
+    <replaceStrings>
+      <replace>namebarrio</replace>
+      <replace>namecalle</replace>
+      <replace>values</replace>
+    </replaceStrings>
+  </component>
+  <component name="FrameworkCommandLineHistory">
+    <commandsHistory>
+      <command text="php artisan server" />
+      <command text="php artisan ser" />
+      <command text="php artisan server" />
+      <command text="cls" />
+      <command text="clear" />
+    </commandsHistory>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.txt" root0="SKIP_INSPECTION" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Modelos/Servicios/ServiciosEnFactura.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/solicitudController.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Nomina/EmpleadoController.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/barriosController.js" />
-        <option value="$PROJECT_DIR$/public/app/controllers/callesController.js" />
-        <option value="$PROJECT_DIR$/resources/views/Suministros/index.php" />
-        <option value="$PROJECT_DIR$/resources/views/Factura/factura.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Solicitud/index_createpdf.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/viewLecturaController.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Solicitud/SolicitudController.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" />
-        <option value="$PROJECT_DIR$/resources/views/Factura/dirPagination.html" />
-        <option value="$PROJECT_DIR$/public/app/app.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Clientes/ClienteController.php" />
-        <option value="$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/clientesController.js" />
-        <option value="$PROJECT_DIR$/public/app/controllers/solicitudServicioController.js" />
-        <option value="$PROJECT_DIR$/resources/views/Clientes/index.php" />
-        <option value="$PROJECT_DIR$/resources/views/Solicitud/index.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Configuraciones/Configuracion.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Facturas/Factura.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Facturas/OtrosValores.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Facturas/OtrosValoresFactura.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php" />
+        <option value="$PROJECT_DIR$/resources/views/ConfiguracionSystem/index.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/InvetarioItemKardex.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Compras/ComprasController.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_DocumentoVenta.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Cuentas/CuentasporCobrar.php" />
         <option value="$PROJECT_DIR$/resources/views/Lecturas/index_viewLectura.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Facturas/FacturaController.php" />
-        <option value="$PROJECT_DIR$/resources/views/Factura/factura.php" />
-        <option value="$PROJECT_DIR$/resources/views/compras/formulario_compras.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Retencion/RetencionCompra.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Compras/CompraProducto.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/retencionCompra.js" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Retencion/RetencionCompraController.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/retencionComprasIndex.js" />
-        <option value="$PROJECT_DIR$/public/app/controllers/facturaController.js" />
-        <option value="$PROJECT_DIR$/resources/views/Factura/factura_print.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Cuentas/CobroAgua.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/retencionCompraController.js" />
+        <option value="$PROJECT_DIR$/public/app/controllers/nuevaLecturaController.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php" />
-        <option value="$PROJECT_DIR$/resources/views/index.php" />
-        <option value="$PROJECT_DIR$/resources/views/retencion/form_retencionCompra.php" />
-        <option value="$PROJECT_DIR$/resources/views/retencion/index_retencionCompra.php" />
-        <option value="$PROJECT_DIR$/resources/views/Comprobantes/form_comprobanteegreso.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Comprobantes/ComprobanteEgresoController.php" />
-        <option value="$PROJECT_DIR$/resources/views/Comprobantes/index_comprobanteegreso.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/comprobEgresoIndexController.js" />
-        <option value="$PROJECT_DIR$/app/Modelos/Comprobantes/ComprobanteEgreso.php" />
-        <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Modelos/Sectores/Canton.php" />
-        <option value="$PROJECT_DIR$/app/Modelos/Sectores/Parroquia.php" />
-        <option value="$PROJECT_DIR$/public/app/controllers/nomencladorController.js" />
-        <option value="$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php" />
+        <option value="$PROJECT_DIR$/resources/views/Cuentas/cuentasxcobrar.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Cuentas/CobroServicio.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Cuentas/CatalogoItemSolicitudServicio.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Solicitud/SolicitudServicio.php" />
+        <option value="$PROJECT_DIR$/resources/views/Cuentas/cobroservicio.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/facturaController.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Facturas/CobroServicioController.php" />
+        <option value="$PROJECT_DIR$/resources/views/Cuentas/cobroservicio_print.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/cobroServicioController.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Clientes/ClienteController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Transportista/TransportistaController.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/transportistaController.js" />
+        <option value="$PROJECT_DIR$/resources/views/Factura/factura.php" />
+        <option value="$PROJECT_DIR$/public/css/index.css" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Facturas/FacturaController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Facturacionventa/DocumentoVenta.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/venta.js" />
+        <option value="$PROJECT_DIR$/public/app/controllers/cuentasporCobrarController.js" />
+        <option value="$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_CuentasPorCobrar.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_CuentasPorPagar.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Cuentas/CuentasPorCobrarController.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/mainController.js" />
+        <option value="$PROJECT_DIR$/resources/views/index_new.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Cuentas/CuentasPorPagarController.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/cuentasporPagarController.js" />
+        <option value="$PROJECT_DIR$/resources/views/Cuentas/cuentasxpagar.php" />
+        <option value="$PROJECT_DIR$/resources/views/catalogoproductos/index_catalogo.php" />
+        <option value="$PROJECT_DIR$/resources/views/compras/index.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/clientesController.js" />
+        <option value="$PROJECT_DIR$/public/app/app.js" />
+        <option value="$PROJECT_DIR$/resources/views/Facturacionventa/venta.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/comprasController.js" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/app/Modelos/SRI/SRI_RetencionCompra.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_DocumentoCompra.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/SRI/SRI_DetalleImpuestoRetencion.php" />
+        <option value="$PROJECT_DIR$/app/Modelos/SRI/SRI_RetencionDetalleCompra.php" />
+        <option value="$PROJECT_DIR$/resources/views/retencion/index_retencionCompra.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Retencion/RetencionCompraController.php" />
+        <option value="$PROJECT_DIR$/public/app/controllers/retencionComprasIndexController.js" />
       </list>
     </option>
   </component>
@@ -190,7 +178,7 @@
   <component name="PhpDebugGeneral" hide_empty_superglobals="false" />
   <component name="PhpServers">
     <servers>
-      <server host="localhost" id="f3d4e417-e924-4290-a7bb-28317f2501ef" name="localhost" port="8000">
+      <server host="localhost" id="f3d4e417-e924-4290-a7bb-28317f2501ef" name="localhost" port="8000" use_path_mappings="true">
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$" remote-root="E:/BERRI/TRABAJO/SERVER/Apache24-vc11/htdocs/LARAVEL/aqua" />
           <mapping local-root="$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php" remote-root="E:/BERRI/TRABAJO/SERVER/Apache24-vc11/htdocs/LARAVEL/aqua/app/Http/Controllers/Lecturas/LecturaController.php" />
@@ -199,12 +187,17 @@
     </servers>
   </component>
   <component name="PhpWebServerValidation" path_to_validation_script="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/" />
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP" />
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP7">
+    <include_path>
+      <path value="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\public" />
+    </include_path>
+  </component>
+  <component name="PhpXdebugProxy" ide_key="PHPSTORM" />
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1370" />
-    <option name="height" value="772" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -240,7 +233,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -263,7 +255,79 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modelos" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modelos" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SRI" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -285,16 +349,65 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Http" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controllers" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="aqua" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Http" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controllers" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Contabilidad" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../aqua-riego" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="331" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
@@ -313,19 +426,41 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="919" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
-    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\public" />
+      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\resources\views\Cuentas" />
+      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\public\app\controllers" />
+      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\app\Modelos\Contabilidad" />
+      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\resources\views\reportes" />
       <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\resources\views\Factura" />
-      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\resources\views" />
-      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua\resources\views\Lecturas" />
-      <recent name="E:\BERRI\TRABAJO\SERVER\Apache24-vc11\htdocs\LARAVEL\aqua" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Web Application.factura">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="PHP Remote Debug.Unnamed">
+    <configuration default="true" type="CodeceptionConfigurationType" factoryName="Codeception">
+      <PhpTestRunnerSettings />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
     <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
       <config-file value="" />
       <node-interpreter value="project" />
@@ -349,7 +484,7 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug">
+    <configuration default="true" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" server_name="localhost" session_id="PHPSTORM">
       <method />
     </configuration>
     <configuration default="true" type="PhpSpecConfigurationType" factoryName="PHPSpec">
@@ -388,15 +523,11 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <configuration default="false" name="factura" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="localhost" start_url="/factura">
+    <configuration default="false" name="Unnamed" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" singleton="true" server_name="localhost" session_id="PHPSTORM">
       <method />
     </configuration>
-    <configuration default="false" name="cliente" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="localhost" start_url="/cliente">
-      <method />
-    </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="PHP Web Application.factura" />
-      <item index="1" class="java.lang.String" itemvalue="PHP Web Application.cliente" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="PHP Remote Debug.Unnamed" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -515,429 +646,569 @@
       <workItem from="1483034990534" duration="88000" />
       <workItem from="1483520211668" duration="3974000" />
       <workItem from="1483611725511" duration="4773000" />
-      <workItem from="1483827729686" duration="4418000" />
-      <workItem from="1486581795787" duration="104000" />
-      <workItem from="1486582186448" duration="117000" />
-      <workItem from="1487340748571" duration="3380000" />
-      <workItem from="1487347358342" duration="3808000" />
-      <workItem from="1487359833184" duration="76000" />
-      <workItem from="1487362408637" duration="896000" />
-      <workItem from="1487432864540" duration="29000" />
-      <workItem from="1490360410429" duration="197000" />
-      <workItem from="1490499899378" duration="902000" />
-      <workItem from="1490641907486" duration="1474000" />
-      <workItem from="1490656832067" duration="594000" />
-      <workItem from="1490662657263" duration="1813000" />
-      <workItem from="1490665741745" duration="90000" />
-      <workItem from="1490666438428" duration="22000" />
-      <workItem from="1490666917851" duration="24000" />
-      <workItem from="1490796656153" duration="4251000" />
-      <workItem from="1490964850801" duration="598000" />
-      <workItem from="1491514658039" duration="1020000" />
-      <workItem from="1491518881139" duration="742000" />
+      <workItem from="1483827729686" duration="16770000" />
+      <workItem from="1484016690943" duration="22434000" />
+      <workItem from="1484594956437" duration="601000" />
+      <workItem from="1487744760883" duration="8966000" />
+      <workItem from="1487756266353" duration="4031000" />
+      <workItem from="1487768668730" duration="7136000" />
+      <workItem from="1487930091995" duration="7279000" />
+      <workItem from="1488003092487" duration="11121000" />
+      <workItem from="1488120311888" duration="18002000" />
+      <workItem from="1488157762269" duration="593000" />
+      <workItem from="1488176954977" duration="9234000" />
+      <workItem from="1488215954260" duration="50000" />
+      <workItem from="1488303109524" duration="1514000" />
+      <workItem from="1488315505956" duration="8669000" />
+      <workItem from="1488346765315" duration="5602000" />
+      <workItem from="1488416324400" duration="117000" />
+      <workItem from="1488508412294" duration="1069000" />
+      <workItem from="1488637221843" duration="129000" />
+      <workItem from="1488932637484" duration="711000" />
+      <workItem from="1488948629453" duration="16604000" />
+      <workItem from="1488986667693" duration="1714000" />
+      <workItem from="1489241592053" duration="28000" />
+      <workItem from="1489241781010" duration="1323000" />
+      <workItem from="1489244860907" duration="8134000" />
+      <workItem from="1489273636850" duration="4420000" />
+      <workItem from="1489329041943" duration="120000" />
+      <workItem from="1489472500923" duration="7726000" />
+      <workItem from="1489682257178" duration="14000" />
+      <workItem from="1489759381814" duration="50000" />
+      <workItem from="1489946778700" duration="1294000" />
+      <workItem from="1490015693726" duration="50000" />
+      <workItem from="1490077809229" duration="8933000" />
+      <workItem from="1490088596610" duration="2567000" />
+      <workItem from="1490273534304" duration="4083000" />
+      <workItem from="1490344675171" duration="10065000" />
+      <workItem from="1490364278028" duration="1565000" />
+      <workItem from="1490380878476" duration="662000" />
+      <workItem from="1490501073653" duration="16177000" />
+      <workItem from="1490566747190" duration="3726000" />
+      <workItem from="1490624652689" duration="56000" />
+      <workItem from="1490624835669" duration="753000" />
+      <workItem from="1490689188169" duration="10000" />
+      <workItem from="1490693476742" duration="994000" />
+      <workItem from="1490814908660" duration="5133000" />
+      <workItem from="1490850188233" duration="5360000" />
+      <workItem from="1490879893376" duration="3023000" />
+      <workItem from="1490968824373" duration="87000" />
+      <workItem from="1491144457870" duration="7978000" />
+      <workItem from="1491177763470" duration="7305000" />
+      <workItem from="1491196608731" duration="5740000" />
+      <workItem from="1491263118340" duration="810000" />
+      <workItem from="1491336078372" duration="1127000" />
+      <workItem from="1491345819339" duration="2182000" />
+      <workItem from="1491354129399" duration="1108000" />
+      <workItem from="1491407539186" duration="1118000" />
+      <workItem from="1491409404056" duration="1227000" />
+      <workItem from="1491441840388" duration="621000" />
+      <workItem from="1491459385806" duration="216000" />
+      <workItem from="1491459630101" duration="22069000" />
+      <workItem from="1491652642260" duration="4333000" />
+      <workItem from="1491739881345" duration="178000" />
+      <workItem from="1491805258994" duration="4344000" />
+      <workItem from="1491916845809" duration="10000" />
+      <workItem from="1491916910811" duration="871000" />
+      <workItem from="1492052619288" duration="70000" />
+      <workItem from="1492052848914" duration="814000" />
+      <workItem from="1492089636497" duration="1306000" />
+      <workItem from="1492179344408" duration="2873000" />
+      <workItem from="1492274990198" duration="803000" />
+      <workItem from="1492357803701" duration="79000" />
+      <workItem from="1492382405037" duration="7648000" />
+      <workItem from="1492421145889" duration="15717000" />
+      <workItem from="1492521099019" duration="9765000" />
+      <workItem from="1492601432188" duration="17358000" />
+      <workItem from="1492871166137" duration="50000" />
+      <workItem from="1493164633772" duration="10572000" />
+      <workItem from="1493180747560" duration="6334000" />
+      <workItem from="1493256896868" duration="55000" />
+      <workItem from="1493296906885" duration="9318000" />
+      <workItem from="1493377491370" duration="225000" />
+      <workItem from="1493377900619" duration="16275000" />
+      <workItem from="1493473587552" duration="1648000" />
+      <workItem from="1493518714584" duration="4415000" />
+      <workItem from="1493570221979" duration="4163000" />
+      <workItem from="1493599816659" duration="3483000" />
+      <workItem from="1493613946189" duration="26778000" />
+      <workItem from="1493707728876" duration="14113000" />
+      <workItem from="1493742580037" duration="4487000" />
+      <workItem from="1493784292166" duration="339000" />
+      <workItem from="1493795108874" duration="1421000" />
+      <workItem from="1493929334777" duration="2552000" />
+      <workItem from="1494043869836" duration="49000" />
+      <workItem from="1494043986738" duration="477000" />
+      <workItem from="1494117186613" duration="22000" />
+      <workItem from="1494119071121" duration="373000" />
+      <workItem from="1494179545389" duration="1031000" />
+      <workItem from="1494229980137" duration="56000" />
+      <workItem from="1494353919411" duration="5673000" />
+      <workItem from="1494392138171" duration="1961000" />
+      <workItem from="1494514493578" duration="172000" />
+      <workItem from="1494517939071" duration="742000" />
+      <workItem from="1494765484999" duration="2450000" />
+      <workItem from="1494798034290" duration="1812000" />
+      <workItem from="1494890004095" duration="13342000" />
+      <workItem from="1494988879749" duration="196000" />
+      <workItem from="1494989399153" duration="523000" />
+      <workItem from="1494990448492" duration="9833000" />
+      <workItem from="1495027348454" duration="2873000" />
+      <workItem from="1495063230875" duration="60000" />
+      <workItem from="1495198569906" duration="3441000" />
+      <workItem from="1495222962754" duration="2971000" />
+      <workItem from="1495255653262" duration="111000" />
+      <workItem from="1495381898320" duration="1375000" />
+      <workItem from="1495406846953" duration="6075000" />
+      <workItem from="1495437630482" duration="12940000" />
+      <workItem from="1495460712079" duration="7933000" />
+      <workItem from="1495495090749" duration="959000" />
+      <workItem from="1495501417269" duration="2112000" />
+      <workItem from="1495520550893" duration="17626000" />
+      <workItem from="1495545622209" duration="8728000" />
+      <workItem from="1495567821230" duration="174000" />
+      <workItem from="1495574443305" duration="655000" />
+      <workItem from="1495614414445" duration="9822000" />
+      <workItem from="1495632211727" duration="12350000" />
+      <workItem from="1495693102600" duration="676000" />
+      <workItem from="1495716130940" duration="9119000" />
+      <workItem from="1495819165738" duration="1397000" />
+      <workItem from="1495841629512" duration="1725000" />
+      <workItem from="1495897053843" duration="2099000" />
+      <workItem from="1495929423063" duration="664000" />
+      <workItem from="1496148805605" duration="2874000" />
+      <workItem from="1496215955796" duration="13667000" />
+      <workItem from="1496274932863" duration="1180000" />
+      <workItem from="1496313148252" duration="6059000" />
+      <workItem from="1496347904897" duration="4237000" />
+      <workItem from="1496357674355" duration="39000" />
+      <workItem from="1496401460154" duration="1571000" />
+      <workItem from="1496411442960" duration="7620000" />
+      <workItem from="1496432502607" duration="93000" />
+      <workItem from="1496575586591" duration="11732000" />
+      <workItem from="1496657257874" duration="587000" />
+      <workItem from="1496675162486" duration="6771000" />
+      <workItem from="1496750287711" duration="11492000" />
+      <workItem from="1496791127918" duration="163000" />
+      <workItem from="1496792500259" duration="923000" />
+      <workItem from="1496794364101" duration="1615000" />
+      <workItem from="1496920422468" duration="38000" />
+      <workItem from="1496921229515" duration="8442000" />
+      <workItem from="1496932252713" duration="3699000" />
+      <workItem from="1496956236470" duration="26000" />
+      <workItem from="1497184876126" duration="1084000" />
+      <workItem from="1497186075230" duration="4892000" />
+      <workItem from="1497193117756" duration="6306000" />
+      <workItem from="1497251186865" duration="13054000" />
+      <workItem from="1497353543960" duration="1887000" />
+      <workItem from="1497371243289" duration="1040000" />
+      <workItem from="1497555245821" duration="3248000" />
+      <workItem from="1497591621783" duration="13000" />
+      <workItem from="1497591728964" duration="377000" />
+      <workItem from="1497593598668" duration="1833000" />
+      <workItem from="1497638869410" duration="630000" />
+      <workItem from="1497702116606" duration="7995000" />
+      <workItem from="1497763325941" duration="635000" />
     </task>
-    <task id="LOCAL-00108" summary="SubModulo Lectura - Refactoring - Envio de Correo">
-      <created>1479539595484</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
+    <task id="LOCAL-00324" summary="Refactoring">
+      <created>1495621941865</created>
+      <option name="number" value="00324" />
+      <option name="presentableId" value="LOCAL-00324" />
       <option name="project" value="LOCAL" />
-      <updated>1479539595484</updated>
+      <updated>1495621941867</updated>
     </task>
-    <task id="LOCAL-00109" summary="SubModulo Lectura - Refactoring - Envio de Correo">
-      <created>1479540021792</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
+    <task id="LOCAL-00325" summary="Refactoring">
+      <created>1495636363752</created>
+      <option name="number" value="00325" />
+      <option name="presentableId" value="LOCAL-00325" />
       <option name="project" value="LOCAL" />
-      <updated>1479540021792</updated>
+      <updated>1495636363752</updated>
     </task>
-    <task id="LOCAL-00110" summary="SubModulo Lectura - Refactoring - Busqueda">
-      <created>1479651167277</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
+    <task id="LOCAL-00326" summary="SubModulo Cobro de Agua + Nuevo INDEX">
+      <created>1495636604059</created>
+      <option name="number" value="00326" />
+      <option name="presentableId" value="LOCAL-00326" />
       <option name="project" value="LOCAL" />
-      <updated>1479651167278</updated>
+      <updated>1495636604059</updated>
     </task>
-    <task id="LOCAL-00111" summary="SubModulo Lectura - Refactoring - Factura">
-      <created>1479661727858</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
+    <task id="LOCAL-00327" summary="Refactoring">
+      <created>1495637698807</created>
+      <option name="number" value="00327" />
+      <option name="presentableId" value="LOCAL-00327" />
       <option name="project" value="LOCAL" />
-      <updated>1479661727858</updated>
+      <updated>1495637698807</updated>
     </task>
-    <task id="LOCAL-00112" summary="SubModulo 001N - Solicitudes">
-      <created>1479972229429</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
+    <task id="LOCAL-00328" summary="Refactoring">
+      <created>1495653137111</created>
+      <option name="number" value="00328" />
+      <option name="presentableId" value="LOCAL-00328" />
       <option name="project" value="LOCAL" />
-      <updated>1479972229430</updated>
+      <updated>1495653137111</updated>
     </task>
-    <task id="LOCAL-00113" summary="SubModulo 001N - Solicitudes">
-      <created>1479974860956</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
+    <task id="LOCAL-00329" summary="Refactoring">
+      <created>1495657124082</created>
+      <option name="number" value="00329" />
+      <option name="presentableId" value="LOCAL-00329" />
       <option name="project" value="LOCAL" />
-      <updated>1479974860956</updated>
+      <updated>1495657124082</updated>
     </task>
-    <task id="LOCAL-00114" summary="SubModulo 001N - Solicitudes">
-      <created>1479991691704</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
+    <task id="LOCAL-00330" summary="Refactoring">
+      <created>1495720301489</created>
+      <option name="number" value="00330" />
+      <option name="presentableId" value="LOCAL-00330" />
       <option name="project" value="LOCAL" />
-      <updated>1479991691704</updated>
+      <updated>1495720301489</updated>
     </task>
-    <task id="LOCAL-00115" summary="SubModulo 001N - Solicitudes">
-      <created>1479993466552</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
+    <task id="LOCAL-00331" summary="Refactoring">
+      <created>1495720887194</created>
+      <option name="number" value="00331" />
+      <option name="presentableId" value="LOCAL-00331" />
       <option name="project" value="LOCAL" />
-      <updated>1479993466552</updated>
+      <updated>1495720887194</updated>
     </task>
-    <task id="LOCAL-00116" summary="SubModulo 001N - Solicitudes">
-      <created>1480001223044</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
+    <task id="LOCAL-00332" summary="Refactoring">
+      <created>1495725945523</created>
+      <option name="number" value="00332" />
+      <option name="presentableId" value="LOCAL-00332" />
       <option name="project" value="LOCAL" />
-      <updated>1480001223044</updated>
+      <updated>1495725945523</updated>
     </task>
-    <task id="LOCAL-00117" summary="SubModulo 001N - Solicitudes">
-      <created>1480016646753</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
+    <task id="LOCAL-00333" summary="Refactoring">
+      <created>1495729100864</created>
+      <option name="number" value="00333" />
+      <option name="presentableId" value="LOCAL-00333" />
       <option name="project" value="LOCAL" />
-      <updated>1480016646753</updated>
+      <updated>1495729100864</updated>
     </task>
-    <task id="LOCAL-00118" summary="SubModulo 001N - Solicitudes">
-      <created>1480018102950</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
+    <task id="LOCAL-00334" summary="Refactoring">
+      <created>1495731022755</created>
+      <option name="number" value="00334" />
+      <option name="presentableId" value="LOCAL-00334" />
       <option name="project" value="LOCAL" />
-      <updated>1480018102950</updated>
+      <updated>1495731022756</updated>
     </task>
-    <task id="LOCAL-00119" summary="SubModulo Cobro de Agua">
-      <created>1480175751706</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
+    <task id="LOCAL-00335" summary="Refactoring">
+      <created>1495731173657</created>
+      <option name="number" value="00335" />
+      <option name="presentableId" value="LOCAL-00335" />
       <option name="project" value="LOCAL" />
-      <updated>1480175751707</updated>
+      <updated>1495731173657</updated>
     </task>
-    <task id="LOCAL-00120" summary="SubModulo Cobro de Agua">
-      <created>1480177265034</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
+    <task id="LOCAL-00336" summary="Refactoring">
+      <created>1495897606259</created>
+      <option name="number" value="00336" />
+      <option name="presentableId" value="LOCAL-00336" />
       <option name="project" value="LOCAL" />
-      <updated>1480177265034</updated>
+      <updated>1495897606260</updated>
     </task>
-    <task id="LOCAL-00121" summary="SubModulo Cobro de Agua">
-      <created>1480227270544</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
+    <task id="LOCAL-00337" summary="Refactoring">
+      <created>1495898563780</created>
+      <option name="number" value="00337" />
+      <option name="presentableId" value="LOCAL-00337" />
       <option name="project" value="LOCAL" />
-      <updated>1480227270545</updated>
+      <updated>1495898563780</updated>
     </task>
-    <task id="LOCAL-00122" summary="SubModulo Cobro de Agua">
-      <created>1480347510383</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
+    <task id="LOCAL-00338" summary="Cuentas x Cobrar">
+      <created>1496223898563</created>
+      <option name="number" value="00338" />
+      <option name="presentableId" value="LOCAL-00338" />
       <option name="project" value="LOCAL" />
-      <updated>1480347510384</updated>
+      <updated>1496223898564</updated>
     </task>
-    <task id="LOCAL-00123" summary="SubModulo Cobro de Agua">
-      <created>1480401794147</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
+    <task id="LOCAL-00339" summary="Cuentas x Cobrar">
+      <created>1496230568354</created>
+      <option name="number" value="00339" />
+      <option name="presentableId" value="LOCAL-00339" />
       <option name="project" value="LOCAL" />
-      <updated>1480401794147</updated>
+      <updated>1496230568354</updated>
     </task>
-    <task id="LOCAL-00124" summary="SubModulo Cobro de Agua - Imprimir">
-      <created>1480487158159</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
+    <task id="LOCAL-00340" summary="Cuentas x Cobrar">
+      <created>1496314930091</created>
+      <option name="number" value="00340" />
+      <option name="presentableId" value="LOCAL-00340" />
       <option name="project" value="LOCAL" />
-      <updated>1480487158159</updated>
+      <updated>1496314930092</updated>
     </task>
-    <task id="LOCAL-00125" summary="SubModulo Cobro de Agua">
-      <created>1480490451926</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
+    <task id="LOCAL-00341" summary="Cuentas x Cobrar">
+      <created>1496315711722</created>
+      <option name="number" value="00341" />
+      <option name="presentableId" value="LOCAL-00341" />
       <option name="project" value="LOCAL" />
-      <updated>1480490451927</updated>
+      <updated>1496315711722</updated>
     </task>
-    <task id="LOCAL-00126" summary="SubModulo Cobro de Agua">
-      <created>1480536576705</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
+    <task id="LOCAL-00342" summary="Cuentas x Cobrar">
+      <created>1496351929627</created>
+      <option name="number" value="00342" />
+      <option name="presentableId" value="LOCAL-00342" />
       <option name="project" value="LOCAL" />
-      <updated>1480536576710</updated>
+      <updated>1496351929628</updated>
     </task>
-    <task id="LOCAL-00127" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1480575079946</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
+    <task id="LOCAL-00343" summary="Cuentas x Cobrar">
+      <created>1496418419834</created>
+      <option name="number" value="00343" />
+      <option name="presentableId" value="LOCAL-00343" />
       <option name="project" value="LOCAL" />
-      <updated>1480575080027</updated>
+      <updated>1496418419835</updated>
     </task>
-    <task id="LOCAL-00128" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1480749689445</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
+    <task id="LOCAL-00344" summary="Cuentas x Cobrar">
+      <created>1496418766347</created>
+      <option name="number" value="00344" />
+      <option name="presentableId" value="LOCAL-00344" />
       <option name="project" value="LOCAL" />
-      <updated>1480749689445</updated>
+      <updated>1496418766347</updated>
     </task>
-    <task id="LOCAL-00129" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481227335014</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
+    <task id="LOCAL-00345" summary="Cuentas x Cobrar">
+      <created>1496577837293</created>
+      <option name="number" value="00345" />
+      <option name="presentableId" value="LOCAL-00345" />
       <option name="project" value="LOCAL" />
-      <updated>1481227335014</updated>
+      <updated>1496577837295</updated>
     </task>
-    <task id="LOCAL-00130" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481477315895</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
+    <task id="LOCAL-00346" summary="Cuentas x Cobrar">
+      <created>1496580425050</created>
+      <option name="number" value="00346" />
+      <option name="presentableId" value="LOCAL-00346" />
       <option name="project" value="LOCAL" />
-      <updated>1481477315895</updated>
+      <updated>1496580425050</updated>
     </task>
-    <task id="LOCAL-00131" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481725896348</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
+    <task id="LOCAL-00347" summary="Cuentas x Cobrar">
+      <created>1496583558768</created>
+      <option name="number" value="00347" />
+      <option name="presentableId" value="LOCAL-00347" />
       <option name="project" value="LOCAL" />
-      <updated>1481725896348</updated>
+      <updated>1496583558768</updated>
     </task>
-    <task id="LOCAL-00132" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481730094461</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
+    <task id="LOCAL-00348" summary="Cuentas x Cobrar">
+      <created>1496675871214</created>
+      <option name="number" value="00348" />
+      <option name="presentableId" value="LOCAL-00348" />
       <option name="project" value="LOCAL" />
-      <updated>1481730094461</updated>
+      <updated>1496675871214</updated>
     </task>
-    <task id="LOCAL-00133" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481740582215</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
+    <task id="LOCAL-00349" summary="Cuentas x Cobrar">
+      <created>1496680621238</created>
+      <option name="number" value="00349" />
+      <option name="presentableId" value="LOCAL-00349" />
       <option name="project" value="LOCAL" />
-      <updated>1481740582215</updated>
+      <updated>1496680621239</updated>
     </task>
-    <task id="LOCAL-00134" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481742230045</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
+    <task id="LOCAL-00350" summary="Cuentas x Cobrar">
+      <created>1496760006694</created>
+      <option name="number" value="00350" />
+      <option name="presentableId" value="LOCAL-00350" />
       <option name="project" value="LOCAL" />
-      <updated>1481742230045</updated>
+      <updated>1496760006695</updated>
     </task>
-    <task id="LOCAL-00135" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1481745183802</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
+    <task id="LOCAL-00351" summary="Cuentas x Cobrar">
+      <created>1496761960740</created>
+      <option name="number" value="00351" />
+      <option name="presentableId" value="LOCAL-00351" />
       <option name="project" value="LOCAL" />
-      <updated>1481745183802</updated>
+      <updated>1496761960740</updated>
     </task>
-    <task id="LOCAL-00136" summary="Union Submodulos Retencion">
-      <created>1482172968162</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
+    <task id="LOCAL-00352" summary="Cuentas x Cobrar">
+      <created>1496764190571</created>
+      <option name="number" value="00352" />
+      <option name="presentableId" value="LOCAL-00352" />
       <option name="project" value="LOCAL" />
-      <updated>1482172968163</updated>
+      <updated>1496764190571</updated>
     </task>
-    <task id="LOCAL-00137" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1482416397759</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
+    <task id="LOCAL-00353" summary="Cuentas x Cobrar">
+      <created>1496772967809</created>
+      <option name="number" value="00353" />
+      <option name="presentableId" value="LOCAL-00353" />
       <option name="project" value="LOCAL" />
-      <updated>1482416397813</updated>
+      <updated>1496772967809</updated>
     </task>
-    <task id="LOCAL-00138" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1482591513463</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
+    <task id="LOCAL-00354" summary="Cuentas x Cobrar">
+      <created>1496773166850</created>
+      <option name="number" value="00354" />
+      <option name="presentableId" value="LOCAL-00354" />
       <option name="project" value="LOCAL" />
-      <updated>1482591513464</updated>
+      <updated>1496773166850</updated>
     </task>
-    <task id="LOCAL-00139" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1482733509687</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
+    <task id="LOCAL-00355" summary="Cuentas x Cobrar">
+      <created>1496773277193</created>
+      <option name="number" value="00355" />
+      <option name="presentableId" value="LOCAL-00355" />
       <option name="project" value="LOCAL" />
-      <updated>1482733509688</updated>
+      <updated>1496773277193</updated>
     </task>
-    <task id="LOCAL-00140" summary="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud">
-      <created>1482733723764</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
+    <task id="LOCAL-00356" summary="Cuentas x Cobrar">
+      <created>1496778157583</created>
+      <option name="number" value="00356" />
+      <option name="presentableId" value="LOCAL-00356" />
       <option name="project" value="LOCAL" />
-      <updated>1482733723764</updated>
+      <updated>1496778157583</updated>
     </task>
-    <task id="LOCAL-00141" summary="SubModulo Retencion">
-      <created>1482734383096</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
+    <task id="LOCAL-00357" summary="Cuentas x Cobrar">
+      <created>1496934131602</created>
+      <option name="number" value="00357" />
+      <option name="presentableId" value="LOCAL-00357" />
       <option name="project" value="LOCAL" />
-      <updated>1482734383096</updated>
+      <updated>1496934131602</updated>
     </task>
-    <task id="LOCAL-00142" summary="SubModulo Retencion">
-      <created>1482741002871</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
+    <task id="LOCAL-00358" summary="Cuentas x Cobrar">
+      <created>1496934765198</created>
+      <option name="number" value="00358" />
+      <option name="presentableId" value="LOCAL-00358" />
       <option name="project" value="LOCAL" />
-      <updated>1482741002871</updated>
+      <updated>1496934765198</updated>
     </task>
-    <task id="LOCAL-00143" summary="SubModulo Retencion">
-      <created>1482745980006</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
+    <task id="LOCAL-00359" summary="Cuentas x Cobrar">
+      <created>1496935349679</created>
+      <option name="number" value="00359" />
+      <option name="presentableId" value="LOCAL-00359" />
       <option name="project" value="LOCAL" />
-      <updated>1482745980007</updated>
+      <updated>1496935349679</updated>
     </task>
-    <task id="LOCAL-00144" summary="SubModulo Retencion">
-      <created>1482749011095</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
+    <task id="LOCAL-00360" summary="Refactoring">
+      <created>1497188274407</created>
+      <option name="number" value="00360" />
+      <option name="presentableId" value="LOCAL-00360" />
       <option name="project" value="LOCAL" />
-      <updated>1482749011096</updated>
+      <updated>1497188274408</updated>
     </task>
-    <task id="LOCAL-00145" summary="SubModulo Retencion">
-      <created>1482863492188</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
+    <task id="LOCAL-00361" summary="Refactoring">
+      <created>1497194951761</created>
+      <option name="number" value="00361" />
+      <option name="presentableId" value="LOCAL-00361" />
       <option name="project" value="LOCAL" />
-      <updated>1482863492573</updated>
+      <updated>1497194951761</updated>
     </task>
-    <task id="LOCAL-00146" summary="SubModulo Retencion">
-      <created>1482911884676</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
+    <task id="LOCAL-00362" summary="Refactoring">
+      <created>1497196514076</created>
+      <option name="number" value="00362" />
+      <option name="presentableId" value="LOCAL-00362" />
       <option name="project" value="LOCAL" />
-      <updated>1482911884677</updated>
+      <updated>1497196514076</updated>
     </task>
-    <task id="LOCAL-00147" summary="SubModulo Retencion">
-      <created>1482916313444</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
+    <task id="LOCAL-00363" summary="Refactoring">
+      <created>1497197502316</created>
+      <option name="number" value="00363" />
+      <option name="presentableId" value="LOCAL-00363" />
       <option name="project" value="LOCAL" />
-      <updated>1482916313444</updated>
+      <updated>1497197502316</updated>
     </task>
-    <task id="LOCAL-00148" summary="SubModulo Retencion">
-      <created>1483520611423</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
+    <task id="LOCAL-00364" summary="Refactoring">
+      <created>1497200138955</created>
+      <option name="number" value="00364" />
+      <option name="presentableId" value="LOCAL-00364" />
       <option name="project" value="LOCAL" />
-      <updated>1483520611423</updated>
+      <updated>1497200138955</updated>
     </task>
-    <task id="LOCAL-00149" summary="SubModulo Cobro de Agua">
-      <created>1483523432647</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
+    <task id="LOCAL-00365" summary="Refactoring">
+      <created>1497254147716</created>
+      <option name="number" value="00365" />
+      <option name="presentableId" value="LOCAL-00365" />
       <option name="project" value="LOCAL" />
-      <updated>1483523432647</updated>
+      <updated>1497254147717</updated>
     </task>
-    <task id="LOCAL-00150" summary="SubModulo Cobro de Agua">
-      <created>1483523504845</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
+    <task id="LOCAL-00366" summary="Cuentas x Pagar">
+      <created>1497257006757</created>
+      <option name="number" value="00366" />
+      <option name="presentableId" value="LOCAL-00366" />
       <option name="project" value="LOCAL" />
-      <updated>1483523504845</updated>
+      <updated>1497257006757</updated>
     </task>
-    <task id="LOCAL-00151" summary="SubModulo Cobro de Agua">
-      <created>1483629998746</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
+    <task id="LOCAL-00367" summary="Refactoring">
+      <created>1497297810100</created>
+      <option name="number" value="00367" />
+      <option name="presentableId" value="LOCAL-00367" />
       <option name="project" value="LOCAL" />
-      <updated>1483629998747</updated>
+      <updated>1497297810100</updated>
     </task>
-    <task id="LOCAL-00152" summary="SubModulo Retencion">
-      <created>1483663538571</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
+    <task id="LOCAL-00368" summary="Refactoring">
+      <created>1497298794933</created>
+      <option name="number" value="00368" />
+      <option name="presentableId" value="LOCAL-00368" />
       <option name="project" value="LOCAL" />
-      <updated>1483663538571</updated>
+      <updated>1497298794933</updated>
     </task>
-    <task id="LOCAL-00153" summary="SubModulo Comprobantes Egreso e Ingreso">
-      <created>1483830412168</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
+    <task id="LOCAL-00369" summary="Refactoring">
+      <created>1497299615587</created>
+      <option name="number" value="00369" />
+      <option name="presentableId" value="LOCAL-00369" />
       <option name="project" value="LOCAL" />
-      <updated>1483830412169</updated>
+      <updated>1497299615588</updated>
     </task>
-    <task id="LOCAL-00154" summary="SubModulo Comprobantes Egreso e Ingreso">
-      <created>1483832375144</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
+    <task id="LOCAL-00370" summary="Refactoring">
+      <created>1497311154690</created>
+      <option name="number" value="00370" />
+      <option name="presentableId" value="LOCAL-00370" />
       <option name="project" value="LOCAL" />
-      <updated>1483832375144</updated>
+      <updated>1497311154694</updated>
     </task>
-    <task id="LOCAL-00155" summary="SubModulo Cobro de Agua">
-      <created>1490665803415</created>
-      <option name="number" value="00155" />
-      <option name="presentableId" value="LOCAL-00155" />
+    <task id="LOCAL-00371" summary="SubModulo Cobro de Agua + Nuevo INDEX">
+      <created>1497563888013</created>
+      <option name="number" value="00371" />
+      <option name="presentableId" value="LOCAL-00371" />
       <option name="project" value="LOCAL" />
-      <updated>1490665803415</updated>
+      <updated>1497563888014</updated>
     </task>
-    <task id="LOCAL-00156" summary="NomencladorAqua">
-      <created>1490824816603</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
+    <task id="LOCAL-00372" summary="Refactoring">
+      <created>1497707708863</created>
+      <option name="number" value="00372" />
+      <option name="presentableId" value="LOCAL-00372" />
       <option name="project" value="LOCAL" />
-      <updated>1490824816604</updated>
+      <updated>1497707708864</updated>
     </task>
-    <option name="localTasksCounter" value="157" />
+    <option name="localTasksCounter" value="373" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="851984000" />
+    <option name="totallyTimeSpent" value="1549790000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1370" height="772" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23664123" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3395931" sideWeight="0.129771" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.68701094" sideWeight="0.870229" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6197183" sideWeight="0.41225415" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35015774" sideWeight="0.49121523" order="3" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35015774" sideWeight="0.5087848" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7791798" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35015774" sideWeight="0.5087848" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45899054" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21815519" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32594937" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20362474" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28843337" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3785489" sideWeight="0.49121523" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35015774" sideWeight="0.49121523" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -951,379 +1222,693 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Restaurar configuracion de correo en Libreria de Envio de Correo de Laravel" />
-    <MESSAGE value="Arreglo de estilo a login.php" />
-    <MESSAGE value="Arreglo de estilo a index.php para ser responsive" />
-    <MESSAGE value="Adaptacion de Cargos y Empleados al nuevo diseño de index.php" />
-    <MESSAGE value="Refactoring Cargos" />
-    <MESSAGE value="Refactoring Empleados" />
-    <MESSAGE value="Generacion de PDF desde Nueva Lectura. Se integro el modulo con Cobro de Agua" />
-    <MESSAGE value="Refactoring Lectura" />
-    <MESSAGE value="Refactoring Lectura + Cobro de Agua" />
-    <MESSAGE value="SubModulo Empleado - Subida de Ficheros" />
-    <MESSAGE value="Adaptar para Subida de Ficheros" />
-    <MESSAGE value="SubModulo Lectura" />
-    <MESSAGE value="SubModulo Lectura - Refactoring" />
-    <MESSAGE value="SubModulo Lectura - Refactoring - Envio de Correo" />
-    <MESSAGE value="SubModulo Lectura - Refactoring - Busqueda" />
-    <MESSAGE value="SubModulo Lectura - Refactoring - Factura" />
-    <MESSAGE value="SubModulo 001N - Solicitudes" />
-    <MESSAGE value="SubModulo Cobro de Agua - Imprimir" />
-    <MESSAGE value="Union Submodulos Retencion" />
-    <MESSAGE value="Refactoring Cobro de Agua, Lectura, Cliente, Solicitud" />
-    <MESSAGE value="SubModulo Retencion" />
-    <MESSAGE value="SubModulo Comprobantes Egreso e Ingreso" />
+    <MESSAGE value="Lectura" />
+    <MESSAGE value="Refactoring Sectorizacion" />
+    <MESSAGE value="Refactoring Cobro Agua" />
     <MESSAGE value="SubModulo Cobro de Agua" />
-    <MESSAGE value="NomencladorAqua" />
-    <MESSAGE value="NomencladorAqua01" />
-    <option name="LAST_COMMIT_MESSAGE" value="NomencladorAqua01" />
-    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.80487806" />
+    <MESSAGE value="Refactoring (Cliente-Solicitud)" />
+    <MESSAGE value="Configuracion" />
+    <MESSAGE value="Contabilidad" />
+    <MESSAGE value="Refactoring Contacto Proveedores" />
+    <MESSAGE value="Refactoring Cliente + Solicitud" />
+    <MESSAGE value="Others" />
+    <MESSAGE value="Refactoring Suministro" />
+    <MESSAGE value="Refactoring Solicitud Suministro" />
+    <MESSAGE value="Refactoring Solicitudes" />
+    <MESSAGE value="Negocio Ayora + Contabilidad" />
+    <MESSAGE value="Gestion de Departamentos" />
+    <MESSAGE value="Login" />
+    <MESSAGE value="Gestion de Roles y Usuarios" />
+    <MESSAGE value="Refactoring Ventas + Compras" />
+    <MESSAGE value="Refactoring Compras" />
+    <MESSAGE value="Retencion de Compras" />
+    <MESSAGE value="Reportes" />
+    <MESSAGE value="Cuentas x Cobrar" />
+    <MESSAGE value="Cuentas x Pagar" />
+    <MESSAGE value="SubModulo Cobro de Agua + Nuevo INDEX" />
+    <MESSAGE value="Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/Suministros/SuministroController.php</url>
+          <line>78</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/Facturacionventa/DocumentoVenta.php</url>
+          <line>714</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/Facturacionventa/DocumentoVenta.php</url>
+          <line>213</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public/app/controllers/venta.js</url>
+          <line>783</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public/app/controllers/retencionComprasIndexController.js</url>
+          <line>440</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="67" />
+      <option name="time" value="127" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/index.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/Cuentas/cobroservicio.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="549">
+          <caret line="111" column="10" lean-forward="false" selection-start-line="111" selection-start-column="10" selection-end-line="111" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style_generic_app.css">
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/Balances.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-559">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_nuevaLectura.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="260" column="39" lean-forward="true" selection-start-line="260" selection-start-column="39" selection-end-line="260" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Configuraciones/Configuracion.php" />
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Facturas/OtrosValoresFactura.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/Lecturas/index_viewLectura.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-295">
-          <caret line="96" column="100" lean-forward="false" selection-start-line="96" selection-start-column="100" selection-end-line="96" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/viewLecturaController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="878">
-          <caret line="188" column="29" lean-forward="true" selection-start-line="188" selection-start-column="29" selection-end-line="188" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/ViewLecturaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-457">
-          <caret line="75" column="85" lean-forward="false" selection-start-line="75" selection-start-column="85" selection-end-line="75" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/cargosController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/barriosController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="11" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="18" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Solicitud/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="71" column="63" lean-forward="true" selection-start-line="71" selection-start-column="63" selection-end-line="71" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/solicitudServicioController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19635">
-          <caret line="1155" column="50" lean-forward="true" selection-start-line="1154" selection-start-column="12" selection-end-line="1155" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Factura/factura.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="827">
-          <caret line="108" column="0" lean-forward="true" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Facturas/Factura.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Facturas/OtrosValores.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Compras/CompraProducto.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Retencion/RetencionCompra.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/compras/formulario_compras.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="34" column="40" lean-forward="true" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Compras/CompraProductoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-531">
-          <caret line="429" column="28" lean-forward="false" selection-start-line="429" selection-start-column="20" selection-end-line="429" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/comprasproductoIngresoController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="321" column="5" lean-forward="false" selection-start-line="308" selection-start-column="4" selection-end-line="321" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/retencionCompraController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="49" lean-forward="false" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Retencion/RetencionCompraController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="58" column="22" lean-forward="false" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/clientesController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="209" column="49" lean-forward="true" selection-start-line="203" selection-start-column="16" selection-end-line="209" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/facturaController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="407" column="26" lean-forward="false" selection-start-line="407" selection-start-column="26" selection-end-line="407" selection-end-column="26" />
+        <state relative-caret-position="448">
+          <caret line="339" column="89" lean-forward="true" selection-start-line="339" selection-start-column="89" selection-end-line="339" selection-end-column="89" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Factura/factura_print.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="784">
-          <caret line="159" column="17" lean-forward="true" selection-start-line="159" selection-start-column="17" selection-end-line="159" selection-end-column="17" />
+        <state relative-caret-position="-816">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/cobroServicioController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="184" column="50" lean-forward="false" selection-start-line="184" selection-start-column="50" selection-end-line="184" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/facturaController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8585">
+          <caret line="505" column="10" lean-forward="false" selection-start-line="505" selection-start-column="10" selection-end-line="505" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Cuentas/cobroservicio_print.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1496">
+          <caret line="88" column="20" lean-forward="false" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Facturas/CobroServicioController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1768">
+          <caret line="152" column="6" lean-forward="false" selection-start-line="152" selection-start-column="6" selection-end-line="152" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Transportista/TransportistaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="87" column="49" lean-forward="true" selection-start-line="87" selection-start-column="49" selection-end-line="87" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/transportistaController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="219" column="91" lean-forward="false" selection-start-line="219" selection-start-column="91" selection-end-line="219" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Factura/factura.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="66" column="88" lean-forward="false" selection-start-line="66" selection-start-column="87" selection-end-line="66" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/login.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/bootstrap-datetimepicker.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4981">
+          <caret line="293" column="10" lean-forward="true" selection-start-line="293" selection-start-column="10" selection-end-line="293" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="186" column="0" lean-forward="true" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/facturacionventa.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-459">
+          <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Facturas/FacturaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270">
-          <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+        <state relative-caret-position="408">
+          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php">
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/suministrosController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="293" column="16" lean-forward="false" selection-start-line="293" selection-start-column="16" selection-end-line="293" selection-end-column="16" />
+        <state relative-caret-position="303">
+          <caret line="293" column="64" lean-forward="false" selection-start-line="293" selection-start-column="41" selection-end-line="293" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/index.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Suministros/SuministroController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="211" column="74" lean-forward="false" selection-start-line="211" selection-start-column="74" selection-end-line="211" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/retencion/form_retencionCompra.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="344" column="69" lean-forward="false" selection-start-line="344" selection-start-column="69" selection-end-line="344" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Comprobantes/form_comprobanteegreso.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Comprobantes/ComprobanteEgresoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="82" column="27" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/retencion/index_retencionCompra.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="139" column="61" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/retencionComprasIndexController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="53" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Comprobantes/index_comprobanteegreso.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="84" column="49" lean-forward="false" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/comprobEgresoIndexController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Comprobantes/ComprobanteEgreso.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Solicitud/Solicitud.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="31" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Clientes/ClienteController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/PHP/php.ini" />
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomina/CargoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Clientes/Cliente.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Clientes/index.php" />
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Sectores/Parroquia.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Modelos/Sectores/Canton.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controllers/nomencladorController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37366">
-          <caret line="2198" column="0" lean-forward="false" selection-start-line="2198" selection-start-column="0" selection-end-line="2198" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Nomenclador/index_nomenclador.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33303">
-          <caret line="1959" column="7" lean-forward="false" selection-start-line="1959" selection-start-column="7" selection-end-line="1959" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Nomenclador/NomencladorController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23783">
-          <caret line="1422" column="0" lean-forward="false" selection-start-line="1422" selection-start-column="0" selection-end-line="1422" selection-end-column="0" />
+        <state relative-caret-position="185">
+          <caret line="78" column="43" lean-forward="false" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="43" />
           <folding>
-            <element signature="e#52#90#0#PHP" expanded="true" />
+            <element signature="e#755#1750#0#PHP" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/venta.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="679" column="65" lean-forward="true" selection-start-line="679" selection-start-column="65" selection-end-line="679" selection-end-column="65" />
+          <folding>
+            <element signature="e#683#2431#0" expanded="false" />
+            <element signature="e#780#2423#0" expanded="false" />
+            <element signature="e#1187#2408#0" expanded="false" />
+            <element signature="e#1331#2351#0" expanded="false" />
+            <element signature="e#1433#1524#0" expanded="false" />
+            <element signature="e#1567#1661#0" expanded="false" />
+            <element signature="e#1667#1754#0" expanded="false" />
+            <element signature="e#1787#2285#0" expanded="false" />
+            <element signature="e#1825#1971#0" expanded="false" />
+            <element signature="e#2488#2529#0" expanded="false" />
+            <element signature="e#2573#3289#0" expanded="false" />
+            <element signature="e#2620#2712#0" expanded="false" />
+            <element signature="e#2718#2764#0" expanded="false" />
+            <element signature="e#2788#2884#0" expanded="false" />
+            <element signature="e#3042#3281#0" expanded="false" />
+            <element signature="e#3060#3129#0" expanded="false" />
+            <element signature="e#3365#4113#0" expanded="false" />
+            <element signature="e#3465#4105#0" expanded="false" />
+            <element signature="e#3507#3535#0" expanded="false" />
+            <element signature="e#3584#3876#0" expanded="false" />
+            <element signature="e#3880#4095#0" expanded="false" />
+            <element signature="e#4177#4367#0" expanded="false" />
+            <element signature="e#4277#4362#0" expanded="false" />
+            <element signature="e#4418#4851#0" expanded="false" />
+            <element signature="e#4446#4666#0" expanded="false" />
+            <element signature="e#4565#4660#0" expanded="false" />
+            <element signature="e#4670#4848#0" expanded="false" />
+            <element signature="e#4894#6816#0" expanded="false" />
+            <element signature="e#4993#6535#0" expanded="false" />
+            <element signature="e#5133#6188#0" expanded="false" />
+            <element signature="e#5214#5654#0" expanded="false" />
+            <element signature="e#5284#5632#0" expanded="false" />
+            <element signature="e#5732#6170#0" expanded="false" />
+            <element signature="e#5802#6148#0" expanded="false" />
+            <element signature="e#6252#6527#0" expanded="false" />
+            <element signature="e#6556#6811#0" expanded="false" />
+            <element signature="e#6857#7034#0" expanded="false" />
+            <element signature="e#6946#7029#0" expanded="false" />
+            <element signature="e#7077#7519#0" expanded="false" />
+            <element signature="e#7165#7514#0" expanded="false" />
+            <element signature="e#7253#7470#0" expanded="false" />
+            <element signature="e#7563#8074#0" expanded="false" />
+            <element signature="e#7663#8069#0" expanded="false" />
+            <element signature="e#7804#8026#0" expanded="false" />
+            <element signature="e#8120#8521#0" expanded="false" />
+            <element signature="e#8170#8518#0" expanded="false" />
+            <element signature="e#8214#8514#0" expanded="false" />
+            <element signature="e#8277#8509#0" expanded="false" />
+            <element signature="e#8579#9005#0" expanded="false" />
+            <element signature="e#8675#8833#0" expanded="false" />
+            <element signature="e#8689#8800#0" expanded="false" />
+            <element signature="e#8837#9002#0" expanded="false" />
+            <element signature="e#9053#9186#0" expanded="false" />
+            <element signature="e#9629#10275#0" expanded="false" />
+            <element signature="e#9695#10269#0" expanded="false" />
+            <element signature="e#9740#10259#0" expanded="false" />
+            <element signature="e#9816#9913#0" expanded="false" />
+            <element signature="e#9987#10079#0" expanded="false" />
+            <element signature="e#10153#10245#0" expanded="false" />
+            <element signature="e#10313#11010#0" expanded="false" />
+            <element signature="e#10357#11004#0" expanded="false" />
+            <element signature="e#10413#10994#0" expanded="false" />
+            <element signature="e#10503#10976#0" expanded="false" />
+            <element signature="e#10557#10876#0" expanded="false" />
+            <element signature="e#10880#10958#0" expanded="false" />
+            <element signature="e#11048#18551#0" expanded="false" />
+            <element signature="e#11223#12314#0" expanded="false" />
+            <element signature="e#11231#11262#0" expanded="false" />
+            <element signature="e#11395#12284#0" expanded="false" />
+            <element signature="e#11448#11849#0" expanded="false" />
+            <element signature="e#11853#11971#0" expanded="false" />
+            <element signature="e#12029#12275#0" expanded="false" />
+            <element signature="e#12474#14167#0" expanded="false" />
+            <element signature="e#12619#13198#0" expanded="false" />
+            <element signature="e#12663#13184#0" expanded="false" />
+            <element signature="e#12753#12870#0" expanded="false" />
+            <element signature="e#12891#13020#0" expanded="false" />
+            <element signature="e#13041#13166#0" expanded="false" />
+            <element signature="e#13202#13897#0" expanded="false" />
+            <element signature="e#13419#13883#0" expanded="false" />
+            <element signature="e#13519#13865#0" expanded="false" />
+            <element signature="e#13904#14160#0" expanded="false" />
+            <element signature="e#14323#15017#0" expanded="false" />
+            <element signature="e#14379#15007#0" expanded="false" />
+            <element signature="e#14458#14993#0" expanded="false" />
+            <element signature="e#14528#14879#0" expanded="false" />
+            <element signature="e#14883#14971#0" expanded="false" />
+            <element signature="e#15060#15760#0" expanded="false" />
+            <element signature="e#15116#15750#0" expanded="false" />
+            <element signature="e#15198#15736#0" expanded="false" />
+            <element signature="e#15268#15622#0" expanded="false" />
+            <element signature="e#15626#15714#0" expanded="false" />
+            <element signature="e#15805#16507#0" expanded="false" />
+            <element signature="e#15861#16497#0" expanded="false" />
+            <element signature="e#15944#16483#0" expanded="false" />
+            <element signature="e#16014#16369#0" expanded="false" />
+            <element signature="e#16373#16461#0" expanded="false" />
+            <element signature="e#17373#17463#0" expanded="false" />
+            <element signature="e#18145#18212#0" expanded="false" />
+            <element signature="e#18603#18651#0" expanded="false" />
+            <element signature="e#18721#18874#0" expanded="false" />
+            <element signature="e#19147#19285#0" expanded="false" />
+            <element signature="e#19220#19278#0" expanded="false" />
+            <element signature="e#19303#19562#0" expanded="false" />
+            <element signature="e#19741#20369#0" expanded="false" />
+            <element signature="e#19810#20361#0" expanded="false" />
+            <element signature="e#19832#20319#0" expanded="false" />
+            <element signature="e#20375#20476#0" expanded="false" />
+            <element signature="e#20608#20780#0" expanded="false" />
+            <element signature="e#20675#20773#0" expanded="false" />
+            <element signature="e#20850#21359#0" expanded="false" />
+            <element signature="e#20919#21351#0" expanded="false" />
+            <element signature="e#20946#21304#0" expanded="false" />
+            <element signature="e#21365#21389#0" expanded="false" />
+            <element signature="e#21475#22183#0" expanded="false" />
+            <element signature="e#21605#22175#0" expanded="false" />
+            <element signature="e#21639#22121#0" expanded="false" />
+            <element signature="e#22293#23016#0" expanded="false" />
+            <element signature="e#22378#22599#0" expanded="false" />
+            <element signature="e#22453#22585#0" expanded="false" />
+            <element signature="e#22620#22972#0" expanded="false" />
+            <element signature="e#23109#23862#0" expanded="false" />
+            <element signature="e#23197#23424#0" expanded="false" />
+            <element signature="e#23275#23410#0" expanded="false" />
+            <element signature="e#23448#23815#0" expanded="false" />
+            <element signature="e#23961#24726#0" expanded="false" />
+            <element signature="e#24050#24279#0" expanded="false" />
+            <element signature="e#24129#24265#0" expanded="false" />
+            <element signature="e#24305#24677#0" expanded="false" />
+            <element signature="e#24845#25013#0" expanded="false" />
+            <element signature="e#24910#25006#0" expanded="false" />
+            <element signature="e#25024#25275#0" expanded="false" />
+            <element signature="e#25344#25410#0" expanded="false" />
+            <element signature="e#25493#26225#0" expanded="false" />
+            <element signature="e#25562#26217#0" expanded="false" />
+            <element signature="e#25584#26178#0" expanded="false" />
+            <element signature="e#27511#27533#0" expanded="false" />
+            <element signature="e#27618#28272#0" expanded="false" />
+            <element signature="e#27644#28226#0" expanded="false" />
+            <element signature="e#28278#28293#0" expanded="false" />
+            <element signature="e#28333#28415#0" expanded="false" />
+            <element signature="e#28448#28622#0" expanded="false" />
+            <element signature="e#28632#28670#0" expanded="false" />
+            <element signature="e#28870#28938#0" expanded="false" />
+            <element signature="e#29048#29658#0" expanded="false" />
+            <element signature="e#29094#29394#0" expanded="false" />
+            <element signature="e#29398#29648#0" expanded="false" />
+            <element signature="e#29688#29729#0" expanded="false" />
+            <element signature="e#29776#30636#0" expanded="false" />
+            <element signature="e#30685#33870#0" expanded="false" />
+            <element signature="e#30804#33862#0" expanded="false" />
+            <element signature="e#32508#33724#0" expanded="false" />
+            <element signature="e#32644#33622#0" expanded="false" />
+            <element signature="e#32682#33007#0" expanded="false" />
+            <element signature="e#32712#32852#0" expanded="false" />
+            <element signature="e#33342#33352#0" expanded="false" />
+            <element signature="e#33772#33836#0" expanded="false" />
+            <element signature="e#33916#33971#0" expanded="false" />
+            <element signature="e#34026#34940#0" expanded="false" />
+            <element signature="e#34198#34932#0" expanded="false" />
+            <element signature="e#34236#34666#0" expanded="false" />
+            <element signature="e#34670#34922#0" expanded="false" />
+            <element signature="e#34995#35096#0" expanded="false" />
+            <element signature="e#35138#35487#0" expanded="false" />
+            <element signature="e#35543#35920#0" expanded="false" />
+            <element signature="e#35701#35739#0" expanded="false" />
+            <element signature="e#35745#35883#0" expanded="false" />
+            <element signature="e#35805#35873#0" expanded="false" />
+            <element signature="e#35968#36319#0" expanded="false" />
+            <element signature="e#36134#36170#0" expanded="false" />
+            <element signature="e#36176#36313#0" expanded="false" />
+            <element signature="e#36217#36273#0" expanded="false" />
+            <element signature="e#36375#36682#0" expanded="false" />
+            <element signature="e#36575#36649#0" expanded="false" />
+            <element signature="e#36742#37253#0" expanded="false" />
+            <element signature="e#36778#36900#0" expanded="false" />
+            <element signature="e#37067#37103#0" expanded="false" />
+            <element signature="e#37109#37247#0" expanded="false" />
+            <element signature="e#37151#37207#0" expanded="false" />
+            <element signature="e#37309#37886#0" expanded="false" />
+            <element signature="e#37420#37469#0" expanded="false" />
+            <element signature="e#37475#37880#0" expanded="false" />
+            <element signature="e#37608#37654#0" expanded="false" />
+            <element signature="e#37660#37822#0" expanded="false" />
+            <element signature="e#37728#37808#0" expanded="false" />
+            <element signature="n#!!block;n#convertDatetoDB#0" expanded="false" />
+            <element signature="e#37964#38050#0" expanded="false" />
+            <element signature="e#38056#38142#0" expanded="false" />
+            <element signature="n#!!block;n#now#0" expanded="false" />
+            <element signature="n#!!block;n#first#0" expanded="false" />
+            <element signature="n#!!block;n#completarNumer#0" expanded="false" />
+            <element signature="e#38563#38729#0" expanded="false" />
+            <element signature="e#38685#38723#0" expanded="false" />
+            <element signature="n#!!block;n#QuitarClasesMensaje#0" expanded="false" />
+            <element signature="e#39070#39200#0" expanded="false" />
+            <element signature="e#39108#39196#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Facturacionventa/DocumentoVenta.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-977">
+          <caret line="212" column="0" lean-forward="true" selection-start-line="212" selection-start-column="0" selection-end-line="212" selection-end-column="0" />
+          <folding>
+            <element signature="e#25053#26483#0#PHP" expanded="false" />
+            <element signature="e#26561#30508#0#PHP" expanded="false" />
+            <element signature="e#30596#31057#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/cuentasporCobrarController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1124">
+          <caret line="235" column="0" lean-forward="true" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Cuentas/cuentasxcobrar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="160" column="104" lean-forward="false" selection-start-line="160" selection-start-column="91" selection-end-line="160" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_CuentasPorCobrar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="49" lean-forward="false" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/mainController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="265" column="32" lean-forward="false" selection-start-line="265" selection-start-column="11" selection-end-line="265" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="1074" column="48" lean-forward="true" selection-start-line="1074" selection-start-column="48" selection-end-line="1074" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/index_new.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="312" column="59" lean-forward="false" selection-start-line="312" selection-start-column="59" selection-end-line="312" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_DocumentoVenta.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="58" column="5" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Cuentas/CuentasPorCobrarController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="175" column="9" lean-forward="true" selection-start-line="125" selection-start-column="8" selection-end-line="175" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Lecturas/LecturaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1600">
+          <caret line="341" column="43" lean-forward="false" selection-start-line="341" selection-start-column="43" selection-end-line="341" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/cuentasporPagarController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1670">
+          <caret line="163" column="0" lean-forward="true" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Cuentas/cuentasxpagar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="63" column="80" lean-forward="true" selection-start-line="63" selection-start-column="80" selection-end-line="63" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/catalogoproductos/index_catalogo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="246" column="0" lean-forward="true" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_CuentasPorPagar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Cuentas/CuentasPorPagarController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="14" column="36" lean-forward="true" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Clientes/ClienteController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="145" column="0" lean-forward="true" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Clientes/index_cliente.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="348" column="112" lean-forward="false" selection-start-line="348" selection-start-column="101" selection-end-line="348" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/clientesController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="289" column="39" lean-forward="false" selection-start-line="289" selection-start-column="39" selection-end-line="289" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="950" column="0" lean-forward="false" selection-start-line="950" selection-start-column="0" selection-end-line="950" selection-end-column="0" />
+          <caret line="1" column="66" lean-forward="true" selection-start-line="1" selection-start-column="66" selection-end-line="1" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Facturacionventa/venta.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/comprasController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="548" column="13" lean-forward="true" selection-start-line="548" selection-start-column="13" selection-end-line="548" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/compras/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="549" column="70" lean-forward="false" selection-start-line="549" selection-start-column="70" selection-end-line="549" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/retencionCompraController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-204">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/retencion/form_retencionCompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/SRI/SRI_RetencionCompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/SRI/SRI_DetalleImpuestoRetencion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="55" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/Contabilidad/Cont_DocumentoCompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Modelos/SRI/SRI_RetencionDetalleCompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Retencion/RetencionCompraController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="109" column="20" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+          <folding>
+            <element signature="e#861#962#0#PHP" expanded="false" />
+            <element signature="e#967#1058#0#PHP" expanded="false" />
+            <element signature="e#1064#1186#0#PHP" expanded="false" />
+            <element signature="e#1256#2536#0#PHP" expanded="false" />
+            <element signature="e#2559#2741#0#PHP" expanded="false" />
+            <element signature="e#2559#2804#0#PHP" expanded="false" />
+            <element signature="e#2559#2818#0#PHP" expanded="false" />
+            <element signature="e#2843#3132#0#PHP" expanded="false" />
+            <element signature="e#2843#3185#0#PHP" expanded="false" />
+            <element signature="e#3253#4107#0#PHP" expanded="false" />
+            <element signature="e#3475#4050#0#PHP" expanded="false" />
+            <element signature="e#3551#3723#0#PHP" expanded="false" />
+            <element signature="e#3752#3992#0#PHP" expanded="false" />
+            <element signature="e#4178#4387#0#PHP" expanded="false" />
+            <element signature="e#4407#4611#0#PHP" expanded="false" />
+            <element signature="e#4464#4597#0#PHP" expanded="false" />
+            <element signature="e#4617#5197#0#PHP" expanded="false" />
+            <element signature="e#4677#4855#0#PHP" expanded="false" />
+            <element signature="e#4677#5015#0#PHP" expanded="false" />
+            <element signature="e#4677#5129#0#PHP" expanded="false" />
+            <element signature="e#5203#5487#0#PHP" expanded="false" />
+            <element signature="e#5260#5481#0#PHP" expanded="false" />
+            <element signature="e#5442#5481#0#PHP" expanded="false" />
+            <element signature="e#5493#5631#0#PHP" expanded="false" />
+            <element signature="e#5637#6268#0#PHP" expanded="false" />
+            <element signature="e#5874#6262#0#PHP" expanded="false" />
+            <element signature="e#6016#6116#0#PHP" expanded="false" />
+            <element signature="e#6187#6262#0#PHP" expanded="false" />
+            <element signature="e#6274#6383#0#PHP" expanded="false" />
+            <element signature="e#6388#6435#0#PHP" expanded="false" />
+            <element signature="e#6441#6600#0#PHP" expanded="false" />
+            <element signature="e#6605#7896#0#PHP" expanded="false" />
+            <element signature="e#7072#7890#0#PHP" expanded="false" />
+            <element signature="e#7177#7708#0#PHP" expanded="false" />
+            <element signature="e#7575#7694#0#PHP" expanded="false" />
+            <element signature="e#7902#8024#0#PHP" expanded="false" />
+            <element signature="e#9729#9869#0#PHP" expanded="false" />
+            <element signature="e#9874#9922#0#PHP" expanded="false" />
+            <element signature="e#9928#10110#0#PHP" expanded="false" />
+            <element signature="e#10115#11959#0#PHP" expanded="false" />
+            <element signature="e#10984#11953#0#PHP" expanded="false" />
+            <element signature="e#11168#11831#0#PHP" expanded="false" />
+            <element signature="e#11698#11817#0#PHP" expanded="false" />
+            <element signature="e#11965#12099#0#PHP" expanded="false" />
+            <element signature="e#12104#12155#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controllers/retencionComprasIndexController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="447" column="0" lean-forward="true" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
+          <folding>
+            <element signature="e#5211#5260#0" expanded="false" />
+            <element signature="e#10634#11501#0" expanded="false" />
+            <element signature="e#11552#11895#0" expanded="false" />
+            <element signature="e#11949#12708#0" expanded="false" />
+            <element signature="e#12748#13748#0" expanded="false" />
+            <element signature="e#13790#13866#0" expanded="false" />
+            <element signature="e#13908#14413#0" expanded="false" />
+            <element signature="e#14464#14835#0" expanded="false" />
+            <element signature="e#14883#15153#0" expanded="false" />
+            <element signature="e#15199#15623#0" expanded="false" />
+            <element signature="e#21446#22214#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/retencion/index_retencionCompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="447" column="94" lean-forward="false" selection-start-line="447" selection-start-column="86" selection-end-line="447" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Contabilidad/Balances.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="739">
+          <caret line="650" column="5" lean-forward="false" selection-start-line="650" selection-start-column="5" selection-end-line="650" selection-end-column="5" />
           <folding />
         </state>
       </provider>

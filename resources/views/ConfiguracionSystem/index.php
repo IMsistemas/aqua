@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-xs-12" style="margin-top: 5px;">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Contribuyente Especial: </span>
+                                        <span class="input-group-addon">No. Contribuyente Especial (si presenta): </span>
                                         <input type="text" class="form-control" name="t_contribuyente" id="t_contribuyente" ng-model="t_contribuyente" />
                                     </div>
                                 </div>
@@ -621,7 +621,7 @@
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">Tasa Interés: </span>
+                                <span class="input-group-addon">Tasa Interés (%): </span>
                                 <input type="text" class="form-control" placeholder="Para sistema AYORA"
                                        name="t_ayora_tasainteres" id="t_ayora_tasainteres" ng-model="t_ayora_tasainteres" required
                                        ng-keypress="onlyDecimal($event)" />
@@ -654,6 +654,75 @@
                         </button>
 
                     </div>
+
+                    <h4>Estructura Lectura</h4>
+                    <hr>
+
+                    <form class="form-horizontal" name="formEspecifica" novalidate="">
+                        <table class="table table-responsive table-striped">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th style="width: 50%;">LECTURA</th>
+                                    <th style="width: 50%;">SERVICIO A BRINDAR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Consumo Tarifa Básica</td>
+                                    <td>
+                                        <select class="form-control" name="serv_lect_tar" id="serv_lect_tar" ng-model="serv_lect_tar"
+                                                ng-options="value.id as value.label for value in list_serv"></select>
+                                        <input type="hidden" name="serv_lect_tar" id="serv_lect_tar" ng-model="serv_lect_tar">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Excedente</td>
+                                    <td>
+                                        <select class="form-control" name="serv_lect_ex" id="serv_lect_ex" ng-model="serv_lect_ex"
+                                                ng-options="value.id as value.label for value in list_serv"></select>
+                                        <input type="hidden" name="serv_lect_ex" id="serv_lect_ex" ng-model="serv_lect_ex">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Alcantarillado</td>
+                                    <td>
+                                        <select class="form-control" name="serv_lect_alcant" id="serv_lect_alcant" ng-model="serv_lect_alcant"
+                                                ng-options="value.id as value.label for value in list_serv"></select>
+                                        <input type="hidden" name="serv_lect_alcant" id="serv_lect_alcant" ng-model="serv_lect_alcant">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Recogida Desechos Solidos</td>
+                                    <td>
+                                        <select class="form-control" name="serv_lect_rds" id="serv_lect_rds" ng-model="serv_lect_rds"
+                                                ng-options="value.id as value.label for value in list_serv" required></select>
+                                        <input type="hidden" name="serv_lect_rds" id="serv_lect_rds" ng-model="serv_lect_rds">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Medio Ambiente</td>
+                                    <td>
+                                        <select class="form-control" name="serv_lect_ma" id="serv_lect_ma" ng-model="serv_lect_ma"
+                                                ng-options="value.id as value.label for value in list_serv" required></select>
+                                        <input type="hidden" name="serv_lect_ma" id="serv_lect_ma" ng-model="serv_lect_ma">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" ng-click="getListServicio()">
+                                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-success" ng-click="saveListServicio()" >
+                                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
 
                 </div>
 

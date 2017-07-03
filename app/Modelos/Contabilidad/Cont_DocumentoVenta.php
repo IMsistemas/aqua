@@ -54,5 +54,13 @@ class Cont_DocumentoVenta extends Model
     public function cont_formapago_documentoventa(){
         return $this->hasMany('App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta',"iddocumentoventa");
     }
+    public function cont_cuentasporcobrar(){
+        return $this->hasMany('App\Modelos\Cuentas\CuentasporCobrar',"iddocumentoventa");
+    }
+
+    public function sri_retencionventa()
+    {
+        return $this->hasMany('App\Modelos\SRI\SRI_RetencionVenta','iddocumentoventa');
+    }
 
 }

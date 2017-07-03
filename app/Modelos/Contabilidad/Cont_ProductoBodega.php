@@ -10,7 +10,7 @@ class Cont_ProductoBodega extends Model
 
     protected $primaryKey = "idproducto_bodega";
 
-    public $incrementing = false;
+    public $incrementing = true;
 
     public $timestamps = false;
 

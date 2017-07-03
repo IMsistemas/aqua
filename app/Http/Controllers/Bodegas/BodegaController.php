@@ -110,7 +110,8 @@ class BodegaController extends Controller
                         		DB::raw("(persona.lastnamepersona || ' ' || persona.namepersona) as bodeguero ")
                         		,'persona.email', 'cont_bodega.*', 'cont_plancuenta.concepto',
                         		DB::raw("(provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) as ubicacion"))
-                            ->whereRaw("(cont_bodega.idbodega::text ILIKE '%" . $filter->text . "%' 
+                            ->whereRaw("(cont_bodega.idbodega::text ILIKE '%" . $filter->text . "%'
+                                    or cont_bodega.namebodega ILIKE '%" . $filter->text . "%' 
                             		or (provincia.nameprovincia||'/'||canton.namecanton||'/'||parroquia.nameparroquia) ILIKE '%" . $filter->text . "%'                             		
                             		or (persona.lastnamepersona||' '||persona.namepersona) ILIKE '%" . $filter->text . "%' )                             		
                             		".$filterSector)

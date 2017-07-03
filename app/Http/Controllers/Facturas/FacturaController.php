@@ -52,7 +52,7 @@ class FacturaController extends Controller
         $facturas = CobroAgua::with(
             [
                 'suministro.tarifaaguapotable', 'lectura', 'catalogoitem_cobroagua.cont_catalogitem', 'otrosvalores_cobroagua.otrosvalores',
-                'suministro.cliente.sri_tipoimpuestoiva',
+                'suministro.cliente.sri_tipoimpuestoiva', 'cont_cuentasporcobrar',
                 'suministro' => function ($query_suministro) use ($search) {
                     return $query_suministro->with([
                         'cliente' => function ($query_cliente) use ($search) {
@@ -82,7 +82,7 @@ class FacturaController extends Controller
             $facturas->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . $filter->anio);
         }
 
-        return $facturas->orderBy('fechacobro','asc')->paginate(5);
+        return $facturas->orderBy('fechacobro','desc')->paginate(5);
     }
 
     public function Filtrar($filter)
@@ -352,7 +352,7 @@ class FacturaController extends Controller
 
         return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['cobroagua']['numerosuministro'] . '.pdf']);*/
 
-        $pdf->setPaper('a4', 'landscape')->save(public_path() . '/uploads/factura/' . $data['idsuministro'] . '.pdf');
+        $pdf->setPaper('a4', 'portrait')->save(public_path() . '/uploads/factura/' . $data['idsuministro'] . '.pdf');
 
         return response()->json(['success' => true, 'url' => 'uploads/factura/' . $data['idsuministro'] . '.pdf']);
     }

@@ -2,26 +2,39 @@
 
 namespace App\Http\Controllers\NotaCredito;
 
-use App\Http\Controllers\CatalogoProductos\CoreKardex;
-use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Bodegas\Bodega;
-use App\Modelos\Clientes\Cliente;
-use App\Modelos\Configuracion\ConfiguracionSystem;
-use App\Modelos\Contabilidad\Cont_Bodega;
-use App\Modelos\Contabilidad\Cont_CatalogItem;
-use App\Modelos\Contabilidad\Cont_DocumentoNotaCreditFactura;
-use App\Modelos\Contabilidad\Cont_FormaPago;
-use App\Modelos\Contabilidad\Cont_ItemNotaCreditFactura;
-use App\Modelos\Contabilidad\Cont_Kardex;
-use App\Modelos\Contabilidad\Cont_PlanCuenta;
-use App\Modelos\Contabilidad\Cont_PuntoDeVenta;
-use App\Modelos\Contabilidad\Cont_RegistroCliente;
-use App\Modelos\Contabilidad\Cont_Transaccion;
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
+
+
+
+use App\Modelos\Clientes\Cliente;
+use App\Modelos\Contabilidad\Cont_Bodega;
+use App\Modelos\Contabilidad\Cont_FormaPago;
+use App\Modelos\Contabilidad\Cont_PuntoDeVenta;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Nomina\Empleado;
+use App\Modelos\Configuracion\ConfiguracionSystem;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Modelos\Contabilidad\Cont_Transaccion;
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
+use App\Http\Controllers\CatalogoProductos\CoreKardex;
+use App\Modelos\Contabilidad\Cont_DocumentoNotaCreditFactura;
+use App\Modelos\Contabilidad\Cont_ItemNotaCreditFactura;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
+use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta;
+use App\Modelos\Contabilidad\Cont_Kardex;
+//use App\Modelos\Facturacionventa\puntoventa;
+
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
+use DateTime;
+use DB;
+use Illuminate\Support\Facades\Session;
 
 class NotaCreditoController extends Controller
 {
@@ -32,7 +45,7 @@ class NotaCreditoController extends Controller
      */
     public function index()
     {
-        return view('notacreditofactura/index');
+        return view('notacredito/notacredito');
     }
 
     /**
@@ -51,7 +64,6 @@ class NotaCreditoController extends Controller
             ->limit(1)
             ->get();
     }
-
     /**
      * Ontener la informacion de una bodega
      *
@@ -62,7 +74,6 @@ class NotaCreditoController extends Controller
     {
         return Bodega::whereRaw("idbodega ILIKE '%" . $texto . "%' or nombrebodega ILIKE '%" . $texto . "%'")->get();
     }
-
     /**
      * Ontener todas las bodegas
      *
@@ -117,7 +128,7 @@ class NotaCreditoController extends Controller
     public function getCofiguracioncontable()
     {
         //return   configuracioncontable::all();
-        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' OR optionname='CONT_IVA_VENTA' OR optionname='CONT_ICE_VENTA' ")->get();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_NC' OR optionname='SRI_RETEN_IVA_NC' OR optionname='CONT_PROPINA_NC' OR optionname='SRI_RETEN_RENTA_NC' OR optionname='CONT_IVA_NC' OR optionname='CONT_ICE_NC' ")->get();
         $aux_configcontable=array();
         foreach ($aux_data as $i) {
             $aux_contable="";
@@ -173,7 +184,7 @@ class NotaCreditoController extends Controller
 
     }
 
-    public function getProductoPorSuministro($id)
+    public function getProductoPorSuministro()
     {
 
         return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
@@ -188,7 +199,8 @@ class NotaCreditoController extends Controller
             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
             ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-            ->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+            //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+            ->whereRaw(" cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
             ->get();
         //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
         //->get() ;
@@ -222,8 +234,7 @@ class NotaCreditoController extends Controller
      * @return mixed
      */
     public function getDocVenta()
-    {
-        $lastVta=Cont_DocumentoNotaCreditFactura::all();
+    {   $lastVta=Cont_DocumentoNotaCreditFactura::all();
         return $lastVta->last();
     }
     /**
@@ -254,10 +265,10 @@ class NotaCreditoController extends Controller
         $docventa=Cont_DocumentoNotaCreditFactura::create($aux_docventa);
         $aux_addVenta=Cont_DocumentoNotaCreditFactura::all();
         for($x=0;$x<count($filtro->DataItemsVenta);$x++){
-            $filtro->DataItemsVenta[$x]->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
+            $filtro->DataItemsVenta[$x]->iddocumentonotacreditfactura=$aux_addVenta->last()->iddocumentonotacreditfactura;
         }
         $aux_itemventa=(array) $filtro->DataItemsVenta;
-        //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+        //$itemventa=Cont_ItemNotaCreditFactura::create($aux_itemventa);
         for($x=0;$x<count($filtro->DataItemsVenta);$x++){
             Cont_ItemNotaCreditFactura::create((array) $filtro->DataItemsVenta[$x]);
         }
@@ -265,17 +276,17 @@ class NotaCreditoController extends Controller
         $registrocliente = array(
             'idcliente' => $docventa->idcliente,
             'idtransaccion' => $id_transaccion,
-            'fecha' => $docventa->fecharegistroventa,
-            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente
-            'haber' => 0,
-            'numerodocumento' => "".$aux_addVenta->last()->iddocumentoventa."",
+            'fecha' => $docventa->fecharegistroncf,
+            'haber' => $filtro->DataContabilidad->registro[0]->Haber, //primera posicion es cliente
+            'debe' => 0,
+            'numerodocumento' => "".$aux_addVenta->last()->iddocumentonotacreditfactura."",
             'estadoanulado' => false);
         $aux_registrocliente=Cont_RegistroCliente::create($registrocliente);
 
 
-        $aux= DB::table('cont_formapago_documentoventa')->insert([
+        /*$aux= DB::table('cont_formapago_documentoventa')->insert([
             ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
-        ]);
+        ]);*/
 
 
 
@@ -333,15 +344,15 @@ class NotaCreditoController extends Controller
          $filtro->DataVenta->idtransaccion=$id_transaccion;
 
          $aux_docventa=(array) $filtro->DataVenta;
-         $docventa=Cont_DocumentoVenta::create($aux_docventa);
-         $aux_addVenta=Cont_DocumentoVenta::all();
+         $docventa=Cont_DocumentoNotaCreditFactura::create($aux_docventa);
+         $aux_addVenta=Cont_DocumentoNotaCreditFactura::all();
          for($x=0;$x<count($filtro->DataItemsVenta);$x++){
              $filtro->DataItemsVenta[$x]->iddocumentoventa=$aux_addVenta->last()->iddocumentoventa;
          }
          $aux_itemventa=(array) $filtro->DataItemsVenta;
-         //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+         //$itemventa=Cont_ItemNotaCreditFactura::create($aux_itemventa);
          for($x=0;$x<count($filtro->DataItemsVenta);$x++){
-             Cont_ItemVenta::create((array) $filtro->DataItemsVenta[$x]);
+             Cont_ItemNotaCreditFactura::create((array) $filtro->DataItemsVenta[$x]);
          }
 
          $registrocliente = array(
@@ -401,18 +412,24 @@ class NotaCreditoController extends Controller
     //public function getallFitros()
     public function getallFitros(Request $request)
     {
-        //return Cont_DocumentoVenta::whereRaw(" estadoanulado=false ")->get();
+        //return Cont_DocumentoNotaCreditFactura::whereRaw(" estadoanulado=false ")->get();
 
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
+        $estado = $filter->estado;
         $data = null;
         $aux_query="";
         if ($search!="") {
             $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
         }
+        $aux_estado="false";
+        if($estado=="I"){
+            $aux_estado="true";
+        }
 
-        $data= Cont_DocumentoNotaCreditFactura::with('cont_puntoventa.sri_establecimiento')
-            ->whereRaw(" estadoanulado=false ".$aux_query."" );
+        $data= Cont_DocumentoNotaCreditFactura::with('cliente.persona')
+            // ->whereRaw(" estadoanulado=false ".$aux_query."" );
+            ->whereRaw(" estadoanulado=".$aux_estado." ".$aux_query."" );
         return $data->paginate(10);
 
         /*
@@ -437,7 +454,7 @@ class NotaCreditoController extends Controller
         $aux_servv= serviciosenventa:: where("codigoventa","=",$id)->delete();
         $aux_venta= venta::where("codigoventa", $id)
                     ->update(['estaanulada' => 't']);*/
-        Cont_DocumentoNotaCreditFactura::whereRaw("iddocumentoventa=$id")
+        Cont_DocumentoNotaCreditFactura::whereRaw("iddocumentonotacreditfactura=$id")
             ->update(['estadoanulado' => 't']);
         $aux_venta=Cont_DocumentoNotaCreditFactura::find($id);
         CoreContabilidad::AnularAsientoContable($aux_venta->idtransaccion);
@@ -479,20 +496,19 @@ class NotaCreditoController extends Controller
             "cliente"=> $aux_cliente
         );
         return $aux_data;*/
-        /*return Cont_DocumentoVenta::with("cliente","cont_itemventa.cont_catalogoitem","cont_puntoventa")
+        /*return Cont_DocumentoNotaCreditFactura::with("cliente","Cont_ItemNotaCreditFactura.cont_catalogoitem","cont_puntoventa")
                                     ->whereRaw(" iddocumentoventa='$id' ")
                                     ->get();*/
-        $datadocventa=Cont_DocumentoNotaCreditFactura::with("cont_formapago_documentoventa")
-            ->whereRaw(" iddocumentoventa='$id' ")->get();
+        $datadocventa=Cont_DocumentoNotaCreditFactura::whereRaw(" iddocumentonotacreditfactura='$id' ")->get();
         $dataclient=Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
             ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
             ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
             ->whereRaw(" cliente.idcliente=".$datadocventa[0]->idcliente." ")
             ->get();
-        /*$dataitemventa=Cont_ItemVenta::with("cont_catalogoitem")
+        /*$dataitemventa=Cont_ItemNotaCreditFactura::with("cont_catalogoitem")
                                 ->whereRaw(" iddocumentoventa=$id ")
                                 ->get();*/
-        $dataitemventa=Cont_ItemNotaCreditFactura::join("cont_catalogitem","cont_catalogitem.idcatalogitem","=","cont_itemventa.idcatalogitem")
+        $dataitemventa=Cont_ItemNotaCreditFactura::join("cont_catalogitem","cont_catalogitem.idcatalogitem","=","cont_itemnotacreditfactura.idcatalogitem")
             ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
             ->selectRaw("*")
             ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
@@ -504,11 +520,8 @@ class NotaCreditoController extends Controller
             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
             ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-            ->whereRaw(" iddocumentoventa=$id ")
+            ->whereRaw(" iddocumentonotacreditfactura=$id ")
             ->get();
-
-
-
 
         $dataConta=Cont_Transaccion::whereRaw(" idtransaccion=".$datadocventa[0]->idtransaccion."")->get();
         $full_data_venta= array(

@@ -29,6 +29,11 @@ class Cont_DocumentoCompra extends Model
         return $this->belongsTo('App\Modelos\SRI\SRI_ComprobanteRetencion',"idcomprobanteretencion");
     }
 
+    public function sri_retencioncompra()
+    {
+        return $this->hasMany('App\Modelos\SRI\SRI_RetencionCompra','iddocumentocompra');
+    }
+
     public function proveedor()
     {
         return $this->belongsTo('App\Modelos\Proveedores\Proveedor',"idproveedor");
@@ -47,6 +52,16 @@ class Cont_DocumentoCompra extends Model
     public function cont_formapago_documentocompra()
     {
         return $this->hasMany('App\Modelos\Contabilidad\Cont_FormaPagoDocumentoCompra', 'iddocumentocompra');
+    }
+
+    public function cont_itemcompra()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_ItemCompra', 'iddocumentocompra');
+    }
+
+    public function cont_cuentasporpagar()
+    {
+        return $this->hasMany('App\Modelos\Contabilidad\Cont_CuentasPorPagar',"iddocumentocompra");
     }
    
 }

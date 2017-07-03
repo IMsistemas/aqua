@@ -4,6 +4,7 @@ app.controller('rolController', function($scope, $http, API_URL) {
 
     $scope.departamentos = [];
     $scope.idcargo_del = 0;
+    $scope.idrol = 0;
     $scope.modalstate = '';
 
     $scope.pageChanged = function(newPage) {
@@ -49,9 +50,31 @@ app.controller('rolController', function($scope, $http, API_URL) {
                 break;
             case 'perm':
 
-                $http.get(API_URL + 'rol/getPermisos').success(function(response){
+                $scope.idrol = id;
 
-                    $scope.permisos = response;
+                $http.get(API_URL + 'rol/getPermisos/' + id).success(function(response){
+
+                    var array_permisos = [];
+
+                    var longitud = response.length;
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        var default_state = false;
+
+                        if (response[i].permiso_rol.length > 0) {
+                            default_state = response[i].permiso_rol[0].state;
+                        }
+
+                        var p = {
+                            idpermiso: response[i].idpermiso,
+                            namepermiso: response[i].namepermiso,
+                            state: default_state
+                        };
+                        array_permisos.push(p);
+                    }
+
+                    $scope.permisos = array_permisos;
                     $('#modalPermisos').modal('show');
 
                 });
@@ -108,6 +131,36 @@ app.controller('rolController', function($scope, $http, API_URL) {
                 });
                 break;
         }
+    };
+
+    $scope.savePermisos = function () {
+
+        console.log($scope.permisos);
+
+        var data = {
+            idrol: $scope.idrol,
+            permisos: $scope.permisos
+        };
+
+        $http.post(API_URL + 'rol/savePermisos', data ).success(function (response) {
+
+            $('#modalPermisos').modal('hide');
+
+            if (response.success == true) {
+
+                $scope.message = 'Se actualizó correctamente los permisos correspondiente al rol...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+
+            }
+            else {
+
+                $scope.message_error = 'Ha ocurrido un error...';
+                $('#modalMessageError').modal('show');
+
+            }
+        });
+
     };
 
     $scope.showModalConfirm = function (rol) {

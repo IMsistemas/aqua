@@ -20,6 +20,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getConfigEspecifica();
 
         $scope.getConfigSRI();
+
+        $scope.getListServicio();
     };
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -78,7 +80,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.saveEstablecimiento = function () {
 
-        var ruc = $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial;
+        //var ruc = $scope.t_establ + '-' + $scope.t_pto + '-' + $scope.t_secuencial;
+
+        var ruc = $('#t_establ').val() + '-' + $('#t_pto').val() + '-' + $('#t_secuencial').val();
 
         var data = {
             razonsocial: $scope.t_razonsocial,
@@ -559,6 +563,119 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         }).error(function (res) {
 
         });
+    };
+
+    $scope.getListServicio = function () {
+        $http.get(API_URL + 'configuracion/getListServicio').success(function(response0){
+
+            var longitud = response0.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response0[i].nombreproducto, id: response0[i].idcatalogitem})
+            }
+
+            $scope.list_serv = array_temp;
+
+            $scope.serv_lect_tar = '';
+            $scope.serv_lect_ex = '';
+            $scope.serv_lect_alcant = '';
+            $scope.serv_lect_rds = '';
+            $scope.serv_lect_ma = '';
+
+            $http.get(API_URL + 'configuracion/getSaveServicio').success(function(response){
+
+                var longitud = response.length;
+
+                for (var i = 0; i < longitud; i++) {
+                    if (response[i].optionname === 'SERV_TARIFAB_LECT') {
+
+                        $scope.serv_lect_tar_h = response[i].idconfiguracionsystem;
+                        if (response[i].optionvalue !== null){
+                            $scope.serv_lect_tar = parseInt(response[i].optionvalue);
+                        }
+
+                    } else if (response[i].optionname === 'SERV_EXCED_LECT') {
+
+                        $scope.serv_lect_ex_h = response[i].idconfiguracionsystem;
+                        if (response[i].optionvalue !== null){
+                            $scope.serv_lect_ex = parseInt(response[i].optionvalue);
+                        }
+
+                    } else if (response[i].optionname === 'SERV_ALCANT_LECT') {
+
+                        $scope.serv_lect_alcant_h = response[i].idconfiguracionsystem;
+                        if (response[i].optionvalue !== null){
+                            $scope.serv_lect_alcant = parseInt(response[i].optionvalue);
+                        }
+
+                    } else if (response[i].optionname === 'SERV_RRDDSS_LECT') {
+
+                        $scope.serv_lect_rds_h = response[i].idconfiguracionsystem;
+                        if (response[i].optionvalue !== null){
+                            $scope.serv_lect_rds = parseInt(response[i].optionvalue);
+                        }
+
+                    } else if (response[i].optionname === 'SERV_MEDAMB_LECT') {
+
+                        $scope.serv_lect_ma_h = response[i].idconfiguracionsystem;
+                        if (response[i].optionvalue !== null){
+                            $scope.serv_lect_ma = parseInt(response[i].optionvalue);
+                        }
+
+                    }
+                }
+
+            });
+
+        });
+    };
+
+    $scope.saveListServicio = function () {
+        var tar = {
+            idconfiguracionsystem: $scope.serv_lect_tar_h,
+            optionvalue: $scope.serv_lect_tar
+        };
+
+        var ex = {
+            idconfiguracionsystem: $scope.serv_lect_ex_h,
+            optionvalue: $scope.serv_lect_ex
+        };
+
+        var alcant = {
+            idconfiguracionsystem: $scope.serv_lect_alcant_h,
+            optionvalue: $scope.serv_lect_alcant
+        };
+
+        var rds = {
+            idconfiguracionsystem: $scope.serv_lect_rds_h,
+            optionvalue: $scope.serv_lect_rds
+        };
+
+        var ma = {
+            idconfiguracionsystem: $scope.serv_lect_ma_h,
+            optionvalue: $scope.serv_lect_ma
+        };
+
+        var data = {
+            array_data: [tar, ex, alcant, rds, ma]
+        };
+
+        $http.put(API_URL + '/configuracion/updateListServicio/0', data ).success(function (response) {
+
+            if (response.success === true) {
+                $scope.message = 'Se editó correctamente los datos la estructura de Lectura';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la estructura de Lectura';
+                $('#modalMessageError').modal('show');
+                $scope.hideModalMessage();
+            }
+
+        }).error(function (res) {
+
+        });
+
     };
 
     //-----------------------------------------------------------------------------------------------------------------

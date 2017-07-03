@@ -60,7 +60,7 @@ class ClienteController extends Controller
                             ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific LIKE '%" . $search . "%')");
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
         }
 
         return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);
@@ -120,6 +120,15 @@ class ClienteController extends Controller
         return TipoCliente::orderBy('nametipocliente', 'asc')->get();
     }
 
+
+    private function searchExist($numidentific)
+    {
+        $count = Cliente::join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
+            ->where('persona.numdocidentific', $numidentific)->count();
+
+        return ($count == 1) ? true : false;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -128,41 +137,50 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->input('idpersona') == 0) {
-            $persona = new Persona();
+
+        if ($this->searchExist($request->input('documentoidentidadempleado'))) {
+
+            return response()->json(['success' => false, 'type_error_exists' => true]);
+
         } else {
-            $persona = Persona::find($request->input('idpersona'));
-        }
 
-        $persona->numdocidentific = $request->input('documentoidentidadempleado');
-        $persona->email = $request->input('correo');
-        $persona->celphone = $request->input('celular');
-        $persona->idtipoidentificacion = $request->input('tipoidentificacion');
-        $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
-        $persona->lastnamepersona = $request->input('apellidos');
-        $persona->namepersona = $request->input('nombres');
-        $persona->direccion = $request->input('direccion');
+            if ($request->input('idpersona') == 0) {
+                $persona = new Persona();
+            } else {
+                $persona = Persona::find($request->input('idpersona'));
+            }
 
-        if ($persona->save()) {
-            $cliente = new Cliente();
-            $cliente->fechaingreso = $request->input('fechaingreso');
-            $cliente->estado = true;
-            $cliente->idpersona = $persona->idpersona;
-            $cliente->idplancuenta = $request->input('cuentacontable');
-            $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');
-            $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
-            $cliente->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
-            $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
-            $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
-            $cliente->direcciontrabajo = $request->input('direcciontrabajo');
+            $persona->numdocidentific = $request->input('documentoidentidadempleado');
+            $persona->email = $request->input('correo');
+            $persona->celphone = $request->input('celular');
+            $persona->idtipoidentificacion = $request->input('tipoidentificacion');
+            $persona->razonsocial = $request->input('nombres') . ' ' . $request->input('apellidos');
+            $persona->lastnamepersona = $request->input('apellidos');
+            $persona->namepersona = $request->input('nombres');
+            $persona->direccion = $request->input('direccion');
 
-            $cliente->idtipocliente = $request->input('tipocliente');
+            if ($persona->save()) {
+                $cliente = new Cliente();
+                $cliente->fechaingreso = $request->input('fechaingreso');
+                $cliente->estado = true;
+                $cliente->idpersona = $persona->idpersona;
+                $cliente->idplancuenta = $request->input('cuentacontable');
+                $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');
+                $cliente->telefonoprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
+                $cliente->telefonosecundariodomicilio = $request->input('telefonosecundariodomicilio');
+                $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
+                $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
+                $cliente->direcciontrabajo = $request->input('direcciontrabajo');
 
-            if ($cliente->save()) {
-                return response()->json(['success' => true]);
+                $cliente->idtipocliente = $request->input('tipocliente');
+
+                if ($cliente->save()) {
+                    return response()->json(['success' => true]);
+                } else return response()->json(['success' => false]);
+
             } else return response()->json(['success' => false]);
 
-        } else return response()->json(['success' => false]);
+        }
 
     }
 
@@ -235,6 +253,15 @@ class ClienteController extends Controller
     /*
      * INICIO SECCION DE FUNCIONES REFERENTES A LAS SOLICITUDES DE LOS CLIENTES-----------------------------------------
      */
+
+
+    public function getSuministroByClient($idcliente)
+    {
+        return Solicitud::whereRaw('idsolicitud IN (SELECT idsolicitud FROM solicitudsuministro)')
+                            ->where('idcliente', $idcliente)
+                            ->where('estadoprocesada', true)
+                            ->count();
+    }
 
     /**
      * Obtener todos los clientes diferentes al id por parametro
@@ -637,7 +664,9 @@ class ClienteController extends Controller
         $suministro->valorcuotainicial = $request->input('cuota_inicial');
         $suministro->dividendocredito = $request->input('dividendos');
 
-        $suministro->idcatalogitem = $request->input('idproducto');
+        $suministro->formapago = $request->input('formapago');
+
+        //$suministro->idcatalogitem = $request->input('idproducto');
 
         if ($suministro->save()) {
 

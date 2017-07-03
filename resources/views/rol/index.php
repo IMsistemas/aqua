@@ -30,20 +30,20 @@
                 <thead class="bg-primary">
                 <tr>
                     <th>Nombre Rol</th>
-                    <th style="width: 25%;">Acciones</th>
+                    <th style="width: 35%;">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="item in roles | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                     <td>{{item.namerol}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
+                        <button ng-show="item.idrol != 1" type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
                             Permisos <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         </button>
                         <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
                             Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
+                        <button ng-show="item.idrol != 1" type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
                             Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -175,7 +175,7 @@
                                     <tr ng-repeat="item in permisos" ng-cloak >
                                         <td>{{item.namepermiso}}</td>
                                         <td>
-                                            <input type="checkbox" name="select_cuenta"  ng-click="">
+                                            <input type="checkbox" name="select_cuenta" ng-model="item.state">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -187,7 +187,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="">
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="savePermisos()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>

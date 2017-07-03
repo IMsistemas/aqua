@@ -1,29 +1,4 @@
-<!doctype html>
-<html lang="es-ES" ng-app="softver-aqua">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Facturacion Compras</title>
 
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-
-    <style>
-        .modal-body {
-            max-height: calc(100vh - 210px);
-            overflow-y: auto;
-        }
-    </style>
-
-</head>
-
-<body>
 
 
 
@@ -75,54 +50,54 @@
                 </button>
             </div>
 
-            <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+            <div class="col-xs-12" style="font-size: 12px !important;">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
                         <th style="text-align: center; width: 4%;" ng-click="sort('codigocompra')">
-                            Código
+                            NO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='codigocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center; width: 10%;" ng-click="sort('fecharegistrocompra')">
-                            Fecha Ingreso
+                            FECHA INGRESO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='fecharegistrocompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center;" ng-click="sort('razonsocialproveedor')">
-                            Proveedor
+                            PROVEEDOR
                             <span class="glyphicon sort-icon" ng-show="sortKey=='razonsocialproveedor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th style="text-align: center; width: 14%;">NO.</th>
-                        <th style="text-align: center; width: 8%;">Subtotal</th>
+                        <th style="text-align: center; width: 14%;">NO. FACTURA</th>
+                        <th style="text-align: center; width: 8%;">SUBTOTAL</th>
                         <th style="text-align: center; width: 8%;">IVA</th>
                         <th style="text-align: center; width: 10%;" ng-click="sort('totalcompra')">
-                            Total
+                            TOTAL
                             <span class="glyphicon sort-icon" ng-show="sortKey=='totalcompra'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th style="text-align: center; width: 9%;" ng-click="sort('estapagada')">
-                            Estado
+                            ESTADO
                             <span class="glyphicon sort-icon" ng-show="sortKey=='estapagada'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th class="text-center" style="width: 9%;">Acciones</th>
+                        <th class="text-center" style="width: 9%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                    <tr dir-paginate="item in compras | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItems" ng-cloak">
                         <td style="text-align: center;">{{item.iddocumentocompra}}</td>
                         <td class="text-center">{{formatoFecha(item.fecharegistrocompra)}}</td>
                         <td class="text-left">{{item.razonsocial}}</td>
                         <td class="text-center">{{item.numdocumentocompra}}</td>
-                        <td class="text-right">{{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
-                        <td class="text-right">{{item.ivacompra  }}</td>
-                        <td class="text-right">{{item.valortotalcompra}}</td>
+                        <td class="text-right">$ {{sumar(item.subtotalconimpuestocompra,item.subtotalcerocompra)}}</td>
+                        <td class="text-right">$ {{item.ivacompra  }}</td>
+                        <td class="text-right">$ {{item.valortotalcompra}}</td>
                         <td class="text-right">{{(item.estadoanulado)?'ANULADA':'NO ANULADA'}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
-                                    data-toggle="tooltip" data-placement="bottom" >
+                                    data-toggle="tooltip" data-placement="bottom" title="Información">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                             </button>
 
                             <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1">
+                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1" title="Anular">
                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                             </button>
 
@@ -137,7 +112,7 @@
                         template-url="dirPagination.html"
 
                         class="pull-right"
-                        max-size="10"
+                        max-size="8"
                         direction-links="true"
                         boundary-links="true" >
 
@@ -162,28 +137,7 @@
             </div>
         </div>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-danger">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Confirmación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>Está seguro que desea Anular la compra: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
-                            Anular
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoEmpleado">
             <div class="modal-dialog modal-sm" role="document">
@@ -225,11 +179,7 @@
 
     </div>
 
-
-
     <!-- Formulario -->
-
-
 
     <div class="col-xs-12" ng-show="!listado" >
         <div>
@@ -346,12 +296,12 @@
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Bodega: </span>
-                                <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " ng-required="true">
+                                <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' ">
                                     <option value="">-- Seleccione --</option>
                                     <option ng-repeat="b in Bodegas" value="{{b.idbodega}}">{{b.namebodega+" "+b.observacion}}</option>
                                 </select>
                             </div>
-                            <span class="help-block error" ng-show="formCompra.bodega.$invalid && formCompra.bodega.$touched">La Bodega es requerida</span>
+                            <!--<span class="help-block error" ng-show="formCompra.bodega.$invalid && formCompra.bodega.$touched">La Bodega es requerida</span>-->
                         </div>
 
                     </fieldset>
@@ -452,7 +402,8 @@
                                 <!--LoadProductos-->
                                 <angucomplete-alt id="codigoproducto{{$index}}"
                                                   pause="400"
-                                                  selected-object="item.productoObj"
+                                                  selected-object="AsignarData"
+                                                  selected-object-data = "item"
                                                   remote-url="{{url}}DocumentoVenta/LoadProductos/"
                                                   title-field="codigoproducto"
                                                   description-field="twitter"
@@ -464,7 +415,8 @@
                                                   disable-input="impreso"
                                                   text-searching="Buscando Producto"
                                                   text-no-results="Producto no encontrado"
-                                                  initial-value="item.producto" focus-out="AsignarData(item);"; />
+                                                  initial-value="item.producto";
+                                />
                             </div>
                             <span class="help-block error" ng-show="formventa.codigoproducto{{$index}}.$invalid && formventa.codigoproducto{{$index}}.$touched">El producto es requerido.</span>
                         </td>
@@ -475,7 +427,7 @@
                             <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                         </td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
-                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+                        <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-keypress="onlyNumber($event, undefined, undefined)" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
                         <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
                         <td><input type="text" class="form-control text-right" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>
@@ -500,11 +452,13 @@
                         </select>
                     </div>
                     <span class="help-block error"
-                          ng-show="formCompra.idformapago.$invalid && formCompra.idformapago.$touched">La Forma Pago es requerida</span>
+                          ng-show="formCompra.formapago.$invalid && formCompra.formapago.$touched">La Forma Pago es requerida</span>
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">
                     <textarea class="form-control" name="observacion" id="observacion" ng-model="observacion" cols="30" rows="5" placeholder="Observacion" ng-required="true"></textarea>
+                    <span class="help-block error"
+                          ng-show="formCompra.observacion.$invalid && formCompra.observacion.$touched">La Observación es requerida</span>
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 15px;">
@@ -515,7 +469,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon">Tipo de Pago: </span>
                                 <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
-                                        ng-options="value.id as value.label for value in listtipopago">
+                                        ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()">
                                 </select>
 
                             </div>
@@ -585,14 +539,19 @@
 
 
                 <div class="col-xs-12 text-right" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-warning" id="btn-anular" ng-click="showModalConfirm1()" ng-disabled="!guardado" >
+
+                    <button class="btn btn-primary" ng-click="InicioList();">
+                        Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-default" id="btn-anular" ng-click="anular()" ng-disabled="guardado" >
                         Anular <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
 
-                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="confirmSave()" ng-disabled="formCompra.$invalid" >
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="confirmSave()" ng-disabled="formCompra.$invalid" >
                         Guardar <span class="glyphicon glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
-                    <button class="btn btn-success" ng-click="InicioList();"> Regresar</button>
+
                 </div>
 
             </div>
@@ -652,6 +611,30 @@
 
     </div>
 
+    <!-- Modales -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Está seguro que desea Anular la compra: <strong>"{{numseriecompra}}"</strong> seleccionada?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
+                        Anular
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage1">
         <div class="modal-dialog" role="document">
@@ -722,31 +705,26 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="msm" style="z-index: 8000;" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary" id="titulomsm">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Mensaje</h4>
+                </div>
+                <div class="modal-body">
+                    <strong>{{Mensaje}}</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
-</div>
-
-</body>
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
 
 
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-
-<script src="<?= asset('app/app.js') ?>"></script>
-<script src="<?= asset('app/controllers/comprasController.js') ?>"></script>
-
-
-</html>

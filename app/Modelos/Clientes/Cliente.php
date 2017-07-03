@@ -41,4 +41,9 @@ class Cliente extends Model
         return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','idcliente');
     }
 
+    public function cont_plancuenta()
+    {
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_PlanCuenta','idplancuenta');
+    }
+
 }

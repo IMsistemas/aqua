@@ -39,7 +39,21 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         };
         $scope.productos = [];
         $http.get(API_URL + 'catalogoproducto/getCatalogoProductos/' + JSON.stringify(filter)).success(function(response){
-            $scope.items = response;            
+
+            //$scope.items = response;
+
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                if (response[i].foto == null || response[i].foto == '') {
+                    response[i].foto = 'img/product_services.jpg';
+                }
+
+            }
+
+            $scope.items = response;
+
         });
     }
     
@@ -126,10 +140,13 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 break;
             case 'edit':
 
-            	$scope.form_title = "Editar Producto";                
+            	$scope.form_title = "Editar Item";
                 $scope.id = id;
                 $scope.producto = null;              
                 $http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){
+
+                    console.log(response);
+
                   	$scope.producto = response;    	
  
                 	$http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
@@ -146,12 +163,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                     $http.get(API_URL + 'catalogoproducto/getImpuestoICE').success(function(response){
 
                         var longitud = response.length;
-                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        var array_temp = [{label: '-- Seleccione --', id: null}];
                         for(var i = 0; i < longitud; i++){
                             array_temp.push({label: response[i].nametipoimpuestoice, id: response[i].idtipoimpuestoice})
                         }
                         $scope.imp_ice = array_temp;
-                        
 
                     });
 
@@ -178,10 +194,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                        
                         
                     });
-                    
-                    
+
+
                     var ids = $scope.producto.jerarquia.split('.');
-                	$scope.s_linea = ids[0];	  
+                	$scope.s_linea = ids[0];
+
                 	$scope.idcat = $scope.producto.idcategoria;
 	                $scope.loadSubLinea($scope.s_linea,false, $scope.idcat);
 	                 
@@ -224,7 +241,6 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 break;
         }
     }
-
 
 
     $scope.showPlanCuenta = function (opcion) {
@@ -311,10 +327,10 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         }  
 
-        if ($scope.producto.idtipoimpuestoice==null){
+        /*if ($scope.producto.idtipoimpuestoice==null){
            $scope.producto.idtipoimpuestoice=undefined; 
 
-        }   	       	
+        } */
         	
         
         console.log($scope.producto);
@@ -325,7 +341,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
       	      
       	}).success(function(data, status, headers, config) {
       	    	$scope.initLoad();
-      	    	$scope.message = 'El item se almaceno correctamente.';
+      	    	$scope.message = 'El item se guardó correctamente...';
               	$('#modalAction').modal('hide');
               	$('#modalMessage').modal('show');
               	setTimeout("$('#modalMessage').modal('hide')",3000);
@@ -354,12 +370,35 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     $scope.destroyProducto = function(){
         $http.delete(API_URL + 'catalogoproducto/' + $scope.empleado_del).success(function(response) {
-            $scope.initLoad();
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.empleado_del = 0;
-            $scope.message = 'Se elimino correctamente el Item seleccionado';
-            $('#modalMessage').modal('show');
-            setTimeout("$('#modalMessage').modal('hide')",3000);
+
+            if (response.success === true) {
+
+                $scope.initLoad();
+                $scope.empleado_del = 0;
+                $scope.message = 'Se eliminó correctamente el Item seleccionado...';
+                $('#modalMessage').modal('show');
+                setTimeout("$('#modalMessage').modal('hide')",3000);
+
+            } else {
+
+                if (response.exists != undefined) {
+
+                    $scope.message_error = 'No se puede eliminar el item, ya que ha sido utilizado en el sistema...';
+
+                } else {
+
+                    $scope.message_error = 'Ha ocurrido un error al intentar eliminar el item seleccionado...';
+
+                }
+
+                $('#modalMessageError').modal('show');
+
+            }
+
+
+
         });
     }   
     
@@ -371,11 +410,13 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
   
     
   
-  $scope.thumbnail = {
-	        dataUrl: ''
-	    };
-	    $scope.fileReaderSupported = window.FileReader != null;
-	    $scope.photoChanged = function(files){
+    $scope.thumbnail = {
+            dataUrl: ''
+      };
+
+    $scope.fileReaderSupported = window.FileReader != null;
+
+	$scope.photoChanged = function(files){
 	        if (files != null) {
 	            var file = files[0];
 	        if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
@@ -392,13 +433,15 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 	    }
 	    };
   
-  
-  
+
   
     
 });
 
 function defaultImage (obj){
+
+    console.log(obj);
+
 	obj.src = 'img/producto.png';
 }
 

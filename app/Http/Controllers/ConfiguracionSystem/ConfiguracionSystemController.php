@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ConfiguracionSystem;
 
 use App\Modelos\Configuracion\ConfiguracionSystem;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\SRI\SRI_Establecimiento;
 use App\Modelos\SRI\SRI_TipoAmbiente;
@@ -25,7 +26,6 @@ class ConfiguracionSystemController extends Controller
         return view('ConfiguracionSystem.index');
     }
 
-
     public function getDataEmpresa()
     {
         return SRI_Establecimiento::get();
@@ -39,6 +39,43 @@ class ConfiguracionSystemController extends Controller
     public function getIVADefault()
     {
         return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+    }
+
+    public function getListServicio()
+    {
+        return Cont_CatalogItem::where('idclaseitem', 2)->get();
+    }
+
+    public function getSaveServicio()
+    {
+        return ConfiguracionSystem::where('optionname','SERV_TARIFAB_LECT')
+                                        ->orWhere('optionname','SERV_EXCED_LECT')
+                                        ->orWhere('optionname','SERV_ALCANT_LECT')
+                                        ->orWhere('optionname','SERV_RRDDSS_LECT')
+                                        ->orWhere('optionname','SERV_MEDAMB_LECT')
+                                        ->select('*')
+                                        ->get();
+    }
+
+    public function updateListServicio(Request $request, $id)
+    {
+        $array_option = $request->input('array_data');
+
+        foreach ($array_option as $item) {
+            $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
+            }
+
+            if (! $configuracion->save()) {
+                return response()->json(['success' => false]);
+            }
+        }
+
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -80,9 +117,7 @@ class ConfiguracionSystemController extends Controller
         $configuracion->direccionestablecimiento = $request->input('direccionestablecimiento');
         $configuracion->rutalogo = $request->input('rutalogo');
 
-        if ($request->input('contribuyenteespecial') == '') {
-            $configuracion->contribuyenteespecial = null;
-        } else {
+        if ($request->input('contribuyenteespecial') != '' && $request->input('contribuyenteespecial') != null) {
             $configuracion->contribuyenteespecial = $request->input('contribuyenteespecial');
         }
 
@@ -156,13 +191,11 @@ class ConfiguracionSystemController extends Controller
         $configuracion->direccionestablecimiento = $request->input('direccionestablecimiento');
         $configuracion->rutalogo = $request->input('rutalogo');
 
-        if ($request->input('contribuyenteespecial') == '') {
-            $configuracion->contribuyenteespecial = null;
-        } else {
+        if ($request->input('contribuyenteespecial') != '' && $request->input('contribuyenteespecial') != null) {
             $configuracion->contribuyenteespecial = $request->input('contribuyenteespecial');
         }
 
-        if ($request->input('obligadocontabilidad') == '1') {
+         if ($request->input('obligadocontabilidad') == '1') {
             $configuracion->obligadocontabilidad = true;
         } else {
             $configuracion->obligadocontabilidad = false;
@@ -213,7 +246,6 @@ class ConfiguracionSystemController extends Controller
 
     }
 
-
     public function getConfigCompra()
     {
         return ConfiguracionSystem::where('optionname','CONT_IVA_COMPRA')
@@ -233,10 +265,16 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ''){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
+
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);
@@ -245,7 +283,6 @@ class ConfiguracionSystemController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
     public function getConfigVenta()
     {
@@ -266,10 +303,15 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ""){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);
@@ -278,7 +320,6 @@ class ConfiguracionSystemController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
     public function getConfigNC()
     {
@@ -299,10 +340,15 @@ class ConfiguracionSystemController extends Controller
 
         foreach ($array_option as $item) {
             $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
-            if($configuracion->optionvalue == ""){
+            /*if($configuracion->optionvalue == ""){
                 $configuracion->optionvalue = null;
+            }*/
+
+            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                $configuracion->optionvalue = null;
+            } else {
+                $configuracion->optionvalue = $item['optionvalue'];
             }
-            $configuracion->optionvalue = $item['optionvalue'];
 
             if (! $configuracion->save()) {
                 return response()->json(['success' => false]);

@@ -53,16 +53,16 @@
                             </td>
                             <td  class="text-center">
                                 <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfoCliente(item)">
-                                    <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-info-circle" aria-hidden="true" title="Información"></i>
                                 </button>
                                 <button type="button" class="btn btn-warning btn-sm" ng-click="showModalEditCliente(item)">
-                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" title="Editar"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDeleteCliente(item)">
-                                    <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-trash" aria-hidden="true" title="Eliminar"></i>
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
-                                    <i class="fa fa-lg fa-cogs" aria-hidden="true"></i>
+                                    <i class="fa fa-lg fa-cogs" aria-hidden="true" title="Solicitudes"></i>
                                 </button>
                             </td>
                         </tr>
@@ -514,13 +514,13 @@
                             <button type="button" class="btn btn-primary btn-block" ng-click="actionServicio()">
                                 Servicios
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
+                            <button id="btnSetName" type="button" class="btn btn-primary btn-block" ng-click="actionSetName()">
                                 Cambio de Nombre
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionMantenimiento()">
+                            <button id="btnMantenimiento" type="button" class="btn btn-primary btn-block" ng-click="actionMantenimiento()">
                                 Mantenimiento
                             </button>
-                            <button type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
+                            <button id="btnOtras" type="button" class="btn btn-primary btn-block" ng-click="actionOtro()">
                                 Otras Solicitudes
                             </button>
                         </div>
@@ -1446,7 +1446,7 @@
                                         <fieldset>
                                             <legend style="font-size: 16px; font-weight: bold;">Datos Costo</legend>
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
+                                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Acometida</legend>
 
@@ -1489,7 +1489,7 @@
                                                 </fieldset>
                                             </div>
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
+                                            <!--<div class="col-xs-12" style="padding: 2%; margin-top: -35px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Medidor</legend>
 
@@ -1525,13 +1525,13 @@
                                                     </div>
 
                                                 </fieldset>
-                                            </div>
+                                            </div>-->
 
-                                            <div class="col-xs-12" style="padding: 2%; margin-top: -40px;">
+                                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px;">
                                                 <fieldset>
                                                     <legend style="font-size: 14px; font-weight: bold;">Total</legend>
 
-                                                    <div class="col-sm-6 col-xs-12 error">
+                                                    <div class="col-sm-4 col-xs-12 error">
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon"> Cuota Inicial: </span>
@@ -1543,7 +1543,7 @@
                                                             La Couta Inicial es requerida</span>
                                                     </div>
 
-                                                    <div class="col-sm-6 col-xs-12 error">
+                                                    <div class="col-sm-4 col-xs-12 error">
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon"> Crédito: </span>
@@ -1554,6 +1554,24 @@
                                                         <span class="help-block error"
                                                               ng-show="formProcessSuministro.s_suministro_credito.$invalid && formProcessSuministro.s_suministro_credito.$touched">
                                                                 Seleccione un Crédito</span>
+                                                    </div>
+
+                                                    <div class="col-sm-4 col-xs-12 error">
+
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Forma Pago: </span>
+                                                            <select name="s_suministro_formapago" id="s_suministro_formapago" class="form-control" ng-model="s_suministro_formapago"
+                                                                    required>
+                                                                <option value="">-- Seleccione --</option>
+                                                                <option value="1">EFECTIVO</option>
+                                                                <option value="2">COUTAS</option>
+                                                                <option value="3">RECARGAR</option>
+
+                                                            </select>
+                                                        </div>
+                                                        <span class="help-block error"
+                                                              ng-show="formProcessSuministro.s_suministro_formapago.$invalid && formProcessSuministro.s_suministro_formapago.$touched">
+                                                                Seleccione una Forma de Pago</span>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -1638,6 +1656,20 @@
                             <button type="button" class="btn btn-primary" id="btn-ok" ng-click="assignItems()">
                                 Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Información</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span>{{message_error}}</span>
                         </div>
                     </div>
                 </div>

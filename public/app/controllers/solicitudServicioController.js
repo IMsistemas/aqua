@@ -1345,6 +1345,8 @@
 
                     $scope.s_suministro_credito = response[0].suministro.dividendocredito;
 
+                    $scope.s_suministro_formapago = response[0].suministro.formapago;
+
                     if(response[0].suministro.cont_catalogitem != null) {
                         $scope.t_suministro_medidor = true;
                         $scope.t_suministro_marca = response[0].suministro.cont_catalogitem.nombreproducto;
@@ -1363,12 +1365,13 @@
                     $('#t_suministro_aguapotable').prop('disabled', true);
                     $('#t_suministro_alcantarillado').prop('disabled', true);
                     $('#t_suministro_garantia').prop('disabled', true);
-                    $('#t_suministro_medidor').prop('disabled', true);
-                    $('#t_suministro_marca').prop('disabled', true);
-                    $('#t_suministro_costomedidor').prop('disabled', true);
+                    //$('#t_suministro_medidor').prop('disabled', true);
+                    //$('#t_suministro_marca').prop('disabled', true);
+                    //$('#t_suministro_costomedidor').prop('disabled', true);
                     $('#t_suministro_cuota').prop('disabled', true);
                     $('#s_suministro_credito').prop('disabled', true);
 
+                    //$('#s_suministro_formapago').prop('disabled', true);
 
                     $('#btn-save-solsuministro').prop('disabled', true);
                     $('#btn-process-solsuministro').prop('disabled', true);
@@ -1379,10 +1382,12 @@
                     $scope.t_suministro_aguapotable = '';
                     $scope.t_suministro_alcantarillado = '';
                     $scope.t_suministro_garantia = '';
-                    $scope.t_suministro_medidor = false;
-                    $scope.t_suministro_marca = '';
-                    $scope.t_suministro_costomedidor = '';
-                    $scope.t_suministro_cuota = '';
+                    //$scope.t_suministro_medidor = false;
+                    //$scope.t_suministro_marca = '';
+                    //$scope.t_suministro_costomedidor = '';
+                    //$scope.t_suministro_cuota = '';
+
+                    $scope.s_suministro_formapago = '';
 
                     $('#s_suministro_tarifa').prop('disabled', false);
                     $('#s_suministro_zona').prop('disabled', false);
@@ -1392,12 +1397,13 @@
                     $('#t_suministro_aguapotable').prop('disabled', false);
                     $('#t_suministro_alcantarillado').prop('disabled', false);
                     $('#t_suministro_garantia').prop('disabled', false);
-                    $('#t_suministro_medidor').prop('disabled', false);
-                    $('#t_suministro_marca').prop('disabled', true);
-                    $('#t_suministro_costomedidor').prop('disabled', true);
+                    //$('#t_suministro_medidor').prop('disabled', false);
+                    //$('#t_suministro_marca').prop('disabled', true);
+                    //$('#t_suministro_costomedidor').prop('disabled', true);
                     $('#t_suministro_cuota').prop('disabled', false);
                     $('#s_suministro_credito').prop('disabled', false);
 
+                    $('#s_suministro_formapago').prop('disabled', false);
 
                     $('#btn-save-solsuministro').prop('disabled', false);
                     $('#btn-process-solsuministro').prop('disabled', false);

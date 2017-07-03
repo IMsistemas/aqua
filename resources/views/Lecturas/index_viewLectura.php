@@ -13,8 +13,7 @@
             <fieldset>
                 <div class="col-sm-6 col-xs-12">
 
-                    <h4>Periodo:</h4>
-                    <hr>
+
 
                     <div class="row">
                         <div class="col-xs-6">
@@ -44,8 +43,7 @@
                 
                 <div class="col-sm-6 col-xs-12">
 
-                    <h4>Sector:</h4>
-                    <hr>
+
 
                     <div class="row">
                         <div class="col-xs-6">
@@ -81,24 +79,24 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="font-size: 12px !important;">
                     <table class="table table-striped table-hover table-responsive table-bordered">
                         <thead>
                             <tr class="bg-primary">
-                                <th style="width: 5%;">Código</th>
-                                <th>Cliente</th>
-                                <th style="width: 8%;">Suministro</th>
-                                <th>Calle</th>
-                                <th style="width: 10%;">Lectura Anterior</th>
-                                <th style="width: 10%;">Lectura Actual</th>
-                                <th style="width: 10%;">Consumo del Mes</th>
-                                <th>Observaciones</th>
+                                <th style="width: 4%;">NO.</th>
+                                <th>CLIENTE</th>
+                                <th style="width: 8%;">NO. SUMINIST.</th>
+                                <th>CALLE</th>
+                                <th style="width: 10%;">LECTURA ANTERIOR</th>
+                                <th style="width: 10%;">LECTURA ACTUAL</th>
+                                <th style="width: 10%;">CONSUMO MES</th>
+                                <th>OBSERVACIONES</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr dir-paginate="lectura in lecturas | orderBy:sortKey:reverse |itemsPerPage:4 | filter : t_search" ng-cloak>
-                                <td class="text-right">{{lectura.idlectura}}</td>
-                                <td><i class="fa fa-user" ></i> {{lectura.razonsocial}}</td>
+                                <td class="text-right">{{$index + 1}}</td>
+                                <td>{{lectura.razonsocial}}</td>
                                 <td class="text-center">{{lectura.idsuministro}}</td>
                                 <td>{{lectura.namecalle}}</td>
                                 <td class="text-right">{{lectura.lecturaanterior}}</td>
@@ -114,8 +112,11 @@
                                 </td>
                                 <td class="text-right">{{lectura.consumo}}</td>
                                 <td>
-                                    <textarea class="form-control" name="" id="" cols="5" rows="2" 
-                                            ng-change="prepareUpdate(lectura)" ng-model="lectura.observacion"></textarea>
+                                    <input type="text" class="form-control" ng-change="prepareUpdate(lectura)" style="width: 100%;"
+                                           ng-model="lectura.observacion">
+
+                                    <!--<textarea class="form-control" name="" id="" cols="5" rows="2"
+                                            ng-change="prepareUpdate(lectura)" ng-model="lectura.observacion"></textarea>-->
                                 </td>
                             </tr>
                         </tbody>

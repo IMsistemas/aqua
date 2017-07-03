@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CatalogoProductos;
 
 use App\Modelos\CatalogoProductos\CatalogoProducto;
 use App\Modelos\Categoria;
-
+use App\Modelos\Contabilidad\Cont_Itemactivofijo;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_ClaseItem;
 use App\Modelos\SRI\SRI_TipoImpuestoIce;
@@ -37,7 +37,7 @@ class CatalogoProductoController extends Controller
         $search = $filter->search;
         $cliente = null;
 
-        return Cont_CatalogItem::orderBy('idcatalogitem', 'desc')->paginate(10);
+        return Cont_CatalogItem::orderBy('idcatalogitem', 'desc')->paginate(5);
 
 
         /*$cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
@@ -114,15 +114,19 @@ class CatalogoProductoController extends Controller
             $data['idtipoimpuestoice'] =undefined;
         }*/
             $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
+
             if ($request->input('idtipoimpuestoice')!=null) {
                $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
             }
             
-            $catalogo->idplancuenta = $request->input('idplancuenta');
-            if ($request->input('idplancuenta_ingreso')!=null) {
-                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+            //$catalogo->idplancuenta = $request->input('idplancuenta');
+
+            if ($request->input('idplancuenta_ingreso') != null) {
+                $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
             }
-            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+            //$catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
             $catalogo->idclaseitem = $request->input('idclaseitem');
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
@@ -155,6 +159,14 @@ class CatalogoProductoController extends Controller
             $catalogo->save();**/
             $catalogo->save();
     	    //$result = Cont_CatalogItem::create($data);
+            if ($catalogo->idclaseitem==3) {
+                $id = $catalogo::all();
+                     
+                $guardarItemactivofijo = new  Cont_Itemactivofijo($request->all());
+                $guardarItemactivofijo->idcatalogitem =$id->last()->idcatalogitem;
+                $guardarItemactivofijo->save();
+            }
+            
     	 
     	//return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
             return response()->json(['success' => true]);
@@ -172,15 +184,13 @@ class CatalogoProductoController extends Controller
      	
      	return Cont_CatalogItem::join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'cont_catalogitem.idtipoimpuestoiva')
 		     	->leftJoin('sri_tipoimpuestoice', 'sri_tipoimpuestoice.idtipoimpuestoice', '=', 'cont_catalogitem.idtipoimpuestoice')
-		     	->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
+		     	//->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
 		     	->leftJoin('cont_plancuenta as p2', 'p2.idplancuenta', '=', 'cont_catalogitem.idplancuenta_ingreso')
 		     	->join('cont_claseitem', 'cont_claseitem.idclaseitem', '=', 'cont_catalogitem.idclaseitem')
 		     	->join('cont_categoria', 'cont_categoria.idcategoria', '=', 'cont_catalogitem.idcategoria')
-		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia','p1.concepto', 'p2.concepto as c2')
+		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia', 'p2.concepto as c2')
 		     	->whereRaw("cont_catalogitem.idcatalogitem = '".$id."'")
-		     	->first() ;
-	
-     	
+		     	->first();
      }
     
     /**
@@ -215,12 +225,19 @@ class CatalogoProductoController extends Controller
     		unset($data['idplancuenta_ingreso']);
     	}*/
             $catalogo->idtipoimpuestoiva = $request->input('idtipoimpuestoiva');
-            $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
-            $catalogo->idplancuenta = $request->input('idplancuenta');
-            if ($request->input('idplancuenta_ingreso')!=null) {
-                $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+            if ($request->input('idtipoimpuestoice') != null && $request->input('idtipoimpuestoice') != 'null') {
+                $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
             }
-            $catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
+
+
+            //$catalogo->idplancuenta = $request->input('idplancuenta');
+
+            if ($request->input('idplancuenta_ingreso') != null && $request->input('idplancuenta_ingreso')!= 'null') {
+                $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
+            }
+
+            //$catalogo->idplancuenta_ingreso =$request->input('idplancuenta_ingreso');
             $catalogo->idclaseitem = $request->input('idclaseitem');
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
@@ -242,15 +259,36 @@ class CatalogoProductoController extends Controller
      */
     public function destroy($id)
     {
-    	$producto = Cont_CatalogItem::find($id);
-    	if (file_exists($producto->foto)) {
-    		unlink($producto->foto);
-    	}
-    	$producto->delete();
-    	return response()->json(['success' => true]);
+
+        if ($this->getCountItemUtilizado($id) > 0) {
+
+            return response()->json(['success' => false, 'exists' => true]);
+
+        } else {
+            $producto = Cont_CatalogItem::find($id);
+            if (file_exists($producto->foto)) {
+                unlink($producto->foto);
+            }
+            $producto->delete();
+            return response()->json(['success' => true]);
+        }
+
+
     }
     
-    
+    private function getCountItemUtilizado($id)
+    {
+        $whereRaw = '(idcatalogitem IN (SELECT idcatalogitem FROM cont_itemcompra) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemventa) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemactivofijo) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_itemnotacreditfactura) ';
+        $whereRaw .= 'OR idcatalogitem IN (SELECT idcatalogitem FROM cont_producto_bodega))';
+
+        $count = Cont_CatalogItem::where('idcatalogitem', $id)
+                                    ->whereRaw($whereRaw)->count();
+
+        return $count;
+    }
     
     
     /**

@@ -15,15 +15,16 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
-            $scope.guiaremision = response;
-            console.log(response);
+            $scope.guiaremision = response.guiassinfactura.concat(response.guiasconfactura);
+            console.log('hola');
         });
     }
+    $scope.initLoad();
 
      $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
     };
-    $scope.initLoad = function(pageNumber){
+    /*$scope.initLoadd = function(pageNumber){
 
         if ($scope.busqueda == undefined) {
             var search = null;
@@ -37,15 +38,13 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
             $scope.cargos = response.data;
             $scope.totalItems = response.total;
         });
-    };
+    };*/
 
     $scope.editarGuia = function(){
         $http.get(API_URL + 'guiaremision/getGiaremision').success(function(response){
             $scope.guiaremision = response;
         });
     }
-
-    $scope.initLoad();
 
     $scope.createRow = function() {     
         $scope.editar=false;
@@ -84,11 +83,12 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
         };
 
-    $scope.calculateLength = function(field, length) {
+   $scope.calculateLength = function(field, length) {
                         var text = $("#" + field).val();
                         var longitud = text.length;
                         if (longitud == length) {
                             $("#" + field).val(text);
+                            return text;
                         } else {
                             var diferencia = parseInt(length) - parseInt(longitud);
                             var relleno = '';
@@ -102,6 +102,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                                 }
                             }
                             $("#" + field).val(relleno + text);
+                            console.log(relleno+text);
                             return relleno+text;
                         }
                     };
@@ -241,6 +242,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                     $scope.guiaventa=0;
 
                 }
+                $scope.initLoad();
             });   
         } else {
             console.log(guiaremisionsave);
@@ -265,6 +267,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
                     $scope.guiaventa=0;
                     $scope.edit=0;
                 }
+                $scope.initLoad();
             });  
         }
     };
@@ -305,6 +308,7 @@ app.controller('guiaremisionController', function($scope, $http, API_URL) {
 
             } else {
                 $scope.message_error = 'La Guía de Remisión no puede ser eliminada porque esta asignado a un colaborador...';
+                $scope.initLoad();
                 $('#modalMessageError').modal('show');
                 $('#modalConfirmDelete').modal('hide');
             }

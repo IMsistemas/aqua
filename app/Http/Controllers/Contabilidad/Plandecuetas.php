@@ -43,14 +43,70 @@ class Plandecuetas extends Controller
                 ->orderBy('jerarquia', 'ASC')
                 ->get();
         */
-        $aux_sqlplan="SELECT * , ";
+        /*$aux_sqlplan="SELECT * , ";
         $aux_sqlplan.=" (SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ pl.jerarquia) madreohija, ";
         $aux_sqlplan.=" f_balancecuentacontable(pl.idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ";
         $aux_sqlplan.=" FROM cont_plancuenta pl";
         $aux_sqlplan.=" WHERE pl.tipoestadofinanz='".$filtro->Tipo."' ";
         $aux_sqlplan.=" ORDER BY pl.jerarquia; ";
-        $aux_data=DB::select($aux_sqlplan);
-        return $aux_data;                
+        $aux_data=DB::select($aux_sqlplan);*/
+        $aux_plan=Cont_PlanCuenta::selectRaw("*")
+                ->selectRaw("(SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ cont_plancuenta.jerarquia) madreohija")
+                ->selectRaw("f_balancecuentacontable(cont_plancuenta.idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance")
+                ->whereRaw(" cont_plancuenta.tipoestadofinanz='".$filtro->Tipo."' ")
+                ->orderBy('jerarquia', 'ASC')
+                ->get();
+        $aux_data_plan=array();
+        foreach ($aux_plan as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'madreohija' => $item->madreohija ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_plan, $aux_item); 
+        }
+
+        //return $aux_plan;                
+        return $aux_data_plan;
+    }
+    public function orden_plan_cuenta($orden)
+    {
+        $aux_orden=explode('.', $orden);
+        $aux_numero_orden="";
+        $aux_numero_completar="";
+        $tam=count($aux_orden);
+        if($tam>0){
+              for($x=0;$x<$tam;$x++){
+                if($x<3){
+                    $aux_numero_orden.=$aux_orden[$x];
+                }elseif($x>=3){
+                    if($x==3){
+                        $aux_numero_completar=$aux_orden[$x];
+                        if(strlen ((string)$aux_numero_completar)==1){
+                            $aux_numero_completar="0".$aux_numero_completar;
+                        }
+                        $aux_numero_orden.=$aux_numero_completar;
+                    }elseif($x>3){
+                        $aux_numero_orden.=$aux_orden[$x];
+                    }
+
+                }
+            }
+        }else{
+           $aux_numero_orden=$orden;
+        }
+        
+        return $aux_numero_orden;
     }
     public function store(Request $request)
     {
@@ -109,12 +165,36 @@ class Plandecuetas extends Controller
      *
      */
     public function plancontabletotal(){
-        $aux_sqlplan="SELECT * , ";
+       /* $aux_sqlplan="SELECT * , ";
         $aux_sqlplan.=" (SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ pl.jerarquia) madreohija ";
         $aux_sqlplan.=" FROM cont_plancuenta pl";
         $aux_sqlplan.=" ORDER BY pl.jerarquia; ";
         $aux_data=DB::select($aux_sqlplan);
-        return $aux_data;
+        return $aux_data;*/
+        $aux_plan=Cont_PlanCuenta::selectRaw("*")
+                ->selectRaw("(SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ cont_plancuenta.jerarquia) madreohija")
+                ->orderBy('jerarquia', 'ASC')
+                ->get();
+        $aux_data_plan=array();
+        foreach ($aux_plan as $item) {
+            $aux_item = array(
+                'balance' => $item->balance ,
+                'codigosri' => $item->codigosri ,
+                'concepto' => $item->concepto ,
+                'controlhaber' => $item->controlhaber ,
+                'created_at' => $item->created_at ,
+                'estado' => $item->estado ,
+                'idplancuenta' => $item->idplancuenta ,
+                'jerarquia' => $item->jerarquia ,
+                'madreohija' => $item->madreohija ,
+                'tipocuenta' => $item->tipocuenta ,
+                'tipoestadofinanz' => $item->tipoestadofinanz ,
+                'updated_at' => $item->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );  
+                array_push($aux_data_plan, $aux_item); 
+        }              
+        return $aux_data_plan;
     }
     /**
      *
@@ -194,7 +274,12 @@ class Plandecuetas extends Controller
      */
     public function DatosAsientoContable($id)
     {
-        return Cont_Transaccion::with("cont_registrocontable.cont_plancuentas")
+        /*return Cont_Transaccion::with("cont_registrocontable.cont_plancuentas")
+                                ->whereRaw("cont_transaccion.idtransaccion=".$id."")
+                                ->get();*/
+        return Cont_Transaccion::with(["cont_registrocontable.cont_plancuentas","cont_registrocontable"=>function($query){
+                                    $query->orderBy("debe","DESC");
+                                }])
                                 ->whereRaw("cont_transaccion.idtransaccion=".$id."")
                                 ->get();
     }

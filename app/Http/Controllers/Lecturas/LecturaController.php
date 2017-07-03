@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Lecturas;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Cuentas\CatalogoItemCobroAgua;
 use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
@@ -66,13 +70,19 @@ class LecturaController extends Controller
             $result_array = ['success' => false, 'flag' => 'no_exists'];
         } else {
             if ($count[0]->idlectura == null) {
+
                 $suministro = Suministro::with('cliente.persona', 'tarifaaguapotable', 'calle.barrio')
                     ->where('suministro.idsuministro', $filter->id)
                     ->get();
+
                 $lectura = Lectura::where('idsuministro', $filter->id)
                     ->orderBy('idlectura', 'desc')
                     ->take(1)
                     ->get();
+
+
+
+
                 $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
             } else {
                 $result_array = ['success' => false, 'flag' => 'exists'];
@@ -80,6 +90,76 @@ class LecturaController extends Controller
         }
 
         return response()->json($result_array);
+    }
+
+    /**
+     * Obtener la informacion de un cliente en especifico
+     *
+     * @param $idcliente
+     * @return mixed
+     */
+    public function getInfoClienteByID($idcliente)
+    {
+
+        return Cliente::join("persona","persona.idpersona","=","cliente.idpersona")
+            ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=", "cliente.idtipoimpuestoiva")
+            ->join("cont_plancuenta", "cont_plancuenta.idplancuenta","=","cliente.idplancuenta")
+            ->whereRaw("cliente.idcliente = ".$idcliente)
+            ->limit(1)
+            ->get();
+
+    }
+
+    /**
+     * Obtener configuracion contable
+     *
+     *
+     * @return mixed
+     */
+    public function getConfiguracionContable()
+    {
+        //return   configuracioncontable::all();
+        $aux_data= ConfiguracionSystem::whereRaw(" optionname='CONT_IRBPNR_VENTA' OR optionname='SRI_RETEN_IVA_VENTA' OR optionname='CONT_PROPINA_VENTA' OR optionname='SRI_RETEN_RENTA_VENTA' OR optionname='CONT_COSTO_VENTA' OR optionname='CONT_IVA_VENTA' OR optionname='CONT_ICE_VENTA' ")->get();
+        $aux_configcontable = array();
+        foreach ($aux_data as $i) {
+            $aux_contable = "";
+            if($i->optionvalue != ""){
+                $aux_contable=Cont_PlanCuenta::whereRaw("idplancuenta=".$i->optionvalue." ")->get();
+            }
+            $configventa = array(
+                'Id' => $i->idconfiguracionsystem,
+                'IdContable'=> $i->optionvalue,
+                'Descripcion'=>$i->optionname,
+                'Contabilidad'=>$aux_contable );
+            array_push($aux_configcontable, $configventa);
+        }
+        return $aux_configcontable;
+
+    }
+
+
+    public function getConfiguracionServicio()
+    {
+        $configuracion = ConfiguracionSystem::where('optionname','SERV_TARIFAB_LECT')
+                                        ->orWhere('optionname','SERV_EXCED_LECT')
+                                        ->orWhere('optionname','SERV_ALCANT_LECT')
+                                        ->orWhere('optionname','SERV_RRDDSS_LECT')
+                                        ->orWhere('optionname','SERV_MEDAMB_LECT')
+                                        ->select('*')
+                                        ->get();
+
+        $array_result = [];
+
+        foreach ($configuracion as $item) {
+            $result = Cont_CatalogItem::join('cont_plancuenta', 'cont_catalogitem.idplancuenta_ingreso', '=', 'cont_plancuenta.idplancuenta')
+                                        ->join('sri_tipoimpuestoiva', 'cont_catalogitem.idtipoimpuestoiva', '=', 'sri_tipoimpuestoiva.idtipoimpuestoiva')
+                                        ->where('idcatalogitem', $item->optionvalue)
+                                        ->get();
+
+            $array_result[] = ['configuracion' => $item, 'contabilidad' => $result];
+        }
+
+        return $array_result;
     }
 
     /**
@@ -261,6 +341,40 @@ class LecturaController extends Controller
      */
     public function store(Request $request)
     {
+
+        /*
+         * ----------------------------------------CONTABILIDAD-------------------------------------------------------
+         */
+
+
+        //  $aux = $request->all();
+        $filtro = json_decode($request->input('contabilidad'));
+
+
+        //--Parte contable
+        $id_transaccion = CoreContabilidad::SaveAsientoContable( $filtro->DataContabilidad);
+        //--Fin parte contable
+
+
+        $registrocliente = array(
+            'idcliente' => $request->input('idcliente'),
+            'idtransaccion' => $id_transaccion,
+            'fecha' => date('Y-m-d'),
+            'debe' => $filtro->DataContabilidad->registro[0]->Debe, //primera posicion es cliente
+            'haber' => 0,
+            'numerodocumento' => "",
+            'estadoanulado' => false);
+
+        $aux_registrocliente  = Cont_RegistroCliente::create($registrocliente);
+
+
+
+
+        /*
+         * ----------------------------------------FIN CONTABILIDAD-----------------------------------------------------
+         */
+
+
         $lectura = new Lectura();
         $lectura->idsuministro = $request->input('numerosuministro');
         $lectura->fechalectura = $request->input('fechalectura');
@@ -280,6 +394,7 @@ class LecturaController extends Controller
         $cobroagua->mesesatrasados = $request->input('mesesatrasados');
         $cobroagua->valormesesatrasados = $request->input('valormesesatrasados');
         $cobroagua->valortarifabasica = $request->input('tarifa_basica');
+        $cobroagua->total = $request->input('total');
         $cobroagua->estadopagado = false;
         $cobroagua->save();
 

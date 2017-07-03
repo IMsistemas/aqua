@@ -42,12 +42,12 @@ class PuntoVentaController  extends Controller
         ->get();
     }
 
-    public function empleadoVacio($codigoemision)
+    public function empleadoVacio()
     {
-        return Empleado::join('cargo','cargo.idcargo','=','empleado.idcargo')
+        return Empleado:://join('cargo','cargo.idcargo','=','empleado.idcargo')
         //->join('persona','persona.idempleado','=','empleado.idempleado')
-        ->where('cargo.namecargo','=',"Bodeguero")
-        ->get();
+        //->where('cargo.namecargo','=',"Bodeguero")
+        all();
     }
 
     public function cargaEstablecimiento()

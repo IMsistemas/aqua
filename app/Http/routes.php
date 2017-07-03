@@ -72,6 +72,12 @@ Route::resource('/solicitud', 'Solicitud\SolicitudController');
 
 /*===================================Módulo Lectura===========================================*/
 
+Route::get('nuevaLectura/getConfiguracionServicio', 'Lecturas\LecturaController@getConfiguracionServicio');
+
+Route::get('nuevaLectura/getConfiguracionContable', 'Lecturas\LecturaController@getConfiguracionContable');
+
+Route::get('nuevaLectura/getInfoClienteByID/{idcliente}', 'Lecturas\LecturaController@getInfoClienteByID');
+
 Route::get('nuevaLectura/getInfo/{filter}', 'Lecturas\LecturaController@getInfo');
 
 Route::get('nuevaLectura/exportToPDF/{type}/{data}', 'Lecturas\LecturaController@exportToPDF');
@@ -115,6 +121,17 @@ Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraCont
 Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@form');
 Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
+
+Route::post('retencionVenta/anularRetencion', 'Retencion\RetencionVentaController@anularRetencion');
+Route::get('retencionVenta/getLastIDRetencion', 'Retencion\RetencionVentaController@getLastIDRetencion');
+Route::get('retencionVenta/getConfigContabilidad', 'Retencion\RetencionVentaController@getConfigContabilidad');
+Route::get('retencionVenta/getRetenciones', 'Retencion\RetencionVentaController@getRetenciones');
+Route::get('retencionVenta/getRetencionesByCompra/{id}', 'Retencion\RetencionVentaController@getRetencionesByCompra');
+Route::get('retencionVenta/getCompras/{codigo}', 'Retencion\RetencionVentaController@getCompras');
+Route::get('retencionVenta/getCodigos/{codigo}', 'Retencion\RetencionVentaController@getCodigos');
+Route::get('retencionVenta/form/{id}', 'Retencion\RetencionVentaController@form');
+Route::get('retencionVenta/getCodigosRetencion/{tipo}', 'Retencion\RetencionVentaController@getCodigosRetencion');
+Route::resource('retencionVenta', 'Retencion\RetencionVentaController');
 
 /*
  * ---------------------------------------------------------------------------------------------------------------------
@@ -201,6 +218,7 @@ Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 
 Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
 
+Route::get('cliente/getSuministroByClient/{idcliente}', 'Clientes\ClienteController@getSuministroByClient');
 Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
 Route::get('cliente/getTipoIdentificacion', 'Clientes\ClienteController@getTipoIdentificacion');
 Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA');
@@ -237,8 +255,11 @@ Route::post('factura/print/', 'Facturas\FacturaController@printer');
 
 Route::resource('/factura', 'Facturas\FacturaController');
 
-
-
+Route::get('cobroservicio/getCobrosServicios', 'Facturas\CobroServicioController@getCobrosServicios');
+Route::get('cobroservicio/generate', 'Facturas\CobroServicioController@generate');
+//Route::get('cobroservicio/print/{filtro}', 'Facturas\CobroServicioController@printer');
+Route::post('cobroservicio/print', 'Facturas\CobroServicioController@printer');
+Route::resource('/cobroservicio', 'Facturas\CobroServicioController');
 
 /*--------------------------------------Yamilka-------------------------------------------------*/
 /*===================================Sectores===========================================*/
@@ -750,6 +771,7 @@ Route::post('proveedor/storeContactos', 'Proveedores\ProveedorController@storeCo
 Route::delete('proveedor/destroyContacto/{idcontacto}', 'Proveedores\ProveedorController@destroyContacto');
 Route::resource('proveedor', 'Proveedores\ProveedorController');
 
+Route::get('transportista/getProveedores', 'Transportista\TransportistaController@getProveedores');
 Route::get('transportista/getTransportista', 'Transportista\TransportistaController@getTransportista');
 Route::get('transportista/getTipoIdentificacion', 'Transportista\TransportistaController@getTipoIdentificacion');
 Route::get('transportista/getIdentify/{identify}', 'Transportista\TransportistaController@getIdentify');
@@ -766,11 +788,12 @@ Route::resource('/transportista', 'Transportista\TransportistaController');
 });*/
 
 Route::get('DocumentoVenta/getSuministroByFactura', 'Facturacionventa\DocumentoVenta@getSuministroByFactura');
-Route::get('DocumentoVenta/getProductoPorSuministro/{id}', 'Facturacionventa\DocumentoVenta@getProductoPorSuministro');
+//Route::get('DocumentoVenta/getProductoPorSuministro/{id}', 'Facturacionventa\DocumentoVenta@getProductoPorSuministro');
+Route::get('DocumentoVenta/getProductoPorSuministro', 'Facturacionventa\DocumentoVenta@getProductoPorSuministro');
 Route::get('DocumentoVenta/getInfoClienteXCIRuc/{getInfoCliente}', 'Facturacionventa\DocumentoVenta@getInfoClienteXCIRuc');
 Route::get('DocumentoVenta/getBodega/{texto}', 'Facturacionventa\DocumentoVenta@getinfoBodegas');
 Route::get('DocumentoVenta/getProducto/{texto}', 'Facturacionventa\DocumentoVenta@getinfoProducto');
-Route::get('DocumentoVenta/getheaddocumentoventa', 'Facturacionventa\DocumentoVenta@getPuntoVentaEmpleado'); 
+Route::get('DocumentoVenta/getheaddocumentoventa', 'Facturacionventa\DocumentoVenta@getPuntoVentaEmpleado');
 Route::get('DocumentoVenta/formapago', 'Facturacionventa\DocumentoVenta@getFormaPago');
 Route::get('DocumentoVenta/porcentajeivaiceotro', 'Facturacionventa\DocumentoVenta@getCofiguracioncontable');
 Route::get('DocumentoVenta/AllBodegas', 'Facturacionventa\DocumentoVenta@getAllbodegas');
@@ -787,6 +810,36 @@ Route::get('DocumentoVenta/print/{id}', 'Facturacionventa\DocumentoVenta@imprimi
 
 Route::resource('DocumentoVenta', 'Facturacionventa\DocumentoVenta');
 //------------Modulo documento venta---------------////
+
+//------------Modulo documento nc---------------////
+
+/*Route::get('/DocumentoVenta', function (){
+	return view('DocumentoNC/index');
+});*/
+
+Route::get('DocumentoNC/getSuministroByFactura', 'NotaCredito\NotaCreditoController@getSuministroByFactura');
+//Route::get('DocumentoNC/getProductoPorSuministro/{id}', 'NotaCredito\NotaCreditoController@getProductoPorSuministro');
+Route::get('DocumentoNC/getProductoPorSuministro', 'NotaCredito\NotaCreditoController@getProductoPorSuministro');
+Route::get('DocumentoNC/getInfoClienteXCIRuc/{getInfoCliente}', 'NotaCredito\NotaCreditoController@getInfoClienteXCIRuc');
+Route::get('DocumentoNC/getBodega/{texto}', 'NotaCredito\NotaCreditoController@getinfoBodegas');
+Route::get('DocumentoNC/getProducto/{texto}', 'NotaCredito\NotaCreditoController@getinfoProducto');
+Route::get('DocumentoNC/getheaddocumentoventa', 'NotaCredito\NotaCreditoController@getPuntoVentaEmpleado');
+Route::get('DocumentoNC/formapago', 'NotaCredito\NotaCreditoController@getFormaPago');
+Route::get('DocumentoNC/porcentajeivaiceotro', 'NotaCredito\NotaCreditoController@getCofiguracioncontable');
+Route::get('DocumentoNC/AllBodegas', 'NotaCredito\NotaCreditoController@getAllbodegas');
+Route::get('DocumentoNC/LoadProductos/{id}', 'NotaCredito\NotaCreditoController@getProductoPorBodega');
+Route::get('DocumentoNC/AllServicios', 'NotaCredito\NotaCreditoController@getAllservicios');
+Route::get('DocumentoNC/getVentas/{filtro}', 'NotaCredito\NotaCreditoController@getVentas');
+Route::get('DocumentoNC/getAllFitros', 'NotaCredito\NotaCreditoController@getallFitros');
+Route::get('DocumentoNC/anularVenta/{id}', 'NotaCredito\NotaCreditoController@anularVenta');
+Route::get('DocumentoNC/loadEditVenta/{id}', 'NotaCredito\NotaCreditoController@getVentaXId');
+Route::get('DocumentoNC/excel/{id}', 'NotaCredito\NotaCreditoController@excel');
+Route::get('DocumentoNC/NumRegistroVenta', 'NotaCredito\NotaCreditoController@getDocVenta');
+Route::get('DocumentoNC/cobrar/{id}', 'NotaCredito\NotaCreditoController@confirmarcobro');
+Route::get('DocumentoNC/print/{id}', 'NotaCredito\NotaCreditoController@imprimir');
+
+Route::resource('DocumentoNC', 'NotaCredito\NotaCreditoController');
+//------------Modulo documento nc---------------////
 
 //-------------------------------- Plan Cuentas ---------------/////////
 
@@ -854,17 +907,24 @@ Route::put('configuracion/updateConfigVenta/{id}', 'ConfiguracionSystem\Configur
 
 Route::put('configuracion/updateConfigCompra/{id}', 'ConfiguracionSystem\ConfiguracionSystemController@updateConfigCompra');
 
+Route::put('configuracion/updateListServicio/{id}', 'ConfiguracionSystem\ConfiguracionSystemController@updateListServicio');
+
+Route::get('configuracion/getSaveServicio', 'ConfiguracionSystem\ConfiguracionSystemController@getSaveServicio');
+
+Route::get('configuracion/getListServicio', 'ConfiguracionSystem\ConfiguracionSystemController@getListServicio');
+
 Route::resource('configuracion', 'ConfiguracionSystem\ConfiguracionSystemController');
 
 
 //-------------------------------- Inveario Intem Kardex ---------------/////////
 
-Route::resource('Inventario', 'CatalogoProductos\InventarioKardex');
+
 Route::get('procesoskardex/loadbodegas', 'CatalogoProductos\InventarioKardex@cargarbodegas');
 Route::get('procesoskardex/loadcategoria', 'CatalogoProductos\InventarioKardex@cargarcategoria');
 Route::get('procesoskardex/loadsubcategoria/{id}', 'CatalogoProductos\InventarioKardex@cargarsubcategoria');
 Route::get('procesoskardex/loadinventario', 'CatalogoProductos\InventarioKardex@cargarinvetarioporbodega');
 Route::get('procesoskardex/loadkardex/{filtro}', 'CatalogoProductos\InventarioKardex@kardexitem');
+Route::resource('Inventario', 'CatalogoProductos\InventarioKardex');
 
 //-------------------------------- Inveario Intem Kardex ---------------/////////
 
@@ -966,11 +1026,24 @@ Route::resource('/Nomenclador', 'Nomenclador\NomencladorController');
  * ------------------------------------- Modulo Rol---------------------------------------------------------------------
  */
 
-Route::get('rol/getPermisos', 'Rol\RolController@getPermisos');
+Route::get('rol/getPermisosRol', 'Rol\RolController@getPermisosRol');
+Route::get('rol/getPermisos/{id}', 'Rol\RolController@getPermisos');
 Route::get('rol/getRolByID/{id}', 'Rol\RolController@getRolByID');
 Route::get('rol/getRoles', 'Rol\RolController@getRoles');
+Route::post('rol/savePermisos', 'Rol\RolController@savePermisos');
 
 Route::resource('/rol', 'Rol\RolController');
+
+/*
+ * ------------------------------------- Modulo Usuario-----------------------------------------------------------------
+ */
+
+Route::get('usuario/getEmpleados', 'Usuario\UsuarioController@getEmpleados');
+Route::get('usuario/getRoles', 'Usuario\UsuarioController@getRoles');
+Route::get('usuario/getUsuarios', 'Usuario\UsuarioController@getUsuarios');
+
+Route::resource('/usuario', 'Usuario\UsuarioController');
+
 
 /*
  * ------------------------------------- Modulo Alterno Compras (NO OFICIAL)--------------------------------------------
@@ -1007,3 +1080,128 @@ Route::get('puntoventa/verificaremision/{emision}', 'Contabilidad\PuntoVentaCont
 Route::get('puntoventa/cargaestablecimiento', 'Contabilidad\PuntoVentaController@cargaEstablecimiento');
 Route::get('puntoventa/cargarpuntoventa/{id}', 'Contabilidad\PuntoVentaController@cargarPuntoVenta');
 Route::get('puntoventa/verificarvacio', 'Contabilidad\PuntoVentaController@empleadoVacio');
+
+/*
+ * ------------------------------REPORTE COMPRA-------------------------------------------------------------------------
+ */
+
+Route::get('reportecompra/getCompras', 'Reportes\ReporteCompraController@getCompras');
+Route::resource('reportecompra', 'Reportes\ReporteCompraController');
+
+/*
+ * ------------------------------REPORTE VENTA--------------------------------------------------------------------------
+ */
+
+Route::get('reporteventa/getVentas', 'Reportes\ReporteVentaController@getVentas');
+Route::resource('reporteventa', 'Reportes\ReporteVentaController');
+
+/*
+ * ------------------------------REPORTE NC-----------------------------------------------------------------------------
+ */
+
+Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
+Route::resource('reportenc', 'Reportes\ReporteNCController');
+
+
+/*
+ * ------------------------------REPORTE VENTA/BALANCE------------------------------------------------------------------
+ */
+
+Route::get('reporteventabalance/getVentasBalance', 'Reportes\ReporteVentaBalanceController@getVentasBalance');
+Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController');
+
+/*
+ * ------------------------------CUENTAS POR COBRAR---------------------------------------------------------------------
+ */
+
+Route::get('cuentasxcobrar/getLastID', 'Cuentas\CuentasPorCobrarController@getLastID');
+Route::get('cuentasxcobrar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorCobrarController@getInfoClienteByID');
+Route::get('cuentasxcobrar/getCobrosLecturas/{id}', 'Cuentas\CuentasPorCobrarController@getCobrosLecturas');
+Route::get('cuentasxcobrar/getCobrosServices/{id}', 'Cuentas\CuentasPorCobrarController@getCobrosServices');
+Route::get('cuentasxcobrar/getCobros/{id}', 'Cuentas\CuentasPorCobrarController@getCobros');
+Route::get('cuentasxcobrar/getFacturas', 'Cuentas\CuentasPorCobrarController@getFacturas');
+Route::resource('cuentasxcobrar', 'Cuentas\CuentasPorCobrarController');
+
+/*
+ * ------------------------------CUENTAS POR PAGAR----------------------------------------------------------------------
+ */
+
+Route::get('cuentasxpagar/getLastID', 'Cuentas\CuentasPorPagarController@getLastID');
+Route::get('cuentasxpagar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorPagarController@getInfoClienteByID');
+Route::get('cuentasxpagar/getCobrosLecturas/{id}', 'Cuentas\CuentasPorPagarController@getCobrosLecturas');
+Route::get('cuentasxpagar/getCobrosServices/{id}', 'Cuentas\CuentasPorPagarController@getCobrosServices');
+Route::get('cuentasxpagar/getCobros/{id}', 'Cuentas\CuentasPorPagarController@getCobros');
+Route::get('cuentasxpagar/getFacturas', 'Cuentas\CuentasPorPagarController@getFacturas');
+Route::resource('cuentasxpagar', 'Cuentas\CuentasPorPagarController');
+
+//-------------------------------- Balances Contabilidad---------------/////////
+
+Route::resource('Balance', 'Contabilidad\Balances');
+Route::get('Balance/libro_diario/{filtro}', 'Contabilidad\Balances@get_libro_diario');
+Route::get('Balance/libro_mayor/{filtro}', 'Contabilidad\Balances@get_libro_mayor');
+Route::get('Balance/estado_resultados/{filtro}', 'Contabilidad\Balances@get_estado_resultados');
+Route::get('Balance/libro_diario_print/{filtro}', 'Contabilidad\Balances@print_libro_diario');
+Route::get('Balance/libro_mayor_print/{filtro}', 'Contabilidad\Balances@print_libro_mayor');
+Route::get('Balance/estado_resultados_print/{filtro}', 'Contabilidad\Balances@print_estado_resultados');
+Route::get('Balance/estado_cambio_patrimonio/{filtro}', 'Contabilidad\Balances@estado_cambio_patrimonio');
+Route::get('Balance/estado_cambios_patrimonio_print/{filtro}', 'Contabilidad\Balances@print_estado_cambios_patrimonio');
+Route::get('Balance/balance_general/{filtro}', 'Contabilidad\Balances@get_balance_contable');
+Route::get('Balance/balance_general_print/{filtro}', 'Contabilidad\Balances@print_balace_general');
+Route::get('Balance/estado_de_resultados/{filtro}', 'Contabilidad\Balances@get_estado_de_resultados');
+Route::get('Balance/estado_de_resultados_print/{filtro}', 'Contabilidad\Balances@print_estado_de_resultados');
+Route::get('Balance/balance_de_comprobacion/{filtro}', 'Contabilidad\Balances@get_balance_de_comprobacion');
+Route::get('Balance/balance_de_comprobacion_print/{filtro}', 'Contabilidad\Balances@print_balance_de_comprobacion');
+//-------------------------------- Balances Contabilidad---------------/////////
+
+
+//-------------------------------- MÓDULO ACTIVOS FIJOS--------------------------/////////
+
+//-------------------------------Gesrtionar registro de Activos Fijos---------------//
+/*
+Route::resource('Activosfijos/activosfijos','ActivosFijos\activosfijosController');
+Route::post('Activosfijos/guardaractivosfijos','ActivosFijos\activosfijosController@store');
+Route::get('Activosfijos/getactivosfijos','ActivosFijos\activosfijosController@getClaseItem');
+Route::get('Activosfijos/getCategorias','ActivosFijos\activosfijosController@getCategorias');
+Route::get('Activosfijos/getLinea/{jerarquia}','ActivosFijos\activosfijosController@getLinea');
+Route::get('Activosfijos/GetIdLinea/{idlinea}','ActivosFijos\activosfijosController@GetIdLinea');
+Route::get('Activosfijos/getSubLinea/{subjerarquia}','ActivosFijos\activosfijosController@getSubLinea');
+Route::get('Activosfijos/getTipoIva','ActivosFijos\activosfijosController@getTipoIva');
+Route::get('Activosfijos/getTipoIce','ActivosFijos\activosfijosController@getTipoIce');
+Route::get('Activosfijos/getPlanCuentas','ActivosFijos\activosfijosController@getPlanCuentas');
+Route::get('Activosfijos/getAllActivosfijos','ActivosFijos\activosfijosController@getAllActivosfijos');
+Route::get('Activosfijos/deleteactivofijo/{iditemactivofijo}/{Idcatal}/{NomImg}','ActivosFijos\activosfijosController@destroy');
+Route::get('Activosfijos/showactivofijo/{id}','ActivosFijos\activosfijosController@show');
+Route::get('Activosfijos/getAllActivosfijosfiltrados/{palabra}','ActivosFijos\activosfijosController@getAllActivosfijosfiltradosbusqueda');
+Route::get('Activosfijos/getAllActivosfijoscodigo/{codigo}','ActivosFijos\activosfijosController@getCodigo');
+Route::post('Activosfijos/actualizaractivosfijos/{id}','ActivosFijos\activosfijosController@update');*/
+
+
+//-------------------------------Gesrtionar depreciación de Activos Fijos---------------//
+
+Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciacionActivosFijosController');
+Route::get('Activosfijos/AllActivosfijosAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosAlta');
+Route::get('Activosfijos/AllActivosfijosSinAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosSinAlta');
+Route::get('Activosfijos/ActivoFijoIndividual/{idactivo}','ActivosFijos\depreciacionActivosFijosController@ActivoFijoIndividual');
+Route::get('Activosfijos/AllResponsable/{responsable}','ActivosFijos\depreciacionActivosFijosController@Responsable');
+Route::post('Activosfijos/GuardarAltaActivosfijos/{numero}','ActivosFijos\depreciacionActivosFijosController@store');
+Route::get('Activosfijos/VerificarAltaCompra/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@VerificarAltaCompra');
+Route::get('Activosfijos/ObtenerDatosAlta/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosAlta');
+Route::get('Activosfijos/ObtenerPlanCuentaGasto/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerPlanCuentaGasto');
+Route::get('Activosfijos/ObtenerDemasDatos/{iditemcompra}','ActivosFijos\depreciacionActivosFijosController@ObtenerDemasDAtos');
+Route::get('Activosfijos/ObtenerTiposMantencion','ActivosFijos\depreciacionActivosFijosController@ObtenerTiposMantencion');
+Route::get('Activosfijos/ObtenerNumActivo/{numactivo}','ActivosFijos\depreciacionActivosFijosController@ObtenerNumActivo');
+Route::get('Activosfijos/ObtenerIncidencia/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerIncidencia');
+Route::get('Activosfijos/ObtenerMantencion/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerMantencion');
+Route::get('Activosfijos/ObtenerTraslados/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerTraslados');
+Route::get('Activosfijos/ObtenerConceptoBaja','ActivosFijos\depreciacionActivosFijosController@ObtenerConceptoBaja');
+Route::get('Activosfijos/ObtenerBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ObtenerBaja');
+Route::get('Activosfijos/VerificaDepreciacion/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificaDepreciacion');
+Route::get('Activosfijos/DevolverDatosDeDetealleItemActivosFijos/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@DevolverDatosDeDetealleItemActivosFijos');
+Route::post('Activosfijos/ActualizarCampoDepreciado/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ActualizarCampoDepreciado');
+Route::post('Activosfijos/ActualizarCampoBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@ActualizarCampoBaja');
+Route::get('Activosfijos/ObtenerDepreciados','ActivosFijos\depreciacionActivosFijosController@ObtenerDepreciados');
+Route::get('Activosfijos/ObtenerNoDepreciados','ActivosFijos\depreciacionActivosFijosController@ObtenerNoDepreciados');
+Route::post('Activosfijos/GuardarAsientoContable','ActivosFijos\depreciacionActivosFijosController@GuardarAsientoContable');
+Route::get('Activosfijos/VerificarBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificarBaja');
+Route::get('Activosfijos/ObtenerUltimaDepreciacion','ActivosFijos\depreciacionActivosFijosController@ObtenerUltimaDepreciacion');
+Route::get('Activosfijos/ObtenerDatosCuentaGasto/{idgasto}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosCuentaGasto');

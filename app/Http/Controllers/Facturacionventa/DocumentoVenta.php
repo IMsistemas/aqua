@@ -75,6 +75,7 @@ class DocumentoVenta extends Controller
         //return view('Facturacionventa/index');
         //return view('Facturacionventa/aux_index');
     }
+
     /**
      * Obtener la informacion de un cliente en especifico
      *
@@ -211,7 +212,7 @@ class DocumentoVenta extends Controller
                 
     }
 
-    public function getProductoPorSuministro($id)
+    public function getProductoPorSuministro()
     {
 
         return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
@@ -226,7 +227,8 @@ class DocumentoVenta extends Controller
                         ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
                         ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                         ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-                        ->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+                        //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+                        ->whereRaw(" cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
                         ->get();
         //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
         //->get() ;
@@ -454,14 +456,20 @@ class DocumentoVenta extends Controller
 
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
+        $estado = $filter->estado;
         $data = null;
         $aux_query="";
         if ($search!="") {
             $aux_query.=" AND (numdocumentoventa LIKE '%".$search."%' OR nroautorizacionventa LIKE '%".$search."%' )";
+        }
+        $aux_estado="false";
+        if($estado=="I"){
+            $aux_estado="true";
         } 
 
-        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento')
-                                ->whereRaw(" estadoanulado=false ".$aux_query."" );
+        $data= Cont_DocumentoVenta::with('cont_puntoventa.sri_establecimiento','cliente.persona')
+                               // ->whereRaw(" estadoanulado=false ".$aux_query."" );
+                                ->whereRaw(" estadoanulado=".$aux_estado." ".$aux_query."" );
         return $data->paginate(10);
 
         /*

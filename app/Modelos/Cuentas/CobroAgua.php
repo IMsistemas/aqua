@@ -11,6 +11,11 @@ class CobroAgua extends Model
      protected $primaryKey = 'idcobroagua';
      public $timestamps = false;
 
+    public function cont_cuentasporcobrar()
+    {
+        return $this->hasMany('App\Modelos\Cuentas\CuentasporCobrar',"idcobroagua");
+    }
+
     public function lectura()
     {
         return $this->belongsTo('App\Modelos\Lecturas\Lectura','idlectura');

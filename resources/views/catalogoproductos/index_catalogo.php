@@ -50,26 +50,26 @@
                     </button>
                 </div>
 
-                <div class="col-xs-12">
-                    <table class="table table-responsive table-striped table-hover table-condensed">
+                <div class="col-xs-12" style="font-size: 12px !important;">
+                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
                         <tr>
-                            <th style="text-align: center;">Foto</th>
-                            <th style="text-align: center;">Código</th>
-                            <th style="text-align: center;">Producto</th>
-                            <th style="text-align: center;">Tipo Producto</th>
-                            <th style="text-align: center;">Fecha Ingreso</th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th style="text-align: center;">FOTO</th>
+                            <th style="text-align: center; width: 15%;"">CODIGO</th>
+                            <th style="text-align: center; width: 35%;"">DETALLE ITEM</th>
+                            <th style="text-align: center; width: 15%;"">TIPO ITEM</th>
+                            <th style="text-align: center; width: 10%;">FECHA INGRESO</th>
+                            <th style="text-align: center; width: 15%;">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:10"  >
+                        <tr dir-paginate="producto in items | orderBy:sortKey:reverse | itemsPerPage:5"  >
                             <td style="text-align: center;">
-                            <img class="img-circle" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 50px;" >
+                                <img class="img-thumbnail" ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)"  style="width: 100%;" >
                             </td>
-                            <td style="text-align: center;">{{producto.codigoproducto}}</td>
-                            <td style="text-align: center;">{{producto.nombreproducto}}</td>
-                            <td style="text-align: center;">{{producto.nameclaseitem}}</td>
+                            <td style="">{{producto.codigoproducto}}</td>
+                            <td style="">{{producto.nombreproducto}}</td>
+                            <td style="">{{producto.nameclaseitem}}</td>
                             <td style="text-align: center;">{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
                             <td style="text-align: center;">
                                 <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
@@ -90,8 +90,8 @@
                     </table>
                     <dir-pagination-controls                           
                             template-url="dirPagination.html"
-                            class="pull-left"
-                            max-size="10"
+                            class="pull-right"
+                            max-size="5"
                             direction-links="true"
                             boundary-links="true" >
                     </dir-pagination-controls>
@@ -185,10 +185,10 @@
                                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Precio Venta: </span>
-                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
+                                            <input type="text" class="form-control" name="t_precioventa" id="t_precioventa" ng-model="producto.precioventa" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
                                         </div>
-                                        <span class="help-block error"
-                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>
+                                        <!--<span class="help-block error"
+                                                      ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$touched">El Precio Venta es requerido</span>-->
                                         <span class="help-block error"
                                                       ng-show="formProducto.t_precioventa.$invalid && formProducto.t_precioventa.$error.pattern">El Precio Venta debe ser solo numeros</span>
                                     </div>
@@ -215,7 +215,7 @@
                                               ng-show="formProducto.s_ice.$invalid && formProducto.s_ice.$touched">El Impuesto ICE es requerido</span>
                                     </div>
 
-                                    <div class="col-xs-12" style="margin-top: 5px;">
+                                    <!--<div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Contable: </span>
                                             <input type="text" class="form-control" name="t_cuentacontable" id="t_cuentacontable" ng-model="t_cuentacontable" placeholder=""
@@ -228,13 +228,13 @@
                                             </span>
                                         </div>
                                         <span class="help-block error" ng-show="formProducto.t_cuentacontable.$error.required">La asignación de una cuenta es requerida</span>
-                                    </div>
+                                    </div>-->
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Cuenta Contable Ingreso: </span>
+                                            <span class="input-group-addon">Cuenta Contable: </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
-                                                   ng-model="t_cuentacontableingreso" placeholder=""  readonly >
+                                                   ng-model="t_cuentacontableingreso" placeholder=""  readonly ng-required="true">
                                             <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
                                             <span class="input-group-btn" role="group">
                                                 <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
@@ -242,7 +242,7 @@
                                                 </button>
                                             </span>
                                         </div>
-                                        
+                                        <span class="help-block error" ng-show="formProducto.t_cuentacontableingreso.$error.required">La asignación de una cuenta es requerida</span>
                                     </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
@@ -405,6 +405,20 @@
             </div>
         </div>
 
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Información</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message_error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmDelete">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -435,7 +449,7 @@
                             <img ng-if="producto.foto" ng-src="{{ producto.foto }}" onerror="defaultImage(this)" class="img-circle" style="width:150px" >
 
                         </div>
-                        <div class="row text-center">
+                        <div class="row">
                             <div class="col-xs-12 text-center" style="font-size: 18px;">{{producto.nombreproducto}}</div>
 
                             <div class="col-xs-12">
@@ -459,9 +473,7 @@
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">ICE: </span>{{producto.nametipoimpuestoice}}
                             </div>
-                            <div class="col-xs-12">
-                                <span style="font-weight: bold">Cuenta Contable: </span>{{producto.concepto}}                                
-                            </div>
+
                             <div class="col-xs-12">
                                 <span style="font-weight: bold">Cuenta contable Ingreso: </span>{{producto.c2}}
                             </div>

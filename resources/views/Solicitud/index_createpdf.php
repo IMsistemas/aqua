@@ -203,27 +203,6 @@
             </table>
         </div>
 
-        <div class="container" style="margin-top: 2%;">
-            <span style="font-size: 16px; font-weight: bold;">Medidor </span>
-            <hr>
-        </div>
-
-        <div class="container">
-            <table style="width: 100%;">
-                <tr>
-                    <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Cliente tiene Medidor: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->tiene_medidor ?></span></td>
-                    <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Marca: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;"><?= $data->marca_medidor ?></span></td>
-                </tr>
-                <tr>
-                    <td style="width: 20%;"><span style="font-size: 12px; font-weight: bold;">Costo: </span></td>
-                    <td style="width: 30%;"><span style="font-size: 12px;">USD $ <?= $data->costo_medidor ?></span></td>
-                    <td style="width: 20%;"></td>
-                    <td style="width: 30%;"></td>
-                </tr>
-            </table>
-        </div>
 
         <div class="container" style="margin-top: 2%;">
             <span style="font-size: 16px; font-weight: bold;">Total </span>

@@ -4,6 +4,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
     $scope.transportistas = [];
     $scope.transportista_del = 0;
     $scope.idpersona = 0;
+    $scope.idpersona_edit = 0;
     $scope.id = 0;
 
     $scope.pageChanged = function(newPage) {
@@ -44,10 +45,33 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
     };
 
+    $scope.getProveedores = function (idproveedor) {
+        $http.get(API_URL + 'transportista/getProveedores').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].razonsocial, id: response[i].idproveedor})
+            }
+
+            $scope.proveedores = array_temp;
+
+            $scope.proveedor = '';
+
+            if (idproveedor != undefined) {
+                $scope.proveedor = idproveedor;
+            }
+
+        });
+    };
+
     $scope.toggle = function(modalstate, item) {
         $scope.modalstate = modalstate;
         switch (modalstate) {
             case 'add':
+
+                $scope.getProveedores();
 
                 $http.get(API_URL + 'transportista/getTipoIdentificacion').success(function(response){
                     var longitud = response.length;
@@ -83,6 +107,8 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                 $scope.form_title = "Editar Transportista";
                 $scope.id = item.idempleado;
 
+                $scope.getProveedores(item.idproveedor);
+
                 $http.get(API_URL + 'transportista/getTipoIdentificacion').success(function(response){
                     var longitud = response.length;
                     var array_temp = [{label: '-- Seleccione --', id: ''}];
@@ -103,6 +129,7 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                     $scope.correo = item.email;
                     $scope.placa = item.placa;
                     $scope.idpersona = item.idpersona;
+                    $scope.idpersona_edit = item.idpersona;
                     $scope.tipoidentificacion = item.idtipoidentificacion;
 
                     $scope.id = item.idtransportista;
@@ -163,20 +190,20 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
         var fechaingreso = $('#fechaingreso').val();
 
-        var data ={
+        var data = {
             fechaingreso: convertDatetoDB(fechaingreso),
             celular: $scope.celular,
             correo: $scope.correo,
             tipoidentificacion: $scope.tipoidentificacion,
             documentoidentidadempleado: $scope.documentoidentidadempleado,
             idpersona:  $scope.idpersona,
+            idpersona_edit:  $scope.idpersona_edit,
             placa: $scope.placa,
             direccion: $scope.direccion,
             telefonoprincipal: $scope.telefonoprincipal,
-            razonsocial: $scope.razonsocial
+            razonsocial: $scope.razonsocial,
+            idproveedor: $scope.proveedor
         };
-
-        console.log(data);
 
         if ($scope.modalstate == 'add') {
             $http.post(url, data ).success(function (response) {
@@ -188,15 +215,23 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
                     $scope.hideModalMessage();
                 }
                 else {
-                    $('#modalAction').modal('hide');
-                    $scope.message_error = 'Ha ocurrido un error..';
+
+                    if (response.type_error_exists != undefined) {
+                        $scope.message_error = 'Ya existe un transportista insertado con el mismo Número de Identificación';
+                    } else {
+                        $('#modalAction').modal('hide');
+                        $scope.message_error = 'Ha ocurrido un error..';
+                    }
+
                     $('#modalMessageError').modal('show');
+
                 }
             });
         } else {
             $http.put(url + '/' + $scope.id, data ).success(function (response) {
                 if (response.success == true) {
                     $scope.idpersona = 0;
+                    $scope.idpersona_edit = 0;
                     $scope.id = 0;
                     $scope.initLoad(1);
                     $scope.message = 'Se editó correctamente la información del Transportista...';
@@ -224,12 +259,26 @@ app.controller('transportistaController', function($scope, $http, API_URL, Uploa
 
     $scope.destroy = function(){
         $http.delete(API_URL + 'transportista/' + $scope.transportista_del).success(function(response) {
-            $scope.initLoad(1);
+
             $('#modalConfirmDelete').modal('hide');
-            $scope.transportista_del = 0;
-            $scope.message = 'Se eliminó correctamente el Transportista seleccionado...';
-            $('#modalMessage').modal('show');
-            $scope.hideModalMessage();
+
+            if (response.success == true) {
+                $scope.initLoad(1);
+                $scope.transportista_del = 0;
+                $scope.message = 'Se eliminó correctamente el Transportista seleccionado...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+
+                if (response.exists != undefined) {
+                    $scope.message_error = 'No se puede eliminar el transportista seleccionado, ya que está siendo usado en el sistema...';
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error..';
+                }
+
+                $('#modalMessageError').modal('show');
+            }
+
         });
     };
 

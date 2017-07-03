@@ -92,7 +92,7 @@ html {
 }
 .nav-side-menu li a {
 	text-decoration: none;
-	color: #e1ffff;
+	color: #FFF;
 }
 .nav-side-menu li a i {
 	padding-left: 10px;
@@ -188,5 +188,9 @@ html {
 	.sidebar, .main{
 		width: 100%;
 	}
+}
+
+.bootstrap-datetimepicker-widget {
+	color: #FFF;
 }
 

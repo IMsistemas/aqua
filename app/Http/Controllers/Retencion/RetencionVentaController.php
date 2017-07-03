@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers\Retencion;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
+use App\Modelos\Configuracion\ConfiguracionSystem;
+use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Facturacionventa\venta;
 use App\Modelos\Retencion\DetalleRetencion;
+use App\Modelos\Retencion\RetencionCompra;
+use App\Modelos\Retencion\RetencionFuenteCompra;
 use App\Modelos\Retencion\RetencionFuenteVenta;
 use App\Modelos\Retencion\RetencionVenta;
+use App\Modelos\SRI\SRI_ComprobanteRetencion;
+use App\Modelos\SRI\SRI_DetalleImpuestoRetencion;
+use App\Modelos\SRI\SRI_RetencionCompra;
+use App\Modelos\SRI\SRI_RetencionDetalleCompra;
+use App\Modelos\SRI\SRI_RetencionDetalleVenta;
+use App\Modelos\SRI\SRI_RetencionVenta;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,54 +35,95 @@ class RetencionVentaController extends Controller
         return view('retencion.index_retencionVenta');
     }
 
+    public function form($id)
+    {
+        return view('retencion.form_retencionCompra', ['idretencioncompra' => $id]);
+    }
+
     public function getRetenciones(Request $request)
     {
 
         $filter = json_decode($request->get('filter'));
 
-        $retencion = null;
+        $search = $filter->search;
 
-        if ($filter->year != null && $filter->month != null) {
-            $retencion = RetencionVenta::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year . ' AND EXTRACT( MONTH FROM fecha) = ' . $filter->month);
-        } else if ($filter->year != null) {
-            $retencion = RetencionVenta::whereRaw('EXTRACT( YEAR FROM fecha) = ' . $filter->year);
-        } else if ($filter->month != null) {
-            $retencion = RetencionVenta::whereRaw('EXTRACT( MONTH FROM fecha) = ' . $filter->month);
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentoventa', 'cont_documentoventa.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentoventa.cliente.persona', 'cont_documentoventa.sri_retencionventa.sri_retenciondetalleventa');
+
+
+        if ($search != null) {
+            $retencion = $retencion->whereRaw("sri_comprobanteretencion.nocomprobante LIKE '%" . $search . "%'");
         }
 
-        if ($filter->search != null) {
-            if ($retencion != null) {
-                $retencion->whereRaw("razonsocial LIKE '%" . $filter->search . "%'");
-            } else {
-                $retencion = RetencionVenta::whereRaw("razonsocial LIKE '%" . $filter->search . "%'");
-            }
-        }
-
-        if ($retencion != null) {
-            $retencion = $retencion->orderBy('fecha', 'desc')->paginate(10);
-        } else {
-            $retencion = RetencionVenta::orderBy('fecha', 'desc')->paginate(10);
-        }
-
-        return $retencion;
+        return $retencion->orderBy('fechaemisioncomprob', 'desc')->paginate(8);
 
     }
 
-    public function getRetencionesByVenta($id)
+    /*public function getRetenciones(Request $request)
     {
-        return RetencionFuenteVenta::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuenteventa.iddetalleretencion')
-            ->where('idretencionventa', $id)->get();
+
+        $filter = json_decode($request->get('filter'));
+
+        $search = $filter->search;
+
+        $retencion = SRI_RetencionVenta::join('cont_documentoventa', 'cont_documentoventa.iddocumentoventa', '=', 'sri_retencionventa.iddocumentoventa')
+            ->with('cont_documentoventa.cliente.persona', 'sri_retenciondetalleventa');
+
+
+        if ($search != null) {
+            $retencion = $retencion->whereRaw("sri_comprobanteretencion.nocomprobante LIKE '%" . $search . "%'");
+        }
+
+        return $retencion->paginate(8);
+
+    }*/
+
+    public function getConfigContabilidad()
+    {
+        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_VENTA' OR optionname = 'SRI_RETEN_RENTA_VENTA'")->get();
+
+        $configcontable = [];
+
+        foreach ($config as $item) {
+            $aux_contable = null;
+
+            if($item->optionvalue != '' && $item->optionvalue != null){
+                $aux_contable = Cont_PlanCuenta::where('idplancuenta', $item->optionvalue)->get();
+            }
+
+            $configventa = [
+                'idconfiguracionsystem' => $item->idconfiguracionsystem,
+                'idplancuenta' => $item->optionvalue,
+                'optionname' => $item->optionname,
+                'contabilidad'=> $aux_contable
+            ];
+
+            $configcontable[] = $configventa;
+        }
+
+        return response()->json($configcontable);
+    }
+
+    public function getRetencionesByCompra($id)
+    {
+        return RetencionFuenteCompra::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuentecompra.iddetalleretencion')
+            ->where('idretencioncompra', $id)->get();
     }
 
     public function getCodigos($codigo)
     {
-        return DetalleRetencion::where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
+        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion')
+            ->where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
     }
 
-    public function getVentas($codigo)
+    public function getCompras($codigo)
     {
-        return venta::join('cliente', 'cliente.codigocliente', '=', 'documentoventa.codigocliente')
-            ->whereRaw("documentoventa.codigoventa::text ILIKE '%" . $codigo . "%'")->get();
+        $compra = Cont_DocumentoVenta::with('cliente.persona', 'cliente.cont_plancuenta')
+            //->whereRaw('cont_documentocompra.iddocumentocompra NOT IN (SELECT sri_retencioncompra.iddocumentocompra FROM sri_retencioncompra)')
+            ->whereRaw("cont_documentoventa.numdocumentoventa::text ILIKE '%" . $codigo . "%'")
+            ->get();
+
+        return $compra;
     }
 
     public function getCodigosRetencion($tipo)
@@ -80,6 +133,35 @@ class RetencionVentaController extends Controller
             //return DetalleRetencionFuente::orderBy('codigoSRI', 'asc')->get();
         } else {
             return [];
+        }
+    }
+
+    public function getLastIDRetencion()
+    {
+        $result = SRI_RetencionCompra::max('idretencioncompra');
+
+        return $result;
+    }
+
+    public function anularRetencion(Request $request)
+    {
+        $idretencion = $request->input('idretencion');
+
+        $retencionCompra = SRI_RetencionVenta::find($idretencion);
+        $retencionCompra->estadoanulado = true;
+
+        if ($retencionCompra->save()) {
+
+            $result = CoreContabilidad::AnularAsientoContable($retencionCompra->idtransaccion);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
+
+        } else {
+            return response()->json(['success' => false]);
         }
     }
 
@@ -101,35 +183,26 @@ class RetencionVentaController extends Controller
      */
     public function store(Request $request)
     {
-        $retencionCompra = new RetencionVenta();
 
-        $retencionCompra->numeroretencion2 = $request->input('numeroretencion');
-        $retencionCompra->codigoventa = $request->input('codigocompra');
-        //$retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
-        $retencionCompra->fecha = $request->input('fecha');
-        $retencionCompra->razonsocial = $request->input('razonsocial');
-        $retencionCompra->documentoidentidad = $request->input('documentoidentidad');
-        $retencionCompra->direccion = $request->input('direccion');
-        //$retencionCompra->ciudad = $request->input('ciudad');
-        $retencionCompra->autorizacion = $request->input('autorizacion');
-        $retencionCompra->totalretencion = $request->input('totalretencion');
+        $dataContabilidad = json_decode($request->input('dataContabilidad'));
+
+        $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
+
+        $retencionCompra = new SRI_RetencionVenta();
+
+        $retencionCompra->iddocumentoventa = $request->input('iddocumentoventa');
+        $retencionCompra->idtransaccion = $id_transaccion;
+        $retencionCompra->estadoanulado = false;
 
         if ($retencionCompra->save()) {
 
             $retenciones = $request->input('retenciones');
 
             foreach ($retenciones as $item) {
-                $retencion = new RetencionFuenteVenta();
-                //$retencion->numeroretencion = $request->input('numeroretencion');
+                $retencion = new SRI_RetencionDetalleVenta();
                 $retencion->idretencionventa = $retencionCompra->idretencionventa;
-                /*$retencion->iddetalleretencionfuente = $item->id;
-                $retencion->descripcion = $item->detalle;
-                $retencion->poecentajeretencion = $item->porciento;
-                $retencion->valorretenido = $item->valor;*/
-
-                $retencion->iddetalleretencion = $item['id'];
-                $retencion->descripcion = $item['detalle'];
-                $retencion->poecentajeretencion = $item['porciento'];
+                $retencion->iddetalleimpuestoretencion = $item['id'];
+                $retencion->porcentajeretenido = $item['porciento'];
                 $retencion->valorretenido = $item['valor'];
 
                 if ($retencion->save() == false) {
@@ -137,7 +210,35 @@ class RetencionVentaController extends Controller
                 }
             }
 
-            return response()->json(['success' => true, 'idretencioncompra' => $retencionCompra->idretencionventa]);
+            $dataComprobante = $request->input('dataComprobante');
+
+            $comprobante = new SRI_ComprobanteRetencion();
+
+            $comprobante->idpagoresidente = $dataComprobante['tipopago'];
+            $comprobante->idpagopais = $dataComprobante['paispago'];
+            $comprobante->regimenfiscal = $dataComprobante['regimenfiscal'];
+            $comprobante->conveniotributacion = $dataComprobante['convenio'];
+            $comprobante->normalegal = $dataComprobante['normalegal'];
+            $comprobante->fechaemisioncomprob = $dataComprobante['fechaemisioncomprobante'];
+            $comprobante->nocomprobante = $dataComprobante['nocomprobante'];
+            $comprobante->noauthcomprobante = $dataComprobante['noauthcomprobante'];
+
+            if ($comprobante->save()) {
+
+                $id = $comprobante->idcomprobanteretencion;
+
+                $last_c = Cont_DocumentoVenta::find($request->input('iddocumentoventa'));
+                $last_c->idcomprobanteretencion = $id;
+
+                if ($last_c->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+
+            } else {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true, 'idretencionventa' => $retencionCompra->idretencionventa]);
 
         } else return response()->json(['success' => false]);
     }
@@ -150,7 +251,24 @@ class RetencionVentaController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $retencion = SRI_ComprobanteRetencion::join('cont_documentoventa', 'cont_documentoventa.idcomprobanteretencion', '=', 'sri_comprobanteretencion.idcomprobanteretencion')
+            ->with('cont_documentoventa.cliente.persona', 'cont_documentoventa.cliente.cont_plancuenta', 'cont_documentoventa.sri_retencionventa.sri_retenciondetalleventa.sri_detalleimpuestoretencion.sri_tipoimpuestoretencion')
+            ->orderBy('fechaemisioncomprob', 'desc')
+            ->where('sri_comprobanteretencion.idcomprobanteretencion', $id)->get();
+
+        return $retencion;
+
+        /*return RetencionCompra::join('documentocompra', 'documentocompra.codigocompra', '=', 'retencioncompra.codigocompra')
+                                ->join('proveedor', 'proveedor.idproveedor', '=', 'documentocompra.idproveedor')
+                                ->join('sector', 'proveedor.idsector', '=', 'sector.idsector')
+                                ->join('ciudad', 'sector.idciudad', '=', 'ciudad.idciudad')
+                                ->join('tipocomprobante', 'tipocomprobante.codigocomprbante', '=', 'documentocompra.codigocomprbante')
+                                ->select('documentocompra.*', 'tipocomprobante.nombretipocomprobante', 'retencioncompra.numeroretencion',
+                                            'retencioncompra.fecha AS fecharetencion', 'retencioncompra.autorizacion', 'retencioncompra.totalretencion',
+                                            'retencioncompra.numerodocumentoproveedor AS serialretencion', 'ciudad.nombreciudad','proveedor.*')
+                                ->where('idretencioncompra', $id)->get();*/
+
     }
 
     /**
@@ -173,16 +291,16 @@ class RetencionVentaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $retencionCompra = RetencionVenta::find($id);
+        $retencionCompra = RetencionCompra::find($id);
 
-        $retencionCompra->numeroretencion2 = $request->input('numeroretencion');
-        $retencionCompra->codigoventa = $request->input('codigocompra');
-        //$retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
+        $retencionCompra->numeroretencion = $request->input('numeroretencion');
+        $retencionCompra->codigocompra = $request->input('codigocompra');
+        $retencionCompra->numerodocumentoproveedor = $request->input('numerodocumentoproveedor');
         $retencionCompra->fecha = $request->input('fecha');
         $retencionCompra->razonsocial = $request->input('razonsocial');
         $retencionCompra->documentoidentidad = $request->input('documentoidentidad');
         $retencionCompra->direccion = $request->input('direccion');
-        //$retencionCompra->ciudad = $request->input('ciudad');
+        $retencionCompra->ciudad = $request->input('ciudad');
         $retencionCompra->autorizacion = $request->input('autorizacion');
         $retencionCompra->totalretencion = $request->input('totalretencion');
 
@@ -190,17 +308,12 @@ class RetencionVentaController extends Controller
 
             $retenciones = $request->input('retenciones');
 
-            RetencionFuenteVenta::where('idretencionventa', $id)->delete();
+            RetencionFuenteCompra::where('idretencioncompra', $id)->delete();
 
             foreach ($retenciones as $item) {
-                $retencion = new RetencionFuenteVenta();
+                $retencion = new RetencionFuenteCompra();
                 //$retencion->numeroretencion = $request->input('numeroretencion');
-                $retencion->idretencionventa = $retencionCompra->idretencionventa;
-                /*$retencion->iddetalleretencionfuente = $item->id;
-                $retencion->descripcion = $item->detalle;
-                $retencion->poecentajeretencion = $item->porciento;
-                $retencion->valorretenido = $item->valor;*/
-
+                $retencion->idretencioncompra = $retencionCompra->idretencioncompra;
                 $retencion->iddetalleretencion = $item['id'];
                 $retencion->descripcion = $item['detalle'];
                 $retencion->poecentajeretencion = $item['porciento'];

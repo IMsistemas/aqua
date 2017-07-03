@@ -42,30 +42,30 @@
         </div>
 
 
-            <div class="cos-xs-12">
-            <table class="table table-responsive table-striped table-hover table-condensed">
+            <div class="cos-xs-12" style="font-size: 12px !important;">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                 <tr>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Nro.</a>
+                        <a href="#" style="text-decoration:none; color:white;" >NO.</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Cliente</a>
+                        <a href="#" style="text-decoration:none; color:white;" >CLIENTE</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Zona</a>
+                        <a href="#" style="text-decoration:none; color:white;" >ZONA</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Dirección</a>
+                        <a href="#" style="text-decoration:none; color:white;" >DIRECCION</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Teléfono</a>
+                        <a href="#" style="text-decoration:none; color:white;" >TELEFONO</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Factura</a>
+                        <a href="#" style="text-decoration:none; color:white;" >FACTURA</a>
                     </th>
                     <th>
-                        <a href="#" style="text-decoration:none; color:white;" >Acciones</a>
+                        <a href="#" style="text-decoration:none; color:white;" >ACCIONES</a>
                     </th>
                 </tr>
                 </thead>
@@ -78,13 +78,13 @@
                     <td>{{suministro.telefonosuministro}}</td>
                     <td>{{numFactura(suministro)}}</td>
                     <td >
-                        <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.idsuministro);">
+                        <button type="button" class="btn btn-info btn-sm" ng-click="getSuministro(suministro.idsuministro);" title="Información">
                             <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro);">
+                        <button type="button" class="btn btn-warning btn-sm" ng-click="modalEditarSuministro(suministro);" title="Editar">
                             <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm" ng-click="loadViewFactura(suministro.idsuministro);" ng-disabled="suministro.cont_documentoventa">
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="loadViewFactura(suministro.idsuministro);" ng-disabled="suministro.cont_documentoventa" title="Facturar Suministro">
                             <i class="fa fa-lg fa-usd" aria-hidden="true"></i>
                         </button>
                     </td>

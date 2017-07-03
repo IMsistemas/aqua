@@ -36,7 +36,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">
+    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init=";GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
 
         <input type="hidden" ng-model="otherFactura" id="otherFactura" value="<?= $viewFactura ?>">
 
@@ -46,12 +46,20 @@
 
                     <div class="col-xs-4 ">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa" ng-keyup="pageChanged(1)">
+                            <!--<input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa" ng-keyup="pageChanged(1)">-->
+                            <input type="text" class="form-control " id="busquedaventa" placeholder="BUSCAR..." ng-model="busquedaventa">
                             <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
 
                     <div class="col-xs-4 ">
+                        <div class="input-group">
+                            <span class="input-group-addon">Estado: </span>
+                            <select ng-model="cmb_estado_fact" name="cmb_estado_fact" id="cmb_estado_fact" class="form-control" ng-change="pageChanged(1)">
+                                <option value="A">Activas</option>
+                                <option value="I">Anuladas</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-xs-4 text-right" >
                         <button class="btn btn-primary" ng-disabled="Valida=='1' " ng-click="VerFactura=1; LimiarDataVenta();NumeroRegistroVenta();" title="Nueva Factura"><i class="glyphicon glyphicon-plus"></i></button>
@@ -65,6 +73,7 @@
                                 <th></th>
                                 <th>Fecha Emision</th>
                                 <th>Número Factura</th>
+                                <th>Cliente</th>
                                 <th>SubTotal</th>
                                 <th>IVA</th>
                                 <th>Total</th>
@@ -78,6 +87,7 @@
                             <td>{{$index+1}}</td>
                             <td>{{v.fechaemisionventa}}</td>
                             <td>{{numFactura(v)}}</td>
+                            <td>{{v.cliente.persona.lastnamepersona+" "+v.cliente.persona.namepersona}}</td>
                             <td>{{v.subtotalconimpuestoventa}}</td>
                             <td>{{v.ivacompra}}</td>
                             <td>{{v.valortotalventa}}</td>
@@ -185,7 +195,7 @@
                                     </select>
                                 </div>
 
-                                <span class="help-block error" ng-show="formventa.Bodega.$invalid && formventa.Bodega.$touched">Seleccione una bodega</span>
+                                <!--<span class="help-block error" ng-show="formventa.Bodega.$invalid && formventa.Bodega.$touched">Seleccione una bodega</span>-->
                             </div>
 
                         </fieldset>
@@ -195,6 +205,16 @@
 
                         <fieldset>
                             <legend>Datos Factura de Venta</legend>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Agente Venta: </span>
+                                    <select class="form-control" id="AgenteVenta" ng-change="DataNoDocumento();" ng-model="AgenteVenta">
+                                        <option value="">-- Seleccione --</option>
+                                        <option ng-repeat=" p in PuntoVenta"  value="{{p.idpuntoventa}}">{{p.lastnamepersona+' '+p.namepersona}}</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
@@ -222,24 +242,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
+                            <!--<div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Nro Autorización: </span>
                                     <input type="text" class="form-control" name="NoAutorizacion" id="NoAutorizacion" ng-keypress="onlyNumber($event, 49, 'NoAutorizacion')" ng-model="NoAutorizacion" required="true" />
                                 </div>
                                 <span class="help-block error" ng-show="formventa.NoAutorizacion.$invalid && formventa.NoAutorizacion.$touched">Es requerido el Nro Autorización</span>
-                            </div>
+                            </div>-->
 
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Agente Venta: </span>
-                                    <select class="form-control" id="AgenteVenta" ng-change="DataNoDocumento();" ng-model="AgenteVenta">
-                                        <option value="">-- Seleccione --</option>
-                                        <option ng-repeat=" p in PuntoVenta"  value="{{p.idpuntoventa}}">{{p.lastnamepersona+' '+p.namepersona}}</option>
-                                    </select>
-                                </div>
-                            </div>
+
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
@@ -287,7 +299,7 @@
                                 <div>
                                     <!--compras/getCodigoProducto-->
                                     <!--LoadProductos-->
-                                    <angucomplete-alt id="codigoproducto{{$index}}"
+                                    <!--<angucomplete-alt id="codigoproducto{{$index}}"
                                                       pause="400"
                                                       selected-object="item.productoObj"
                                                       remote-url="{{url}}DocumentoVenta/LoadProductos/"
@@ -301,7 +313,24 @@
                                                       disable-input="impreso"
                                                       text-searching="Buscando Producto"
                                                       text-no-results="Producto no encontrado"
-                                                      initial-value="item.producto" focus-out="AsignarData(item);"; />
+                                                      initial-value="item.producto" focus-out="AsignarData(item);"; />-->
+
+                                    <angucomplete-alt id="codigoproducto{{$index}}"
+                                                      pause="400"
+                                                      selected-object="AsignarData"
+                                                      selected-object-data = "item"
+                                                      remote-url="{{url}}DocumentoVenta/LoadProductos/"
+                                                      title-field="codigoproducto"
+                                                      description-field="twitter"
+                                                      minlength="1"
+                                                      input-class="form-control form-control-small disabled_enter"
+                                                      match-class="highlight"
+                                                      field-required="true"
+                                                      input-name="codigoproducto{{$index}}"
+                                                      disable-input="impreso"
+                                                      text-searching="Buscando Producto"
+                                                      text-no-results="Producto no encontrado"
+                                                      initial-value="item.producto" ; />
                                 </div>
                                 <span class="help-block error" ng-show="formventa.codigoproducto{{$index}}.$invalid && formventa.codigoproducto{{$index}}.$touched">El producto es requerido.</span>
                             </td>
@@ -312,7 +341,7 @@
                                 <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                             </td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
-                            <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}" /></td>
+                            <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.precioU" placeholder="{{item.productoObj.originalObject.precioventa}}"  /></td>
                             <td><input type="text" class="form-control" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.descuento"/></td>
                             <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentiva"  /></td>
                             <td><input type="text" class="form-control" disabled ng-model="item.productoObj.originalObject.porcentice"  /></td>
