@@ -168,7 +168,7 @@
                                     <li id="permiso_22"><a href = "#" ng-click="toModuloDepartamento();">Departamentos</a></li>
                                     <li id="permiso_23"><a href = "#" ng-click="toModuloCargo();">Cargos</a></li>
                                     <li id="permiso_24"><a href = "#" ng-click="toModuloEmpleado();">Personal</a></li>
-                                    <li id="permiso_25"><a href = "#" ng-click="">Nómina</a></li>
+                                    <li id="permiso_25"><a href = "#" ng-click="toModuloRolPago();">Nómina</a></li>
                                 </ul>
                             </li>
 
@@ -315,6 +315,7 @@
     <script src="<?= asset('app/controllers/cuentasporPagarController.js') ?>"></script>
     <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cobroServicioController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/rolPagoController.js') ?>"></script>
 
     </body>
 </html>
