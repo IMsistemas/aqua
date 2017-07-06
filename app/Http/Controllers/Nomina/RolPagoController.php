@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Modelos\Nomina\ConceptoPago;
 use App\Modelos\Nomina\Empleado;
 use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
@@ -35,6 +36,14 @@ class RolPagoController extends Controller
             ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
             ->select('empleado.*', 'cargo.namecargo', 'persona.*' )
             ->where('persona.idpersona', $id)->get();
+
+    }
+
+    public function getConceptos()
+    {
+        return ConceptoPago::join('rrhh_categoriapago', 'rrhh_categoriapago.id_categoriapago', '=', 'rrhh_conceptospago.id_categoriapago')
+            ->select('rrhh_categoriapago.*', 'rrhh_conceptospago.*' )
+            ->orderBy('id_conceptospago', 'asc')->get();
 
     }
 
