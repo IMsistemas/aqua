@@ -82,7 +82,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
 
                 $http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
                     console.log(response);
-                    if (response.length==0) {
+                    if (response==0) {
                         $scope.message="Para crear un Punto de Venta primero debe crear un Empleado";
                         $('#modalEmpleadoVacio').modal('show');
                     }else{

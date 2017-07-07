@@ -44,10 +44,13 @@ class PuntoVentaController  extends Controller
 
     public function empleadoVacio()
     {
-        return Empleado:://join('cargo','cargo.idcargo','=','empleado.idcargo')
+        //return Empleado:://join('cargo','cargo.idcargo','=','empleado.idcargo')
         //->join('persona','persona.idempleado','=','empleado.idempleado')
         //->where('cargo.namecargo','=',"Bodeguero")
-        all();
+        //all();
+
+        return Empleado::count();
+
     }
 
     public function cargaEstablecimiento()
