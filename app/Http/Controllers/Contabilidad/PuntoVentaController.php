@@ -49,7 +49,7 @@ class PuntoVentaController  extends Controller
         //->where('cargo.namecargo','=',"Bodeguero")
         //all();
 
-        return Empleado::get();
+        return Empleado::orderBy('idempleado', 'asc')->get();
 
     }
 
