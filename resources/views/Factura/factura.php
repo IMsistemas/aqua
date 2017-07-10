@@ -331,15 +331,15 @@
 
                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                         <div class="input-group">
-                            <span class="input-group-addon">No. Comprobante: </span>
-                            <input type="text" class="form-control" id="nocomprobante" ng-model="nocomprobante" >
+                            <span class="input-group-addon">Fecha Cobro: </span>
+                            <input type="text" class="form-control datepicker" id="fecharegistro" ng-model="fecharegistro" >
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                         <div class="input-group">
-                            <span class="input-group-addon">Fecha Cobro: </span>
-                            <input type="text" class="form-control datepicker" id="fecharegistro" ng-model="fecharegistro" >
+                            <span class="input-group-addon">No. Comprobante: </span>
+                            <input type="text" class="form-control" id="nocomprobante" ng-model="nocomprobante" >
                         </div>
                     </div>
 
