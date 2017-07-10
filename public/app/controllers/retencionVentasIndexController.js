@@ -22,6 +22,12 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         $scope.initLoad(1);
     });
 
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD',
+        ignoreReadonly: false
+    });
+
     $scope.active = '0';
 
     $scope.tiporetencion = [
