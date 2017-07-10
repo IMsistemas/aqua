@@ -77,9 +77,20 @@
                 <td>{{Pagada(item.estadopagado)}}</td>
                 <td class="text-right">$ {{item.total}}</td>
                 <td>
-                    <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)"  title="Imprimir">
-                        <i class="fa fa-lg fa-print" aria-hidden="true"></i>
-                    </button>
+
+                    <span ng-if="item.total != null">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)"  title="Imprimir">
+                            <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
+                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="showModalListCobro(item)" title="Cobros" >
+                             <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                        </button>
+                    </span>
+
+
                     <!--<span ng-if="item.estadopagado == true">
                         <button type="button" class="btn btn-success btn-sm" ng-click="printer(item)">
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
@@ -90,26 +101,13 @@
                             <i class="fa fa-lg fa-print" aria-hidden="true"></i>
                         </button>
                     </span>-->
-                    <span ng-if="item.totalfactura == null">
-                        <span ng-if="item.cobroagua == null">
-                            <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
-                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
-                        </button>
-                        </span>
-                        <span ng-if="item.cobroagua != null">
-                            <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" disabled title="Información">
-                                <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
-                            </button>
-                        </span>
-                    </span>
-                    <span ng-if="item.totalfactura != null">
+
+                    <!--<span ng-if="item.totalfactura != null">
                         <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
                             <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
                         </button>
-                    </span>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="showModalListCobro(item)" title="Cobros" >
-                         <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                    </button>
+                    </span>-->
+
                 </td>
             </tr>
             </tbody>
