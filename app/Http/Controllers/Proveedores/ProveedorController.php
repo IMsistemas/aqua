@@ -112,7 +112,8 @@ class ProveedorController extends Controller
         $count = Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')
                                 ->where('persona.numdocidentific', $numidentific)->count();
 
-        return ($count == 1) ? true : false;
+        return ($count >= 1) ? true : false;
+
     }
 
     /**

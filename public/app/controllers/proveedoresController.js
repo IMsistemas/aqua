@@ -315,13 +315,15 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
         var fechaingreso = $('#fechaingreso').val();
 
+        var identify = ($scope.documentoidentidadempleado).trim();
+
         var data = {
             fechaingreso: convertDatetoDB(fechaingreso),
             telefonoprincipal: $scope.telefonoprincipal,
             celular: $scope.celular,
             direccion: $scope.direccion,
             correo: $scope.correo,
-            documentoidentidadempleado: $scope.documentoidentidadempleado,
+            documentoidentidadempleado: identify,
             razonsocial: $scope.razonsocial,
             idpersona:  $scope.idpersona,
             idpersona_edit:  $scope.idpersona_edit,
