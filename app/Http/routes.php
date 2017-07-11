@@ -1205,7 +1205,7 @@ Route::post('Activosfijos/GuardarAsientoContable','ActivosFijos\depreciacionActi
 Route::get('Activosfijos/VerificarBaja/{iddetalleitemactivofijo}','ActivosFijos\depreciacionActivosFijosController@VerificarBaja');
 Route::get('Activosfijos/ObtenerUltimaDepreciacion','ActivosFijos\depreciacionActivosFijosController@ObtenerUltimaDepreciacion');
 Route::get('Activosfijos/ObtenerDatosCuentaGasto/{idgasto}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosCuentaGasto');
-
+Route::get('Activosfijos/ObtenerDatosCuentaDepreciacion/{iddepreciacion}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosCuentaDepreciacion');
 Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciacionActivosFijosController');
 
 //-------------------------------Rol de Pago----------------------------//

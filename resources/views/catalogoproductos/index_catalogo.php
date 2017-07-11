@@ -232,7 +232,7 @@
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Cuenta Contable: </span>
+                                            <span class="input-group-addon">C. Contable (Ingreso): </span>
                                             <input type="text" class="form-control" name="t_cuentacontableingreso" id="t_cuentacontableingreso"
                                                    ng-model="t_cuentacontableingreso" placeholder=""  readonly ng-required="true">
                                             <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">

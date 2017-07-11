@@ -12,7 +12,7 @@ class Cont_tipomantencionaf extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'tipo'   
+        'tipo'
     ];
 
   

@@ -201,7 +201,7 @@
 						
 					console.log(data);
 						Upload.upload({
-						url:API_URL + 'Activosfijos/actualizaractivosfijos/' + $scope.id , data,
+						url:API_URL + 'Activosfijos/actualizaractivosfijos/' + $scope.id + data
 
 					}).success(function(data) {
 						console.log(data);
