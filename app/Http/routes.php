@@ -1178,7 +1178,7 @@ Route::post('Activosfijos/actualizaractivosfijos/{id}','ActivosFijos\activosfijo
 
 //-------------------------------Gesrtionar depreciación de Activos Fijos---------------//
 
-Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciacionActivosFijosController');
+
 Route::get('Activosfijos/AllActivosfijosAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosAlta');
 Route::get('Activosfijos/AllActivosfijosSinAlta','ActivosFijos\depreciacionActivosFijosController@AllActivosFijosSinAlta');
 Route::get('Activosfijos/ActivoFijoIndividual/{idactivo}','ActivosFijos\depreciacionActivosFijosController@ActivoFijoIndividual');
@@ -1206,6 +1206,7 @@ Route::get('Activosfijos/VerificarBaja/{iddetalleitemactivofijo}','ActivosFijos\
 Route::get('Activosfijos/ObtenerUltimaDepreciacion','ActivosFijos\depreciacionActivosFijosController@ObtenerUltimaDepreciacion');
 Route::get('Activosfijos/ObtenerDatosCuentaGasto/{idgasto}','ActivosFijos\depreciacionActivosFijosController@ObtenerDatosCuentaGasto');
 
+Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciacionActivosFijosController');
 
 //-------------------------------Rol de Pago----------------------------//
 

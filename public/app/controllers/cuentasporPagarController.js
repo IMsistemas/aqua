@@ -217,8 +217,8 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             concepto: $scope.Cliente.concepto,
             controlhaber: $scope.Cliente.controlhaber,
             tipocuenta: $scope.Cliente.tipocuenta,
-            Debe: 0,
-            Haber: parseFloat($scope.valorrecibido),
+            Debe: parseFloat($scope.valorrecibido),
+            Haber: 0,
             Descipcion: ''
         };
 
@@ -229,8 +229,8 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             concepto: $scope.select_cuenta.concepto,
             controlhaber: $scope.select_cuenta.controlhaber,
             tipocuenta: $scope.select_cuenta.tipocuenta,
-            Debe: parseFloat($scope.valorrecibido),
-            Haber: 0,
+            Debe: 0,
+            Haber: parseFloat($scope.valorrecibido),
             Descipcion: ''
         };
 
