@@ -134,7 +134,7 @@
 		<h3><strong> Estado De Cambios En El Patrimonio </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
-		<h4><strong>En El Periodo De: <?= $filtro->FechaI ?>  y  <?= $filtro->FechaF ?> </strong></h4>
+		<h4><strong>En El Periodo De: <?= $filtro->FechaI ?>  y  <?= $filtro->FechaF ?> </strong>  <strong>  Moneda: USD $ </strong></h4>
 	</div>
 	<div class="col-xs-12 text-right">
 		<h4><strong>Fecha: <?= $today ?> </strong></h4>

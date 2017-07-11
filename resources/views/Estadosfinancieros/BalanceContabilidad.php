@@ -416,6 +416,12 @@
 
           </tbody>
         </table>
+        <table class="table table-bordered">
+          <tr>
+            <th class="text-right">Total Ingresos - Total Gastos</th>
+            <th class="text-right">{{formato_dinero((total_ingreso-total_gasto),"$")}}</th>
+          </tr>
+        </table>
       </div>
     </div>
     <!--estado de resultados-->

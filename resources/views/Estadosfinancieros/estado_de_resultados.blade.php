@@ -132,7 +132,7 @@
 		<h3><strong>Estado De Resultados </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
-		<h4><strong>Desde : <?= $filtro->FechaI ?> Hasta : <?= $filtro->FechaF ?> </strong></h4>
+		<h4><strong>Desde : <?= $filtro->FechaI ?> Hasta : <?= $filtro->FechaF ?> </strong>   <strong>  Moneda: USD $ </strong></h4>
 	</div>
 	<div class="col-xs-12 text-right">
 		<h4><strong>Fecha: <?= $today ?> </strong></h4>
@@ -245,6 +245,13 @@
 					</th>
 				</tr>
 			</tfoot>
+		</table>
+
+		<table class="table table-bordered">
+			<tr>
+				<th class="text-right">Total Ingresos - Total Gastos</th>
+				<th class="text-right"><?=  "$ ".number_format(($aux_total_ingreso-$aux_total_gasto),4,'.',',') ?></th>
+			</tr>
 		</table>
 	</div>
 

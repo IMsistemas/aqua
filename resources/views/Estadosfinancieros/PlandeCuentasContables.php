@@ -181,7 +181,8 @@
                       <th colspan="6" class="text-right">Total: </th>
                       <th>{{formato_dinero(aux_total_debe,"$")}}</th>
                       <th>{{formato_dinero(aux_total_haber,"$")}}</th>
-                      <th>{{formato_dinero(aux_total_saldo,"$")}}</th>
+                      <th>{{formato_dinero((aux_total_debe-aux_total_haber),"$")}}</th>
+                      <!--<th>{{formato_dinero(aux_total_saldo,"$")}}</th>-->
                     </tfoot>
                   </table>
                 </div>
