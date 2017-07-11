@@ -465,7 +465,8 @@ $scope.cmb_estado_fact="A";
         //$scope.Subtotalconimpuestos= (aux_subtotalconimpuestos - parseFloat($scope.Totaldescuento)).toFixed(4);
         //$scope.Subtotalconimpuestos= (aux_subtotalconimpuestos ).toFixed(4); // cambio
 
-        $scope.ValIVA=(parseFloat((($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100)) + (parseFloat(con_iva)) ).toFixed(4);
+        //$scope.ValIVA=(parseFloat((($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100)) + (parseFloat(con_iva)) ).toFixed(4);
+        $scope.ValIVA=(parseFloat((($scope.Subtotalconimpuestos*parseInt($scope.Cliente.porcentaje))/100)));
 
         $scope.ValIVA=(isNaN($scope.ValIVA))? 0:$scope.ValIVA;
         $scope.ValIRBPNR=(isNaN($scope.ValIRBPNR))? 0:$scope.ValIRBPNR;
