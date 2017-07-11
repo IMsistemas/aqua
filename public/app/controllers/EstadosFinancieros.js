@@ -19,6 +19,12 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
 
     $scope.EstadoSave="";
 
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        ignoreReadonly: true
+    });
+
     ///---
     $scope.GenereraFiltroPlanCuentas=function(){
         var aux_fechai=$("#FechaI").val();
