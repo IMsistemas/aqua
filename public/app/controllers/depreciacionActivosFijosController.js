@@ -1002,6 +1002,9 @@
 								var yyyy = hoy.getFullYear();
 
 								//Asignar los datos a los campos no llenables
+
+								console.log(response);
+
 								$scope.DiaActual = yyyy+'-'+mm+'-'+dd;
 								$scope.codigo = response[0].codigoproducto;
 								$scope.detalle = response[0].nombreproducto;
