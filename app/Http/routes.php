@@ -1210,6 +1210,7 @@ Route::resource('Activosfijos/depreciacionActivosFijos','ActivosFijos\depreciaci
 
 //-------------------------------Rol de Pago----------------------------//
 
+Route::get('rolPago/getPlanCuenta', 'Nomina\RolPagoController@getPlanCuenta');
 Route::get('rolPago/getConceptos', 'Nomina\RolPagoController@getConceptos');
 Route::get('rolPago/getDataEmpleado/{id}', 'Nomina\RolPagoController@getDataEmpleado');
 Route::get('rolPago/getEmpleados', 'Nomina\RolPagoController@getEmpleados');

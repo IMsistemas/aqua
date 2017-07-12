@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\ConceptoPago;
 use App\Modelos\Nomina\Empleado;
 use App\Modelos\SRI\SRI_Establecimiento;
@@ -45,6 +46,13 @@ class RolPagoController extends Controller
             ->select('rrhh_categoriapago.*', 'rrhh_conceptospago.*' )
             ->orderBy('id_conceptospago', 'asc')->get();
 
+    }
+
+    public function getPlanCuenta()
+    {
+        return Cont_PlanCuenta::selectRaw('
+                 * , (SELECT count(*)  FROM cont_plancuenta aux WHERE aux.jerarquia <@ cont_plancuenta.jerarquia) AS madreohija
+            ')->orderBy('jerarquia', 'asc')->get();
     }
 
     public function show($id)

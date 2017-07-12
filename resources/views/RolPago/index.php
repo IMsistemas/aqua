@@ -148,12 +148,11 @@
                                 <td><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra"
+                                        <input type="text" class="form-control" ng-model="item.cuenta"
                                                placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
-                                        <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
+                                        <input type="hidden" ng-model="item.cuentah">
                                         <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </span>
@@ -176,12 +175,11 @@
                                 <td class="bg-info"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra"
+                                        <input type="text" class="form-control" ng-model="item.cuenta"
                                                placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
-                                        <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
+                                        <input type="hidden" ng-model="item.cuentah">
                                         <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </span>
@@ -196,12 +194,11 @@
                                 <td class="bg-success"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra"
+                                        <input type="text" class="form-control" ng-model="item.cuenta"
                                                placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
-                                        <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
+                                        <input type="hidden" ng-model="item.cuentah">
                                         <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </span>
@@ -220,12 +217,115 @@
                 </fieldset>
             </div>
 
+            <div class="col-xs-12">
+                <div class="col-xs-6" style="margin-top: 10px;">
+                    <fieldset>
+                        <legend>Deducciones</legend>
+                        <div class="col-xs-12" style="padding: 0px;">
+                            <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-danger">
+                                <tr>
+                                    <th style="width: 20%;">Concepto</th>
+                                    <th style="width: 8%;">%</th>
+                                    <th style="width: 8%;">Valor</th>
+                                    <th style="width: 20%;">Asignar Cuenta</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in deducciones" ng-cloak >
+                                    <td>{{item.name_conceptospago}}</td>
+                                    <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
+                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresDeducciones(item)"/></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" ng-model="item.cuenta"
+                                                   placeholder="Cuenta Contable" readonly>
+                                            <input type="hidden" ng-model="item.cuentah">
+                                            <span class="input-group-btn" role="group">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </button>
+                                        </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-danger" colspan="2">Total Deducciones:</td>
+                                    <td class="bg-danger" colspan="1">{{total_deducciones}}</td>
+                                    <td class="bg-danger" colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-danger" colspan="2">Ingreso Bruto (-) Deducciones:</td>
+                                    <td class="bg-danger" colspan="1">{{ingresoBruto_deducciones}}</td>
+                                    <td class="bg-danger" colspan="1"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-xs-6" style="margin-top: 10px;">
+                    <fieldset>
+                        <legend>Beneficios de Ley</legend>
+                        <div class="col-xs-12" style="padding: 0px; margin: 0px;">
+                            <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-warning">
+                                <tr>
+                                    <th style="width: 20%;">Concepto</th>
+                                    <th style="width: 8%;">%</th>
+                                    <th style="width: 8%;">Valor</th>
+                                    <th style="width: 20%;">Asignar Cuenta</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in beneficios" ng-cloak >
+                                    <td>{{item.name_conceptospago}}</td>
+                                    <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
+                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresBeneficios(item)"/></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" ng-model="item.cuenta"
+                                                   placeholder="Cuenta Contable" readonly>
+                                            <input type="hidden" ng-model="item.cuentah">
+                                            <span class="input-group-btn" role="group">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </button>
+                                        </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-warning" colspan="2">Total Beneficios de Ley:</td>
+                                    <td class="bg-warning" colspan="1">{{total_beneficios}}</td>
+                                    <td class="bg-warning" colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-warning" colspan="2">Subtotal mensual + Beneficios de Ley:</td>
+                                    <td class="bg-warning" colspan="1">{{ingresoBruto_beneficios}}</td>
+                                    <td class="bg-warning" colspan="1"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0px;">
+                        <div class="input-group" style="margin-top: 0px; padding: 0px;">
+                            <span class="input-group-addon">Total Sueldo Liquido: </span>
+                            <input type="text" class="form-control" disabled name="sueldoliquido" id="sueldoliquido" ng-model="sueldoliquido" />
+                            <span class="input-group-addon"> $ </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xs-6" style="margin-top: 10px;">
                 <fieldset>
-                    <legend>Deducciones</legend>
-                    <div class="col-xs-12" style="padding: 0px;">
+                    <legend>Beneficios Adicionales</legend>
+                    <div class="col-xs-12" style="padding: 0px; margin: 0px;">
                         <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                            <thead class="bg-danger">
+                            <thead class="bg-success">
                             <tr>
                                 <th style="width: 20%;">Concepto</th>
                                 <th style="width: 8%;">%</th>
@@ -234,18 +334,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="item in deducciones" ng-cloak >
+                            <tr ng-repeat="item in benefadicionales" ng-cloak >
                                 <td>{{item.name_conceptospago}}</td>
                                 <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
-                                <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresDeducciones(item)"/></td>
+                                <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresBeneficiosA(item)"/></td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra"
+                                        <input type="text" class="form-control" ng-model="item.cuenta"
                                                placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
-                                        <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
+                                        <input type="hidden" ng-model="item.cuentah">
                                         <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
+                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </span>
@@ -253,14 +352,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-danger" colspan="2">Total Deducciones:</td>
-                                <td class="bg-danger" colspan="1">{{total_deducciones}}</td>
-                                <td class="bg-danger" colspan="1"></td>
+                                <td class="bg-success" colspan="2">Total Beneficios Adicionales:</td>
+                                <td class="bg-success" colspan="1">{{total_adicionales}}</td>
+                                <td class="bg-success" colspan="1"></td>
                             </tr>
                             <tr>
-                                <td class="bg-danger" colspan="2">Ingreso Bruto (-) Deducciones:</td>
-                                <td class="bg-danger" colspan="1">{{ingresoBruto_deducciones}}</td>
-                                <td class="bg-danger" colspan="1"></td>
+                                <td class="bg-success" colspan="2">Total Gasto Empresarial:</td>
+                                <td class="bg-success" colspan="1">{{total_empresarial}}</td>
+                                <td class="bg-success" colspan="1"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -268,57 +367,55 @@
                 </fieldset>
             </div>
 
-            <div class="col-xs-6" style="margin-top: 10px;">
-                <fieldset>
-                    <legend>Beneficios de Ley</legend>
-                    <div class="col-xs-12" style="padding: 0px; margin: 0px;">
-                        <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                            <thead class="bg-warning">
-                            <tr>
-                                <th style="width: 20%;">Concepto</th>
-                                <th style="width: 8%;">%</th>
-                                <th style="width: 8%;">Valor</th>
-                                <th style="width: 20%;">Asignar Cuenta</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="item in beneficios" ng-cloak >
-                                <td>{{item.name_conceptospago}}</td>
-                                <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
-                                <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresBeneficios(item)"/></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="iva_compra" id="iva_compra" ng-model="iva_compra"
-                                               placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" name="iva_compra_h" id="iva_compra_h" ng-model="iva_compra_h">
-                                        <input type="hidden" name="id_iva_compra_h" id="id_iva_compra_h" ng-model="id_iva_compra_h">
-                                        <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-iva-compra" ng-click="showPlanCuenta('iva_compra', 'iva_compra_h')">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
+            <div class="modal fade" tabindex="-1" role="dialog" id="modalPlanCuenta">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Plan de Cuenta</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                                <div class="col-xs-12">
+                                    <div class="form-group  has-feedback">
+                                        <input type="text" class="form-control" id="" ng-model="searchContabilidad" placeholder="BUSCAR..." >
+                                        <span class="glyphicon glyphicon-search form-control-feedback" ></span>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-warning" colspan="2">Total Beneficios de Ley:</td>
-                                <td class="bg-warning" colspan="1">{{total_beneficios}}</td>
-                                <td class="bg-warning" colspan="1"></td>
-                            </tr>
-                            <tr>
-                                <td class="bg-warning" colspan="2">Subtotal mensual + Beneficios de Ley:</td>
-                                <td class="bg-warning" colspan="1">{{ingresoBruto_beneficios}}</td>
-                                <td class="bg-warning" colspan="1"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
-                <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0px;">
-                    <div class="input-group" style="margin-top: 0px; padding: 0px;">
-                        <span class="input-group-addon">Total Sueldo Liquido: </span>
-                        <input type="text" class="form-control" disabled name="sueldoliquido" id="sueldoliquido" ng-model="sueldoliquido" />
-                        <span class="input-group-addon"> $ </span>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                        <thead class="bg-primary">
+                                        <tr>
+                                            <th style="width: 15%;">ORDEN</th>
+                                            <th>CONCEPTO</th>
+                                            <th style="width: 10%;">CODIGO</th>
+                                            <th style="width: 4%;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in cuentas | filter:searchContabilidad" ng-cloak >
+                                            <td>{{item.jerarquia}}</td>
+                                            <td>{{item.concepto}}</td>
+                                            <td>{{item.codigosri}}</td>
+                                            <td>
+                                                <input ng-show="item.madreohija=='1'" ng-hide="item.madreohija!='1'" type="radio" name="select_cuenta"  ng-click="click_radio(item)">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
+                                Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

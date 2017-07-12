@@ -21,6 +21,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
     $scope.total_deducciones = 0;
     $scope.total_beneficios = 0;
 
+    var field = "";
+
     var ss = 0;
     var dc = 0;
     var hc = 0;
@@ -123,6 +125,14 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                     };
                     Object.defineProperty(response[i], 'obs', observacion);
 
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     $scope.ingresos1.push(response[i]);
 
                 }
@@ -159,6 +169,14 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'obs', observacion);
+
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
 
                     $scope.ingresos2.push(response[i]);
 
@@ -197,6 +215,14 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                     };
                     Object.defineProperty(response[i], 'obs', observacion);
 
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     $scope.ingresos3.push(response[i]);
 
                 }
@@ -217,6 +243,14 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
 
                     $scope.beneficios.push(response[i]);
 
@@ -239,10 +273,42 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                     };
                     Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     $scope.deducciones.push(response[i]);
 
                 }
                 if(response[i].id_categoriapago === 4){
+                    var cantidad = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cant', cantidad);
+
+                    var valorTotal = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     $scope.benefadicionales.push(response[i]);
 
                 }
@@ -420,6 +486,30 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
             $scope.sueldoliquido = $scope.ingresoBruto_beneficios;
         }
 
+    };
+
+    $scope.showPlanCuenta = function (item) {
+
+        field = item;
+
+        $http.get(API_URL + 'rolPago/getPlanCuenta').success(function(response){
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
+    $scope.selectCuenta = function () {
+
+        var selected = $scope.select_cuenta;
+        field.cuenta = selected.concepto;
+
+        $('#modalPlanCuenta').modal('hide');
+
+    };
+
+    $scope.click_radio = function (item) {
+        $scope.select_cuenta = item;
     };
 
 });
