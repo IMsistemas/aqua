@@ -248,7 +248,7 @@ class CatalogoProductoController extends Controller
             $catalogo->nombreproducto = $request->input('nombreproducto');
             $catalogo->codigoproducto = $request->input('codigoproducto');
 
-            if ($request->input('precioventa') != null && $request->input('precioventa') != '') {
+            if ($request->input('precioventa') != null && $request->input('precioventa') != '' && $request->input('precioventa') != 'null') {
                 $catalogo->precioventa = $request->input('precioventa');
             }
 
