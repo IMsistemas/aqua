@@ -131,7 +131,12 @@ class CatalogoProductoController extends Controller
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
             $catalogo->codigoproducto = $request->input('codigoproducto');
-            $catalogo->precioventa = $request->input('precioventa');
+
+            if ($request->input('precioventa') != null && $request->input('precioventa') != '') {
+                $catalogo->precioventa = $request->input('precioventa');
+            }
+
+
             $catalogo->created_at = $date;
             $catalogo->updated_at = $date;
     	if(is_object($image)){
@@ -242,7 +247,12 @@ class CatalogoProductoController extends Controller
             $catalogo->idcategoria = $request->input('idcategoria');
             $catalogo->nombreproducto = $request->input('nombreproducto');
             $catalogo->codigoproducto = $request->input('codigoproducto');
-            $catalogo->precioventa = $request->input('precioventa');
+
+            if ($request->input('precioventa') != null && $request->input('precioventa') != '') {
+                $catalogo->precioventa = $request->input('precioventa');
+            }
+
+            //$catalogo->precioventa = $request->input('precioventa');
             $catalogo->updated_at = $date;
     	
     	   $catalogo->update();
