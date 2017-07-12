@@ -8,7 +8,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
     $scope.confirmacion=false;
 
      $scope.bloquearGuardar = function(){
-       document.formpuntoventa.guardar.disabled=true;
+       //document.formpuntoventa.guardar.disabled=true;
     };
 
 
