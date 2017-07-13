@@ -181,11 +181,13 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_debe=$cuenta->Haber;
 				}
-			}elseif($cuenta->tipocuenta=="I"){ // INGRESO AUMENTA POR EL DEBE
+			}elseif($cuenta->tipocuenta=="I"){ // INGRESO AUMENTA POR EL DEBE // CORRECCION HABER
 				if($cuenta->Debe>0){
-					$aux_haber=$cuenta->Debe;
+					//$aux_haber=$cuenta->Debe;
+					$aux_debe=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_haber=$cuenta->Haber;
+					//$aux_haber=$cuenta->Haber;
+					$aux_debe=$cuenta->Haber;
 				}
 			}else{
 				//LAS CUENTAS DISMINUYEN SOLO AUMENTA SI ESTAN A EL MISMO LADO DE LA CUENTA QUE COMANDA 
@@ -198,7 +200,8 @@ class CoreContabilidad extends Controller
 			}
 			
 		}elseif($aux_regla=="C+" || $aux_regla=="G+"  ){ // COSTO O CASTO AUMENTA
-			if($cuenta->tipocuenta=="A" || $cuenta->tipocuenta=="I"){// ACTIVO e INGRESO AUMENTA POR EL DEBE
+			//if($cuenta->tipocuenta=="A" || $cuenta->tipocuenta=="I"){// ACTIVO e INGRESO AUMENTA POR EL DEBE
+			if($cuenta->tipocuenta=="A"){// ACTIVO e INGRESO AUMENTA POR EL DEBE // CORRECCION 
 				if($cuenta->Debe>0){
 					$aux_haber=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
@@ -212,6 +215,12 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_debe=$cuenta->Haber;
 				}				
+			}elseif( $cuenta->tipocuenta=="I" ){
+				if($cuenta->Debe>0){
+					$aux_debe=$cuenta->Debe;
+				}elseif($cuenta->Haber>0){
+					$aux_debe=$cuenta->Haber;
+				}
 			}
 		}elseif ($aux_regla=="P-" || $aux_regla=="PT-" ) { //PASIVO, PATRIMONIO DISMINUYEN
 			if($cuenta->tipocuenta=="A"){// ACTIVO AUMENTA POR EL DEBE
@@ -220,11 +229,11 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_haber=$cuenta->Haber;
 				}
-			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA POR EL DEBE
+			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA POR EL DEBE // por haber
 				if($cuenta->Debe>0){
-					$aux_debe=$cuenta->Debe;
+					$aux_haber=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_debe=$cuenta->Haber;
+					$aux_haber=$cuenta->Haber;
 				}
 			}else{
 				//LAS CUENTAS AUMENTAN SOLO DISMINUYEN SI ESTAN A EL MISMO LADO DE LA CUENTA QUE COMANDA 
@@ -237,7 +246,8 @@ class CoreContabilidad extends Controller
 			}
 			
 		}elseif($aux_regla=="C-" || $aux_regla=="G-"  ){ // COSTO O CASTO DISMINUYE
-			if($cuenta->tipocuenta=="A" || $cuenta->tipocuenta=="I"){// ACTIVO e INGRESO AUMENTA POR EL DEBE
+			//if($cuenta->tipocuenta=="A" || $cuenta->tipocuenta=="I"){// ACTIVO e INGRESO AUMENTA POR EL DEBE
+			if($cuenta->tipocuenta=="A" ){// ACTIVO e INGRESO AUMENTA POR EL DEBE// correccion ingreso por el haber
 				if($cuenta->Debe>0){
 					$aux_debe=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
@@ -247,6 +257,12 @@ class CoreContabilidad extends Controller
 				//LAS CUENTAS AUMENTA SOLO DISMINUYE SI ESTAN A EL MISMO LADO DE LA CUENTA QUE COMANDA 
                 //PERO CUANDO YA LLEGA A ESTA PARTE SIGNIGICA QUE NO ESTA A EL MISMO LADO LA CUENTA
                 if($cuenta->Debe>0){
+					$aux_haber=$cuenta->Debe;
+				}elseif($cuenta->Haber>0){
+					$aux_haber=$cuenta->Haber;
+				}
+			}elseif ($cuenta->tipocuenta=="I") { //INGRESO
+				if($cuenta->Debe>0){
 					$aux_haber=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
 					$aux_haber=$cuenta->Haber;
@@ -271,11 +287,11 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_haber=$cuenta->Haber;
 				}
-			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA
+			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA // CORRECCION
 				if($cuenta->Debe>0){
-					$aux_debe=$cuenta->Debe;
+					$aux_haber=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_debe=$cuenta->Haber;
+					$aux_haber=$cuenta->Haber;
 				}
 			}
 			
@@ -292,11 +308,11 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_debe=$cuenta->Haber;
 				}
-			}elseif ($cuenta->tipocuenta=="I") { // INGRESO DISMINUYE
+			}elseif ($cuenta->tipocuenta=="I") { // INGRESO DISMINUYE //CORRECCION
 				if($cuenta->Debe>0){
-					$aux_haber=$cuenta->Debe;
+					$aux_debe=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_haber=$cuenta->Haber;
+					$aux_debe=$cuenta->Haber;
 				}
 			}		
 		}elseif ($aux_regla=="A-") {// ACTIVO DISMINUYE
@@ -318,11 +334,11 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_debe=$cuenta->Haber;
 				}
-			}elseif ($cuenta->tipocuenta=="I") { // INGRESO DISMINUYE
+			}elseif ($cuenta->tipocuenta=="I") { // INGRESO DISMINUYE // CORRECION
 				if($cuenta->Debe>0){
-					$aux_haber=$cuenta->Debe;
+					$aux_debe=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_haber=$cuenta->Haber;
+					$aux_debe=$cuenta->Haber;
 				}
 			}
 		}elseif ($aux_regla=="I-") {// INGRESO DISMINUYE
@@ -338,11 +354,11 @@ class CoreContabilidad extends Controller
 				}elseif($cuenta->Haber>0){
 					$aux_haber=$cuenta->Haber;
 				}
-			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA
+			}elseif ($cuenta->tipocuenta=="I") { // INGRESO AUMENTA // CORRECION
 				if($cuenta->Debe>0){
-					$aux_debe=$cuenta->Debe;
+					$aux_haber=$cuenta->Debe;
 				}elseif($cuenta->Haber>0){
-					$aux_debe=$cuenta->Haber;
+					$aux_haber=$cuenta->Haber;
 				}
 			}		
 		}

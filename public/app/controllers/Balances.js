@@ -440,7 +440,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             return "";
         }
         amount += ''; // por si pasan un numero en vez de un string
-        amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+        amount = parseFloat(amount.replace(/[^0-9\.-]/g, '')); // elimino cualquier cosa que no sea numero o punto
         // si es mayor o menor que cero retorno el valor formateado como numero
         amount = '' + amount.toFixed(4);
         var amount_parts = amount.split('.'),
