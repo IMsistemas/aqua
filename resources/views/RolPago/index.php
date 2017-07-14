@@ -142,7 +142,7 @@
                             <tbody>
                             <tr ng-repeat="item in ingresos1" ng-cloak >
                                 <td>{{item.name_conceptospago}}</td>
-                                <td><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValoresIngresos1(item)" required/></td>
+                                <td><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
                                 <td><input type="text" disabled class="form-control"  ng-model="item.valor"/></td>
                                 <td><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
                                 <td><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
@@ -169,7 +169,7 @@
                             </tr>
                             <tr ng-repeat="item in ingresos2" ng-cloak >
                                 <td class="bg-info">{{item.name_conceptospago}}</td>
-                                <td class="bg-info"><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValoresIngresos2(item)" required/></td>
+                                <td class="bg-info"><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
                                 <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valor"/></td>
                                 <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
                                 <td class="bg-info"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
@@ -190,7 +190,7 @@
                                 <td class="bg-success">{{item.name_conceptospago}}</td>
                                 <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.cant"/></td>
                                 <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.valormax"/></td>
-                                <td class="bg-success"><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresIngresos3(item)" /></td>
+                                <td class="bg-success"><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)" /></td>
                                 <td class="bg-success"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
                                 <td>
                                     <div class="input-group">
@@ -235,7 +235,7 @@
                                 <tr ng-repeat="item in deducciones" ng-cloak >
                                     <td>{{item.name_conceptospago}}</td>
                                     <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
-                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresDeducciones(item)"/></td>
+                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                                     <td>
                                         <div class="input-group">
                                             <input type="text" class="form-control" ng-model="item.cuenta"
@@ -282,7 +282,7 @@
                                 <tr ng-repeat="item in beneficios" ng-cloak >
                                     <td>{{item.name_conceptospago}}</td>
                                     <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
-                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresBeneficios(item)"/></td>
+                                    <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                                     <td>
                                         <div class="input-group">
                                             <input type="text" class="form-control" ng-model="item.cuenta"
@@ -337,7 +337,7 @@
                             <tr ng-repeat="item in benefadicionales" ng-cloak >
                                 <td>{{item.name_conceptospago}}</td>
                                 <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
-                                <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValoresBeneficiosA(item)"/></td>
+                                <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                                 <td>
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model="item.cuenta"

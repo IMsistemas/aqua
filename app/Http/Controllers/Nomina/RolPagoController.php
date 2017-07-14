@@ -42,10 +42,14 @@ class RolPagoController extends Controller
 
     public function getConceptos()
     {
-        return ConceptoPago::join('rrhh_categoriapago', 'rrhh_categoriapago.id_categoriapago', '=', 'rrhh_conceptospago.id_categoriapago')
-            ->select('rrhh_categoriapago.*', 'rrhh_conceptospago.*' )
-            ->orderBy('id_conceptospago', 'asc')->get();
+        return ConceptoPago::selectRaw("*, COALESCE ((SELECT configuracionsystem.optionvalue FROM configuracionsystem 
+                        WHERE configuracionsystem.idconfiguracionsystem= COALESCE((rrhh_conceptospago.id_configurationsystem),0)),'') 
+                                    AS impuesto")
+                            ->orderBy('rrhh_conceptospago.id_conceptospago', 'asc')->get();
 
+        /*return ConceptoPago::join('rrhh_categoriapago', 'rrhh_categoriapago.id_categoriapago', '=', 'rrhh_conceptospago.id_categoriapago')
+            ->select('rrhh_categoriapago.*', 'rrhh_conceptospago.*' )
+            ->orderBy('id_conceptospago', 'asc')->get();*/
     }
 
     public function getPlanCuenta()

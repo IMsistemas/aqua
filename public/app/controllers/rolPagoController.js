@@ -20,6 +20,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
     $scope.sueldoliquido = 0;
     $scope.total_deducciones = 0;
     $scope.total_beneficios = 0;
+    $scope.total_adicionales = 0;
+    $scope.total_empresarial = 0;
 
     var field = "";
 
@@ -29,6 +31,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
     var f1 = 0;
     var x = 0;
     var baseiess = 0;
+    var aux_max = 0;
 
     $scope.initLoad = function () {
 
@@ -91,6 +94,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
             var long = response.length;
             for(var i = 0; i < long; i++){
+                var impuesto =  response[i].impuesto;
                 if(response[i].id_categoriapago === 1 && response[i].grupo === '1'){
 
                     var cantidad = {
@@ -139,7 +143,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(response[i].id_categoriapago === 1 && response[i].grupo === '2'){
 
                     var cantidad = {
-                        value: "",
+                        value: impuesto,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -197,7 +201,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                         enumerable: true,
                         configurable: true
                     };
-                    Object.defineProperty(response[i], 'valorm', valormax);
+                    Object.defineProperty(response[i], 'valormax', valormax);
 
                     var valorTotal = {
                         value: "",
@@ -229,7 +233,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(response[i].id_categoriapago === 2){
 
                     var cantidad = {
-                        value: "",
+                        value: impuesto,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -258,7 +262,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(response[i].id_categoriapago === 3){
 
                     var cantidad = {
-                        value: "",
+                        value: impuesto,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -286,7 +290,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 }
                 if(response[i].id_categoriapago === 4){
                     var cantidad = {
-                        value: "",
+                        value: impuesto,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -333,12 +337,126 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
     };
 
-    $scope.calcValoresIngresos1 = function (item) {
+    $scope.calcValores = function (item) {
 
         ss = $scope.sueldo;
         dc = $scope.diascalculo;
         hc = $scope.horascalculo;
-        //if(item.cant !== "")
+        baseiess = $scope.baseiess;
+        x = (item.cant !== "") ?  item.cant : 0;
+        aux_max = 0;
+
+        if(item.formulavalor !== '' && item.formulavalor !== null){
+            f1 = eval(item.formulavalor);
+            item.valor = f1.toFixed(2);
+        }
+        if(item.formulatotal !== '' && item.formulatotal !== null){
+            var total = parseFloat(eval(item.formulatotal));
+            item.valorTotal = total.toFixed(2);
+        }
+
+        var long1 = $scope.ingresos1.length;
+        var long2 = $scope.ingresos2.length;
+        var long3 = $scope.ingresos3.length;
+        var longb = $scope.beneficios.length;
+        var longd = $scope.deducciones.length;
+        var longba = $scope.benefadicionales.length;
+
+        $scope.baseiess = 0;
+        $scope.valortotalIngreso = 0;
+        $scope.valortotalCantidad = 0;
+
+        for (var i = 0; i < long1; i++) {
+            if ($scope.ingresos1[i].cant !== undefined && $scope.ingresos1[i].cant !== "" && $scope.ingresos1[i].valorTotal !== undefined ) {
+
+                $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) + parseInt($scope.ingresos1[i].cant);
+
+                if ($scope.valortotalCantidad <= 30){
+                    if($scope.ingresos1[i].aportaiess === true){
+                        $scope.baseiess = parseFloat($scope.baseiess) + parseFloat($scope.ingresos1[i].valorTotal);
+                    }
+
+                    $scope.valortotalIngreso = parseFloat($scope.valortotalIngreso) + parseFloat($scope.ingresos1[i].valorTotal);
+                    $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngreso);
+                }
+                else{
+                    $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt($scope.ingresos1[i].cant);
+                    item.cant = "";
+                    item.valor = "";
+                    item.valorTotal = "";
+
+                    $scope.message_error = "El numero de dias introducidos no puede ser mayor al numero de dias calculos."
+                    $('#modalError').modal('show');
+
+                }
+            }
+        }
+
+        for (var i = 0; i < long2; i++) {
+
+            if ($scope.ingresos2[i].cant !== undefined && $scope.ingresos2[i].valorTotal !== "") {
+                if($scope.ingresos2[i].aportaiess === true){
+                    $scope.baseiess = parseFloat($scope.baseiess) + parseFloat($scope.ingresos2[i].valorTotal);
+                }
+                $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat($scope.ingresos2[i].valorTotal);
+            }
+        }
+        aux_max = (baseiess * parseFloat(item.cant))/100;
+        for (var i = 0; i < long3; i++) {
+
+            if ($scope.ingresos3[i].valorTotal !== undefined && $scope.ingresos3[i].valorTotal !== "") {
+                if($scope.ingresos3[i].valorTotal <= aux_max){
+                    $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat($scope.ingresos3[i].valorTotal);
+                }
+                else{
+
+                    item.valorTotal = "";
+                    $scope.ingresos3[i].valorTotal = 0;
+                    $scope.message_error = "El valor introducido no puede ser mayor al 20% de la base de aporte al IESS. Por favor introduzca un nuevo valor."
+                    $('#modalError').modal('show');
+                }
+            }
+            item.valormax = aux_max;
+        }
+
+        $scope.total_deducciones = 0;
+        $scope.ingresoBruto_deducciones = $scope.valortotalIngresoBruto;
+        for (var i = 0; i < longd; i++) {
+
+            if ($scope.deducciones[i].valorTotal !== undefined && $scope.deducciones[i].valorTotal !== "") {
+                $scope.ingresoBruto_deducciones = parseFloat($scope.ingresoBruto_deducciones) - parseFloat($scope.deducciones[i].valorTotal);
+                $scope.total_deducciones = parseFloat($scope.total_deducciones) + parseFloat($scope.deducciones[i].valorTotal);
+                $scope.ingresoBruto_beneficios = parseFloat($scope.ingresoBruto_deducciones) + parseFloat($scope.total_beneficios);
+            }
+        }
+
+        $scope.total_beneficios = 0;
+        $scope.ingresoBruto_beneficios = $scope.ingresoBruto_deducciones;
+        for (var i = 0; i < longb; i++) {
+
+            if ($scope.beneficios[i].valorTotal !== undefined && $scope.beneficios[i].valorTotal !== "") {
+                $scope.ingresoBruto_beneficios = parseFloat($scope.ingresoBruto_beneficios) + parseFloat($scope.beneficios[i].valorTotal);
+                $scope.total_beneficios = parseFloat($scope.total_beneficios) + parseFloat($scope.beneficios[i].valorTotal);
+            }
+        }
+
+        $scope.total_adicionales = 0;
+        $scope.sueldoliquido  = $scope.ingresoBruto_beneficios;
+        for (var i = 0; i < longba; i++) {
+
+            if ($scope.benefadicionales[i].valorTotal !== undefined && $scope.benefadicionales[i].valorTotal !== "") {
+                $scope.total_adicionales = parseFloat($scope.total_adicionales) + parseFloat($scope.benefadicionales[i].valorTotal);
+                $scope.total_empresarial = parseFloat($scope.total_adicionales) + parseFloat($scope.sueldoliquido);
+            }
+        }
+    };
+
+    /*$scope.calcValoresIngresos1 = function (item) {
+
+        ss = $scope.sueldo;
+        dc = $scope.diascalculo;
+        hc = $scope.horascalculo;
+        baseiess = $scope.baseiess;
         x = (item.cant !== "") ?  item.cant : 0;
 
         if(item.formulavalor !== '' && item.formulavalor !== null){
@@ -348,41 +466,41 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
         if(item.formulatotal !== '' && item.formulatotal !== null){
             var total = parseFloat(eval(item.formulatotal));
             item.valorTotal = total.toFixed(2);
+        }
 
-            var longitud = $scope.ingresos1.length;
+        var long1 = $scope.ingresos1.length;
 
-            $scope.baseiess = 0;
-            $scope.valortotalIngreso = 0;
-            $scope.valortotalCantidad = 0;
+        $scope.baseiess = 0;
+        $scope.valortotalIngreso = 0;
+        $scope.valortotalCantidad = 0;
 
-            for (var i = 0; i < longitud; i++) {
-                if ($scope.ingresos1[i].cant !== undefined && $scope.ingresos1[i].cant !== "" && $scope.ingresos1[i].valorTotal !== undefined ) {
+        for (var i = 0; i < long1; i++) {
+            if ($scope.ingresos1[i].cant !== undefined && $scope.ingresos1[i].cant !== "" && $scope.ingresos1[i].valorTotal !== undefined ) {
 
-                    $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) + parseInt($scope.ingresos1[i].cant);
+                $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) + parseInt($scope.ingresos1[i].cant);
 
-                    if ($scope.valortotalCantidad <= 30){
-                        if($scope.ingresos1[i].aportaiess === true){
-                            $scope.baseiess = parseFloat($scope.baseiess) + parseFloat($scope.ingresos1[i].valorTotal);
-                        }
-
-                        $scope.valortotalIngreso = parseFloat($scope.valortotalIngreso) + parseFloat($scope.ingresos1[i].valorTotal);
-                        $scope.valortotalIngresoBruto = $scope.valortotalIngreso;
+                if ($scope.valortotalCantidad <= 30){
+                    if($scope.ingresos1[i].aportaiess === true){
+                        $scope.baseiess = parseFloat($scope.baseiess) + parseFloat($scope.ingresos1[i].valorTotal);
                     }
-                    else{
-                        $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt($scope.ingresos1[i].cant);
-                        item.cant = "";
-                        item.valor = "";
-                        item.valorTotal = "";
 
-                        $scope.message_error = "El numero de dias introducidos no puede ser mayor al numero de dias calculos."
-                        $('#modalError').modal('show');
-
-                    }
+                    $scope.valortotalIngreso = parseFloat($scope.valortotalIngreso) + parseFloat($scope.ingresos1[i].valorTotal);
+                    $scope.valortotalIngresoBruto = $scope.valortotalIngreso;
                 }
-                $scope.ingresoBruto_deducciones = $scope.valortotalIngreso;
-                $scope.ingresoBruto_beneficios = $scope.valortotalIngreso;
-                $scope.sueldoliquido = $scope.valortotalIngreso;
+                else{
+                    $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt($scope.ingresos1[i].cant);
+                    item.cant = "";
+                    item.valor = "";
+                    item.valorTotal = "";
+
+                    $scope.message_error = "El numero de dias introducidos no puede ser mayor al numero de dias calculos."
+                    $('#modalError').modal('show');
+
+                }
             }
+            $scope.ingresoBruto_deducciones = $scope.valortotalIngreso;
+            $scope.ingresoBruto_beneficios = $scope.valortotalIngreso;
+            $scope.sueldoliquido = $scope.valortotalIngreso;
         }
     };
 
@@ -430,16 +548,26 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
         dc = $scope.diascalculo;
         hc = $scope.horascalculo;
         //x = (item.cant !== "") ?  item.cant : 0;
-        //baseiess = $scope.baseiess;
+        baseiess = parseFloat($scope.baseiess);
+        aux_max = (baseiess* parseFloat(item.cant))/100;
+        console.log(aux_max);
 
         $scope.valortotalIngresoBruto = $scope.valortotalIngreso;
-        //$scope.baseiess = $scope.valortotalIngreso;
 
         var longitud = $scope.ingresos3.length;
         for (var i = 0; i < longitud; i++) {
 
             if ($scope.ingresos3[i].valorTotal !== undefined && $scope.ingresos3[i].valorTotal !== "") {
-                $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat($scope.ingresos3[i].valorTotal);
+                if($scope.ingresos3[i].valorTotal <= aux_max){
+                    $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat($scope.ingresos3[i].valorTotal);
+                }
+            }
+            else{
+
+                item.valorTotal = "";
+                $scope.ingresos3[i].valorTotal = 0;
+                $scope.message_error = "El valor introducido no puede ser mayor al 20% de la base de aporte al IESS. Por favor introduzca un nuevo valor."
+                $('#modalError').modal('show');
             }
 
             $scope.ingresoBruto_deducciones = $scope.valortotalIngresoBruto;
@@ -487,6 +615,22 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
         }
 
     };
+
+    $scope.calcValoresBeneficiosA = function (item) {
+
+        $scope.total_adicionales = 0;
+        $scope.total_empresarial = 0;
+
+        var longitud = $scope.benefadicionales.length;
+        for (var i = 0; i < longitud; i++) {
+
+            if ($scope.benefadicionales[i].valorTotal !== undefined && $scope.benefadicionales[i].valorTotal !== "") {
+                $scope.total_adicionales = parseFloat($scope.total_adicionales) + parseFloat($scope.benefadicionales[i].valorTotal);
+                $scope.total_empresarial = parseFloat($scope.total_adicionales) + parseFloat($scope.sueldoliquido);
+            }
+        }
+
+    };*/
 
     $scope.showPlanCuenta = function (item) {
 
