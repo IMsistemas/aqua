@@ -131,23 +131,33 @@
 
         $scope.focusOut = function () {
 
-            if ($scope.documentoidentidadempleado != null && $scope.documentoidentidadempleado != '' && $scope.documentoidentidadempleado != undefined) {
-                $http.get(API_URL + 'empleado/getPersonaByIdentify/' + $scope.documentoidentidadempleado).success(function(response){
+            if ($scope.documentoidentidadempleado !== null && $scope.documentoidentidadempleado !== '' && $scope.documentoidentidadempleado !== undefined) {
 
-                    var longitud = response.length;
+                $http.get(API_URL + 'cliente/searchDuplicate/' + $scope.documentoidentidadempleado).success(function(response){
 
-                    if (longitud > 0) {
-                        $scope.idpersona = response[0].idpersona;
-                    } /*else {
+                    if (response.success === false) {
 
+                        $http.get(API_URL + 'empleado/getPersonaByIdentify/' + $scope.documentoidentidadempleado).success(function(response){
 
+                            var longitud = response.length;
 
-                        $scope.idpersona = 0;
-                    }*/
+                            if (longitud > 0) {
+                                $scope.idpersona = response[0].idpersona;
+                            }
+
+                        });
+
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', $scope.documentoidentidadempleado);
+
+                    } else {
+
+                        $scope.message_error = 'Ya existe un cliente insertado con el mismo Número de Identificación';
+                        $('#modalMessageError').modal('show');
+
+                    }
 
                 });
 
-                $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', $scope.documentoidentidadempleado);
             }
 
         };
@@ -466,6 +476,7 @@
         };
 
         $scope.initLoad(1);
+
 
         /*
          *  ACTIONS FOR SOLICITUD SUMINISTRO----------------------------------------------------------------------------

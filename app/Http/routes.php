@@ -225,6 +225,8 @@ Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA'
 Route::get('cliente/getPersonaByIdentify/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
 Route::get('cliente/getIdentify/{identify}', 'Clientes\ClienteController@getIdentify');
 
+Route::get('cliente/searchDuplicate/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
+
 Route::resource('/cliente', 'Clientes\ClienteController');
 
 /*=============================Módulo Suministro====================================*/

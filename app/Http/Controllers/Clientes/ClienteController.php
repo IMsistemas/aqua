@@ -121,12 +121,20 @@ class ClienteController extends Controller
     }
 
 
+    public function searchDuplicate($numidentific)
+    {
+        $result = $this->searchExist($numidentific);
+
+        return response()->json(['success' => $result]);
+    }
+
+
     private function searchExist($numidentific)
     {
         $count = Cliente::join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
             ->where('persona.numdocidentific', $numidentific)->count();
 
-        return ($count == 1) ? true : false;
+        return ($count >= 1) ? true : false;
     }
 
     /**
