@@ -328,6 +328,12 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     };
 
+    $scope.autoAssignDate = function () {
+
+        $scope.fecharegistro = $('#fecharegistro').val();
+
+    };
+
     $scope.save = function () {
           var data = {
               rubros: $scope.aux_modal,
@@ -726,6 +732,8 @@ app.controller('facturaController', function($scope, $http, API_URL) {
 
     $scope.saveCobro = function () {
 
+        $('#btn-ok').prop('disabled', true);
+
         var id = 0;
         var type = '';
 
@@ -880,7 +888,6 @@ $(function(){
     });
 });
 
-
 function Auxiliar  (mes_anio) {
     var mes = mes_anio;
     var elem = mes.split('-');
@@ -889,7 +896,6 @@ function Auxiliar  (mes_anio) {
 
     return mes_letra;
 }
-
 
 function yearmonth  (fecha) {
     var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
