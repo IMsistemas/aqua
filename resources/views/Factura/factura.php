@@ -50,30 +50,30 @@
             <thead class="bg-primary">
             <tr>
                 <th style="width: 4%;">NO.</th>
-                <th style="width: 7%;">FECHA</th>
+                <!--<th style="width: 7%;">FECHA</th>-->
                 <th style="width: 7%;">PERIODO</th>
                 <th>CLIENTE</th>
                 <th style="width: 8%;">NO. SUMINIST.</th>
                 <th style="width: 8%;">TARIFA</th>
                 <th style="width: 12%;">DIRECC. SUMINIST.</th>
-                <th style="width: 5%;">TELF. SUMINIST.</th>
-                <th style="width: 5%;">CONSUMO(m3)</th>
-                <th style="width: 5%;">ESTADO</th>
-                <th style="width: 5%;">TOTAL</th>
-                <th style="width: 10%;">ACCIONES</th>
+                <!--<th style="width: 5%;">TELF. SUMINIST.</th>-->
+                <th style="width: 6%;">CONSUMO(m3)</th>
+                <th style="width: 8%;">ESTADO</th>
+                <th style="width: 6%;">TOTAL</th>
+                <th style="width: 12%;">ACCIONES</th>
             </tr>
             </thead>
             <tbody>
-            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:5 | filter:t_busqueda" total-items="totalItems" ng-cloak>
+            <tr dir-paginate="item in factura | orderBy:sortKey:reverse | itemsPerPage:8 | filter:t_busqueda" total-items="totalItems" ng-cloak>
                 <td>{{$index + 1}}</td>
-                <td>{{ FormatoFecha(item.fechacobro)}}</td>
+                <!--<td>{{ FormatoFecha(item.fechacobro)}}</td>-->
                 <td>{{yearmonth (item.fechacobro)}}</td>
                 <td>{{item.suministro.cliente.persona.razonsocial}}</td>
                 <td>{{item.suministro.idsuministro}}</td>
                 <td>{{item.suministro.tarifaaguapotable.nametarifaaguapotable}}</td>
                 <td>{{item.suministro.direccionsumnistro}}</td>
-                <td>{{item.suministro.telefonosuministro}}</td>
-                <td>{{item.lectura.consumo}}</td>
+                <!--<td>{{item.suministro.telefonosuministro}}</td>-->
+                <td class="text-right">{{item.lectura.consumo}}</td>
                 <td>{{Pagada(item.estadopagado)}}</td>
                 <td class="text-right">$ {{item.total}}</td>
                 <td>
@@ -119,7 +119,7 @@
                 template-url="dirPagination.html"
 
                 class="pull-right"
-                max-size="5"
+                max-size="8"
                 direction-links="true"
                 boundary-links="true" >
 
