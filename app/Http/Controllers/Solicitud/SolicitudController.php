@@ -75,7 +75,7 @@ class SolicitudController extends Controller
                                 (SELECT rutapdf FROM solicitudsuministro WHERE solicitudsuministro.idsolicitud = solicitud.idsolicitud) AS rutapdf,
                                 (SELECT idsolicitudservicio FROM solicitudservicio WHERE solicitudservicio.idsolicitud = solicitud.idsolicitud) AS solicitudservicio'
                             )
-                            ->orderBy('fechasolicitud', 'asc')->paginate(10);
+                            ->orderBy('fechasolicitud', 'asc')->paginate(8);
 
     }
 

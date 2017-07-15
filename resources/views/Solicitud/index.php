@@ -76,7 +76,7 @@
                     </thead>
                     <tbody>
                         <!--<tr dir-paginate="solicitud in solicitudes |orderBy:sortKey:reverse |itemsPerPage:10 | filter : search" ng-cloak>-->
-                        <tr dir-paginate="solicitud in solicitudes | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
+                        <tr dir-paginate="solicitud in solicitudes | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItems" ng-cloak>
                             <td class="text-center">{{solicitud.idsolicitud}}</td>
                             <td>{{solicitud.fechasolicitud | formatDate}}</td>
                             <td style="font-weight: bold;">{{solicitud.razonsocial}}</td>
@@ -123,7 +123,7 @@
                         template-url="dirPagination.html"
 
                         class="pull-right"
-                        max-size="10"
+                        max-size="8"
                         direction-links="true"
                         boundary-links="true" >
 

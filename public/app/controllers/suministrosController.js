@@ -1,19 +1,20 @@
+
+
 app.controller('suministrosController', function($scope, $http, API_URL) {
 
-    $scope.initLoad = function () {
-        $http.get(API_URL + 'suministros/getsuministros').success(function (response) {
-            console.log(response);
-            /*var longitud = response.length;
-            for (var i = 0; i < longitud; i++) {
-                var complete_name = {
-                    value: response[i].cliente.nombres + ' ' + response[i].cliente.apellidos,
-                    writable: true,
-                    enumerable: true,
-                    configurable: true
-                };
-                Object.defineProperty(response[i].cliente, 'complete_name', complete_name);
-            }*/
-            $scope.suministros = response;
+
+    $scope.pageChanged = function(newPage) {
+        $scope.initLoad(newPage);
+    };
+
+    $scope.initLoad = function (pageNumber) {
+        $http.get(API_URL + 'suministros/getsuministros?page=' + pageNumber).success(function (response) {
+            //console.log(response);
+
+            //$scope.suministros = response;
+
+            $scope.suministros = response.data;
+            $scope.totalItems = response.total;
         });
     };
 
@@ -79,7 +80,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         }
         else {
 
-            $scope.initLoad();
+            $scope.initLoad(1);
         }
     };
 
@@ -176,7 +177,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         };
 
         $http.put(API_URL + 'suministros/' + $scope.idsuministro, data).success(function (response) {
-            $scope.initLoad();
+            $scope.initLoad(1);
             $('#editar-suministro').modal('hide');
             $scope.message = 'Se editó correctamente el Suministro seleccionado...';
             $('#modalConfirmacion').modal('show');
@@ -277,7 +278,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         }
         else {
 
-            $scope.initLoad();
+            $scope.initLoad(1);
         }
     };
 
@@ -321,7 +322,7 @@ app.controller('suministrosController', function($scope, $http, API_URL) {
         return relleno + text;
     };
 
-    $scope.initLoad();
+    $scope.initLoad(1);
     $scope.Filtro();
 
     /*

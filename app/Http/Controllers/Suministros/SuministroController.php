@@ -21,10 +21,10 @@ class SuministroController extends Controller
         return view('Suministros/index');
 	}
 
-    public function getsuministros()
+    public function getsuministros(Request $request)
     {
        return Suministro::with('cliente.persona', 'calle.barrio', 'cont_documentoventa.cont_puntoventa.sri_establecimiento')
-                                    ->orderBy('idsuministro', 'asc')->get();
+                                    ->orderBy('idsuministro', 'asc')->paginate(8);
     }
 
     public function getSuministrosByBarrio($filter)

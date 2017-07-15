@@ -63,7 +63,7 @@ class ClienteController extends Controller
             $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
         }
 
-        return $cliente->orderBy('fechaingreso', 'desc')->paginate(10);
+        return $cliente->orderBy('fechaingreso', 'desc')->paginate(8);
     }
 
     /**

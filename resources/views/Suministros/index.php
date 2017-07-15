@@ -46,31 +46,31 @@
             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                 <tr>
-                    <th>
+                    <th style="width: 5%;">
                         <a href="#" style="text-decoration:none; color:white;" >NO.</a>
                     </th>
                     <th>
                         <a href="#" style="text-decoration:none; color:white;" >CLIENTE</a>
                     </th>
-                    <th>
+                    <th style="width: 12%;">
                         <a href="#" style="text-decoration:none; color:white;" >ZONA</a>
                     </th>
                     <th>
                         <a href="#" style="text-decoration:none; color:white;" >DIRECCION</a>
                     </th>
-                    <th>
+                    <th style="width: 10%;">
                         <a href="#" style="text-decoration:none; color:white;" >TELEFONO</a>
                     </th>
-                    <th>
+                    <th style="width: 12%;">
                         <a href="#" style="text-decoration:none; color:white;" >FACTURA</a>
                     </th>
-                    <th>
+                    <th style="width: 12%;">
                         <a href="#" style="text-decoration:none; color:white;" >ACCIONES</a>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr dir-paginate="suministro in suministros| orderBy:sortKey:reverse|filter:busqueda|itemsPerPage:10" ng-cloak>
+                <tr dir-paginate="suministro in suministros| orderBy:sortKey:reverse|filter:busqueda|itemsPerPage:8" total-items="totalItems" ng-cloak>
                     <td>{{suministro.idsuministro}}</td>
                     <td>{{suministro.cliente.persona.razonsocial}}</td>
                     <td>{{suministro.calle.barrio.namebarrio}}</td>
@@ -93,9 +93,14 @@
             </table>
 
                 <dir-pagination-controls
-                    max-size="5"
-                    direction-links="true"
-                    boundary-links="true" >
+                        on-page-change="pageChanged(newPageNumber)"
+
+                        template-url="dirPagination.html"
+
+                        class="pull-right"
+                        max-size="8"
+                        direction-links="true"
+                        boundary-links="true" >
                 </dir-pagination-controls>
 
         </div>

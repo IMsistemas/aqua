@@ -38,7 +38,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="item in clientes|orderBy:sortKey:reverse| itemsPerPage:10" total-items="totalItems" ng-cloak >
+                        <tr dir-paginate="item in clientes|orderBy:sortKey:reverse| itemsPerPage:8" total-items="totalItems" ng-cloak >
                             <td>{{$index + 1}}</td>
                             <td>{{item.numdocidentific}}</td>
                             <td>{{item.fechaingreso | formatDate}}</td>
@@ -75,7 +75,7 @@
                         template-url="dirPagination.html"
 
                         class="pull-right"
-                        max-size="1"
+                        max-size="8"
                         direction-links="true"
                         boundary-links="true" >
 
