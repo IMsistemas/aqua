@@ -112,6 +112,7 @@
                             <li role="presentation" class="tabs"><a href="#cont_compras" aria-controls="cont_compras" role="tab" data-toggle="tab"></i> Factura Compra</a></li>
                             <li role="presentation" class="tabs"><a href="#cont_venta" aria-controls="cont_venta" role="tab" data-toggle="tab"></i> Factura Ventas</a></li>
                             <li role="presentation" class="tabs"><a href="#cont_notacredit" aria-controls="cont_notacredit" role="tab" data-toggle="tab"></i> Notas de Crédito</a></li>
+                            <li role="presentation" class="tabs"><a href="#cont_nomina" aria-controls="cont_nomina" role="tab" data-toggle="tab"></i> Nomina</a></li>
                         </ul>
                         <!-- Tab panels -->
                         <div class="tab-content" style="padding-top: 10px;">
@@ -553,6 +554,22 @@
                                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                     </button>
                                     <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigNC()" ng-disabled="formNC.$invalid" >
+                                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade" id="cont_nomina">
+
+
+
+                                <div class="col-xs-12 text-center" style="margin-top: 5px;">
+
+                                    <button type="button" class="btn btn-default" ng-click="getConfigNomina()">
+                                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigNomina()" >
                                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                                     </button>
 

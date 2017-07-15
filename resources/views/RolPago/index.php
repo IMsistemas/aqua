@@ -125,96 +125,59 @@
             </div>
 
             <div class="col-xs-12" style="margin-top: 15px;">
-                <fieldset>
-                    <legend>Ingresos</legend>
-                    <div class="col-xs-12">
-                        <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                            <thead class="bg-primary">
-                            <tr>
-                                <th style="width: 25%;">Concepto</th>
-                                <th style="width: 8%;">Cantidad</th>
-                                <th style="width: 8%;">Valor</th>
-                                <th style="width: 8%;">Valor Total</th>
-                                <th style="width: 30%;">Observacion</th>
-                                <th style="width: 30%;">Asignar Cuenta</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="item in ingresos1" ng-cloak >
-                                <td>{{item.name_conceptospago}}</td>
-                                <td><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
-                                <td><input type="text" disabled class="form-control"  ng-model="item.valor"/></td>
-                                <td><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
-                                <td><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="item.cuenta"
-                                               placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" ng-model="item.cuentah">
-                                        <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-primary" colspan="1">Valor Sueldo Basico:</td>
-                                <td class="bg-primary" colspan="1">{{valortotalCantidad}}</td>
-                                <td class="bg-primary" colspan="1"></td>
-                                <td class="bg-primary" colspan="1">{{valortotalIngreso}}</td>
-                                <td class="bg-primary" colspan="1"></td>
-                                <td class="bg-primary" colspan="1"></td>
-                            </tr>
-                            <tr ng-repeat="item in ingresos2" ng-cloak >
-                                <td class="bg-info">{{item.name_conceptospago}}</td>
-                                <td class="bg-info"><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
-                                <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valor"/></td>
-                                <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
-                                <td class="bg-info"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="item.cuenta"
-                                               placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" ng-model="item.cuentah">
-                                        <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr ng-repeat="item in ingresos3" ng-cloak >
-                                <td class="bg-success">{{item.name_conceptospago}}</td>
-                                <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.cant"/></td>
-                                <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.valormax"/></td>
-                                <td class="bg-success"><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)" /></td>
-                                <td class="bg-success"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="item.cuenta"
-                                               placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" ng-model="item.cuentah">
-                                        <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bg-primary" colspan="3">Total Ingreso Bruto:</td>
-                                <td class="bg-primary" colspan="1">{{valortotalIngresoBruto}}</td>
-                                <td class="bg-primary" colspan="1"></td>
-                                <td class="bg-primary" colspan="1"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
+                <div class="col-xs-12" style="margin-top: 10px;">
+                    <fieldset>
+                        <legend>Ingresos</legend>
+                        <div class="col-xs-12">
+                            <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                <tr>
+                                    <th style="width: 30%;">Concepto</th>
+                                    <th style="width: 8%;">Cantidad</th>
+                                    <th style="width: 8%;">Valor</th>
+                                    <th style="width: 8%;">Valor Total</th>
+                                    <th style="width: 40%;">Observacion</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in ingresos1" ng-cloak >
+                                    <td>{{item.name_conceptospago}}</td>
+                                    <td><input type="text" class="form-control" ng-disabled="empleado=='' " ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
+                                    <td><input type="text" disabled class="form-control"  ng-model="item.valor"/></td>
+                                    <td><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
+                                    <td><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-primary" colspan="1">Valor Sueldo Basico:</td>
+                                    <td class="bg-primary" colspan="1">{{valortotalCantidad}}</td>
+                                    <td class="bg-primary" colspan="1"></td>
+                                    <td class="bg-primary" colspan="1">{{valortotalIngreso}}</td>
+                                    <td class="bg-primary" colspan="1"></td>
+                                </tr>
+                                <tr ng-repeat="item in ingresos2" ng-cloak >
+                                    <td class="bg-info">{{item.name_conceptospago}}</td>
+                                    <td class="bg-info"><input type="text" class="form-control" ng-model="item.cant" ng-blur="calcValores(item)" required/></td>
+                                    <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valor"/></td>
+                                    <td class="bg-info"><input type="text" disabled class="form-control" ng-model="item.valorTotal"/></td>
+                                    <td class="bg-info"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
+                                </tr>
+                                <tr ng-repeat="item in ingresos3" ng-cloak >
+                                    <td class="bg-success">{{item.name_conceptospago}}</td>
+                                    <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.cant"/></td>
+                                    <td class="bg-success"><input type="text" disabled class="form-control" ng-model="item.valormax"/></td>
+                                    <td class="bg-success"><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)" /></td>
+                                    <td class="bg-success"><textarea class="form-control" ng-model="item.observacion" rows="1"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-primary" colspan="3">Total Ingreso Bruto:</td>
+                                    <td class="bg-primary" colspan="1">{{valortotalIngresoBruto}}</td>
+                                    <td class="bg-primary" colspan="1"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
 
             <div class="col-xs-12">
@@ -228,7 +191,6 @@
                                     <th style="width: 20%;">Concepto</th>
                                     <th style="width: 8%;">%</th>
                                     <th style="width: 8%;">Valor</th>
-                                    <th style="width: 20%;">Asignar Cuenta</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -236,28 +198,14 @@
                                     <td>{{item.name_conceptospago}}</td>
                                     <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
                                     <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" ng-model="item.cuenta"
-                                                   placeholder="Cuenta Contable" readonly>
-                                            <input type="hidden" ng-model="item.cuentah">
-                                            <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="bg-danger" colspan="2">Total Deducciones:</td>
                                     <td class="bg-danger" colspan="1">{{total_deducciones}}</td>
-                                    <td class="bg-danger" colspan="1"></td>
                                 </tr>
                                 <tr>
                                     <td class="bg-danger" colspan="2">Ingreso Bruto (-) Deducciones:</td>
                                     <td class="bg-danger" colspan="1">{{ingresoBruto_deducciones}}</td>
-                                    <td class="bg-danger" colspan="1"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -275,7 +223,6 @@
                                     <th style="width: 20%;">Concepto</th>
                                     <th style="width: 8%;">%</th>
                                     <th style="width: 8%;">Valor</th>
-                                    <th style="width: 20%;">Asignar Cuenta</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -283,28 +230,14 @@
                                     <td>{{item.name_conceptospago}}</td>
                                     <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
                                     <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" ng-model="item.cuenta"
-                                                   placeholder="Cuenta Contable" readonly>
-                                            <input type="hidden" ng-model="item.cuentah">
-                                            <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="bg-warning" colspan="2">Total Beneficios de Ley:</td>
                                     <td class="bg-warning" colspan="1">{{total_beneficios}}</td>
-                                    <td class="bg-warning" colspan="1"></td>
                                 </tr>
                                 <tr>
                                     <td class="bg-warning" colspan="2">Subtotal mensual + Beneficios de Ley:</td>
                                     <td class="bg-warning" colspan="1">{{ingresoBruto_beneficios}}</td>
-                                    <td class="bg-warning" colspan="1"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -330,7 +263,6 @@
                                 <th style="width: 20%;">Concepto</th>
                                 <th style="width: 8%;">%</th>
                                 <th style="width: 8%;">Valor</th>
-                                <th style="width: 20%;">Asignar Cuenta</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -338,28 +270,14 @@
                                 <td>{{item.name_conceptospago}}</td>
                                 <td><input type="text" class="form-control" ng-model="item.cant" required/></td>
                                 <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="item.cuenta"
-                                               placeholder="Cuenta Contable" readonly>
-                                        <input type="hidden" ng-model="item.cuentah">
-                                        <span class="input-group-btn" role="group">
-                                            <button type="button" class="btn btn-info" id="btn-cuenta" ng-click="showPlanCuenta(item)">
-                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </td>
                             </tr>
                             <tr>
                                 <td class="bg-success" colspan="2">Total Beneficios Adicionales:</td>
                                 <td class="bg-success" colspan="1">{{total_adicionales}}</td>
-                                <td class="bg-success" colspan="1"></td>
                             </tr>
                             <tr>
                                 <td class="bg-success" colspan="2">Total Gasto Empresarial:</td>
                                 <td class="bg-success" colspan="1">{{total_empresarial}}</td>
-                                <td class="bg-success" colspan="1"></td>
                             </tr>
                             </tbody>
                         </table>
