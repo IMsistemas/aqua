@@ -225,7 +225,7 @@ Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA'
 Route::get('cliente/getPersonaByIdentify/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
 Route::get('cliente/getIdentify/{identify}', 'Clientes\ClienteController@getIdentify');
 
-Route::get('cliente/searchDuplicate/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
+Route::get('cliente/searchDuplicate/{identify}', 'Clientes\ClienteController@searchDuplicate');
 
 Route::resource('/cliente', 'Clientes\ClienteController');
 
@@ -441,6 +441,9 @@ Route::get('empleado/getTipoIdentificacion', 'Nomina\EmpleadoController@getTipoI
 Route::get('empleado/getIdentify/{identify}', 'Nomina\EmpleadoController@getIdentify');
 Route::get('empleado/getPersonaByIdentify/{identify}', 'Nomina\EmpleadoController@getPersonaByIdentify');
 Route::post('empleado/updateEmpleado/{id}', 'Nomina\EmpleadoController@updateEmpleado');
+
+Route::get('empleado/searchDuplicate/{identify}', 'Nomina\EmpleadoController@searchDuplicate');
+
 Route::resource('/empleado', 'Nomina\EmpleadoController');
 
 /*
@@ -771,12 +774,18 @@ Route::get('proveedor/getProveedores', 'Proveedores\ProveedorController@getProve
 Route::get('proveedor/getContactos/{idproveedor}', 'Proveedores\ProveedorController@getContactos');
 Route::post('proveedor/storeContactos', 'Proveedores\ProveedorController@storeContactos');
 Route::delete('proveedor/destroyContacto/{idcontacto}', 'Proveedores\ProveedorController@destroyContacto');
+
+Route::get('proveedor/searchDuplicate/{identify}', 'Proveedores\ProveedorController@searchDuplicate');
+
 Route::resource('proveedor', 'Proveedores\ProveedorController');
 
 Route::get('transportista/getProveedores', 'Transportista\TransportistaController@getProveedores');
 Route::get('transportista/getTransportista', 'Transportista\TransportistaController@getTransportista');
 Route::get('transportista/getTipoIdentificacion', 'Transportista\TransportistaController@getTipoIdentificacion');
 Route::get('transportista/getIdentify/{identify}', 'Transportista\TransportistaController@getIdentify');
+
+Route::get('transportista/searchDuplicate/{identify}', 'Transportista\TransportistaController@searchDuplicate');
+
 Route::resource('/transportista', 'Transportista\TransportistaController');
 
 /*

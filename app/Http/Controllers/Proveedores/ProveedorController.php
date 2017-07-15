@@ -107,6 +107,12 @@ class ProveedorController extends Controller
         return ContactoProveedor::where('idproveedor', $idproveedor)->orderBy('namecontacto', 'asc')->get();
     }
 
+    public function searchDuplicate($numidentific)
+    {
+        $result = $this->searchExist($numidentific);
+        return response()->json(['success' => $result]);
+    }
+
     private function searchExist($numidentific)
     {
         $count = Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')

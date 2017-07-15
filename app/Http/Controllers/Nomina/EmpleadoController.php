@@ -139,13 +139,18 @@ class EmpleadoController extends Controller
         return Persona::whereRaw("numdocidentific::text ILIKE '%" . $identify . "%'")->get();
     }
 
+    public function searchDuplicate($numidentific)
+    {
+        $result = $this->searchExist($numidentific);
+        return response()->json(['success' => $result]);
+    }
 
     private function searchExist($numidentific)
     {
         $count = Empleado::join('persona', 'empleado.idpersona', '=', 'persona.idpersona')
                             ->where('persona.numdocidentific', $numidentific)->count();
 
-        return ($count == 1) ? true : false;
+        return ($count >= 1) ? true : false;
     }
 
 

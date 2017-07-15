@@ -288,20 +288,36 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
     $scope.focusOut = function () {
 
-        if ($scope.documentoidentidadempleado != null && $scope.documentoidentidadempleado != '' && $scope.documentoidentidadempleado != undefined) {
-            $http.get(API_URL + 'empleado/getPersonaByIdentify/' + $scope.documentoidentidadempleado).success(function(response){
+        if ($scope.documentoidentidadempleado !== null && $scope.documentoidentidadempleado !== '' && $scope.documentoidentidadempleado !== undefined) {
 
-                var longitud = response.length;
+            $http.get(API_URL + 'proveedor/searchDuplicate/' + $scope.documentoidentidadempleado).success(function(response){
 
-                if (longitud > 0) {
-                    $scope.idpersona = response[0].idpersona;
+                if (response.success === false) {
+
+                    $http.get(API_URL + 'empleado/getPersonaByIdentify/' + $scope.documentoidentidadempleado).success(function(response){
+
+                        var longitud = response.length;
+
+                        if (longitud > 0) {
+                            $scope.idpersona = response[0].idpersona;
+                        } else {
+                            $scope.idpersona = 0;
+                        }
+
+                    });
+
+                    $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', $scope.documentoidentidadempleado);
+
                 } else {
-                    $scope.idpersona = 0;
+
+                    $scope.message_error = 'Ya existe un proveedor insertado con el mismo Número de Identificación';
+                    $('#modalMessageError').modal('show');
+
                 }
 
             });
 
-            $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', $scope.documentoidentidadempleado);
+
         }
 
     };

@@ -76,12 +76,18 @@ class TransportistaController extends Controller
         return Proveedor::join('persona', 'proveedor.idpersona', '=', 'persona.idpersona')->get();
     }
 
+    public function searchDuplicate($numidentific)
+    {
+        $result = $this->searchExist($numidentific);
+        return response()->json(['success' => $result]);
+    }
+
     private function searchExist($numidentific)
     {
         $count = Transportista::join('persona', 'transportista.idpersona', '=', 'persona.idpersona')
                                 ->where('persona.numdocidentific', $numidentific)->count();
 
-        return ($count == 1) ? true : false;
+        return ($count >= 1) ? true : false;
     }
 
     /**

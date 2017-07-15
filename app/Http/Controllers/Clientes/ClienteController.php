@@ -124,7 +124,6 @@ class ClienteController extends Controller
     public function searchDuplicate($numidentific)
     {
         $result = $this->searchExist($numidentific);
-
         return response()->json(['success' => $result]);
     }
 
