@@ -42,6 +42,18 @@ class PuntoVentaController  extends Controller
         ->get();
     }
 
+    public function getExistEstablecimiento()
+    {
+        $result = SRI_Establecimiento::count();
+
+        if ($result == 0){
+            return response()->json(['success' => false]);
+        } else {
+            return response()->json(['success' => true]);
+        }
+    }
+
+
     public function empleadoVacio()
     {
         //return Empleado::all();

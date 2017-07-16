@@ -8,8 +8,13 @@
 		        <hr>
 
 		    </div>
+
+            <div class="col-xs-12" id="info_alert" style="display: none;">
+                <div class="alert alert-info" role="alert">Debe Ingresar los datos de Establecimiento en Configuración de Sistema...</div>
+            </div>
+
 			<div ng-cloak class="col-xs-12 text-right">
-				<button type="button" class="btn btn-primary" ng-click="toggle('add', 0)">
+				<button type="button" id="btn_add" class="btn btn-primary" ng-click="toggle('add', 0)">
 		            Agregar <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> 
 		        </button>
 			</div>
@@ -18,11 +23,11 @@
 				<table class="table table-responsive table-striped table-hover table-condensed">
 					<thead class="bg-primary">
 						<tr >
-							<th>Nro.</th>
-							<th>Establecimiento</th>
-							<th>Agente de Venta / Empleado</th>
-							<th>Código Emisión</th>
-							<th>Acción</th>							
+							<th>NO.</th>
+							<th>ESTABLECIMIENTO</th>
+							<th>AGENTE DE VENTA / EMPLEADO</th>
+							<th>CODIGO EMISION</th>
+							<th>ACCION</th>
 						</tr>
 
 					</thead>

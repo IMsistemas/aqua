@@ -13,10 +13,26 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
 
 
     $scope.initLoad = function(){
-        $http.get(API_URL + 'puntoventa/getpuntoventas').success(function(response){
-            $scope.puntoventas = response;
+
+        $http.get(API_URL + 'puntoventa/getExistEstablecimiento').success(function(response){
+
+            if (response.success === true) {
+                $('#info_alert').hide();
+                $('#btn_add').prop('disabled', false);
+                $http.get(API_URL + 'puntoventa/getpuntoventas').success(function(response){
+                    $scope.puntoventas = response;
+                });
+
+            } else {
+                $('#info_alert').show();
+                $('#btn_add').prop('disabled', true);
+            }
+
         });
+
+
     };
+
     $scope.verificarEmision = function(){
         $http.get(API_URL + 'puntoventa/verificaremision/'+$scope.codigo).success(function(response){
             if (response.length!=0) {
@@ -51,6 +67,7 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                             return relleno+text;
                         }
                     };
+
     $scope.onlyNumber = function ($event, length, field) {
 
         if (length != undefined) {
@@ -81,10 +98,12 @@ app.controller('puntoventaController', function($scope, $http, API_URL) {
                 $scope.codigo = '';
 
                 $http.get(API_URL + 'puntoventa/verificarvacio').success(function(response){
-                    console.log(response);
-                    if (response === 0) {
-                        $scope.message="Para crear un Punto de Venta primero debe crear un Empleado.";
+                    //console.log(response);
+
+                    if (parseInt(response) === 0) {
+                        $scope.message="Para crear un Punto de Venta primero debe crear al menos un Empleado.";
                         $('#modalEmpleadoVacio').modal('show');
+
                     }else{
                         $http.get(API_URL + 'puntoventa/cargaestablecimiento').success(function(response) {
                             $scope.establecimiento=response[0].razonsocial;

@@ -1090,6 +1090,7 @@ Route::get('puntoventa/verificaremision/{emision}', 'Contabilidad\PuntoVentaCont
 Route::get('puntoventa/cargaestablecimiento', 'Contabilidad\PuntoVentaController@cargaEstablecimiento');
 Route::get('puntoventa/cargarpuntoventa/{id}', 'Contabilidad\PuntoVentaController@cargarPuntoVenta');
 Route::get('puntoventa/verificarvacio', 'Contabilidad\PuntoVentaController@empleadoVacio');
+Route::get('puntoventa/getExistEstablecimiento', 'Contabilidad\PuntoVentaController@getExistEstablecimiento');
 Route::resource('puntoventa', 'Contabilidad\PuntoVentaController');
 
 /*
