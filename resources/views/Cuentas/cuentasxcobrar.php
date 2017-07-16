@@ -146,71 +146,78 @@
                     <h4 class="modal-title">Forma de Cobro </h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="row">
 
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group date">
-                                    <span class="input-group-addon">Fecha Cobro: </span>
-                                    <input type="text" class="datepicker form-control" id="fecharegistro" ng-model="fecharegistro" >
-                                </div>
+                    <form class="form-horizontal" name="formCobro" novalidate="">
+
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Fecha Cobro: </span>
+                                <input type="text" class="form-control datepicker" name="fecharegistro" id="fecharegistro" ng-model="fecharegistro" ng-blur="autoAssignDate()" required >
                             </div>
+                            <span class="help-block error"
+                                  ng-show="formCobro.fecharegistro.$invalid && formCobro.fecharegistro.$touched">La Fecha Registro es requerido</span>
+                        </div>
 
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">No. Comprobante: </span>
-                                    <input type="text" class="form-control" id="nocomprobante" ng-model="nocomprobante" >
-                                </div>
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">No. Comprobante: </span>
+                                <input type="text" class="form-control" name="nocomprobante" id="nocomprobante" ng-model="nocomprobante" required >
                             </div>
+                            <span class="help-block error"
+                                  ng-show="formCobro.nocomprobante.$invalid && formCobro.nocomprobante.$touched">La Fecha Registro es requerido</span>
+                        </div>
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Forma Pago: </span>
-                                    <select class="form-control" name="formapago" id="formapago" ng-model="formapago" ng-required="true"
-                                            ng-options="value.id as value.label for value in listformapago">
-                                    </select>
-                                </div>
-                                <span class="help-block error"
-                                      ng-show="formCompra.formapago.$invalid && formCompra.formapago.$touched">La Forma Pago es requerida</span>
+                        <div class="col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Forma Pago: </span>
+                                <select class="form-control" name="formapago" id="formapago" ng-model="formapago" ng-required="true"
+                                        ng-options="value.id as value.label for value in listformapago" >
+                                </select>
                             </div>
+                            <span class="help-block error"
+                                  ng-show="formCobro.formapago.$invalid && formCobro.formapago.$touched">La Forma Pago es requerida</span>
+                        </div>
 
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">A Cobrar: </span>
-                                    <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
-                                </div>
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">A Cobrar: </span>
+                                <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
                             </div>
+                        </div>
 
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Cobrado: </span>
-                                    <input type="text" class="form-control" id="valorrecibido" ng-model="valorrecibido" >
-                                </div>
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Cobrado: </span>
+                                <input type="text" class="form-control" name="valorrecibido" id="valorrecibido" ng-model="valorrecibido" required />
                             </div>
+                            <span class="help-block error"
+                                  ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
+                        </div>
 
-                            <div class="col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
-                                    <span class="input-group-addon">C. Contab.: </span>
-                                    <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
-                                           ng-required="true" readonly>
-                                    <span class="input-group-btn" role="group">
+                        <div class="col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">C. Contab.: </span>
+                                <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
+                                       ng-required="true" readonly>
+                                <span class="input-group-btn" role="group">
                                     <button type="button" class="btn btn-info" id="btn-pcc" ng-click="showPlanCuenta()">
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </button>
                                 </span>
 
-                                </div>
-                                <span class="help-block error"
-                                      ng-show="formEmployee.cuenta_employee.$error.required">La asignación de una cuenta es requerida</span>
                             </div>
+                            <span class="help-block error"
+                                  ng-show="formCobro.cuenta_employee.$error.required">La asignación de una cuenta es requerida</span>
                         </div>
+
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="saveCobro()">
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="saveCobro()" ng-disabled="formCobro.$invalid">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>

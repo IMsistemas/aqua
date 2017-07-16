@@ -196,6 +196,12 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
      ---------------------------------CUENTAS POR COBRAR-----------------------------------------------------------------
      */
 
+    $scope.autoAssignDate = function () {
+
+        $scope.fecharegistro = $('#fecharegistro').val();
+
+    };
+
     $scope.showPlanCuenta = function () {
 
         $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
@@ -339,6 +345,8 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
     };
 
     $scope.saveCobro = function () {
+
+        $('#btn-ok').prop('disabled', true);
 
         var id = 0;
         var type = '';

@@ -628,8 +628,6 @@ app.controller('facturaController', function($scope, $http, API_URL) {
             }
         }
 
-
-
         $scope.infoCliente(item.suministro.idcliente);
 
         if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {

@@ -201,6 +201,12 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     -----------------------------------------------------------------------------------------------------------------
      */
 
+    $scope.autoAssignDate = function () {
+
+        $scope.fecharegistro = $('#fecharegistro').val();
+
+    };
+
     $scope.infoCliente = function (idcliente) {
         $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ idcliente).success(function(response){
 
@@ -211,6 +217,8 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     };
 
     $scope.saveCobro = function () {
+
+        $('#btn-ok').prop('disabled', true);
 
         var id = 0;
         var type = '';

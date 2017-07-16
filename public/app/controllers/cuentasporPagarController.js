@@ -186,6 +186,12 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
     -----------------------------------------------------------------------------------------------------------------
      */
 
+    $scope.autoAssignDate = function () {
+
+        $scope.fecharegistro = $('#fecharegistro').val();
+
+    };
+
     $scope.infoCliente = function (idcliente) {
         $http.get(API_URL + 'cuentasxpagar/getInfoClienteByID/'+ idcliente).success(function(response){
 
@@ -196,6 +202,8 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
     };
 
     $scope.saveCobro = function () {
+
+        $('#btn-ok').prop('disabled', true);
 
         var descripcion = 'Cuentas x Pagar Factura de Compra';
 
