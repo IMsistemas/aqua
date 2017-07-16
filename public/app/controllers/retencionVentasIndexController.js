@@ -646,26 +646,21 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
          };*/
 
 
-        var dataComprobante = null;
+        var pais = null;
 
-        if ($scope.tipopago != '' && $scope.tipopago != undefined) {
+        if ($scope.paispago != null && $scope.paispago != undefined && $scope.paispago != '') {
+            pais = $scope.paispago;
+        }
 
-            var pais = null;
-
-            if ($scope.paispago != null && $scope.paispago != undefined && $scope.paispago != '') {
-                pais = $scope.paispago;
-            }
-
-            dataComprobante = {
-                tipopago: $scope.tipopago,
-                paispago: pais,
-                regimenfiscal: $scope.regimenfiscal,
-                convenio: $scope.convenio,
-                normalegal: $scope.normalegal,
-                fechaemisioncomprobante: $('#fechaemisioncomprobante').val(),
-                nocomprobante: $('#t_establ').val() + '-' + $('#t_pto').val() + '-' + $('#t_secuencial').val(),
-                noauthcomprobante: $scope.t_nroautorizacion
-            }
+        var dataComprobante = {
+            tipopago: $scope.tipopago,
+            paispago: pais,
+            regimenfiscal: $scope.regimenfiscal,
+            convenio: $scope.convenio,
+            normalegal: $scope.normalegal,
+            fechaemisioncomprobante: $('#fechaemisioncomprobante').val(),
+            nocomprobante: $('#t_establ').val() + '-' + $('#t_pto').val() + '-' + $('#t_secuencial').val(),
+            noauthcomprobante: $scope.t_nroautorizacion
         }
 
         var data_full = {

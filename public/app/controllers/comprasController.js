@@ -815,10 +815,20 @@
             //--Items venta
             var ItemsVenta=[];
             for(x=0;x<$scope.items.length;x++){
+
+                var bodega = null;
+
+                console.log($scope.Bodega);
+
+                if ($scope.Bodega !== '0' || $scope.Bodega !== undefined || $scope.Bodega !== '') {
+                    console.log($scope.Bodega);
+                    bodega = $scope.Bodega;
+                }
+
                 var itemsdocventa={
                     idcatalogitem: $scope.items[x].productoObj.originalObject.idcatalogitem,
                     iddocumentoventa:0,
-                    idbodega: $scope.Bodega,
+                    idbodega: bodega,
                     idtipoimpuestoiva:$scope.items[x].productoObj.originalObject.idtipoimpuestoiva,
                     idtipoimpuestoice:$scope.items[x].productoObj.originalObject.idtipoimpuestoice,
                     cantidad:parseInt($scope.items[x].cantidad),
@@ -852,7 +862,7 @@
                 }
             }
 
-            console.log(dataComprobante);
+
 
             var transaccion_venta_full={
                 DataContabilidad: Contabilidad,
@@ -863,7 +873,7 @@
                 dataComprobante: dataComprobante
             };
 
-            //console.log(transaccion_venta_full);
+            console.log(ItemsVenta);
 
 
 

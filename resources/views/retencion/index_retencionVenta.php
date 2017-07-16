@@ -261,7 +261,7 @@
 
                     </div>
                     <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.t_nrocompra.$invalid && formRteCompras.t_nrocompra.$touched" >El Nro. de Compra es requerido</span>
+                          ng-show="formRteCompras.t_nrocompra.$invalid && formRteCompras.t_nrocompra.$touched" >El Nro. de Venta es requerido</span>
                 </div>
             </div>
 
@@ -313,10 +313,12 @@
                     <div class="input-group">
                         <span class="input-group-addon">Tipo de Pago: </span>
                         <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
-                                ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()">
+                                ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()" required>
                         </select>
 
                     </div>
+                    <span class="help-block error" style="text-align: right !important; color: red;"
+                          ng-show="formRteCompras.tipopago.$invalid && formRteCompras.tipopago.$touched" >El Tipo de Pago es requerido</span>
                 </div>
                 <div class="col-xs-6">
                     <div class="input-group">
@@ -358,6 +360,8 @@
                         <span class="input-group-addon">Fecha Emisión Comprobante: </span>
                         <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" />
                     </div>
+                    <span class="help-block error" style="text-align: right !important; color: red;"
+                          ng-show="formRteCompras.fechaemisioncomprobante.$invalid && formRteCompras.fechaemisioncomprobante.$touched" >La Fecha de Emisión es requerido</span>
                 </div>
 
                 <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
