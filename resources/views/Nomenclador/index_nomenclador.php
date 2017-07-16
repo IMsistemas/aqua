@@ -1,21 +1,14 @@
-<!doctype html>
-<html lang="en" ng-app="softver-aqua">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Configuracion de Nomencladores</title>
 
-    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-
-
-</head>
-
-<body>
 <div ng-controller="NomencladorController" ng-init="CargadataProvincia();">
+
+    <div class="col-xs-12">
+
+        <h4>Gestión de Nomencladores (Catálogos)</h4>
+
+        <hr>
+
+    </div>
+
     <div id="dvTab" style="margin-top: 5px;">
         <ul class="nav nav-tabs" role="tablist">
             <li ng-click="CargadataProvincia()" role="presentation" class="active tabs"><a href="#empresa" aria-controls="empresa" role="tab" data-toggle="tab"> Empresa</a></li>
@@ -1934,27 +1927,3 @@
 
 </div>
 
-</body>
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-
-
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-
-<script src="<?= asset('app/app.js') ?>"></script>
-<script src="<?= asset('app/controllers/nomencladorController.js') ?>"></script>
-
-
-
-</html>
