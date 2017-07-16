@@ -1,7 +1,5 @@
 
 
-
-
 <div ng-controller="comprasController">
 
     <div class="col-xs-12">
@@ -690,14 +688,14 @@
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <span>¿Desea guardar la compra?... </span>
+                    <span>¿Desea guardar la Factura de Compra actual...? </span>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="save()">
+                    <button type="button" class="btn btn-primary" id="btn-save0" ng-click="save()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>

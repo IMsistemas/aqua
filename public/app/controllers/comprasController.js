@@ -594,7 +594,7 @@
 
         $scope.save = function(){
 
-            $('#btn-save').prop('disabled', true);
+            $('#btn-save0').prop('disabled', true);
 
             var Transaccion={
                 fecha:$("#fechaemisioncompra").val(),
@@ -877,7 +877,7 @@
                     console.log(response);
 
                 if (response.success == true) {
-
+                    $('#btn-save').prop('disabled', true);
                     $('#modalConfirmSave').modal('hide');
                     $scope.message = 'Se insertó correctamente la Compra...';
                     $('#modalMessage1').modal('show');
@@ -902,6 +902,7 @@
         };
 
         $scope.confirmSave = function() {
+            $('#btn-save0').prop('disabled', false);
             $('#modalConfirmSave').modal('show');
         };
 
