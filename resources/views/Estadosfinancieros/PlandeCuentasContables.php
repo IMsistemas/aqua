@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html ng-app="softver-aqua">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-    <title>Contabilidad</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-</head>
-<body>
 
 	<div class="container-fluid" ng-controller="Contabilidad" ng-init="LoadTipoTransaccion();" ng-cloak>
+
+        <div class="col-xs-12">
+
+            <h4>Plan de Cuentas</h4>
+
+            <hr>
+
+        </div>
+
 		<div class="row">
+
 			<div class="col-xs-6">
-                <h3><strong>Plan de cuentas</strong></h3>
-                <hr/>
+
                 <div class="row">
                     <div class="col-xs-4">
                         <div class="input-group">
@@ -81,7 +74,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="font-size: 12px;">
                                 <tr ng-repeat="cuenta in CuentasContables | filter:FiltraCuentaPlan " >
                                     <td>
                                         <button class="btn btn-primary btn-sm" ng-click="AgregarCuentahija(cuenta);"><i class="glyphicon glyphicon glyphicon-plus"></i></button>
@@ -91,7 +84,7 @@
                                     <td>{{cuenta.aux_jerarquia}}</td>
                                     <td>{{cuenta.concepto}}</td>
                                     <td>{{cuenta.codigosri}}</td>
-                                    <td>{{formato_dinero(cuenta.balance,"$")}}</td>
+                                    <td class="text-right">{{formato_dinero(cuenta.balance,"$")}}</td>
                                     <td>
                                       <button ng-click="RegistroContableCuenta(cuenta);"; class="btn btn-primary btn-sm" ng-show="cuenta.madreohija=='1' " ng-hide=" cuenta.madreohija!='1' ">
                                         <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -107,7 +100,7 @@
 
             <!--Registro-->
             <div class="col-xs-6">
-            <br/><br/><br/>
+
               <div class="row">
                 <div class="col-xs-1">
                   <button class="btn btn-primary" ng-click="AddAsientoContable();">Agregar  Asiento contable <i class="glyphicon glyphicon-plus"></i></button>
@@ -161,7 +154,7 @@
                         <th>Saldo</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 12px;">
                       <tr ng-repeat=" registro in RegistroCuentaContable">
                         <td>{{$index+1}}</td>
                         <td>
@@ -193,411 +186,369 @@
 		</div>
 
 
+        <div class="modal fade" id="AddCCMadre" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Cuenta Madre</h4>
+              </div>
+              <div class="modal-body">
 
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Concepto: </span>
+                              <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
 
-
-<div class="modal fade" id="AddCCMadre" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Agregar Cuenta Madre</h4>
-      </div>
-      <div class="modal-body">
-    
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Concepto: </span>
-                      <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
-                      
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Codigo : </span>
+                              <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Codigo : </span>
-                      <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Tipo Estado Financiero: </span>
+                              <select class="form-control input-sm" ng-model="TipoestadoF">
+                                  <option value="E">Estado De Resultados</option>
+                                  <option value="B">Balance</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Tipo De Cueta: </span>
+                              <select class="form-control input-sm" ng-model="TipoCuenta">
+                                  <option value="">Seleccione</option>
+                                  <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="A">Activos</option>
+                                  <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="P">Pasivos</option>
+                                  <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="PT">Patrimonio</option>
+                                  <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="I">Ingresos</option>
+                                  <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="C">Costos</option>
+                                  <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="G">Gastos</option>
+                              </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-success" ng-click="GuardarCCMadre();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+              </div>
             </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Tipo Estado Financiero: </span>
-                      <select class="form-control input-sm" ng-model="TipoestadoF">
-                          <option value="E">Estado De Resultados</option>
-                          <option value="B">Balance</option>
-                      </select>
+          </div>
+        </div>
+
+        <div class="modal fade" id="AddCCNodo" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Cuenta Contable</h4>
+              </div>
+              <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Concepto: </span>
+                              <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
+
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Codigo : </span>
+                              <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Tipo De Cueta: </span>
-                      <select class="form-control input-sm" ng-model="TipoCuenta">
-                          <option value="">Seleccione</option>
-                          <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="A">Activos</option>
-                          <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="P">Pasivos</option>
-                          <option ng-show="TipoestadoF=='B'" ng-hide="TipoestadoF=='E'" value="PT">Patrimonio</option>
-                          <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="I">Ingresos</option>
-                          <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="C">Costos</option>
-                          <option ng-show="TipoestadoF=='E'" ng-hide="TipoestadoF=='B'" value="G">Gastos</option>
-                      </select>
-                    </div>
-                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-success" ng-click="GuardarCCNodo();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+              </div>
             </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="GuardarCCMadre();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
+          </div>
+        </div>
 
+        <div class="modal fade" id="ModifyCCNodo" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modificar Cuenta Contable</h4>
+              </div>
+              <div class="modal-body">
 
-<div class="modal fade" id="AddCCNodo" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Agregar Cuenta Contable</h4>
-      </div>
-      <div class="modal-body">
-    
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Concepto: </span>
-                      <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
-                      
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Concepto: </span>
+                              <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
+
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">Codigo : </span>
+                              <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Codigo : </span>
-                      <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
-                    </div>
-                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-success" ng-click="GuardarModificacionNodo();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+              </div>
             </div>
+          </div>
+        </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="GuardarCCNodo();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="ModifyCCNodo" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modificar Cuenta Contable</h4>
-      </div>
-      <div class="modal-body">
-    
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Concepto: </span>
-                      <input type="type" class="form-control   input-sm"  ng-model="ConceptoCCM" >
-                      
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">Codigo : </span>
-                      <input type="type" class="form-control   input-sm" ng-model="CodigoSRICCM">
-                    </div>
-                </div>
+        <div class="modal fade" id="msm" style="z-index: 8000;" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary" id="titulomsm">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mensaje</h4>
+              </div>
+              <div class="modal-body">
+                <strong>{{Mensaje}}</strong>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+              </div>
             </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-click="GuardarModificacionNodo();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<div class="modal fade" id="msm" style="z-index: 8000;" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary" id="titulomsm">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Mensaje</h4>
-      </div>
-      <div class="modal-body">
-        <strong>{{Mensaje}}</strong>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="msmBorarCC" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header btn-danger" id="titulomsm">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Mensaje De Validación</h4>
-      </div>
-      <div class="modal-body">
-        <strong>Esta seguro de borrar</strong>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-danger" ng-click="okBorrarCuenta();" >Eliminar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="modal fade" id="PlanContable" style="z-index: 5000;" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header btn-primary" id="titulomsm">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Plan de cuentas contables</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group  has-feedback">
-            <input type="text" class="form-control" id="" ng-model="FiltraCuenta" placeholder="Buscar" >
-            <span class="glyphicon glyphicon-search form-control-feedback" ></span>
-          </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <table class="table table-bordered table-condensed">
-              <thead>
-                <tr class="btn-primary">
-                  <th></th>
-                  <th>Descripción</th>
-                  <th>Codigo </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="cuenta in aux_plancuentas | filter:FiltraCuenta">
-                  <td>{{cuenta.aux_jerarquia}}</td>
-                  <td>{{cuenta.concepto}}</td>
-                  <td>{{cuenta.codigosri}}</td>
-                  <td>
-                      <input ng-show="cuenta.madreohija=='1' " ng-hide="cuenta.madreohija!='1' " type="checkbox" name="" ng-click="AsignarCuentaContable(cuenta);">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-primary" ng-click="AsignarCuentaContable();" >Aceptar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="modal fade" id="AddAsc" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Agregar Asiento Contable</h4>
-      </div>
-      <div class="modal-body">
-      
-      <div class="row">
-        <div class="col-xs-4">
-          <div class="input-group">
-            <span class="input-group-addon">Fecha : </span>
-            <input type="type" class="form-control datepicker  input-sm" id="FechaIASC" ng-model="FechaIASC">
-          </div>
-        </div>
-        <div class="col-xs-6">
-          <div class="input-group">
-            <span class="input-group-addon">Transacción: </span>
-            <select ng-disabled="EstadoSave=='M'"  class="form-control" id="tipotransaccion" ng-model="tipotransaccion" ng-change="NumeroComprobante();">
-              <option value="">Seleccione</option>
-              <option ng-repeat=" transaccion in listatipotransaccion" value="{{transaccion.idtipotransaccion}}">{{transaccion.descripcion +" "+ transaccion.cont_tipoingresoegreso.descripcion}}</option>
-            </select>
           </div>
         </div>
 
-
-      </div>
-
-      <div class="row">
-        <div class="col-xs-4">
-          <div class="input-group">
-            <span class="input-group-addon">Numero De comprobante: </span>
-            <input type="number" class="form-control   input-sm"   ng-model="NumeroIASC" readonly>
+        <div class="modal fade" id="msmBorarCC" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header btn-danger" id="titulomsm">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mensaje De Validación</h4>
+              </div>
+              <div class="modal-body">
+                <strong>Esta seguro de borrar</strong>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-danger" ng-click="okBorrarCuenta();" >Eliminar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col-xs-6">
-          <div class="input-group">
-            <span class="input-group-addon">Descripción: </span>
-            <input type="type" class="form-control   input-sm"  ng-model="DescripcionASC">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-4">
-          <button ng-disabled="EstadoSave=='M'"  ng-click="AddIntemCotable()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <table class="table table-bordered table-condensed">
-            <thead>
-              <tr class="bg-primary">
-                <th></th>
-                <th></th>
-                <th>Cuenta</th>
-                <th>Debe</th>
-                <th>Haber</th>
-                <th>Descripción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="registro in RegistroC">
-                <td>
-                  <button ng-disabled="EstadoSave=='M'"  class="btn btn-danger" ng-click="BorrarFilaAsientoContable(registro);"><i class="glyphicon glyphicon-trash"></i></button>
-                </td>
-                <td>
-                  <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.aux_jerarquia" readonly>
-                </td>
-                <td>
-                  <div class="input-group">
-                    <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.idplancuenta">
-                    <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.tipocuenta">
-                    <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.controlhaber">
-                    <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.concepto" readonly>
-                    <span ng-disabled="EstadoSave=='M'" ng-click="BuscarCuentaContable(registro);" class="btn btn-info input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        <div class="modal fade" id="PlanContable" style="z-index: 5000;" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header btn-primary" id="titulomsm">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Plan de cuentas contables</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="form-group  has-feedback">
+                    <input type="text" class="form-control" id="" ng-model="FiltraCuenta" placeholder="Buscar" >
+                    <span class="glyphicon glyphicon-search form-control-feedback" ></span>
                   </div>
-                </td>
-                <td>
-                    <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Debe" ng-keyup="SumarDebeHaber();">
-                </td>
-                <td>
-                    <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Haber" ng-keyup="SumarDebeHaber();">
-                </td>
-                <td>
-                    <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Descipcion">
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th colspan="3" class="text-right"> Diferencia: </th>
-                <th>{{formato_dinero(aux_sumdebedif,"$")}}</th>
-                <th>{{formato_dinero(aux_sumhaberdif,"$")}}</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th colspan="3" class="text-right"> Total: </th>
-                <th>{{formato_dinero(aux_sumdebe,"$")}}</th>
-                <th>{{formato_dinero(aux_sumhaber,"$")}}</th>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-success" ng-disabled="EstadoAsc=='An' "   ng-click="AsientoContable();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="modal fade" data-backdrop="static" data-keyboard="false" style="z-index: 9999999;" tabindex="-1" id="procesarinfomracion" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      
-      <div class="modal-body">
-
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-            <span > Procesando </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <table class="table table-bordered table-condensed">
+                      <thead>
+                        <tr class="btn-primary">
+                          <th></th>
+                          <th>Descripción</th>
+                          <th>Codigo </th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="cuenta in aux_plancuentas | filter:FiltraCuenta">
+                          <td>{{cuenta.aux_jerarquia}}</td>
+                          <td>{{cuenta.concepto}}</td>
+                          <td>{{cuenta.codigosri}}</td>
+                          <td>
+                              <input ng-show="cuenta.madreohija=='1' " ng-hide="cuenta.madreohija!='1' " type="checkbox" name="" ng-click="AsignarCuentaContable(cuenta);">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-primary" ng-click="AsignarCuentaContable();" >Aceptar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
+              </div>
+            </div>
           </div>
-      </div>
+        </div>
 
-      </div>
-      
-    </div>
-  </div>
-</div>
+        <div class="modal fade" id="AddAsc" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Asiento Contable</h4>
+              </div>
+              <div class="modal-body">
 
-<div class="modal fade" id="BorraTransaccion" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header btn-danger">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Mensaje De Validación</h4>
-      </div>
-      <div class="modal-body">
-        <strong>Está Seguro De Anular La Transacción  Contable</strong>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon-ban-circle"></i></button>
-        <button type="button" class="btn btn-danger" ng-click="ConfirmarBorrarTransaccion();">Anular <i class="glyphicon glyphicon-ban-circle"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">Fecha : </span>
+                    <input type="type" class="form-control datepicker  input-sm" id="FechaIASC" ng-model="FechaIASC">
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">Transacción: </span>
+                    <select ng-disabled="EstadoSave=='M'"  class="form-control" id="tipotransaccion" ng-model="tipotransaccion" ng-change="NumeroComprobante();">
+                      <option value="">Seleccione</option>
+                      <option ng-repeat=" transaccion in listatipotransaccion" value="{{transaccion.idtipotransaccion}}">{{transaccion.descripcion +" "+ transaccion.cont_tipoingresoegreso.descripcion}}</option>
+                    </select>
+                  </div>
+                </div>
 
 
+              </div>
 
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">Numero De comprobante: </span>
+                    <input type="number" class="form-control   input-sm"   ng-model="NumeroIASC" readonly>
+                  </div>
+                </div>
+
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">Descripción: </span>
+                    <input type="type" class="form-control   input-sm"  ng-model="DescripcionASC">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4">
+                  <button ng-disabled="EstadoSave=='M'"  ng-click="AddIntemCotable()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <table class="table table-bordered table-condensed">
+                    <thead>
+                      <tr class="bg-primary">
+                        <th></th>
+                        <th></th>
+                        <th>Cuenta</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                        <th>Descripción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="registro in RegistroC">
+                        <td>
+                          <button ng-disabled="EstadoSave=='M'"  class="btn btn-danger" ng-click="BorrarFilaAsientoContable(registro);"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                        <td>
+                          <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.aux_jerarquia" readonly>
+                        </td>
+                        <td>
+                          <div class="input-group">
+                            <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.idplancuenta">
+                            <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.tipocuenta">
+                            <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.controlhaber">
+                            <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.concepto" readonly>
+                            <span ng-disabled="EstadoSave=='M'" ng-click="BuscarCuentaContable(registro);" class="btn btn-info input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                          </div>
+                        </td>
+                        <td>
+                            <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Debe" ng-keyup="SumarDebeHaber();">
+                        </td>
+                        <td>
+                            <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Haber" ng-keyup="SumarDebeHaber();">
+                        </td>
+                        <td>
+                            <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Descipcion">
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th colspan="3" class="text-right"> Diferencia: </th>
+                        <th>{{formato_dinero(aux_sumdebedif,"$")}}</th>
+                        <th>{{formato_dinero(aux_sumhaberdif,"$")}}</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <th colspan="3" class="text-right"> Total: </th>
+                        <th>{{formato_dinero(aux_sumdebe,"$")}}</th>
+                        <th>{{formato_dinero(aux_sumhaber,"$")}}</th>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-success" ng-disabled="EstadoAsc=='An' "   ng-click="AsientoContable();">Guardar <i class="glyphicon glyphicon glyphicon-floppy-saved"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" style="z-index: 9999999;" tabindex="-1" id="procesarinfomracion" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <div class="modal-body">
+
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span > Procesando </span>
+                  </div>
+              </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="BorraTransaccion" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header btn-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mensaje De Validación</h4>
+              </div>
+              <div class="modal-body">
+                <strong>Está Seguro De Anular La Transacción  Contable</strong>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon-ban-circle"></i></button>
+                <button type="button" class="btn btn-danger" ng-click="ConfirmarBorrarTransaccion();">Anular <i class="glyphicon glyphicon-ban-circle"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
 
 	</div>
-
-
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-    <script src="<?= asset('js/menuLateral.js') ?>"></script>
-    <script src="<?= asset('js/moment.min.js') ?>"></script>
-    <script src="<?= asset('js/es.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-
-
-    <script src="<?= asset('app/app.js') ?>"></script>
-    <script src="<?= asset('app/controllers/EstadosFinancieros.js') ?>"></script>
-</body>
-</html>
