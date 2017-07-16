@@ -694,6 +694,8 @@ Route::get('catalogoproducto/getImpuestoICE', 'CatalogoProductos\CatalogoProduct
 Route::get('catalogoproducto/getImpuestoIVA', 'CatalogoProductos\CatalogoProductoController@getImpuestoIVA');
 Route::get('catalogoproducto/getCatalogoItems', 'CatalogoProductos\CatalogoProductoController@getCatalogoItems');
 
+Route::get('catalogoproducto/getIVADefault', 'CatalogoProductos\CatalogoProductoController@getIVADefault');
+
 Route::resource('catalogoproducto', 'CatalogoProductos\CatalogoProductoController');
 
 

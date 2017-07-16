@@ -129,9 +129,21 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                             array_temp.push({label: response[i].nombrecategoria, id: response[i].jerarquia})
                         }
                         $scope.lineas = array_temp;
-                        $scope.s_linea = ''; 
-                        $scope.producto.idcategoria = ''; 
-                        $('#modalAction').modal('show');
+                        $scope.s_linea = '';
+
+                        $http.get(API_URL + 'cliente/getIVADefault').success(function(response){
+
+                            if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                                $scope.producto.idtipoimpuestoiva = parseInt(response[0].optionvalue);
+                            }
+
+                            $scope.producto.idcategoria = '';
+                            $('#modalAction').modal('show');
+
+
+                        });
+
+
                     });
                 });
 

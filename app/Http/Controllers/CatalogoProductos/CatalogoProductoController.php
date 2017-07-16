@@ -65,6 +65,11 @@ class CatalogoProductoController extends Controller
     {
         return Cont_ClaseItem::orderBy('nameclaseitem', 'asc')->get();
     }
+
+    public function getIVADefault()
+    {
+        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+    }
     
     /**
      * Obtener las lineas para filtro
