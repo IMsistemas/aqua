@@ -223,31 +223,45 @@
                         $scope.imp_iva = array_temp;
                         $scope.iva = '';
 
-                        $scope.t_codigocliente = 0;
-                        $scope.t_fecha_ingreso = $scope.nowDate();
 
-                        $scope.idcliente = 0;
-                        $scope.documentoidentidadempleado = '';
-                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
-                        $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
-                        $scope.idpersona = 0;
-                        $scope.apellido = '';
-                        $scope.nombre = '';
-                        $scope.telefonoprincipal = '';
-                        $scope.telefonosecundario = '';
-                        $scope.celular = '';
-                        $scope.direccion = '';
-                        $scope.telefonoprincipaltrabajo = '';
-                        $scope.telefonosecundariotrabajo = '';
-                        $scope.direcciontrabajo = '';
-                        $scope.correo = '';
-                        $scope.cuenta_employee = '';
+                        $http.get(API_URL + 'cliente/getIVADefault').success(function(response){
 
-                        $scope.select_cuenta = null;
+                            if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                                $scope.iva = parseInt(response[0].optionvalue);
+                            }
 
-                        $scope.title_modal_cliente = 'Nuevo Cliente';
 
-                        $('#modalAddCliente').modal('show');
+
+                            $scope.t_codigocliente = 0;
+                            $scope.t_fecha_ingreso = $scope.nowDate();
+
+                            $scope.idcliente = 0;
+                            $scope.documentoidentidadempleado = '';
+                            $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
+                            $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
+                            $scope.idpersona = 0;
+                            $scope.apellido = '';
+                            $scope.nombre = '';
+                            $scope.telefonoprincipal = '';
+                            $scope.telefonosecundario = '';
+                            $scope.celular = '';
+                            $scope.direccion = '';
+                            $scope.telefonoprincipaltrabajo = '';
+                            $scope.telefonosecundariotrabajo = '';
+                            $scope.direcciontrabajo = '';
+                            $scope.correo = '';
+                            $scope.cuenta_employee = '';
+
+                            $scope.select_cuenta = null;
+
+                            $scope.title_modal_cliente = 'Nuevo Cliente';
+
+                            $('#modalAddCliente').modal('show');
+
+                        });
+
+
+
 
                     });
 
@@ -307,7 +321,7 @@
                     if (response.success === true) {
                         $scope.initLoad(1);
                         $scope.message = 'Se guardó correctamente la información del Cliente...';
-                        //$('#modalAddCliente').modal('hide');
+                        $('#modalAddCliente').modal('hide');
                         $('#modalMessage').modal('show');
                         $scope.hideModalMessage();
                     }

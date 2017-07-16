@@ -89,6 +89,11 @@ class ClienteController extends Controller
             ->get();
     }
 
+    public function getIVADefault()
+    {
+        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+    }
+
     /**
      * Obtener y devolver la persona que cumpla con el numero de identificacion buscado
      *

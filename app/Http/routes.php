@@ -224,7 +224,7 @@ Route::get('cliente/getTipoIdentificacion', 'Clientes\ClienteController@getTipoI
 Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA');
 Route::get('cliente/getPersonaByIdentify/{identify}', 'Clientes\ClienteController@getPersonaByIdentify');
 Route::get('cliente/getIdentify/{identify}', 'Clientes\ClienteController@getIdentify');
-
+Route::get('cliente/getIVADefault', 'Clientes\ClienteController@getIVADefault');
 Route::get('cliente/searchDuplicate/{identify}', 'Clientes\ClienteController@searchDuplicate');
 
 Route::resource('/cliente', 'Clientes\ClienteController');
