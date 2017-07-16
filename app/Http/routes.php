@@ -429,6 +429,7 @@ Route::get('departamento/getDepartamentos', 'Nomina\DepartamentoController@getDe
 Route::resource('/departamento', 'Nomina\DepartamentoController');
 
 Route::get('cargo/getCargos', 'Nomina\CargoController@getCargos');
+Route::get('cargo/getExistDepartament', 'Nomina\CargoController@getExistDepartament');
 Route::get('cargo/getCargoByID/{id}', 'Nomina\CargoController@getCargoByID');
 Route::resource('/cargo', 'Nomina\CargoController');
 

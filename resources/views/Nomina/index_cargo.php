@@ -20,18 +20,25 @@
             </div>
 
             <div class="col-sm-6 col-xs-4">
-                <button type="button" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">
+                <button type="button" id="btnAgregar" class="btn btn-primary" style="float: right;" ng-click="toggle('add', 0)">
                     Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="alert alert-info" role="alert" id="message-positions" style="display: none;">
+                    <span style="font-weight: bold;">INFORMACION: </span>
+                    Para Administrar Cargos, se necesita crear Departamentos primeramente...
+                </div>
             </div>
 
             <div class="col-xs-12">
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                     <tr>
-                        <th>Nombre Cargo</th>
-                        <th>Departamento</th>
-                        <th style="width: 200px;">Acciones</th>
+                        <th>NOMBRE CARGO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th style="width: 200px;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>

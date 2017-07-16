@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Nomina;
 
 use App\Modelos\Nomina\Cargo;
+use App\Modelos\Nomina\Departamento;
 use App\Modelos\Nomina\Empleado;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,17 @@ class CargoController extends Controller
         }
 
         return $cargo->paginate(10);
+    }
+
+    public function getExistDepartament()
+    {
+        $result = Departamento::count();
+
+        if ($result === 0) {
+            return response()->json(['success' => false]);
+        } else {
+            return response()->json(['success' => true]);
+        }
     }
 
     /**

@@ -12,6 +12,8 @@ app.controller('cargosController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(pageNumber){
 
+        $scope.searchDepartament();
+
         if ($scope.busqueda == undefined) {
             var search = null;
         } else var search = $scope.busqueda;
@@ -26,7 +28,19 @@ app.controller('cargosController', function($scope, $http, API_URL) {
         });
     };
 
-    
+    $scope.searchDepartament = function(){
+        $http.get(API_URL + 'cargo/getExistDepartament').success(function(response){
+
+            if(response.success === false){
+                $('#btnAgregar').prop('disabled', true);
+                $('#message-positions').show();
+            } else {
+                $('#btnAgregar').prop('disabled', false);
+                $('#message-positions').hide();
+            }
+
+        });
+    };
 
     $scope.toggle = function(modalstate, id) {
         $scope.modalstate = modalstate;

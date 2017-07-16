@@ -137,7 +137,6 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.idtipoidentificacion = array_temp;
                     $scope.tipoidentificacion = '';
 
-
                     $scope.documentoidentidadempleado = '';
                     $('#documentoidentidadempleado').val('');
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', ' ');

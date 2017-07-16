@@ -29,8 +29,8 @@
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
-                    <th>Nombre Departamento</th>
-                    <th style="width: 200px;">Acciones</th>
+                    <th>NOMBRE DEPARTAMENTO</th>
+                    <th style="width: 200px;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
