@@ -561,8 +561,48 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane fade" id="cont_nomina">
-
-
+                                <div class="col-xs-8 text-center">
+                                    <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                        <thead class="bg-primary">
+                                        <tr>
+                                            <th style="width: 50%;">CONCEPTO DE PAGO</th>
+                                            <th style="width: 50%;">ASIGNAR CUENTA</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Salario Basico</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="sueldobasico" id="sueldobasico" ng-model="sueldobasico" placeholder="Cuenta Contable"
+                                                           readonly>
+                                                    <input type="hidden" name="sueldobasico_h" id="sueldobasico_h" ng-model="sueldobasico_h">
+                                                    <input type="hidden" name="id_sueldobasico_h" id="id_sueldobasico_h" ng-model="id_sueldobasico_h">
+                                                    <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuenta('sueldobasico', 'sueldobasico_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in conceptos" ng-cloak >
+                                            <td>{{item.name_conceptospago}}</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
+                                                           readonly>
+                                                    <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuenta(item)">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <div class="col-xs-12 text-center" style="margin-top: 5px;">
 

@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConfigNomina extends Model
 {
-    //
+    protected $table = 'confignomina';
+    protected $primaryKey = 'id_confignomina';
 }

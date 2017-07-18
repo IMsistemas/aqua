@@ -4,6 +4,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.idestablecimiento = 0;
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
+    var field = '';
 
     $scope.initLoad = function () {
 
@@ -16,6 +17,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getConfigVenta();
 
         $scope.getConfigNC();
+
+        $scope.getConceptos();
 
         $scope.getConfigEspecifica();
 
@@ -490,7 +493,41 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
-    $scope.getConfigEspecifica = function () {
+    $scope.getConceptos = function () {
+
+        $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
+            var longitud = response.length;
+            console.log(response);
+            var array_temp = [];
+            for(var i = 0; i < longitud; i++){
+                if (response[i].id_categoriapago === 1 && response[i].grupo !== "1"){
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                    array_temp.push(response[i]);
+                }
+                if (response[i].id_categoriapago !== 1){
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                    array_temp.push(response[i]);
+                }
+            }
+            $scope.conceptos = array_temp;
+
+        });
+    };
+
+    //-----------------------------------------------------------------------------------------------------------------
+     $scope.getConfigEspecifica = function () {
         $http.get(API_URL + 'configuracion/getConfigEspecifica').success(function(response){
 
             var longitud = response.length;
@@ -767,6 +804,17 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
+    $scope.showPlanCuenta = function (item) {
+
+        field = item;
+
+        $http.get(API_URL + 'rolPago/getPlanCuenta').success(function(response){
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
     $scope.showPlanCuenta = function (field_concepto, field_id) {
 
         $scope.fieldconcepto = field_concepto;
@@ -792,17 +840,22 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     };
 
     $scope.selectCuenta = function () {
+        if(field !== ''){
+            var selected = $scope.select_cuenta;
+            field.cuenta = selected.concepto;
 
-        var selected = $scope.select_cuenta;
+            $('#modalPlanCuenta').modal('hide');
+        }else{
+            var selected = $scope.select_cuenta;
 
-        var fieldconcepto = $parse($scope.fieldconcepto);
-        fieldconcepto.assign($scope, selected.concepto);
+            var fieldconcepto = $parse($scope.fieldconcepto);
+            fieldconcepto.assign($scope, selected.concepto);
 
-        var fieldid = $parse($scope.fieldid);
-        fieldid.assign($scope, selected.idplancuenta);
+            var fieldid = $parse($scope.fieldid);
+            fieldid.assign($scope, selected.idplancuenta);
 
-        $('#modalPlanCuenta').modal('hide');
-
+            $('#modalPlanCuenta').modal('hide');
+        }
     };
 
     $scope.click_radio = function (item) {
