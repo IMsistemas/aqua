@@ -222,7 +222,7 @@
         <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirm">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header modal-header-info">
+                    <div class="modal-header modal-header-primary">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Confirmación</h4>
                     </div>
@@ -234,7 +234,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save()">
+                        <button type="button" class="btn btn-primary" id="btn-save" ng-click="save()">
                             Aceptar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                         </button>
                     </div>
@@ -262,7 +262,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <p style="font-size: 12px !important; font-weight: bold;" id="text-demo-load">
-                            ESPERE POR FAVOR!, ESTAMOS GUARDANDO LA LECTURA, CREANDO CORREO A ENVIAR.....
+                            ESPERE POR FAVOR!, SE ESTA PROCESANDO LA LECTURA....
                         </p>
                         <div class="row" style="padding: 5px;">
                             <div class="progress">

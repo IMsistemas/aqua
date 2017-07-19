@@ -189,7 +189,7 @@
                             <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
                                     <span class="input-group-addon">Bodega: </span>
-                                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " ng-required="true">
+                                    <select class="form-control" name="Bodega" id="Bodega" ng-model="Bodega" ng-change=" Validabodegaprodct='0' " >
                                         <option value="">-- Seleccione --</option>
                                         <option ng-repeat="b in Bodegas" value="{{b.idbodega}}">{{b.namebodega+" "+b.observacion}}</option>
                                     </select>
@@ -395,47 +395,47 @@
                         <tbody>
                         <tr>
                             <td style="width: 60%;">SubTotal con Impuesto</td>
-                            <td>{{Subtotalconimpuestos}}</td>
+                            <td class="text-right">{{Subtotalconimpuestos}}</td>
                         </tr>
                         <tr>
                             <td>SubTotal 0%</td>
-                            <td>{{Subtotalcero}}</td>
+                            <td class="text-right">{{Subtotalcero}}</td>
                         </tr>
                         <tr>
                             <td>SubTotal No Objeto IVA</td>
-                            <td>{{Subtotalnobjetoiva}}</td>
+                            <td class="text-right">{{Subtotalnobjetoiva}}</td>
                         </tr>
                         <tr>
                             <td>SubTotal Exento IVA</td>
-                            <td>{{Subototalexentoiva}}</td>
+                            <td class="text-right">{{Subototalexentoiva}}</td>
                         </tr>
                         <tr>
                             <td>SubTotal Sin Impuestos</td>
-                            <td>{{Subtotalsinimpuestos}}</td>
+                            <td class="text-right">{{Subtotalsinimpuestos}}</td>
                         </tr>
                         <tr>
                             <td>Total Descuento</td>
-                            <td>{{Totaldescuento}}</td>
+                            <td class="text-right">{{Totaldescuento}}</td>
                         </tr>
                         <tr>
                             <td>ICE</td>
-                            <td><input type="text" class="form-control input-sm" id="ValICE"  ng-model="ValICE"  /></td>
+                            <td><input type="text" class="text-right form-control input-sm" id="ValICE"  ng-model="ValICE"  /></td>
                         </tr>
                         <tr>
                             <td>IVA</td>
-                            <td><input type="text" class="form-control input-sm" id="ValIVA"  ng-model="ValIVA" /></td>
+                            <td><input type="text" class="text-right form-control input-sm" id="ValIVA"  ng-model="ValIVA" /></td>
                         </tr>
                         <tr>
                             <td>IRBPNR</td>
-                            <td><input type="text" class="form-control input-sm" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
+                            <td><input type="text" class="text-right form-control input-sm" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
                         </tr>
                         <tr>
                             <td>PROPINA</td>
-                            <td><input type="text" class="form-control input-sm" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
+                            <td><input type="text" class="text-right form-control input-sm" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
                         </tr>
                         <tr>
                             <td>VALOR TOTAL</td>
-                            <td>{{ValorTotal}}</td>
+                            <td class="text-right">{{ValorTotal}}</td>
                         </tr>
                         </tbody>
                     </table>

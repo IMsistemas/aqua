@@ -674,7 +674,7 @@
 
                 <div role="tabpanel" class="tab-pane fade" id="especifica" style="padding-top: 10px;">
 
-                    <form class="form-horizontal" name="formEspecifica" novalidate="">
+                    <form class="form-horizontal" name="formEspecifica0" novalidate="">
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
@@ -685,7 +685,7 @@
                                 <input type="hidden" name="h_ayora_dividendos" id="h_ayora_dividendos" ng-model="h_ayora_dividendos" >
                             </div>
                             <span class="help-block error"
-                              ng-show="formEspecifica.t_ayora_dividendos.$invalid && formEspecifica.t_ayora_dividendos.$touched">Dividendos es requerido</span>
+                              ng-show="formEspecifica0.t_ayora_dividendos.$invalid && formEspecifica0.t_ayora_dividendos.$touched">Dividendos es requerido</span>
                         </div>
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -697,7 +697,7 @@
                                 <input type="hidden" name="h_ayora_tasainteres" id="h_ayora_tasainteres" ng-model="h_ayora_tasainteres" >
                             </div>
                             <span class="help-block error"
-                              ng-show="formEspecifica.t_ayora_tasainteres.$invalid && formEspecifica.t_ayora_tasainteres.$touched">Tasa Interés es requerida</span>
+                              ng-show="formEspecifica0.t_ayora_tasainteres.$invalid && formEspecifica0.t_ayora_tasainteres.$touched">Tasa Interés es requerida</span>
                         </div>
 
                         <!--<div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
@@ -718,7 +718,7 @@
                         <button type="button" class="btn btn-default" ng-click="getConfigEspecifica()">
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigEspecifica()"  ng-disabled="formEspecifica.$invalid">
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigEspecifica()"  ng-disabled="formEspecifica0.$invalid">
                             Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                         </button>
 
