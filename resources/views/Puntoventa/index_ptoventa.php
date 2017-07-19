@@ -33,9 +33,9 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="puntoventa in puntoventas" >
-							<td>{{puntoventa.idpuntoventa}}</td>
+							<td>{{$index + 1}}</td>
 							<td>{{puntoventa.razonsocial}}</td>
-							<td>{{puntoventa.namepersona+' '+puntoventa.lastnamepersona}}</td>
+							<td>{{puntoventa.namepersona + ' ' + puntoventa.lastnamepersona}}</td>
 							<td>{{puntoventa.codigoptoemision}}</td>
 							<td>
 								<button type="button" class="btn btn-warning">

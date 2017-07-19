@@ -1,3 +1,4 @@
+
 app.controller('mainController',function($scope, $http, API_URL) {
 
     $scope.titulo = "Inicio";
@@ -111,11 +112,6 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "barrio";
 
     }
-	/*$scope.toModuloCalle = function(idbarrio,nombrebarrio){
-	 $scope.idbarrio = idbarrio;
-	 $scope.titulo = "Tranversales Barrio: ".concat(nombrebarrio);
-	 $scope.toModulo = "calles";
-	 }*/
 
     $scope.toModuloCalle = function(){
         $scope.titulo = "Tranversales";
