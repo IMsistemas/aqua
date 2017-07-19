@@ -32,7 +32,9 @@
                                 <button class="btn btn-primary btn-lg btn-block" ng-click="verifyLogin()">ENTRAR</button>
                             </div>
 
-                            <div class="col-xs-12" id="view-failed-login" style="margin-top: 10px; display: none;">{{text_failed}}</div>
+                            <div class="col-xs-12" id="view-failed-login" style="margin-top: 10px; display: none;">
+                                <div class="alert alert-danger" style="font-weight: bold;" role="alert">{{text_failed}}</div>
+                            </div>
 
                         </div>
                     </div>
