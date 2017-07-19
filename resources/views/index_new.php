@@ -115,8 +115,8 @@
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Inventario</a>
                                         <ul class="dropdown-menu">
                                             <li id="permiso_6"><a tabindex="-1" href="#" ng-click="toModuloCrearBodegas();">Bodega</a></li>
+                                            <li id="permiso_8"><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio (Categorías)</a></li>
                                             <li id="permiso_7"><a href="#" ng-click="toModuloCatalogoProductos();">Catálogo Item</a></li>
-                                            <li id="permiso_8"><a href="#" ng-click="toModuloPortafolioProductos();">Portafolio</a></li>
                                             <li id="permiso_9"><a href="#" ng-click="toModuloInventario();">Registro Inventario y Kardex</a></li>
                                         </ul>
                                     </li>
