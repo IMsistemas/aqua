@@ -724,9 +724,13 @@ $scope.cmb_estado_fact="A";
 
             console.log($scope.Bodega);
 
-            if ($scope.Bodega !== '0' || $scope.Bodega !== undefined || $scope.Bodega !== '') {
+            if ($scope.Bodega !== '0' || $scope.Bodega !== undefined || $scope.Bodega.trim() !== '') {
                 console.log($scope.Bodega);
                 bodega = $scope.Bodega;
+            }
+
+            if (bodega == '') {
+                bodega = null;
             }
 
     		var itemsdocventa={
