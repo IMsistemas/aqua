@@ -216,8 +216,6 @@ class ConfiguracionSystemController extends Controller
     /**
      * Obtener los valores para seleccionar configuración
      */
-
-
     public function getImpuestoIVA()
     {
         return SRI_TipoImpuestoIva::orderBy('nametipoimpuestoiva', 'asc')->get();
@@ -358,7 +356,6 @@ class ConfiguracionSystemController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     public function getConfigEspecifica()
     {
 
@@ -389,7 +386,6 @@ class ConfiguracionSystemController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
     public function getTipoEmision()
     {

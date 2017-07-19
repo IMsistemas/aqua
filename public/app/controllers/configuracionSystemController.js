@@ -526,6 +526,58 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         });
     };
 
+    $scope.saveConfigNomina = function () {
+        var iva = {
+            idconfiguracionsystem: $scope.id_iva_compra_h,
+            optionvalue: $scope.iva_compra_h
+        };
+        var ice = {
+            idconfiguracionsystem: $scope.id_ice_compra_h,
+            optionvalue: $scope.ice_compra_h
+        };
+        var irbpnr = {
+            idconfiguracionsystem: $scope.id_irbpnr_compra_h,
+            optionvalue: $scope.irbpnr_compra_h
+        };
+
+        var retiva = {
+            idconfiguracionsystem: $scope.id_retiva_compra_h,
+            optionvalue: $scope.retiva_compra_h
+        };
+
+        var propina = {
+            idconfiguracionsystem: $scope.id_propina_compra_h,
+            optionvalue: $scope.propina_compra_h
+        };
+
+        var retrenta = {
+            idconfiguracionsystem: $scope.id_retrenta_compra_h,
+            optionvalue: $scope.retrenta_compra_h
+        };
+
+        var data = {
+            array_data: [iva, ice, irbpnr, retiva, propina, retrenta]
+        };
+
+        $http.put(API_URL + '/configuracion/updateConfigCompra/0', data ).success(function (response) {
+
+            if (response.success == true) {
+                $scope.initLoad();
+                $scope.message = 'Se editó correctamente los datos de la Configuración de Compras';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la Configuración de Compras';
+                $('#modalMessageError').modal('show');
+                $scope.hideModalMessage();
+            }
+
+
+        }).error(function (res) {
+
+        });
+    };
+
     //-----------------------------------------------------------------------------------------------------------------
      $scope.getConfigEspecifica = function () {
         $http.get(API_URL + 'configuracion/getConfigEspecifica').success(function(response){
@@ -804,11 +856,11 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
-    $scope.showPlanCuenta = function (item) {
+    $scope.showPlanCuentaItem = function (item) {
 
         field = item;
 
-        $http.get(API_URL + 'rolPago/getPlanCuenta').success(function(response){
+        $http.get(API_URL + 'configuracion/getPlanCuenta').success(function(response){
             $scope.cuentas = response;
             $('#modalPlanCuenta').modal('show');
         });

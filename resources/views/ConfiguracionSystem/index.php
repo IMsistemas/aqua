@@ -561,12 +561,16 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane fade" id="cont_nomina">
-                                <div class="col-xs-8 text-center">
+                                <div class="col-xs-1">
+
+                                </div>
+                                <div class="col-xs-10" style="align-content:center">
                                     <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                         <thead class="bg-primary">
                                         <tr>
-                                            <th style="width: 50%;">CONCEPTO DE PAGO</th>
-                                            <th style="width: 50%;">ASIGNAR CUENTA</th>
+                                            <th style="width: 40%;">CONCEPTO DE PAGO</th>
+                                            <th style="width: 40%;">ASIGNAR CUENTA</th>
+                                            <th style="width: 15%;">VALORES IMPUESTOS</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -585,6 +589,9 @@
                                             </span>
                                                 </div>
                                             </td>
+                                            <td>
+
+                                            </td>
                                         </tr>
                                         <tr ng-repeat="item in conceptos" ng-cloak >
                                             <td>{{item.name_conceptospago}}</td>
@@ -593,10 +600,15 @@
                                                     <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
                                                            readonly>
                                                     <span class="input-group-btn" role="group">
-                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuenta(item)">
+                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuentaItem(item)">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                             </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right" ng-model="item.impuesto" />
                                                 </div>
                                             </td>
                                         </tr>
