@@ -64,7 +64,9 @@ app.controller('reporteVentaBalanceController',  function($scope, $http, API_URL
                                 t_f = parseFloat(response[i].haber_c);
                             }
 
-                            array_item[j].totalfactura = array_item[j].totalfactura + t_f;
+                            var t = array_item[j].totalfactura + t_f;
+
+                            array_item[j].totalfactura = parseFloat(t).toFixed(2);
                             state = true;
                         }
                     }
@@ -102,7 +104,7 @@ app.controller('reporteVentaBalanceController',  function($scope, $http, API_URL
             }
 
             $scope.list = array_item;
-            $scope.total = total;
+            $scope.total = total.toFixed(2);
         });
 
     };
