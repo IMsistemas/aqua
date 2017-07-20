@@ -1009,11 +1009,18 @@
                 $scope.fecharegistrocompra = response.fecharegistrocompra;
                 $scope.fechaemisioncompra = response.fechaemisioncompra;
 
+                $scope.observacion = aux_transaccion.descripcion;
+
                 var longitud_item = Items.length;
 
                 $scope.items = [];
 
                 for (var i = 0; i < longitud_item; i++) {
+
+                    if (Items[i].idbodega !== null) {
+                        $scope.Bodega = (Items[0].idbodega).toString();
+                    }
+
                     var item = {
 
                         productoObj:{
@@ -1034,7 +1041,7 @@
 
                 }
 
-                $scope.Bodega = (Items[0].idbodega).toString();
+
 
                 if (response.cont_formapago_documentocompra.length > 0) {
                     $scope.formapago = response.cont_formapago_documentocompra[0].idformapago;
