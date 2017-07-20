@@ -96,6 +96,12 @@
 
         };
 
+        $scope.valueFecha = function () {
+
+            $scope.fechaemisioncomprobante = $('#fechaemisioncomprobante').val();
+
+        };
+
         $scope.getPaisPagoComprobante = function () {
 
             $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){

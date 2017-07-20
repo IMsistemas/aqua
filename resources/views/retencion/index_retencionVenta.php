@@ -358,7 +358,7 @@
                 <div class="col-xs-6" style="margin-top: 5px;">
                     <div class="input-group">
                         <span class="input-group-addon">Fecha Emisión Comprobante: </span>
-                        <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" />
+                        <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" ng-blur="valueFecha()" required/>
                     </div>
                     <span class="help-block error" style="text-align: right !important; color: red;"
                           ng-show="formRteCompras.fechaemisioncomprobante.$invalid && formRteCompras.fechaemisioncomprobante.$touched" >La Fecha de Emisión es requerido</span>
