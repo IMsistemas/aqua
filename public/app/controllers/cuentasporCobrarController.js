@@ -119,7 +119,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $scope.infoCliente(item.idcliente);
 
-        if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null) {
+        if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null && item.idlectura === undefined) {
             $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
 
                 $scope.listcobro = response;
