@@ -86,8 +86,8 @@
                   <th style="width: 10%;">NUMERO</th>
                   <th style="width: 20%;">CUENTA</th>
                   <th style="width: 30%;">DESCRIPCION</th>
-                  <th style="width: 15%;">DEBE</th>
-                  <th style="width: 15%;">HABER</th>
+                  <th class="text-right" style="width: 15%;">DEBE</th>
+                  <th class="text-right" style="width: 15%;">HABER</th>
                   <th style="width: 10%;">ESTADO</th>
                 </tr>
               </thead>
