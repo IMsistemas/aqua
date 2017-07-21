@@ -1232,4 +1232,4 @@ Route::get('rolPago/getEmpleados', 'Nomina\RolPagoController@getEmpleados');
 Route::get('rolPago/getDataEmpresa', 'Nomina\RolPagoController@getDataEmpresa');
 Route::resource('rolPago', 'Nomina\RolPagoController');
 
-Route::resource('configNomina', 'Nomina\ConfigNominaController');
+Route::resource('configNomina', 'ConfiguracionSystem\ConfigNominaController');

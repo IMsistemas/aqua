@@ -4,6 +4,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.idestablecimiento = 0;
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
+    $scope.conceptos = [];
     var field = '';
 
     $scope.initLoad = function () {
@@ -497,7 +498,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
             var longitud = response.length;
-            console.log(response);
             var array_temp = [];
             for(var i = 0; i < longitud; i++){
                 if (response[i].id_categoriapago === 1 && response[i].grupo !== "1"){
@@ -508,9 +508,30 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'cuenta', cuenta);
+                    var idcuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta', idcuenta);
+                    var impuesto = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'impuesto', impuesto);
+                    var idcuenta1 = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
                     array_temp.push(response[i]);
                 }
-                if (response[i].id_categoriapago !== 1){
+                if (response[i].id_categoriapago !== 1 && response[i].id_categoriapago !== 4){
                     var cuenta = {
                         value: "",
                         writable: true,
@@ -518,6 +539,65 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'cuenta', cuenta);
+                    var idcuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta', idcuenta);
+                    var impuesto = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'impuesto', impuesto);
+                    var idcuenta1 = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
+                    array_temp.push(response[i]);
+                }
+                if (response[i].id_categoriapago === 4){
+                    var cuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                    var idcuenta = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta', idcuenta);
+                    var impuesto = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'impuesto', impuesto);
+                    var cuenta1 = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'cuenta1', cuenta1);
+                    var idcuenta1 = {
+                        value: "",
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    };
+                    Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
                     array_temp.push(response[i]);
                 }
             }
@@ -527,47 +607,21 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     };
 
     $scope.saveConfigNomina = function () {
-        var iva = {
-            idconfiguracionsystem: $scope.id_iva_compra_h,
-            optionvalue: $scope.iva_compra_h
-        };
-        var ice = {
-            idconfiguracionsystem: $scope.id_ice_compra_h,
-            optionvalue: $scope.ice_compra_h
-        };
-        var irbpnr = {
-            idconfiguracionsystem: $scope.id_irbpnr_compra_h,
-            optionvalue: $scope.irbpnr_compra_h
-        };
-
-        var retiva = {
-            idconfiguracionsystem: $scope.id_retiva_compra_h,
-            optionvalue: $scope.retiva_compra_h
-        };
-
-        var propina = {
-            idconfiguracionsystem: $scope.id_propina_compra_h,
-            optionvalue: $scope.propina_compra_h
-        };
-
-        var retrenta = {
-            idconfiguracionsystem: $scope.id_retrenta_compra_h,
-            optionvalue: $scope.retrenta_compra_h
-        };
 
         var data = {
-            array_data: [iva, ice, irbpnr, retiva, propina, retrenta]
+            conceptos: $scope.conceptos
         };
+        console.log(data);
 
-        $http.put(API_URL + '/configuracion/updateConfigCompra/0', data ).success(function (response) {
+        $http.post(API_URL + '/configNomina', data ).success(function (response) {
 
             if (response.success == true) {
                 $scope.initLoad();
-                $scope.message = 'Se editó correctamente los datos de la Configuración de Compras';
+                $scope.message = 'Se guardaron correctamente los datos de la Configuración de Nomina';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
             } else {
-                $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la Configuración de Compras';
+                $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la Configuración de Nomina';
                 $('#modalMessageError').modal('show');
                 $scope.hideModalMessage();
             }
@@ -861,6 +915,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         field = item;
 
         $http.get(API_URL + 'configuracion/getPlanCuenta').success(function(response){
+
             $scope.cuentas = response;
             $('#modalPlanCuenta').modal('show');
         });
@@ -892,13 +947,21 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     };
 
     $scope.selectCuenta = function () {
+        var selected = $scope.select_cuenta;
         if(field !== ''){
-            var selected = $scope.select_cuenta;
-            field.cuenta = selected.concepto;
+            if(field.id_categoriapago !== 4){
+                field.cuenta = selected.concepto;
+                field.idcuenta = selected.idplancuenta;
+            }else if (field.cuenta === ''){
+                field.cuenta = selected.concepto;
+                field.idcuenta = selected.idplancuenta;
+            }else{
+                field.cuenta1 = selected.concepto;
+                field.idcuenta1 = selected.idplancuenta;
+            }
 
             $('#modalPlanCuenta').modal('hide');
         }else{
-            var selected = $scope.select_cuenta;
 
             var fieldconcepto = $parse($scope.fieldconcepto);
             fieldconcepto.assign($scope, selected.concepto);
@@ -977,12 +1040,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         }
     };
 
-
     $scope.initLoad();
 
-
 });
-
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();

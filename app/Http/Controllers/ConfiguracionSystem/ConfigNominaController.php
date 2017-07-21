@@ -19,24 +19,38 @@ class ConfigNominaController extends Controller
      */
     public function store(Request $request)
     {
-        /*$array = $request->input('array_data');
+        $array = $request->input('conceptos');
 
         foreach ($array as $item) {
-            $configuracion = ConfigNomina::find($item['id_conceptospago']);
+            $cant_concepto = ConfigNomina::where('id_conceptospago',$item['id_conceptospago'])->count();
 
-            if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
-                $configuracion->optionvalue = null;
-            } else {
-                $configuracion->optionvalue = $item['optionvalue'];
+            if ($cant_concepto === 0){
+                $concepto = new ConfigNomina();
+                $concepto->id_conceptospago = $item['id_conceptospago'];
+                if($item['idcuenta1']!== ''){
+                    $concepto->cuenta = $item['idcuenta'] . ',' . $item['idcuenta1'];
+                }else{
+                    $concepto->cuenta = $item['idcuenta'];
+                }
+                $concepto->value_imp = $item['impuesto'];
+            }else{
+                $config = ConfigNomina::where('id_conceptospago',$item['id_conceptospago'])->get();
+                $concepto = ConfigNomina::find($config[0]->id_confignomina);
+                $concepto->id_conceptospago = $item['id_conceptospago'];
+                if($item['idcuenta1']!== ''){
+                    $concepto->cuenta = $item['idcuenta'] . ',' . $item['idcuenta1'];
+                }else{
+                    $concepto->cuenta = $item['idcuenta'];
+                }
+                $concepto->value_imp = $item['impuesto'];
             }
 
-
-            if (! $configuracion->save()) {
+            if (! $concepto->save()) {
                 return response()->json(['success' => false]);
             }
         }
 
-        return response()->json(['success' => true]);*/
+        return response()->json(['success' => true]);
     }
 
     /**
