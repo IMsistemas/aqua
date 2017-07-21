@@ -4,7 +4,7 @@
 
         <div class="col-xs-12">
 
-            <h4>Estados Finacieros</h4>
+            <h4>Estados Financieros</h4>
 
             <hr>
 
