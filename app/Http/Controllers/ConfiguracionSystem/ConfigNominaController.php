@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ConfiguracionSystem;
 
 use App\Modelos\Configuracion\ConfigNomina;
+use App\Modelos\Nomina\ConceptoPago;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +11,16 @@ use App\Http\Controllers\Controller;
 
 class ConfigNominaController extends Controller
 {
+
+    public function getConfigNomina()
+    {
+        return ConfigNomina::orderBy('id_conceptospago', 'asc')->get();
+    }
+
+    public function getConceptos()
+    {
+        return ConceptoPago::with('confignomina')->orderBy('id_conceptospago', 'asc')->get();
+    }
 
     /**
      * Almacenar la Configuracion de la Nomina
@@ -36,6 +47,7 @@ class ConfigNominaController extends Controller
             }else{
                 $config = ConfigNomina::where('id_conceptospago',$item['id_conceptospago'])->get();
                 $concepto = ConfigNomina::find($config[0]->id_confignomina);
+
                 $concepto->id_conceptospago = $item['id_conceptospago'];
                 if($item['idcuenta1']!== ''){
                     $concepto->cuenta = $item['idcuenta'] . ',' . $item['idcuenta1'];

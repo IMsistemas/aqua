@@ -21,6 +21,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $scope.getConceptos();
 
+        $scope.getConfigNomina();
+
         $scope.getConfigEspecifica();
 
         $scope.getConfigSRI();
@@ -39,7 +41,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.url_foto = 'img/empleado.png';
 
         $http.get(API_URL + '/configuracion/getDataEmpresa').success(function(response){
-            console.log(API_URL);
+
             if(response.length != 0){
                 $scope.t_razonsocial = response[0].razonsocial;
                 $scope.t_nombrecomercial = response[0].nombrecomercial;
@@ -97,7 +99,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             obligadocontabilidad: $scope.s_obligado,
             rutalogo: $scope.file
         };
-        console.log(data);
 
         var url = API_URL + "/configuracion";
 
@@ -158,7 +159,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             $scope.iva = '';
 
             $http.get(API_URL + '/configuracion/getIVADefault').success(function(response){
-                console.log(response);
 
                 if(response.length > 0){
 
@@ -179,7 +179,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         var data = {
             optionvalue: $scope.iva
         };
-        console.log(data);
 
         $http.put(API_URL + '/configuracion/updateIvaDefault/'+ $scope.idconfiguracionsystem, data ).success(function (response) {
 
@@ -204,8 +203,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.getConfigCompra = function () {
         $http.get(API_URL + 'configuracion/getConfigCompra').success(function(response){
-
-            console.log(response);
 
             var longitud = response.length;
 
@@ -296,8 +293,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.getConfigVenta = function () {
         $http.get(API_URL + 'configuracion/getConfigVenta').success(function(response){
-
-            console.log(response);
 
             var longitud = response.length;
 
@@ -397,8 +392,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.getConfigNC = function () {
         $http.get(API_URL + 'configuracion/getConfigNC').success(function(response){
 
-            console.log(response);
-
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
@@ -496,7 +489,10 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.getConceptos = function () {
 
-        $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
+        $http.get(API_URL + 'configNomina/getConceptos').success(function(response){
+
+            console.log(response);
+
             var longitud = response.length;
             var array_temp = [];
             for(var i = 0; i < longitud; i++){
@@ -516,7 +512,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     };
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: "",
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -547,7 +543,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     };
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: "",
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -606,12 +602,18 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         });
     };
 
+    $scope.getConfigNomina = function () {
+        $http.get(API_URL + 'configNomina/getConfigNomina').success(function(response){
+
+            console.log(response);
+        });
+    };
+
     $scope.saveConfigNomina = function () {
 
         var data = {
             conceptos: $scope.conceptos
         };
-        console.log(data);
 
         $http.post(API_URL + '/configNomina', data ).success(function (response) {
 
