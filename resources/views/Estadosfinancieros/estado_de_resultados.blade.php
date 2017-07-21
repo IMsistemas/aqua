@@ -253,6 +253,13 @@
 				<th class="text-right"><?=  "$ ".number_format(($aux_total_ingreso-$aux_total_gasto),4,'.',',') ?></th>
 			</tr>
 		</table>
+
+		<table class="table table-bordered">
+			<tr>
+				<th class="text-right">Total Ingresos - Total Egreso </th>
+				<th class="text-right"><?=  "$ ".number_format(($aux_total_ingreso-($aux_total_costo + $aux_total_gasto )),4,'.',',') ?></th>
+			</tr>
+		</table>
 	</div>
 
 	<div class="col-xs-6 text-center">

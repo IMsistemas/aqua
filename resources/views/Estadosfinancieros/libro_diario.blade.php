@@ -183,12 +183,12 @@
                 echo "<th>Fecha : ".$libro->fechatransaccion."</th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<th>Numero</th>";
-                echo "<th>Cuenta</th>";
-                echo "<th>Descripción</th>";
-                echo "<th>Debe</th>";
-                echo "<th>Haber</th>";
-                echo "<th>Estado</th>";
+                echo "<th style='width: 15%;'>Numero</th>";
+                echo "<th style='width: 20%;'>Cuenta</th>";
+                echo "<th style='width: 30%;'>Descripción</th>";
+                echo "<th style='width: 15%;'>Debe</th>";
+                echo "<th style='width: 15%;'>Haber</th>";
+                echo "<th style='width: 10%;'>Estado</th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -198,8 +198,8 @@
                         echo "<td>".orden_plan_cuenta($reg["cont_plancuentas"]["jerarquia"])."</td>";
                         echo "<td>".$reg["cont_plancuentas"]["concepto"]."</td>";
                         echo "<td>".$reg["descripcion"]."</td>";
-                        echo "<td>"."$ ".number_format($reg["debe_c"],4,'.',',')."</td>";
-                        echo "<td>"."$ ".number_format($reg["haber_c"],4,'.',',')."</td>";
+                        echo "<td class='text-center'>"."$ ".number_format($reg["debe_c"],4,'.',',')."</td>";
+                        echo "<td class='text-center'>"."$ ".number_format($reg["haber_c"],4,'.',',')."</td>";
                         if($reg["estadoanulado"]==true){
                          echo "<td class='bg-success'>Activo</td>";
                         }
@@ -217,8 +217,8 @@
                     echo "<tfoot>";
                     echo "<tr>";
                     echo "<th class='text-left' colspan='3'>".$libro->descripcion."</th>";
-                    echo "<th>"."$ ".number_format($aux_debe,4,'.',',')."</th>";
-                    echo "<th>"."$ ".number_format($aux_haber,4,'.',',')."</th>";
+                    echo "<th >"."$ ".number_format($aux_debe,4,'.',',')."</th>";
+                    echo "<th >"."$ ".number_format($aux_haber,4,'.',',')."</th>";
                     echo "<th></th>";
                     echo "</tr>";
                     echo "<tfoot>";
@@ -231,10 +231,12 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th class="text-right">Total Debe</th>
-                    <th><?= "$ ".number_format($total_aux_debe,4,'.',',') ?></th>
-                    <th><?= "$ ".number_format($total_aux_haber,4,'.',',') ?></th>
-                    <th class="text-left">Total Haber</th>
+                    <th style='width: 15%;'></th>
+                    <th style='width: 20%;'></th>
+                    <th style='width: 30%;' class="text-right">Total</th>
+                    <th style='width: 15%;'><?= "$ ".number_format($total_aux_debe,4,'.',',') ?></th>
+                    <th style='width: 15%;' ><?= "$ ".number_format($total_aux_haber,4,'.',',') ?></th>
+                    <th style='width: 10%;' class="text-left"></th>
                 </tr>
             </thead>
         </table>

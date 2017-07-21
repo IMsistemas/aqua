@@ -100,12 +100,12 @@
               <!--<th></th>-->
               <!--<th>Tipo</th>-->
               <!--<th>Fecha</th>-->
-              <th>Número</th>
-              <th>Cuenta</th>
-              <th>Descripción</th>
-              <th>Debe</th>
-              <th>Haber</th>
-              <th>Estado</th>
+              <th style="width: 10%;">Número</th>
+              <th style="width: 20%;">Cuenta</th>
+              <th style="width: 30%;">Descripción</th>
+              <th style="width: 15%;">Debe</th>
+              <th style="width: 15%;">Haber</th>
+              <th style="width: 10%;">Estado</th>
             </tr>
           </thead>
           <tbody >
@@ -138,13 +138,12 @@
         <table class="table ">
           <thead>
             <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th class="text-right">Total Debe</th>
-              <th>{{formato_dinero(aux_tot_libroD_debe,"$")}}</th>
-              <th>{{formato_dinero(aux_tot_libroD_haber,"$")}}</th>
-              <th class="text-left">Total Haber</th>
+              <th style="width: 10%;"></th>
+              <th style="width: 20%;"></th>
+              <th style="width: 30%;" class="text-right">Total</th>
+              <th style="width: 15%;">{{formato_dinero(aux_tot_libroD_debe,"$")}}</th>
+              <th style="width: 15%;">{{formato_dinero(aux_tot_libroD_haber,"$")}}</th>
+              <th style="width: 10%;"></th>
             </tr>
           </thead>
         </table>
@@ -433,6 +432,13 @@
           <tr>
             <th class="text-right">Total Ingresos - Total Gastos</th>
             <th class="text-right">{{formato_dinero((total_ingreso-total_gasto),"$")}}</th>
+          </tr>
+        </table>
+
+        <table class="table table-bordered">
+          <tr>
+            <th class="text-right">Total Ingresos - Total Egresos </th>
+            <th class="text-right">{{formato_dinero((total_ingreso-(total_costo + total_gasto)),"$")}}</th>
           </tr>
         </table>
       </div>
