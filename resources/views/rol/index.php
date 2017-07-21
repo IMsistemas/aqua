@@ -29,8 +29,8 @@
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
-                    <th>Nombre Rol</th>
-                    <th style="width: 35%;">Acciones</th>
+                    <th>NOMBRE ROL</th>
+                    <th style="width: 35%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>

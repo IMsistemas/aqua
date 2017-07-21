@@ -20,16 +20,16 @@
 		<table class="table table-responsive table-striped table-hover table-condensed">
 			<thead class="bg-primary">
 				<tr>
-					<td>Imagen</td>
-					<td>Codigo</td>
-					<td >Nro Compra</td>
-					<td>Valor Unitario</td>
-					<td>Fecha</td>
-					<td>Responsable</td>
-					<td>Ubicacion</td>
-					<td>Precio Venta</td>
-					<td>Estado</td>
-					<td>Accion</td>
+					<td>IMAGEN</td>
+					<td>CODIGO</td>
+					<td>NO. COMPRA</td>
+					<td>VALOR UNITARIO</td>
+					<td>FECHA</td>
+					<td>RESPONSABLE</td>
+					<td>UBICACION</td>
+					<td>PRECIO VENTA</td>
+					<td>ESTADO</td>
+					<td>ACCION</td>
 				</tr>
 			</thead>
 			<tbody dir-paginate="activos in AllActivosFijos | itemsPerPage:6" ng-cloak>

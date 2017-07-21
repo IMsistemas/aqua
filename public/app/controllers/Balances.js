@@ -46,6 +46,12 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
 
     $scope.list_balance_comprobacion=[];
 
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        ignoreReadonly: true
+    });
+
     ///---generar reporte segun la opcion que seleecione 
     $scope.genera_report=function() {
         $scope.libro_mayor=[];
@@ -290,7 +296,7 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
             FechaI:convertDatetoDB($("#txt_fechaI").val()),
             FechaF:convertDatetoDB($("#txt_fechaF").val())
         };
-        $scope.titulo_head_report="Estado De Cambios En El Patrimonio en el Perdio : "+convertDatetoDB($("#txt_fechaI").val())+" y "+convertDatetoDB($("#txt_fechaF").val());
+        $scope.titulo_head_report="Estado De Cambios En El Patrimonio en el Periodo : "+convertDatetoDB($("#txt_fechaI").val())+" y "+convertDatetoDB($("#txt_fechaF").val());
         $scope.aux_Fecha_I=convertDatetoDB($("#txt_fechaI").val());
         $scope.aux_Fecha_F=convertDatetoDB($("#txt_fechaF").val());
 

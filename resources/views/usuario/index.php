@@ -29,9 +29,9 @@
             <table class="table table-responsive table-striped table-hover table-condensed">
                 <thead class="bg-primary">
                 <tr>
-                    <th>Usuario</th>
-                    <th>Rol</th>
-                    <th style="width: 35%;">Acciones</th>
+                    <th>USUARIO</th>
+                    <th>ROL</th>
+                    <th style="width: 35%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
