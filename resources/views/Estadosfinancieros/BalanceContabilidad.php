@@ -191,6 +191,19 @@
               <td ng-show="!regm.estadoanulado" ng-hide="regm.estadoanulado" class="bg-warning">Anulada</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-right">Total:</th>
+              <th>{{formato_dinero(aux_total_debe_m,"$") }}</th>
+              <th>{{formato_dinero(aux_total_haber_m,"$") }}</th>
+              <th>{{formato_dinero((aux_total_debe_m - aux_total_haber_m),"$") }}</th>
+              <th></th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

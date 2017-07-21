@@ -154,6 +154,10 @@
 				</tr>
 			</thead>
 			<tbody>
+                <?php 
+                    $aux_debe=0;
+                    $aux_haber=0;
+                ?>
 				<?php foreach ($libro_mayor as $item):?>
 		 			<tr>
 		 				<td class=""><?= $item["cont_transaccion"]["cont_tipotransaccion"]["siglas"] ?></td>
@@ -164,7 +168,10 @@
 		 				<td class=""><?= "$ ".number_format($item["debe_c"],4,'.',',') ?></td>
 		 				<td class=""><?= "$ ".number_format($item["haber_c"],4,'.',',') ?></td>
 		 				<td class=""><?= "$ ".number_format($item["saldo"],4,'.',',') ?></td>
-		 				<?php if($item["estadoanulado"]==true){
+		 				<?php 
+                            $aux_debe+=$item["debe_c"];
+                            $aux_haber+=$item["haber_c"];
+                            if($item["estadoanulado"]==true){
 		 					 echo "<td class='bg-success'>Activo</td>";
 		 					}
 		 					elseif ($item["estadoanulado"]==false) {
@@ -174,6 +181,19 @@
 		 			</tr>
 		 		<?php  endforeach;?>
 			</tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="text-right">Total: </th>
+                    <td class=""><?= "$ ".number_format($aux_debe,4,'.',',') ?></td>
+                    <td class=""><?= "$ ".number_format($aux_haber,4,'.',',') ?></td>
+                    <td class=""><?= "$ ".number_format(($aux_debe-$aux_haber),4,'.',',') ?></td>
+                    <th></th>
+                </tr>
+            </tfoot>
 		</table>
 	</div>
 

@@ -239,6 +239,8 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         $scope.aux_cuenta_select=item;
         console.log($scope.aux_cuenta_select);
     };
+    $scope.aux_total_debe_m=0;
+    $scope.aux_total_haber_m=0;
     $scope.generar_libro_mayor=function() {
         $("#PlanContable").modal("show");
         $scope.filtro_mayor={
@@ -252,6 +254,12 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
         .success(function(response){
             console.log(response);
             $scope.libro_mayor=response;
+
+            $scope.libro_mayor.forEach(function(i){
+                $scope.aux_total_debe_m+=(i.debe_c!="")?parseFloat(i.debe_c):0;
+                $scope.aux_total_haber_m+=(i.haber_c!="")?parseFloat(i.haber_c):0;
+            });
+
             $("#procesarinfomracion").modal("hide");
             $("#PlanContable").modal("hide");
         });
