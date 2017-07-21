@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html lang="es-ES" ng-app="softver-aqua">
-
-    <head>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-        <title>Documento venta</title>
-
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-        <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-
-        <style>
-            .dataclient{
-                font-weight: bold;
-            }
-        </style>
-
-    </head>
-<body>
 
 
 <div class="col-xs-12">
@@ -56,8 +31,8 @@
                         <div class="input-group">
                             <span class="input-group-addon">Estado: </span>
                             <select ng-model="cmb_estado_fact" name="cmb_estado_fact" id="cmb_estado_fact" class="form-control" ng-change="pageChanged(1)">
-                                <option value="A">Activas</option>
-                                <option value="I">Anuladas</option>
+                                <option value="A">NO ANULADAS</option>
+                                <option value="I">ANULADAS</option>
                             </select>
                         </div>
                     </div>
@@ -71,12 +46,12 @@
                             <thead class="bg-primary">
                             <tr>
                                 <th></th>
-                                <th>Fecha Emision</th>
-                                <th>Número Factura</th>
-                                <th>Cliente</th>
-                                <th>SubTotal</th>
+                                <th>FECHA EMISION</th>
+                                <th>NUMERO FACTURA</th>
+                                <th>CLIENTE</th>
+                                <th>SUBTOTAL</th>
                                 <th>IVA</th>
-                                <th>Total</th>
+                                <th>TOTAL</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -504,41 +479,3 @@
 
 
     
-    <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-    <script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-
-    <script src="<?= asset('js/jquery.min.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-    <script src="<?= asset('js/menuLateral.js') ?>"></script>
-    <script src="<?= asset('js/moment.min.js') ?>"></script>
-    <script src="<?= asset('js/es.js') ?>"></script>
-    <script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-    <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-
-
-    <script src="<?= asset('app/app.js') ?>"></script>
-
-    
-    <script src="<?= asset('app/controllers/venta.js') ?>"></script>
-    
-
-    <script type="text/javascript">
-        /* $(function() {
-         $(document).keydown(function(e){
-         var code = (e.keyCode ? e.keyCode : e.which);
-         if(code == 116) {
-         e.preventDefault();
-         alert('no puedes we');
-         }
-         });
-         });*/
-    </script>
-
-    </body>
-</html>

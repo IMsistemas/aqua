@@ -1,6 +1,15 @@
 
 
 	<div ng-controller="guiaremisionController" ng-cloak ng-init="initLoad()">
+
+        <div class="col-xs-12">
+
+            <h4>Guía de Remisión</h4>
+
+            <hr>
+
+        </div>
+
 		<div ng-show="ActivaGuia=='0'" ng-hide="ActivaGuia=='1'">
 			<div class="col-sm-4 col-xs-6">
 	                <div class="form-group has-feedback">
@@ -19,11 +28,11 @@
 				<table class="table table-responsive table-striped table-hover table-condensed">
 					<thead class="bg-primary">
 						<tr>
-							<td>Nro.</td>
-							<td>Cliente</td>
-							<td>Nro. Guía de Remisión</td>
-							<td>Nro. Factura Venta</td>
-							<td>Acción</td>							
+							<td>NO.</td>
+							<td>CLIENTE</td>
+							<td>NO. GUIA DE REMISION</td>
+							<td>NO FACTURA VENTA</td>
+							<td>ACCION</td>
 						</tr>
 					</thead>
 					<tbody>
