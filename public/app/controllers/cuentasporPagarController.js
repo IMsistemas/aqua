@@ -112,6 +112,9 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
         if (item.iddocumentocompra !== undefined && item.iddocumentocompra !== null) {
             $http.get(API_URL + 'cuentasxpagar/getCobros/' + item.iddocumentocompra).success(function(response){
 
+                console.log(response);
+
+
                 $scope.listcobro = response;
 
                 $scope.valorpendiente = (item.valortotalcompra - item.valorcobrado).toFixed(2);
@@ -120,6 +123,38 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
             });
         }
+    };
+
+    $scope.showModalConfirm = function(item){
+        /*$scope.compra_anular = item.iddocumentocompra;
+        $scope.numseriecompra = item.numdocumentocompra;*/
+        $('#modalConfirmAnular').modal('show');
+    };
+
+    $scope.anular= function(){
+
+        /*var object = {
+            iddocumentocompra: $scope.compra_anular
+        };
+
+        $http.post(API_URL + 'cuentasxpagar/anular', object).success(function(response) {
+
+            $('#modalConfirmAnular').modal('hide');
+
+            if(response.success == true){
+                $scope.initLoad(1);
+                $scope.compra_anular = 0;
+                $scope.message = 'Se ha anulado la compra seleccionada...';
+                $('#modalMessage1').modal('show');
+
+                $('#btn-anular').prop('disabled', true);
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar anular la Compra seleccionada...';
+                $('#modalMessageError').modal('show');
+            }
+
+        });*/
     };
 
     $scope.showModalFormaCobro = function () {

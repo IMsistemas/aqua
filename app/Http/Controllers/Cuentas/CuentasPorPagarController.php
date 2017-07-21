@@ -64,6 +64,31 @@ class CuentasPorPagarController extends Controller
         return Cont_CuentasPorPagar::max('idcuentasporpagar');
     }
 
+
+    public function anular(Request $request)
+    {
+        $iddocumentocompra = $request->input('iddocumentocompra');
+
+        $compra = Cont_DocumentoCompra::find($iddocumentocompra);
+        $compra->estadoanulado =  true;
+
+        if ($compra->save()) {
+
+            CoreContabilidad::AnularAsientoContable($compra->idtransaccion);
+
+            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $compra->idtransaccion)
+                ->update(['estadoanulado' => true]);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
