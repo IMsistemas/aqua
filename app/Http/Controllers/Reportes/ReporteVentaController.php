@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -96,5 +97,38 @@ class ReporteVentaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getVentasPrint($parametro)
+    {
+
+        $filter = json_decode($parametro);
+
+        return  Cont_DocumentoVenta::join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
+            ->join('persona','persona.idpersona','=','cliente.idpersona')
+            ->select('persona.razonsocial', 'cont_documentoventa.*')
+            ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->FechaI . "' AND '"  . $filter->FechaF . "'")
+            ->get();
+    }
+
+    public function reporte_print($parametro)
+    {
+        ini_set('max_execution_time', 300);
+
+        $filtro = json_decode($parametro);
+
+        $aux_empresa = SRI_Establecimiento::all();
+        $comprobacion = $this->getVentasPrint($parametro);
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('reportes.reporteVentaPrint', compact('filtro','comprobacion','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('reportVenta_' . $today);
     }
 }

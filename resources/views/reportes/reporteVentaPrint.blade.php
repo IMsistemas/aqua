@@ -129,7 +129,7 @@
 		<h3><strong><?= $aux_empresa[0]->nombrecomercial ?> </strong></h3>
 	</div>
  	<div class="col-xs-12 text-center">
-		<h3><strong> Reporte de Facturación Compras </strong></h3>
+		<h3><strong> Reporte de Facturación Ventas </strong></h3>
 	</div>
 	<div class="col-xs-12 text-center">
 		<h4><strong>Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong>   <strong>  Moneda: USD $ </strong> </h4>
@@ -146,7 +146,7 @@
 			<thead>
 			<tr>
 				<th>NO.</th>
-				<th>PROVEEDOR</th>
+				<th>CLIENTE</th>
 				<th style="width: 8%;">FECHA INGRESO</th>
 				<th style="width: 11%;">NO FACTURA</th>
 				<th style="width: 6%;">SUBTOTAL C/I</th>
@@ -163,15 +163,15 @@
 			<tbody>
 
                 <?php
-					$subtotalconimpuestocompra = 0;
-					$subtotalsinimpuestocompra = 0;
-					$subtotalcerocompra = 0;
-					$subtotalnoobjivacompra = 0;
-					$subtotalexentivacompra = 0;
+					$subtotalconimpuestoventa= 0;
+					$subtotalsinimpuestoventa = 0;
+					$subtotalceroventa = 0;
+					$subtotalnoobjivaventa = 0;
+					$subtotalexentivaventa = 0;
 					$ivacompra = 0;
 					$icecompra = 0;
 					$totaldescuento = 0;
-					$valortotalcompra = 0;
+					$valortotalventa = 0;
 
 					$i = 0;
                 ?>
@@ -180,29 +180,29 @@
 
 						<td><?= ++$i ?></td>
 						<td><?= $item->razonsocial ?></td>
-						<td class="text-center"><?= $item->fecharegistrocompra ?></td>
-						<td class="text-center"><?= $item->numdocumentocompra ?></td>
-						<td class="text-right"><?= '$ ' . number_format($item->subtotalconimpuestocompra, 2, '.', ',') ?></td>
-						<td class="text-right"><?= '$ ' . number_format($item->subtotalsinimpuestocompra, 2, '.', ',') ?></td>
-						<td class="text-right"><?= '$ ' . number_format($item->subtotalcerocompra, 2, '.', ',') ?></td>
-						<td class="text-right"><?= '$ ' . number_format($item->subtotalnoobjivacompra, 2, '.', ',') ?></td>
-						<td class="text-right"><?= '$ ' . number_format($item->subtotalexentivacompra, 2, '.', ',') ?></td>
+						<td class="text-center"><?= $item->fecharegistroventa ?></td>
+						<td class="text-center"><?= $item->numdocumentoventa ?></td>
+						<td class="text-right"><?= '$ ' . number_format($item->subtotalconimpuestoventa, 2, '.', ',') ?></td>
+						<td class="text-right"><?= '$ ' . number_format($item->subtotalsinimpuestoventa, 2, '.', ',') ?></td>
+						<td class="text-right"><?= '$ ' . number_format($item->subtotalceroventa, 2, '.', ',') ?></td>
+						<td class="text-right"><?= '$ ' . number_format($item->subtotalnoobjivaventa, 2, '.', ',') ?></td>
+						<td class="text-right"><?= '$ ' . number_format($item->subtotalexentivaventa, 2, '.', ',') ?></td>
 						<td class="text-right"><?= '$ ' . number_format($item->ivacompra, 2, '.', ',') ?></td>
 						<td class="text-right"><?= '$ ' . number_format($item->icecompra, 2, '.', ',') ?></td>
 						<td class="text-right"><?= '$ ' . number_format($item->totaldescuento, 2, '.', ',') ?></td>
-						<td class="text-right" style="font-weight: bold;"><?= '$ ' . number_format($item->valortotalcompra, 2, '.', ',') ?></td>
+						<td class="text-right" style="font-weight: bold;"><?= '$ ' . number_format($item->valortotalventa, 2, '.', ',') ?></td>
 
 						<?php
 
-							$subtotalconimpuestocompra += ((float) $item->subtotalconimpuestocompra);
-							$subtotalsinimpuestocompra += ((float) $item->subtotalsinimpuestocompra);
-							$subtotalcerocompra += ((float) $item->subtotalcerocompra);
-							$subtotalnoobjivacompra += ((float) $item->subtotalnoobjivacompra);
-							$subtotalexentivacompra += ((float) $item->subtotalexentivacompra);
+							$subtotalconimpuestoventa += ((float) $item->subtotalconimpuestoventa);
+							$subtotalsinimpuestoventa += ((float) $item->subtotalsinimpuestoventa);
+							$subtotalceroventa += ((float) $item->subtotalceroventa);
+							$subtotalnoobjivaventa += ((float) $item->subtotalnoobjivaventa);
+							$subtotalexentivaventa += ((float) $item->subtotalexentivaventa);
 							$ivacompra += ((float) $item->ivacompra);
 							$icecompra += ((float) $item->icecompra);
 							$totaldescuento += ((float) $item->totaldescuento);
-							$valortotalcompra += ((float) $item->valortotalcompra);
+							$valortotalventa += ((float) $item->valortotalventa);
 
 						?>
 
@@ -215,15 +215,15 @@
 
 			<tr>
 				<th colspan="4" class="text-right">TOTALES</th>
-				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalconimpuestocompra, 2, '.', ',') ?></th>
-				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalsinimpuestocompra, 2, '.', ',') ?></th>
-				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalcerocompra, 2, '.', ',') ?></th>
-				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalnoobjivacompra, 2, '.', ',') ?></th>
-				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalexentivacompra, 2, '.', ',') ?></th>
+				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalconimpuestoventa, 2, '.', ',') ?></th>
+				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalsinimpuestoventa, 2, '.', ',') ?></th>
+				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalceroventa, 2, '.', ',') ?></th>
+				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalnoobjivaventa, 2, '.', ',') ?></th>
+				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($subtotalexentivaventa, 2, '.', ',') ?></th>
 				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($ivacompra, 2, '.', ',') ?></th>
 				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($icecompra, 2, '.', ',') ?></th>
 				<th class="text-right btn-warning" style="color: #000;"><?= '$ ' . number_format($totaldescuento, 2, '.', ',') ?></th>
-				<th class="text-right btn-danger" style="font-weight: bold;"><?= '$ ' . number_format($valortotalcompra, 2, '.', ',') ?></th>
+				<th class="text-right btn-danger" style="font-weight: bold;"><?= '$ ' . number_format($valortotalventa, 2, '.', ',') ?></th>
 			</tr>
 			</tfoot>
 		</table>

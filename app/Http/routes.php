@@ -1108,6 +1108,7 @@ Route::resource('reportecompra', 'Reportes\ReporteCompraController');
  * ------------------------------REPORTE VENTA--------------------------------------------------------------------------
  */
 
+Route::get('reporteventa/reporte_print/{filtro}', 'Reportes\ReporteVentaController@reporte_print');
 Route::get('reporteventa/getVentas', 'Reportes\ReporteVentaController@getVentas');
 Route::resource('reporteventa', 'Reportes\ReporteVentaController');
 

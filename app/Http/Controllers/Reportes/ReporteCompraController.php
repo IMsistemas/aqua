@@ -132,7 +132,7 @@ class ReporteCompraController extends Controller
 
         $pdf->setPaper('A4', 'landscape');
 
-        return $pdf->stream('estado_resultados_' . $today);
+        return $pdf->stream('reportCompras_' . $today);
     }
 
 }
