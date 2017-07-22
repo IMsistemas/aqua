@@ -1116,6 +1116,7 @@ Route::resource('reporteventa', 'Reportes\ReporteVentaController');
  * ------------------------------REPORTE NC-----------------------------------------------------------------------------
  */
 
+Route::get('reportenc/reporte_print/{filtro}', 'Reportes\ReporteNCController@reporte_print');
 Route::get('reportenc/getNC', 'Reportes\ReporteNCController@getNC');
 Route::resource('reportenc', 'Reportes\ReporteNCController');
 

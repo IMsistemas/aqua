@@ -94,8 +94,6 @@ app.controller('reporteVentaController',  function($scope, $http, API_URL) {
 
         var accion = API_URL + 'reporteventa/reporte_print/' + JSON.stringify(filtro);
 
-        console.log(accion);
-
         $('#WPrint_head').html('Reporte Facturación de Ventas');
 
         $('#WPrint').modal('show');
