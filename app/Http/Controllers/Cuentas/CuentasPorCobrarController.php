@@ -9,6 +9,7 @@ use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\CobroServicio;
 use App\Modelos\Cuentas\CuentasporCobrar;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -234,5 +235,30 @@ class CuentasPorCobrarController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    private function getCobroPrint($id)
+    {
+        return CuentasporCobrar::where('idcuentasporcobrar', $id)->get();
+    }
+
+    public function printComprobanteIngreso($params)
+    {
+        ini_set('max_execution_time', 300);
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $cobro = $this->getCobroPrint($params);
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Cuentas.comprobanteIngresoPrint', compact('today', 'cobro', 'aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        return $pdf->stream('comprobIngreso_' . $today);
     }
 }

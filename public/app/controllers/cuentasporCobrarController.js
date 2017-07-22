@@ -347,6 +347,17 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
      -----------------------------------------------------------------------------------------------------------------
      */
 
+    $scope.printComprobante = function(id) {
+
+        var accion = API_URL + 'cuentasxcobrar/printComprobante/' + id;
+
+        $('#WPrint_head').html('Comprobante de Ingreso');
+
+        $('#WPrint').modal('show');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+    };
+
     $scope.fechaByFilter = function(){
 
         var f = new Date();
