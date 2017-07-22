@@ -1,3 +1,4 @@
+
 <div ng-controller="recaudacionController">
 	<div class="container" style="margin-top: 2%;">
 		<div class="col-xs-6">

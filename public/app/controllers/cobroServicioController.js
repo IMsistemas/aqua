@@ -302,9 +302,10 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
             $scope.select_cuenta = null;
 
             $scope.nocomprobante = parseInt(response) + 1;
+            $scope.concepto = '';
             $scope.valorrecibido = '';
             $scope.cuenta_employee = '';
-            $('#fecharegistro').val('');
+            //$('#fecharegistro').val('');
 
             $('#formCobros').modal('show');
         });
@@ -353,12 +354,18 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
 
         var descripcion = '';
 
-        if ($scope.item_select.iddocumentoventa !== undefined) {
-            descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
-        } else if ($scope.item_select.idcobroservicio !== undefined) {
-            descripcion = 'Cuentas x Cobrar Solicitud Servicio';
-        } else {
-            descripcion = 'Cuentas x Cobrar Toma Lectura';
+        if ($scope.concepto !== undefined) {
+            descripcion = $scope.concepto;
+        }
+
+        if (descripcion === '') {
+            if ($scope.item_select.iddocumentoventa !== undefined) {
+                descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
+            } else if ($scope.item_select.idcobroservicio !== undefined) {
+                descripcion = 'Cuentas x Cobrar Solicitud Servicio';
+            } else {
+                descripcion = 'Cuentas x Cobrar Toma Lectura';
+            }
         }
 
 
@@ -382,7 +389,7 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.Cliente.tipocuenta,
             Debe: 0,
             Haber: parseFloat($scope.valorrecibido),
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(cliente);
@@ -394,7 +401,7 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.select_cuenta.tipocuenta,
             Debe: parseFloat($scope.valorrecibido),
             Haber: 0,
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(cobro);
@@ -438,9 +445,9 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
 
-            console.log(data);
+            //console.log(data);
 
-            console.log($scope.select_cuenta);
+            //console.log($scope.select_cuenta);
 
             $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
 
@@ -494,6 +501,17 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
         $scope.fechainicio = firthDayMonth;
         $scope.fechafin = toDay;
 
+    };
+
+    $scope.printComprobante = function(id) {
+
+        var accion = API_URL + 'cuentasxcobrar/printComprobante/' + id;
+
+        $('#WPrint_head').html('Comprobante de Ingreso');
+
+        $('#WPrint').modal('show');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
     };
 
     $scope.fechaByFilter();
