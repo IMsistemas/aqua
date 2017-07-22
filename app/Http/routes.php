@@ -1146,6 +1146,7 @@ Route::resource('cuentasxcobrar', 'Cuentas\CuentasPorCobrarController');
  * ------------------------------CUENTAS POR PAGAR----------------------------------------------------------------------
  */
 
+Route::get('cuentasxpagar/printComprobante/{id}', 'Cuentas\CuentasPorPagarController@printComprobanteEgreso');
 Route::get('cuentasxpagar/getLastID', 'Cuentas\CuentasPorPagarController@getLastID');
 Route::get('cuentasxpagar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorPagarController@getInfoClienteByID');
 Route::get('cuentasxpagar/getCobrosLecturas/{id}', 'Cuentas\CuentasPorPagarController@getCobrosLecturas');

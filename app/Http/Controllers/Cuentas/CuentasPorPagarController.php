@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Cuentas;
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Contabilidad\Cont_CuentasPorPagar;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\Contabilidad\Cont_RegistroContable;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
 use App\Modelos\Proveedores\Proveedor;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -141,6 +143,7 @@ class CuentasPorPagarController extends Controller
         $cuenta->fecharegistro = $request->input('fecharegistro');
         $cuenta->idplancuenta = $request->input('cuenta');
         $cuenta->idtransaccion = $id_transaccion;
+        $cuenta->descripcion = $request->input('descripcion');
 
         $cuenta->iddocumentocompra = $request->input('iddocumentocompra');
 
@@ -203,5 +206,49 @@ class CuentasPorPagarController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getPagosPrint($id)
+    {
+
+        $pago = Cont_CuentasPorPagar::selectRaw('cont_cuentasporcobrar.idcuentasporcobrar, cont_cuentasporcobrar.valorpagado,
+                                        cont_cuentasporcobrar.fecharegistro, cont_cuentasporcobrar.descripcion, 
+                                        cont_cuentasporcobrar.idtransaccion, persona.razonsocial')
+                            ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'cont_cuentasporcobrar.iddocumentocompra')
+                            ->join('cliente', 'cliente.idcliente', '=', 'cont_documentocompra.idcliente')
+                            ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                            ->where('idcuentasporcobrar', $id)->get();
+
+
+        $registro = Cont_RegistroContable::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_registrocontable.idplancuenta')
+            ->selectRaw('cont_registrocontable.idtransaccion, 
+                                        cont_registrocontable.idplancuenta,cont_registrocontable.debe, cont_registrocontable.haber, 
+                                        cont_registrocontable.descripcion,cont_plancuenta.jerarquia, cont_plancuenta.concepto')
+            ->where('cont_registrocontable.idtransaccion', $pago[0]->idtransaccion)
+            ->orderBy('cont_registrocontable.debe', 'desc')->get();
+
+        return [$pago, $registro];
+    }
+
+    public function printComprobanteEgreso($params)
+    {
+        ini_set('max_execution_time', 300);
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $result = $this->getPagosPrint($params);
+
+        $cobro = $result[0];
+        $registro = $result[1];
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Cuentas.comprobanteEgresoPrint', compact('today', 'cobro', 'registro', 'aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        return $pdf->stream('comprobEgreso_' . $today);
     }
 }

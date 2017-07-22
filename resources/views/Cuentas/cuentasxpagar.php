@@ -117,9 +117,12 @@
                                         <td>{{item.nameformapago}}</td>
                                         <td class="text-right">$ {{item.valorpagado}}</td>
                                         <td class="text-right">{{(item.estado) ? 'NO ANULADA' : 'ANULADA'}}</td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-delete" ng-click="showModalConfirm(item)" title="Anular">
+                                        <td class="text-center" style="width: 12%;">
+                                            <button type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
                                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+                                            </button>
+                                            <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporcobrar)" title="Imprimir">
+                                                <span class="glyphicon glyphicon-print" aria-hidden="true">
                                             </button>
                                         </td>
 
@@ -189,6 +192,13 @@
                             </div>
                             <span class="help-block error"
                                   ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
+                        </div>
+
+                        <div class="col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Concepto: </span>
+                                <input type="text" class="form-control" id="concepto" ng-model="concepto" />
+                            </div>
                         </div>
 
                         <div class="col-xs-12" style="margin-top: 5px;">
@@ -321,6 +331,27 @@
                     <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
                         Anular
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="WPrint" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="WPrint_head"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12" id="bodyprint">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i> </button>
                 </div>
             </div>
         </div>

@@ -179,9 +179,10 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             $scope.select_cuenta = null;
 
             $scope.nocomprobante = parseInt(response) + 1;
+            $scope.concepto = '';
             $scope.valorrecibido = '';
             $scope.cuenta_employee = '';
-            $('#fecharegistro').val('');
+            //$('#fecharegistro').val('');
 
             $('#formCobros').modal('show');
         });
@@ -242,6 +243,10 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
         var descripcion = 'Cuentas x Pagar Factura de Compra';
 
+        if ($scope.concepto !== undefined) {
+            descripcion = $scope.concepto;
+        }
+
         /*
          * --------------------------------- CONTABILIDAD --------------------------------------------------------------
          */
@@ -262,7 +267,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.Cliente.tipocuenta,
             Debe: parseFloat($scope.valorrecibido),
             Haber: 0,
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(proveedor);
@@ -274,7 +279,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.select_cuenta.tipocuenta,
             Debe: 0,
             Haber: parseFloat($scope.valorrecibido),
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(cobro);
@@ -297,6 +302,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
             var data = {
                 idproveedor: $scope.Cliente.idproveedor,
                 nocomprobante: $scope.nocomprobante,
+                descripcion: descripcion,
                 fecharegistro: $('#fecharegistro').val(),
                 idformapago: $scope.formapago,
                 pagado: $scope.valorrecibido,
@@ -361,6 +367,17 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
         $scope.fechainicio = firthDayMonth;
         $scope.fechafin = toDay;
 
+    };
+
+    $scope.printComprobante = function(id) {
+
+        var accion = API_URL + 'cuentasxpagar/printComprobante/' + id;
+
+        $('#WPrint_head').html('Comprobante de Egreso');
+
+        $('#WPrint').modal('show');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
     };
 
     $scope.fechaByFilter();
