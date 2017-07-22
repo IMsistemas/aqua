@@ -1100,6 +1100,7 @@ Route::resource('puntoventa', 'Contabilidad\PuntoVentaController');
  * ------------------------------REPORTE COMPRA-------------------------------------------------------------------------
  */
 
+Route::get('reportecompra/reporte_print/{filtro}', 'Reportes\ReporteCompraController@reporte_print');
 Route::get('reportecompra/getCompras', 'Reportes\ReporteCompraController@getCompras');
 Route::resource('reportecompra', 'Reportes\ReporteCompraController');
 

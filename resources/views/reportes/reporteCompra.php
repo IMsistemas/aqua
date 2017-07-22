@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html lang="es-ES" ng-app="softver-aqua">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Retencion Compras</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-
-    <style>
-        .dataclient{
-            font-weight: bold;
-        }
-    </style>
-</head>
-
-<body>
 
 <div ng-controller="reporteComprasController">
 
@@ -34,7 +11,7 @@
 
     <div class="col-xs-12" style="margin-top: 5px;">
 
-        <div class="col-sm-6 col-xs-8">
+        <div class="col-sm-4 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad()">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -53,6 +30,12 @@
                 <span class="input-group-addon">Fecha Fin:</span>
                 <input type="text" class="datepicker form-control" name="fechafin" id="fechafin" ng-model="fechafin" ng-blur="initLoad()">
             </div>
+        </div>
+
+        <div class="col-sm-2 col-xs-2">
+            <button type="button" class="btn btn-info" ng-click="printReport();">
+                Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
+            </button>
         </div>
 
 
@@ -77,7 +60,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in list | filter : busqueda" ng-cloak">
+                    <tr ng-repeat="item in list | filter : busqueda" ng-cloak>
 
                         <td>{{$index + 1}}</td>
                         <td>{{item.razonsocial}}</td>
@@ -114,26 +97,28 @@
         </div>
     </div>
 
+    <div class="modal fade" id="WPrint" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="WPrint_head"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12" id="bodyprint">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i> </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-</body>
 
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/menuLateral.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/app.js') ?>"></script>
-
-<script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
-</html>
 

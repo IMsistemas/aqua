@@ -85,7 +85,35 @@ app.controller('reporteComprasController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.printReport = function() {
+
+        var filtro = {
+            FechaI: $('#fechainicio').val(),
+            FechaF: $('#fechafin').val()
+        };
+
+        var accion = API_URL + 'reportecompra/reporte_print/' + JSON.stringify(filtro);
+
+        console.log(accion);
+
+        $('#WPrint_head').html('Reporte Facturación de Compras');
+
+        $('#WPrint').modal('show');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+    };
+
     $scope.fechaByFilter();
     $scope.initLoad();
 
 });
+
+function convertDatetoDB(now, revert){
+    if (revert === undefined){
+        var t = now.split('/');
+        return t[2] + '-' + t[1] + '-' + t[0];
+    } else {
+        var t = now.split('-');
+        return t[2] + '/' + t[1] + '/' + t[0];
+    }
+}

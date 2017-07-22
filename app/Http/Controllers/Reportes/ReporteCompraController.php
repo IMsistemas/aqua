@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -99,4 +100,39 @@ class ReporteCompraController extends Controller
     {
         //
     }
+
+
+    public function getComprasPrint($parametro)
+    {
+
+        $filter = json_decode($parametro);
+
+        return  Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+                                    ->join('persona','persona.idpersona','=','proveedor.idpersona')
+                                    ->select('persona.razonsocial', 'cont_documentocompra.*')
+                                    ->whereRaw("cont_documentocompra.fecharegistrocompra BETWEEN '" . $filter->FechaI . "' AND '"  . $filter->FechaF . "'")
+                                    ->get();
+    }
+
+    public function reporte_print($parametro)
+    {
+        ini_set('max_execution_time', 300);
+
+        $filtro = json_decode($parametro);
+
+        $aux_empresa = SRI_Establecimiento::all();
+        $comprobacion = $this->getComprasPrint($parametro);
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('reportes.reporteCompraPrint', compact('filtro','comprobacion','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('estado_resultados_' . $today);
+    }
+
 }
