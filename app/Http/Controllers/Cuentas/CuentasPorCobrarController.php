@@ -162,6 +162,7 @@ class CuentasPorCobrarController extends Controller
         $cuenta->fecharegistro = $request->input('fecharegistro');
         $cuenta->idplancuenta = $request->input('cuenta');
         $cuenta->idtransaccion = $id_transaccion;
+        $cuenta->descripcion = $request->input('descripcion');
 
         if ($request->input('type') == 'venta') {
             if ($request->input('iddocumentoventa') != 0) {

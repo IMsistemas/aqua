@@ -110,7 +110,7 @@
                                         <th style="width: 10%;">FECHA</th>
                                         <th>FORMA PAGO</th>
                                         <th style="width: 11%;">VALOR</th>
-                                        <th style="width: 5%;">ACCION</th>
+                                        <th style="width: 12%;">ACCION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,8 +121,11 @@
                                         <td>{{item.nameformapago}}</td>
                                         <td class="text-right">$ {{item.valorpagado}}</td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-delete" ng-click="" title="Anular">
+                                            <button type="button" class="btn btn-default" ng-click="" title="Anular">
                                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+                                            </button>
+                                            <button type="button" class="btn btn-info" ng-click="" title="Imprimir">
+                                                <span class="glyphicon glyphicon-print" aria-hidden="true">
                                             </button>
                                         </td>
 
@@ -192,6 +195,13 @@
                             </div>
                             <span class="help-block error"
                                   ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
+                        </div>
+
+                        <div class="col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Concepto: </span>
+                                <input type="text" class="form-control" id="concepto" ng-model="concepto" />
+                            </div>
                         </div>
 
                         <div class="col-xs-12" style="margin-top: 5px;">

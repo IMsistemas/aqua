@@ -1,13 +1,4 @@
 
-/*$(function () {
-    $('.datepicker').datetimepicker({
-        locale: 'es',
-        format: 'YYYY-MM-DD'
-    });
-
-
-});*/
-
 app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
 
@@ -225,13 +216,22 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         var descripcion = '';
 
-        if ($scope.item_select.iddocumentoventa !== undefined) {
-            descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
-        } else if ($scope.item_select.idcobroservicio !== undefined) {
-            descripcion = 'Cuentas x Cobrar Solicitud Servicio';
-        } else {
-            descripcion = 'Cuentas x Cobrar Toma Lectura';
+        if ($scope.concepto !== undefined) {
+            descripcion = $scope.concepto;
         }
+
+
+        if (descripcion === '') {
+            if ($scope.item_select.iddocumentoventa !== undefined) {
+                descripcion = 'Cuentas x Cobrar Factura: ' + $scope.item_select.numdocumentoventa;
+            } else if ($scope.item_select.idcobroservicio !== undefined) {
+                descripcion = 'Cuentas x Cobrar Solicitud Servicio';
+            } else {
+                descripcion = 'Cuentas x Cobrar Toma Lectura';
+            }
+        }
+
+
 
 
         /*
@@ -254,7 +254,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.Cliente.tipocuenta,
             Debe: 0,
             Haber: parseFloat($scope.valorrecibido),
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(cliente);
@@ -266,7 +266,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             tipocuenta: $scope.select_cuenta.tipocuenta,
             Debe: parseFloat($scope.valorrecibido),
             Haber: 0,
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         RegistroC.push(cobro);
@@ -306,6 +306,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 cobrado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
                 iddocumentoventa: id,
+                descripcion: descripcion,
                 type: type,
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
