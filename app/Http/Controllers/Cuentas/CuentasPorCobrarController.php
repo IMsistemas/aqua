@@ -251,9 +251,10 @@ class CuentasPorCobrarController extends Controller
 
 
 
-        } elseif ($cobro[0]->idcobroagua != null) {
+        } elseif ($cobro[0]->idcobroservicio != null) {
 
-
+            $cobro1 = $cobro1->join('cobroservicio', 'cobroservicio.idcobroservicio', '=', 'cont_cuentasporcobrar.idcobroservicio')
+                            ->join('cliente', 'cliente.idcliente', '=', 'cobroservicio.idcliente');
 
         } else {
 
@@ -271,7 +272,8 @@ class CuentasPorCobrarController extends Controller
                                 ->selectRaw('cont_registrocontable.idtransaccion, 
                                         cont_registrocontable.idplancuenta,cont_registrocontable.debe, cont_registrocontable.haber, 
                                         cont_registrocontable.descripcion,cont_plancuenta.jerarquia, cont_plancuenta.concepto')
-                                ->where('cont_registrocontable.idtransaccion', $resultCobro[0]->idtransaccion)->get();
+                                ->where('cont_registrocontable.idtransaccion', $resultCobro[0]->idtransaccion)
+                                ->orderBy('cont_registrocontable.debe', 'desc')->get();
 
         return [$resultCobro, $registro];
     }
