@@ -1125,6 +1125,7 @@ Route::resource('reportenc', 'Reportes\ReporteNCController');
  * ------------------------------REPORTE VENTA/BALANCE------------------------------------------------------------------
  */
 
+Route::get('reporteventabalance/reporte_print/{filtro}', 'Reportes\ReporteVentaBalanceController@reporte_print');
 Route::get('reporteventabalance/getVentasBalance', 'Reportes\ReporteVentaBalanceController@getVentasBalance');
 Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController');
 

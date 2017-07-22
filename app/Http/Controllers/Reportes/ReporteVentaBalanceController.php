@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_RegistroContable;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -103,5 +104,39 @@ class ReporteVentaBalanceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getVentasBalancePrint($parametro)
+    {
+
+        $filter = json_decode($parametro);
+
+        return Cont_RegistroContable::join('cont_transaccion', 'cont_registrocontable.idtransaccion', '=', 'cont_transaccion.idtransaccion')
+            ->join('cont_tipotransaccion', 'cont_tipotransaccion.idtipotransaccion', '=', 'cont_transaccion.idtipotransaccion')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_registrocontable.idplancuenta')
+            ->whereRaw("cont_registrocontable.fecha BETWEEN '" . $filter->FechaI . "' AND '"  . $filter->FechaF . "'")
+            ->whereRaw('cont_transaccion.idtipotransaccion = 6')
+            ->get();
+    }
+
+    public function reporte_print($parametro)
+    {
+        ini_set('max_execution_time', 300);
+
+        $filtro = json_decode($parametro);
+
+        $aux_empresa = SRI_Establecimiento::all();
+        $comprobacion = $this->getVentasBalancePrint($parametro);
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('reportes.reporteVentaBalancePrint', compact('filtro','comprobacion','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        //$pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('reportVentaBalance_' . $today);
     }
 }

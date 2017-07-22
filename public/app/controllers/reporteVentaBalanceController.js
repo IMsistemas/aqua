@@ -109,7 +109,6 @@ app.controller('reporteVentaBalanceController',  function($scope, $http, API_URL
 
     };
 
-
     $scope.fechaByFilter = function(){
 
         var f = new Date();
@@ -130,6 +129,22 @@ app.controller('reporteVentaBalanceController',  function($scope, $http, API_URL
         $scope.fechainicio = firthDayMonth;
         $scope.fechafin = toDay;
 
+    };
+
+    $scope.printReport = function() {
+
+        var filtro = {
+            FechaI: $('#fechainicio').val(),
+            FechaF: $('#fechafin').val()
+        };
+
+        var accion = API_URL + 'reporteventabalance/reporte_print/' + JSON.stringify(filtro);
+
+        $('#WPrint_head').html('Reporte Ventas / Balance');
+
+        $('#WPrint').modal('show');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
     };
 
     $scope.fechaByFilter();
