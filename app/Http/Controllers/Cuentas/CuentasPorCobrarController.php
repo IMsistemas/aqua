@@ -6,6 +6,7 @@ use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Contabilidad\Cont_RegistroCliente;
+use App\Modelos\Contabilidad\Cont_RegistroContable;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\CobroServicio;
 use App\Modelos\Cuentas\CuentasporCobrar;
@@ -240,7 +241,15 @@ class CuentasPorCobrarController extends Controller
 
     private function getCobroPrint($id)
     {
-        return CuentasporCobrar::where('idcuentasporcobrar', $id)->get();
+        $cobro = CuentasporCobrar::where('idcuentasporcobrar', $id)->get();
+
+        $registro = Cont_RegistroContable::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_registrocontable.idplancuenta')
+                                ->selectRaw('cont_registrocontable.idtransaccion, 
+                                        cont_registrocontable.idplancuenta,cont_registrocontable.debe, cont_registrocontable.haber, 
+                                        cont_registrocontable.descripcion,cont_plancuenta.jerarquia, cont_plancuenta.concepto')
+                                ->where('cont_registrocontable.idtransaccion', $cobro[0]->idtransaccion)->get();
+
+        return [$cobro, $registro];
     }
 
     public function printComprobanteIngreso($params)
@@ -249,11 +258,14 @@ class CuentasPorCobrarController extends Controller
 
         $aux_empresa = SRI_Establecimiento::all();
 
-        $cobro = $this->getCobroPrint($params);
+        $result = $this->getCobroPrint($params);
+
+        $cobro = $result[0];
+        $registro = $result[1];
 
         $today = date("Y-m-d H:i:s");
 
-        $view =  \View::make('Cuentas.comprobanteIngresoPrint', compact('today', 'cobro', 'aux_empresa'))->render();
+        $view =  \View::make('Cuentas.comprobanteIngresoPrint', compact('today', 'cobro', 'registro', 'aux_empresa'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
 

@@ -185,20 +185,27 @@
 
 			<tbody>
 
+            <?php
+				$debito = 0;
+				$credito = 0;
+            ?>
+
+            <?php foreach ($registro as $item):?>
 				<tr>
+
+					<td><?= $item->jerarquia ?></td>
 					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><?= $item->concepto ?></td>
+					<td class="text-right"><?= number_format($item->debe, 2, '.', ',') ?></td>
+					<td class="text-right"><?= number_format($item->haber, 2, '.', ',') ?></td>
+
 				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+
+				<?php
+					$debito += ((float) $item->debe);
+					$credito += ((float) $item->haber);
+				?>
+            <?php  endforeach;?>
 
 			</tbody>
 
@@ -211,8 +218,8 @@
 					<th style="width: 24%">ELABORADO</th>
 					<th style="width: 23%">GERENTE</th>
 					<th style="width: 23%">CONTABILIZADO</th>
-					<th style="width: 15%"></th>
-					<th style="width: 15%"></th>
+					<th class="text-right" style="width: 15%"><?= number_format($debito, 2, '.', ',') ?></th>
+					<th class="text-right" style="width: 15%"><?= number_format($credito, 2, '.', ',') ?></th>
 				</tr>
 			</thead>
 
