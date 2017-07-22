@@ -243,13 +243,37 @@ class CuentasPorCobrarController extends Controller
     {
         $cobro = CuentasporCobrar::where('idcuentasporcobrar', $id)->get();
 
+        $cobro1 = CuentasporCobrar::selectRaw('cont_cuentasporcobrar.idcuentasporcobrar, cont_cuentasporcobrar.valorpagado,
+                                        cont_cuentasporcobrar.fecharegistro, cont_cuentasporcobrar.descripcion, 
+                                        cont_cuentasporcobrar.idtransaccion, persona.razonsocial');
+
+        if ($cobro[0]->idcobroagua != null) {
+
+
+
+        } elseif ($cobro[0]->idcobroagua != null) {
+
+
+
+        } else {
+
+            $cobro1 = $cobro1->join('cont_documentoventa', 'cont_documentoventa.iddocumentoventa', '=', 'cont_cuentasporcobrar.iddocumentoventa')
+                            ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente');
+
+        }
+
+        $resultCobro = $cobro1->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                                ->where('idcuentasporcobrar', $id)->get();
+
+
+
         $registro = Cont_RegistroContable::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_registrocontable.idplancuenta')
                                 ->selectRaw('cont_registrocontable.idtransaccion, 
                                         cont_registrocontable.idplancuenta,cont_registrocontable.debe, cont_registrocontable.haber, 
                                         cont_registrocontable.descripcion,cont_plancuenta.jerarquia, cont_plancuenta.concepto')
-                                ->where('cont_registrocontable.idtransaccion', $cobro[0]->idtransaccion)->get();
+                                ->where('cont_registrocontable.idtransaccion', $resultCobro[0]->idtransaccion)->get();
 
-        return [$cobro, $registro];
+        return [$resultCobro, $registro];
     }
 
     public function printComprobanteIngreso($params)

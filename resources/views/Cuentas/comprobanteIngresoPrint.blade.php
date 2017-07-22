@@ -150,7 +150,9 @@
 			<tbody>
 
 				<tr>
-					<td style="width: 80% !important;"><strong>RECIBI DE:</strong> </td>
+					<td style="width: 80% !important;">
+						<strong>RECIBI DE:</strong> <span style="margin-top: 1px;"><?= strtoupper($cobro[0]->razonsocial) ?></span>
+					</td>
 					<td class="text-right" style="width: 20%;">
 						<strong>USD $:</strong> <span style="margin-top: 1px;"><?= $cobro[0]->valorpagado ?></span>
 					</td>
