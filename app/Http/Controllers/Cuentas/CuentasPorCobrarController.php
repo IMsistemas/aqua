@@ -249,7 +249,9 @@ class CuentasPorCobrarController extends Controller
 
         if ($cobro[0]->idcobroagua != null) {
 
-
+            $cobro1 = $cobro1->join('cobroagua', 'cobroagua.idcobroagua', '=', 'cont_cuentasporcobrar.idcobroagua')
+                            ->join('suministro', 'suministro.idcliente', '=', 'cobroagua.idsuministro')
+                            ->join('cliente', 'cliente.idcliente', '=', 'suministro.idcliente');
 
         } elseif ($cobro[0]->idcobroservicio != null) {
 

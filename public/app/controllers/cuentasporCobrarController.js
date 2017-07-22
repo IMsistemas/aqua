@@ -93,7 +93,6 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             $scope.fecha_i = item.fechacobro;
         }
 
-
         if (item.valortotalventa !== undefined) {
             if (item.valortotalventa !== item.valorcobrado) {
                 $('#btn-cobrar').prop('disabled', false);
@@ -141,6 +140,8 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             });
         }
+
+        console.log($scope.listcobro)
     };
 
     $scope.showModalFormaCobro = function () {
@@ -231,9 +232,6 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             }
         }
 
-
-
-
         /*
          * --------------------------------- CONTABILIDAD --------------------------------------------------------------
          */
@@ -284,17 +282,16 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.iddocumentoventa !== undefined && $scope.item_select.iddocumentoventa !== null) {
-            id = $scope.item_select.iddocumentoventa;
-            type = 'venta';
-        } else if ($scope.item_select.idcobroservicio !== undefined) {
+        if ($scope.item_select.idcobroservicio !== undefined) {
             id = $scope.item_select.idcobroservicio;
             type = 'servicio';
-        } else {
+        } else if ($scope.item_select.idcobroagua !== undefined) {
             id = $scope.item_select.idcobroagua;
             type = 'lectura';
+        } else {
+            id = $scope.item_select.iddocumentoventa;
+            type = 'venta';
         }
-
 
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
@@ -313,7 +310,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             console.log(data);
 
-            console.log($scope.select_cuenta);
+            //console.log($scope.select_cuenta);
 
             $http.post(API_URL + 'cuentasxcobrar', data ).success(function (response) {
 
