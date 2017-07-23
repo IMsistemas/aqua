@@ -144,7 +144,7 @@ class CuentasPorPagarController extends Controller
         $cuenta->idplancuenta = $request->input('cuenta');
         $cuenta->idtransaccion = $id_transaccion;
         $cuenta->descripcion = $request->input('descripcion');
-
+        $cuenta->nocuenta = $request->input('nocuenta');
         $cuenta->iddocumentocompra = $request->input('iddocumentocompra');
 
         if ($cuenta->save()) {
@@ -212,8 +212,9 @@ class CuentasPorPagarController extends Controller
     {
 
         $pago = Cont_CuentasPorPagar::selectRaw('cont_cuentasporpagar.idcuentasporpagar, cont_cuentasporpagar.valorpagado,
-                                        cont_cuentasporpagar.fecharegistro, cont_cuentasporpagar.descripcion, 
-                                        cont_cuentasporpagar.idtransaccion, persona.razonsocial')
+                                        cont_cuentasporpagar.fecharegistro, cont_cuentasporpagar.descripcion, cont_cuentasporpagar.nocuenta,
+                                        cont_cuentasporpagar.idtransaccion, persona.razonsocial, cont_plancuenta.concepto')
+                            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_cuentasporpagar.idplancuenta')
                             ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'cont_cuentasporpagar.iddocumentocompra')
                             ->join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
                             ->join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')

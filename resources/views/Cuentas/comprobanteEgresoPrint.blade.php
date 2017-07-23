@@ -347,7 +347,7 @@
 				</tr>
 				<tr>
 					<td>
-						<strong>CUENTA (BANCO):</strong> <span style="margin-top: 1px;"><?= strtoupper($cobro[0]->descripcion) ?></span>
+						<strong>CUENTA (BANCO):</strong> <span style="margin-top: 1px;"><?= strtoupper($cobro[0]->concepto) ?></span>
 					</td>
 					<td class="text-right">
 						<strong>USD $:</strong> <span style="margin-top: 1px;"><?= $cobro[0]->valorpagado ?></span>
@@ -358,7 +358,7 @@
 						<strong>CONCEPTO:</strong> <span style="margin-top: 1px;"><?= strtoupper($cobro[0]->descripcion) ?></span>
 					</td>
 					<td class="text-right">
-						<strong>NO. CHEQUE $:</strong> <span style="margin-top: 1px;"><?= $cobro[0]->valorpagado ?></span>
+						<strong>NO. CHEQUE:</strong> <span style="margin-top: 1px;"><?= $cobro[0]->nocuenta ?></span>
 					</td>
 				</tr>
 

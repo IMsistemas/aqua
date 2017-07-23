@@ -203,6 +203,13 @@
 
                         <div class="col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
+                                <span class="input-group-addon">No. Cheque (si procede): </span>
+                                <input type="text" class="form-control" id="nocheque" ng-model="nocheque" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12" style="margin-top: 5px;">
+                            <div class="input-group">
                                 <span class="input-group-addon">C. Contab.: </span>
                                 <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
                                        ng-required="true" readonly>

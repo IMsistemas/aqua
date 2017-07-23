@@ -180,6 +180,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
             $scope.nocomprobante = parseInt(response) + 1;
             $scope.concepto = '';
+            $scope.nocheque = '';
             $scope.valorrecibido = '';
             $scope.cuenta_employee = '';
             //$('#fecharegistro').val('');
@@ -299,11 +300,18 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
+            var nocheque = null;
+
+            if ($scope.nocheque !== undefined) {
+                nocheque = $scope.nocheque;
+            }
+
             var data = {
                 idproveedor: $scope.Cliente.idproveedor,
                 nocomprobante: $scope.nocomprobante,
                 descripcion: descripcion,
                 fecharegistro: $('#fecharegistro').val(),
+                nocuenta: nocheque,
                 idformapago: $scope.formapago,
                 pagado: $scope.valorrecibido,
                 cuenta: $scope.select_cuenta.idplancuenta,
