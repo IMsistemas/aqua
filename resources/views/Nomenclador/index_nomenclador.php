@@ -248,8 +248,6 @@
 
             </div>
 
-
-
             <div role="tabpanel" class="tab-pane fade" id="sri" >
                 <div id="dvTab3" style="margin-top: 5px;">
                     <ul class="nav nav-tabs" role="tablist">
@@ -636,12 +634,12 @@
                                 <table class="table table-responsive table-striped table-hover table-condensed">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 30%;">Tipo de Impuesto Retención</td>
-                                        <td style="width: 15%;">Detalle Retención</td>
+                                        <td style="width: 15%;">Tipo de Impuesto Retención</td>
+                                        <td>Detalle Retención</td>
                                         <td style="width: 10%;">Código SRI</td>
                                         <td style="width: 10%;">Porcentaje</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <td style="width: 10%;">Estado</td>
+                                        <td style="width: 15%;">Acciones</td>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -1020,7 +1018,6 @@
         </div>
 
 
-
         <!-- Modal  tipo impuesto Nativo-->
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalActionTipoImp">
@@ -1079,10 +1076,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
 
         <!-- Modal  Impuesto Iva Nativo-->
@@ -1716,7 +1709,6 @@
         </div>
 
 
-
         <!-- Modal canton Nativo-->
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalActioncanton">
@@ -1820,9 +1812,7 @@
         </div>
 
 
-
         <!-- Modal Confirmacion Borrado -->
-
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmDelete">
             <div class="modal-dialog" role="document">
@@ -1849,7 +1839,6 @@
     </div>
 
 
-
     <!-- Modal Mensajes -->
 
 
@@ -1866,7 +1855,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal Provincia -->
     <div id="myProvincia" class="modal fade" role="dialog">
@@ -1908,7 +1896,6 @@
 
         </div>
     </div>
-
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
         <div class="modal-dialog" role="document">
