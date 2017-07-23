@@ -50,7 +50,11 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
                 var suma = 0;
 
                 for (var j = 0; j < longitud_cobros; j++) {
-                    suma += parseFloat(response[i].cont_cuentasporpagar[j].valorpagado);
+
+                    if (response[i].cont_cuentasporpagar[j].estadoanulado === false){
+                        suma += parseFloat(response[i].cont_cuentasporpagar[j].valorpagado);
+                    }
+
                 }
 
                 var complete_name = {

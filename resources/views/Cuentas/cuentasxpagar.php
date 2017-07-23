@@ -116,9 +116,9 @@
                                         <td class="text-center">{{item.fecharegistro}}</td>
                                         <td>{{item.nameformapago}}</td>
                                         <td class="text-right">$ {{item.valorpagado}}</td>
-                                        <td class="text-right">{{(item.estado) ? 'NO ANULADA' : 'ANULADA'}}</td>
+                                        <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                                         <td class="text-center" style="width: 12%;">
-                                            <button type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
+                                            <button ng-show="item.estadoanulado == false" type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
                                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
                                             </button>
                                             <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporpagar)" title="Imprimir">
