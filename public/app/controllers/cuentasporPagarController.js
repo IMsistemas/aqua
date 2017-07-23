@@ -15,6 +15,8 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
+    $scope.pago_anular = '';
+
     $scope.fecha_i = '';
 
     $scope.initLoad = function(){
@@ -94,26 +96,30 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
         $scope.fecha_i = item.fecharegistrocompra;
 
         if (item.valortotalcompra !== undefined) {
+
             if (item.valortotalcompra !== item.valorcobrado) {
                 $('#btn-cobrar').prop('disabled', false);
             } else {
                 $('#btn-cobrar').prop('disabled', true);
             }
+
         } else {
+
             if (item.total !== item.valorcobrado) {
                 $('#btn-cobrar').prop('disabled', false);
             } else {
                 $('#btn-cobrar').prop('disabled', true);
             }
+
         }
 
         $scope.infoCliente(item.idproveedor);
 
         if (item.iddocumentocompra !== undefined && item.iddocumentocompra !== null) {
+
             $http.get(API_URL + 'cuentasxpagar/getCobros/' + item.iddocumentocompra).success(function(response){
 
                 console.log(response);
-
 
                 $scope.listcobro = response;
 
@@ -122,39 +128,14 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
                 $('#listCobros').modal('show');
 
             });
+
         }
     };
 
     $scope.showModalConfirm = function(item){
-        /*$scope.compra_anular = item.iddocumentocompra;
-        $scope.numseriecompra = item.numdocumentocompra;*/
+        $scope.pago_anular = item.idcuentasporpagar;
+
         $('#modalConfirmAnular').modal('show');
-    };
-
-    $scope.anular= function(){
-
-        /*var object = {
-            iddocumentocompra: $scope.compra_anular
-        };
-
-        $http.post(API_URL + 'cuentasxpagar/anular', object).success(function(response) {
-
-            $('#modalConfirmAnular').modal('hide');
-
-            if(response.success == true){
-                $scope.initLoad(1);
-                $scope.compra_anular = 0;
-                $scope.message = 'Se ha anulado la compra seleccionada...';
-                $('#modalMessage1').modal('show');
-
-                $('#btn-anular').prop('disabled', true);
-
-            } else {
-                $scope.message_error = 'Ha ocurrido un error al intentar anular la Compra seleccionada...';
-                $('#modalMessageError').modal('show');
-            }
-
-        });*/
     };
 
     $scope.showModalFormaCobro = function () {
@@ -351,6 +332,34 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.anular = function(){
+
+        var object = {
+            idcuentasporpagar: $scope.pago_anular
+        };
+
+        $http.post(API_URL + 'cuentasxpagar/anular', object).success(function(response) {
+
+            $('#modalConfirmAnular').modal('hide');
+
+            if(response.success === true){
+                $scope.initLoad(1);
+                $scope.pago_anular = 0;
+                $scope.message = 'Se ha anulado el pago seleccionado...';
+                $('#modalMessage1').modal('show');
+
+                $scope.showModalListCobro($scope.item_select);
+
+                //$('#btn-anular').prop('disabled', true);
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar anular el pago seleccionado...';
+                $('#modalMessageError').modal('show');
+            }
+
+        });
+    };
+
     /*
      -----------------------------------------------------------------------------------------------------------------
      */
@@ -389,6 +398,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
     };
 
     $scope.fechaByFilter();
+
     $scope.initLoad();
 
 });

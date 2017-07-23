@@ -335,7 +335,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularCompra()">
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anular()">
                         Anular
                     </button>
                 </div>

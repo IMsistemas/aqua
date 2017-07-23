@@ -428,7 +428,7 @@
               <div class="row">
                 <div class="col-xs-4">
                   <div class="input-group">
-                    <span class="input-group-addon">Numero De comprobante: </span>
+                    <span class="input-group-addon">Número De comprobante: </span>
                     <input type="number" class="form-control   input-sm"   ng-model="NumeroIASC" readonly>
                   </div>
                 </div>

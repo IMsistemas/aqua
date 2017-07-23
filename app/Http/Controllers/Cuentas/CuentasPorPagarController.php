@@ -69,25 +69,21 @@ class CuentasPorPagarController extends Controller
 
     public function anular(Request $request)
     {
-        $iddocumentocompra = $request->input('iddocumentocompra');
+        $idcuentasporpagar = $request->input('idcuentasporpagar');
 
-        $compra = Cont_DocumentoCompra::find($iddocumentocompra);
-        $compra->estadoanulado =  true;
+        $cuenta = Cont_CuentasPorPagar::find($idcuentasporpagar);
+        $cuenta->estadoanulado =  true;
 
-        if ($compra->save()) {
+        if ($cuenta->save()) {
 
-            CoreContabilidad::AnularAsientoContable($compra->idtransaccion);
-
-            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $compra->idtransaccion)
-                ->update(['estadoanulado' => true]);
-
-            if ($result == false) {
-                return response()->json(['success' => false]);
-            }
+            CoreContabilidad::AnularAsientoContable($cuenta->idtransaccion);
 
             return response()->json(['success' => true]);
+
         } else {
+
             return response()->json(['success' => false]);
+
         }
     }
 
@@ -146,6 +142,7 @@ class CuentasPorPagarController extends Controller
         $cuenta->descripcion = $request->input('descripcion');
         $cuenta->nocuenta = $request->input('nocuenta');
         $cuenta->iddocumentocompra = $request->input('iddocumentocompra');
+        $cuenta->estadoanulado = false;
 
         if ($cuenta->save()) {
 
@@ -162,6 +159,8 @@ class CuentasPorPagarController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+
 
     /**
      * Display the specified resource.
