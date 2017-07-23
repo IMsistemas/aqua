@@ -112,7 +112,7 @@
 
     <!---------------------------- FORMULARIOS DE CUENTAS POR COBRAR ---------------------------------------------->
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="listCobros" style="z-index: 9999;">
+    <div class="modal fade" tabindex="-1" role="dialog" id="listCobros">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
@@ -137,6 +137,7 @@
                                     <th style="width: 10%;">FECHA</th>
                                     <th>FORMA PAGO</th>
                                     <th style="width: 11%;">VALOR</th>
+                                    <th style="width: 12%;">ESTADO</th>
                                     <th style="width: 12%;">ACCION</th>
                                 </tr>
                                 </thead>
@@ -147,8 +148,9 @@
                                 <td class="text-center">{{item.fecharegistro}}</td>
                                 <td>{{item.nameformapago}}</td>
                                 <td class="text-right">$ {{item.valorpagado}}</td>
+                                <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-default" ng-click="" title="Anular">
+                                    <button ng-show="item.estadoanulado == false" type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
                                         <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
                                     </button>
                                     <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporcobrar)" title="Imprimir">
@@ -315,7 +317,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="WPrint" tabindex="-1" role="dialog" style="z-index: 999999;">
+    <div class="modal fade" id="WPrint" tabindex="-1" role="dialog" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header btn-primary">
@@ -331,6 +333,29 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i> </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Está seguro que desea Anular el Cobro seleccionado...?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anular()">
+                        Anular
+                    </button>
                 </div>
             </div>
         </div>

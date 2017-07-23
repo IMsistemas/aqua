@@ -12,6 +12,8 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
+    $scope.pago_anular = '';
+
     $scope.initLoad = function(){
 
         $('.datepicker').datetimepicker({
@@ -195,6 +197,12 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
     /*
      ---------------------------------CUENTAS POR COBRAR-----------------------------------------------------------------
      */
+
+    $scope.showModalConfirm = function(item){
+        $scope.pago_anular = item.idcuentasporcobrar;
+
+        $('#modalConfirmAnular').modal('show');
+    };
 
     $scope.autoAssignDate = function () {
 
@@ -475,6 +483,34 @@ app.controller('cobroServicioController',  function($scope, $http, API_URL) {
         }
 
 
+    };
+
+    $scope.anular = function(){
+
+        var object = {
+            idcuentasporcobrar: $scope.pago_anular
+        };
+
+        $http.post(API_URL + 'cuentasxcobrar/anular', object).success(function(response) {
+
+            $('#modalConfirmAnular').modal('hide');
+
+            if(response.success === true){
+                $scope.initLoad(1);
+                $scope.pago_anular = 0;
+                $scope.message = 'Se ha anulado el cobro seleccionado...';
+                $('#modalMessage').modal('show');
+
+                $scope.showModalListCobro($scope.item_select);
+
+                //$('#btn-anular').prop('disabled', true);
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar anular el cobro seleccionado...';
+                $('#modalMessageError').modal('show');
+            }
+
+        });
     };
 
     /*
