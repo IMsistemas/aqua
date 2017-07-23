@@ -350,7 +350,7 @@ app.controller('cuentasporPagarController',  function($scope, $http, API_URL) {
                 $scope.initLoad(1);
                 $scope.pago_anular = 0;
                 $scope.message = 'Se ha anulado el pago seleccionado...';
-                $('#modalMessage1').modal('show');
+                $('#modalMessage').modal('show');
 
                 $scope.showModalListCobro($scope.item_select);
 
