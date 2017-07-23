@@ -512,7 +512,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     };
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: response[i].confignomina[0].value_imp,
+                        value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -543,7 +543,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     };
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: response[i].confignomina[0].value_imp,
+                        value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true

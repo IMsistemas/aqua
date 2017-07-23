@@ -134,6 +134,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
         $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
 
+            console.log(response);
+
             var long = response.length;
             for(var i = 0; i < long; i++){
 
@@ -152,7 +154,6 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
                 //------------------------------------------------------------------------------------------------------
 
-                var impuesto =  response[i].impuesto;
                 if(response[i].id_categoriapago === 1 && response[i].grupo === '1'){
 
                     var cantidad = {
@@ -209,7 +210,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                     Object.defineProperty(response[i], 'cant', cantidad);
 
                     var valor1 = {
-                        value: impuesto,
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -291,7 +292,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(response[i].id_categoriapago === 2){
 
                     var cantidad = {
-                        value: impuesto,
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -320,7 +321,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(response[i].id_categoriapago === 3){
 
                     var cantidad = {
-                        value: impuesto,
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -348,7 +349,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 }
                 if(response[i].id_categoriapago === 4){
                     var cantidad = {
-                        value: impuesto,
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -375,8 +376,6 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
                 }
             }
-
-            console.log(response);
         });
     };
 
@@ -430,11 +429,11 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
                 if ($scope.valortotalCantidad <= 30){
                     if(item.aportaiess === true){
-                        $scope.baseiess = parseFloat($scope.baseiess) + parseFloat(item.valorTotal);
+                        $scope.baseiess = (parseFloat($scope.baseiess) + parseFloat(item.valorTotal)).toFixed(2);
                     }
 
-                    $scope.valortotalIngreso = parseFloat($scope.valortotalIngreso) + parseFloat(item.valorTotal);
-                    $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngreso);
+                    $scope.valortotalIngreso = (parseFloat($scope.valortotalIngreso) + parseFloat(item.valorTotal)).toFixed(2);
+                    $scope.valortotalIngresoBruto = (parseFloat($scope.valortotalIngreso)).toFixed(2);
                 }
                 else{
                     $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt(item.cant);
@@ -455,7 +454,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 if(item.aportaiess === true){
                     $scope.baseiess = parseFloat($scope.baseiess) + parseFloat(item.valorTotal);
                 }
-                $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat(item.valorTotal);
+                $scope.valortotalIngresoBruto = (parseFloat($scope.valortotalIngresoBruto) + parseFloat(item.valorTotal)).toFixed(2);
             }
         });
 
@@ -470,7 +469,7 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                     $scope.message_error = "El valor introducido no puede ser mayor al 20% de la base de aporte al IESS. Por favor introduzca un nuevo valor."
                     $('#modalError').modal('show');
                 }else{
-                    $scope.valortotalIngresoBruto = parseFloat($scope.valortotalIngresoBruto) + parseFloat(aux_total);
+                    $scope.valortotalIngresoBruto = (parseFloat($scope.valortotalIngresoBruto) + parseFloat(aux_total)).toFixed(2);
                 }
             }
         });
@@ -485,9 +484,9 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
                 item.valorTotal = total.toFixed(2);
             }
             if (item.valorTotal !== undefined && item.valorTotal !== "") {
-                $scope.ingresoBruto_deducciones = parseFloat($scope.ingresoBruto_deducciones) - parseFloat(item.valorTotal);
-                $scope.total_deducciones = parseFloat($scope.total_deducciones) + parseFloat(item.valorTotal);
-                $scope.ingresoBruto_beneficios = parseFloat($scope.ingresoBruto_deducciones) + parseFloat($scope.total_beneficios);
+                $scope.ingresoBruto_deducciones = (parseFloat($scope.ingresoBruto_deducciones) - parseFloat(item.valorTotal)).toFixed(2);
+                $scope.total_deducciones = (parseFloat($scope.total_deducciones) + parseFloat(item.valorTotal)).toFixed(2);
+                $scope.ingresoBruto_beneficios = (parseFloat($scope.ingresoBruto_deducciones) + parseFloat($scope.total_beneficios)).toFixed(2);
             }
         });
 
@@ -502,8 +501,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
             }
 
             if (item.valorTotal !== undefined && item.valorTotal !== "") {
-                $scope.ingresoBruto_beneficios = parseFloat($scope.ingresoBruto_beneficios) + parseFloat(item.valorTotal);
-                $scope.total_beneficios = parseFloat($scope.total_beneficios) + parseFloat(item.valorTotal);
+                $scope.ingresoBruto_beneficios = (parseFloat($scope.ingresoBruto_beneficios) + parseFloat(item.valorTotal)).toFixed(2);
+                $scope.total_beneficios = (parseFloat($scope.total_beneficios) + parseFloat(item.valorTotal)).toFixed(2);
             }
         });
 
@@ -518,8 +517,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
             }
 
             if (item.valorTotal !== undefined && item.valorTotal !== "") {
-                $scope.total_adicionales = parseFloat($scope.total_adicionales) + parseFloat(item.valorTotal);
-                $scope.total_empresarial = parseFloat($scope.total_adicionales) + parseFloat($scope.sueldoliquido);
+                $scope.total_adicionales = (parseFloat($scope.total_adicionales) + parseFloat(item.valorTotal)).toFixed(2);
+                $scope.total_empresarial = (parseFloat($scope.total_adicionales) + parseFloat($scope.sueldoliquido)).toFixed(2);
             }
         });
     };
