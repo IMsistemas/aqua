@@ -370,7 +370,7 @@
 
 			<thead>
 				<tr>
-					<th style="width: 17%">CUENTA</th>
+					<th style="width: 19%">CUENTA</th>
 					<th style="width: 5%">CC</th>
 					<th style="width: 46%">DETALLE</th>
 					<th style="width: 15%">DEBITO</th>
@@ -425,14 +425,15 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td style="height: 35px;" colspan="2"></td>
+					<td></td>
+					<td style="height: 35px;" colspan="2" class="text-center">RECIBI CONFORME</td>
 				</tr>
 
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="4" class="text-right">R.U.C. / C.I.</th>
-					<th></th>
+					<th colspan="2"></th>
 				</tr>
 			</tfoot>
 

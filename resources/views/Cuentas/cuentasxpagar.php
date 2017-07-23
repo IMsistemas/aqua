@@ -121,7 +121,7 @@
                                             <button type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
                                                 <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
                                             </button>
-                                            <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporcobrar)" title="Imprimir">
+                                            <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporpagar)" title="Imprimir">
                                                 <span class="glyphicon glyphicon-print" aria-hidden="true">
                                             </button>
                                         </td>

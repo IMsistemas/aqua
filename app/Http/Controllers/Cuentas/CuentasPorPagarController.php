@@ -211,13 +211,13 @@ class CuentasPorPagarController extends Controller
     private function getPagosPrint($id)
     {
 
-        $pago = Cont_CuentasPorPagar::selectRaw('cont_cuentasporcobrar.idcuentasporcobrar, cont_cuentasporcobrar.valorpagado,
-                                        cont_cuentasporcobrar.fecharegistro, cont_cuentasporcobrar.descripcion, 
-                                        cont_cuentasporcobrar.idtransaccion, persona.razonsocial')
-                            ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'cont_cuentasporcobrar.iddocumentocompra')
-                            ->join('cliente', 'cliente.idcliente', '=', 'cont_documentocompra.idcliente')
-                            ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
-                            ->where('idcuentasporcobrar', $id)->get();
+        $pago = Cont_CuentasPorPagar::selectRaw('cont_cuentasporpagar.idcuentasporpagar, cont_cuentasporpagar.valorpagado,
+                                        cont_cuentasporpagar.fecharegistro, cont_cuentasporpagar.descripcion, 
+                                        cont_cuentasporpagar.idtransaccion, persona.razonsocial')
+                            ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'cont_cuentasporpagar.iddocumentocompra')
+                            ->join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+                            ->join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
+                            ->where('idcuentasporpagar', $id)->get();
 
 
         $registro = Cont_RegistroContable::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_registrocontable.idplancuenta')
