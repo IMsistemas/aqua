@@ -94,6 +94,26 @@ class CuentasPorCobrarController extends Controller
         return CuentasporCobrar::max('idcuentasporcobrar');
     }
 
+    public function anular(Request $request)
+    {
+        $idcuentasporcobrar = $request->input('idcuentasporcobrar');
+
+        $cuenta = CuentasporCobrar::find($idcuentasporcobrar);
+        $cuenta->estadoanulado =  true;
+
+        if ($cuenta->save()) {
+
+            CoreContabilidad::AnularAsientoContable($cuenta->idtransaccion);
+
+            return response()->json(['success' => true]);
+
+        } else {
+
+            return response()->json(['success' => false]);
+
+        }
+    }
+
     /**
      * Obtener la informacion de un cliente en especifico
      *
@@ -237,7 +257,6 @@ class CuentasPorCobrarController extends Controller
     {
         //
     }
-
 
     private function getCobroPrint($id)
     {

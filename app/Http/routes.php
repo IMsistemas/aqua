@@ -1133,6 +1133,7 @@ Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController')
  * ------------------------------CUENTAS POR COBRAR---------------------------------------------------------------------
  */
 
+Route::post('cuentasxcobrar/anular', 'Cuentas\CuentasPorCobrarController@anular');
 Route::get('cuentasxcobrar/printComprobante/{id}', 'Cuentas\CuentasPorCobrarController@printComprobanteIngreso');
 Route::get('cuentasxcobrar/getLastID', 'Cuentas\CuentasPorCobrarController@getLastID');
 Route::get('cuentasxcobrar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorCobrarController@getInfoClienteByID');
