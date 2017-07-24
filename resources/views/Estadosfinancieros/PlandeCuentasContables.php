@@ -147,7 +147,7 @@
                         <th></th>
                         <th>TIPO</th>
                         <th>FECHA</th>
-                        <th>NUMERO T.</th>
+                        <th>NUM. T.</th>
                         <th>CONCEPTO</th>
                         <th>DEBE</th>
                         <th>HABER</th>
@@ -165,16 +165,16 @@
                         <td>{{ registro.fecha }}</td>
                         <td>{{ registro.cont_transaccion.numcontable }}</td>
                         <td>{{ registro.descripcion }}</td>
-                        <td>{{ formato_dinero(registro.debe_c,"$") }}</td>
-                        <td>{{ formato_dinero(registro.haber_c,"$") }}</td>
-                        <td>{{ formato_dinero(registro.saldo,"$") }}</td>
+                        <td class="text-right">{{ formato_dinero(registro.debe_c,"$") }}</td>
+                        <td class="text-right">{{ formato_dinero(registro.haber_c,"$") }}</td>
+                        <td class="text-right">{{ formato_dinero(registro.saldo,"$") }}</td>
                       </tr>
                     </tbody>
                     <tfoot>
-                      <th colspan="6" class="text-right">Total: </th>
-                      <th>{{formato_dinero(aux_total_debe,"$")}}</th>
-                      <th>{{formato_dinero(aux_total_haber,"$")}}</th>
-                      <th>{{formato_dinero((aux_total_debe-aux_total_haber),"$")}}</th>
+                      <th colspan="6" class="text-right">TOTAL: </th>
+                      <th class="text-right">{{formato_dinero(aux_total_debe,"$")}}</th>
+                      <th class="text-right">{{formato_dinero(aux_total_haber,"$")}}</th>
+                      <th class="text-right">{{formato_dinero((aux_total_debe-aux_total_haber),"$")}}</th>
                       <!--<th>{{formato_dinero(aux_total_saldo,"$")}}</th>-->
                     </tfoot>
                   </table>
