@@ -244,6 +244,25 @@
 		 				?>
 		 			</th>
 		 		</tr>
+				<tr>
+					<th colspan="2">Total Ingresos - Total Egresos (Utilidad)</th>
+					<th class="text-right">
+                        <?php
+                        echo "$ ".number_format((float) $balance_general_contable["Utilidad"] ,4,'.',',');
+							//print_r($balance_general_contable);
+                        ?>
+					</th>
+				</tr>
+
+				<tr>
+					<th colspan="2">Cuadre (Activo-(Pasivo + Patrimonio + Utilidad))</th>
+					<th class="text-right">
+                        <?php
+                        echo "$ ".number_format((( (float) $aux_total_activo )-( ((float) $aux_total_pasivo) + ((float) $aux_total_patrimonio) +( (float) $balance_general_contable["Utilidad"] ) )),4,'.',',');
+                        ?>
+					</th>
+				</tr>
+
 			</tbody>
 			<tfoot>
 				<tr>
