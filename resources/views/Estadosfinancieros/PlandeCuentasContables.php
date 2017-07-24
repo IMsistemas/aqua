@@ -17,28 +17,28 @@
                     <div class="col-xs-4">
                         <div class="input-group">
                           <span class="input-group-addon">Generar: </span>
-                          <select class="form-control input-sm" ng-model="GenerarPlanCuentasTipo">
+                          <select class="form-control" ng-model="GenerarPlanCuentasTipo">
                               <option value="E">Estado De Resultado</option>
                               <option value="B">Balance</option>
                           </select>
                         </div>
                     </div>
-                    <div class="col-xs-3" ng-show=" GenerarPlanCuentasTipo=='E' " ng-hide="GenerarPlanCuentasTipo=='B' ">
+                    <div class="col-xs-3" style="padding: 0;" ng-show=" GenerarPlanCuentasTipo=='E' " ng-hide="GenerarPlanCuentasTipo=='B' ">
                         <div class="input-group">
                           <span class="input-group-addon">Fecha I.: </span>
-                          <input type="type" class="form-control datepicker  input-sm" id="FechaI" ng-model="FechaI">
+                          <input type="type" class="form-control datepicker" id="FechaI" ng-model="FechaI">
                         </div>
                     </div>
-                    <div class="col-xs-3" ng-show=" GenerarPlanCuentasTipo=='E' ||  GenerarPlanCuentasTipo=='B' " >
+                    <div class="col-xs-3" style="padding: 0;" ng-show=" GenerarPlanCuentasTipo=='E' ||  GenerarPlanCuentasTipo=='B' " >
                         <div class="input-group">
                           <span class="input-group-addon">Fecha F.: </span>
-                          <input type="type" class="form-control datepicker  input-sm" id="FechaF" ng-model="FechaF">
+                          <input type="type" class="form-control datepicker" id="FechaF" ng-model="FechaF">
                         </div>
                     </div>
                     <div class="col-xs-2">
                         <div class="btn-group">
                           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                            Accion <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu">
                             <li><a href="#" ng-click="GenereraFiltroPlanCuentas();" ><i class="glyphicon glyphicon-cog"></i> Generar</a></li>
@@ -67,11 +67,11 @@
                                 </tr>
                                 <tr class="bg-primary">
                                     <th style="width: 20%;"></th>
-                                    <th ></th>
-                                    <th style="width: 35%;">Detalle</th>
-                                    <th style="width: 10%;">Codigo</th>
-                                    <th style="width: 15%;">Balance</th>
-                                    <th></th>
+                                    <th style="width: 10%;"></th>
+                                    <th>DETALLE</th>
+                                    <th style="width: 10%;">CODIGO</th>
+                                    <th style="width: 15%;">BALANCE</th>
+                                    <th style="width: 5%;"></th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 12px;">
@@ -107,7 +107,7 @@
                 </div>
               </div>
               <div class="row" style="padding-top: 5px;">
-                <div class="col-xs-3">
+                <div class="col-xs-3" >
                   <div class="input-group">
                     <span class="input-group-addon">Estado: </span>
                     <select class="form-control" ng-model="EstadoAsc" id="EstadoAsc" ng-change="LoadRegistroCuenta();">
@@ -116,16 +116,16 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3" style="padding: 0;">
                   <div class="input-group">
                     <span class="input-group-addon">Fecha I.: </span>
-                    <input type="type" class="form-control datepicker  input-sm" id="FechaRI" ng-model="FechaRI">
+                    <input type="type" class="form-control datepicker" id="FechaRI" ng-model="FechaRI">
                   </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3" style="padding: 0;">
                   <div class="input-group">
                     <span class="input-group-addon">Fecha F.: </span>
-                    <input type="type" class="form-control datepicker  input-sm" id="FechaRF" ng-model="FechaRF">
+                    <input type="type" class="form-control datepicker" id="FechaRF" ng-model="FechaRF">
                   </div>
                 </div>
                 <div class="col-xs-3">
@@ -145,13 +145,13 @@
                       <tr class="bg-primary">
                         <th></th>
                         <th></th>
-                        <th>Tipo</th>
-                        <th>Fecha</th>
-                        <th>Numero T.</th>
-                        <th>Concepto</th>
-                        <th>Debe</th>
-                        <th>Haber</th>
-                        <th>Saldo</th>
+                        <th>TIPO</th>
+                        <th>FECHA</th>
+                        <th>NUMERO T.</th>
+                        <th>CONCEPTO</th>
+                        <th>DEBE</th>
+                        <th>HABER</th>
+                        <th>SALDO</th>
                       </tr>
                     </thead>
                     <tbody style="font-size: 12px;">
