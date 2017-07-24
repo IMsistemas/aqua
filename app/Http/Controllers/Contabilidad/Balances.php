@@ -411,10 +411,30 @@ class Balances extends Controller
                  );  
                 array_push($aux_data_balance_patrimonio, $aux_item); 
         }
+
+        ///ingreso aumenta por el debe y se calcula en el periodo seleccionado
+        $aux_total_ingresos=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
+            ->selectRaw("COALESCE(SUM(cont_registrocontable.debe_c)-SUM(cont_registrocontable.haber_c),0.0) AS total_ingreso ")
+            ->whereRaw("cont_plancuenta.tipocuenta='I' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            ->get();
+        ///costo aumenta por el haber y se calcula en el periodo seleccionado
+        $aux_total_costo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
+            ->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_costo ")
+            ->whereRaw("cont_plancuenta.tipocuenta='C' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            ->get();
+        ///gasto aumenta por el haber y se calcula en el periodo seleccionado
+        $aux_total_gasto=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
+            ->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_gasto ")
+            ->whereRaw("cont_plancuenta.tipocuenta='G' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            ->get();
+        /// utilidad
+        $aux_utilidad= ( ((float) $aux_total_ingresos[0]->total_ingreso) -  ((float) $aux_total_costo[0]->total_costo) -  ((float) $aux_total_gasto[0]->total_gasto) );
+
         $aux_data_plan = array(
             'Activo' => $aux_data_balance_activo,
             'Pasivo' => $aux_data_balance_pasivo,
-            'Patrimonio' => $aux_data_balance_patrimonio 
+            'Patrimonio' => $aux_data_balance_patrimonio,
+            'Utilidad'=>$aux_utilidad
             );
         return $aux_data_plan;
     }
