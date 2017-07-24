@@ -361,7 +361,7 @@
               </tr>
                 <tr>
                     <th class="text-right"> Cuadre Contable (Activo-(Pasivo + Patrimonio + Utilidad)) </th>
-                    <th class="text-right"> {{ formato_dinero(aux_cuadre_contable ,"$")}}</th>
+                    <th class="text-right"> {{ formato_dinero(aux_cuadre_contable,"$") }}</th>
                 </tr>
               </thead>
             </table>

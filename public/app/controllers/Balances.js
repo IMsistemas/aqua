@@ -184,8 +184,9 @@ app.controller('ReportBalanceContabilidad', function($scope, $http, API_URL) {
                $scope.aux_formula_patrimonial=$scope.aux_formula_patrimonial.toFixed(4);
 
                $scope.aux_utilidad_formula=(response.Utilidad!="")?parseFloat(response.Utilidad):0;
+            $scope.aux_utilidad_formula=$scope.aux_utilidad_formula.toFixed(4);
                $scope.aux_cuadre_contable=parseFloat($scope.total_activo)-(parseFloat($scope.aux_formula_patrimonial)+($scope.aux_utilidad_formula));
-                $scope.aux_cuadre_contable.toFixed(4);
+            $scope.aux_cuadre_contable=  $scope.aux_cuadre_contable.toFixed(4);
                console.log($scope.aux_cuadre_contable);
             $("#procesarinfomracion").modal("hide");
         });
