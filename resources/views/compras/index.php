@@ -381,15 +381,15 @@
                 <table class="table table-responsive table-striped table-hover table-condensed">
                     <thead class="bg-primary">
                     <tr>
-                        <td>Código Item</td>
-                        <td style="width: 20%">Detalle</td>
-                        <td>Cantidad</td>
-                        <td>Precio Unitario</td>
-                        <td>Descuento(%)</td>
-                        <td>IVA</td>
-                        <td>ICE</td>
-                        <td>Total</td>
-                        <td></td>
+                        <th>CODIGO ITEM</th>
+                        <th style="width: 20%">DETALLE</th>
+                        <th>CANTIDAD</th>
+                        <th>PRECIO UNITARIO</th>
+                        <th>DESCUENTO(%)</th>
+                        <th>IVA</th>
+                        <th>ICE</th>
+                        <th>TOTAL</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -459,7 +459,7 @@
                           ng-show="formCompra.observacion.$invalid && formCompra.observacion.$touched">La Observación es requerida</span>
                 </div>
 
-                <div class="col-xs-12" style="margin-top: 15px;">
+                <!--<div class="col-xs-12" style="margin-top: 15px;">
                     <fieldset>
                         <legend>Comprobante de Retención</legend>
 
@@ -533,7 +533,7 @@
                         </div>
 
                     </fieldset>
-                </div>
+                </div>-->
 
 
                 <div class="col-xs-12 text-right" style="margin-top: 20px;">

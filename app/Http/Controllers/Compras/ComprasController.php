@@ -265,7 +265,7 @@ class ComprasController extends Controller
 
                 //----------Insert data Comprobante retencion--------------------------------
 
-                if ($filtro->dataComprobante != null) {
+                /*if ($filtro->dataComprobante != null) {
 
                     $comprobante = new SRI_ComprobanteRetencion();
 
@@ -293,7 +293,7 @@ class ComprasController extends Controller
                         return response()->json(['success' => false]);
                     }
 
-                }
+                }*/
 
                 $formapago = new Cont_FormaPagoDocumentoCompra();
 

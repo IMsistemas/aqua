@@ -627,7 +627,7 @@
                 tipocuenta: $scope.proveedor.originalObject.proveedor[0].cont_plancuenta.tipocuenta,
                 Debe: 0,
                 Haber: $scope.ValorTotal,
-                Descipcion:''
+                Descipcion: $scope.observacion
             };
 
             RegistroC.push(cliente);
@@ -643,7 +643,7 @@
                         tipocuenta: aux_bodegaseleccionada.tipocuenta,
                         Debe: (parseFloat($scope.items[x].total)).toFixed(4),
                         Haber: 0,
-                        Descipcion:''
+                        Descipcion: $scope.observacion
                     };
                     RegistroC.push(producto);
                 }
@@ -661,7 +661,7 @@
                         tipocuenta: $scope.items[x].productoObj.originalObject.tipocuentaingreso,
                         Debe: (parseFloat($scope.items[x].total)).toFixed(4),
                         Haber: 0,
-                        Descipcion:''
+                        Descipcion: $scope.observacion
                     };
                     RegistroC.push(itemproductoservicio);
                 }
@@ -684,7 +684,7 @@
                     tipocuenta: iceventa.tipocuenta,
                     Debe: parseFloat($scope.ValICE),
                     Haber: 0,
-                    Descipcion:''
+                    Descipcion:$scope.observacion
                 };
                 RegistroC.push(ice);
             }
@@ -706,7 +706,7 @@
                     tipocuenta: irbpnrventa.tipocuenta,
                     Debe: parseFloat($scope.ValIRBPNR),
                     Haber: 0,
-                    Descipcion:''
+                    Descipcion: $scope.observacion
                 };
                 RegistroC.push(irbpnr);
             }
@@ -728,7 +728,7 @@
                     tipocuenta: propinaventa.tipocuenta,
                     Debe: parseFloat($scope.ValPropina),
                     Haber: 0,
-                    Descipcion:''
+                    Descipcion: $scope.observacion
                 };
                 RegistroC.push(propinav);
             }
@@ -736,23 +736,25 @@
 
 
             //--Iva venta
-            var ivaventa={};
-            for(i=0;i<$scope.Configuracion.length;i++){
-                if($scope.Configuracion[i].Descripcion=="CONT_IVA_COMPRA"){
-                    var auxcosto=$scope.Configuracion[i].Contabilidad;
-                    ivaventa=auxcosto[0];
+            if (parseFloat($scope.ValIVA) > 0) {
+                var ivaventa={};
+                for(i=0;i<$scope.Configuracion.length;i++){
+                    if($scope.Configuracion[i].Descripcion=="CONT_IVA_COMPRA"){
+                        var auxcosto=$scope.Configuracion[i].Contabilidad;
+                        ivaventa=auxcosto[0];
+                    }
                 }
+                var iva={
+                    idplancuenta: ivaventa.idplancuenta,
+                    concepto: ivaventa.concepto,
+                    controlhaber: ivaventa.controlhaber,
+                    tipocuenta: ivaventa.tipocuenta,
+                    Debe: parseFloat($scope.ValIVA),
+                    Haber: 0,
+                    Descipcion: $scope.observacion
+                };
+                RegistroC.push(iva);
             }
-            var iva={
-                idplancuenta: ivaventa.idplancuenta,
-                concepto: ivaventa.concepto,
-                controlhaber: ivaventa.controlhaber,
-                tipocuenta: ivaventa.tipocuenta,
-                Debe: parseFloat($scope.ValIVA),
-                Haber: 0,
-                Descipcion:''
-            };
-            RegistroC.push(iva);
             //--Iva venta
 
 
@@ -850,7 +852,7 @@
             }
             //--Items venta
 
-            var dataComprobante = null;
+            /*var dataComprobante = null;
 
             if ($scope.tipopago != '' && $scope.tipopago != undefined) {
 
@@ -870,7 +872,7 @@
                     nocomprobante: $('#t_establ_c').val() + '-' + $('#t_pto_c').val() + '-' + $('#t_secuencial_c').val(),
                     noauthcomprobante: $scope.noauthcomprobante
                 }
-            }
+            }*/
 
 
 
@@ -880,7 +882,7 @@
                 DataCompra: DocVenta,
                 Idformapagocompra: $scope.formapago,
                 DataItemsCompra: ItemsVenta,
-                dataComprobante: dataComprobante
+                //dataComprobante: dataComprobante
             };
 
             console.log(ItemsVenta);
@@ -1086,6 +1088,9 @@
                     $scope.noauthcomprobante = response.sri_comprobanteretencion.noauthcomprobante;
                 }
 
+                $('#btn-save').prop('disabled', true);
+                $('#btn-save').hide();
+
 
             })
             .error(function(err){
@@ -1191,6 +1196,9 @@
         $scope.anular = function () {
             $scope.compra_anular = $scope.itemEditAnular.iddocumentocompra;
             $scope.numseriecompra = $scope.itemEditAnular.numdocumentocompra;
+
+            console.log($scope.compra_anular);
+
             $('#modalConfirmAnular').modal('show');
         };
 
@@ -1227,7 +1235,7 @@
                 $scope.getSustentoTributario();
                 $scope.getFormaPago();
                 $scope.getTipoPagoComprobante();
-                $scope.getPaisPagoComprobante();
+                //$scope.getPaisPagoComprobante();
 
                 $scope.Subtotalconimpuestos = '0.00';
                 $scope.Subtotalcero = '0.00';
@@ -1241,12 +1249,14 @@
                 $scope.ValPropina = '0.00';
                 $scope.ValorTotal = '0.00';
 
+                $scope.observacion = '';
+
                 $scope.fecharegistrocompra = $scope.fecha();
                 $scope.fechaemisioncompra = $scope.fecha();
 
                 // Campos de Comprobante-------
 
-                $scope.estados = [
+                /*$scope.estados = [
                     { id: 1, name: 'SI' },
                     { id: 2, name: 'NO' }
                 ];
@@ -1260,11 +1270,12 @@
                 $('#t_establ_c').val('000');
                 $('#t_pto_c').val('000');
                 $('#t_secuencial_c').val('000000000');
-                $scope.noauthcomprobante = '';
+                $scope.noauthcomprobante = '';*/
 
                 $scope.createRow();
 
                 $('#btn-anular').prop('disabled', true);
+                $('#btn-save').show();
 
             } else {
 
