@@ -3,8 +3,6 @@
  */
 
 
-
-
 app.controller('NomencladorController', function($scope, $http, API_URL, Upload) {
 
     $scope.sri_tipodocumento = [];
@@ -54,9 +52,9 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
     $scope.parroquia = [];
     $scope.parroquia_del = 0;
 
+    $scope.select_cuenta = null;
+
     //$scope.CargadataProvincia();
-
-
 
 
 
@@ -92,8 +90,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             $scope.totalItemstpdoc = response.total;
         });
     };
-
-
 
     $scope.CargadataTPident = function (pageNumber) {
 
@@ -171,7 +167,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         });
     };
 
-
     $scope.CargadataImpICE = function (pageNumber) {
 
         if ($scope.busqueda == undefined) {
@@ -190,7 +185,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         });
     };
-
 
     $scope.CargadataTipoImpRetenc = function (pageNumber) {
 
@@ -223,6 +217,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         };
 
         $http.get(API_URL + 'Nomenclador/getImpuestoIVARENTA?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+
+            console.log(response);
 
             $scope.sri_ImpuestoIVARENTA = response.data;
             $scope.totalItemstpimpretcivapg = response.total;
@@ -261,7 +257,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
             $scope.totalItems = response.total;
         });
     };
-
 
     $scope.CargadataComprobante = function (pageNumber) {
 
@@ -402,8 +397,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
     };
 
-
-
     $scope.CargadataParroquia = function (pageNumber) {
 
         if ($scope.busqueda == undefined) {
@@ -422,7 +415,6 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         });
 
     };
-
 
     $scope.toggle = function(modalstate, id, obafect) {
         $scope.modalstate = modalstate;
@@ -488,6 +480,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $scope.porcentaje = '0.00';
                     $scope.codigosri = '';
                     $scope.estado = 'true';
+                    $scope.select_cuenta = null;
+                    $scope.cuenta_employee = '';
                     $('#modalActionTipoImpIvaRetRenta').modal('show');
                 }
 
@@ -670,6 +664,15 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                         $scope.TipoImpuesto = response[0].idtipoimpuestoretencion.toString();
                         $scope.porcentaje = response[0].porcentaje;
                         $scope.codigosri = response[0].codigosri;
+
+                        $scope.select_cuenta = response[0].cont_plancuenta;
+
+                        if (response[0].cont_plancuenta !== null) {
+                            $scope.cuenta_employee = response[0].cont_plancuenta.concepto;
+                        } else {
+                            $scope.cuenta_employee = '';
+                        }
+
                         //$scope.estado = response[0].estado;
                         if(response[0].estado){
                             $scope.estado = 'true' ;
@@ -903,8 +906,11 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                 porcentaje: $scope.porcentaje,
                 idtipoimpuestoretencion:$scope.TipoImpuesto,
                 codigosri: $scope.codigosri,
-                estado: $scope.estado
+                estado: $scope.estado,
+                idplancuenta: $scope.select_cuenta.idplancuenta
             };
+
+            console.log(data);
         }
 
         if (tbafect == "sustrib"){
@@ -2176,7 +2182,27 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
         setTimeout("$('#modalMessage').modal('hide')", 3000);
     };
 
+    $scope.showPlanCuenta = function () {
 
+        $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
+            console.log(response);
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
+    $scope.selectCuenta = function () {
+        var selected = $scope.select_cuenta;
+
+        $scope.cuenta_employee = selected.concepto;
+
+        $('#modalPlanCuenta').modal('hide');
+    };
+
+    $scope.click_radio = function (item) {
+        $scope.select_cuenta = item;
+    };
 
 });
 

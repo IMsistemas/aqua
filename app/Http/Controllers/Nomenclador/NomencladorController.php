@@ -60,7 +60,6 @@ class NomencladorController extends Controller
         }
     }
 
-
     public function gettipoidentificacion(Request $request)
 
     {
@@ -81,8 +80,6 @@ class NomencladorController extends Controller
         }
 
     }
-
-
 
     public function getTipoImpuestoEx(Request $request)
 
@@ -178,7 +175,6 @@ class NomencladorController extends Controller
         }
     }
 
-
     public function getTipoImpuestoRetenc(Request $request)
 
     {
@@ -199,7 +195,6 @@ class NomencladorController extends Controller
         }
     }
 
-
     public function getImpuestoIVARENTA(Request $request)
 
     {
@@ -210,22 +205,22 @@ class NomencladorController extends Controller
 
         if ($search != null) {
 
-            return SRI_DetalleImpuestoRetencion::join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
+            return SRI_DetalleImpuestoRetencion::with('cont_plancuenta')
+                ->join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
                 ->select('sri_detalleimpuestoretencion.*', 'sri_tipoimpuestoretencion.nametipoimpuestoretencion')
                 ->where('sri_detalleimpuestoretencion.namedetalleimpuestoretencion','ILIKE','%' . $search . '%')
-                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(8);
+                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(5);
 
         }
         else{
-            return SRI_DetalleImpuestoRetencion::join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
+            return SRI_DetalleImpuestoRetencion::with('cont_plancuenta')
+                ->join('sri_tipoimpuestoretencion', 'sri_detalleimpuestoretencion.idtipoimpuestoretencion', '=', 'sri_tipoimpuestoretencion.idtipoimpuestoretencion')
                 ->select('sri_detalleimpuestoretencion.*', 'sri_tipoimpuestoretencion.nametipoimpuestoretencion')
-                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(8);
+                ->orderBy ('namedetalleimpuestoretencion','asc')->paginate(5);
 
         }
 
     }
-
-
 
     public function getSustentoTributario(Request $request)
 
@@ -573,6 +568,7 @@ class NomencladorController extends Controller
             $TipoImpuestoIvaReten ->porcentaje = $request->input('porcentaje');
             $TipoImpuestoIvaReten ->codigosri = $request->input('codigosri');
             $TipoImpuestoIvaReten ->estado = $request->input('estado');
+            $TipoImpuestoIvaReten ->idplancuenta = $request->input('idplancuenta');
 
             if ($TipoImpuestoIvaReten ->save()) {
                 return response()->json(['success' => true]);
@@ -906,7 +902,8 @@ class NomencladorController extends Controller
     public function getTipoImpuestoRetencionIvaRetByID($id)
     {
         //return SRI_TipoIdentificacion::where('idtipoidentificacion', $id)->orderBy('nameidentificacion')->get();
-        return SRI_DetalleImpuestoRetencion::where('iddetalleimpuestoretencion',$id)  -> get();
+        return SRI_DetalleImpuestoRetencion::with('cont_plancuenta')
+                                            ->where('iddetalleimpuestoretencion',$id)->get();
 
     }
 
@@ -1110,6 +1107,8 @@ class NomencladorController extends Controller
         $TipoImpIvaRt ->porcentaje = $request->input('porcentaje');
         $TipoImpIvaRt ->codigosri = $request->input('codigosri');
         $TipoImpIvaRt ->estado = $request->input('estado');
+        $TipoImpIvaRt ->idplancuenta = $request->input('idplancuenta');
+
         if ($TipoImpIvaRt ->save()) {
             return response()->json(['success' => true]);
         } else {

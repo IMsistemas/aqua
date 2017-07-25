@@ -322,8 +322,6 @@
                             </div>
                         </div>
 
-
-
                         <div role="tabpanel" class="tab-pane fade" id="sri_tiposidentificacion">
                             <div class="col-xs-12">
                                 <div class="col-xs-6">
@@ -380,7 +378,6 @@
                                 </dir-pagination-controls>
                             </div>
                         </div>
-
 
                         <div role="tabpanel" class="tab-pane fade" id="sri_tiposimpuestos">
                             <div class="col-xs-12">
@@ -634,20 +631,22 @@
                                 <table class="table table-responsive table-striped table-hover table-condensed">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 15%;">Tipo de Impuesto Retención</td>
-                                        <td>Detalle Retención</td>
-                                        <td style="width: 10%;">Código SRI</td>
-                                        <td style="width: 10%;">Porcentaje</td>
-                                        <td style="width: 10%;">Estado</td>
-                                        <td style="width: 15%;">Acciones</td>
+                                        <th style="width: 7%;">TIPO</th>
+                                        <th>DETALLE RETENCION</th>
+                                        <th style="width: 7%;">CODIGO SRI</th>
+                                        <th style="width: 7%;">PORCENTAJE</th>
+                                        <th>CUENTA</th>
+                                        <th style="width: 7%;">ESTADO</th>
+                                        <th style="width: 15%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr dir-paginate=" ImpuestoIVARENTA in sri_ImpuestoIVARENTA | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemstpimpretcivapg" current-page="currentPage" pagination-id="tpimpretcivapg" ng-cloak >
+                                    <tr dir-paginate=" ImpuestoIVARENTA in sri_ImpuestoIVARENTA | orderBy:sortKey:reverse | itemsPerPage:5" total-items="totalItemstpimpretcivapg" current-page="currentPage" pagination-id="tpimpretcivapg" ng-cloak >
                                         <td>{{ImpuestoIVARENTA.nametipoimpuestoretencion}}</td>
                                         <td>{{ImpuestoIVARENTA.namedetalleimpuestoretencion}}</td>
                                         <td>{{ImpuestoIVARENTA.codigosri}}</td>
-                                        <td>{{ImpuestoIVARENTA.porcentaje}}</td>
+                                        <td class="text-right">{{ImpuestoIVARENTA.porcentaje}}</td>
+                                        <td>{{ImpuestoIVARENTA.cont_plancuenta.concepto}}</td>
                                         <td>
                                             <div ng-if="ImpuestoIVARENTA.estado">
                                                 Activo
@@ -671,7 +670,7 @@
                                 <dir-pagination-controls pagination-id="tpimpretcivapg"
                                                          on-page-change="CargadataImpIVARENTA(newPageNumber)"
                                                          class="pull-right"
-                                                         max-size="8"
+                                                         max-size="5"
                                                          direction-links="true"
                                                          boundary-links="true" >
                                 </dir-pagination-controls>
@@ -1329,7 +1328,7 @@
                                           ng-show="formsriImpuestoIce.TipoImpuesto.$invalid && formsriImpuestoIce.TipoImpuesto==''">El Tipo Impuesto es requerido</span>
 
                                 </div>
-                                <div class="col-xs-12 error">
+                                <div class="col-xs-12 error" style="margin-top: 5px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">Nombre del Impuesto de Iva - Retencion: </span>
                                         <input type="text" class="form-control" name="nametipoimpuestoivaret" id="nametipoimpuestoivaret" ng-model="nametipoimpuestoivaret" placeholder=""
@@ -1340,7 +1339,7 @@
                                     <span class="help-block error"
                                           ng-show="formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$invalid && formsritipoimpuestoIvaRetRenta.nametipoimpuestoivaret.$error.maxlength">La longitud máxima es de 10 caracteres</span>
                                 </div>
-                                <div class="col-xs-12 error">
+                                <div class="col-xs-12 error" style="margin-top: 5px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">Porcentaje: </span>
                                         <input type="text" class="form-control" name="porcentaje" id="porcentaje" ng-model="porcentaje" placeholder=""
@@ -1350,13 +1349,30 @@
                                           ng-show="formsritipoimpuestoIvaRetRenta.porcentaj.$invalid && formsritipoimpuestoIvaRetRenta.porcentaje==''">El porcentaje es requerido</span>
 
                                 </div>
-                                <div class="col-xs-12 error">
+
+                                <div class="col-xs-12" style="margin-top: 5px;">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">C. Contab.: </span>
+                                        <input type="text" class="form-control" name="cuenta_employee" id="cuenta_employee" ng-model="cuenta_employee" placeholder=""
+                                               ng-required="true" readonly>
+                                        <span class="input-group-btn" role="group">
+                                            <button type="button" class="btn btn-info" id="btn-pcc" ng-click="showPlanCuenta()">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </button>
+                                        </span>
+
+                                    </div>
+                                    <span class="help-block error"
+                                          ng-show="formsritipoimpuestoIvaRetRenta.cuenta_employee.$error.required">La asignación de una cuenta es requerida</span>
+                                </div>
+
+                                <div class="col-xs-12 error" style="margin-top: 5px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">Código SRI: </span>
                                         <input type="text" class="form-control" name="codigosri" id="codigosri" ng-model="codigosri" placeholder=""
                                                ng-required="true" ng-maxlength="5">
                                     </div>
-                                    <div class="input-group">
+                                    <div class="input-group"  style="margin-top: 5px;">
                                         <span class="input-group-addon">Estado: </span>
                                         <select class="selectpicker form-control" id="estado" ng-model="estado">
                                             <option value="true">Activo</option>
@@ -1836,6 +1852,61 @@
             </div>
         </div>
 
+    </div>
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalPlanCuenta">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Plan de Cuenta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <div class="form-group  has-feedback">
+                                <input type="text" class="form-control" id="" ng-model="searchContabilidad" placeholder="BUSCAR..." >
+                                <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                <tr>
+                                    <th style="width: 15%;">ORDEN</th>
+                                    <th>CONCEPTO</th>
+                                    <th style="width: 10%;">CODIGO</th>
+                                    <th style="width: 4%;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in cuentas | filter:searchContabilidad" ng-cloak >
+                                    <td>{{item.jerarquia}}</td>
+                                    <td>{{item.concepto}}</td>
+                                    <td>{{item.codigosri}}</td>
+                                    <td>
+                                        <input ng-show="item.madreohija=='1'" ng-hide="item.madreohija!='1'" type="radio" name="select_cuenta"  ng-click="click_radio(item)">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="selectCuenta()">
+                        Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
