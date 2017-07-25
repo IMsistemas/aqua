@@ -44,7 +44,7 @@
                         <th>PROVEEDOR</th>
                         <th style="width: 11%;">NO FACTURA</th>
                         <th style="width: 11%;">VALOR TOTAL</th>
-                        <th style="width: 11%;">VALOR COBRADO</th>
+                        <th style="width: 11%;">VALOR PAGADO</th>
                         <th style="width: 11%;">PENDIENTE</th>
                         <th style="width: 11%;">ACCION</th>
                     </tr>
@@ -180,18 +180,18 @@
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">A Cobrar: </span>
+                                <span class="input-group-addon">A Pagar: </span>
                                 <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">Cobrado: </span>
+                                <span class="input-group-addon">Pagado: </span>
                                 <input type="text" class="form-control" name="valorrecibido" id="valorrecibido" ng-model="valorrecibido" required />
                             </div>
                             <span class="help-block error"
-                                  ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
+                                  ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Pagado es requerido</span>
                         </div>
 
                         <div class="col-xs-12" style="margin-top: 5px;">
