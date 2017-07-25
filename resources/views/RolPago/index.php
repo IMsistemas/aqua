@@ -15,12 +15,27 @@
         <div class="col-xs-12" ng-controller="rolPagoController" ng-init="initLoad()">
 
             <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <h4>Rol de Pago</h4>
+                </div>
 
-                <h4>Rol de Pago</h4>
+                <div class="col-xs-6 text-right" style="margin-top: 5px;">
 
-                <hr>
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigNomina()" >
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-info" ng-click="getConfigNomina()">
+                        Imprimir <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    </button>
+
+                </div>
 
             </div>
+            <div class="col-xs-12">
+                <hr>
+            </div>
+
 
             <div class="col-xs-4">
 

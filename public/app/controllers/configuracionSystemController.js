@@ -603,9 +603,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     };
 
     $scope.getConfigNomina = function () {
+
         $http.get(API_URL + 'configNomina/getConfigNomina').success(function(response){
 
-            console.log(response);
         });
     };
 
