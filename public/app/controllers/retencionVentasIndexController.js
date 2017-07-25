@@ -433,7 +433,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
     $scope.newForm = function () {
 
         $scope.getLastIDRetencion();
-        $scope.getConfigContabilidad();
+        //$scope.getConfigContabilidad();
 
         $scope.getTipoPagoComprobante();
         $scope.getPaisPagoComprobante();
@@ -504,7 +504,8 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
             id:0,
             baseimponible: '0.00',
             porciento: '0.00',
-            valor: '0.00'
+            valor: '0.00',
+            contabilidad: null
         };
 
         ($scope.itemretencion).push(object_row);
@@ -570,18 +571,17 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         $scope.t_secuencial = $('#t_secuencial').val();
 
 
-
-        //console.log($scope.itemretencion);
-
         /*
          * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
          */
+
+        var descripcion = 'RETENCION VENTA A: ' + $('#t_nrocompra').val();
 
         var transaccion = {
             fecha: $scope.convertDatetoDB($scope.t_fechaingreso),
             idtipotransaccion: 6,
             numcomprobante: 1,
-            descripcion: 'RETENCIONES VENTA'
+            descripcion: descripcion
         };
 
         var registroC = [];
@@ -593,7 +593,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
             tipocuenta: $scope.ProveedorContable.tipocuenta,
             Debe: 0,
             Haber: $scope.t_total,
-            Descipcion: ''
+            Descipcion: descripcion
         };
 
         registroC.push(proveedor);
@@ -602,9 +602,20 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
         for (var i = 0; i < longitud_item; i++) {
 
-            var item = null;
+            var item = {
+                idplancuenta: $scope.itemretencion[i].contabilidad.idplancuenta,
+                concepto: $scope.itemretencion[i].contabilidad.concepto,
+                controlhaber: $scope.itemretencion[i].contabilidad.controlhaber,
+                tipocuenta: $scope.itemretencion[i].contabilidad.tipocuenta,
+                Debe: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                Haber: 0,
+                Descipcion: descripcion
+            };
 
-            if ($scope.itemretencion[i].tipo === 'RENTA') {
+
+            registroC.push(item);
+
+            /*if ($scope.itemretencion[i].tipo === 'RENTA') {
 
                 item = {
                     idplancuenta: $scope.ConfiguracionContableRetenRENTA.idplancuenta,
@@ -613,7 +624,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
                     tipocuenta: $scope.ConfiguracionContableRetenRENTA.contabilidad[0].tipocuenta,
                     Debe: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
                     Haber: 0,
-                    Descipcion: ''
+                    Descipcion: descripcion
                 };
 
                 registroC.push(item);
@@ -627,12 +638,12 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
                     tipocuenta: $scope.ConfiguracionContableRetenIVA.contabilidad[0].tipocuenta,
                     Debe: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
                     Haber: 0,
-                    Descipcion: ''
+                    Descipcion: descripcion
                 };
 
                 registroC.push(item);
 
-            }
+            }*/
 
         }
 
@@ -678,7 +689,6 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         };
 
         console.log(data_full);
-
 
 
         var url = API_URL + 'retencionVenta';
@@ -774,6 +784,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
                 data.detalle = object.originalObject.namedetalleimpuestoretencion;
                 data.tipo = object.originalObject.sri_tipoimpuestoretencion.nametipoimpuestoretencion;
                 data.porciento = object.originalObject.porcentaje;
+                data.contabilidad = object.originalObject.cont_plancuenta;
 
                 var porciento = parseFloat(data.porciento);
 
@@ -824,6 +835,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
             data.tipo = '';
             data.porciento = '0.00';
             data.baseimponible = '0.00';
+            data.contabilidad = null;
         }
 
     };
