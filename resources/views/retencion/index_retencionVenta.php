@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html lang="es-ES" ng-app="softver-aqua">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Retencion Ventas</title>
-
-    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
-    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
-
-    <style>
-        .dataclient{
-            font-weight: bold;
-        }
-    </style>
-</head>
-
-<body>
 
 <div ng-controller="retencionVentasController" ng-cloak>
 
@@ -62,7 +39,7 @@
             <div class="col-sm-1 col-xs-12">
                 <button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
                         data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Venta">
-                    <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
+                    Agregar <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -72,34 +49,34 @@
                 <thead class="bg-primary">
                 <tr>
                     <th class="text-center" style="width: 10%;" ng-click="sort('')">
-                        Nro. Retención
+                        NO. RETENCION
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th class="text-center" style="width: 10%;" ng-click="sort('')">
-                        Fecha Emisión
+                        FECHA EMISION
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th class="text-center" ng-click="sort('')">
-                        Cliente
+                        CLIENTE
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th class="text-center" style="width: 13%;" ng-click="sort('')">
-                        Nro. Documento Reten.
+                        NO. DOC. RETENC.
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th class="text-center" style="width: 9%;" ng-click="sort('')">
-                        Valor
+                        VALOR
                         <span class="glyphicon sort-icon" ng-show="sortKey==''"
                               ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th style="text-align: center; width: 9%;">
-                        Estado
+                        ESTADO
                     </th>
-                    <th class="text-center" style="width: 10%;">Acciones</th>
+                    <th class="text-center" style="width: 10%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -192,7 +169,7 @@
                 <div class="col-sm-4 col-xs-12 text-center" style="padding-top: 3%; display: none; font-weight: bold; font-size: 24px;"></div>
                 <div class="col-sm-4 col-xs-12" style="padding-top: 2%; display: none;">
 
-                    <div id="btn-export" style="display: none;">
+                    <!--<div id="btn-export" style="display: none;">
                         <div style="float: right">
                             <a href="#id" ng-click="imprimir()" data-toggle="tab" >
                                 <img ng-src="../../img/impresora.png" style="height: 50px" >
@@ -208,7 +185,7 @@
                                 <img ng-src="../../img/excel.png" style="height: 50px" >
                             </a>
                         </div>
-                    </div>
+                    </div>-->
 
 
                 </div>
@@ -217,7 +194,7 @@
             <div class="container" style="margin-bottom: 5px;">
                 <div class="col-sm-4 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Fecha Ingreso: </span>
+                        <span class="input-group-addon">Fecha Ingreso: </span>
                         <input type="text" class="datepicker form-control" id="t_fechaingreso" name="t_fechaingreso" ng-model="t_fechaingreso" placeholder="" disabled />
                     </div>
                 </div>
@@ -235,7 +212,7 @@
 
                 <div class="col-sm-4 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Nro. Documento: </span>
+                        <span class="input-group-addon">Nro. Documento: </span>
                         <!--<input type="text" class="form-control" id="t_nrocompra" name="t_nrocompra" ng-model="t_nrocompra" placeholder="" />-->
 
                         <angucomplete-alt
@@ -268,13 +245,13 @@
             <div class="container" style="margin-top: 5px;">
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> RUC / CI: </span>
+                        <span class="input-group-addon">RUC / CI: </span>
                         <input type="text" class="form-control" id="t_rucci" name="t_rucci" ng-model="t_rucci" disabled />
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Razón Social: </span>
+                        <span class="input-group-addon">Razón Social: </span>
                         <input type="text" class="form-control" id="t_razonsocial" name="t_razonsocial" ng-model="t_razonsocial" disabled />
                     </div>
                 </div>
@@ -366,7 +343,7 @@
 
                 <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nro. Documento: </span>
+                        <span class="input-group-addon">Nro. Documento: </span>
                         <span class="input-group-btn" style="width: 15%;">
                                         <input  type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
                                     </span>
@@ -378,7 +355,7 @@
                 </div>
                 <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Autorización: </span>
+                        <span class="input-group-addon">Autorización: </span>
                         <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
                                ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
                     </div>
@@ -388,127 +365,123 @@
             </div>
 
             <div class="col-xs-12" style="margin-top: 15px;">
-                <fieldset>
-                    <legend>Detalle Retención</legend>
+                <div class="container">
 
-                    <div class="container">
-
-                        <div class="col-xs-12">
-                            <button type="button" class="btn btn-primary" id="btn-createrow" style="float: right;" ng-click="createRow()"
-                                    data-toggle="tooltip" data-placement="left" title="Agregar Retención" disabled>
-                                <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-                        <div class="col-xs-12" style="margin-top: 5px;">
-                            <table class="table table-responsive table-striped table-hover table-condensed">
-                                <thead class="bg-primary">
-                                <tr>
-                                    <th class="text-center" style="width: 8%;">
-                                        Año
-                                    </th>
-                                    <th class="text-center" style="width: 12%;">
-                                        Código
-                                    </th>
-                                    <th class="text-center" ng-click="sort('')">
-                                        Detalle
-                                        <span class="glyphicon sort-icon" ng-show="sortKey==''"
-                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                    </th>
-                                    <th style="width: 5%;">Tipo</th>
-                                    <th class="text-center" style="width: 15%;" ng-click="sort('')">
-                                        Base Imponible
-                                        <span class="glyphicon sort-icon" ng-show="sortKey==''"
-                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                    </th>
-                                    <th class="text-center" style="width: 10%;" ng-click="sort('')">
-                                        %
-                                        <span class="glyphicon sort-icon" ng-show="sortKey==''"
-                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                    </th>
-                                    <th class="text-center" style="width: 12%;" ng-click="sort('')">
-                                        Valor
-                                        <span class="glyphicon sort-icon" ng-show="sortKey==''"
-                                              ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                    </th>
-                                    <th style="width: 5%;"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="item in itemretencion" ng-cloak>
-                                    <td class="text-center">{{item.year}}</td>
-                                    <td>
-                                        <input type="hidden" name="h_iddetalleretencionfuente" ng-model="h_iddetalleretencionfuente">
-                                        <div class="col-xs-12">
-                                            <angucomplete-alt
-                                                    id = "item.codigo{{$index}}"
-                                                    pause = "400"
-                                                    selected-object = "showInfoRetencion"
-                                                    selected-object-data = "item"
-
-                                                    remote-url = "{{API_URL}}retencionVenta/getCodigos/"
-
-                                                    title-field="codigosri"
-
-                                                    minlength="1"
-                                                    input-class="form-control text-right error"
-                                                    match-class="highlight"
-                                                    field-required="true"
-                                                    input-name="itemcodigo{{$index}}"
-                                                    disable-input="guardado"
-                                                    text-searching="Buscando Códigos"
-                                                    text-no-results="Código no encontrado"
-                                                    initial-value="item.codigo"
-                                            />
-                                        </div>
-                                        <span class="help-block error" style="text-align: right !important; color: red;"
-                                              ng-show="formRteCompras.itemcodigo{{$index}}.$invalid && formRteCompras.itemcodigo{{$index}}.$touched" >
-                                                Es requerido</span>
-                                    </td>
-                                    <td>{{item.detalle}}</td>
-                                    <td>{{item.tipo}}</td>
-                                    <td class="text-right">$ {{item.baseimponible}}</td>
-                                    <td>
-                                        <input type="text" class="form-control" style="text-align: right !important;" ng-model="item.porciento" ng-blur="recalculateRow(item)" ng-keypress="onlyDecimal($event)">
-                                    </td>
-                                    <td class="text-right">$ {{item.valor}}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger" name="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
-                                                data-toggle="tooltip" data-placement="left" title="Eliminar Retención" >
-                                            <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th colspan="5" class="text-right">TOTAL:</th>
-                                    <th>
-                                        <input type="text" class="form-control" style="text-align: right !important;" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)" disabled/>
-                                    </th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                        <div class="col-xs-12">
-                            <button type="button" class="btn btn-primary" style="float: right;" ng-click="returnList()"
-                                    data-toggle="tooltip" data-placement="bottom" title="Regresar al Registro de Retenciones de Compra">
-                                Registro <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default" style="float: right;" ng-click=""
-                                    data-toggle="tooltip" data-placement="bottom" title="Anular la Retención de la Compra">
-                                Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-success" id="btn_save" style="float: right;" ng-click="save()" ng-disabled="formRteCompras.$invalid"
-                                    data-toggle="tooltip" data-placement="left" title="Guardar la Retención de la Compra" >
-                                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-                            </button>
-                        </div>
-
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-primary" id="btn-createrow" style="float: right;" ng-click="createRow()"
+                                data-toggle="tooltip" data-placement="left" title="Agregar Retención" disabled>
+                            <i class="fa fa-lg fa-plus" aria-hidden="true"></i>
+                        </button>
                     </div>
-                </fieldset>
+
+                    <div class="col-xs-12" style="margin-top: 5px;">
+                        <table class="table table-responsive table-striped table-hover table-condensed">
+                            <thead class="bg-primary">
+                            <tr>
+                                <th class="text-center" style="width: 10%;">
+                                    AÑO FISCAL
+                                </th>
+                                <th class="text-center" style="width: 12%;">
+                                    CODIGO
+                                </th>
+                                <th class="text-center" ng-click="sort('')">
+                                    DETALLE
+                                    <span class="glyphicon sort-icon" ng-show="sortKey==''"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th style="width: 5%;">TIPO</th>
+                                <th class="text-center" style="width: 15%;" ng-click="sort('')">
+                                    BASE IMPONIBLE
+                                    <span class="glyphicon sort-icon" ng-show="sortKey==''"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th class="text-center" style="width: 10%;" ng-click="sort('')">
+                                    %
+                                    <span class="glyphicon sort-icon" ng-show="sortKey==''"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th class="text-center" style="width: 12%;" ng-click="sort('')">
+                                    VALOR
+                                    <span class="glyphicon sort-icon" ng-show="sortKey==''"
+                                          ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                                <th style="width: 5%;"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in itemretencion" ng-cloak>
+                                <td class="text-center">{{item.year}}</td>
+                                <td>
+                                    <input type="hidden" name="h_iddetalleretencionfuente" ng-model="h_iddetalleretencionfuente">
+                                    <div class="col-xs-12">
+                                        <angucomplete-alt
+                                                id = "item.codigo{{$index}}"
+                                                pause = "400"
+                                                selected-object = "showInfoRetencion"
+                                                selected-object-data = "item"
+
+                                                remote-url = "{{API_URL}}retencionVenta/getCodigos/"
+
+                                                title-field="codigosri"
+
+                                                minlength="1"
+                                                input-class="form-control text-right error"
+                                                match-class="highlight"
+                                                field-required="true"
+                                                input-name="itemcodigo{{$index}}"
+                                                disable-input="guardado"
+                                                text-searching="Buscando Códigos"
+                                                text-no-results="Código no encontrado"
+                                                initial-value="item.codigo"
+                                        />
+                                    </div>
+                                    <span class="help-block error" style="text-align: right !important; color: red;"
+                                          ng-show="formRteCompras.itemcodigo{{$index}}.$invalid && formRteCompras.itemcodigo{{$index}}.$touched" >
+                                                Es requerido</span>
+                                </td>
+                                <td>{{item.detalle}}</td>
+                                <td>{{item.tipo}}</td>
+                                <td class="text-right">$ {{item.baseimponible}}</td>
+                                <td>
+                                    <input type="text" class="form-control" style="text-align: right !important;" ng-model="item.porciento" ng-blur="recalculateRow(item)" ng-keypress="onlyDecimal($event)">
+                                </td>
+                                <td class="text-right">$ {{item.valor}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" name="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
+                                            data-toggle="tooltip" data-placement="left" title="Eliminar Retención" >
+                                        <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="5" class="text-right">TOTAL:</th>
+                                <th>
+                                    <input type="text" class="form-control" style="text-align: right !important;" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)" disabled/>
+                                </th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-primary" style="float: right;" ng-click="returnList()"
+                                data-toggle="tooltip" data-placement="bottom" title="Regresar al Registro de Retenciones de Compra">
+                            Registro <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" style="float: right;" ng-click=""
+                                data-toggle="tooltip" data-placement="bottom" title="Anular la Retención de la Compra">
+                            Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn_save" style="float: right;" ng-click="save()" ng-disabled="formRteCompras.$invalid"
+                                data-toggle="tooltip" data-placement="left" title="Guardar la Retención de la Compra" >
+                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </form>
 
@@ -546,24 +519,4 @@
 
 </div>
 
-</body>
-
-<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
-<script src="<?= asset('js/jquery.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-<script src="<?= asset('js/menuLateral.js') ?>"></script>
-<script src="<?= asset('js/moment.min.js') ?>"></script>
-<script src="<?= asset('js/es.js') ?>"></script>
-<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
-<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
-
-<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
-<script src="<?= asset('app/app.js') ?>"></script>
-
-<script src="<?= asset('app/controllers/retencionVentasIndexController.js') ?>"></script>
-</html>
 
