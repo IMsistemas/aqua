@@ -594,12 +594,12 @@
                         <td><input type="text" class="form-control input-sm text-right" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
                     </tr>
                     <tr>
-                        <td>PROPINA</td>
+                        <td>Propina</td>
                         <td><input type="text" class="form-control input-sm text-right" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
                     </tr>
                     <tr>
-                        <td>VALOR TOTAL</td>
-                        <td class="text-right">{{ValorTotal}}</td>
+                        <td style="font-weight: bold;">VALOR TOTAL</td>
+                        <td style="font-weight: bold;" class="text-right">{{ValorTotal}}</td>
                     </tr>
                     </tbody>
                 </table>
