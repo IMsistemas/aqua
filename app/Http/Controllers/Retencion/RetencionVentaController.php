@@ -112,7 +112,7 @@ class RetencionVentaController extends Controller
 
     public function getCodigos($codigo)
     {
-        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion')
+        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion', 'cont_plancuenta')
             ->where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
     }
 

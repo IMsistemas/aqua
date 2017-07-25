@@ -767,27 +767,34 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
             console.log(object.originalObject);
 
-            data.id = object.originalObject.iddetalleimpuestoretencion;
-            data.codigo = object.originalObject.codigosri;
-            data.detalle = object.originalObject.namedetalleimpuestoretencion;
-            data.tipo = object.originalObject.sri_tipoimpuestoretencion.nametipoimpuestoretencion;
-            data.porciento = object.originalObject.porcentaje;
+            if (object.originalObject.cont_plancuenta !== null) {
 
-            var porciento = parseFloat(data.porciento);
+                data.id = object.originalObject.iddetalleimpuestoretencion;
+                data.codigo = object.originalObject.codigosri;
+                data.detalle = object.originalObject.namedetalleimpuestoretencion;
+                data.tipo = object.originalObject.sri_tipoimpuestoretencion.nametipoimpuestoretencion;
+                data.porciento = object.originalObject.porcentaje;
 
-            if (object.originalObject.idtipoimpuestoretencion == 1) {
-                var baseimponible = parseFloat($scope.baseimponible);
-                data.baseimponible = $scope.baseimponible;
+                var porciento = parseFloat(data.porciento);
+
+                if (object.originalObject.idtipoimpuestoretencion == 1) {
+                    var baseimponible = parseFloat($scope.baseimponible);
+                    data.baseimponible = $scope.baseimponible;
+                } else {
+                    var baseimponible = parseFloat($scope.baseimponibleIVA);
+                    data.baseimponible = $scope.baseimponibleIVA;
+                }
+
+                var result = (porciento / 100) *  baseimponible;
+
+                data.valor = result.toFixed(2);
+
+                $scope.recalculateTotal();
+
             } else {
-                var baseimponible = parseFloat($scope.baseimponibleIVA);
-                data.baseimponible = $scope.baseimponibleIVA;
+                $scope.message_error = 'El Código de Retención seleccionado no tiene cuenta contable asignado...';
+                $('#modalMessageError').modal('show');
             }
-
-            var result = (porciento / 100) *  baseimponible;
-
-            data.valor = result.toFixed(2);
-
-            $scope.recalculateTotal();
 
             /*var codigocliente = object.originalObject.codigocliente;
 
@@ -809,6 +816,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
              $scope.celular_new_cliente_setnombre = '';
              $scope.telf_trab_new_cliente_setnombre = '';
              }*/
+
         } else {
             data.codigo = '';
             data.id = 0;
