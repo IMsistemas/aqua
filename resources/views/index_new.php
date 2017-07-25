@@ -36,11 +36,7 @@
                 width: 100% !important;
             }
 
-
-
         </style>
-
-
 
     </head>
     <body ng-controller="mainController">

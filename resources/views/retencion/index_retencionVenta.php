@@ -217,7 +217,7 @@
 
                         <angucomplete-alt
                                 id = "t_nrocompra"
-                                pause = "400"
+                                pause = "200"
                                 selected-object = "showDataPurchase"
 
                                 remote-url = "{{API_URL}}retencionVenta/getCompras/"
