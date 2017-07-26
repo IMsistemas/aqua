@@ -57,32 +57,6 @@ class RetencionCompraController extends Controller
 
     }
 
-    public function getConfigContabilidad()
-    {
-        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_COMPRA' OR optionname = 'SRI_RETEN_RENTA_COMPRA'")->get();
-
-        $configcontable = [];
-
-        foreach ($config as $item) {
-            $aux_contable = null;
-
-            if($item->optionvalue != '' && $item->optionvalue != null){
-                $aux_contable = Cont_PlanCuenta::where('idplancuenta', $item->optionvalue)->get();
-            }
-
-            $configventa = [
-                'idconfiguracionsystem' => $item->idconfiguracionsystem,
-                'idplancuenta' => $item->optionvalue,
-                'optionname' => $item->optionname,
-                'contabilidad'=> $aux_contable
-            ];
-
-            $configcontable[] = $configventa;
-        }
-
-        return response()->json($configcontable);
-    }
-
     public function getRetencionesByCompra($id)
     {
         return RetencionFuenteCompra::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuentecompra.iddetalleretencion')
@@ -91,15 +65,15 @@ class RetencionCompraController extends Controller
 
     public function getCodigos($codigo)
     {
-        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion')
+        return SRI_DetalleImpuestoRetencion::with('sri_tipoimpuestoretencion', 'cont_plancuenta')
                     ->where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
     }
 
     public function getCompras($codigo)
     {
         $compra = Cont_DocumentoCompra::with('proveedor.persona', 'proveedor.cont_plancuenta', 'sri_comprobanteretencion')
-                            ->where('idcomprobanteretencion', '!=', null)
-                            ->whereRaw('cont_documentocompra.iddocumentocompra NOT IN (SELECT sri_retencioncompra.iddocumentocompra FROM sri_retencioncompra)')
+                            //->where('idcomprobanteretencion', '!=', null)
+                            //->whereRaw('cont_documentocompra.iddocumentocompra NOT IN (SELECT sri_retencioncompra.iddocumentocompra FROM sri_retencioncompra)')
                             ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $codigo . "%'")
                             ->get();
 

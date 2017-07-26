@@ -164,7 +164,6 @@ class ComprasController extends Controller
         }
     }
 
-
     private function getDuplicateNumber($idproveedor, $number)
     {
         $count = Cont_DocumentoCompra::where('idproveedor', $idproveedor)

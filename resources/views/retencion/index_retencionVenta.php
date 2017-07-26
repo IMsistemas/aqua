@@ -283,20 +283,6 @@
 
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="col-xs-12" style="margin-top: 15px;">
                 <div class="container">
 

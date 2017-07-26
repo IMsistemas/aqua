@@ -59,51 +59,6 @@ class RetencionVentaController extends Controller
 
     }
 
-    /*public function getRetenciones(Request $request)
-    {
-
-        $filter = json_decode($request->get('filter'));
-
-        $search = $filter->search;
-
-        $retencion = SRI_RetencionVenta::join('cont_documentoventa', 'cont_documentoventa.iddocumentoventa', '=', 'sri_retencionventa.iddocumentoventa')
-            ->with('cont_documentoventa.cliente.persona', 'sri_retenciondetalleventa');
-
-
-        if ($search != null) {
-            $retencion = $retencion->whereRaw("sri_comprobanteretencion.nocomprobante LIKE '%" . $search . "%'");
-        }
-
-        return $retencion->paginate(8);
-
-    }*/
-
-    public function getConfigContabilidad()
-    {
-        $config = ConfiguracionSystem::whereRaw("optionname = 'SRI_RETEN_IVA_VENTA' OR optionname = 'SRI_RETEN_RENTA_VENTA'")->get();
-
-        $configcontable = [];
-
-        foreach ($config as $item) {
-            $aux_contable = null;
-
-            if($item->optionvalue != '' && $item->optionvalue != null){
-                $aux_contable = Cont_PlanCuenta::where('idplancuenta', $item->optionvalue)->get();
-            }
-
-            $configventa = [
-                'idconfiguracionsystem' => $item->idconfiguracionsystem,
-                'idplancuenta' => $item->optionvalue,
-                'optionname' => $item->optionname,
-                'contabilidad'=> $aux_contable
-            ];
-
-            $configcontable[] = $configventa;
-        }
-
-        return response()->json($configcontable);
-    }
-
     public function getRetencionesByCompra($id)
     {
         return RetencionFuenteCompra::join('detalleretencion', 'detalleretencion.iddetalleretencion', '=', 'retencionfuentecompra.iddetalleretencion')
