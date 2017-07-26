@@ -1,2 +1,2 @@
 var app = angular.module('softver-aqua', ['ngRoute', 'ngFileUpload', 'angularUtils.directives.dirPagination', 'angucomplete-alt'])
-                    .constant('API_URL', 'http://www.aqua.ec/desarrollo_aqua/aqua_potable/ayora/aqua/public/');
+                    .constant('API_URL', 'http://localhost:8000/');

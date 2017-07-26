@@ -17,25 +17,6 @@
                     <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
-            <!--<div class="col-sm-2 col-xs-12">
-                <select class="form-control" name="s_tiporetencion" id="s_tiporetencion"
-                        ng-model="s_tiporetencion" ng-options="value.id as value.name for value in tiporetencion" ng-change="getCodigosRetencion()">
-                </select>
-            </div>
-            <div class="col-sm-2 col-xs-12">
-                <select class="form-control" name="s_codigoretencion" id="s_codigoretencion"
-                        ng-model="s_codigoretencion" ng-options="value.id as value.name for value in codigosretencion" ng-change="">
-                </select>
-            </div>-->
-            <!--<div class="col-sm-2 col-xs-12">
-                <input type="text" class="datepicker_a form-control" name="t_year" id="t_year" ng-model="t_year" ng-change="initLoad(1)"
-                        placeholder="-- Año --">
-            </div>
-            <div class="col-sm-2 col-xs-12">
-                <select class="form-control" name="s_month" id="s_month"
-                        ng-model="s_month" ng-options="value.id as value.name for value in meses" ng-change="initLoad(1)">
-                </select>
-            </div>-->
             <div class="col-sm-1 col-xs-12">
                 <button type="button" class="btn btn-primary" style="float: right;" ng-click="newForm()"
                         data-toggle="tooltip" data-placement="bottom" title="Crear nueva Retención de Venta">
@@ -82,25 +63,6 @@
                 <tbody>
                 <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:8 " total-items="totalItems" ng-cloak>
                     <td>{{$index + 1}}</td>
-
-                    <!--
-
-                    <td class="text-center">{{item.cont_documentocompra.sri_comprobanteretencion.fechaemisioncomprob | formatDate}}</td>
-                    <td style="font-weight: bold;">{{item.cont_documentocompra.proveedor.persona.razonsocial}}</td>
-                    <td class="text-center">{{item.cont_documentocompra.sri_comprobanteretencion.nocomprobante}}</td>
-                    <td class="text-right">$ {{item.total_retenido}}</td>
-                    <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
-                    <td  class="text-center">
-                        <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idretencioncompra)">
-                            <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm" ng-click="showModalConfirmAnular(item)" ng-disabled="item.estadoanulado==1">
-                            <i class="fa fa-lg fa-ban" aria-hidden="true"></i>
-                        </button>
-                    </td>
-
-                    -->
-
                     <td class="text-center">{{item.fechaemisioncomprob | formatDate}}</td>
                     <td style="font-weight: bold;">{{item.cont_documentoventa[0].cliente.persona.razonsocial}}</td>
                     <td class="text-center">{{item.nocomprobante}}</td>
@@ -164,205 +126,176 @@
 
         <form name="formRteCompras" novalidate="">
 
-            <div class="col-xs-12" style="padding-top: 5px;">
-                <div class="col-sm-4 col-xs-12"></div>
-                <div class="col-sm-4 col-xs-12 text-center" style="padding-top: 3%; display: none; font-weight: bold; font-size: 24px;"></div>
-                <div class="col-sm-4 col-xs-12" style="padding-top: 2%; display: none;">
-
-                    <!--<div id="btn-export" style="display: none;">
-                        <div style="float: right">
-                            <a href="#id" ng-click="imprimir()" data-toggle="tab" >
-                                <img ng-src="../../img/impresora.png" style="height: 50px" >
-                            </a>
-                        </div>
-                        <div style="float: right">
-                            <a href="#id" ng-click="pdf()" data-toggle="tab">
-                                <img ng-src="../../img/pdf.png" style="height: 50px" >
-                            </a>
-                        </div>
-                        <div style="float: right">
-                            <a href="#id" ng-click="excel()" data-toggle="tab">
-                                <img ng-src="../../img/excel.png" style="height: 50px" >
-                            </a>
-                        </div>
-                    </div>-->
-
-
-                </div>
-            </div>
-
             <div class="container" style="margin-bottom: 5px;">
-                <div class="col-sm-4 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Fecha Ingreso: </span>
-                        <input type="text" class="datepicker form-control" id="t_fechaingreso" name="t_fechaingreso" ng-model="t_fechaingreso" placeholder="" disabled />
+
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Fecha Ingreso: </span>
+                            <input type="text" class="datepicker form-control" id="t_fechaingreso" name="t_fechaingreso" ng-model="t_fechaingreso" placeholder="" disabled />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-xs-12 error">
+
+                    </div>
+
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Nro. Documento: </span>
+                            <!--<input type="text" class="form-control" id="t_nrocompra" name="t_nrocompra" ng-model="t_nrocompra" placeholder="" />-->
+
+                            <angucomplete-alt
+                                    id = "t_nrocompra"
+                                    pause = "200"
+                                    selected-object = "showDataPurchase"
+
+                                    remote-url = "{{API_URL}}retencionVenta/getCompras/"
+
+                                    title-field="numdocumentoventa"
+
+                                    minlength="1"
+                                    input-class="form-control"
+                                    match-class="highlight"
+                                    field-required="true"
+                                    input-name="t_nrocompra"
+                                    disable-input="guardado"
+                                    text-searching="Buscando Documentos de Ventas"
+                                    text-no-results="Venta no encontrada"
+
+                            />
+
+
+                        </div>
+                        <span class="help-block error" style="text-align: right !important; color: red;"
+                              ng-show="formRteCompras.t_nrocompra.$invalid && formRteCompras.t_nrocompra.$touched" >El Nro. de Venta es requerido</span>
                     </div>
                 </div>
 
-                <div class="col-sm-4 col-xs-12 error">
-                    <!--<div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Retención Nro.: </span>
-                        <input type="text" class="form-control" id="t_nroretencion" name="t_nroretencion" disabled
-                               ng-model="t_nroretencion" ng-required="true" ng-keypress="onlyNumber($event, 12, 't_nroretencion')" placeholder="" />
-
-                    </div>
-                    <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.t_nroretencion.$invalid && formRteCompras.t_nroretencion.$touched" >El Nro. de Retención es requerido</span>-->
-                </div>
-
-                <div class="col-sm-4 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Nro. Documento: </span>
-                        <!--<input type="text" class="form-control" id="t_nrocompra" name="t_nrocompra" ng-model="t_nrocompra" placeholder="" />-->
-
-                        <angucomplete-alt
-                                id = "t_nrocompra"
-                                pause = "200"
-                                selected-object = "showDataPurchase"
-
-                                remote-url = "{{API_URL}}retencionVenta/getCompras/"
-
-                                title-field="numdocumentoventa"
-
-                                minlength="1"
-                                input-class="form-control"
-                                match-class="highlight"
-                                field-required="true"
-                                input-name="t_nrocompra"
-                                disable-input="guardado"
-                                text-searching="Buscando Documentos de Ventas"
-                                text-no-results="Venta no encontrada"
-
-                        />
-
-
-                    </div>
-                    <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.t_nrocompra.$invalid && formRteCompras.t_nrocompra.$touched" >El Nro. de Venta es requerido</span>
-                </div>
             </div>
 
             <div class="container" style="margin-top: 5px;">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">RUC / CI: </span>
-                        <input type="text" class="form-control" id="t_rucci" name="t_rucci" ng-model="t_rucci" disabled />
+
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">RUC / CI: </span>
+                            <input type="text" class="form-control" id="t_rucci" name="t_rucci" ng-model="t_rucci" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Razón Social: </span>
+                            <input type="text" class="form-control" id="t_razonsocial" name="t_razonsocial" ng-model="t_razonsocial" disabled />
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon">Razón Social: </span>
-                        <input type="text" class="form-control" id="t_razonsocial" name="t_razonsocial" ng-model="t_razonsocial" disabled />
-                    </div>
-                </div>
+
+
             </div>
-            <!--<div class="col-xs-12" style="margin-top: 5px;">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span> Télefono: </span>
-                        <input type="text" class="form-control" id="t_phone" name="t_phone" ng-model="t_phone" disabled />
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Dirección: </span>
-                        <input type="text" class="form-control" id="t_direccion" name="t_direccion" ng-model="t_direccion" disabled />
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12" style="margin-top: 5px;">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Ciudad: </span>
-                        <input type="text" class="form-control" id="t_ciudad" name="t_ciudad" ng-model="t_ciudad" disabled />
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Tipo Comprobante: </span>
-                        <input type="text" class="form-control" id="t_tipocomprobante" name="t_tipocomprobante" ng-model="t_tipocomprobante" disabled />
-                    </div>
-                </div>
-            </div> -->
+
             <div class="container" style="margin-top: 5px;">
 
-                <div class="col-xs-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Tipo de Pago: </span>
-                        <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
-                                ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()" required>
-                        </select>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Tipo de Pago: </span>
+                            <select class="form-control" name="tipopago" id="tipopago" ng-model="tipopago"
+                                    ng-options="value.id as value.label for value in listtipopago" ng-change="typeResident()" required>
+                            </select>
 
+                        </div>
+                        <span class="help-block error" style="text-align: right !important; color: red;"
+                              ng-show="formRteCompras.tipopago.$invalid && formRteCompras.tipopago.$touched" >El Tipo de Pago es requerido</span>
                     </div>
-                    <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.tipopago.$invalid && formRteCompras.tipopago.$touched" >El Tipo de Pago es requerido</span>
-                </div>
-                <div class="col-xs-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Pais Pago: </span>
-                        <select class="form-control" name="paispago" id="paispago" ng-model="paispago"
-                                ng-options="value.id as value.label for value in listpaispago">
-                        </select>
+                    <div class="col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">País Pago: </span>
+                            <select class="form-control" name="paispago" id="paispago" ng-model="paispago"
+                                    ng-options="value.id as value.label for value in listpaispago">
+                            </select>
 
-                    </div>
-                </div>
-
-                <div class="col-xs-6" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Régimen Fiscal?: </span>
-                        <select class="form-control" name="regimenfiscal" id="regimenfiscal" ng-model="regimenfiscal"
-                                ng-options="value.id as value.name for value in estados" >
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-6" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Convenio doble Tributación?: </span>
-                        <select class="form-control" name="convenio" id="convenio" ng-model="convenio"
-                                ng-options="value.id as value.name for value in estados">
-                        </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-xs-6" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Aplicación de Norma Legal?: </span>
-                        <select class="form-control" name="normalegal" id="normalegal" ng-model="normalegal"
-                                ng-options="value.id as value.name for value in estados">
-                        </select>
+                <div class="row">
+                    <div class="col-xs-6" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Régimen Fiscal?: </span>
+                            <select class="form-control" name="regimenfiscal" id="regimenfiscal" ng-model="regimenfiscal"
+                                    ng-options="value.id as value.name for value in estados" >
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Fecha Emisión Comprobante: </span>
-                        <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" ng-blur="valueFecha()" required/>
+                    <div class="col-xs-6" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Convenio doble Tributación?: </span>
+                            <select class="form-control" name="convenio" id="convenio" ng-model="convenio"
+                                    ng-options="value.id as value.name for value in estados">
+                            </select>
+                        </div>
                     </div>
-                    <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.fechaemisioncomprobante.$invalid && formRteCompras.fechaemisioncomprobante.$touched" >La Fecha de Emisión es requerido</span>
                 </div>
 
-                <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Nro. Documento: </span>
-                        <span class="input-group-btn" style="width: 15%;">
+                <div class="row">
+                    <div class="col-xs-6" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Aplicación de Norma Legal?: </span>
+                            <select class="form-control" name="normalegal" id="normalegal" ng-model="normalegal"
+                                    ng-options="value.id as value.name for value in estados">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Fecha Emisión Comprobante: </span>
+                            <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" ng-blur="valueFecha()" required/>
+                        </div>
+                        <span class="help-block error" style="text-align: right !important; color: red;"
+                              ng-show="formRteCompras.fechaemisioncomprobante.$invalid && formRteCompras.fechaemisioncomprobante.$touched" >La Fecha de Emisión es requerido</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Nro. Documento: </span>
+                            <span class="input-group-btn" style="width: 15%;">
                                         <input  type="text" class="form-control" id="t_establ" name="t_establ" ng-model="t_establ" ng-keypress="onlyNumber($event, 3, 't_establ')" ng-blur="calculateLength('t_establ', 3)" />
                                     </span>
-                        <span class="input-group-btn" style="width: 15%;" >
+                            <span class="input-group-btn" style="width: 15%;" >
                                         <input  type="text" class="form-control" id="t_pto" name="t_pto" ng-model="t_pto" ng-keypress="onlyNumber($event, 3, 't_pto')" ng-blur="calculateLength('t_pto', 3)" />
                                     </span>
-                        <input  type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
+                            <input  type="text" class="form-control" id="t_secuencial" name="t_secuencial" ng-model="t_secuencial" ng-keypress="onlyNumber($event, 9, 't_secuencial')" ng-blur="calculateLength('t_secuencial', 9)" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+                        <div class="input-group">
+                            <span class="input-group-addon">Autorización: </span>
+                            <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
+                                   ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
+                        </div>
+                        <span class="help-block error" style="text-align: right !important; color: red;"
+                              ng-show="formRteCompras.t_nroautorizacion.$invalid && formRteCompras.t_nroautorizacion.$touched" >El Nro. de Autorización es requerido</span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">Autorización: </span>
-                        <input type="text" class="form-control" id="t_nroautorizacion" name="t_nroautorizacion"
-                               ng-model="t_nroautorizacion" ng-required="true" ng-keypress="onlyNumber($event, 16, 't_nroautorizacion')" placeholder="" />
-                    </div>
-                    <span class="help-block error" style="text-align: right !important; color: red;"
-                          ng-show="formRteCompras.t_nroautorizacion.$invalid && formRteCompras.t_nroautorizacion.$touched" >El Nro. de Autorización es requerido</span>
-                </div>
+
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <div class="col-xs-12" style="margin-top: 15px;">
                 <div class="container">

@@ -64,9 +64,9 @@
 
         $scope.iddocumentocompra = 0;
 
-        $scope.ConfiguracionContable = null;
+        /*$scope.ConfiguracionContable = null;
         $scope.ConfiguracionContableRetenIVA = null;
-        $scope.ConfiguracionContableRetenRENTA = null;
+        $scope.ConfiguracionContableRetenRENTA = null;*/
         $scope.ProveedorContable = null;
 
         $scope.initLoad = function (pageNumber) {
@@ -339,11 +339,47 @@
             });
         };
 
+        $scope.getTipoPagoComprobante = function () {
+
+            $http.get(API_URL + 'DocumentoCompras/getTipoPagoComprobante').success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+                for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].tipopagoresidente, id: response[i].idpagoresidente})
+                }
+
+                $scope.listtipopago = array_temp;
+                $scope.tipopago = array_temp[0].id
+
+            });
+
+        };
+
+        $scope.getPaisPagoComprobante = function () {
+
+            $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+
+                for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].pais, id: response[i].idpagopais})
+                }
+
+                $scope.listpaispago = array_temp;
+                $scope.paispago = array_temp[0].id
+
+            });
+
+        };
+
         $scope.newForm = function () {
 
             $scope.getLastIDRetencion();
-
-            $scope.getConfigContabilidad();
+            $scope.getTipoPagoComprobante();
+            $scope.getPaisPagoComprobante();
 
             $scope.t_fechaingreso = $scope.nowDate();
             $scope.t_nroretencion = '';
@@ -362,6 +398,24 @@
             $scope.t_establ = '';
             $scope.t_pto = '';
             $scope.t_secuencial = '';
+
+            // Campos de Comprobante-------
+
+            $scope.estados = [
+                { id: 1, name: 'SI' },
+                { id: 2, name: 'NO' }
+            ];
+
+            $scope.regimenfiscal = 1;
+            $scope.convenio = 1;
+            $scope.normalegal = 1;
+
+            $('#fechaemisioncomprobante').val('');
+
+            $('#t_establ_c').val('000');
+            $('#t_pto_c').val('000');
+            $('#t_secuencial_c').val('000000000');
+
 
             $scope.t_nroautorizacion = '';
 
@@ -830,6 +884,20 @@
             }
         };
 
+        $scope.typeResident = function () {
+
+            $scope.paispago = '';
+
+            if ($scope.tipopago == '1') {
+
+                $('#paispago').prop('disabled', true);
+
+            } else {
+
+                $('#paispago').prop('disabled', false);
+
+            }
+        };
     });
 
     $(function () {
