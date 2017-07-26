@@ -316,6 +316,7 @@ Route::get('retencionCompra/getCompras/{codigo}', 'Retencion\RetencionCompraCont
 Route::get('retencionCompra/getCodigos/{codigo}', 'Retencion\RetencionCompraController@getCodigos');
 Route::get('retencionCompra/form/{id}', 'Retencion\RetencionCompraController@form');
 Route::get('retencionCompra/getCodigosRetencion/{tipo}', 'Retencion\RetencionCompraController@getCodigosRetencion');
+Route::get('retencionCompra/getProveedores', 'Retencion\RetencionCompraController@getProveedores');
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
 /*

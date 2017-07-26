@@ -7,6 +7,7 @@ use App\Modelos\Compras\CompraProducto;
 use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
+use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\Retencion\DetalleRetencion;
 use App\Modelos\Retencion\DetalleRetencion_Iva;
 use App\Modelos\Retencion\DetalleRetencionFuente;
@@ -78,6 +79,11 @@ class RetencionCompraController extends Controller
                             ->get();
 
         return $compra;
+    }
+
+    public function getProveedores()
+    {
+        return Proveedor::join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')->orderBy('persona.razonsocial', 'asc')->get();
     }
 
     public function getCodigosRetencion($tipo)

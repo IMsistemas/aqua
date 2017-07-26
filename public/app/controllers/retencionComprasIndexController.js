@@ -372,11 +372,26 @@
 
         };
 
+        $scope.getProveedores = function () {
+            $http.get(API_URL + 'retencionCompra/getProveedores').success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for(var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].razonsocial, id: response[i].idproveedor})
+                }
+                $scope.listproveedor = array_temp;
+                $scope.proveedor = '';
+
+            });
+        };
+
         $scope.newForm = function () {
 
             $scope.getLastIDRetencion();
             $scope.getTipoPagoComprobante();
             $scope.getPaisPagoComprobante();
+            $scope.getProveedores();
 
             $scope.t_fechaingreso = $scope.nowDate();
             $scope.t_nroretencion = '';

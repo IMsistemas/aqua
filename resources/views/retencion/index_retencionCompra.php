@@ -137,7 +137,11 @@
                             </div>
 
                             <div class="col-sm-4 col-xs-12 error">
-
+                                <div class="input-group">
+                                    <span class="input-group-addon">Proveedor: </span>
+                                    <select class="form-control" name="proveedor" id="proveedor" ng-model="proveedor"
+                                            ng-options="value.id as value.label for value in listproveedor" required></select>
+                                </div>
                             </div>
 
                             <div class="col-sm-4 col-xs-12">
