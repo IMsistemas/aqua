@@ -155,6 +155,10 @@
                                             selected-object = "showDataPurchase"
 
                                             remote-url = "{{API_URL}}retencionCompra/getCompras/"
+                                            remote-url-request-formatter="remoteUrlRequestFn"
+
+
+                                            remote-api-handler="searchAPI"
 
                                             title-field="numdocumentocompra"
 

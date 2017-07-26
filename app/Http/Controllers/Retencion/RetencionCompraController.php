@@ -70,13 +70,24 @@ class RetencionCompraController extends Controller
                     ->where('codigosri', 'LIKE', '%' . $codigo . '%')->get();
     }
 
-    public function getCompras($codigo)
+    /*public function getCompras($codigo)
     {
         $compra = Cont_DocumentoCompra::with('proveedor.persona', 'proveedor.cont_plancuenta', 'sri_comprobanteretencion')
                             //->where('idcomprobanteretencion', '!=', null)
                             //->whereRaw('cont_documentocompra.iddocumentocompra NOT IN (SELECT sri_retencioncompra.iddocumentocompra FROM sri_retencioncompra)')
                             ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $codigo . "%'")
                             ->get();
+
+        return $compra;
+    }*/
+
+    public function getCompras(Request $request)
+    {
+        $compra = Cont_DocumentoCompra::join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+            ->with('proveedor.persona', 'proveedor.cont_plancuenta', 'sri_comprobanteretencion')
+            ->where('proveedor.idproveedor', $request->input('idproveedor'))
+            ->whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $request->input('q') . "%'")
+            ->get();
 
         return $compra;
     }

@@ -386,6 +386,14 @@
             });
         };
 
+        $scope.remoteUrlRequestFn = function(str) {
+            return {q: str, idproveedor: $scope.proveedor};
+        };
+
+        $scope.searchAPI = function(userInputString, timeoutPromise) {
+            return $http.post(API_URL + 'retencionCompra/getCompras', {q: userInputString, idproveedor: $scope.proveedor}, {timeout: timeoutPromise});
+        };
+
         $scope.newForm = function () {
 
             $scope.getLastIDRetencion();
