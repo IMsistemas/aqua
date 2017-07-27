@@ -5,9 +5,13 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
     $scope.conceptos = [];
+    $scope.listCuentas = [];
+
     var field = '';
 
     $scope.initLoad = function () {
+
+        $scope.getCuentas();
 
         $scope.getDataEmpresa();
 
@@ -28,6 +32,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getConfigSRI();
 
         $scope.getListServicio();
+
+
     };
 
     //-----------------------------------------------------------------------------------------------------------------
@@ -487,6 +493,44 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
+    $scope.getCuentas = function () {
+        $http.get(API_URL + 'rolPago/getCuentas').success(function(response){
+
+            $scope.listCuentas = response;
+
+        });
+    };
+
+    $scope.searchCuenta = function (stringCuenta) {
+
+        var cuentas = [];
+
+        if (stringCuenta.lastIndexOf(',') === -1) {
+            cuentas.push(stringCuenta);
+        } else {
+            cuentas = stringCuenta.split(',');
+        }
+
+        var result = [];
+        var longitud = cuentas.length;
+        var longitud_cuentas = $scope.listCuentas.length;
+
+        for (var i = 0; i < longitud; i++) {
+
+            for (var j = 0; j < longitud_cuentas; j++) {
+
+                if (parseInt(cuentas[i]) === parseInt($scope.listCuentas[j].idplancuenta)) {
+                    result.push($scope.listCuentas[j]);
+                }
+
+            }
+
+        }
+
+        return result;
+
+    };
+
     $scope.getConceptos = function () {
 
         $http.get(API_URL + 'configNomina/getConceptos').success(function(response){
@@ -496,37 +540,59 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             var longitud = response.length;
             var array_temp = [];
             for(var i = 0; i < longitud; i++){
+
+                var cuentas = ['', ''];
+
+                if (response[i].confignomina.length !== 0) {
+                    if (response[i].confignomina[0].cuenta !== null && response[i].confignomina[0].cuenta !== '') {
+                        cuentas = $scope.searchCuenta(response[i].confignomina[0].cuenta);
+
+                        console.log(cuentas);
+                    }
+                }
+
                 if (response[i].id_categoriapago === 1 && response[i].grupo !== "1"){
                     var cuenta = {
-                        value: "",
+                        value: '',
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[0] !== '') {
+                        cuenta.value = cuentas[0].concepto;
+                    }
+
                     Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     var idcuenta = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[0] !== '') {
+                        idcuenta.value = cuentas[0].idplancuenta;
+                    }
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: "",
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'impuesto', impuesto);
+
                     var idcuenta1 = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+
                     Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
                     array_temp.push(response[i]);
                 }
+
                 if (response[i].id_categoriapago !== 1 && response[i].id_categoriapago !== 4){
                     var cuenta = {
                         value: "",
@@ -534,16 +600,25 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         enumerable: true,
                         configurable: true
                     };
+
+                    if (cuentas[0] !== '') {
+                        cuenta.value = cuentas[0].concepto;
+                    }
                     Object.defineProperty(response[i], 'cuenta', cuenta);
+
                     var idcuenta = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[0] !== '') {
+                        idcuenta.value = cuentas[0].idplancuenta;
+                    }
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
+
                     var impuesto = {
-                        value: "",
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
@@ -555,6 +630,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         enumerable: true,
                         configurable: true
                     };
+
                     Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
                     array_temp.push(response[i]);
                 }
@@ -565,34 +641,51 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[0] !== '') {
+                        cuenta.value = cuentas[0].concepto;
+                    }
                     Object.defineProperty(response[i], 'cuenta', cuenta);
+
+
                     var idcuenta = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[0] !== '') {
+                        idcuenta.value = cuentas[0].idplancuenta;
+                    }
+
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
                     var impuesto = {
-                        value: "",
+                        value: response[i].confignomina[0].value_imp,
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
                     Object.defineProperty(response[i], 'impuesto', impuesto);
+
                     var cuenta1 = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[1] !== '') {
+                        cuenta1.value = cuentas[1].concepto;
+                    }
                     Object.defineProperty(response[i], 'cuenta1', cuenta1);
+
                     var idcuenta1 = {
                         value: "",
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+                    if (cuentas[1] !== '') {
+                        idcuenta1.value = cuentas[1].idplancuenta;
+                    }
                     Object.defineProperty(response[i], 'idcuenta1', idcuenta1);
                     array_temp.push(response[i]);
                 }
