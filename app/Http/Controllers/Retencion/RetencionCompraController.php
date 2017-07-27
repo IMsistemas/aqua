@@ -181,6 +181,34 @@ class RetencionCompraController extends Controller
                 }
             }
 
+            $dataComprobante = $request->input('dataComprobante');
+
+            $comprobante = new SRI_ComprobanteRetencion();
+
+            $comprobante->idpagoresidente = $dataComprobante['tipopago'];
+            $comprobante->idpagopais = $dataComprobante['paispago'];
+            $comprobante->regimenfiscal = $dataComprobante['regimenfiscal'];
+            $comprobante->conveniotributacion = $dataComprobante['convenio'];
+            $comprobante->normalegal = $dataComprobante['normalegal'];
+            $comprobante->fechaemisioncomprob = $dataComprobante['fechaemisioncomprobante'];
+            $comprobante->nocomprobante = $dataComprobante['nocomprobante'];
+            $comprobante->noauthcomprobante = $dataComprobante['noauthcomprobante'];
+
+            if ($comprobante->save()) {
+
+                $id = $comprobante->idcomprobanteretencion;
+
+                $last_c = Cont_DocumentoCompra::find($request->input('iddocumentocompra'));
+                $last_c->idcomprobanteretencion = $id;
+
+                if ($last_c->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+
+            } else {
+                return response()->json(['success' => false]);
+            }
+
             return response()->json(['success' => true, 'idretencioncompra' => $retencionCompra->idretencioncompra]);
 
         } else return response()->json(['success' => false]);

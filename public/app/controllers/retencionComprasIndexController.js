@@ -22,6 +22,12 @@
             $scope.initLoad(1);
         });
 
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+            ignoreReadonly: false
+        });
+
         $scope.active = '0';
 
         $scope.tiporetencion = [
@@ -386,10 +392,6 @@
             });
         };
 
-        $scope.remoteUrlRequestFn = function(str) {
-            return {q: str, idproveedor: $scope.proveedor};
-        };
-
         $scope.searchAPI = function(userInputString, timeoutPromise) {
             return $http.post(API_URL + 'retencionCompra/getCompras', {q: userInputString, idproveedor: $scope.proveedor}, {timeout: timeoutPromise});
         };
@@ -519,6 +521,12 @@
             $scope.recalculateTotal();
         };
 
+        $scope.valueFecha = function () {
+
+            $scope.fechaemisioncomprobante = $('#fechaemisioncomprobante').val();
+
+        };
+
         $scope.save = function () {
 
             $('#btn_save').prop('disabled', true);
@@ -602,7 +610,7 @@
 
             var data_full = {
                 dataContabilidad: JSON.stringify(Contabilidad),
-                iddocumentoventa: $scope.iddocumentocompra,
+                iddocumentocompra: $scope.iddocumentocompra,
                 retenciones: $scope.itemretencion,
                 dataComprobante: dataComprobante
             };
@@ -674,6 +682,7 @@
                     data.detalle = object.originalObject.namedetalleimpuestoretencion;
                     data.tipo = object.originalObject.sri_tipoimpuestoretencion.nametipoimpuestoretencion;
                     data.porciento = object.originalObject.porcentaje;
+                    data.contabilidad = object.originalObject.cont_plancuenta;
 
                     var porciento = parseFloat(data.porciento);
 
