@@ -407,7 +407,6 @@
                                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                                 <thead class="bg-primary">
                                                 <tr>
-
                                                     <th>NOMBRE Y APELLIDOS</th>
                                                     <th>PARENTESCO</th>
                                                     <th>FECHA NAC.</th>

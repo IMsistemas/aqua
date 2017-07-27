@@ -201,21 +201,31 @@ class EmpleadoController extends Controller
                 $empleado->idpersona = $persona->idpersona;
                 $empleado->idcargo = $request->input('idcargo');
                 $empleado->iddepartamento = $request->input('departamento');
-                $empleado->idplancuenta = $request->input('cuentacontable');
+                //$empleado->idplancuenta = $request->input('cuentacontable');
                 $empleado->estado = true;
                 $empleado->fechaingreso = $request->input('fechaingreso');
                 $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
                 $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
                 $empleado->salario = $request->input('salario');
 
+                $empleado->fechanacimiento = $request->input('fechanacimiento');
+                $empleado->estadocivil = $request->input('estadocivil');
+                $empleado->genero = $request->input('genero');
+                $empleado->codigoempleado = $request->input('codigoempleado');
+
                 if ($url_file != null) {
                     $empleado->rutafoto = $url_file;
                 }
-                $empleado->save();
+
+                if ($empleado->save()) {
+                    return response()->json(['success' => true]);
+                } else {
+                    return response()->json(['success' => false]);
+                }
+
             } else {
                 return response()->json(['success' => false]);
             }
-            return response()->json(['success' => true]);
 
         }
 

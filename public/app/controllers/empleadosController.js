@@ -335,7 +335,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
             departamento: $scope.departamento,
             tipoidentificacion: $scope.tipoidentificacion,
-            cuentacontable: $scope.select_cuenta.idplancuenta
+
+            codigoempleado: $scope.codigo,
+            fechanacimiento: $scope.fechanacimiento,
+            estadocivil: $scope.estadocivil,
+            genero: $scope.genero
+            //cuentacontable: $scope.select_cuenta.idplancuenta
         };
 
         console.log(data);
