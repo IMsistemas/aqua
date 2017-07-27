@@ -276,34 +276,6 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
 
             $scope.active = '1';
 
-            /*$http.get(API_URL + 'retencionVenta/getRetencionesByCompra/' + $scope.idretencion).success(function(data){
-
-             var longitud = data.length;
-             for (var i = 0; i < longitud; i++){
-             var object_row = {
-             year: (response[0].fecharetencion).split('-')[0],
-             codigo: data[i].codigosri,
-             detalle: data[i].concepto,
-             id: data[i].iddetalleretencion,
-             baseimponible: '0.00',
-             porciento: data[i].poecentajeretencion,
-             valor: data[i].valorretenido
-             };
-
-             if (data[i].idtiporetencion == 1) {
-             object_row.baseimponible = response[0].subtotalnoivacompra;
-             } else {
-             object_row.baseimponible = response[0].ivacompra;
-             }
-
-             ($scope.itemretencion).push(object_row);
-             $('[data-toggle="tooltip"]').tooltip();
-             }
-             $scope.recalculateTotal();
-             $('#btn-export').show();
-             $scope.active = '1';
-             });*/
-
         });
     };
 
@@ -389,6 +361,7 @@ app.controller('retencionVentasController', function($scope, $http, API_URL) {
         $('#t_nrocompra').val('');
         $scope.t_nrocompra = '';
         $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', '');
+        $scope.$broadcast('angucomplete-alt:clearInput', 't_nrocompra');
 
         $scope.t_rucci = '';
         $scope.t_razonsocial = '';

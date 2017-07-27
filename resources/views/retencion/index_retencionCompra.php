@@ -304,7 +304,7 @@
                             </div>
 
                             <div class="col-xs-12" style="margin-top: 5px;">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
                                         <th class="text-center" style="width: 10%;">
@@ -376,7 +376,7 @@
                                         </td>
                                         <td class="text-right">$ {{item.valor}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" name="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
+                                            <button type="button" class="btn btn-danger btn_delete" name="btn-deleterow" style="float: right;" ng-click="deleteRow(item)"
                                                     data-toggle="tooltip" data-placement="left" title="Eliminar Retención" >
                                                 <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
                                             </button>
@@ -384,13 +384,13 @@
                                     </tr>
                                     </tbody>
                                     <tfoot>
-                                    <tr>
-                                        <th colspan="5" class="text-right">TOTAL:</th>
-                                        <th>
-                                            <input type="text" class="form-control" style="text-align: right !important;" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)" disabled/>
-                                        </th>
-                                        <th></th>
-                                    </tr>
+                                        <tr>
+                                            <th colspan="6" class="text-right">TOTAL:</th>
+                                            <th>
+                                                <input type="text" class="form-control" style="text-align: right !important;" id="t_total" name="t_total" ng-model="t_total" ng-keypress="onlyDecimal($event)" disabled/>
+                                            </th>
+                                            <th></th>
+                                        </tr>
                                     </tfoot>
                                 </table>
                             </div>
