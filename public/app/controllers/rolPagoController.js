@@ -2,7 +2,7 @@
  * Created by daniel on 02/07/17.
  */
 
-app.controller('rolPagoController', function ($scope,$http,API_URL) {
+app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.ingresos1 = [];
     $scope.ingresos2 = [];
@@ -25,7 +25,8 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
     $scope.listCuentas = [];
 
-    var field = "";
+    $scope.fieldconcepto = '';
+    $scope.fieldid = '';
 
     var ss = 0;
     var dc = 0;
@@ -523,11 +524,12 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
         });
     };
 
-    $scope.showPlanCuenta = function (item) {
+    $scope.showPlanCuenta = function (field_concepto, field_id) {
 
-        field = item;
+        $scope.fieldconcepto = field_concepto;
+        $scope.fieldid = field_id;
 
-        $http.get(API_URL + 'rolPago/getPlanCuenta').success(function(response){
+        $http.get(API_URL + 'configuracion/getPlanCuenta').success(function(response){
             $scope.cuentas = response;
             $('#modalPlanCuenta').modal('show');
         });
@@ -535,9 +537,13 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
     };
 
     $scope.selectCuenta = function () {
-
         var selected = $scope.select_cuenta;
-        field.cuenta = selected.concepto;
+
+        var fieldconcepto = $parse($scope.fieldconcepto);
+        fieldconcepto.assign($scope, selected.concepto);
+
+        var fieldid = $parse($scope.fieldid);
+        fieldid.assign($scope, selected.idplancuenta);
 
         $('#modalPlanCuenta').modal('hide');
 
@@ -545,6 +551,69 @@ app.controller('rolPagoController', function ($scope,$http,API_URL) {
 
     $scope.click_radio = function (item) {
         $scope.select_cuenta = item;
+    };
+
+    $scope.save = function () {
+
+        var conceptos = $scope.ingresos1.concat($scope.ingresos2, $scope.ingresos3, $scope.beneficios, $scope.deducciones, $scope.benefadicionales);
+
+        console.log(conceptos);
+
+        /*
+         * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
+         */
+
+        var descripcion = 'ROL PAGO A: ';
+
+        var transaccion = {
+            fecha: $('#fecha').val(),
+            idtipotransaccion: 12,
+            numcomprobante: 1,
+            descripcion: descripcion
+        };
+
+        var registroC = [];
+
+        var empleado = {
+            idplancuenta: $scope.ProveedorContable.idplancuenta,
+            concepto: $scope.ProveedorContable.concepto,
+            controlhaber: $scope.ProveedorContable.controlhaber,
+            tipocuenta: $scope.ProveedorContable.tipocuenta,
+            Debe: $scope.t_total,
+            Haber: 0,
+            Descipcion: descripcion
+        };
+
+        registroC.push(proveedor);
+
+        var longitud_item = $scope.itemretencion.length;
+
+        for (var i = 0; i < longitud_item; i++) {
+
+            var item = {
+                idplancuenta: $scope.itemretencion[i].contabilidad.idplancuenta,
+                concepto: $scope.itemretencion[i].contabilidad.concepto,
+                controlhaber: $scope.itemretencion[i].contabilidad.controlhaber,
+                tipocuenta: $scope.itemretencion[i].contabilidad.tipocuenta,
+                Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
+                Debe: 0,
+                Descipcion: descripcion
+            };
+
+            registroC.push(item);
+
+        }
+
+        var Contabilidad={
+            transaccion: transaccion,
+            registro: registroC
+        };
+
+
+        /*
+         * -------------------------FIN CONTABILIDAD----------------------------------------------------------------
+         */
+
     };
 
 });

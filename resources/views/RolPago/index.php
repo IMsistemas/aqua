@@ -21,7 +21,7 @@
 
                 <div class="col-xs-6 text-right" style="margin-top: 5px;">
 
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveConfigNomina()" >
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="save()" >
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
 
@@ -127,7 +127,7 @@
                     <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i> Fecha: </span>
-                            <input type="text" disabled class="form-control" name="fecha" id="fecha" ng-model="fecha" required/>
+                            <input type="text" class="form-control" name="fecha" id="fecha" ng-model="fecha" required/>
                         </div>
                     </div>
                     <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
@@ -259,10 +259,25 @@
                         </div>
                     </fieldset>
                     <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0px;">
-                        <div class="input-group" style="margin-top: 0px; padding: 0px;">
-                            <span class="input-group-addon">Total Sueldo Liquido: </span>
-                            <input type="text" class="form-control" disabled name="sueldoliquido" id="sueldoliquido" ng-model="sueldoliquido" />
-                            <span class="input-group-addon"> $ </span>
+                        <div class="col-sm-6 col-sm-12" style="padding: 0px;">
+                            <div class="input-group">
+                                <span class="input-group-addon">Total Sueldo Liquido: </span>
+                                <input type="text" class="form-control" disabled name="sueldoliquido" id="sueldoliquido" ng-model="sueldoliquido" />
+                                <span class="input-group-addon"> $ </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xs-12" style="margin-top: 0px; padding: 0px;">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="sueldo_liquido" id="sueldo_liquido" ng-model="sueldo_liquido" placeholder="Cuenta Contable"
+                                       readonly>
+                                <input type="hidden" name="sueldo_liquido_h" id="sueldo_liquido_h" ng-model="sueldo_liquido_h">
+                                <span class="input-group-btn" role="group">
+                                    <button type="button" class="btn btn-info" id="btn-liquido" ng-click="showPlanCuenta('sueldo_liquido', 'sueldo_liquido_h')">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
