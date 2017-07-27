@@ -67,6 +67,7 @@
         $scope.baseimponible = 0;
         $scope.baseimponibleIVA = 0;
         $scope.idretencion = 0;
+        $scope.retencion = '';
 
         $scope.iddocumentocompra = 0;
 
@@ -166,6 +167,8 @@
 
             $scope.idretencion = id;
 
+
+
             $scope.estados = [
                 { id: 1, name: 'SI' },
                 { id: 2, name: 'NO' }
@@ -204,6 +207,8 @@
                     $http.get(API_URL + 'retencionCompras/' + $scope.idretencion).success(function(response){
 
                         console.log(response);
+
+                        $scope.retencion = response[0];
 
                         $scope.tipopago = response[0].idpagoresidente;
                         $('#fechaemisioncomprobante').val(response[0].fechaemisioncomprob);
@@ -356,28 +361,6 @@
                 } else {
                     $scope.t_nroretencion = 1;
                 }
-
-            });
-        };
-
-        $scope.getConfigContabilidad = function () {
-            $http.get(API_URL + 'retencionCompra/getConfigContabilidad').success(function(response){
-
-                //console.log(response);
-
-                var longitud = response.length;
-
-                for (var i = 0; i < longitud; i++) {
-                    if (response[i].optionname == 'SRI_RETEN_IVA_COMPRA') {
-                        $scope.ConfiguracionContableRetenIVA = response[i];
-                    } else if (response[i].optionname == 'SRI_RETEN_RENTA_COMPRA') {
-                        $scope.ConfiguracionContableRetenRENTA = response[i];
-                    }
-                }
-
-                //console.log($scope.ConfiguracionContableRetenRENTA);
-
-                $scope.ConfiguracionContable = response;
 
             });
         };
@@ -707,6 +690,17 @@
         };
 
         $scope.showModalConfirmAnular = function(item){
+
+            console.log(item);
+
+            $scope.idretencion = item.cont_documentocompra[0].sri_retencioncompra[0].idretencioncompra;
+            $scope.numseriecompra = item.nocomprobante;
+            $('#modalConfirmAnular').modal('show');
+        };
+
+        $scope.showModalConfirmAnular2 = function(){
+
+            var item = $scope.retencion;
 
             console.log(item);
 

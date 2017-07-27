@@ -400,7 +400,7 @@
                                         data-toggle="tooltip" data-placement="bottom" title="Regresar al Registro de Retenciones de Compra">
                                     Registro <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                                 </button>
-                                <button type="button" class="btn btn-default" style="float: right;" ng-click=""
+                                <button type="button" class="btn btn-default" style="float: right;" ng-click="showModalConfirmAnular2()"
                                         data-toggle="tooltip" data-placement="bottom" title="Anular la Retención de la Compra">
                                     Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                 </button>
