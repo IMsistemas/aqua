@@ -50,7 +50,7 @@ app.controller('ConciliacionC', function($scope, $http, API_URL) {
         $http.get(API_URL + 'Conciliacion/data_before_cuenta/'+JSON.stringify($scope.aux_cuenta_contable))
         .success(function(response){
             console.log(response);
-            if(response[0].balancefinal!=undefined && response[0].balancefinal!=null){
+            if(response[0]!=undefined && response[0]!=null){
                 $scope.aux_balance_inicial=parseFloat(response[0].balancefinal);
                 $scope.txt_balanceI=$scope.aux_balance_inicial;
 
