@@ -30,12 +30,14 @@
                 <thead class="bg-primary">
                 <tr>
                     <th>NOMBRE DEPARTAMENTO</th>
-                    <th style="width: 200px;">ACCIONES</th>
+                    <th style="width: 12%">CENTRO COSTO</th>
+                    <th style="width: 18%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="item in departamentos | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                 <td>{{item.namedepartamento}}</td>
+                <td>{{(item.centrocosto) ? 'SI' : 'NO'}}</td>
                 <td class="text-center">
                     <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.iddepartamento)">
                         Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

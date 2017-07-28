@@ -45,6 +45,13 @@ app.controller('departamentosController', function($scope, $http, API_URL) {
 
                 $http.get(API_URL + 'departamento/getDepartamentoByID/' + id).success(function(response) {
                     $scope.nombrecargo = response[0].namedepartamento.trim();
+
+                    if (response[0].centrocosto === true) {
+                        $scope.centrocosto = 'true';
+                    } else {
+                        $scope.centrocosto = 'false';
+                    }
+
                     $('#modalActionCargo').modal('show');
                 });
                 break;
