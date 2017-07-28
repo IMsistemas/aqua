@@ -379,6 +379,7 @@ Route::get('DocumentoCompras/getSustentoTributario', 'Compras\ComprasController@
 Route::get('DocumentoCompras/getTipoComprobante/{idsustento}', 'Compras\ComprasController@getTipoComprobante' );
 Route::get('DocumentoCompras/getFormaPago', 'Compras\ComprasController@getFormaPago' );
 Route::get('DocumentoCompras/getCompras', 'Compras\ComprasController@getCompras');
+Route::get('DocumentoCompras/getCentrosCostos', 'Compras\ComprasController@getCentrosCostos');
 Route::resource('DocumentoCompras', 'Compras\ComprasController');
 
 /*

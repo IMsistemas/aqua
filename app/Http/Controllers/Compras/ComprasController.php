@@ -15,6 +15,7 @@ use App\Modelos\Contabilidad\Cont_Kardex;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroProveedor;
 use App\Modelos\Contabilidad\Cont_Transaccion;
+use App\Modelos\Nomina\Departamento;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\SRI\SRI_ComprobanteRetencion;
@@ -81,6 +82,11 @@ class ComprasController extends Controller
                                         ->where('idsustentotributario', $idsustento)
                                         ->select('sri_tipocomprobante.idtipocomprobante', 'sri_tipocomprobante.namecomprobante')
                                         ->orderBy('sri_tipocomprobante.namecomprobante', 'asc')->get();
+    }
+
+    public function getCentrosCostos()
+    {
+        return Departamento::where('centrocosto', true)->get();
     }
 
     public function getFormaPago()

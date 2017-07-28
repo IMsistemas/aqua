@@ -102,6 +102,28 @@
 
         };
 
+
+        $scope.getCentrosCostos = function () {
+
+            $http.get(API_URL + 'DocumentoCompras/getCentrosCostos').success(function(response){
+
+                console.log(response);
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: 0}];
+
+                for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
+                }
+
+                $scope.listcentrocostos = array_temp;
+                //$scope.paispago = array_temp[0].id
+
+            });
+
+        };
+
+
         $scope.getPaisPagoComprobante = function () {
 
             $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){
@@ -226,8 +248,9 @@
 
             ($scope.list_item).push(object_row);*/
 
-            var item={
+            var item = {
                 productoObj:null,
+                idcentrocosto: 0,
                 cantidad:0,
                 precioU:0,
                 descuento:0,
@@ -1145,6 +1168,7 @@
             $scope.ConfigContable();
             $scope.getProveedorByFilter();
             $scope.searchByFilter(1);
+            $scope.getCentrosCostos();
         };
 
         $scope.sumar = function(v1,v2){
@@ -1178,6 +1202,7 @@
             return {
                 cantidad:0,
                 descuento:0,
+                idcentrocosto: 0,
                 precioUnitario:0,
                 iva: $scope.ivaPro,
                 ice:0,
@@ -1205,6 +1230,8 @@
         $scope.activeForm = function (action) {
 
             if (action == 0) {
+
+
 
                 $scope.listado = false;
 
