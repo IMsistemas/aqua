@@ -53,7 +53,7 @@ class Conciliacion extends Controller
      {
      	$filtro = json_decode($parametro);
      	return Cont_RegistroContable::with("cont_transaccion","cont_plancuentas")
-     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND cont_registrocontable.idconciliacion IS NULL ")
+     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND cont_registrocontable.idconciliacion IS NULL  AND cont_registrocontable.estadoanulado=true")
      								->orderBy('cont_registrocontable.fecha', 'ASC')
      								->get();
      }
@@ -152,12 +152,12 @@ class Conciliacion extends Controller
     	$filtro = json_decode($parametro);
     	if($filtro->estadoconciliacion=="2"){
     		return Cont_RegistroContable::with("cont_transaccion","cont_plancuentas")
-     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND cont_registrocontable.idconciliacion='".$filtro->idconciliacion."' ")
+     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND cont_registrocontable.idconciliacion='".$filtro->idconciliacion."'  AND cont_registrocontable.estadoanulado=true ")
      								->orderBy('cont_registrocontable.fecha', 'ASC')
      								->get();
     	}else{
     		return Cont_RegistroContable::with("cont_transaccion","cont_plancuentas")
-     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND (cont_registrocontable.idconciliacion='".$filtro->idconciliacion."' OR cont_registrocontable.idconciliacion IS NULL ) ")
+     								->whereRaw(" cont_registrocontable.idplancuenta='".$filtro->idplancuenta."' AND (cont_registrocontable.idconciliacion='".$filtro->idconciliacion."' OR cont_registrocontable.idconciliacion IS NULL ) AND cont_registrocontable.estadoanulado=true ")
      								->orderBy('cont_registrocontable.fecha', 'ASC')
      								->get();
     	}
