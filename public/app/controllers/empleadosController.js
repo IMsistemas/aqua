@@ -197,7 +197,6 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
 
-
                     $scope.apellido = item.lastnamepersona;
                     $scope.nombre = item.namepersona;
                     $scope.telefonoprincipal = item.telefprincipaldomicilio;
@@ -209,6 +208,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     $scope.idpersona = item.idpersona;
                     $scope.idpersona_edit = item.idpersona;
+
+                    $scope.fechanacimiento = item.fechanacimiento;
+                    $scope.estadocivil = item.estadocivil;
+                    $scope.genero = item.genero;
+                    $scope.codigo = item.codigoempleado;
+
                     console.log(item);
 
                     if (item.rutafoto != null && item.rutafoto != ''){
