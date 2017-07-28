@@ -599,6 +599,17 @@ Route::get('procesoskardex/loadinventario', 'CatalogoProductos\InventarioKardex@
 Route::get('procesoskardex/loadkardex/{filtro}', 'CatalogoProductos\InventarioKardex@kardexitem');
 Route::resource('Inventario', 'CatalogoProductos\InventarioKardex');
 
+//-------------------------------Conciliacion Contable----------------------------//
+Route::get('Conciliacion/anular_conciliacion/{transaccion}', 'Contabilidad\Conciliacion@anular_conciliacion');
+Route::get('Conciliacion/reload_conciliacion/{transaccion}', 'Contabilidad\Conciliacion@reload_conciliacion');
+Route::get('Conciliacion/getAllFitros', 'Contabilidad\Conciliacion@getallFitros');
+Route::get('Conciliacion/data_before_cuenta/{transaccion}', 'Contabilidad\Conciliacion@data_before_conciliacion');
+Route::get('Conciliacion/close_conciliacion/{transaccion}', 'Contabilidad\Conciliacion@close_conciliacion');
+Route::get('Conciliacion/conciliar_desconciliar/{transaccion}', 'Contabilidad\Conciliacion@conciliar_desconciliar');
+Route::get('Conciliacion/save_conciliacion/{transaccion}', 'Contabilidad\Conciliacion@save_conciliacion');
+Route::get('Conciliacion/get_cuentas_conciliar/{transaccion}', 'Contabilidad\Conciliacion@get_cuentas_conciliar');
+Route::resource('Conciliacion', 'Contabilidad\Conciliacion');
+
 
 /*
  * -----------------------------------MODULO CONFIGURACION--------------------------------------------------------------
