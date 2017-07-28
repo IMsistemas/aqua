@@ -56,8 +56,8 @@ app.controller('ConciliacionC', function($scope, $http, API_URL) {
 
                 $scope.aux_conciliacion_egreso_ingreso=$scope.aux_balance_inicial;
             }else{
-                $scope.aux_balance_inicial=0;
-                $scope.aux_balance_inicial=$scope.aux_balance_inicial.toFixed(4);
+                $scope.aux_balance_inicial="0.000";
+
 
                 $scope.txt_balanceI=0;
                 $scope.aux_conciliacion_egreso_ingreso=0;
