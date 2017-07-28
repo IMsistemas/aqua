@@ -76,6 +76,7 @@ class DepartamentoController extends Controller
         } else {
             $cargo = new Departamento();
             $cargo->namedepartamento = $request->input('namedepartamento');
+            $cargo->centrocosto = $request->input('centrocosto');
 
             if ($cargo->save()) {
                 return response()->json(['success' => true]);

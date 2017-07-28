@@ -34,6 +34,7 @@ app.controller('departamentosController', function($scope, $http, API_URL) {
             case 'add':
                 $scope.form_title = "Nuevo Departamento";
                 $scope.nombrecargo = '';
+                $scope.centrocosto = "false";
                 $('#modalActionCargo').modal('show');
 
                 break;
@@ -54,8 +55,15 @@ app.controller('departamentosController', function($scope, $http, API_URL) {
 
     $scope.Save = function (){
 
+        var centrocosto = false;
+
+        if ($scope.centrocosto === "true") {
+            centrocosto = true;
+        }
+
         var data = {
-            namedepartamento: $scope.nombrecargo
+            namedepartamento: $scope.nombrecargo,
+            centrocosto: centrocosto
         };
 
         switch ( $scope.modalstate) {

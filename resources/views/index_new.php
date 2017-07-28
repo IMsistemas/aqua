@@ -97,6 +97,7 @@
                                     <li role="separator" class="divider"></li>
 
                                     <li id="permiso_5"><a href="#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
+                                    <li id="permiso_5"><a href="#" ng-click="toModuloConciliacion();">Conciliacion</a></li>
 
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes Contabilidad</a>
@@ -410,6 +411,7 @@
     <script src="<?= asset('app/controllers/depreciacionActivosFijosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cobroServicioController.js') ?>"></script>
     <script src="<?= asset('app/controllers/rolPagoController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/ConciliacionController.js') ?>"></script>
 
     </body>
 </html>

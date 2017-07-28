@@ -84,6 +84,17 @@
                                 <span class="help-block error"
                                       ng-show="formCargo.nombrecargo.$invalid && formCargo.nombrecargo.$error.maxlength">La longitud máxima es de 150 caracteres</span>
                             </div>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Centro de Costo: </span>
+                                    <select class="form-control" name="centrocosto" id="centrocosto" ng-model="centrocosto">
+                                        <option value="false">NO</option>
+                                        <option value="true">SI</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
