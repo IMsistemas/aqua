@@ -94,6 +94,7 @@ app.controller('ConciliacionC', function($scope, $http, API_URL) {
 
 
                     $scope.aux_balance_inicial=$scope.aux_data_conciliacion.balanceinicial;
+                   $scope.aux_balance_inicial=(parseFloat($scope.aux_balance_inicial)==0)?"0.000":parseFloat($scope.aux_balance_inicial);
                     $scope.aux_balance_inicial=$scope.aux_balance_inicial.toFixed(4);
 
                     $scope.aux_balance_final=$scope.aux_data_conciliacion.balancefinal;
