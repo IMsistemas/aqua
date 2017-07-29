@@ -265,6 +265,28 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     }
 
+                    //--------------------------------------------------------------
+
+                    $scope.historial = [];
+
+                    var longitud_h = item.empleado_registrosalarial.length;
+
+                    if (longitud_h > 0) {
+
+                        for (var x = 0; x < longitud_h; x++) {
+
+                            var h = {
+                                idempleado_registrosalarial: item.empleado_registrosalarial[x].idempleado_registrosalarial,
+                                fechainicio: item.empleado_registrosalarial[x].fecha,
+                                salario: item.empleado_registrosalarial[x].salario,
+                                observacion: item.empleado_registrosalarial[x].observacion
+                            };
+
+                            $scope.historial.push(h);
+                        }
+
+                    }
+
                     $('#modalAction').modal('show');
 
                 });

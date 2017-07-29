@@ -7,6 +7,7 @@ use App\Modelos\Nomina\Cargo;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\Nomina\Empleado;
 use App\Modelos\Nomina\EmpleadoCargaFamiliar;
+use App\Modelos\Nomina\EmpleadoRegistroSalarial;
 use App\Modelos\Persona;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class EmpleadoController extends Controller
         $cargo = $filter->cargo;
         $employee = null;
 
-        $employees = Empleado::with('empleado_cargafamiliar')
+        $employees = Empleado::with('empleado_cargafamiliar', 'empleado_registrosalarial')
                                 ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
                                 ->join('departamento', 'departamento.iddepartamento', '=', 'empleado.iddepartamento')
                                 ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
@@ -236,6 +237,27 @@ class EmpleadoController extends Controller
 
                     }
 
+                    $salarios = $request->input('historialsalario');
+
+                    if (count($salarios) > 0) {
+
+                        foreach ($salarios as $element) {
+
+                            $sueldo = new EmpleadoRegistroSalarial();
+
+                            $sueldo->observacion = $element['observacion'];
+                            $sueldo->salario = $element['salario'];
+                            $sueldo->fecha = $element['fechainicio'];
+                            $sueldo->idempleado = $empleado->idempleado;
+
+                            if ($sueldo->save() == false) {
+                                return response()->json(['success' => false]);
+                            }
+
+                        }
+
+                    }
+
                     return response()->json(['success' => true]);
 
                 } else {
@@ -339,7 +361,28 @@ class EmpleadoController extends Controller
 
                 }
 
-                //$resultSalario =
+                $resultSalario = EmpleadoRegistroSalarial::where('idempleado', $id)->delete();
+
+                $salarios = $request->input('historialsalario');
+
+                if (count($salarios) > 0) {
+
+                    foreach ($salarios as $element) {
+
+                        $sueldo = new EmpleadoRegistroSalarial();
+
+                        $sueldo->observacion = $element['observacion'];
+                        $sueldo->salario = $element['salario'];
+                        $sueldo->fecha = $element['fechainicio'];
+                        $sueldo->idempleado = $empleado->idempleado;
+
+                        if ($sueldo->save() == false) {
+                            return response()->json(['success' => false]);
+                        }
+
+                    }
+
+                }
 
                 return response()->json(['success' => true]);
 
