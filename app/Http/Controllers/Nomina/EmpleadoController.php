@@ -220,8 +220,7 @@ class EmpleadoController extends Controller
 
                 if ($empleado->save()) {
 
-
-                    $familiares = $request->input('familiar');
+                    $familiares = $request->input('familiares');
 
                     if (count($familiares) > 0) {
 

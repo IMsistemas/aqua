@@ -287,7 +287,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
         $('.datepicker').datetimepicker({
             locale: 'es',
-            format: 'DD/MM/YYYY'
+            format: 'YYYY-MM-DD'
         });
 
     };
