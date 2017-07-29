@@ -157,6 +157,13 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.cuenta_employee = '';
                     $scope.select_cuenta = null;
 
+                    $scope.familiares = [];
+
+                    $scope.fechanacimiento = '';
+                    $scope.estadocivil = '';
+                    $scope.genero = '';
+                    $scope.codigo = '';
+
                     $scope.form_title = "Ingresar Nuevo Colaborador";
 
                     $scope.url_foto = 'img/empleado.png';
