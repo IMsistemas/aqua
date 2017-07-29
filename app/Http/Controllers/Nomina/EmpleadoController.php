@@ -6,6 +6,7 @@ use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\Cargo;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\Nomina\Empleado;
+use App\Modelos\Nomina\EmpleadoCargaFamiliar;
 use App\Modelos\Persona;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
 use Carbon\Carbon;
@@ -224,10 +225,22 @@ class EmpleadoController extends Controller
 
                     if (count($familiares) > 0) {
 
+                        foreach ($familiares as $element) {
 
+                            $familiar = new EmpleadoCargaFamiliar();
+
+                            $familiar->nombreapellidos = $element['nombreapellidos'];
+                            $familiar->parentesco = $element['parentesco'];
+                            $familiar->fechanacimiento = $element['fechanacimiento'];
+                            $familiar->idempleado = $empleado->idempleado;
+
+                            if ($familiar->save() == false) {
+                                return response()->json(['success' => false]);
+                            }
+
+                        }
 
                     }
-
 
                     return response()->json(['success' => true]);
 
