@@ -8,6 +8,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
     $scope.id = 0;
 
     $scope.familiares = [];
+    $scope.historial = [];
 
     $scope.select_cuenta = null;
 
@@ -158,6 +159,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.select_cuenta = null;
 
                     $scope.familiares = [];
+                    $scope.historial = [];
 
                     $scope.fechanacimiento = '';
                     $scope.estadocivil = '';
@@ -316,10 +318,35 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     };
 
+    $scope.createRowHistory = function () {
+
+        var item = {
+            idempleado_registrosalarial: 0,
+            fechainicio: '',
+            salario: '',
+            observacion: ''
+        };
+
+        $scope.historial.push(item);
+
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD'
+        });
+
+    };
+
     $scope.deleteItem=function (item) {
 
         var posicion = $scope.familiares.indexOf(item);
         $scope.familiares.splice(posicion,1);
+
+    };
+
+    $scope.deleteHistorial=function (item) {
+
+        var posicion = $scope.historial.indexOf(item);
+        $scope.historial.splice(posicion,1);
 
     };
 
@@ -397,7 +424,8 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             estadocivil: $scope.estadocivil,
             genero: $scope.genero,
 
-            familiares: $scope.familiares
+            familiares: $scope.familiares,
+            historialsalario: $scope.historial
 
             //cuentacontable: $scope.select_cuenta.idplancuenta
         };

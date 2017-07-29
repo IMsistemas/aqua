@@ -339,6 +339,8 @@ class EmpleadoController extends Controller
 
                 }
 
+                //$resultSalario =
+
                 return response()->json(['success' => true]);
 
             } else {
