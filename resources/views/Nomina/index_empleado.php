@@ -402,24 +402,38 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="cargaf">
 
+                                        <div class="col-xs-12" style="margin-top: 5px;">
+                                            <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="createRowFamily()">
+                                                Agregar Familiar <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                                            </button>
+                                        </div>
+
                                         <div class="col-xs-12" style="font-size: 12px !important; margin-top: 5px;">
 
                                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                                 <thead class="bg-primary">
                                                 <tr>
+                                                    <th>NO.</th>
                                                     <th>NOMBRE Y APELLIDOS</th>
                                                     <th>PARENTESCO</th>
-                                                    <th>FECHA NAC.</th>
+                                                    <th>FECHA NACIMIENTO</th>
                                                     <th style="width: 5%;"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-repeat="family in familiares" ng-cloak >
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{$index + 1}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-danger" ng-click=""
+                                                        <input type="text" class="form-control" ng-model="family.nombreapellidos" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" ng-model="family.parentesco" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="datepicker form-control" ng-model="family.fechanacimiento" />
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger" ng-click="deleteItem(family)"
                                                                 data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                         </button>

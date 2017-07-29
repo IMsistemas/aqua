@@ -218,7 +218,19 @@ class EmpleadoController extends Controller
                 }
 
                 if ($empleado->save()) {
+
+
+                    $familiares = $request->input('familiar');
+
+                    if (count($familiares) > 0) {
+
+
+
+                    }
+
+
                     return response()->json(['success' => true]);
+
                 } else {
                     return response()->json(['success' => false]);
                 }

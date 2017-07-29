@@ -7,6 +7,8 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
     $scope.idpersona_edit = 0;
     $scope.id = 0;
 
+    $scope.familiares = [];
+
     $scope.select_cuenta = null;
 
     $scope.objectPerson = {
@@ -272,6 +274,31 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
         }
     };
 
+    $scope.createRowFamily = function () {
+
+        var item = {
+            idfamiliar: 0,
+            nombreapellidos: '',
+            parentesco: '',
+            fechanacimiento: ''
+        };
+
+        $scope.familiares.push(item);
+
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'DD/MM/YYYY'
+        });
+
+    };
+
+    $scope.deleteItem=function (item) {
+
+        var posicion = $scope.familiares.indexOf(item);
+        $scope.familiares.splice(posicion,1);
+
+    };
+
     $scope.focusOut = function () {
 
         if ($scope.documentoidentidadempleado !== null && $scope.documentoidentidadempleado !== '' && $scope.documentoidentidadempleado !== undefined) {
@@ -344,7 +371,10 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             codigoempleado: $scope.codigo,
             fechanacimiento: $scope.fechanacimiento,
             estadocivil: $scope.estadocivil,
-            genero: $scope.genero
+            genero: $scope.genero,
+
+            familiares: $scope.familiares
+
             //cuentacontable: $scope.select_cuenta.idplancuenta
         };
 
