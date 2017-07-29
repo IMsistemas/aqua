@@ -387,8 +387,8 @@
                             <th style="width: 5%">CANTIDAD</th>
                             <th style="width: 8%">PRECIO UNIT.</th>
                             <th style="width: 5%">DESC(%)</th>
-                            <th style="width: 5%">IVA</th>
-                            <th style="width: 5%">ICE</th>
+                            <th style="width: 6%">IVA</th>
+                            <th style="width: 6%">ICE</th>
                             <th style="width: 10%">TOTAL</th>
                             <th style="width: 4%"></th>
                         </tr>
@@ -427,7 +427,8 @@
                         </td>
                         <td>
                             <select class="form-control" ng-modal="item.idcentrocosto">
-                                <option ng-repeat="elem in listcentrocostos" value="{{elem.id}}">{{elem.label}}</option>
+                                <option value="0">-- Seleccione --</option>
+                                <option ng-repeat="elem in listcentrocostos" value="{{elem.iddepartamento}}" >{{elem.namedepartamento}}</option>
                             </select>
                         </td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>

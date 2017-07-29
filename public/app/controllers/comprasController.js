@@ -109,14 +109,17 @@
 
                 console.log(response);
 
-                var longitud = response.length;
+                /*var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
 
                 for (var i = 0; i < longitud; i++){
                     array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
                 }
 
-                $scope.listcentrocostos = array_temp;
+                $scope.listcentrocostos = array_temp;*/
+
+                $scope.listcentrocostos = response;
+
                 //$scope.paispago = array_temp[0].id
 
             });
@@ -234,19 +237,6 @@
         };
 
         $scope.createRow = function () {
-
-            /*var object_row = {
-                cantidad:0,
-                descuento:0,
-                precioUnitario:0,
-                iva: $scope.ivaPro,
-                ice:0,
-                total:0,
-                productoObj:null,
-                testObj:null
-            };
-
-            ($scope.list_item).push(object_row);*/
 
             var item = {
                 productoObj:null,
@@ -843,9 +833,13 @@
                 idtransaccion:''
             };
             //--Documento de venta
+
             //--Items venta
             var ItemsVenta=[];
             for(x=0;x<$scope.items.length;x++){
+
+                console.log($scope.items);
+
 
                 var bodega = null;
 
@@ -869,7 +863,8 @@
                     cantidad:parseInt($scope.items[x].cantidad),
                     preciounitario: parseFloat($scope.items[x].precioU),
                     descuento: $scope.items[x].descuento,
-                    preciototal:(parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4)
+                    preciototal:(parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+                    centrocosto: $scope.items[x].idcentrocosto
                 };
                 ItemsVenta.push(itemsdocventa);
             }
@@ -908,11 +903,11 @@
                 //dataComprobante: dataComprobante
             };
 
-            console.log(ItemsVenta);
+            //console.log(ItemsVenta);
 
 
 
-            var transaccionfactura={
+            /*var transaccionfactura={
                 datos:JSON.stringify(transaccion_venta_full)
                 //datos: transaccion_venta_full
             };
@@ -943,7 +938,7 @@
             })
             .error(function(err){
                 console.log(err);
-            });
+            });*/
         };
 
         $scope.confirmSave = function() {
