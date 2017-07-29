@@ -102,30 +102,15 @@
 
         };
 
-
         $scope.getCentrosCostos = function () {
 
             $http.get(API_URL + 'DocumentoCompras/getCentrosCostos').success(function(response){
 
-                console.log(response);
-
-                /*var longitud = response.length;
-                var array_temp = [{label: '-- Seleccione --', id: 0}];
-
-                for (var i = 0; i < longitud; i++){
-                    array_temp.push({label: response[i].namedepartamento, id: response[i].iddepartamento})
-                }
-
-                $scope.listcentrocostos = array_temp;*/
-
                 $scope.listcentrocostos = response;
-
-                //$scope.paispago = array_temp[0].id
 
             });
 
         };
-
 
         $scope.getPaisPagoComprobante = function () {
 
@@ -1168,7 +1153,7 @@
 
         $scope.sumar = function(v1,v2){
             return $scope.roundToTwo(parseFloat(v1) + parseFloat(v2)).toFixed(2);
-        }
+        };
 
         $scope.formatoFecha = function(fecha){
             if(typeof fecha != 'undefined'){
@@ -1179,11 +1164,11 @@
                 return '';
             }
 
-        }
+        };
 
         $scope.roundToTwo = function (num) {
             return +(Math.round(num + "e+2")  + "e-2");
-        }
+        };
 
         $scope.InicioList=function() {
             $scope.listado =  true;
@@ -1205,6 +1190,18 @@
                 productoObj:null,
                 testObj:null
             }
+
+            /*var item = {
+                productoObj:null,
+                idcentrocosto: 0,
+                cantidad:0,
+                precioU:0,
+                descuento:0,
+                iva :0,
+                ice:0,
+                total:0
+            };
+            $scope.items.push(item);*/
         };
 
         $scope.showModalConfirm = function(item){
@@ -1225,8 +1222,6 @@
         $scope.activeForm = function (action) {
 
             if (action == 0) {
-
-
 
                 $scope.listado = false;
 
