@@ -164,7 +164,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.fechanacimiento = '';
                     $scope.estadocivil = '';
                     $scope.genero = '';
-                    $scope.codigo = '';
+                    //$scope.codigo = '';
 
                     $scope.form_title = "Ingresar Nuevo Colaborador";
 
@@ -223,7 +223,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.fechanacimiento = item.fechanacimiento;
                     $scope.estadocivil = item.estadocivil;
                     $scope.genero = item.genero;
-                    $scope.codigo = item.codigoempleado;
+                    //$scope.codigo = item.codigoempleado;
 
                     console.log(item);
 
@@ -441,7 +441,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             departamento: $scope.departamento,
             tipoidentificacion: $scope.tipoidentificacion,
 
-            codigoempleado: $scope.codigo,
+            //codigoempleado: $scope.codigo,
             fechanacimiento: $scope.fechanacimiento,
             estadocivil: $scope.estadocivil,
             genero: $scope.genero,

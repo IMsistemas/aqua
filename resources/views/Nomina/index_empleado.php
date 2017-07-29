@@ -100,12 +100,12 @@
                         </div>
 
                         <div class="col-md-3 col-xs-12">
-                            <div class="input-group">
+                            <!--<div class="input-group">
                                 <span class="input-group-addon">Codigo:</span>
                                 <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-required="true">
                             </div>
                             <span class="help-block error"
-                                  ng-show="formEmployee.codigo.$invalid && formEmployee.codigo.$touched">El Codigo es requerido</span>
+                                  ng-show="formEmployee.codigo.$invalid && formEmployee.codigo.$touched">El Codigo es requerido</span>-->
                         </div>
 
                         <div class="col-md-4 col-xs-12">

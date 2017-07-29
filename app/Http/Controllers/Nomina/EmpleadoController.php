@@ -208,7 +208,7 @@ class EmpleadoController extends Controller
                 $empleado->fechanacimiento = $request->input('fechanacimiento');
                 $empleado->estadocivil = $request->input('estadocivil');
                 $empleado->genero = $request->input('genero');
-                $empleado->codigoempleado = $request->input('codigoempleado');
+                //$empleado->codigoempleado = $request->input('codigoempleado');
 
                 if ($url_file != null) {
                     $empleado->rutafoto = $url_file;
@@ -330,7 +330,7 @@ class EmpleadoController extends Controller
             $empleado->fechanacimiento = $request->input('fechanacimiento');
             $empleado->estadocivil = $request->input('estadocivil');
             $empleado->genero = $request->input('genero');
-            $empleado->codigoempleado = $request->input('codigoempleado');
+            //$empleado->codigoempleado = $request->input('codigoempleado');
 
             if ($url_file != null) {
                 $empleado->rutafoto = $url_file;
