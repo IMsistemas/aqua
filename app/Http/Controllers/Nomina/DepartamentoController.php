@@ -117,13 +117,19 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $count = Departamento::where('namedepartamento', $request->input('namedepartamento'))->count();
+        $count = Departamento::where('namedepartamento', $request->input('namedepartamento'))
+                                ->where('iddepartamento', '!=', $id)->count();
 
         if ($count > 0) {
+
             return response()->json(['success' => false, 'repeat' => true]);
+
         } else {
+
             $departamento = Departamento::find($id);
             $departamento->namedepartamento = $request->input('namedepartamento');
+            $departamento->centrocosto = $request->input('centrocosto');
+
             if ($departamento->save()) {
                 return response()->json(['success' => true]);
             } else {
