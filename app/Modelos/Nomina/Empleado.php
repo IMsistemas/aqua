@@ -30,6 +30,11 @@ class Empleado extends Model
         return $this->hasMany('App\Modelos\Contabilidad\Cont_Bodega', 'idempleado');
     }
 
+    public function empleado_cargafamiliar()
+    {
+        return $this->hasMany('App\Modelos\Nomina\EmpleadoCargaFamiliar', 'idempleado');
+    }
+
     public function persona()
     {
         return $this->belongsTo('App\Modelos\Persona', 'idpersona');

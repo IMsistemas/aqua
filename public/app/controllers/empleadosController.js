@@ -225,8 +225,6 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                         $scope.url_foto = 'img/empleado.png';
                     }
 
-
-
                     $scope.cuenta_employee = item.concepto;
 
                     $scope.tipoidentificacion = item.idtipoidentificacion;
@@ -238,10 +236,29 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     $scope.select_cuenta = objectPlan;
 
+                    $scope.familiares = [];
+
+                    var longitud_f = item.empleado_cargafamiliar.length;
+
+                    if (longitud_f > 0) {
+
+                        for (var j = 0; j < longitud_f; j++) {
+
+                            var e = {
+                                idfamiliar: item.empleado_cargafamiliar[j].idempleado_cargafamiliar,
+                                nombreapellidos: item.empleado_cargafamiliar[j].nombreapellidos,
+                                parentesco: item.empleado_cargafamiliar[j].parentesco,
+                                fechanacimiento: item.empleado_cargafamiliar[j].fechanacimiento
+                            };
+
+                            $scope.familiares.push(e);
+                        }
+
+                    }
+
                     $('#modalAction').modal('show');
 
                 });
-
 
                 break;
 

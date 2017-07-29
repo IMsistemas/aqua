@@ -42,7 +42,8 @@ class EmpleadoController extends Controller
         $cargo = $filter->cargo;
         $employee = null;
 
-        $employees = Empleado::join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+        $employees = Empleado::with('empleado_cargafamiliar')
+                                ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
                                 ->join('departamento', 'departamento.iddepartamento', '=', 'empleado.iddepartamento')
                                 ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
                                 //->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'empleado.idplancuenta')
