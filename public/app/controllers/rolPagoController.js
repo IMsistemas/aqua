@@ -133,251 +133,269 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.getConceptos = function () {
 
-        $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
 
-            console.log(response);
+        $http.get(API_URL + 'rolPago/getExistsConfig').success(function(response){
 
-            var long = response.length;
-            for(var i = 0; i < long; i++){
+            if (response == 0) {
 
-                //------------------------------------------------------------------------------------------------------
-                var contabilidad = {
-                    value: '',
-                    writable: true,
-                    enumerable: true,
-                    configurable: true
-                };
-                Object.defineProperty(response[i], 'contabilidad', contabilidad);
+                $scope.message_info = 'Para realizar el rol de Pago debe llenar la Configuracion de Nómina en Configuración de Sistema...';
 
-                if (response[i].confignomina.length !== 0) {
-                    response[i].contabilidad = $scope.searchCuenta(response[i].confignomina[0].cuenta);
-                }
+                $('#modalMessageInfo').modal('show');
 
-                //------------------------------------------------------------------------------------------------------
+            } else {
 
-                if(response[i].id_categoriapago === 1 && response[i].grupo === '1'){
+                $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
 
-                    var cantidad = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                    console.log(response);
 
-                    var valor1 = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valor', valor1);
+                    var long = response.length;
+                    for(var i = 0; i < long; i++){
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valort', valorTotal);
+                        //------------------------------------------------------------------------------------------------------
+                        var contabilidad = {
+                            value: '',
+                            writable: true,
+                            enumerable: true,
+                            configurable: true
+                        };
+                        Object.defineProperty(response[i], 'contabilidad', contabilidad);
 
-                    var observacion = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'obs', observacion);
+                        if (response[i].confignomina.length !== 0) {
+                            response[i].contabilidad = $scope.searchCuenta(response[i].confignomina[0].cuenta);
+                        }
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                        //------------------------------------------------------------------------------------------------------
 
-                    $scope.ingresos1.push(response[i]);
+                        if(response[i].id_categoriapago === 1 && response[i].grupo === '1'){
 
-                }
-                if(response[i].id_categoriapago === 1 && response[i].grupo === '2'){
+                            var cantidad = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
 
-                    var cantidad = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                            var valor1 = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valor', valor1);
 
-                    var valor1 = {
-                        value: response[i].confignomina[0].value_imp,
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valor', valor1);
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valort', valorTotal);
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'obs', observacion);
 
-                    var observacion = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'obs', observacion);
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                            $scope.ingresos1.push(response[i]);
 
-                    $scope.ingresos2.push(response[i]);
+                        }
+                        if(response[i].id_categoriapago === 1 && response[i].grupo === '2'){
 
-                }
-                if(response[i].id_categoriapago === 1 && response[i].grupo === '3'){
+                            var cantidad = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
 
-                    var cantidad = {
-                        value: "20%",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                            var valor1 = {
+                                value: response[i].confignomina[0].value_imp,
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valor', valor1);
 
-                    var valormax = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valormax', valormax);
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'obs', observacion);
 
-                    var observacion = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'obs', observacion);
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                            $scope.ingresos2.push(response[i]);
 
-                    $scope.ingresos3.push(response[i]);
+                        }
+                        if(response[i].id_categoriapago === 1 && response[i].grupo === '3'){
 
-                }
-                if(response[i].id_categoriapago === 2){
+                            var cantidad = {
+                                value: "20%",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
 
-                    var cantidad = {
-                        value: response[i].confignomina[0].value_imp,
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                            var valormax = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valormax', valormax);
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'obs', observacion);
 
-                    $scope.beneficios.push(response[i]);
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
 
-                }
-                if(response[i].id_categoriapago === 3){
+                            $scope.ingresos3.push(response[i]);
 
-                    var cantidad = {
-                        value: response[i].confignomina[0].value_imp,
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                        }
+                        if(response[i].id_categoriapago === 2){
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            var cantidad = {
+                                value: response[i].confignomina[0].value_imp,
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
-                    $scope.deducciones.push(response[i]);
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
 
-                }
-                if(response[i].id_categoriapago === 4){
-                    var cantidad = {
-                        value: response[i].confignomina[0].value_imp,
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cant', cantidad);
+                            $scope.beneficios.push(response[i]);
 
-                    var valorTotal = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                        }
+                        if(response[i].id_categoriapago === 3){
 
-                    var cuenta = {
-                        value: "",
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'cuenta', cuenta);
+                            var cantidad = {
+                                value: response[i].confignomina[0].value_imp,
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
 
-                    $scope.benefadicionales.push(response[i]);
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
-                }
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
+
+                            $scope.deducciones.push(response[i]);
+
+                        }
+                        if(response[i].id_categoriapago === 4){
+                            var cantidad = {
+                                value: response[i].confignomina[0].value_imp,
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cant', cantidad);
+
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                            var cuenta = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cuenta', cuenta);
+
+                            $scope.benefadicionales.push(response[i]);
+
+                        }
+                    }
+                });
+
             }
+
         });
+
+
+
     };
 
     $scope.fillDataEmpleado = function () {
@@ -574,35 +592,130 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         var registroC = [];
 
-        var empleado = {
-            idplancuenta: $scope.ProveedorContable.idplancuenta,
-            concepto: $scope.ProveedorContable.concepto,
-            controlhaber: $scope.ProveedorContable.controlhaber,
-            tipocuenta: $scope.ProveedorContable.tipocuenta,
-            Debe: $scope.t_total,
-            Haber: 0,
-            Descipcion: descripcion
-        };
 
-        registroC.push(proveedor);
+        //--------------------------------------CONCEPTOS INGRESO 2-----------------------------------------------------
 
-        var longitud_item = $scope.itemretencion.length;
+        var longitud_ingreso2 = $scope.ingresos2.length;
 
-        for (var i = 0; i < longitud_item; i++) {
+        for (var i = 0; i < longitud_ingreso2; i++) {
 
-            var item = {
-                idplancuenta: $scope.itemretencion[i].contabilidad.idplancuenta,
-                concepto: $scope.itemretencion[i].contabilidad.concepto,
-                controlhaber: $scope.itemretencion[i].contabilidad.controlhaber,
-                tipocuenta: $scope.itemretencion[i].contabilidad.tipocuenta,
-                Haber: (parseFloat($scope.itemretencion[i].valor)).toFixed(4),
-                Debe: 0,
-                Descipcion: descripcion
-            };
+            if ($scope.ingresos2[i].valorTotal !== '') {
+                var item = {
+                    idplancuenta: $scope.ingresos2[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.ingresos2[i].contabilidad[0].concepto,
+                    controlhaber: $scope.ingresos2[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.ingresos2[i].contabilidad[0].tipocuenta,
+                    Haber: (parseFloat($scope.ingresos2[i].valorTotal)).toFixed(4),
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
 
-            registroC.push(item);
+                registroC.push(item);
+            }
 
         }
+
+        //--------------------------------------CONCEPTOS INGRESO 3-----------------------------------------------------
+
+        var longitud_ingreso3 = $scope.ingresos3.length;
+
+        for (var i = 0; i < longitud_ingreso3; i++) {
+
+            if ($scope.ingresos3[i].valorTotal !== '') {
+                var item0 = {
+                    idplancuenta: $scope.ingresos3[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.ingresos3[i].contabilidad[0].concepto,
+                    controlhaber: $scope.ingresos3[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.ingresos3[i].contabilidad[0].tipocuenta,
+                    Haber: (parseFloat($scope.ingresos3[i].valorTotal)).toFixed(4),
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(item0);
+            }
+
+        }
+
+        //--------------------------------------CONCEPTOS BENEFICIOS----------------------------------------------------
+
+        var longitud_beneficios = $scope.beneficios.length;
+
+        for (var i = 0; i < longitud_beneficios; i++) {
+
+            if ($scope.beneficios[i].valorTotal !== '') {
+                var item1 = {
+                    idplancuenta: $scope.beneficios[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.beneficios[i].contabilidad[0].concepto,
+                    controlhaber: $scope.beneficios[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.beneficios[i].contabilidad[0].tipocuenta,
+                    Haber: (parseFloat($scope.beneficios[i].valorTotal)).toFixed(4),
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(item1);
+            }
+
+        }
+
+        //--------------------------------------CONCEPTOS DEDUCCIONES---------------------------------------------------
+
+        var longitud_deducciones= $scope.deducciones.length;
+
+        for (var i = 0; i < longitud_deducciones; i++) {
+
+            if ($scope.deducciones[i].valorTotal !== '') {
+                var item2 = {
+                    idplancuenta: $scope.deducciones[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.deducciones[i].contabilidad[0].concepto,
+                    controlhaber: $scope.deducciones[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.deducciones[i].contabilidad[0].tipocuenta,
+                    Haber: (parseFloat($scope.deducciones[i].valorTotal)).toFixed(4),
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(item2);
+            }
+
+        }
+
+        //--------------------------------------CONCEPTOS BENEFICIOS ADICIONALES----------------------------------------
+
+        var longitud_benefadicionales= $scope.benefadicionales.length;
+
+        for (var i = 0; i < longitud_benefadicionales; i++) {
+
+            if ($scope.benefadicionales[i].valorTotal !== '') {
+                var item_a = {
+                    idplancuenta: $scope.benefadicionales[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.benefadicionales[i].contabilidad[0].concepto,
+                    controlhaber: $scope.benefadicionales[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.benefadicionales[i].contabilidad[0].tipocuenta,
+                    Haber: (parseFloat($scope.benefadicionales[i].valorTotal)).toFixed(4),
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
+
+                var item_b = {
+                    idplancuenta: $scope.benefadicionales[i].contabilidad[1].idplancuenta,
+                    concepto: $scope.benefadicionales[i].contabilidad[1].concepto,
+                    controlhaber: $scope.benefadicionales[i].contabilidad[1].controlhaber,
+                    tipocuenta: $scope.benefadicionales[i].contabilidad[1].tipocuenta,
+                    Debe: (parseFloat($scope.benefadicionales[i].valorTotal)).toFixed(4),
+                    Haber: 0,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(item_a);
+                registroC.push(item_b);
+            }
+
+        }
+
+
+
 
         var Contabilidad={
             transaccion: transaccion,

@@ -521,6 +521,7 @@ Route::get('rolPago/getConceptos', 'Nomina\RolPagoController@getConceptos');
 Route::get('rolPago/getDataEmpleado/{id}', 'Nomina\RolPagoController@getDataEmpleado');
 Route::get('rolPago/getEmpleados', 'Nomina\RolPagoController@getEmpleados');
 Route::get('rolPago/getDataEmpresa', 'Nomina\RolPagoController@getDataEmpresa');
+Route::get('rolPago/getExistsConfig', 'Nomina\RolPagoController@getExistsConfig');
 Route::resource('rolPago', 'Nomina\RolPagoController');
 
 Route::get('configNomina/getConceptos', 'ConfiguracionSystem\ConfigNominaController@getConceptos');

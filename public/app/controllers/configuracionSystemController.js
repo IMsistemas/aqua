@@ -574,12 +574,18 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                         idcuenta.value = cuentas[0].idplancuenta;
                     }
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
+
                     var impuesto = {
-                        value: response[i].confignomina[0].value_imp,
+                        value: '',
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+
+                    if (response[i].confignomina.length !== 0) {
+                        impuesto.value = response[i].confignomina[0].value_imp;
+                    }
+
                     Object.defineProperty(response[i], 'impuesto', impuesto);
 
                     var idcuenta1 = {
@@ -618,11 +624,16 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
 
                     var impuesto = {
-                        value: response[i].confignomina[0].value_imp,
+                        value: '',
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+
+                    if (response[i].confignomina.length !== 0) {
+                        impuesto.value = response[i].confignomina[0].value_imp;
+                    }
+
                     Object.defineProperty(response[i], 'impuesto', impuesto);
                     var idcuenta1 = {
                         value: "",
@@ -658,12 +669,18 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     }
 
                     Object.defineProperty(response[i], 'idcuenta', idcuenta);
+
                     var impuesto = {
-                        value: response[i].confignomina[0].value_imp,
+                        value: '',
                         writable: true,
                         enumerable: true,
                         configurable: true
                     };
+
+                    if (response[i].confignomina.length !== 0) {
+                        impuesto.value = response[i].confignomina[0].value_imp;
+                    }
+
                     Object.defineProperty(response[i], 'impuesto', impuesto);
 
                     var cuenta1 = {

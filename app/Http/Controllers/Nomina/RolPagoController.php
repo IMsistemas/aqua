@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Modelos\Configuracion\ConfigNomina;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\ConceptoPago;
 use App\Modelos\Nomina\Empleado;
@@ -38,6 +39,11 @@ class RolPagoController extends Controller
             ->select('empleado.*', 'cargo.namecargo', 'persona.*' )
             ->where('persona.idpersona', $id)->get();
 
+    }
+
+    public function getExistsConfig()
+    {
+        return ConfigNomina::count();
     }
 
     public function getCuentas()
