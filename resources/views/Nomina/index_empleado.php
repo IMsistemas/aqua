@@ -63,10 +63,10 @@
                                 data-toggle="tooltip" data-placement="bottom" title="Editar" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-info" ng-click="toggle('registry', empleado)"
+                        <!--<button type="button" class="btn btn-info" ng-click="toggle('registry', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Registro Salario" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </button>
+                        </button>-->
                         <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -633,7 +633,7 @@
                                     <tr ng-repeat="item in sueldos | filter:searchRegistroSalario" ng-cloak >
                                         <td>{{$index + 1}}</td>
                                         <td>{{item.mes}}</td>
-                                        <td>{{item.sueldo}}</td>
+                                        <td class="text-right">{{item.sueldo}}</td>
                                     </tr>
                                 </tbody>
                             </table>

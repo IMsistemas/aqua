@@ -330,9 +330,63 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                 var idempleado = item.idempleado;
 
+                $scope.sueldos = [];
+
                 $http.get(API_URL + 'empleado/getRegistroSalario/' + idempleado).success(function(response){
 
                     console.log(response);
+
+                    var longitud = response.length;
+
+                    if (longitud > 0) {
+
+                        var first_date = response[0].fecha;
+                        var first_year = (response[0].fecha).split('-')[0];
+
+                        var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+
+                        for (var x = 0; x < 12; x++) {
+
+                            var item = {
+                                mes: '',
+                                year: '',
+                                sueldo: 0
+                            };
+
+                            var flag = false;
+
+                            for (var i = 0; i < longitud; i++) {
+
+                                if ((parseInt((response[i].fecha).split('-')[1]) - 1) === x) {
+                                    item.sueldo = parseFloat(response[i].salario).toFixed(2);
+                                    item.mes = meses[parseInt((response[i].fecha).split('-')[1]) - 1];
+                                    item.year = (response[i].fecha).split('-')[0];
+                                    flag = true;
+                                }
+
+                            }
+
+                            if (flag === false) {
+
+                                if ($scope.sueldos[$scope.sueldos.length - 1] !== undefined) {
+                                    item.sueldo = $scope.sueldos[$scope.sueldos.length - 1].sueldo;
+                                } else item.sueldo = '';
+
+                                item.mes = meses[x];
+                                item.year = first_year;
+                            }
+
+                            $scope.sueldos.push(item);
+
+                        }
+
+                        console.log($scope.sueldos);
+
+                    }
+
+                    $('#modalRegistrySueldos').modal('show');
 
                 });
 
