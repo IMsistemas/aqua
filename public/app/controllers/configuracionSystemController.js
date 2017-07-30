@@ -1061,7 +1061,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.selectCuenta = function () {
         var selected = $scope.select_cuenta;
         if(field !== ''){
-            if(field.id_categoriapago !== 4){
+            /*if(field.id_categoriapago !== 4){
                 field.cuenta = selected.concepto;
                 field.idcuenta = selected.idplancuenta;
             }else if (field.cuenta === ''){
@@ -1070,7 +1070,28 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             }else{
                 field.cuenta1 = selected.concepto;
                 field.idcuenta1 = selected.idplancuenta;
+            }*/
+
+            if(field.id_categoriapago !== 4){
+
+                field.cuenta = selected.concepto;
+                field.idcuenta = selected.idplancuenta;
+
+            } else {
+
+                if (field.cuenta === ''){
+
+                    field.cuenta = selected.concepto;
+                    field.idcuenta = selected.idplancuenta;
+
+                } else {
+
+                    field.cuenta1 = selected.concepto;
+                    field.idcuenta1 = selected.idplancuenta;
+
+                }
             }
+
 
             $('#modalPlanCuenta').modal('hide');
         }else{

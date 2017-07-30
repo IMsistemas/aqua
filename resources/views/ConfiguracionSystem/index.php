@@ -582,7 +582,7 @@
                                                         <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
                                                                readonly>
                                                         <span class="input-group-btn" role="group">
-                                                <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuentaItem(item)">
+                                                <button type="button" class="btn btn-info"  ng-click="showPlanCuentaItem(item)">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                                     </span>
@@ -595,7 +595,7 @@
                                                             <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
                                                                    readonly>
                                                             <span class="input-group-btn" role="group">
-                                                            <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuentaItem(item)">
+                                                            <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item)">
                                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                             </button>
                                                             </span>
@@ -606,7 +606,7 @@
                                                             <input type="text" class="form-control" ng-model="item.cuenta1" placeholder="Cuenta Contable"
                                                                    readonly>
                                                             <span class="input-group-btn" role="group">
-                                                            <button type="button" class="btn btn-info" id="btn-costo-nc" ng-click="showPlanCuentaItem(item)">
+                                                            <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item)">
                                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                             </button>
                                                             </span>
