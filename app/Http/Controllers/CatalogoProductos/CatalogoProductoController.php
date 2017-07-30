@@ -337,7 +337,7 @@ class CatalogoProductoController extends Controller
     	return  Cont_CatalogItem::orderBy('codigoproducto', 'asc')
     	->join('cont_categoria', 'cont_categoria.idcategoria', '=', 'cont_catalogitem.idcategoria')
         ->join('cont_claseitem', 'cont_claseitem.idclaseitem', '=', 'cont_catalogitem.idclaseitem')
-    	->whereRaw("( idcatalogitem::text like '%" . $filter->text . "%' or nombreproducto ILIKE '%" . $filter->text . "%') ".$filterCategorias)
+    	->whereRaw("( codigoproducto::text like '%" . $filter->text . "%' or nombreproducto ILIKE '%" . $filter->text . "%') ".$filterCategorias)
     	->get();
     }
 

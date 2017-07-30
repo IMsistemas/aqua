@@ -18,10 +18,10 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         
         if($scope.search != undefined && $scope.search != ''){
             t_search = $scope.search;
-            var last = t_search.substring(t_search.length -1);            
+            /*var last = t_search.substring(t_search.length -1);
             if (last === "."){ 
             	t_search = t_search.substring(0,t_search.length -1);
-            }
+            }*/
         }
         
         if($scope.lineaFiltro != undefined && $scope.lineaFiltro != ''){
@@ -37,6 +37,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             linId: t_lineaId,
             subId: t_subId
         };
+
+        console.log(filter);
+
         $scope.productos = [];
         $http.get(API_URL + 'catalogoproducto/getCatalogoProductos/' + JSON.stringify(filter)).success(function(response){
 
