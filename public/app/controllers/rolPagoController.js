@@ -25,6 +25,9 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.listCuentas = [];
 
+    $scope.cuentaLiquida = '';
+    $scope.dataSueldoBasico = '';
+
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
 
@@ -133,7 +136,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.getConceptos = function () {
 
-
         $http.get(API_URL + 'rolPago/getExistsConfig').success(function(response){
 
             if (response == 0) {
@@ -147,6 +149,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                 $http.get(API_URL + 'rolPago/getConceptos').success(function(response){
 
                     console.log(response);
+
+                    $scope.dataSueldoBasico = response[0];
 
                     var long = response.length;
                     for(var i = 0; i < long; i++){
@@ -394,8 +398,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         });
 
-
-
     };
 
     $scope.fillDataEmpleado = function () {
@@ -557,6 +559,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.selectCuenta = function () {
         var selected = $scope.select_cuenta;
 
+        $scope.cuentaLiquida = $scope.select_cuenta;
+
         var fieldconcepto = $parse($scope.fieldconcepto);
         fieldconcepto.assign($scope, selected.concepto);
 
@@ -573,9 +577,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.save = function () {
 
-        var conceptos = $scope.ingresos1.concat($scope.ingresos2, $scope.ingresos3, $scope.beneficios, $scope.deducciones, $scope.benefadicionales);
-
-        console.log(conceptos);
 
         /*
          * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
@@ -671,8 +672,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                     concepto: $scope.deducciones[i].contabilidad[0].concepto,
                     controlhaber: $scope.deducciones[i].contabilidad[0].controlhaber,
                     tipocuenta: $scope.deducciones[i].contabilidad[0].tipocuenta,
-                    Haber: (parseFloat($scope.deducciones[i].valorTotal)).toFixed(4),
-                    Debe: 0,
+                    Debe: (parseFloat($scope.deducciones[i].valorTotal)).toFixed(4),
+                    Haber: 0,
                     Descipcion: descripcion
                 };
 
@@ -715,6 +716,34 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         }
 
 
+        //--------------------------------------SUELDO LIQUIDO----------------------------------------------------------
+
+        var sueldoliquido = {
+            idplancuenta: $scope.cuentaLiquida.idplancuenta,
+            concepto: $scope.cuentaLiquida.concepto,
+            controlhaber: $scope.cuentaLiquida.controlhaber,
+            tipocuenta: $scope.cuentaLiquida.tipocuenta,
+            Debe: (parseFloat($scope.sueldoliquido)).toFixed(4),
+            Haber: 0,
+            Descipcion: descripcion
+        };
+
+        registroC.push(sueldoliquido);
+
+        //--------------------------------------SUELDO BASICO-----------------------------------------------------------
+
+        var sueldobasico = {
+            idplancuenta: $scope.dataSueldoBasico.contabilidad[0].idplancuenta,
+            concepto: $scope.dataSueldoBasico.contabilidad[0].concepto,
+            controlhaber: $scope.dataSueldoBasico.contabilidad[0].controlhaber,
+            tipocuenta: $scope.dataSueldoBasico.contabilidad[0].tipocuenta,
+            Haber: (parseFloat($scope.valortotalIngreso)).toFixed(4),
+            Debe: 0,
+            Descipcion: descripcion
+        };
+
+        registroC.push(sueldobasico);
+
 
 
         var Contabilidad={
@@ -722,10 +751,41 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             registro: registroC
         };
 
+        console.log(Contabilidad);
+
+
+
 
         /*
          * -------------------------FIN CONTABILIDAD----------------------------------------------------------------
          */
+
+        var data_full = {
+            dataContabilidad: JSON.stringify(Contabilidad),
+            /*iddocumentocompra: $scope.iddocumentocompra,
+            retenciones: $scope.itemretencion,
+            dataComprobante: dataComprobante*/
+        };
+
+        console.log(data_full);
+
+        var url = API_URL + 'rolPago';
+
+        $http.post(url, data_full).success(function (response) {
+            if (response.success === true) {
+
+                //$scope.idretencion = response.idretencioncompra;
+                //$('#btn-export').show();
+                $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
+                $('#modalMessage').modal('show');
+                //$scope.hideModalMessage();
+
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar guardar las Retenciones...';
+                $('#modalMessageError').modal('show');
+            }
+        }).error(function (res) {});
 
     };
 

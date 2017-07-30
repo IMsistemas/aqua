@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Nomina;
 
+use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Configuracion\ConfigNomina;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\ConceptoPago;
@@ -75,6 +76,18 @@ class RolPagoController extends Controller
 
     public function show($id)
     {
+
+    }
+
+    public function store(Request $request)
+    {
+
+        $dataContabilidad = json_decode($request->input('dataContabilidad'));
+
+        $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
+
+        return response()->json(['success' => true, 'idtransaccion' => $id_transaccion]);
+
 
     }
 
