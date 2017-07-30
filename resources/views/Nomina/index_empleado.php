@@ -44,7 +44,7 @@
                     <th>CARGO</th>
                     <th>TELEFONO</th>
                     <th>CELULAR</th>
-                    <th style="width: 160px;">ACCIONES</th>
+                    <th style="width: 14%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,6 +61,10 @@
                         </button>
                         <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
                                 data-toggle="tooltip" data-placement="bottom" title="Editar" >
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-info" ng-click="toggle('registry', empleado)"
+                                data-toggle="tooltip" data-placement="bottom" title="Registro Salario" >
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
                         <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado)"
@@ -594,6 +598,52 @@
                             <span style="font-weight: bold">Salario: </span>{{salario_employee}}
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalRegistrySueldos">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registro de Salario Empleado</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <div class="form-group  has-feedback">
+                                <input type="text" class="form-control" id="" ng-model="searchRegistroSalario" placeholder="BUSCAR..." >
+                                <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                    <tr>
+                                        <th style="width: 4%;">NO</th>
+                                        <th>MES</th>
+                                        <th style="width: 10%;">SALARIO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in sueldos | filter:searchRegistroSalario" ng-cloak >
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{item.mes}}</td>
+                                        <td>{{item.sueldo}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -326,6 +326,18 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                 break;
 
+            case 'registry':
+
+                var idempleado = item.idempleado;
+
+                $http.get(API_URL + 'empleado/getRegistroSalario/' + idempleado).success(function(response){
+
+                    console.log(response);
+
+                });
+
+                break;
+
             default:
                 break;
         }

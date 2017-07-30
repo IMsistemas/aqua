@@ -113,6 +113,11 @@ class EmpleadoController extends Controller
             ')->orderBy('jerarquia', 'asc')->get();
     }
 
+    public function getRegistroSalario($id)
+    {
+        return EmpleadoRegistroSalarial::where('idempleado', $id)->orderBy('fecha', 'asc')->get();
+    }
+
     /**
      * Obtener y devolver los numeros de identificacion que concuerden con el parametro a buscar
      *
@@ -305,7 +310,7 @@ class EmpleadoController extends Controller
             }
         }
 
-        $persona = Persona::find($request->input('idpersona_edit'));;
+        $persona = Persona::find($request->input('idpersona_edit'));
         $persona->lastnamepersona = $request->input('apellidos');
         $persona->namepersona = $request->input('nombres');
         $persona->numdocidentific = $request->input('documentoidentidadempleado');
