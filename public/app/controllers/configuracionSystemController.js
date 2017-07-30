@@ -721,27 +721,67 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.saveConfigNomina = function () {
 
-        var data = {
-            conceptos: $scope.conceptos
-        };
+        var flag = true;
 
-        $http.post(API_URL + '/configNomina', data ).success(function (response) {
+        var longitud = $scope.conceptos.length;
 
-            if (response.success == true) {
-                $scope.initLoad();
-                $scope.message = 'Se guardaron correctamente los datos de la Configuración de Nomina';
-                $('#modalMessage').modal('show');
-                $scope.hideModalMessage();
+        for (var i = 0; i < longitud; i++) {
+
+            if ($scope.conceptos[i].id_categoriapago === 4){
+
+                if ($scope.conceptos[i].idcuenta === ''){
+                    flag = $scope.conceptos[i].name_conceptospago;
+                }
+
+                if ($scope.conceptos[i].idcuenta1 === ''){
+                    flag = $scope.conceptos[i].name_conceptospago;
+                }
+
             } else {
-                $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la Configuración de Nomina';
-                $('#modalMessageError').modal('show');
-                $scope.hideModalMessage();
+
+                if ($scope.conceptos[i].idcuenta === ''){
+                    flag = $scope.conceptos[i].name_conceptospago;
+                }
+
             }
 
+        }
 
-        }).error(function (res) {
+        if (flag === true) {
 
-        });
+            var data = {
+                conceptos: $scope.conceptos
+            };
+
+            console.log(data);
+
+            $http.post(API_URL + '/configNomina', data ).success(function (response) {
+
+                if (response.success == true) {
+                    $scope.initLoad();
+                    $scope.message = 'Se guardaron correctamente los datos de la Configuración de Nomina';
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al actualizar los datos de la Configuración de Nomina';
+                    $('#modalMessageError').modal('show');
+                    $scope.hideModalMessage();
+                }
+
+
+            }).error(function (res) {
+
+            });
+
+        } else {
+
+            $scope.message_error = 'Verifique que el concepto: "' + flag + '" esté asociado a una cuenta contable...';
+            $('#modalMessageError').modal('show');
+
+        }
+
+
+
     };
 
     //-----------------------------------------------------------------------------------------------------------------

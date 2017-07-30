@@ -565,63 +565,75 @@
 
                                 </div>
                                 <div class="col-xs-10" style="align-content:center">
-                                    <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                                        <thead class="bg-primary">
-                                        <tr>
-                                            <th>CONCEPTO DE PAGO</th>
-                                            <th style="width: 50%;">ASIGNAR CUENTA</th>
-                                            <th style="width: 15%;">VALOR (IMP. SRI)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="item in conceptos" ng-cloak >
-                                            <td>{{item.name_conceptospago}}</td>
-                                            <td>
-                                                <div ng-show="item.id_categoriapago !== 4" class="col-xs-12" style="padding: 0px">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
-                                                               readonly>
-                                                        <span class="input-group-btn" role="group">
-                                                <button type="button" class="btn btn-info"  ng-click="showPlanCuentaItem(item)">
-                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                </button>
-                                                    </span>
-                                                    </div>
-                                                </div>
 
-                                                <div ng-show="item.id_categoriapago == 4" class="col-xs-12" style="padding: 0px">
-                                                    <div class="col-xs-6" style="margin: 0px; padding: 0px">
+                                    <form class="form-horizontal" name="formNomina" novalidate="">
+
+                                        <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                            <thead class="bg-primary">
+                                                <tr>
+                                                    <th>CONCEPTO DE PAGO</th>
+                                                    <th style="width: 50%;">ASIGNAR CUENTA</th>
+                                                    <th style="width: 15%;">VALOR (IMP. SRI)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="item in conceptos" ng-cloak >
+                                                <td>{{item.name_conceptospago}}</td>
+                                                <td>
+                                                    <div ng-show="item.id_categoriapago !== 4" class="col-xs-12" style="padding: 0px">
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
-                                                                   readonly>
+                                                                   readonly required>
                                                             <span class="input-group-btn" role="group">
+                                                                <button type="button" class="btn btn-info"  ng-click="showPlanCuentaItem(item)">
+                                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <span class="help-block error"
+                                                              ng-show="formNomina.nomplancuenta.$invalid && formNomina.nomplancuenta.$touched">Es requerido</span>
+                                                    </div>
+
+                                                    <div ng-show="item.id_categoriapago == 4" class="col-xs-12" style="padding: 0px">
+                                                        <div class="col-xs-6" style="margin: 0px; padding: 0px">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="nomplancuenta" ng-model="item.cuenta" placeholder="Cuenta Contable"
+                                                                       readonly required>
+                                                                <span class="input-group-btn" role="group">
                                                             <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item)">
                                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                             </button>
                                                             </span>
+                                                            </div>
+                                                            <span class="help-block error"
+                                                                  ng-show="formNomina.nomplancuenta.$invalid && formNomina.nomplancuenta.$touched">Es requerido</span>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xs-6" style="margin: 0px; padding: 0px">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" ng-model="item.cuenta1" placeholder="Cuenta Contable"
-                                                                   readonly>
-                                                            <span class="input-group-btn" role="group">
+                                                        <div class="col-xs-6 error" style="margin: 0px; padding: 0px">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="nomplancuenta" ng-model="item.cuenta1" placeholder="Cuenta Contable"
+                                                                       readonly required>
+                                                                <span class="input-group-btn" role="group">
                                                             <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item)">
                                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                             </button>
                                                             </span>
+                                                            </div>
+                                                            <span class="help-block error"
+                                                                  ng-show="formNomina.nomplancuenta.$invalid && formNomina.nomplancuenta.$touched">Es requerido</span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control text-right" ng-model="item.impuesto" />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control text-right" ng-model="item.impuesto" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </form>
+
                                 </div>
 
                                 <div class="col-xs-12 text-center" style="margin-top: 5px; margin-bottom: 10px;">
