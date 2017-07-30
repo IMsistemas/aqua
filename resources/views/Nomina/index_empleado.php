@@ -469,7 +469,7 @@
                                                 <tr ng-repeat="elemento in historial" ng-cloak >
                                                     <td>{{$index + 1}}</td>
                                                     <td>
-                                                        <input type="text" class="form-control" ng-model="elemento.salario" />
+                                                        <input type="text" class="form-control" ng-model="elemento.salario" ng-keypress="onlyNumber($event, undefined, undefined)" />
                                                     </td>
                                                     <td>
                                                         <input type="text" class="datepicker form-control" ng-model="elemento.fechainicio" />

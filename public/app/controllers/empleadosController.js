@@ -1,6 +1,9 @@
 
 app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
+
+
+
     $scope.empleados = [];
     $scope.empleado_del = 0;
     $scope.idpersona = 0;
@@ -132,6 +135,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                 });
 
                 $http.get(API_URL + 'empleado/getTipoIdentificacion').success(function(response){
+
+                    $('.datepicker').datetimepicker({
+                        locale: 'es',
+                        format: 'YYYY-MM-DD'
+                    });
+
                     var longitud = response.length;
                     var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
@@ -349,12 +358,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             observacion: ''
         };
 
-        $scope.historial.push(item);
-
         $('.datepicker').datetimepicker({
             locale: 'es',
             format: 'YYYY-MM-DD'
         });
+
+        $scope.historial.push(item);
 
     };
 
