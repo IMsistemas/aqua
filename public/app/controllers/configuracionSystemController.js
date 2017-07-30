@@ -7,6 +7,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.conceptos = [];
     $scope.listCuentas = [];
 
+    $scope.btn = null;
+
     var field = '';
 
     $scope.initLoad = function () {
@@ -1062,7 +1064,13 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
-    $scope.showPlanCuentaItem = function (item) {
+    $scope.showPlanCuentaItem = function (item, btn) {
+
+        if (btn !== undefined) {
+            $scope.btn = btn
+        } else {
+            $scope.btn = null;
+        }
 
         field = item;
 
@@ -1099,6 +1107,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     };
 
     $scope.selectCuenta = function () {
+
         var selected = $scope.select_cuenta;
         if(field !== ''){
             /*if(field.id_categoriapago !== 4){
@@ -1119,7 +1128,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
             } else {
 
-                if (field.cuenta === ''){
+                /*if (field.cuenta === ''){
 
                     field.cuenta = selected.concepto;
                     field.idcuenta = selected.idplancuenta;
@@ -1129,6 +1138,14 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     field.cuenta1 = selected.concepto;
                     field.idcuenta1 = selected.idplancuenta;
 
+                }*/
+
+                if ($scope.btn === 'btn_cuenta') {
+                    field.cuenta = selected.concepto;
+                    field.idcuenta = selected.idplancuenta;
+                } else {
+                    field.cuenta1 = selected.concepto;
+                    field.idcuenta1 = selected.idplancuenta;
                 }
             }
 
