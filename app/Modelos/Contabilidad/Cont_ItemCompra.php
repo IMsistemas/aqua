@@ -23,7 +23,8 @@ class Cont_ItemCompra extends Model
         'cantidad',
         'preciounitario',
         'descuento',
-        'preciototal'
+        'preciototal',
+        'iddepartamento'
     ];
 
     public function cont_documentocompra()
