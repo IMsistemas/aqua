@@ -7,6 +7,7 @@ use App\Modelos\Configuracion\ConfigNomina;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\ConceptoPago;
 use App\Modelos\Nomina\Empleado;
+use App\Modelos\Nomina\RolPago;
 use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
@@ -74,6 +75,16 @@ class RolPagoController extends Controller
             ')->orderBy('jerarquia', 'asc')->get();
     }
 
+    public function getRoles()
+    {
+        //SELECT * FROM rrhh_rolpago WHERE id_conceptopago = 2 AND fecha = (SELECT MAX(fecha)  FROM rrhh_rolpago)
+
+        return RolPago::join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
+            ->join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
+            ->where('id_conceptopago', 2)
+                            ->whereRaw('fecha = (SELECT MAX(fecha) FROM rrhh_rolpago)')->get();
+    }
+
     public function show($id)
     {
 
@@ -86,7 +97,37 @@ class RolPagoController extends Controller
 
         $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
 
-        return response()->json(['success' => true, 'idtransaccion' => $id_transaccion]);
+        //return response()->json(['success' => true, 'idtransaccion' => $id_transaccion]);
+
+        if($id_transaccion !== 0){
+            $roles = $request->input('dataRoldePago');
+
+            foreach ($roles as $item) {
+                $rol = new RolPago();
+                $rol->id_empleado = $request->input('idempleado');
+                $rol->id_conceptopago = $item['id_conceptospago'];
+                $rol->diascalculo = $request->input('diascalculo');
+                if($item['cantidad'] === ""){
+                    $rol->valormedida = 0;
+                }else $rol->valormedida = $item['cantidad'];
+
+                if($item['valorTotal'] === ""){
+                    $rol->valormoneda = 0;
+                }else $rol->valormoneda = $item['valorTotal'];
+
+                $rol->horascalculo = $request->input('horascalculo');
+                $rol->observacion = $item['observacion'];
+                $rol->fecha = $request->input('fecha');
+                $rol->numtransaccion = $id_transaccion;
+
+                if ($rol->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+            }
+            if ($rol->save() == true) {
+                return response()->json(['success' => true]);
+            }
+        }
 
 
     }

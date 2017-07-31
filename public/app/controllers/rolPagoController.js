@@ -41,6 +41,12 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.initLoad = function () {
 
+        $('.datepicker').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD',
+            ignoreReadonly: true
+        });
+
         $scope.getCuentas();
 
         $scope.getDataEmpresa();
@@ -178,7 +184,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valor1 = {
                                 value: "",
@@ -186,7 +192,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'valor', valor1);
+                            Object.defineProperty(response[i], 'valor1', valor1);
 
                             var valorTotal = {
                                 value: "",
@@ -194,7 +200,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'valort', valorTotal);
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
 
                             var observacion = {
                                 value: "",
@@ -202,7 +208,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'obs', observacion);
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -223,7 +229,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valor1 = {
                                 value: response[i].confignomina[0].value_imp,
@@ -231,7 +237,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'valor', valor1);
+                            Object.defineProperty(response[i], 'valor1', valor1);
 
                             var valorTotal = {
                                 value: "",
@@ -247,7 +253,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'obs', observacion);
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -268,7 +274,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valormax = {
                                 value: "",
@@ -292,7 +298,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'obs', observacion);
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -313,7 +319,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valorTotal = {
                                 value: "",
@@ -322,6 +328,14 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 configurable: true
                             };
                             Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -342,7 +356,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valorTotal = {
                                 value: "",
@@ -351,6 +365,14 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 configurable: true
                             };
                             Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -370,7 +392,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 enumerable: true,
                                 configurable: true
                             };
-                            Object.defineProperty(response[i], 'cant', cantidad);
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
 
                             var valorTotal = {
                                 value: "",
@@ -379,6 +401,14 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                                 configurable: true
                             };
                             Object.defineProperty(response[i], 'valorTotal', valorTotal);
+
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'observacion', observacion);
 
                             var cuenta = {
                                 value: "",
@@ -403,7 +433,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.fillDataEmpleado = function () {
 
         $scope.ingresos1.forEach(function(item){
-            item.cant
+            item.cantidad
         });
 
         var idempleado = $scope.empleado;
@@ -427,7 +457,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         dc = $scope.diascalculo;
         hc = $scope.horascalculo;
         baseiess = $scope.baseiess;
-        x = (item.cant !== "") ?  item.cant : 0;
+        x = (item.cantidad !== "") ?  item.cantidad : 0;
         aux_max = 0;
 
         if(item.formulavalor !== '' && item.formulavalor !== null){
@@ -444,9 +474,9 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.valortotalCantidad = 0;
 
         $scope.ingresos1.forEach(function(item){
-            if (item.cant !== undefined && item.cant !== "" && item.valorTotal !== undefined ) {
+            if (item.cantidad !== undefined && item.cantidad !== "" && item.valorTotal !== undefined ) {
 
-                $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) + parseInt(item.cant);
+                $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) + parseInt(item.cantidad);
 
                 if ($scope.valortotalCantidad <= 30){
                     if(item.aportaiess === true){
@@ -457,9 +487,9 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                     $scope.valortotalIngresoBruto = (parseFloat($scope.valortotalIngreso)).toFixed(2);
                 }
                 else{
-                    $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt(item.cant);
-                    item.cant = "";
-                    item.valor = "";
+                    $scope.valortotalCantidad = parseInt($scope.valortotalCantidad) - parseInt(item.cantidad);
+                    item.cantidad = "";
+                    item.valor1 = "";
                     item.valorTotal = "";
 
                     $scope.message_error = "El numero de dias introducidos no puede ser mayor al numero de dias calculos."
@@ -471,7 +501,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $scope.ingresos2.forEach(function(item){
 
-            if (item.cant !== undefined && item.valorTotal !== "") {
+            if (item.cantidad !== undefined && item.valorTotal !== "") {
                 if(item.aportaiess === true){
                     $scope.baseiess = parseFloat($scope.baseiess) + parseFloat(item.valorTotal);
                 }
@@ -481,7 +511,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $scope.ingresos3.forEach(function(item){
             var aux_total=(item.valorTotal.toString()!=="")?parseFloat(item.valorTotal):0;
-            var aux_porcentaje=parseFloat(item.cant);
+            var aux_porcentaje=parseFloat(item.cantidad);
             var aux_valor_porcentaje=(($scope.baseiess*aux_porcentaje)/100);
             item.valormax = parseFloat(aux_valor_porcentaje).toFixed(2);
             if (item.valorTotal !== undefined && item.valorTotal !== ""){
@@ -498,7 +528,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.total_deducciones = 0;
         $scope.ingresoBruto_deducciones = $scope.valortotalIngresoBruto;
         $scope.deducciones.forEach(function (item) {
-            x = (item.cant !== "") ?  item.cant : 0;
+            x = (item.cantidad !== "") ?  item.cantidad : 0;
             baseiess = parseFloat($scope.baseiess);
             if(item.formulatotal !== '' && item.formulatotal !== null){
                 var total = parseFloat(eval(item.formulatotal));
@@ -514,7 +544,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.total_beneficios = 0;
         $scope.ingresoBruto_beneficios = $scope.ingresoBruto_deducciones;
         $scope.beneficios.forEach(function (item) {
-            x = (item.cant !== "") ?  item.cant : 0;
+            x = (item.cantidad !== "") ?  item.cantidad : 0;
             baseiess = parseFloat($scope.baseiess);
             if(item.formulatotal !== '' && item.formulatotal !== null){
                 var total = parseFloat(eval(item.formulatotal));
@@ -530,7 +560,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.total_adicionales = 0;
         $scope.sueldoliquido  = $scope.ingresoBruto_beneficios;
         $scope.benefadicionales.forEach(function (item) {
-            x = (item.cant !== "") ?  item.cant : 0;
+            x = (item.cantidad !== "") ?  item.cantidad : 0;
             baseiess = parseFloat($scope.baseiess);
             if(item.formulatotal !== '' && item.formulatotal !== null){
                 var total = parseFloat(eval(item.formulatotal));
@@ -576,16 +606,15 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     };
 
     $scope.save = function () {
-
-
         /*
          * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
          */
 
         var descripcion = 'ROL PAGO A: ';
+        var fecha = $('#fecha').val();
 
         var transaccion = {
-            fecha: $('#fecha').val(),
+            fecha: fecha,
             idtipotransaccion: 12,
             numcomprobante: 1,
             descripcion: descripcion
@@ -751,20 +780,20 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             registro: registroC
         };
 
-        console.log(Contabilidad);
-
-
-
-
         /*
-         * -------------------------FIN CONTABILIDAD----------------------------------------------------------------
+         * -------------------------FIN CONTABILIDAD E INICIO DEL ROL DE PAGO----------------------------------------------------------------
          */
+
+        $scope.dataRoldePago = $scope.ingresos1.concat($scope.ingresos2.concat($scope.ingresos3.concat($scope.beneficios.concat($scope.deducciones.concat($scope.benefadicionales)))));
+        console.log($scope.dataRoldePago);
 
         var data_full = {
             dataContabilidad: JSON.stringify(Contabilidad),
-            /*iddocumentocompra: $scope.iddocumentocompra,
-            retenciones: $scope.itemretencion,
-            dataComprobante: dataComprobante*/
+            idempleado: $scope.empleado,
+            diascalculo: $scope.diascalculo,
+            horascalculo: $scope.horascalculo,
+            fecha: fecha,
+            dataRoldePago: $scope.dataRoldePago
         };
 
         console.log(data_full);
@@ -776,13 +805,13 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
                 //$scope.idretencion = response.idretencioncompra;
                 //$('#btn-export').show();
-                $scope.message = 'Se insertó correctamente las Retenciones seleccionadas...';
+                $scope.message = 'Se insertó correctamente el rol de pago del trabajador seleccionado...';
                 $('#modalMessage').modal('show');
                 //$scope.hideModalMessage();
 
 
             } else {
-                $scope.message_error = 'Ha ocurrido un error al intentar guardar las Retenciones...';
+                $scope.message_error = 'Ha ocurrido un error al intentar guardar el rol de pago...';
                 $('#modalMessageError').modal('show');
             }
         }).error(function (res) {});
