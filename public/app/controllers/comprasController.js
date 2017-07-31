@@ -596,6 +596,11 @@
             $scope.CalculaValores();
         };
 
+
+        $scope.temp = function (a) {
+            console.log(a);
+        };
+
         $scope.save = function(){
 
             $('#btn-save0').prop('disabled', true);
@@ -888,7 +893,7 @@
                 //dataComprobante: dataComprobante
             };
 
-            //console.log(ItemsVenta);
+            console.log(ItemsVenta);
 
 
 

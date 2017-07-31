@@ -426,9 +426,9 @@
                             <label class="control-label" ng-show="read">{{  item.producto.nombreproducto }}</label>-->
                         </td>
                         <td>
-                            <select class="form-control" ng-modal="item.idcentrocosto">
+                            <select class="form-control" ng-model="item.idcentrocosto">
                                 <option ng-value="0">-- Seleccione --</option>
-                                <option ng-repeat="elem in listcentrocostos" ng-value="{{elem.iddepartamento}}" >{{elem.namedepartamento}}</option>
+                                <option ng-repeat="elem in listcentrocostos" value="{{elem.iddepartamento}}" >{{elem.namedepartamento}}</option>
                             </select>
                         </td>
                         <td><input type="text" class="form-control text-right" ng-keyup="CalculaValores();ValidaProducto()" ng-model="item.cantidad"/></td>
