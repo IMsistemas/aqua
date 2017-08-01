@@ -231,7 +231,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_propina_compra_h = response[i].idconfiguracionsystem;
                     $scope.propina_compra_h = parseInt(response[i].optionvalue);
                     $scope.propina_compra = response[i].concepto;
-                } else if (response[i].optionname == 'SRI_RETEN_IVA_COMPRA') {
+                } /*else if (response[i].optionname == 'SRI_RETEN_IVA_COMPRA') {
                     $scope.id_retiva_compra_h = response[i].idconfiguracionsystem;
                     $scope.retiva_compra_h = parseInt(response[i].optionvalue);
                     $scope.retiva_compra = response[i].concepto;
@@ -239,7 +239,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_retrenta_compra_h = response[i].idconfiguracionsystem;
                     $scope.retrenta_compra_h = parseInt(response[i].optionvalue);
                     $scope.retrenta_compra = response[i].concepto;
-                }
+                }*/
             }
 
         });
@@ -259,23 +259,24 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             optionvalue: $scope.irbpnr_compra_h
         };
 
-        var retiva = {
+        /*var retiva = {
             idconfiguracionsystem: $scope.id_retiva_compra_h,
             optionvalue: $scope.retiva_compra_h
-        };
+        };*/
 
         var propina = {
             idconfiguracionsystem: $scope.id_propina_compra_h,
             optionvalue: $scope.propina_compra_h
         };
 
-        var retrenta = {
+        /*var retrenta = {
             idconfiguracionsystem: $scope.id_retrenta_compra_h,
             optionvalue: $scope.retrenta_compra_h
-        };
+        };*/
 
         var data = {
-            array_data: [iva, ice, irbpnr, retiva, propina, retrenta]
+            //array_data: [iva, ice, irbpnr, retiva, propina, retrenta]
+            array_data: [iva, ice, irbpnr, propina]
         };
 
         $http.put(API_URL + '/configuracion/updateConfigCompra/0', data ).success(function (response) {
@@ -325,7 +326,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_costo_venta_h = response[i].idconfiguracionsystem;
                     $scope.costo_venta_h = parseInt(response[i].optionvalue);
                     $scope.costo_venta = response[i].concepto;
-                } else if (response[i].optionname == 'SRI_RETEN_IVA_VENTA') {
+                } /*else if (response[i].optionname == 'SRI_RETEN_IVA_VENTA') {
                     $scope.id_retiva_venta_h = response[i].idconfiguracionsystem;
                     $scope.retiva_venta_h = parseInt(response[i].optionvalue);
                     $scope.retiva_venta = response[i].concepto;
@@ -333,7 +334,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_retrenta_venta_h = response[i].idconfiguracionsystem;
                     $scope.retrenta_venta_h = parseInt(response[i].optionvalue);
                     $scope.retrenta_venta = response[i].concepto;
-                }
+                }*/
             }
 
         });
@@ -353,20 +354,21 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             optionvalue: $scope.irbpnr_venta_h
         };
 
-        var retiva = {
-            idconfiguracionsystem: $scope.id_retiva_venta_h,
-            optionvalue: $scope.retiva_venta_h
-        };
 
         var propina = {
             idconfiguracionsystem: $scope.id_propina_venta_h,
             optionvalue: $scope.propina_venta_h
         };
 
-        var retrenta = {
+        /*var retrenta = {
             idconfiguracionsystem: $scope.id_retrenta_venta_h,
             optionvalue: $scope.retrenta_venta_h
         };
+
+        var retiva = {
+            idconfiguracionsystem: $scope.id_retiva_venta_h,
+            optionvalue: $scope.retiva_venta_h
+        };*/
 
         var costo = {
             idconfiguracionsystem: $scope.id_costo_venta_h,
@@ -374,7 +376,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         };
 
         var data = {
-            array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
+            //array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
+            array_data: [iva, ice, irbpnr, propina, costo]
         };
 
         $http.put(API_URL + '/configuracion/updateConfigVenta/0', data ).success(function (response) {
@@ -419,7 +422,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_propina_nc_h = response[i].idconfiguracionsystem;
                     $scope.propina_nc_h = parseInt(response[i].optionvalue);
                     $scope.propina_nc = response[i].concepto;
-                } else if (response[i].optionname == 'SRI_RETEN_IVA_NC') {
+                } /*else if (response[i].optionname == 'SRI_RETEN_IVA_NC') {
                     $scope.id_retiva_nc_h = response[i].idconfiguracionsystem;
                     $scope.retiva_nc_h = parseInt(response[i].optionvalue);
                     $scope.retiva_nc = response[i].concepto;
@@ -427,7 +430,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.id_retrenta_nc_h = response[i].idconfiguracionsystem;
                     $scope.retrenta_nc_h = parseInt(response[i].optionvalue);
                     $scope.retrenta_nc = response[i].concepto;
-                } else if (response[i].optionname == 'CONT_COSTO_NC') {
+                }*/ else if (response[i].optionname == 'CONT_COSTO_NC') {
                     $scope.id_costo_nc_h = response[i].idconfiguracionsystem;
                     $scope.costo_nc_h = parseInt(response[i].optionvalue);
                     $scope.costo_nc = response[i].concepto;
@@ -451,20 +454,20 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             optionvalue: $scope.irbpnr_nc_h
         };
 
-        var retiva = {
-            idconfiguracionsystem: $scope.id_retiva_nc_h,
-            optionvalue: $scope.retiva_nc_h
-        };
-
         var propina = {
             idconfiguracionsystem: $scope.id_propina_nc_h,
             optionvalue: $scope.propina_nc_h
         };
 
-        var retrenta = {
+        /*var retrenta = {
             idconfiguracionsystem: $scope.id_retrenta_nc_h,
             optionvalue: $scope.retrenta_nc_h
         };
+
+        var retiva = {
+            idconfiguracionsystem: $scope.id_retiva_nc_h,
+            optionvalue: $scope.retiva_nc_h
+        };*/
 
         var costo = {
             idconfiguracionsystem: $scope.id_costo_nc_h,
@@ -472,7 +475,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         };
 
         var data = {
-            array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
+            //array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
+            array_data: [iva, ice, irbpnr, propina, costo]
         };
 
         $http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {
