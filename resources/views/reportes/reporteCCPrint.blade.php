@@ -172,7 +172,7 @@
 						<td class="text-left"><?= $elem->detalle_item ?></td>
 						<td class="text-right"><?= $elem->cantidad ?></td>
 						<td class="text-right"><?= '$ ' . number_format($elem->preciounitario, 4, '.', ',') ?></td>
-						<td class="text-right"><?= '$ ' . number_format($elem->preciototal, 2, '.', ',') ?></td>
+						<td class="text-right"><?= '$ ' . number_format($elem->preciototal, 4, '.', ',') ?></td>
 
 					</tr>
 				<?php  endforeach;?>
