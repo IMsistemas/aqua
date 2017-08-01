@@ -168,7 +168,8 @@ $scope.cmb_estado_fact="A";
 	            $scope.Configuracion=response;
 	            console.log(response);
                 for(x=0;x<$scope.Configuracion.length;x++){
-                    if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
+
+                    /*if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
                         if($scope.Configuracion[x].IdContable==null){
                             $scope.Valida="1";
                             QuitarClasesMensaje();
@@ -176,7 +177,8 @@ $scope.cmb_estado_fact="A";
                             $("#msm").modal("show");
                             $scope.Mensaje="La venta necesita la cuenta contable de COSTO DE VENTA"; 
                         }
-                    }
+                    }*/
+
                     if($scope.Configuracion[x].Descripcion=="CONT_IVA_VENTA"){
                         if($scope.Configuracion[x].IdContable==null){
                             $scope.Valida="1";
