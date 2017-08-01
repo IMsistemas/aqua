@@ -104,6 +104,7 @@
                                         <ul class="dropdown-menu">
                                             <li id="permiso_37"><a tabindex="-1" href="#" ng-click="toModuloBalance();">Estados Financieros</a></li>
                                             <li id="permiso_38"><a tabindex="-1" href="#" ng-click="toModuloReporteVentasBalance();">Ventas / Balance</a></li>
+                                            <li id="permiso_"><a tabindex="-1" href="#" ng-click="toModuloReporteCentroCosto();">Centro de Costo</a></li>
                                         </ul>
                                     </li>
 
@@ -404,6 +405,7 @@
     <script src="<?= asset('app/controllers/reporteCompraController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteNCController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/reporteCCController.js') ?>"></script>
     <script src="<?= asset('app/controllers/Balances.js') ?>"></script>
     <script src="<?= asset('app/controllers/reporteVentaBalanceController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>

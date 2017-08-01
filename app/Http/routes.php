@@ -457,6 +457,14 @@ Route::get('reporteventabalance/getVentasBalance', 'Reportes\ReporteVentaBalance
 Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController');
 
 /*
+ * --------------------------------MODULO REPORTE CENTRO COSTO----------------------------------------------------------
+ */
+
+Route::get('reportecentrocosto/reporte_print/{filtro}', 'Reportes\ReporteCCController@reporte_print');
+Route::get('reportecentrocosto/getCentroCosto', 'Reportes\ReporteCCController@getCentroCosto');
+Route::resource('reportecentrocosto', 'Reportes\ReporteCCController');
+
+/*
  * --------------------------------MODULO ACTIVO FIJO-------------------------------------------------------------------
  */
 
