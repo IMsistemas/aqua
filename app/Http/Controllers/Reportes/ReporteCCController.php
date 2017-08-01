@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_ItemCompra;
 use App\Modelos\Nomina\Departamento;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -107,5 +108,26 @@ class ReporteCCController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function reporte_print($parametro)
+    {
+        ini_set('max_execution_time', 300);
+
+        $filtro = json_decode($parametro);
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('reportes.reporteCCPrint', compact('filtro','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('reportCC_' . $today);
     }
 }

@@ -8,6 +8,7 @@ $(function () {
 
 app.controller('reporteCCController',  function($scope, $http, API_URL) {
 
+    $scope.centrocosto = [];
 
     $scope.initLoad = function(){
 
@@ -160,12 +161,13 @@ app.controller('reporteCCController',  function($scope, $http, API_URL) {
 
         var filtro = {
             FechaI: $('#fechainicio').val(),
-            FechaF: $('#fechafin').val()
+            FechaF: $('#fechafin').val(),
+            centroscosto: $scope.centrocosto
         };
 
-        var accion = API_URL + 'reportecompra/reporte_print/' + JSON.stringify(filtro);
+        var accion = API_URL + 'reportecentrocosto/reporte_print/' + JSON.stringify(filtro);
 
-        $('#WPrint_head').html('Reporte Facturación de Compras');
+        $('#WPrint_head').html('Reporte Centro de Costos');
 
         $('#WPrint').modal('show');
 
