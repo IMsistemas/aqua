@@ -479,7 +479,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             array_data: [iva, ice, irbpnr, propina, costo]
         };
 
-        $http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {
+        console.log(data);
+
+        /*$http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {
 
             if (response.success == true) {
                 $scope.initLoad();
@@ -494,7 +496,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         }).error(function (res) {
 
-        });
+        });*/
     };
 
     //-----------------------------------------------------------------------------------------------------------------
