@@ -541,7 +541,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $http.get(API_URL + 'configNomina/getConceptos').success(function(response){
 
-            console.log(response);
+            //console.log(response);
 
             var longitud = response.length;
             var array_temp = [];
@@ -553,7 +553,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     if (response[i].confignomina[0].cuenta !== null && response[i].confignomina[0].cuenta !== '') {
                         cuentas = $scope.searchCuenta(response[i].confignomina[0].cuenta);
 
-                        console.log(cuentas);
+                        //console.log(cuentas);
                     }
                 }
 
@@ -1088,6 +1088,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.showPlanCuenta = function (field_concepto, field_id) {
 
+        field = '';
+
         $scope.fieldconcepto = field_concepto;
         $scope.fieldid = field_id;
 
@@ -1113,6 +1115,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     $scope.selectCuenta = function () {
 
         var selected = $scope.select_cuenta;
+
         if(field !== ''){
             /*if(field.id_categoriapago !== 4){
                 field.cuenta = selected.concepto;
@@ -1132,18 +1135,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
             } else {
 
-                /*if (field.cuenta === ''){
-
-                    field.cuenta = selected.concepto;
-                    field.idcuenta = selected.idplancuenta;
-
-                } else {
-
-                    field.cuenta1 = selected.concepto;
-                    field.idcuenta1 = selected.idplancuenta;
-
-                }*/
-
                 if ($scope.btn === 'btn_cuenta') {
                     field.cuenta = selected.concepto;
                     field.idcuenta = selected.idplancuenta;
@@ -1155,6 +1146,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
 
             $('#modalPlanCuenta').modal('hide');
+
         }else{
 
             var fieldconcepto = $parse($scope.fieldconcepto);

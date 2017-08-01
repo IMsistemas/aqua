@@ -585,7 +585,7 @@
                                                             <input type="text" class="form-control" ng-model="item.cuenta" placeholder="Cuenta Contable"
                                                                    readonly required>
                                                             <span class="input-group-btn" role="group">
-                                                                <button type="button" class="btn btn-info"  ng-click="showPlanCuentaItem(item)">
+                                                                <button type="button" id="cuenta_{{$index + 1}}" class="btn btn-info"  ng-click="showPlanCuentaItem(item)">
                                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                                 </button>
                                                             </span>
@@ -600,10 +600,10 @@
                                                                 <input type="text" class="form-control" name="nomplancuenta" ng-model="item.cuenta" placeholder="Cuenta Contable"
                                                                        readonly required>
                                                                 <span class="input-group-btn" role="group">
-                                                            <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item, 'btn_cuenta')">
-                                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                            </button>
-                                                            </span>
+                                                                    <button type="button" id="cuenta_f_{{$index + 1}}" class="btn btn-info" ng-click="showPlanCuentaItem(item, 'btn_cuenta')">
+                                                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </span>
                                                             </div>
                                                             <span class="help-block error"
                                                                   ng-show="formNomina.nomplancuenta.$invalid && formNomina.nomplancuenta.$touched">Es requerido</span>
@@ -613,10 +613,10 @@
                                                                 <input type="text" class="form-control" name="nomplancuenta" ng-model="item.cuenta1" placeholder="Cuenta Contable"
                                                                        readonly required>
                                                                 <span class="input-group-btn" role="group">
-                                                            <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item, 'btn_cuenta1')">
-                                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                            </button>
-                                                            </span>
+                                                                    <button type="button" id="cuenta_t_{{$index + 1}}" class="btn btn-info" ng-click="showPlanCuentaItem(item, 'btn_cuenta1')">
+                                                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </span>
                                                             </div>
                                                             <span class="help-block error"
                                                                   ng-show="formNomina.nomplancuenta.$invalid && formNomina.nomplancuenta.$touched">Es requerido</span>
