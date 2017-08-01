@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_ItemCompra;
+use App\Modelos\Nomina\Departamento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -25,11 +26,21 @@ class ReporteCCController extends Controller
 
         $filter = json_decode($request->get('filter'));
 
-        return  Cont_ItemCompra::join('departamento', 'cont_itemcompra.iddepartamento', '=', 'departamento.iddepartamento')
+        $result = Cont_ItemCompra::join('departamento', 'cont_itemcompra.iddepartamento', '=', 'departamento.iddepartamento')
             ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')
             ->join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
-            ->whereRaw("cont_documentocompra.fecharegistrocompra BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
-            ->get();
+            ->whereRaw("cont_documentocompra.fecharegistrocompra BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'");
+
+        if ($filter->cc != '0') {
+            $result = $result->where('departamento.iddepartamento', $filter->cc);
+        }
+
+        return $result->get();
+    }
+
+    public function getListCC()
+    {
+        return Departamento::where('centrocosto', true)->get();
     }
 
     /**

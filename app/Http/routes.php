@@ -461,6 +461,7 @@ Route::resource('reporteventabalance', 'Reportes\ReporteVentaBalanceController')
  */
 
 Route::get('reportecentrocosto/reporte_print/{filtro}', 'Reportes\ReporteCCController@reporte_print');
+Route::get('reportecentrocosto/getListCC', 'Reportes\ReporteCCController@getListCC');
 Route::get('reportecentrocosto/getCentroCosto', 'Reportes\ReporteCCController@getCentroCosto');
 Route::resource('reportecentrocosto', 'Reportes\ReporteCCController');
 

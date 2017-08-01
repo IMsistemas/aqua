@@ -11,11 +11,16 @@
 
     <div class="col-xs-12" style="margin-top: 5px;">
 
-        <div class="col-sm-4 col-xs-6">
+        <div class="col-sm-2 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad()">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
+        </div>
+
+        <div class="col-md-3 col-xs-3">
+            <select class="form-control" name="searchCC" id="searchCC" ng-model="searchCC"
+                    ng-options="value.id as value.label for value in search_cc" ng-change="initLoad()"></select>
         </div>
 
         <div class="col-sm-3 col-xs-2">
@@ -32,34 +37,35 @@
             </div>
         </div>
 
-        <div class="col-sm-2 col-xs-2">
+        <div class="col-sm-1 col-xs-2">
             <button type="button" class="btn btn-info" ng-click="printReport();">
-                Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
             </button>
         </div>
 
 
-        <div class="col-xs-12" style="font-size: 12px !important;">
+        <div class="col-xs-12" style="font-size: 12px !important;" ng-repeat="element in centrocosto">
 
             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
+                    <tr><th colspan="7">CENTRO DE COSTO: {{element.namedepartamento}}</th></tr>
                     <tr>
                         <th style="width: 5%;">NO.</th>
-                        <th>CENTRO COSTO</th>
                         <th style="width: 12%;">DOCUMENTO</th>
-                        <th style="width: 25%;">ITEM (DETALLE)</th>
+                        <th style="width: 10%;">FECHA</th>
+                        <th>ITEM (DETALLE)</th>
                         <th style="width: 6%;">CANTIDAD</th>
-                        <th style="width: 10%;">PRECIO UNITARIO</th>
+                        <th style="width: 10%;">PRECIO UNIT.</th>
                         <th style="width: 10%;">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in list | filter : busqueda" ng-cloak>
+                    <tr ng-repeat="item in element.costos | filter : busqueda" ng-cloak>
 
                         <td>{{$index + 1}}</td>
-                        <td>{{item.namedepartamento}}</td>
                         <td class="text-center">{{item.numdocumentocompra}}</td>
-                        <td class="text-left">{{item.codigoproducto + ' - ' + item.nombreproducto}}</td>
+                        <td class="text-center">{{item.fecharegistrocompra}}</td>
+                        <td class="text-left">{{item.detalle_item}}</td>
                         <td class="text-right">{{item.cantidad}}</td>
                         <td class="text-right">$ {{item.preciounitario}}</td>
                         <td class="text-right">$ {{item.preciototal}}</td>
@@ -69,7 +75,7 @@
                 <tfoot class="bg-primary">
                     <tr>
                         <th colspan="6" class="text-right">TOTALES</th>
-                        <th class="text-right btn-danger" style="font-weight: bold;">{{total}}</th>
+                        <th class="text-right btn-danger" style="font-weight: bold;">$ {{element.total}}</th>
                     </tr>
                 </tfoot>
             </table>
