@@ -27,6 +27,10 @@
         $scope.Configuracion = '';
         $scope.ConfiguracionServicios = '';
 
+        $scope.goSystem = function () {
+            window.location = API_URL;
+        };
+
         $scope.initData = function(){
 
             //$scope.createTableRubros();

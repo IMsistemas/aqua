@@ -16,7 +16,19 @@
 
         <div class="col-xs-12" style="margin-top: 5px;">
 
-            <h3>NUEVA LECTURA</h3>
+            <div class="row">
+                <div class="col-xs-6 text-left">
+                    <h3>NUEVA LECTURA</h3>
+                </div>
+
+                <div class="col-xs-6 text-right">
+                    <br>
+                    <button type="button" class="btn btn-primary" ng-click="goSystem()">
+                        IR AL SISTEMA <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+
             <hr>
 
             <form class="form-horizontal" name="formNewLectura" novalidate >
