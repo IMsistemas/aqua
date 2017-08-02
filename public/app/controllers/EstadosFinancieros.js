@@ -651,6 +651,19 @@ app.controller('Contabilidad', function($scope, $http, API_URL) {
             amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
         return signo+" "+amount_parts.join('.')
     };
+
+    ///---
+    $scope.print_asc=function(item) {
+        console.log(item.cont_transaccion.idtransaccion);
+        $scope.transaccion={
+            idtransaccion:item.cont_transaccion.idtransaccion
+        };
+        var accion = API_URL + "estadosfinacieros/print_asc/"+JSON.stringify($scope.transaccion);
+        $("#WPrint_head").html("Asiento Contable");
+        $("#WPrint").modal("show");
+        $("#bodyprint").html("<object width='100%' height='600' data='"+accion+"'></object>"); 
+
+    };
 });
 
 

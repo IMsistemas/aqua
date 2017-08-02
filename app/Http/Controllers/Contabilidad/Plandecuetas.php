@@ -13,6 +13,10 @@ use App\Modelos\Contabilidad\Cont_Transaccion;
 
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 
+
+use App\Modelos\SRI\SRI_Establecimiento;
+
+
 use Carbon\Carbon;
 use DateTime;
 use DB;
@@ -307,4 +311,33 @@ class Plandecuetas extends Controller
         $aux_numerocomprobante=$aux_numero[0]->numero;
         return $aux_numerocomprobante;
     }
+
+    /**
+     *
+     *
+     * imprimir asiento contable 
+     *
+     */
+
+    public function print_asc($parametro)
+    {
+        ini_set('max_execution_time', 300);
+        $filtro = json_decode($parametro);
+        $data_asc=$this->DatosAsientoContable($filtro->idtransaccion);
+
+        //dd($data_asc);
+
+        $aux_empresa =SRI_Establecimiento::all();
+        $today=date("Y-m-d H:i:s");
+        $view =  \View::make('Estadosfinancieros.asiento_contable', compact('filtro','data_asc','today','aux_empresa'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+       // $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream("print_asiento_contable".$today."");
+
+    }
+
+
+
+
 }
