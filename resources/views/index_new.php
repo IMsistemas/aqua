@@ -38,6 +38,10 @@
                 width: 100% !important;
             }
 
+            .modal-body .bootstrap-datetimepicker-widget {
+                z-index: 999999;
+            }
+
         </style>
 
     </head>

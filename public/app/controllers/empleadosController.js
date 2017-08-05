@@ -1,7 +1,11 @@
 
 app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
-
+    $('.datepickerA').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD',
+        container: '#modalAction'
+    });
 
 
     $scope.empleados = [];
@@ -138,7 +142,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     $('.datepicker').datetimepicker({
                         locale: 'es',
-                        format: 'YYYY-MM-DD'
+                        format: 'DD/MM/YYYY'
                     });
 
                     var longitud = response.length;
@@ -187,6 +191,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                 break;
             case 'edit':
+
                 $scope.form_title = "Editar Colaborador";
                 $scope.id = item.idempleado;
 
@@ -307,6 +312,17 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
                     }
 
+                    $('.datepicker').datetimepicker({
+                        locale: 'es',
+                        format: 'DD/MM/YYYY'
+                    });
+
+                    $('.datepickerA').datetimepicker({
+                        locale: 'es',
+                        format: 'YYYY-MM-DD',
+                        container: '#modalAction'
+                    });
+
                     $('#modalAction').modal('show');
 
                 });
@@ -410,6 +426,11 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     $scope.createRowFamily = function () {
 
+        $('.datepickerA').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM-DD'
+        });
+
         var item = {
             idfamiliar: 0,
             nombreapellidos: '',
@@ -419,7 +440,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
         $scope.familiares.push(item);
 
-        $('.datepicker').datetimepicker({
+        $('.datepickerA').datetimepicker({
             locale: 'es',
             format: 'YYYY-MM-DD'
         });
