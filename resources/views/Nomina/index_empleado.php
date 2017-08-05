@@ -257,7 +257,7 @@
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.maxlength">La longitud máxima es de 16 números</span>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.pattern">El Teléfono debe ser solo números, guion y espacios</span>
+                                                      ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.minlength">La longitud mínima es de 9 caracteres</span>
                                             </div>
@@ -271,7 +271,7 @@
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.maxlength">La longitud máxima es de 16 números</span>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.pattern">El Teléfono debe ser solo números, guion y espacios</span>
+                                                      ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.minlength">La longitud mínima es de 9 caracteres</span>
                                             </div>
@@ -287,7 +287,7 @@
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.maxlength">La longitud máxima es de 16 números</span>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.pattern">El Teléfono debe ser solo números, guion y espacios</span>
+                                                      ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.minlength">La longitud mínima es de 10 caracteres</span>
                                             </div>
@@ -318,7 +318,7 @@
                                             <div class="col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Fecha de Nacimiento:</span>
-                                                    <input type="text" class="datepicker form-control" name="fechanacimiento" id="fechanacimiento" ng-model="fechanacimiento" ng-required="true">
+                                                    <input type="text" class="datepicker form-control" name="fechanacimiento" id="fechanacimiento" ng-model="fechanacimiento" ng-required="true" ng-blur="valueFecha()">
                                                 </div>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.fechanacimiento.$invalid && formEmployee.fechanacimiento.$touched">La Fecha de Nacimiento es requerida</span>

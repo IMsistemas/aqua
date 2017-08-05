@@ -415,6 +415,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     };
 
+    $scope.valueFecha = function () {
+
+        $scope.fechanacimiento = $('#fechanacimiento').val();
+
+    };
+
     $scope.createRowHistory = function () {
 
         var item = {
