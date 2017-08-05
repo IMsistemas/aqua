@@ -163,6 +163,8 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.salario = '';
                     $scope.file = '';
                     $scope.fechaingreso = fecha();
+                    $scope.fechasalida = '';
+                    $('#fechasalida').val('');
 
                     $scope.cuenta_employee = '';
                     $scope.select_cuenta = null;
@@ -175,7 +177,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.genero = '';
                     //$scope.codigo = '';
 
-                    $scope.form_title = "Ingresar Nuevo Colaborador";
+                    $scope.form_title = "Nuevo Colaborador";
 
                     $scope.url_foto = 'img/empleado.png';
 
@@ -213,6 +215,15 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.tipoidentificacion = '';
 
                     $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
+
+                    if (item.fechasalida !== '' && item.fechasalida !== null) {
+                        $scope.fechasalida = convertDatetoDB(item.fechasalida, true);
+                        //$('#fechasalida').val('');
+                    } else {
+                        $scope.fechasalida = '';
+                        $('#fechasalida').val('');
+                    }
+
                     $scope.documentoidentidadempleado = item.numdocidentific;
 
                     $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
@@ -229,7 +240,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                     $scope.idpersona = item.idpersona;
                     $scope.idpersona_edit = item.idpersona;
 
-                    $scope.fechanacimiento = item.fechanacimiento;
+                    $scope.fechanacimiento = convertDatetoDB(item.fechanacimiento, true);;
                     $scope.estadocivil = item.estadocivil;
                     $scope.genero = item.genero;
                     //$scope.codigo = item.codigoempleado;
@@ -501,9 +512,17 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
         }
 
         var fechaingreso = $('#fechaingreso').val();
+        var fechasalida = $('#fechasalida').val();
 
-        var data ={
+        if (fechasalida === '' || fechasalida === undefined) {
+            fechasalida = null;
+        } else {
+            fechasalida = convertDatetoDB(fechasalida);
+        }
+
+        var data = {
             fechaingreso: convertDatetoDB(fechaingreso),
+            fechasalida: fechasalida,
             idcargo: $scope.idcargo,
             apellidos: $scope.apellido,
             nombres: $scope.nombre,
@@ -523,7 +542,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             tipoidentificacion: $scope.tipoidentificacion,
 
             //codigoempleado: $scope.codigo,
-            fechanacimiento: $scope.fechanacimiento,
+            fechanacimiento: convertDatetoDB($scope.fechanacimiento),
             estadocivil: $scope.estadocivil,
             genero: $scope.genero,
 

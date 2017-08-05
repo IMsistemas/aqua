@@ -99,11 +99,19 @@
 
                     <div class="modal-header modal-header-primary">
 
-                        <div class="col-md-4 col-xs-12">
+                        <div class="col-md-3 col-xs-12">
                             <h4 class="modal-title">{{form_title}}</h4>
                         </div>
 
-                        <div class="col-md-3 col-xs-12">
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Fecha de Ingreso:</span>
+                                <input type="text" class="datepicker form-control" name="fechaingreso" id="fechaingreso" ng-model="fechaingreso" ng-required="true">
+                            </div>
+                            <span class="help-block error"
+                                  ng-show="formEmployee.fechaingreso.$invalid && formEmployee.fechaingreso.$touched">La Fecha de Ingreso es requerida</span>
+
                             <!--<div class="input-group">
                                 <span class="input-group-addon">Codigo:</span>
                                 <input type="text" class="form-control" name="codigo" id="codigo" ng-model="codigo" ng-required="true">
@@ -113,12 +121,12 @@
                         </div>
 
                         <div class="col-md-4 col-xs-12">
+
                             <div class="input-group">
-                                <span class="input-group-addon">Fecha de Ingreso:</span>
-                                <input type="text" class="datepicker form-control" name="fechaingreso" id="fechaingreso" ng-model="fechaingreso" ng-required="true">
+                                <span class="input-group-addon">Fecha de Salida:</span>
+                                <input type="text" class="datepicker form-control" name="fechasalida" id="fechasalida" ng-model="fechasalida">
                             </div>
-                            <span class="help-block error"
-                                  ng-show="formEmployee.fechaingreso.$invalid && formEmployee.fechaingreso.$touched">La Fecha de Ingreso es requerida</span>
+
                         </div>
 
                         <div class="col-md-1 col-xs-12 text-right" style="padding: 0;">

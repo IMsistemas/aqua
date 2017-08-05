@@ -206,6 +206,11 @@ class EmpleadoController extends Controller
                 //$empleado->idplancuenta = $request->input('cuentacontable');
                 $empleado->estado = true;
                 $empleado->fechaingreso = $request->input('fechaingreso');
+
+                if ($request->input('fechasalida') != null && $request->input('fechasalida') != 'null') {
+                    $empleado->fechasalida = $request->input('fechasalida');
+                }
+
                 $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
                 $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
                 $empleado->salario = $request->input('salario');
@@ -328,6 +333,11 @@ class EmpleadoController extends Controller
             $empleado->iddepartamento = $request->input('departamento');
             //$empleado->idplancuenta = $request->input('cuentacontable');
             $empleado->fechaingreso = $request->input('fechaingreso');
+
+            if ($request->input('fechasalida') != null && $request->input('fechasalida') != 'null') {
+                $empleado->fechasalida = $request->input('fechasalida');
+            }
+
             $empleado->telefprincipaldomicilio = $request->input('telefonoprincipaldomicilio');
             $empleado->telefsecundariodomicilio = $request->input('telefonosecundariodomicilio');
             $empleado->salario = $request->input('salario');
