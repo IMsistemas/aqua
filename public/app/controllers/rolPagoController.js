@@ -4,6 +4,8 @@
 
 app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
+    $scope.listado = true;
+
     $scope.ingresos1 = [];
     $scope.ingresos2 = [];
     $scope.ingresos3 = [];
@@ -52,6 +54,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.getDataEmpresa();
 
         $scope.getDataEmpleado();
+
+        $scope.getRoles();
 
         setTimeout(function(){ $scope.getConceptos(); }, 1500);
 
@@ -605,6 +609,24 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.select_cuenta = item;
     };
 
+    $scope.InicioList=function() {
+        $scope.listado =  true;
+        $scope.initLoad(1);
+    };
+
+    $scope.getRoles = function () {
+
+        $http.get(API_URL + 'rolPago/getRoles').success(function(response){
+            $scope.roles = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+    }
+
+    $scope.activeForm = function (action) {
+
+        $scope.listado = false;
+    };
+
     $scope.save = function () {
         /*
          * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
@@ -793,6 +815,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             diascalculo: $scope.diascalculo,
             horascalculo: $scope.horascalculo,
             fecha: fecha,
+            numdocumento: $scope.empleado+fecha.getMonth()+fecha.getYear(),
             dataRoldePago: $scope.dataRoldePago
         };
 

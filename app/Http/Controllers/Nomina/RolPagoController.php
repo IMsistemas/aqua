@@ -80,9 +80,10 @@ class RolPagoController extends Controller
         //SELECT * FROM rrhh_rolpago WHERE id_conceptopago = 2 AND fecha = (SELECT MAX(fecha)  FROM rrhh_rolpago)
 
         return RolPago::join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
-            ->join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
-            ->where('id_conceptopago', 2)
-                            ->whereRaw('fecha = (SELECT MAX(fecha) FROM rrhh_rolpago)')->get();
+            ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+            ->where('id_conceptopago', 1)
+            ->whereRaw('EXTRACT( MONTH FROM fecha) = (SELECT MAX(EXTRACT( MONTH FROM fecha)) FROM rrhh_rolpago)')
+            ->whereRaw('EXTRACT( YEAR FROM fecha) = (SELECT MAX(EXTRACT( YEAR FROM fecha)) FROM rrhh_rolpago)')->get();
     }
 
     public function show($id)
@@ -96,8 +97,6 @@ class RolPagoController extends Controller
         $dataContabilidad = json_decode($request->input('dataContabilidad'));
 
         $id_transaccion = CoreContabilidad::SaveAsientoContable($dataContabilidad);
-
-        //return response()->json(['success' => true, 'idtransaccion' => $id_transaccion]);
 
         if($id_transaccion !== 0){
             $roles = $request->input('dataRoldePago');
@@ -119,6 +118,7 @@ class RolPagoController extends Controller
                 $rol->observacion = $item['observacion'];
                 $rol->fecha = $request->input('fecha');
                 $rol->numtransaccion = $id_transaccion;
+                $rol->numdocumento = $request->input('numdocumento');
 
                 if ($rol->save() == false) {
                     return response()->json(['success' => false]);
@@ -128,9 +128,5 @@ class RolPagoController extends Controller
                 return response()->json(['success' => true]);
             }
         }
-
-
     }
-
-
 }
