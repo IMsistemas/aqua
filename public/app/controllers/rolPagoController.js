@@ -6,6 +6,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.listado = true;
 
+    $scope.sueldos = [];
     $scope.ingresos1 = [];
     $scope.ingresos2 = [];
     $scope.ingresos3 = [];
@@ -28,6 +29,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.listCuentas = [];
 
     $scope.cuentaLiquida = '';
+    $scope.dataSueldoLiquido = '';
     $scope.dataSueldoBasico = '';
 
     $scope.fieldconcepto = '';
@@ -160,8 +162,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
                     console.log(response);
 
-                    $scope.dataSueldoBasico = response[0];
-
                     var long = response.length;
                     for(var i = 0; i < long; i++){
 
@@ -179,6 +179,61 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                         }
 
                         //------------------------------------------------------------------------------------------------------
+
+                        if(response[i].id_conceptospago === 1){
+                            var cantidad = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
+
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'observacion', observacion);
+
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            $scope.sueldos.push(response[i]);
+                        }
+
+                        if(response[i].id_conceptospago === 2){
+                            var cantidad = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'cantidad', cantidad);
+
+                            var observacion = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'observacion', observacion);
+
+                            var valorTotal = {
+                                value: "",
+                                writable: true,
+                                enumerable: true,
+                                configurable: true
+                            };
+                            Object.defineProperty(response[i], 'valorTotal', valorTotal);
+                            $scope.sueldos.push(response[i]);
+                        }
+
 
                         if(response[i].id_categoriapago === 1 && response[i].grupo === '1'){
 
@@ -576,6 +631,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                 $scope.total_empresarial = (parseFloat($scope.total_adicionales) + parseFloat($scope.sueldoliquido)).toFixed(2);
             }
         });
+
     };
 
     $scope.showPlanCuenta = function (field_concepto, field_id) {
@@ -634,6 +690,9 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         var descripcion = 'ROL PAGO A: ';
         var fecha = $('#fecha').val();
+        var array_fecha = fecha.split("-")
+        var anno = array_fecha[0];
+        var mes = array_fecha[1];
 
         var transaccion = {
             fecha: fecha,
@@ -644,7 +703,45 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         var registroC = [];
 
+        //--------------------------------------CONCEPTOS SUELDOS-------------------------------------------------------
 
+        $scope.sueldos[0].valorTotal = (parseFloat($scope.sueldoliquido)).toFixed(4);
+        $scope.sueldos[1].valorTotal = (parseFloat($scope.valortotalIngreso)).toFixed(4);
+
+        var longitud_sueldos = $scope.sueldos.length;
+
+        for (var i = 0; i < longitud_sueldos; i++) {
+
+            if ($scope.sueldos[i].id_conceptospago === 1 && $scope.sueldos[i].valorTotal !== '') {
+
+                var itemliquido = {
+                    idplancuenta: $scope.sueldos[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.sueldos[i].contabilidad[0].concepto,
+                    controlhaber: $scope.sueldos[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.sueldos[i].contabilidad[0].tipocuenta,
+                    Haber: 0,
+                    Debe: $scope.sueldos[i].valorTotal,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(itemliquido);
+            }
+
+            if ($scope.sueldos[i].id_conceptospago === 2 && $scope.sueldos[i].valorTotal !== '') {
+                var itembasico = {
+                    idplancuenta: $scope.sueldos[i].contabilidad[0].idplancuenta,
+                    concepto: $scope.sueldos[i].contabilidad[0].concepto,
+                    controlhaber: $scope.sueldos[i].contabilidad[0].controlhaber,
+                    tipocuenta: $scope.sueldos[i].contabilidad[0].tipocuenta,
+                    Haber: $scope.sueldos[i].valorTotal,
+                    Debe: 0,
+                    Descipcion: descripcion
+                };
+
+                registroC.push(itembasico);
+            }
+
+        }
         //--------------------------------------CONCEPTOS INGRESO 2-----------------------------------------------------
 
         var longitud_ingreso2 = $scope.ingresos2.length;
@@ -769,7 +866,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         //--------------------------------------SUELDO LIQUIDO----------------------------------------------------------
 
-        var sueldoliquido = {
+        /*var sueldoliquido = {
             idplancuenta: $scope.cuentaLiquida.idplancuenta,
             concepto: $scope.cuentaLiquida.concepto,
             controlhaber: $scope.cuentaLiquida.controlhaber,
@@ -793,9 +890,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             Descipcion: descripcion
         };
 
-        registroC.push(sueldobasico);
-
-
+        registroC.push(sueldobasico);*/
 
         var Contabilidad={
             transaccion: transaccion,
@@ -806,7 +901,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
          * -------------------------FIN CONTABILIDAD E INICIO DEL ROL DE PAGO----------------------------------------------------------------
          */
 
-        $scope.dataRoldePago = $scope.ingresos1.concat($scope.ingresos2.concat($scope.ingresos3.concat($scope.beneficios.concat($scope.deducciones.concat($scope.benefadicionales)))));
+        $scope.dataRoldePago = $scope.sueldos.concat($scope.ingresos1.concat($scope.ingresos2.concat($scope.ingresos3.concat($scope.beneficios.concat($scope.deducciones.concat($scope.benefadicionales))))));
         console.log($scope.dataRoldePago);
 
         var data_full = {
@@ -815,7 +910,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             diascalculo: $scope.diascalculo,
             horascalculo: $scope.horascalculo,
             fecha: fecha,
-            numdocumento: $scope.empleado+fecha.getMonth()+fecha.getYear(),
+            numdocumento: parseInt($scope.empleado.toString()+mes+anno),
             dataRoldePago: $scope.dataRoldePago
         };
 
