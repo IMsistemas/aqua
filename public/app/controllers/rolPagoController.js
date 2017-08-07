@@ -32,6 +32,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.dataSueldoLiquido = '';
     $scope.dataSueldoBasico = '';
 
+    $scope.dataRoldePago = [];
+
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
 
@@ -181,6 +183,15 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                         //------------------------------------------------------------------------------------------------------
 
                         if(response[i].id_conceptospago === 1){
+
+                            $scope.cuentaLiquida = {
+                                idplancuenta: response[i].contabilidad[0].idplancuenta,
+                                concepto: response[i].contabilidad[0].concepto
+                            };
+
+                            $scope.sueldo_liquido = response[i].contabilidad[0].concepto;
+                            $scope.sueldo_liquido_h = response[i].contabilidad[0].idplancuenta;
+
                             var cantidad = {
                                 value: "",
                                 writable: true,
@@ -208,6 +219,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                         }
 
                         if(response[i].id_conceptospago === 2){
+
                             var cantidad = {
                                 value: "",
                                 writable: true,
@@ -481,6 +493,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
                         }
                     }
+
+
                 });
 
             }
@@ -689,6 +703,72 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             console.log(response);
 
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                for (var j = 0; j < $scope.ingresos1.length; j++) {
+                    if (response[i].id_conceptopago === $scope.ingresos1[j].id_conceptospago) {
+                        $scope.ingresos1[j].valorTotal = response[i].valormoneda;
+                        $scope.ingresos1[j].cantidad = response[i].valormedida;
+                    }
+                }
+
+                for (var x = 0; x < $scope.ingresos2.length; x++) {
+                    if (response[i].id_conceptopago === $scope.ingresos2[x].id_conceptospago) {
+                        $scope.ingresos2[x].valorTotal = response[i].valormoneda;
+                        $scope.ingresos2[x].cantidad = response[i].valormedida;
+                    }
+                }
+
+                for (var x = 0; x < $scope.ingresos3.length; x++) {
+                    if (response[i].id_conceptopago === $scope.ingresos3[x].id_conceptospago) {
+                        $scope.ingresos3[x].valorTotal = response[i].valormoneda;
+                        $scope.ingresos3[x].cantidad = response[i].valormedida;
+                    }
+                }
+
+                for (var x = 0; x < $scope.beneficios.length; x++) {
+                    if (response[i].id_conceptopago === $scope.beneficios[x].id_conceptospago) {
+                        $scope.beneficios[x].valorTotal = response[i].valormoneda;
+                        $scope.beneficios[x].cantidad = response[i].valormedida;
+                    }
+                }
+
+                for (var x = 0; x < $scope.deducciones.length; x++) {
+                    if (response[i].id_conceptopago === $scope.deducciones[x].id_conceptospago) {
+                        $scope.deducciones[x].valorTotal = response[i].valormoneda;
+                        $scope.deducciones[x].cantidad = response[i].valormedida;
+                    }
+                }
+
+                for (var x = 0; x < $scope.benefadicionales.length; x++) {
+                    if (response[i].id_conceptopago === $scope.benefadicionales[x].id_conceptospago) {
+                        $scope.benefadicionales[x].valorTotal = response[i].valormoneda;
+                        $scope.benefadicionales[x].cantidad = response[i].valormedida;
+                    }
+                }
+
+            }
+
+            if (response[0].id_conceptopago === $scope.sueldos[0].id_conceptospago) {
+
+                $scope.cuentaLiquida = {
+                    idplancuenta: $scope.sueldos[0].contabilidad[0].idplancuenta,
+                    concepto: $scope.sueldos[0].contabilidad[0].concepto
+                };
+
+                $scope.sueldo_liquido = $scope.sueldos[0].contabilidad[0].concepto;
+                $scope.sueldo_liquido_h = $scope.sueldos[0].contabilidad[0].idplancuenta;
+
+            }
+
+
+
+            $scope.calcValores(response[2]);
+
+            $scope.listado = false;
+
         });
 
     };
@@ -725,8 +805,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             if ($scope.sueldos[i].id_conceptospago === 1 && $scope.sueldos[i].valorTotal !== '') {
 
                 var itemliquido = {
-                    idplancuenta: $scope.sueldos[i].contabilidad[0].idplancuenta,
-                    concepto: $scope.sueldos[i].contabilidad[0].concepto,
+                    idplancuenta: $scope.sueldo_liquido_h,
+                    concepto: $scope.sueldo_liquido,
                     controlhaber: $scope.sueldos[i].contabilidad[0].controlhaber,
                     tipocuenta: $scope.sueldos[i].contabilidad[0].tipocuenta,
                     Haber: 0,
