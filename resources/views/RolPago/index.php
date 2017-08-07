@@ -106,7 +106,7 @@
                     <td class="text-left">{{item.fecha}}</td>
                     <td class="text-right">$ {{item.valormoneda}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
+                        <button type="button" class="btn btn-info" ng-click="viewInfoRol(item)"
                                 data-toggle="tooltip" data-placement="bottom" title="Información">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
                         </button>

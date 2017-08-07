@@ -674,13 +674,23 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $http.get(API_URL + 'rolPago/getRoles').success(function(response){
             $scope.roles = response;
-            $('#modalPlanCuenta').modal('show');
+            //$('#modalPlanCuenta').modal('show');
         });
     }
 
     $scope.activeForm = function (action) {
 
         $scope.listado = false;
+    };
+
+    $scope.viewInfoRol = function (item) {
+
+        $http.get(API_URL + 'rolPago/getRolPago/' + item.numdocumento).success(function(response){
+
+            console.log(response);
+
+        });
+
     };
 
     $scope.save = function () {

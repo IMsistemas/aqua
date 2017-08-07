@@ -86,6 +86,11 @@ class RolPagoController extends Controller
             ->whereRaw('EXTRACT( YEAR FROM fecha) = (SELECT MAX(EXTRACT( YEAR FROM fecha)) FROM rrhh_rolpago)')->get();
     }
 
+    public function getRolPago($numdocumento)
+    {
+        return RolPago::where('numdocumento', $numdocumento)->orderBy('id_rolpago', 'asc')->get();
+    }
+
     public function show($id)
     {
 

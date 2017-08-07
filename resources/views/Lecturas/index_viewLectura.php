@@ -89,7 +89,7 @@
                                 <th>CALLE</th>
                                 <th style="width: 10%;">LECTURA ANTERIOR</th>
                                 <th style="width: 10%;">LECTURA ACTUAL</th>
-                                <th style="width: 10%;">CONSUMO MES</th>
+                                <th style="width: 10%;">CONSUMO MES (m3)</th>
                                 <th>OBSERVACIONES</th>
                             </tr>
                         </thead>
