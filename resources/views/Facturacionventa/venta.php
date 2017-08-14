@@ -1,4 +1,28 @@
+<!DOCTYPE html>
+<html lang="es-ES" ng-app="softver-aqua">
 
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <title>Documento venta</title>
+
+    <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
+    <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
+    <link href="<?= asset('css/index.css') ?>" rel="stylesheet">
+    <link href="<?= asset('css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+    <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
+    <link href="<?= asset('css/angucomplete-alt.css') ?>" rel="stylesheet">
+
+    <style>
+        .dataclient{
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
 
 <div class="col-xs-12">
 
@@ -11,7 +35,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
+    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();GetCentroCosto();">
 
         <input type="hidden" ng-model="otherFactura" id="otherFactura" value="<?= $viewFactura ?>">
 
@@ -42,40 +66,42 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <table class="table">
+                        <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                             <thead class="bg-primary">
                             <tr>
-                                <th></th>
-                                <th>FECHA EMISION</th>
-                                <th>NUMERO FACTURA</th>
+                                <th style="width: 4%;"></th>
+                                <th style="width: 10%;">FECHA EMISION</th>
+                                <th style="width: 12%;">NUMERO FACTURA</th>
                                 <th>CLIENTE</th>
-                                <th>SUBTOTAL</th>
-                                <th>IVA</th>
-                                <th>TOTAL</th>
-                                <th></th>
-                                <th></th>
+                                <th style="width: 15%;">SUBTOTAL</th>
+                                <th style="width: 10%;">IVA</th>
+                                <th style="width: 15%;">TOTAL</th>
+                                <th style="width: 10%;">ACCIONES</th>
                             </tr>
                             </thead>
                             <tbody>
                             <!--<tr ng-repeat="v in Allventas">-->
                             <tr dir-paginate="v in Allventas | orderBy:sortKey:reverse |filter:busquedaventa| itemsPerPage:10" total-items="totalItems" ng-cloak">
                             <td>{{$index+1}}</td>
-                            <td>{{v.fechaemisionventa}}</td>
-                            <td>{{numFactura(v)}}</td>
+                            <td class="text-center">{{v.fechaemisionventa}}</td>
+                            <td class="text-center">{{numFactura(v)}}</td>
                             <td>{{v.cliente.persona.lastnamepersona+" "+v.cliente.persona.namepersona}}</td>
-                            <td>{{v.subtotalconimpuestoventa}}</td>
-                            <td>{{v.ivacompra}}</td>
-                            <td>{{v.valortotalventa}}</td>
-                            <td>
-                                <button type="button" class="btn btn-info" ng-click="ViewVenta(v)">
-                                    <span class="glyphicon glyphicon glyphicon-info-sign"   aria-hidden="true"></span>
-                                </button>
+                            <td class="text-right">{{v.subtotalconimpuestoventa}}</td>
+                            <td class="text-right">{{v.ivacompra}}</td>
+                            <td class="text-right">{{v.valortotalventa}}</td>
+                            <td class="text-center">
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-info" ng-click="ViewVenta(v)">
+                                        <span class="glyphicon glyphicon glyphicon-info-sign"   aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default" ng-click="AnularVentaDirecto(v.iddocumentoventa)">
+                                        <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-default" ng-click="AnularVentaDirecto(v.iddocumentoventa)">
-                                    <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                                </button>
-                            </td>
+
                             </tr>
                             </tbody>
                         </table>
@@ -232,12 +258,20 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">Nro. Guía Remisión: </span>
                                     <span class="input-group-btn" style="width: 15%;">
-                        <input type="text" class="form-control" id="t_establ_guia" name="t_establ_guia" ng-model="t_establ_guia" ng-keypress="onlyNumber($event, 3, 't_establ_guia')" ng-blur="calculateLength('t_establ_guia', 3)" />
-                    </span>
+                                        <input type="text" class="form-control" id="t_establ_guia" name="t_establ_guia" ng-model="t_establ_guia" ng-keypress="onlyNumber($event, 3, 't_establ_guia')" ng-blur="calculateLength('t_establ_guia', 3)" />
+                                    </span>
                                     <span class="input-group-btn" style="width: 15%;" >
-                        <input type="text" class="form-control" id="t_pto_guia" name="t_pto_guia" ng-model="t_pto_guia" ng-keypress="onlyNumber($event, 3, 't_pto_guia')" ng-blur="calculateLength('t_pto_guia', 3)" />
-                    </span>
+                                        <input type="text" class="form-control" id="t_pto_guia" name="t_pto_guia" ng-model="t_pto_guia" ng-keypress="onlyNumber($event, 3, 't_pto_guia')" ng-blur="calculateLength('t_pto_guia', 3)" />
+                                    </span>
                                     <input type="text" class="form-control" id="t_secuencial_guia" name="t_secuencial_guia" ng-model="t_secuencial_guia" ng-keypress="onlyNumber($event, 9, 't_secuencial_guia')" ng-blur="calculateLength('t_secuencial_guia', 9)" />
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Centro de Costo: </span>
+                                    <select class="form-control" name="departamento" id="departamento" ng-model="departamento"
+                                            ng-options="value.id as value.label for value in listdepartamento"></select>
                                 </div>
                             </div>
 
@@ -477,5 +511,33 @@
 
 </div>
 
+<script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
+<script src="<?= asset('app/lib/angular/angular-route.min.js') ?>"></script>
+
+<script src="<?= asset('app/lib/angular/ng-file-upload-shim.min.js') ?>"></script>
+<script src="<?= asset('app/lib/angular/ng-file-upload.min.js') ?>"></script>
+
+<script src="<?= asset('app/lib/angular/dirPagination.js') ?>"></script>
+
+<script src="<?= asset('js/jquery.min.js') ?>"></script>
+<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+<script src="<?= asset('js/menuLateral.js') ?>"></script>
+<script src="<?= asset('js/moment.min.js') ?>"></script>
+<script src="<?= asset('js/es.js') ?>"></script>
+<script src="<?= asset('js/bootstrap-datetimepicker.min.js') ?>"></script>
+
+<script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
+
+
+<script src="<?= asset('app/app.js') ?>"></script>
+
+
+<script src="<?= asset('app/controllers/venta.js') ?>"></script>
+
+
+
+
+</body>
+</html>
 
     

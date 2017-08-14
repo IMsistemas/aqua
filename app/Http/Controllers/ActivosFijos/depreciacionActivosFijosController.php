@@ -24,9 +24,6 @@ use DB;
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 
 
-
-
-
 class depreciacionActivosFijosController extends Controller
 {
     /**
@@ -246,24 +243,26 @@ class depreciacionActivosFijosController extends Controller
     {
 
         return $AllActivosFijos = Cont_ItemCompra::join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
-                                                 ->join('cont_bodega','cont_bodega.idbodega','=','cont_itemcompra.idbodega')
+                                                 //->join('cont_bodega','cont_bodega.idbodega','=','cont_itemcompra.idbodega')
                                                  ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')  
                                                  ->where('cont_catalogitem.idclaseitem','=','3')
-                                                 ->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_bodega.namebodega','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra')
+                                                 ->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra')
+                                                 //->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_bodega.namebodega','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra')
                                                  ->get();
     }
 
 
       public function AllActivosFijosSinAlta()
     {
-       return $AllActivosFijosSinAlta =   Cont_ItemCompra::join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
-                                                 ->join('cont_bodega','cont_bodega.idbodega','=','cont_itemcompra.idbodega')
+       return $AllActivosFijosSinAlta = Cont_ItemCompra::join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
+                                                 //->join('cont_bodega','cont_bodega.idbodega','=','cont_itemcompra.idbodega')
                                                  ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')
                                                  ->join('cont_detalleitemactivofijo','cont_detalleitemactivofijo.iditemcompra','=','cont_itemcompra.iditemcompra')
                                                  ->join('empleado','empleado.idempleado','=','cont_detalleitemactivofijo.idempleado')
                                                  ->join('persona','persona.idpersona','=','empleado.idpersona')
                                                  ->where('cont_catalogitem.idclaseitem','=','3')
-                                                 ->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_bodega.namebodega','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra','cont_detalleitemactivofijo.estado','persona.namepersona','cont_detalleitemactivofijo.iddetalleitemactivofijo','cont_detalleitemactivofijo.fechaalta','cont_documentocompra.numdocumentocompra','cont_detalleitemactivofijo.vidautil')
+                                                 //->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_bodega.namebodega','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra','cont_detalleitemactivofijo.estado','persona.namepersona','cont_detalleitemactivofijo.iddetalleitemactivofijo','cont_detalleitemactivofijo.fechaalta','cont_documentocompra.numdocumentocompra','cont_detalleitemactivofijo.vidautil')
+                                                 ->select('cont_catalogitem.foto','cont_catalogitem.codigoproducto','cont_documentocompra.numdocumentocompra','cont_itemcompra.preciounitario','cont_documentocompra.fecharegistrocompra','cont_itemcompra.idcatalogitem','cont_itemcompra.iditemcompra','cont_detalleitemactivofijo.estado','persona.namepersona','cont_detalleitemactivofijo.iddetalleitemactivofijo','cont_detalleitemactivofijo.fechaalta','cont_documentocompra.numdocumentocompra','cont_detalleitemactivofijo.vidautil')
                                                  ->get();
     }
 

@@ -26,26 +26,32 @@
         </div>
 
         <div class="col-xs-12">
-            <table class="table table-responsive table-striped table-hover table-condensed">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                 <tr>
                     <th>NOMBRE ROL</th>
-                    <th style="width: 35%;">ACCIONES</th>
+                    <th style="width: 25%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="item in roles | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
                     <td>{{item.namerol}}</td>
                     <td class="text-center">
-                        <button ng-show="item.idrol != 1" type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
-                            Permisos <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
-                            Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </button>
-                        <button ng-show="item.idrol != 1" type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
-                            Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
+
+
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button ng-show="item.idrol != 1" type="button" class="btn btn-info" ng-click="toggle('perm', item.idrol)">
+                                Permisos <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idrol)">
+                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button ng-show="item.idrol != 1" type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
+                                Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+
                     </td>
                 </tr>
                 </tbody>

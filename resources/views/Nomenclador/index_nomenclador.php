@@ -42,24 +42,26 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 70%;">Provincia</td>
-                                        <td>Acciones</td>
+                                        <th style="width: 80%;">PROVINCIA</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="provi in provincia | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemsprv" pagination-id="provinciapg" current-page="currentPage" ng-cloak">
-                                    <td>{{provi.nameprovincia}}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning" ng-click="toggle('edit',provi.idprovincia,'prov')">
-                                            Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(provi,'prov')">
-                                            Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </button>
-                                    </td>
+                                        <td>{{provi.nameprovincia}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',provi.idprovincia,'prov')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(provi,'prov')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -89,25 +91,30 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Provincia</td>
-                                        <td style="width: 35%;">Cantón</td>
-                                        <td>Acciones</td>
+                                        <th style="width: 40%;">PROVINCIA</th>
+                                        <th style="width: 40%;">CANTON</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="cant in canton | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemscanton" current-page="currentPage" pagination-id="cantonpg" ng-cloak >
                                         <td>{{cant.nameprovincia}}</td>
                                         <td>{{cant.namecanton}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',cant.idcanton,'canton')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(cant,'canton')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',cant.idcanton,'canton')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(cant,'canton')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -140,25 +147,29 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Cantón</td>
-                                        <td style="width: 35%;">Parroquía</td>
-                                        <td>Acciones</td>
+                                        <th style="width: 40%;">CANTON</th>
+                                        <th style="width: 40%;">PARROQUIA</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="parq in parroquia | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItemsparroquia" current-page="currentPage" pagination-id="parroquiapg" ng-cloak >
                                         <td>{{parq.namecanton}}</td>
                                         <td>{{parq.nameparroquia}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',parq.idparroquia,'parroquia')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(parq,'parroquia')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',parq.idparroquia,'parroquia')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(parq,'parroquia')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -201,13 +212,13 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Forma de Pago</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>FORMA DE PAGO</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -222,13 +233,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', FormaPago.idformapago,'formapago')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(FormaPago,'formapago')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', FormaPago.idformapago,'formapago')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(FormaPago,'formapago')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -280,13 +296,13 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Documento</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE DOCUMENTO</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -301,13 +317,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', tipodocumento.idtipodocumento,'tpdocsri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipodocumento,'tpdocsri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', tipodocumento.idtipodocumento,'tpdocsri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipodocumento,'tpdocsri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -337,13 +358,13 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Identificación</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE IDENTIFICACION</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -358,13 +379,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoidentificacion.idtipoidentificacion,'tpidentsri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoidentificacion,'tpidentsri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoidentificacion.idtipoidentificacion,'tpidentsri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoidentificacion,'tpidentsri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -394,13 +420,13 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Impuesto</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE IMPUESTO</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -415,13 +441,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuesto.idtipoimpuesto,'timpsri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuesto,'timpsri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuesto.idtipoimpuesto,'timpsri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuesto,'timpsri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -451,14 +482,14 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Impuesto IVA</td>
-                                        <td style="width: 10%;">Código SRI</td>
-                                        <td style="width: 10%;">Porcentaje</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE IMPUESTO IVA</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">PORCENTAJE</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -474,13 +505,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoiva.idtipoimpuestoiva,'tpimpivasri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoiva,'tpimpivasri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoiva.idtipoimpuestoiva,'tpimpivasri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoiva,'tpimpivasri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -510,15 +546,15 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Impuesto ICE</td>
-                                        <td style="width: 10%;">Código SRI</td>
-                                        <td style="width: 10%;">Porcentaje</td>
-                                        <td style="width: 10%;">Tarifa</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE IMPUESTO ICE</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">PORCENTAJE</th>
+                                        <th style="width: 10%;">TARIFA</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -535,13 +571,18 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoice.idtipoimpuestoice,'tpimpicesri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoice,'tpimpicesri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoice.idtipoimpuestoice,'tpimpicesri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoice,'tpimpicesri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -571,35 +612,40 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Tipo de Impuesto Retención</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>TIPO DE IMPUESTO RETENCION</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="tipoimpuestoRten in sri_tipoimpuestoRten | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemstpimpretpg01" current-page="currentPage" pagination-id="tpimpretcpg" ng-cloak" >
-                                    <td>{{tipoimpuestoRten.nametipoimpuestoretencion}}</td>
-                                    <td>{{tipoimpuestoRten.codigosri}}</td>
-                                    <td>
-                                        <div ng-if="tipoimpuestoRten.estado">
-                                            Activo
-                                        </div>
-                                        <div ng-if="!tipoimpuestoRten.estado">
-                                            No Activo
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoRten.idtipoimpuestoretencion,'tpimpretsri')">
-                                            Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoRten,'tpimpretsri')">
-                                            Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </button>
-                                    </td>
+                                        <td>{{tipoimpuestoRten.nametipoimpuestoretencion}}</td>
+                                        <td>{{tipoimpuestoRten.codigosri}}</td>
+                                        <td>
+                                            <div ng-if="tipoimpuestoRten.estado">
+                                                Activo
+                                            </div>
+                                            <div ng-if="!tipoimpuestoRten.estado">
+                                                No Activo
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',tipoimpuestoRten.idtipoimpuestoretencion,'tpimpretsri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(tipoimpuestoRten,'tpimpretsri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
+
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -628,16 +674,16 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
                                         <th style="width: 7%;">TIPO</th>
-                                        <th>DETALLE RETENCION</th>
+                                        <th style="width: 15%;">DETALLE RETENCION</th>
                                         <th style="width: 7%;">CODIGO SRI</th>
                                         <th style="width: 7%;">PORCENTAJE</th>
                                         <th>CUENTA</th>
                                         <th style="width: 7%;">ESTADO</th>
-                                        <th style="width: 15%;">ACCIONES</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -656,13 +702,17 @@
                                             </div>
 
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',ImpuestoIVARENTA.iddetalleimpuestoretencion,'tpimpivaretsri')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(ImpuestoIVARENTA,'tpimpivaretsri')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',ImpuestoIVARENTA.iddetalleimpuestoretencion,'tpimpivaretsri')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(ImpuestoIVARENTA,'tpimpivaretsri')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -692,13 +742,13 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 35%;">Sustento Tributario</td>
-                                        <td style="width: 20%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>SUSTENTO TRIBUTARIO</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -713,13 +763,17 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',SustentoTributario.idsustentotributario,'sustrib')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(SustentoTributario,'sustrib')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',SustentoTributario.idsustentotributario,'sustrib')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(SustentoTributario,'sustrib')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -749,14 +803,14 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 30%;">Sustento Tributario</td>
-                                        <td style="width: 15%;">Tipo de Comprobante</td>
-                                        <td style="width: 10%;">Código SRI</td>
-                                        <td style="width: 15%;">Estado</td>
-                                        <td>Acciones</td>
+                                        <th>SUSTENTO TRIBUTARIO</th>
+                                        <th>TIPO DE COMPROBANTE</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 10%;">ESTADO</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -773,13 +827,17 @@
                                                 No Activo
                                             </div>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',Comprobante.idtipocomprobante,'compsust')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(Comprobante,'compsust')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',Comprobante.idtipocomprobante,'compsust')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(Comprobante,'compsust')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -809,23 +867,27 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 70%;">Pago Residente</td>
-                                        <td>Acciones</td>
+                                        <th style="width: 80%;">PAGO RESIDENTE</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="PagoResidente in sri_PagoResidente | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemstpresindentpgs" current-page="currentPage" pagination-id="tpresindentpg" ng-cloak >
                                         <td>{{PagoResidente.tipopagoresidente}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',PagoResidente.idpagoresidente,'tppagores')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(PagoResidente,'tppagores')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',PagoResidente.idpagoresidente,'tppagores')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(PagoResidente,'tppagores')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -855,25 +917,29 @@
                                 </div>
                             </div>
                             <div class="col-xs-12">
-                                <table class="table table-responsive table-striped table-hover table-condensed">
+                                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <td style="width: 70%;">País Pago</td>
-                                        <td style="width: 10%;">Código SRI</td>
-                                        <td>Acciones</td>
+                                        <th>PAIS PAGO</th>
+                                        <th style="width: 10%;">CODIGO SRI</th>
+                                        <th style="width: 20%;">ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="pagopais in sri_pagopais | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItemstppaispg" current-page="currentPage" pagination-id="tppaispg" ng-cloak>
                                         <td>{{pagopais.pais}}</td>
                                         <td>{{pagopais.codigosri}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning" ng-click="toggle('edit',pagopais.idpagopais,'pagopais')">
-                                                Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(pagopais,'pagopais')">
-                                                Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                            </button>
+                                        <td class="text-center">
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-warning" ng-click="toggle('edit',pagopais.idpagopais,'pagopais')">
+                                                    Editar <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(pagopais,'pagopais')">
+                                                    Eliminar <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     </tbody>

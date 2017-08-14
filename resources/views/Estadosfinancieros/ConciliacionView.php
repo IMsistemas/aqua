@@ -41,14 +41,14 @@
 				<table class="table table-bordered table-striped">
 					<thead class="bg-primary">
 						<tr>
-							<th></th>
-							<th>Concepto</th>
-							<th>Cuenta</th>
-							<th>Fecha</th>
-							<th>B. Inicial</th>
-							<th>B. Final</th>
-							<th></th>
-							<th></th>
+							<th style="width: 4%;"></th>
+							<th>CONCEPTO</th>
+							<th>CUENTA CONTABLE</th>
+							<th style="width: 8%;">FECHA</th>
+							<th style="width: 12%;">B. INICIAL</th>
+							<th style="width: 12%;">B. FINAL</th>
+							<th style="width: 8%;">ESTADO</th>
+							<th style="width: 8%;">ACCIONES</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -57,14 +57,16 @@
 						<td>{{v.descripcion}}</td>
 						<td>{{v.cont_plancuenta.concepto}}</td>
 						<td>{{v.fecha}}</td>
-						<td>{{v.balanceinicial}}</td>
-						<td>{{v.balancefinal}}</td>
+						<td class="text-right">{{v.balanceinicial}}</td>
+						<td class="text-right">{{v.balancefinal}}</td>
 						<td ng-show="v.estadoconciliacion=='2' " ng-hide=" 
 						v.estadoconciliacion!='2' ">Finalizado</td>
 						<td ng-show="v.estadoconciliacion=='0' " ng-hide=" v.estadoconciliacion!='0' ">En Proceso</td>
 						<td>
-							<button type="button" class="btn btn-primary btn-sm" ng-click='reload_conciliacion(v)'> <i class="glyphicon glyphicon glyphicon-cog"></i> </button>
-							<button type="button" class="btn btn-default btn-sm" ng-click="anular_conciliacion(v)" ><i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-primary btn-sm" ng-click='reload_conciliacion(v)'> <i class="glyphicon glyphicon glyphicon-cog"></i> </button>
+                                <button type="button" class="btn btn-default btn-sm" ng-click="anular_conciliacion(v)" ><i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                            </div>
 						</td>
 						</tr>
 					</tbody>

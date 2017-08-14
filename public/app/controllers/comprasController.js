@@ -650,7 +650,7 @@
 
             //--Sacar producto de bodega -- el producto es un activo pero como se lo vente disminuye por el haber
             for(var x=0;x<$scope.items.length;x++){
-                if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==3){
+                if($scope.items[x].productoObj.originalObject.idclaseitem==1){
                     var producto={
                         //idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
                         idplancuenta: aux_bodegaseleccionada.idplancuenta,
@@ -669,7 +669,7 @@
 
             //--Ingreso del item producto o servicio
             for(x=0;x<$scope.items.length;x++){
-                if($scope.items[x].productoObj.originalObject.idclaseitem==4){
+                if($scope.items[x].productoObj.originalObject.idclaseitem==4 || $scope.items[x].productoObj.originalObject.idclaseitem==3){
                     var itemproductoservicio={
                         idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
                         concepto: $scope.items[x].productoObj.originalObject.conceptoingreso,
@@ -912,7 +912,7 @@
                 //dataComprobante: dataComprobante
             };
 
-            console.log(ItemsVenta);
+            console.log(transaccion_venta_full);
 
             var transaccionfactura={
                 datos:JSON.stringify(transaccion_venta_full)

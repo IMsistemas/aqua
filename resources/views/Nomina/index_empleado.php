@@ -56,23 +56,27 @@
                     <td>{{empleado.namecargo}}</td>
                     <td>{{empleado.telefprincipaldomicilio}}</td>
                     <td>{{empleado.celphone}}</td>
-                    <td>
-                        <button type="button" class="btn btn-info" ng-click="toggle('info', empleado)"
-                                data-toggle="tooltip" data-placement="bottom" title="Información">
-                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
-                                data-toggle="tooltip" data-placement="bottom" title="Editar" >
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </button>
-                        <!--<button type="button" class="btn btn-info" ng-click="toggle('registry', empleado)"
-                                data-toggle="tooltip" data-placement="bottom" title="Registro Salario" >
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </button>-->
-                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado)"
-                                data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
+                    <td class="text-center">
+
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-info" ng-click="toggle('info', empleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Información">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', empleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Editar" >
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <!--<button type="button" class="btn btn-info" ng-click="toggle('registry', empleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Registro Salario" >
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>-->
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(empleado)"
+                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
                     </td>
                 </tr>
                 </tbody>

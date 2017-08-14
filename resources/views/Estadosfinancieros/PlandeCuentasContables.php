@@ -60,13 +60,13 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <table class="table table-bordered table-condensed">
+                        <table class="table table-bordered table-condensed table-responsive table-striped table-hover">
                             <thead>
                                 <tr class="bg-primary">
                                     <th colspan="6"></th>
                                 </tr>
                                 <tr class="bg-primary">
-                                    <th style="width: 20%;"></th>
+                                    <th style="width: 18%;"></th>
                                     <th style="width: 10%;"></th>
                                     <th>DETALLE</th>
                                     <th style="width: 10%;">CODIGO</th>
@@ -77,9 +77,13 @@
                             <tbody style="font-size: 12px;">
                                 <tr ng-repeat="cuenta in CuentasContables | filter:FiltraCuentaPlan " >
                                     <td>
-                                        <button class="btn btn-primary btn-sm" ng-click="AgregarCuentahija(cuenta);"><i class="glyphicon glyphicon glyphicon-plus"></i></button>
-                                        <button class="btn btn-warning btn-sm" ng-click="ModificarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-edit"></i></button>
-                                        <button ng-show="cuenta.madreohija=='1' " ng-hide=" cuenta.madreohija!='1' " class="btn btn-danger btn-sm"  ng-click="BorrarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-trash"></i></button>
+
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button class="btn btn-primary btn-sm" ng-click="AgregarCuentahija(cuenta);"><i class="glyphicon glyphicon glyphicon-plus"></i></button>
+                                            <button class="btn btn-warning btn-sm" ng-click="ModificarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-edit"></i></button>
+                                            <button ng-show="cuenta.madreohija=='1' " ng-hide=" cuenta.madreohija!='1' " class="btn btn-danger btn-sm"  ng-click="BorrarCuentaC(cuenta);"><i class="glyphicon glyphicon glyphicon-trash"></i></button>
+                                        </div>
+
                                     </td>
                                     <td>{{cuenta.aux_jerarquia}}</td>
                                     <td>{{cuenta.concepto}}</td>
@@ -135,7 +139,7 @@
 
               <div class="row" style="padding-top: 5px;">
                 <div class="col-xs-12">
-                  <table class="table table-bordered table-condensed">
+                  <table class="table table-bordered table-condensed table-responsive table-striped table-hover">
                     <thead>
                       <tr class="bg-primary">
                         <th colspan="9" class="text-center">
@@ -158,10 +162,14 @@
                       <tr ng-repeat=" registro in RegistroCuentaContable">
                         <td>{{$index+1}}</td>
                         <td>
-                          <button    class="btn btn-warning btn-sm" ng-click="ProcesoModificarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-edit"></i></button>
-                          <button ng-disabled="EstadoAsc=='An' " class="btn btn-danger btn-sm" ng-click="ProcesoBorrarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
 
-                          <button    class="btn btn-info btn-sm" ng-click="print_asc(registro)" > <i class="glyphicon glyphicon glyphicon-print"></i></button>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button class="btn btn-warning btn-sm" ng-click="ProcesoModificarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-edit"></i></button>
+                                <button ng-disabled="EstadoAsc=='An' " class="btn btn-default btn-sm" ng-click="ProcesoBorrarAsientoCt(registro)" > <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                                <button class="btn btn-info btn-sm" ng-click="print_asc(registro)" > <i class="glyphicon glyphicon glyphicon-print"></i></button>
+
+                            </div>
+
 
                         </td>
                         <td>{{ registro.cont_transaccion.cont_tipotransaccion.siglas }}</td>

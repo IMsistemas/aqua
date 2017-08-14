@@ -17,12 +17,12 @@
 
 				$http.get(API_URL + 'Activosfijos/getactivosfijos').success(function (response) {
 
-				$scope.tipoItem=response[2].nameclaseitem;
-				$scope.idTipoItem=response[2].idclaseitem;
-				
-			
-			});
-			}
+					$scope.tipoItem=response[2].nameclaseitem;
+					$scope.idTipoItem=response[2].idclaseitem;
+
+
+				});
+			};
 
 			$scope.GetCategorias = function () {
 					$http.get(API_URL + 'Activosfijos/getCategorias').success(function (response) {

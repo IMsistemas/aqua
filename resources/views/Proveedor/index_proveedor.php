@@ -44,19 +44,23 @@
                         <td>{{proveedor.direccion}}</td>
                         <td>{{proveedor.telefonoprincipal}}</td>
                         <td>{{proveedor.celphone}}</td>
-                        <td>
-                            <button type="button" class="btn btn-info" ng-click="toggle('info', proveedor)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Contactos">
-                                Información <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', proveedor)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Editar" >
-                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(proveedor)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                                Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
+                        <td class="text-center">
+
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-info" ng-click="toggle('info', proveedor)"
+                                        data-toggle="tooltip" data-placement="bottom" title="Contactos">
+                                    Información <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', proveedor)"
+                                        data-toggle="tooltip" data-placement="bottom" title="Editar" >
+                                    Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(proveedor)"
+                                        data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </div>
+
                         </td>
                     </tr>
                 </tbody>
@@ -283,18 +287,19 @@
 
                             </div>
 
+                        </div>
 
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate)" ng-disabled="formEmployee.$invalid">
+                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </form>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-                Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate)" ng-disabled="formEmployee.$invalid">
-                Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-            </button>
         </div>
     </div>
 

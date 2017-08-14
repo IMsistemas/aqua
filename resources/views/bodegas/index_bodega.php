@@ -84,15 +84,18 @@
                         <td>{{bodega.telefonobodega}}/{{bodega.telefonosecundariobodega}}</td>
                         <td>{{bodega.direccionbodega}}</td>
                         <td>{{bodega.namebodega}}</td>
-                        <td>
-                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', bodega.idbodega)"
-                                    data-toggle="tooltip" data-placement="bottom" >
+                        <td class="text-center">
+
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', bodega.idbodega)"
+                                        data-toggle="tooltip" data-placement="bottom" >
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true" title="Editar">
-                            </button>
-                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(bodega.idbodega,0)"
-                                    data-toggle="tooltip" data-placement="bottom"  >
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"  title="Eliminar"></span>
-                            </button>
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="showModalConfirm(bodega.idbodega,0)"
+                                        data-toggle="tooltip" data-placement="bottom"  >
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"  title="Eliminar"></span>
+                                </button>
+                            </div>
                             
                         </td>
                     </tr>
@@ -274,14 +277,11 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Dirección: </span>
                                                 <input type="text" class="form-control" name="direccion" id="direccion"
-                                                       ng-required="true" ng-model="bodega.direccionbodega" ng-maxlength="32" ng-pattern="/[a-zA-ZáéíóúñÑ0-9. ]+/">
+                                                       ng-required="true" ng-model="bodega.direccionbodega">
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formBodega.direccion.$invalid && formBodega.direccion.$touched">La dirección es requerida.</span>
-                                            <span class="help-block error"
-                                                  ng-show="formBodega.direccion.$invalid && formBodega.direccion.$error.maxlength">La longitud máxima es de 32 caracteres.</span>
-                                            <span class="help-block error"
-                                                  ng-show="formBodega.direccion.$invalid && formBodega.direccion.$error.pattern">La Dirección debe ser solo letras, puntos, números, guion y espacios.</span>
+
                                         </div>
 
                                         <div class="col-xs-12" style="margin-top: 5px;">

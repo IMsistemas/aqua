@@ -20,14 +20,14 @@
 			</div>
 
 			<div class="col-xs-12" style="margin-top: 5px;">
-				<table class="table table-responsive table-striped table-hover table-condensed">
+				<table class="table table-responsive table-striped table-hover table-condensed table-bordered">
 					<thead class="bg-primary">
-						<tr >
-							<th>NO.</th>
+						<tr>
+							<th style="width: 4%;">NO.</th>
 							<th>ESTABLECIMIENTO</th>
 							<th>AGENTE DE VENTA / EMPLEADO</th>
-							<th>CODIGO EMISION</th>
-							<th>ACCION</th>
+							<th style="width: 10%;">CODIGO EMISION</th>
+							<th style="width: 10%;">ACCION</th>
 						</tr>
 
 					</thead>
@@ -37,13 +37,15 @@
 							<td>{{puntoventa.razonsocial}}</td>
 							<td>{{puntoventa.namepersona + ' ' + puntoventa.lastnamepersona}}</td>
 							<td>{{puntoventa.codigoptoemision}}</td>
-							<td>
-								<button type="button" class="btn btn-warning">
-					                <span class="glyphicon glyphicon glyphicon-edit" ng-click="toggle('edit',puntoventa.idpuntoventa)" aria-hidden="true"></span> 
-					            </button>
-					            <button type="button" class="btn btn-danger">
-					                <span class="glyphicon glyphicon glyphicon-trash" ng-click="showModalConfirm(puntoventa.idpuntoventa)" aria-hidden="true"></span> 
-					            </button>
+							<td class="text-center">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-warning">
+                                        <span class="glyphicon glyphicon glyphicon-edit" ng-click="toggle('edit',puntoventa.idpuntoventa)" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon glyphicon-trash" ng-click="showModalConfirm(puntoventa.idpuntoventa)" aria-hidden="true"></span>
+                                    </button>
+                                </div>
 							</td>
 						</tr>
 					</tbody>

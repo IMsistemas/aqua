@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Facturacionventa;
 
 use App\Modelos\Bodegas\Bodega;
+use App\Modelos\Nomina\Departamento;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
@@ -113,6 +114,14 @@ class DocumentoVenta extends Controller
         //return Bodega::all();
         return Cont_Bodega::join("cont_plancuenta","cont_plancuenta.idplancuenta","=","cont_bodega.idplancuenta")->get();
     }
+
+
+    public function getCentroCosto()
+    {
+        return Departamento::orderBy('namedepartamento', 'asc')->get();
+    }
+
+
     /**
      * Ontener la informacion de una producto
      *
@@ -228,21 +237,9 @@ class DocumentoVenta extends Controller
                         ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                         ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
                         //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
-                        ->whereRaw(" cont_catalogitem.idcatalogitem = 1  OR cont_catalogitem.idcatalogitem = 2")
+                        ->whereRaw(" cont_catalogitem.idcatalogitem = 1 ")
                         ->get();
-        //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
-        //->get() ;
 
-        //return  catalogoproducto::join('productoenbodega', 'productoenbodega.codigoproducto', '=', 'catalogoproducto.codigoproducto')
-        //->where("productoenbodega.idbodega", $id)->get();
-        /*return productoenbodega::with(
-           [
-               'bodega', 'catalogoproducto',
-               'bodega' => function ($query) use ($id){
-                           $query->where('idbodega',$id);
-                       }
-           ])->get();
-       */
 
     }
     /**
@@ -316,7 +313,7 @@ class DocumentoVenta extends Controller
             ['idformapago' => $filtro->Idformapagoventa, 'iddocumentoventa' => $aux_addVenta->last()->iddocumentoventa]
         ]);
 
-        if (Session::has('suministro_to_facturar')) {
+        /*if (Session::has('suministro_to_facturar')) {
 
             $object_s = Session::get('suministro_to_facturar');
 
@@ -328,7 +325,7 @@ class DocumentoVenta extends Controller
 
             $suministro->save();
 
-        }
+        }*/
 
 
         return 1;

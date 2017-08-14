@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogoProductos\CoreKardex;
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_Bodega;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_FormaPago;
 use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoCompra;
@@ -60,6 +61,40 @@ class ComprasController extends Controller
             ->paginate(8);
 
     }
+
+    public function getProductoPorBodega($id)
+    {
+
+        return Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+            //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
+            ->selectRaw("*")
+            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+            ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+            //->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+            ->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') ")
+            ->get();
+        //return Cont_CatalogItem::whereRaw("codigoproducto::text LIKE '%" . $id . "%'")
+        //->get() ;
+
+        //return  catalogoproducto::join('productoenbodega', 'productoenbodega.codigoproducto', '=', 'catalogoproducto.codigoproducto')
+        //->where("productoenbodega.idbodega", $id)->get();
+        /*return productoenbodega::with(
+           [
+               'bodega', 'catalogoproducto',
+               'bodega' => function ($query) use ($id){
+                           $query->where('idbodega',$id);
+                       }
+           ])->get();
+       */
+
+    }
+
 
     public function getProveedorByFilter()
     {

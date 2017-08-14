@@ -1,12 +1,14 @@
 
-    <div class="col-xs-12">
 
-                <h4>Portafolio</h4>
+    <div ng-controller="categoriasController">
 
-                <hr>
+        <div class="col-xs-12">
 
-            </div>
-    <div ng-controller="categoriasController">      
+            <h4>Portafolio</h4>
+
+            <hr>
+
+        </div>
     
         <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
             <div class="col-sm-4 col-xs-6">
@@ -33,14 +35,15 @@
                 </button>
             </div>
             <div class="col-xs-12">
-                <table class="table table-responsive table-striped table-hover table-condensed">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                     <tr>
                         <th style="width: 10%; text-align: center;">
                         <a href="" style="text-decoration:none; color:white;" ng-click="ordenarColumna='idcategoria'; reversa=!reversa;">
-                        Código</a></th>
-                        <th style="text-align: center;">Nombre</th>
-                        <th style="width: 20%; text-align: center;">Acciones</th>
+                        CODIGO</a>
+                        </th>
+                        <th style="text-align: center;">NOMBRE</th>
+                        <th style="width: 20%; text-align: center;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,16 +70,16 @@
                         <div class="buttons" ng-show="$index == edit">
                         <table class="tableIn">                    
                         <tr>
-                        <td class="tdLeft"> 
-                        	 <button type="button" ng-click="saveCategoria($index)" class="btn btn-primary" ng-disabled="myForm.$invalid">
-					            Guardar
-					          </button>
-                        </td>
-                        <td class="tdRight">
-                        	<button type="button" ng-click="cancel($index)" class="btn btn-default">
-					            Cancelar
-					          </button>
-                        </td>
+                            <td class="tdLeft">
+                                 <button type="button" ng-click="saveCategoria($index)" class="btn btn-primary" ng-disabled="myForm.$invalid">
+                                    Guardar
+                                  </button>
+                            </td>
+                            <td class="tdRight">
+                                <button type="button" ng-click="cancel($index)" class="btn btn-default">
+                                    Cancelar
+                                  </button>
+                            </td>
                         </tr>
                         </table>
 					     

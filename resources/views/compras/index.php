@@ -89,15 +89,18 @@
                         <td class="text-right">$ {{item.valortotalcompra}}</td>
                         <td class="text-right">{{(item.estadoanulado)?'ANULADA':'NO ANULADA'}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
-                                    data-toggle="tooltip" data-placement="bottom" title="Información">
-                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
-                            </button>
 
-                            <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
-                                    data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1" title="Anular">
-                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                            </button>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-info" ng-click="viewInfoCompra(item.iddocumentocompra)" ng-disabled="item.estaAnulada==1"
+                                        data-toggle="tooltip" data-placement="bottom" title="Información">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true">
+                                </button>
+
+                                <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
+                                        data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1" title="Anular">
+                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                </button>
+                            </div>
 
                         </td>
                     </tr>
