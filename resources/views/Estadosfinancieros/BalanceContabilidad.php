@@ -68,7 +68,7 @@
         <!--Libro diario-->
         <div class="row" ng-hide="aux_render!='3' " ng-show=" aux_render=='3'">
           <div class="col-md-12 col-xs-12">
-            <table class="table " ng-repeat="libro in libro_diario">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered" ng-repeat="libro in libro_diario">
               <thead class="bg-primary">
                 <tr>
                   <!--<th colspan="9" class="text-center" >{{titulo_head_report}}</th>-->
@@ -137,7 +137,7 @@
         <!--libro mayor-->
         <div class="row" ng-hide="aux_render!='4' " ng-show=" aux_render=='4'">
           <div class="col-md-12 col-xs-12">
-            <table class="table ">
+            <table class="table table-responsive table-striped table-hover table-condensed table-bordered ">
               <thead class="bg-primary">
                 <tr>
                   <th colspan="10" class="text-center" >{{titulo_head_report}}</th>
@@ -196,7 +196,7 @@
 
           <div class="row">
             <div class="col-md-6 col-xs-12">  <!--Balance-->
-              <table class="table">
+              <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                   <tr>
                     <th colspan="3" class="text-center">{{titulo_balance}}</th>
@@ -269,7 +269,7 @@
 
         <!--estado de cambios del patrimonio-->
         <div class="col-xs-12" ng-hide="aux_render!='1' " ng-show=" aux_render=='1'">
-          <table class="table">
+          <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
               <tr>
                 <th colspan="6">{{titulo_head_report}}</th>

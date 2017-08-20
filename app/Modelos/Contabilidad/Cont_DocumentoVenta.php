@@ -36,6 +36,8 @@ class Cont_DocumentoVenta extends Model
         'valortotalventa',
         'estadoanulado',
         'iddepartamento',
+        'idtipocomprobante',
+        'idcomprobanteretencion',
         'idtransaccion'
     ];
 

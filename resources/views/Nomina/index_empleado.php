@@ -448,7 +448,7 @@
                                                     <td>
                                                         <input type="text" class="form-control" ng-model="family.parentesco" />
                                                     </td>
-                                                    <td>
+                                                    <td class="container-date">
                                                         <input type="text" class="datepickerA form-control" ng-model="family.fechanacimiento" />
                                                     </td>
                                                     <td>
@@ -489,7 +489,7 @@
                                                     <td>
                                                         <input type="text" class="form-control" ng-model="elemento.salario" ng-keypress="onlyNumber($event, undefined, undefined)" />
                                                     </td>
-                                                    <td>
+                                                    <td class="container-date">
                                                         <input type="text" class="datepickerA form-control" ng-model="elemento.fechainicio" />
                                                     </td>
                                                     <td>

@@ -135,6 +135,10 @@
 	</div>
 
 	<div class="col-xs-12 text-center">
+		<h3><strong> <?= ($filtro->tipo == 'G')? 'GASTOS' : 'INGRESOS' ?> </strong></h3>
+	</div>
+
+	<div class="col-xs-12 text-center">
 		<h4><strong>Desde: <?= $filtro->FechaI ?>  Hasta : <?= $filtro->FechaF ?> </strong>   <strong>  Moneda: USD $ </strong> </h4>
 	</div>
 

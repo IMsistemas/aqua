@@ -184,11 +184,13 @@ class EmpleadoController extends Controller
                 }
 
             }
+
             if ($request->input('idpersona') == 0) {
                 $persona = new Persona();
             } else {
                 $persona = Persona::find($request->input('idpersona'));
             }
+
             $persona->lastnamepersona = $request->input('apellidos');
             $persona->namepersona = $request->input('nombres');
             $persona->numdocidentific = $request->input('documentoidentidadempleado');
@@ -264,6 +266,19 @@ class EmpleadoController extends Controller
                                 return response()->json(['success' => false]);
                             }
 
+                        }
+
+                    } else {
+
+                        $sueldo = new EmpleadoRegistroSalarial();
+
+                        $sueldo->observacion = 'PRIMER SALARIO';
+                        $sueldo->salario = $request->input('salario');
+                        $sueldo->fecha = $request->input('fechaingreso');
+                        $sueldo->idempleado = $empleado->idempleado;
+
+                        if ($sueldo->save() == false) {
+                            return response()->json(['success' => false]);
                         }
 
                     }

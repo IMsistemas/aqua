@@ -221,6 +221,20 @@ $scope.cmb_estado_fact="A";
             $scope.departamento = '';
         });
     };
+    ///---
+    $scope.GetTipoComprobanteV=function () {
+        $http.get(API_URL + 'DocumentoVenta/getTipoComprobante').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for (var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecomprobante, id: response[i].idtipocomprobante})
+            }
+
+            $scope.listtipocomprobante = array_temp;
+            $scope.tipocomprobante = '';
+        });
+    };
 	///---
 	$scope.GetFormaPago=function () {
 		$http.get(API_URL + 'DocumentoVenta/formapago')
@@ -736,6 +750,7 @@ $scope.cmb_estado_fact="A";
     		valortotalventa:$scope.ValorTotal,
     		estadoanulado:'false',
             iddepartamento: departamento,
+            idtipocomprobante: $scope.tipocomprobante,
     		idtransaccion:''
     	};
     	//--Documento de venta

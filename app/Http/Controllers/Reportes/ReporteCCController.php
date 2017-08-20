@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reportes;
 
 use App\Modelos\Contabilidad\Cont_ItemCompra;
+use App\Modelos\Contabilidad\Cont_ItemVenta;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
@@ -27,13 +28,28 @@ class ReporteCCController extends Controller
 
         $filter = json_decode($request->get('filter'));
 
-        $result = Cont_ItemCompra::join('departamento', 'cont_itemcompra.iddepartamento', '=', 'departamento.iddepartamento')
-            ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')
-            ->join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
-            ->whereRaw("cont_documentocompra.fecharegistrocompra BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'");
 
-        if ($filter->cc != '0') {
-            $result = $result->where('departamento.iddepartamento', $filter->cc);
+        if ($filter->tipo == 'G') {
+
+            $result = Cont_ItemCompra::join('departamento', 'cont_itemcompra.iddepartamento', '=', 'departamento.iddepartamento')
+                ->join('cont_documentocompra','cont_documentocompra.iddocumentocompra','=','cont_itemcompra.iddocumentocompra')
+                ->join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemcompra.idcatalogitem')
+                ->whereRaw("cont_documentocompra.fecharegistrocompra BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'");
+
+            if ($filter->cc != '0') {
+                $result = $result->where('departamento.iddepartamento', $filter->cc);
+            }
+
+        } else {
+
+            $result = Cont_ItemVenta::join('cont_documentoventa', 'cont_documentoventa.iddocumentoventa', '=', 'cont_itemventa.iddocumentoventa')
+                ->join('departamento', 'cont_documentoventa.iddepartamento', '=', 'departamento.iddepartamento')
+                ->join('cont_catalogitem','cont_catalogitem.idcatalogitem','=','cont_itemventa.idcatalogitem')
+                ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'");
+
+            if ($filter->cc != '0') {
+                $result = $result->where('departamento.iddepartamento', $filter->cc);
+            }
         }
 
         return $result->get();

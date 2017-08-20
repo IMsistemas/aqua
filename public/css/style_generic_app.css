@@ -161,11 +161,28 @@
 
 /*------------------------------------------------------------------------------------------------------------------*/
 
-/*td {
+td {
     vertical-align: middle !important;
-}*/
+}
 
 .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }
+
+.modal-header .bootstrap-datetimepicker-widget {
+    color: #000000 !important;
+}
+
+.modal-body .container-date > .bootstrap-datetimepicker-widget {
+    /*z-index: 2147483647 !important;*/
+    position: fixed;
+}
+
+/*body{
+    background-color: #292929 !important;
+}
+
+table {
+    background-color: #FFFFFF !important;
+}*/

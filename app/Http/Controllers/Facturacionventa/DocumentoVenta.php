@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Facturacionventa;
 
 use App\Modelos\Bodegas\Bodega;
 use App\Modelos\Nomina\Departamento;
+use App\Modelos\SRI\SRI_TipoComprobante;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
@@ -132,6 +133,12 @@ class DocumentoVenta extends Controller
     {               
         return catalogoproducto::where('nombreproducto', 'LIKE', '%' . $texto . '%')->get();
     }
+
+    public function getTipoComprobante()
+    {
+        return SRI_TipoComprobante::orderBy('namecomprobante', 'asc')->get();
+    }
+
     /**
      * obtener informacion de un empleado con su punto de venta
      *

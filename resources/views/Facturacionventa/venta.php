@@ -35,7 +35,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();GetCentroCosto();">
+    <div  class="col-xs-12" ng-controller="Venta" ng-cloak ng-init="GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();GetCentroCosto();GetTipoComprobanteV();">
 
         <input type="hidden" ng-model="otherFactura" id="otherFactura" value="<?= $viewFactura ?>">
 
@@ -269,6 +269,16 @@
 
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <div class="input-group">
+                                    <span class="input-group-addon">Tipo Comprobante: </span>
+                                    <select ng-disabled="impreso" class="form-control" name="tipocomprobante" id="tipocomprobante" ng-model="tipocomprobante" ng-required="true"
+                                            ng-options="value.id as value.label for value in listtipocomprobante">
+                                    </select>
+                                </div>
+                                <span class="help-block error" ng-show="formventa.tipocomprobante.$invalid && formventa.tipocomprobante.$touched">El Tipo Comprobante es requerido</span>
+                            </div>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
                                     <span class="input-group-addon">Centro de Costo: </span>
                                     <select class="form-control" name="departamento" id="departamento" ng-model="departamento"
                                             ng-options="value.id as value.label for value in listdepartamento"></select>
@@ -287,7 +297,7 @@
                     </button>
                 </div>
 
-                <div class="col-xs-12" style="margin-top: 5px;">
+                <div class="col-xs-12" style="margin-top: 5px; font-size: 12px !important;">
                     <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
                         <tr>
@@ -298,8 +308,8 @@
                             <th style="width: 5%;">DESC(%)</th>
                             <th style="width: 6%;">IVA</th>
                             <th style="width: 6%;">ICE</th>
-                            <th style="width: 4%;">TOTAL</th>
-                            <th></th>
+                            <th style="width: 10%;">TOTAL</th>
+                            <th style="width: 4%"></th>
                         </tr>
                         </thead>
                         <tbody>

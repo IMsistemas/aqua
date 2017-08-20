@@ -89,7 +89,7 @@
 
 				$('#icon').removeClass('glyphicon glyphicon glyphicon-refresh');
 				$('#icon').addClass('fa fa-refresh fa-spin fa-fw');
-				$('#palabra').html('Actualizando...')
+				$('#palabra').html('Actualizando...');
 
 			//Mostrar todas las compras que solo sean activo fijos
 

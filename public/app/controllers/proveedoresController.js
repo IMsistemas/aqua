@@ -94,31 +94,62 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                     $scope.imp_iva = array_temp;
                     $scope.iva = '';
 
-                    $scope.documentoidentidadempleado = '';
-                    $('#documentoidentidadempleado').val('');
-                    $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
-                    $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
-                    $scope.razonsocial = '';
-                    $scope.telefonoprincipal = '';
-                    $scope.celular = '';
-                    $scope.direccion = '';
-                    $scope.correo = '';
+                    $http.get(API_URL + 'proveedor/getTipoEmpresa').success(function(response){
 
-                    $scope.fechaingreso = fecha();
+                        var longitud = response.length;
+                        var array_temp = [{label: '-- Seleccione --', id: ''}];
+                        for(var i = 0; i < longitud; i++){
+                            array_temp.push({label: response[i].nametipoempresa, id: response[i].idtipoempresa})
+                        }
+                        $scope.listtipoempresaats = array_temp;
+                        $scope.tipoempresaats = '';
 
-                    $scope.cuenta_employee = '';
-                    $scope.select_cuenta = null;
+                        $http.get(API_URL + 'proveedor/getTipoParte').success(function(response){
 
-                    $scope.form_title = "Ingresar Nuevo Proveedor";
+                            var longitud = response.length;
+                            var array_temp = [];
+                            for(var i = 0; i < longitud; i++){
+                                array_temp.push({label: response[i].nameparte, id: response[i].idparte})
+                            }
+                            $scope.listtipoparte = array_temp;
+                            $scope.tipoparte = array_temp[0].id;
 
-                    var array_temp = [{label: '-- Seleccione --', id: ''}];
-                    $scope.cantones = array_temp;
-                    $scope.canton = '';
-                    $scope.parroquias = array_temp;
-                    $scope.parroquia = '';
+                            $http.get(API_URL + 'proveedor/getIVADefault').success(function(response){
 
-                    $('#modalAction').modal('show');
+                                if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                                    $scope.iva = parseInt(response[0].optionvalue);
+                                }
 
+                                $scope.documentoidentidadempleado = '';
+                                $('#documentoidentidadempleado').val('');
+                                $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
+                                $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
+                                $scope.razonsocial = '';
+                                $scope.telefonoprincipal = '';
+                                $scope.celular = '';
+                                $scope.direccion = '';
+                                $scope.correo = '';
+
+                                $scope.fechaingreso = fecha();
+
+                                $scope.cuenta_employee = '';
+                                $scope.select_cuenta = null;
+
+                                $scope.form_title = "Ingresar Nuevo Proveedor";
+
+                                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                                $scope.cantones = array_temp;
+                                $scope.canton = '';
+                                $scope.parroquias = array_temp;
+                                $scope.parroquia = '';
+
+                                $('#modalAction').modal('show');
+
+                            });
+
+                        });
+
+                    });
 
                 });
 
@@ -160,6 +191,7 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                 });
 
                 $http.get(API_URL + 'proveedor/getTipoIdentificacion').success(function(response){
+
                     var longitud = response.length;
                     var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
@@ -177,35 +209,62 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                         $scope.imp_iva = array_temp;
                         $scope.iva = '';
 
-                        $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
-                        $scope.documentoidentidadempleado = item.numdocidentific;
 
-                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
 
-                        $scope.razonsocial = item.razonsocial;
-                        $scope.telefonoprincipal = item.telefonoprincipal;
-                        $scope.celular = item.celphone;
-                        $scope.direccion = item.direccion;
-                        $scope.correo = item.email;
-                        $scope.salario = item.salario;
+                        $http.get(API_URL + 'proveedor/getTipoEmpresa').success(function(response){
 
-                        $scope.idpersona = item.idpersona;
-                        $scope.idpersona_edit = item.idpersona;
+                            var longitud = response.length;
+                            var array_temp = [{label: '-- Seleccione --', id: ''}];
+                            for(var i = 0; i < longitud; i++){
+                                array_temp.push({label: response[i].nametipoempresa, id: response[i].idtipoempresa})
+                            }
+                            $scope.listtipoempresaats = array_temp;
+                            $scope.tipoempresaats = item.idtipoempresa;
 
-                        $scope.cuenta_employee = item.concepto;
+                            $http.get(API_URL + 'proveedor/getTipoParte').success(function(response){
 
-                        $scope.tipoidentificacion = item.idtipoidentificacion;
+                                var longitud = response.length;
+                                var array_temp = [];
+                                for(var i = 0; i < longitud; i++){
+                                    array_temp.push({label: response[i].nameparte, id: response[i].idparte})
+                                }
+                                $scope.listtipoparte = array_temp;
+                                $scope.tipoparte = item.idparte;
 
-                        $scope.iva = item.idtipoimpuestoiva;
 
-                        var objectPlan = {
-                            idplancuenta: item.idplancuenta,
-                            concepto: item.concepto
-                        };
+                                $scope.fechaingreso = convertDatetoDB(item.fechaingreso, true);
+                                $scope.documentoidentidadempleado = item.numdocidentific;
 
-                        $scope.select_cuenta = objectPlan;
+                                $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
 
-                        $('#modalAction').modal('show');
+                                $scope.razonsocial = item.razonsocial;
+                                $scope.telefonoprincipal = item.telefonoprincipal;
+                                $scope.celular = item.celphone;
+                                $scope.direccion = item.direccion;
+                                $scope.correo = item.email;
+                                $scope.salario = item.salario;
+
+                                $scope.idpersona = item.idpersona;
+                                $scope.idpersona_edit = item.idpersona;
+
+                                $scope.cuenta_employee = item.concepto;
+
+                                $scope.tipoidentificacion = item.idtipoidentificacion;
+
+                                $scope.iva = item.idtipoimpuestoiva;
+
+                                var objectPlan = {
+                                    idplancuenta: item.idplancuenta,
+                                    concepto: item.concepto
+                                };
+
+                                $scope.select_cuenta = objectPlan;
+
+                                $('#modalAction').modal('show');
+
+                            });
+
+                        });
 
                     });
 
@@ -213,7 +272,6 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
 
                 break;
-
             case 'info':
 
                 $http.get(API_URL + 'proveedor/getContactos/' + item.idproveedor).success(function(response){
@@ -242,7 +300,6 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
                 });
 
                 break;
-
             default:
                 break;
         }
@@ -346,7 +403,9 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
             tipoidentificacion: $scope.tipoidentificacion,
             cuentacontable: $scope.select_cuenta.idplancuenta,
             impuesto_iva: $scope.iva,
-            parroquia: $scope.parroquia
+            parroquia: $scope.parroquia,
+            idtipoempresa: $scope.tipoempresaats,
+            idparte: $scope.tipoparte,
         };
 
         console.log(data);

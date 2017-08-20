@@ -12,114 +12,217 @@ app.controller('reporteCCController',  function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
 
-        $('.datepicker').datetimepicker({
-            locale: 'es',
-            format: 'YYYY-MM-DD'
-        });
+        if ($scope.tipo !== '' && $scope.tipo !== undefined) {
+            $('.datepicker').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
 
-        var cc = '0';
+            var cc = '0';
 
-        if ($scope.searchCC !== undefined) {
-            cc = $scope.searchCC;
-        }
+            if ($scope.searchCC !== undefined) {
+                cc = $scope.searchCC;
+            }
 
-        var filter = {
-            inicio: $('#fechainicio').val(),
-            fin: $('#fechafin').val(),
-            cc: cc
-        };
+            var filter = {
+                inicio: $('#fechainicio').val(),
+                fin: $('#fechafin').val(),
+                tipo: $scope.tipo,
+                cc: cc
+            };
 
-        $http.get(API_URL + 'reportecentrocosto/getCentroCosto?filter=' + JSON.stringify(filter)).success(function(response){
+            $http.get(API_URL + 'reportecentrocosto/getCentroCosto?filter=' + JSON.stringify(filter)).success(function(response){
 
-            var longitud = response.length;
-
-            console.log(response);
-
-            var centrocosto = [];
-
-            for (var i = 0; i < longitud; i++) {
-
-                if (centrocosto.length === 0) {
-
-                    var cc = {
-                        iddepartamento: response[i].iddepartamento,
-                        namedepartamento: response[i].namedepartamento,
-                        total: response[i].preciototal,
-                        costos: [
-                            {
-                                numdocumentocompra: response[i].numdocumentocompra,
-                                fecharegistrocompra: response[i].fecharegistrocompra,
-                                detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
-                                cantidad: response[i].cantidad,
-                                preciounitario: response[i].preciounitario,
-                                preciototal: response[i].preciototal
-                            }
-                        ]
-                    };
-
-                    centrocosto.push(cc);
-
+                if ($scope.tipo === 'G') {
+                    $scope.reportegasto = true;
+                    $scope.reporteingreso = false;
                 } else {
+                    $scope.reportegasto = false;
+                    $scope.reporteingreso = true;
+                }
 
-                    var longitud_cc = centrocosto.length;
-                    var flag = false;
 
-                    for (var j = 0; j < longitud_cc; j++) {
+                var longitud = response.length;
 
-                        if (centrocosto[j].iddepartamento === response[i].iddepartamento) {
+                console.log(response);
 
-                            var item = {
-                                numdocumentocompra: response[i].numdocumentocompra,
-                                fecharegistrocompra: response[i].fecharegistrocompra,
-                                detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
-                                cantidad: response[i].cantidad,
-                                preciounitario: response[i].preciounitario,
-                                preciototal: response[i].preciototal
+                var centrocosto = [];
+
+                $scope.centrocostogasto = [];
+                $scope.centrocostoingreso = [];
+
+                $scope.list = response;
+
+                if ($scope.tipo === 'G') {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        if (centrocosto.length === 0) {
+
+                            var cc = {
+                                iddepartamento: response[i].iddepartamento,
+                                namedepartamento: response[i].namedepartamento,
+                                total: response[i].preciototal,
+                                costos: [
+                                    {
+                                        numdocumentocompra: response[i].numdocumentocompra,
+                                        fecharegistrocompra: response[i].fecharegistrocompra,
+                                        detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                        cantidad: response[i].cantidad,
+                                        preciounitario: response[i].preciounitario,
+                                        preciototal: response[i].preciototal
+                                    }
+                                ]
                             };
 
-                            centrocosto[j].costos.push(item);
-                            centrocosto[j].total = parseFloat(centrocosto[j].total) + parseFloat(response[i].preciototal);
-                            centrocosto[j].total = centrocosto[j].total.toFixed(4);
+                            centrocosto.push(cc);
 
-                            flag = true;
+                        } else {
+
+                            var longitud_cc = centrocosto.length;
+                            var flag = false;
+
+                            for (var j = 0; j < longitud_cc; j++) {
+
+                                if (centrocosto[j].iddepartamento === response[i].iddepartamento) {
+
+                                    var item = {
+                                        numdocumentocompra: response[i].numdocumentocompra,
+                                        fecharegistrocompra: response[i].fecharegistrocompra,
+                                        detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                        cantidad: response[i].cantidad,
+                                        preciounitario: response[i].preciounitario,
+                                        preciototal: response[i].preciototal
+                                    };
+
+                                    centrocosto[j].costos.push(item);
+                                    centrocosto[j].total = parseFloat(centrocosto[j].total) + parseFloat(response[i].preciototal);
+                                    centrocosto[j].total = centrocosto[j].total.toFixed(4);
+
+                                    flag = true;
+
+                                }
+
+                            }
+
+                            if (flag === false) {
+
+                                var cc = {
+                                    iddepartamento: response[i].iddepartamento,
+                                    namedepartamento: response[i].namedepartamento,
+                                    total: response[i].preciototal,
+                                    costos: [
+                                        {
+                                            numdocumentocompra: response[i].numdocumentocompra,
+                                            fecharegistrocompra: response[i].fecharegistrocompra,
+                                            detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                            cantidad: response[i].cantidad,
+                                            preciounitario: response[i].preciounitario,
+                                            preciototal: response[i].preciototal
+                                        }
+                                    ]
+                                };
+
+                                centrocosto.push(cc);
+
+                            }
 
                         }
 
                     }
 
-                    if (flag === false) {
+                    $scope.centrocostogasto = centrocosto;
 
-                        var cc = {
-                            iddepartamento: response[i].iddepartamento,
-                            namedepartamento: response[i].namedepartamento,
-                            total: response[i].preciototal,
-                            costos: [
-                                {
-                                    numdocumentocompra: response[i].numdocumentocompra,
-                                    fecharegistrocompra: response[i].fecharegistrocompra,
-                                    detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
-                                    cantidad: response[i].cantidad,
-                                    preciounitario: response[i].preciounitario,
-                                    preciototal: response[i].preciototal
+                } else {
+
+                    for (var i = 0; i < longitud; i++) {
+
+                        if (centrocosto.length === 0) {
+
+                            var cc = {
+                                iddepartamento: response[i].iddepartamento,
+                                namedepartamento: response[i].namedepartamento,
+                                total: response[i].preciototal,
+                                costos: [
+                                    {
+                                        numdocumentocompra: response[i].numdocumentoventa,
+                                        fecharegistrocompra: response[i].fecharegistroventa,
+                                        detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                        cantidad: response[i].cantidad,
+                                        preciounitario: response[i].preciounitario,
+                                        preciototal: response[i].preciototal
+                                    }
+                                ]
+                            };
+
+                            centrocosto.push(cc);
+
+                        } else {
+
+                            var longitud_cc = centrocosto.length;
+                            var flag = false;
+
+                            for (var j = 0; j < longitud_cc; j++) {
+
+                                if (centrocosto[j].iddepartamento === response[i].iddepartamento) {
+
+                                    var item = {
+                                        numdocumentocompra: response[i].numdocumentoventa,
+                                        fecharegistrocompra: response[i].fecharegistroventa,
+                                        detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                        cantidad: response[i].cantidad,
+                                        preciounitario: response[i].preciounitario,
+                                        preciototal: response[i].preciototal
+                                    };
+
+                                    centrocosto[j].costos.push(item);
+                                    centrocosto[j].total = parseFloat(centrocosto[j].total) + parseFloat(response[i].preciototal);
+                                    centrocosto[j].total = centrocosto[j].total.toFixed(4);
+
+                                    flag = true;
+
                                 }
-                            ]
-                        };
 
-                        centrocosto.push(cc);
+                            }
+
+                            if (flag === false) {
+
+                                var cc = {
+                                    iddepartamento: response[i].iddepartamento,
+                                    namedepartamento: response[i].namedepartamento,
+                                    total: response[i].preciototal,
+                                    costos: [
+                                        {
+                                            numdocumentocompra: response[i].numdocumentoventa,
+                                            fecharegistrocompra: response[i].fecharegistroventa,
+                                            detalle_item: response[i].codigoproducto + ' - ' + response[i].nombreproducto,
+                                            cantidad: response[i].cantidad,
+                                            preciounitario: response[i].preciounitario,
+                                            preciototal: response[i].preciototal
+                                        }
+                                    ]
+                                };
+
+                                centrocosto.push(cc);
+
+                            }
+
+                        }
 
                     }
 
+                    $scope.centrocostoingreso = centrocosto;
+
                 }
 
-            }
+            });
 
-            $scope.list = response;
+        } else {
 
-            $scope.centrocosto = centrocosto;
+            $scope.reportegasto = false;
+            $scope.reporteingreso = false;
 
-            console.log(centrocosto);
-
-        });
+        }
 
     };
 
@@ -159,24 +262,42 @@ app.controller('reporteCCController',  function($scope, $http, API_URL) {
 
     $scope.printReport = function() {
 
-        var filtro = {
-            FechaI: $('#fechainicio').val(),
-            FechaF: $('#fechafin').val(),
-            centroscosto: $scope.centrocosto
-        };
+        var centrocosto = [];
 
-        var accion = API_URL + 'reportecentrocosto/reporte_print/' + JSON.stringify(filtro);
+        if ($scope.tipo !== '' && $scope.tipo !== undefined) {
+            if ($scope.tipo === 'G') {
+                centrocosto = $scope.centrocostogasto;
+            } else {
+                centrocosto = $scope.centrocostoingreso;
+            }
 
-        $('#WPrint_head').html('Reporte Centro de Costos');
+            var filtro = {
+                FechaI: $('#fechainicio').val(),
+                FechaF: $('#fechafin').val(),
+                tipo: $scope.tipo,
+                centroscosto: centrocosto
+            };
 
-        $('#WPrint').modal('show');
+            console.log(centrocosto);
 
-        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+            var accion = API_URL + 'reportecentrocosto/reporte_print/' + JSON.stringify(filtro);
+
+            $('#WPrint_head').html('Reporte Centro de Costos');
+
+            $('#WPrint').modal('show');
+
+            $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+
+        }
+
+
     };
 
     $scope.fechaByFilter();
 
-    $scope.initLoad();
+    //$scope.initLoad();
+
     $scope.searchListCC();
 
 });

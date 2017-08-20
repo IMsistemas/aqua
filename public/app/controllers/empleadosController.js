@@ -4,7 +4,7 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
     $('.datepickerA').datetimepicker({
         locale: 'es',
         format: 'YYYY-MM-DD',
-        container: '#modalAction'
+        //container: '#modalAction'
     });
 
 
@@ -317,13 +317,15 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
                         format: 'DD/MM/YYYY'
                     });
 
-                    $('.datepickerA').datetimepicker({
-                        locale: 'es',
-                        format: 'YYYY-MM-DD',
-                        container: '#modalAction'
-                    });
 
                     $('#modalAction').modal('show');
+
+                    $(document).ready (function(){
+                        $('datepickerA').datetimepicker({
+                            locale: 'es',
+                            format: 'YYYY-MM-DD'
+                        });
+                    });
 
                 });
 
@@ -426,9 +428,11 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     $scope.createRowFamily = function () {
 
-        $('.datepickerA').datetimepicker({
-            locale: 'es',
-            format: 'YYYY-MM-DD'
+        $(document).ready (function(){
+            $('datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
         });
 
         var item = {
@@ -440,10 +444,13 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
         $scope.familiares.push(item);
 
-        $('.datepickerA').datetimepicker({
-            locale: 'es',
-            format: 'YYYY-MM-DD'
+        $(document).ready (function(){
+            $('.datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
         });
+
 
     };
 
@@ -455,6 +462,13 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     $scope.createRowHistory = function () {
 
+        $(document).ready (function(){
+            $('.datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
+        });
+
         var item = {
             idempleado_registrosalarial: 0,
             fechainicio: '',
@@ -462,12 +476,14 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             observacion: ''
         };
 
-        $('.datepicker').datetimepicker({
-            locale: 'es',
-            format: 'YYYY-MM-DD'
-        });
-
         $scope.historial.push(item);
+
+        $(document).ready (function(){
+            $('.datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
+        });
 
     };
 
@@ -706,6 +722,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
+
+    $('.datepickerA').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD',
+        //container: '#modalAction'
+    });
 });
 
 function fecha(){

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Proveedores;
 
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Persona;
 use App\Modelos\Proveedores\ContactoProveedor;
 use App\Modelos\Proveedores\Proveedor;
 use App\Modelos\Proveedores\Provincias;
 use App\Modelos\Sectores\Canton;
 use App\Modelos\Sectores\Parroquia;
+use App\Modelos\SRI\SRI_Parte;
+use App\Modelos\SRI\SRI_TipoEmpresa;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
 use App\Modelos\SRI\SRI_TipoImpuestoIva;
 use Illuminate\Http\Request;
@@ -68,6 +71,20 @@ class ProveedorController extends Controller
         return SRI_TipoIdentificacion::orderBy('nameidentificacion', 'asc')->get();
     }
 
+    public function getTipoEmpresa()
+    {
+        return SRI_TipoEmpresa::orderBy('nametipoempresa', 'asc')->get();
+    }
+
+    public function getTipoParte()
+    {
+        return SRI_Parte::orderBy('nameparte', 'asc')->get();
+    }
+
+    public function getIVADefault()
+    {
+        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+    }
 
     /**
      * Obtener y devolver los numeros de identificacion que concuerden con el parametro a buscar
@@ -168,6 +185,9 @@ class ProveedorController extends Controller
                 $proveedor->idplancuenta = $request->input('cuentacontable');
                 $proveedor->idtipoimpuestoiva = $request->input('impuesto_iva');
 
+                $proveedor->idtipoempresa = $request->input('idtipoempresa');
+                $proveedor->idparte = $request->input('idparte');
+
                 if ($proveedor->save()) {
                     return response()->json(['success' => true]);
                 } else return response()->json(['success' => false]);
@@ -243,6 +263,9 @@ class ProveedorController extends Controller
             $proveedor->idparroquia = $request->input('parroquia');
             $proveedor->idplancuenta = $request->input('cuentacontable');
             $proveedor->idtipoimpuestoiva = $request->input('impuesto_iva');
+
+            $proveedor->idtipoempresa = $request->input('idtipoempresa');
+            $proveedor->idparte = $request->input('idparte');
 
             if ($proveedor->save()) {
                 return response()->json(['success' => true]);

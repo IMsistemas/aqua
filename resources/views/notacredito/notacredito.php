@@ -259,19 +259,19 @@
                 </div>
 
                 <div class="col-xs-12" style="margin-top: 5px;">
-                    <table class="table table-responsive table-striped table-hover table-condensed">
+                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
-                        <tr>
-                            <td>Código Item</td>
-                            <td>Detalle</td>
-                            <td style="width: 150px;" >Cantidad</td>
-                            <td style="width: 150px;" >Precio Unitario</td>
-                            <td style="width: 150px;" >Descuento(%)</td>
-                            <td style="width: 70px;">IVA</td>
-                            <td style="width: 70px;">ICE</td>
-                            <td style="width: 150px;" >Total</td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <th style="width: 15%">CODIGO ITEM</th>
+                                <th>DETALLE</th>
+                                <th style="width: 5%;">CANTIDAD</th>
+                                <th style="width: 8%;">PRECIO UNIT.</th>
+                                <th style="width: 5%;">DESC(%)</th>
+                                <th style="width: 6%;">IVA</th>
+                                <th style="width: 6%;">ICE</th>
+                                <th style="width: 10%;">TOTAL</th>
+                                <th style="width: 4%"></th>
+                            </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="item in items">

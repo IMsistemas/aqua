@@ -380,7 +380,7 @@
                 </button>
             </div>
 
-            <div class="col-xs-12" style="margin-top: 5px;">
+            <div class="col-xs-12" style="margin-top: 5px; font-size: 12px !important;">
                 <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                     <thead class="bg-primary">
                         <tr>
