@@ -481,7 +481,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         console.log(data);
 
-        /*$http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {
+        $http.put(API_URL + '/configuracion/updateConfigNC/0', data ).success(function (response) {
 
             if (response.success == true) {
                 $scope.initLoad();
@@ -496,7 +496,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         }).error(function (res) {
 
-        });*/
+        });
     };
 
     //-----------------------------------------------------------------------------------------------------------------
