@@ -283,6 +283,9 @@ Route::resource('categoria', 'Categorias\CategoriaController');
  * ------------------------------------MODULO PROVEEDORES Y TRANSPORTISTAS----------------------------------------------
  */
 
+Route::get('proveedor/getIVADefault', 'Proveedores\ProveedorController@getIVADefault');
+Route::get('proveedor/getTipoParte', 'Proveedores\ProveedorController@getTipoParte');
+Route::get('proveedor/getTipoEmpresa', 'Proveedores\ProveedorController@getTipoEmpresa');
 Route::get('proveedor/getTipoIdentificacion', 'Proveedores\ProveedorController@getTipoIdentificacion');
 Route::get('proveedor/getProvincias', 'Proveedores\ProveedorController@getProvincias');
 Route::get('proveedor/getCantones/{idprovincia}', 'Proveedores\ProveedorController@getCantones');
@@ -367,6 +370,7 @@ Route::resource('cuentasxpagar', 'Cuentas\CuentasPorPagarController');
  * ----------------------------------MODULO COMPRAS---------------------------------------------------------------------
  */
 
+Route::get('DocumentoCompras/LoadProductos/{id}', 'Compras\ComprasController@getProductoPorBodega');
 Route::post('DocumentoCompras/anularCompra', 'Compras\ComprasController@anularCompra');
 Route::get('DocumentoCompras/getPaisPagoComprobante', 'Compras\ComprasController@getPaisPagoComprobante');
 Route::get('DocumentoCompras/getTipoPagoComprobante', 'Compras\ComprasController@getTipoPagoComprobante');
@@ -543,6 +547,8 @@ Route::resource('configNomina', 'ConfiguracionSystem\ConfigNominaController');
  * -----------------------------------MODULO FACTURACION VENTA----------------------------------------------------------
  */
 
+Route::get('DocumentoVenta/getTipoComprobante', 'Facturacionventa\DocumentoVenta@getTipoComprobante' );
+Route::get('DocumentoVenta/getCentroCosto', 'Facturacionventa\DocumentoVenta@getCentroCosto');
 Route::get('DocumentoVenta/getSuministroByFactura', 'Facturacionventa\DocumentoVenta@getSuministroByFactura');
 Route::get('DocumentoVenta/getProductoPorSuministro', 'Facturacionventa\DocumentoVenta@getProductoPorSuministro');
 Route::get('DocumentoVenta/getInfoClienteXCIRuc/{getInfoCliente}', 'Facturacionventa\DocumentoVenta@getInfoClienteXCIRuc');
@@ -552,7 +558,9 @@ Route::get('DocumentoVenta/getheaddocumentoventa', 'Facturacionventa\DocumentoVe
 Route::get('DocumentoVenta/formapago', 'Facturacionventa\DocumentoVenta@getFormaPago');
 Route::get('DocumentoVenta/porcentajeivaiceotro', 'Facturacionventa\DocumentoVenta@getCofiguracioncontable');
 Route::get('DocumentoVenta/AllBodegas', 'Facturacionventa\DocumentoVenta@getAllbodegas');
+
 Route::get('DocumentoVenta/LoadProductos/{id}', 'Facturacionventa\DocumentoVenta@getProductoPorBodega');
+
 Route::get('DocumentoVenta/AllServicios', 'Facturacionventa\DocumentoVenta@getAllservicios');
 Route::get('DocumentoVenta/getVentas/{filtro}', 'Facturacionventa\DocumentoVenta@getVentas');
 Route::get('DocumentoVenta/getAllFitros', 'Facturacionventa\DocumentoVenta@getallFitros');
