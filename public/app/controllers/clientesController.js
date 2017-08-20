@@ -224,43 +224,69 @@
                         $scope.iva = '';
 
 
-                        $http.get(API_URL + 'cliente/getIVADefault').success(function(response){
+                        $http.get(API_URL + 'cliente/getTipoEmpresa').success(function(response){
 
-                            if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
-                                $scope.iva = parseInt(response[0].optionvalue);
+                            var longitud = response.length;
+                            var array_temp = [{label: '-- Seleccione --', id: ''}];
+                            for(var i = 0; i < longitud; i++){
+                                array_temp.push({label: response[i].nametipoempresa, id: response[i].idtipoempresa})
                             }
+                            $scope.listtipoempresaats = array_temp;
+                            $scope.tipoempresaats = '';
+
+
+                            $http.get(API_URL + 'cliente/getTipoParte').success(function(response){
+
+                                var longitud = response.length;
+                                var array_temp = [];
+                                for(var i = 0; i < longitud; i++){
+                                    array_temp.push({label: response[i].nameparte, id: response[i].idparte})
+                                }
+                                $scope.listtipoparte = array_temp;
+                                $scope.tipoparte = array_temp[0].id;
+
+
+                                $http.get(API_URL + 'cliente/getIVADefault').success(function(response){
+
+                                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                                        $scope.iva = parseInt(response[0].optionvalue);
+                                    }
 
 
 
-                            $scope.t_codigocliente = 0;
-                            $scope.t_fecha_ingreso = $scope.nowDate();
+                                    $scope.t_codigocliente = 0;
+                                    $scope.t_fecha_ingreso = $scope.nowDate();
 
-                            $scope.idcliente = 0;
-                            $scope.documentoidentidadempleado = '';
-                            $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
-                            $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
-                            $scope.idpersona = 0;
-                            $scope.apellido = '';
-                            $scope.nombre = '';
-                            $scope.telefonoprincipal = '';
-                            $scope.telefonosecundario = '';
-                            $scope.celular = '';
-                            $scope.direccion = '';
-                            $scope.telefonoprincipaltrabajo = '';
-                            $scope.telefonosecundariotrabajo = '';
-                            $scope.direcciontrabajo = '';
-                            $scope.correo = '';
-                            $scope.cuenta_employee = '';
+                                    $scope.idcliente = 0;
+                                    $scope.documentoidentidadempleado = '';
+                                    $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', '');
+                                    $scope.$broadcast('angucomplete-alt:clearInput', 'documentoidentidadempleado');
+                                    $scope.idpersona = 0;
+                                    $scope.apellido = '';
+                                    $scope.nombre = '';
+                                    $scope.telefonoprincipal = '';
+                                    $scope.telefonosecundario = '';
+                                    $scope.celular = '';
+                                    $scope.direccion = '';
+                                    $scope.telefonoprincipaltrabajo = '';
+                                    $scope.telefonosecundariotrabajo = '';
+                                    $scope.direcciontrabajo = '';
+                                    $scope.correo = '';
+                                    $scope.cuenta_employee = '';
 
-                            $scope.select_cuenta = null;
+                                    $scope.select_cuenta = null;
 
-                            $scope.title_modal_cliente = 'Nuevo Cliente';
+                                    $scope.title_modal_cliente = 'Nuevo Cliente';
 
-                            $('#modalAddCliente').modal('show');
+                                    $('#modalAddCliente').modal('show');
+
+                                });
+
+
+                            });
+
 
                         });
-
-
 
 
                     });
@@ -301,6 +327,8 @@
                 telefonoprincipaltrabajo: $scope.telefonoprincipaltrabajo,
                 telefonosecundariotrabajo: $scope.telefonosecundariotrabajo,
                 direcciontrabajo: $scope.direcciontrabajo,
+                idtipoempresa: $scope.tipoempresaats,
+                idparte: $scope.tipoparte,
 
                 tipocliente: $scope.s_tipocliente
 

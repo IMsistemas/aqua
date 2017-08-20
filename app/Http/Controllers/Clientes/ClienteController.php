@@ -21,6 +21,8 @@ use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
+use App\Modelos\SRI\SRI_Parte;
+use App\Modelos\SRI\SRI_TipoEmpresa;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
 use App\Modelos\SRI\SRI_TipoImpuestoIva;
 use App\Modelos\Suministros\Producto;
@@ -74,6 +76,16 @@ class ClienteController extends Controller
     public function getTipoIdentificacion()
     {
         return SRI_TipoIdentificacion::orderBy('nameidentificacion', 'asc')->get();
+    }
+
+    public function getTipoEmpresa()
+    {
+        return SRI_TipoEmpresa::orderBy('nametipoempresa', 'asc')->get();
+    }
+
+    public function getTipoParte()
+    {
+        return SRI_Parte::orderBy('nameparte', 'asc')->get();
     }
 
     /**
@@ -183,6 +195,8 @@ class ClienteController extends Controller
                 $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
                 $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
                 $cliente->direcciontrabajo = $request->input('direcciontrabajo');
+                $cliente->idtipoempresa = $request->input('idtipoempresa');
+                $cliente->idparte = $request->input('idparte');
 
                 $cliente->idtipocliente = $request->input('tipocliente');
 
@@ -228,6 +242,8 @@ class ClienteController extends Controller
             $cliente->telefonoprincipaltrabajo = $request->input('telefonoprincipaltrabajo');
             $cliente->telefonosecundariotrabajo = $request->input('telefonosecundariotrabajo');
             $cliente->direcciontrabajo = $request->input('direcciontrabajo');
+            $cliente->idtipoempresa = $request->input('idtipoempresa');
+            $cliente->idparte = $request->input('idparte');
 
             if ($cliente->save()) {
                 return response()->json(['success' => true]);

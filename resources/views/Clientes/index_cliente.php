@@ -321,6 +321,27 @@
                                     </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Tipo (ATS): </span>
+                                                <select class="form-control" name="tipoempresaats" id="tipoempresaats" ng-model="tipoempresaats"
+                                                        ng-options="value.id as value.label for value in listtipoempresaats" required></select>
+                                            </div>
+                                            <span class="help-block error"
+                                                  ng-show="formEmployee.tipoempresaats.$invalid && formEmployee.tipoempresaats.$touched">El Tipo es requerido</span>
+
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Tipo Parte (ATS): </span>
+                                                <select class="form-control" name="tipoparte" id="tipoparte" ng-model="tipoparte"
+                                                        ng-options="value.id as value.label for value in listtipoparte" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Cuenta Contable: </span>

@@ -81,6 +81,8 @@ Route::resource('/tarifa', 'Tarifas\TarifaController');
  * -------------------------------------MODULO CLIENTE-------------------------------------------------------------------
  */
 
+Route::get('cliente/getTipoParte', 'Clientes\ClienteController@getTipoParte');
+Route::get('cliente/getTipoEmpresa', 'Clientes\ClienteController@getTipoEmpresa');
 Route::get('cliente/getClienteByIdentify/{idcliente}', 'Clientes\ClienteController@getClienteByIdentify');
 Route::get('cliente/getIdentifyClientes/{idcliente}', 'Clientes\ClienteController@getIdentifyClientes');
 Route::get('cliente/getConfiguracion', 'Clientes\ClienteController@getConfiguracion');
