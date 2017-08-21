@@ -124,7 +124,7 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
             } else {
 
                 if (response.exists == true) {
-                    $scope.message_error = 'El Departamento no puede ser eliminado porque esta asignado a un Cargo...';
+                    $scope.message_error = 'La Tarifa no puede ser eliminada porque esta en uso...';
                 } else {
                     $scope.message_error = 'Ha ocurrido un error al intentar eliminar la Tarifa seleccionada...';
                 }

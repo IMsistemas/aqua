@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tarifas;
 
+use App\Modelos\Suministros\Suministro;
 use App\Modelos\Tarifas\TarifaAguaPotable;
 use Illuminate\Http\Request;
 
@@ -73,9 +74,8 @@ class TarifaController extends Controller
         if ($count > 0) {
             return response()->json(['success' => false]);
         } else {
-            $cargo = new Departamento();
-            $cargo->namedepartamento = $request->input('namedepartamento');
-            $cargo->centrocosto = $request->input('centrocosto');
+            $cargo = new TarifaAguaPotable();
+            $cargo->nametarifaaguapotable = $request->input('nametarifaaguapotable');
 
             if ($cargo->save()) {
                 return response()->json(['success' => true]);
@@ -116,7 +116,24 @@ class TarifaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $count = TarifaAguaPotable::where('nametarifaaguapotable', $request->input('nametarifaaguapotable'))
+            ->where('idtarifaaguapotable', '!=', $id)->count();
+
+        if ($count > 0) {
+
+            return response()->json(['success' => false, 'repeat' => true]);
+
+        } else {
+
+            $departamento = TarifaAguaPotable::find($id);
+            $departamento->nametarifaaguapotable = $request->input('nametarifaaguapotable');
+
+            if ($departamento->save()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'repeat' => false]);
+            }
+        }
     }
 
     /**
@@ -127,6 +144,17 @@ class TarifaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $count = Suministro::where('idtarifaaguapotable',$id)->count();
+        if ($count > 0) {
+            return response()->json(['success' => false, 'exists' => true]);
+        } else {
+            $departamento = TarifaAguaPotable::find($id);
+
+            if ($departamento->delete()) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'exists' => false]);
+            }
+        }
     }
 }
