@@ -25,7 +25,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $scope.getConfigNC();
 
-        $scope.getConceptos();
+        //$scope.getConceptos();
 
         $scope.getConfigNomina();
 
