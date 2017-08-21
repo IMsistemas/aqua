@@ -79,7 +79,7 @@
                         <tr dir-paginate="solicitud in solicitudes | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItems" ng-cloak>
                             <td class="text-center">{{solicitud.idsolicitud}}</td>
                             <td>{{solicitud.fechasolicitud | formatDate}}</td>
-                            <td style="font-weight: bold;">{{solicitud.razonsocial}}</td>
+                            <td style="font-weight: bold;">{{solicitud.lastnamepersona}} {{solicitud.namepersona}}</td>
                             <td>{{solicitud.direccion}}</td>
                             <td>{{solicitud.telefonoprincipaldomicilio}}</td>
                             <td>{{solicitud.tipo}}</td>

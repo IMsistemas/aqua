@@ -40,7 +40,7 @@
                         <th style="width: 5%;">NO</th>
                         <th style="width: 10%;">CI / RUC</th>
                         <th style="width: 10%;">FECHA INGRESO</th>
-                        <th style="">RAZON SOCIAL / NOMBRE Y APELLIDOS</th>
+                        <th style="">RAZON SOCIAL / APELLIDOS Y NOMBRE</th>
                         <th style="width: 8%;">CELULAR</th>
                         <th style="width: 20%;">DIRECCION</th>
                         <th style="width: 7%;">ESTADO</th>
