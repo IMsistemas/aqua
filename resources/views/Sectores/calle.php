@@ -21,7 +21,7 @@
                     ng-options="value.id as value.label for value in barrioss"></select>
         </div>
         <div class="col-sm-4 col-xs-12">
-            <button type="button" class="btn btn-primary" style="float: right;" ng-click="viewModalAdd()">Nuevo  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
+            <button type="button" class="btn btn-primary" style="float: right;" ng-click="viewModalAdd()">Agregar  <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
 
     </div>
@@ -30,8 +30,8 @@
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 15%;">Nombre Transversal</th>
-                <th style="width: 15%;">Acciones</th>
+                <th>NOMBRE TRANSVERSAL</th>
+                <th style="width: 12%;">ACCION</th>
             </tr>
             </thead>
             <tbody>

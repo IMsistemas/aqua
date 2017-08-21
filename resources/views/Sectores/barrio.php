@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="col-sm-6 col-xs-12">
-            <button type="button" class="btn btn-primary" style="float: right;" ng-click="viewModalAdd()">Nuevo <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
+            <button type="button" class="btn btn-primary" style="float: right;" ng-click="viewModalAdd()">Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></button>
         </div>
     </div>
 
@@ -25,9 +25,9 @@
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 15%;">Nombre Zona</th>
-                <th style="">Transversales</th>
-                <th style="width: 15%;">Acciones</th>
+                <th style="width: 15%;">NOMBRE ZONA</th>
+                <th style="">TRANSVERSALES</th>
+                <th style="width: 12%;">ACCIONES</th>
             </tr>
             </thead>
             <tbody>
@@ -41,18 +41,23 @@
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfo(item)">
-                        <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
-                    </button>
-                    <!--<button type="button" class="btn btn-warning btn-sm" ng-click="edit(item)">
-                        <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
-                    </button>-->
-                    <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDelete(item)">
-                        <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
-                        <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
-                    </button>
+
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-info btn-sm" ng-click="showModalInfo(item)">
+                            <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                        </button>
+                        <!--<button type="button" class="btn btn-warning btn-sm" ng-click="edit(item)">
+                            <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>-->
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="showModalDelete(item)">
+                            <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
+                            <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+
                 </td>
             </tr>
             </tbody>
