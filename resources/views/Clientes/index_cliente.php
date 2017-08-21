@@ -52,7 +52,7 @@
                             <td>{{$index + 1}}</td>
                             <td>{{item.numdocidentific}}</td>
                             <td>{{item.fechaingreso | formatDate}}</td>
-                            <td>{{item.razonsocial}}</td>
+                            <td>{{item.lastnamepersona}} {{item.namepersona}}</td>
                             <td>{{item.celphone}}</td>
                             <td>{{item.direccion}}</td>
                             <td ng-if="item.estado == true" class="btn-success text-center" style="font-weight: bold;">ACTIVO</td>

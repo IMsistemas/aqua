@@ -76,7 +76,7 @@ class ClienteController extends Controller
             }
         }
 
-        return $cliente->orderBy('fechaingreso', 'desc')->paginate(8);
+        return $cliente->orderBy('lastnamepersona', 'asc')->paginate(8);
     }
 
     /**
