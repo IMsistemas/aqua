@@ -196,6 +196,8 @@ class CuentasPorCobrarController extends Controller
             $cuenta->idcobroagua = $request->input('iddocumentoventa');
         }
 
+        $cuenta->estadoanulado = false;
+
         if ($cuenta->save()) {
 
             $cuenta2 = CuentasporCobrar::find($cuenta->idcuentasporcobrar);
