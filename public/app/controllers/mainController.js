@@ -322,12 +322,17 @@ app.controller('mainController',function($scope, $http, API_URL) {
     $scope.toModuloActivosFijos = function(){
         
         $scope.toModulo = "Activosfijos/depreciacionActivosFijos";
-    }
+    };
 
     $scope.toModuloRolPago = function(){
         $scope.titulo = "Rol de Pago";
         $scope.toModulo = "rolPago";
-    }
+    };
+
+    $scope.toModuloTarifa = function(){
+        $scope.titulo = "Tarifas";
+        $scope.toModulo = "tarifa";
+    };
 
     $scope.prepareListBreadcrumb = function (list_module) {
         $scope.list_breadcrumb = [

@@ -68,6 +68,8 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
  * -------------------------------------MODULO TARIFA-------------------------------------------------------------------
  */
 
+Route::get('tarifa/getTarifaByID/{id}', 'Tarifas\TarifaController@getTarifaByID');
+
 Route::get('tarifa/getTarifas', 'Tarifas\TarifaController@getTarifas');
 Route::get('tarifa/getAreaCaudal/{data}', 'Tarifas\TarifaController@getAreaCaudal');
 Route::get('tarifa/getConstante', 'Tarifas\TarifaController@getConstante');
