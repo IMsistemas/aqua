@@ -24,6 +24,8 @@
 
         $scope.tasainteres = 0;
 
+        $scope.s_estado_search = '0';
+
         /*$scope.initLoad = function () {
 
             $http.get(API_URL + 'cliente/getConfiguracion').success(function(response){
@@ -87,7 +89,6 @@
         $scope.initLoad = function (pageNumber) {
 
 
-
             $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
@@ -98,7 +99,8 @@
             } else var search = $scope.busqueda;
 
             var filtros = {
-                search: search
+                search: search,
+                estado: $scope.s_estado_search
             };
 
             $http.get(API_URL + 'cliente/getClientes?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){

@@ -55,6 +55,8 @@ class ClienteController extends Controller
     {
         $filter = json_decode($request->get('filter'));
         $search = $filter->search;
+        $estado = $filter->estado;
+
         $cliente = null;
 
         $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
@@ -63,6 +65,14 @@ class ClienteController extends Controller
 
         if ($search != null) {
             $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
+        }
+
+        if ($estado != '0') {
+            if ($estado == '1') {
+                $cliente = $cliente->where("cliente.estado", true);
+            } else {
+                $cliente = $cliente->where("cliente.estado", false);
+            }
         }
 
         return $cliente->orderBy('fechaingreso', 'desc')->paginate(8);

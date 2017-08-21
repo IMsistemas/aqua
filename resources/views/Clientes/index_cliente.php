@@ -16,7 +16,17 @@
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-12">
+                <div class="col-sm-4 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Estado:</span>
+                        <select class="form-control" name="s_estado_search" id="s_estado_search" ng-model="s_estado_search" ng-change="initLoad(1)">
+                            <option value="0">-- Seleccione --</option>
+                            <option value="1">ACTIVO</option>
+                            <option value="2">INACTIVO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-12">
                     <button type="button" class="btn btn-primary" style="float: right;" ng-click="showModalAddCliente()">
                         Agregar <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
