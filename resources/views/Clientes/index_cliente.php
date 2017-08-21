@@ -477,13 +477,10 @@
                             <h4 class="modal-title">Información Cliente</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="col-xs-12 text-center">
-                                <img class="img-thumbnail" src="<?= asset('img/solicitud.png') ?>" alt="">
-                            </div>
-                            <div class="row text-center">
-                                <div class="col-xs-12 text-center" style="font-size: 18px;">{{name_cliente}}</div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center" style="margin-bottom: 10px; font-weight: bold;">DATOS PERSONALES</div>
                                 <div class="col-xs-12">
-                                    <span style="font-weight: bold">CI/RUC: </span>{{identify_cliente}}
+                                    <span style="font-weight: bold">CI / RUC: </span>{{identify_cliente}}
                                 </div>
                                 <div class="col-xs-12">
                                     <span style="font-weight: bold">Fecha Solicitud: </span>{{fecha_solicitud}}
@@ -504,8 +501,15 @@
                                     <span style="font-weight: bold">Teléfonos Trabajo: </span>{{telf_cliente_emp}}
                                 </div>
                                 <div class="col-xs-12">
+                                    <span style="font-weight: bold">Tipo: </span>{{tipoempresa}}
+                                </div>
+                                <div class="col-xs-12">
+                                    <span style="font-weight: bold">Tipo Parte: </span>{{tipoparte}}
+                                </div>
+                                <div class="col-xs-12">
                                     <span style="font-weight: bold">Estado: </span>{{estado_solicitud}}
                                 </div>
+
                             </div>
                         </div>
                     </div>

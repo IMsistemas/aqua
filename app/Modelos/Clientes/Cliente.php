@@ -46,4 +46,14 @@ class Cliente extends Model
         return $this->belongsTo('App\Modelos\Contabilidad\Cont_PlanCuenta','idplancuenta');
     }
 
+    public function sri_tipoempresa()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_TipoEmpresa','idtipoempresa');
+    }
+
+    public function sri_parte()
+    {
+        return $this->belongsTo('App\Modelos\SRI\SRI_Parte','idparte');
+    }
+
 }

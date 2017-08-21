@@ -61,6 +61,7 @@ class ClienteController extends Controller
 
         $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
                             ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+                            ->with('sri_tipoempresa', 'sri_parte')
                             ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
