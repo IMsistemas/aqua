@@ -41,7 +41,7 @@ $scope.cmb_estado_fact="A";
             //$http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro/' + response[0].cont_catalogitem.codigoproducto).success(function(response0){
             $http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro').success(function(response0){
 
-                //console.log(response0);
+                console.log(response0);
 
                 var longitud = response0.length;
 
@@ -51,12 +51,12 @@ $scope.cmb_estado_fact="A";
 
 
                     if (response0[i].idcatalogitem == 1) {
-                        precioventa = response[0].valoranual;
-                    } /*else if (response0[i].idcatalogitem == 2) {
                         precioventa = response[0].valoralcantarillado;
+                    } else if (response0[i].idcatalogitem == 2) {
+                        precioventa = response[0].valoraguapotable;
                     } else {
                         precioventa = response0[i].precioventa;
-                    }*/
+                    }
 
                     var item = {
                         productoObj:{
