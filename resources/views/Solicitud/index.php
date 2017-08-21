@@ -83,34 +83,40 @@
                             <td>{{solicitud.direccion}}</td>
                             <td>{{solicitud.telefonoprincipaldomicilio}}</td>
                             <td>{{solicitud.tipo}}</td>
-                            <td ng-if="solicitud.estadoprocesada == true"><span class="label label-primary" style="font-size: 14px !important;">Procesada</span></td>
-                            <td ng-if="solicitud.estadoprocesada == false"><span class="label label-warning" style="font-size: 14px !important;">En Espera</span></td>
+                            <td ng-if="solicitud.estadoprocesada == true" class="btn-success" style="font-weight: bold;">PROCESADA</td>
+                            <td ng-if="solicitud.estadoprocesada == false" class="btn-warning" style="font-weight: bold;">EN ESPERA</td>
                             <td ng-if="solicitud.estadoprocesada == true">
-                                <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" title="Información">
-                                    <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-                                </button>
-                                <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="" disabled>
-                                    <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
-                                </button>-->
-                                <span ng-if="solicitud.tipo == 'Suministro'">
-                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" title="Archivo de Solicitud">
-                                        <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" title="Información">
+                                        <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                     </button>
-                                </span>
+                                    <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="" disabled>
+                                        <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
+                                    </button>-->
+                                    <span ng-if="solicitud.tipo == 'Suministro'">
+                                        <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" title="Archivo de Solicitud">
+                                            <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
+                                        </button>
+                                    </span>
+                                </div>
 
                             </td>
                             <td ng-if="solicitud.estadoprocesada == false">
-                                <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
-                                    <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-                                </button>
-                                <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="showModalProcesar(solicitud)" >
-                                    <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
-                                </button>-->
-                                <span ng-if="solicitud.tipo == 'Suministro'">
-                                    <button type="button" class="btn btn-default" id="btn_pdf" disabled>
-                                        <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-info" id="btn_inform" ng-click="info(solicitud)" >
+                                        <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                     </button>
-                                </span>
+                                    <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="showModalProcesar(solicitud)" >
+                                        <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
+                                    </button>-->
+                                    <span ng-if="solicitud.tipo == 'Suministro'">
+                                        <button type="button" class="btn btn-default" id="btn_pdf" disabled>
+                                            <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
+                                        </button>
+                                    </span>
+                                </div>
 
                             </td>
                         </tr>
