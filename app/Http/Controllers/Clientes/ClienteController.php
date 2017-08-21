@@ -186,7 +186,7 @@ class ClienteController extends Controller
             if ($persona->save()) {
                 $cliente = new Cliente();
                 $cliente->fechaingreso = $request->input('fechaingreso');
-                $cliente->estado = true;
+                $cliente->estado = $request->input('estado');
                 $cliente->idpersona = $persona->idpersona;
                 $cliente->idplancuenta = $request->input('cuentacontable');
                 $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');
@@ -233,7 +233,7 @@ class ClienteController extends Controller
         if ($persona->save()) {
             $cliente = Cliente::find($id);
             $cliente->fechaingreso = $request->input('fechaingreso');
-            $cliente->estado = true;
+            $cliente->estado = $request->input('estado');
             $cliente->idpersona = $persona->idpersona;
             $cliente->idplancuenta = $request->input('cuentacontable');
             $cliente->idtipoimpuestoiva = $request->input('impuesto_iva');

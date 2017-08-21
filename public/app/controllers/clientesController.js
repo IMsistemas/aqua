@@ -276,6 +276,8 @@
 
                                     $scope.select_cuenta = null;
 
+                                    $scope.s_estado = '1';
+
                                     $scope.title_modal_cliente = 'Nuevo Cliente';
 
                                     $('#modalAddCliente').modal('show');
@@ -303,6 +305,12 @@
 
             var fechaingreso = $('#t_fecha_ingreso').val();
 
+            var estado = true;
+
+            if ($scope.s_estado === '2') {
+                estado = false;
+            }
+
             var data = {
 
                 // datos de persona
@@ -329,6 +337,7 @@
                 direcciontrabajo: $scope.direcciontrabajo,
                 idtipoempresa: $scope.tipoempresaats,
                 idparte: $scope.tipoparte,
+                estado: estado,
 
                 tipocliente: $scope.s_tipocliente
 
@@ -449,45 +458,75 @@
 
                         console.log(item);
 
-                        $scope.idpersona = item.idpersona;
 
-                        $scope.idcliente = item.idcliente;
+                        $http.get(API_URL + 'cliente/getTipoEmpresa').success(function(response){
 
-                        //$scope.t_codigocliente = 0;
+                            var longitud = response.length;
+                            var array_temp = [{label: '-- Seleccione --', id: ''}];
+                            for(var i = 0; i < longitud; i++){
+                                array_temp.push({label: response[i].nametipoempresa, id: response[i].idtipoempresa})
+                            }
+                            $scope.listtipoempresaats = array_temp;
+                            $scope.tipoempresaats = item.idtipoempresa;
 
-                        $scope.t_fecha_ingreso = convertDatetoDB(item.fechaingreso, true);
-                        $scope.documentoidentidadempleado = item.numdocidentific;
-                        $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
 
-                        $scope.apellido = item.lastnamepersona;
-                        $scope.nombre = item.namepersona;
-                        $scope.telefonoprincipal = item.telefonoprincipaldomicilio;
-                        $scope.telefonosecundario = item.telefonoprincipaltrabajo;
-                        $scope.celular = item.celphone;
-                        $scope.direccion = item.direccion;
-                        $scope.telefonoprincipaltrabajo = item.telefonoprincipaltrabajo;
-                        $scope.telefonosecundariotrabajo = item.telefonosecundariotrabajo;
-                        $scope.direcciontrabajo = item.direcciontrabajo;
-                        $scope.correo = item.email;
-                        $scope.cuenta_employee = item.concepto;
+                            $http.get(API_URL + 'cliente/getTipoParte').success(function(response){
 
-                        var objectPlan = {
-                            idplancuenta: item.idplancuenta,
-                            concepto: item.concepto
-                        };
+                                var longitud = response.length;
+                                var array_temp = [];
+                                for(var i = 0; i < longitud; i++){
+                                    array_temp.push({label: response[i].nameparte, id: response[i].idparte})
+                                }
+                                $scope.listtipoparte = array_temp;
+                                $scope.tipoparte = item.idparte;
 
-                        $scope.select_cuenta = objectPlan;
 
-                        $scope.title_modal_cliente = 'Editar Cliente';
+                                $scope.idpersona = item.idpersona;
 
-                        $('#modalAddCliente').modal('show');
+                                $scope.idcliente = item.idcliente;
+
+                                //$scope.t_codigocliente = 0;
+
+                                $scope.t_fecha_ingreso = convertDatetoDB(item.fechaingreso, true);
+                                $scope.documentoidentidadempleado = item.numdocidentific;
+                                $scope.$broadcast('angucomplete-alt:changeInput', 'documentoidentidadempleado', item.numdocidentific);
+
+                                $scope.apellido = item.lastnamepersona;
+                                $scope.nombre = item.namepersona;
+                                $scope.telefonoprincipal = item.telefonoprincipaldomicilio;
+                                $scope.telefonosecundario = item.telefonoprincipaltrabajo;
+                                $scope.celular = item.celphone;
+                                $scope.direccion = item.direccion;
+                                $scope.telefonoprincipaltrabajo = item.telefonoprincipaltrabajo;
+                                $scope.telefonosecundariotrabajo = item.telefonosecundariotrabajo;
+                                $scope.direcciontrabajo = item.direcciontrabajo;
+                                $scope.correo = item.email;
+                                $scope.cuenta_employee = item.concepto;
+
+                                var objectPlan = {
+                                    idplancuenta: item.idplancuenta,
+                                    concepto: item.concepto
+                                };
+
+                                $scope.select_cuenta = objectPlan;
+
+                                if (item.estado === true) {
+                                    $scope.s_estado = '1';
+                                } else {
+                                    $scope.s_estado = '2';
+                                }
+
+                                $scope.title_modal_cliente = 'Editar Cliente';
+
+                                $('#modalAddCliente').modal('show');
+
+                            });
+
+                        });
 
                     });
 
                 });
-
-
-
 
             });
         };
