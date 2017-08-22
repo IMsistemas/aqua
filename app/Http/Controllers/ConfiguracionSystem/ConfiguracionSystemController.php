@@ -38,7 +38,13 @@ class ConfiguracionSystemController extends Controller
 
     public function getIVADefault()
     {
-        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')
+                                    ->orWhere('optionname','CONT_CLIENT_DEFAULT')
+                                    ->orWhere('optionname','CONT_PROV_DEFAULT')
+                                    ->selectRaw("*, (SELECT concepto FROM cont_plancuenta 
+                                    WHERE cont_plancuenta.idplancuenta = (configuracionsystem.optionvalue)::INT 
+                                    AND configuracionsystem.optionname <> 'SRI_IVA_DEFAULT') ")
+                                    ->get();
     }
 
     public function getListServicio()
@@ -237,7 +243,27 @@ class ConfiguracionSystemController extends Controller
 
 
         if ($configuracion->save()) {
+
+            $array_option = $request->input('array_data');
+
+            foreach ($array_option as $item) {
+
+                $configuracion = ConfiguracionSystem::find($item['idconfiguracionsystem']);
+
+                if ($item['optionvalue'] == '' || $item['optionvalue'] == null) {
+                    $configuracion->optionvalue = null;
+                } else {
+                    $configuracion->optionvalue = $item['optionvalue'];
+                }
+
+
+                if (! $configuracion->save()) {
+                    return response()->json(['success' => false]);
+                }
+            }
+
             return response()->json(['success' => true]);
+
         } else {
             return response()->json(['success' => false]);
         }

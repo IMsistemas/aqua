@@ -170,12 +170,31 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
                 if(response.length > 0){
 
-                    $scope.idconfiguracionsystem = response[0].idconfiguracionsystem;
+                    var longitud = response.length;
 
-                    if (response[0].optionvalue != null && response[0].optionvalue != '') {
-                        $scope.iva = parseInt(response[0].optionvalue);
+                    for (var i = 0; i < longitud; i++) {
+                        if (response[i].optionname === 'SRI_IVA_DEFAULT') {
+
+                            $scope.idconfiguracionsystem = response[i].idconfiguracionsystem;
+
+                            if (response[i].optionvalue !== null && response[i].optionvalue !== '') {
+                                $scope.iva = parseInt(response[i].optionvalue);
+                            }
+
+                        } else if (response[i].optionname === 'CONT_CLIENT_DEFAULT') {
+
+                            $scope.id_cont_cliente_default_h = response[i].idconfiguracionsystem;
+                            $scope.cont_cliente_default_h = parseInt(response[i].optionvalue);
+                            $scope.cont_cliente_default = response[i].concepto;
+
+                        } else if (response[i].optionname === 'CONT_PROV_DEFAULT') {
+
+                            $scope.id_cont_prov_default_h = response[i].idconfiguracionsystem;
+                            $scope.cont_prov_default_h = parseInt(response[i].optionvalue);
+                            $scope.cont_prov_default = response[i].concepto;
+
+                        }
                     }
-
                 }
             });
 
@@ -184,9 +203,22 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.updateIvaDefault = function () {
 
-        var data = {
-            optionvalue: $scope.iva
+        var cliente = {
+            idconfiguracionsystem: $scope.id_cont_cliente_default_h,
+            optionvalue: $scope.cont_cliente_default_h
         };
+
+        var proveedor = {
+            idconfiguracionsystem: $scope.id_cont_prov_default_h,
+            optionvalue: $scope.cont_prov_default_h
+        };
+
+        var data = {
+            optionvalue: $scope.iva,
+            array_data: [cliente, proveedor]
+        };
+
+        console.log(data);
 
         $http.put(API_URL + '/configuracion/updateIvaDefault/'+ $scope.idconfiguracionsystem, data ).success(function (response) {
 
@@ -195,7 +227,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             if (response.success == true) {
                 $scope.initLoad();
                 $('#modalActionCargo').modal('hide');
-                $scope.message = 'Se editó correctamente los datos del IVA por defecto';
+                $scope.message = 'Se editó correctamente los datos por defecto';
                 $('#modalMessage').modal('show');
                 $scope.hideModalMessage();
             } else {

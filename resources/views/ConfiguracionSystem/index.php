@@ -131,6 +131,42 @@
                                               ng-show="formContGeneral.iva.$invalid && formContGeneral.iva.$touched">El IVA es requerido</span>
                                     </div>
 
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta Cliente (defecto): </span>
+                                            <input type="text" class="form-control" name="cont_cliente_default" id="cont_cliente_default" ng-model="cont_cliente_default" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="cont_cliente_default_h" id="cont_cliente_default_h" ng-model="cont_cliente_default_h">
+                                            <input type="hidden" name="id_cont_cliente_default_h" id="id_cont_cliente_default_h" ng-model="id_cont_cliente_default_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-cont-cli" ng-click="showPlanCuenta('cont_cliente_default', 'cont_cliente_default_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-cont-cli" ng-click = "clean('cont_cliente_default', 'cont_cliente_default_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Cuenta Proveedor (defecto): </span>
+                                            <input type="text" class="form-control" name="cont_prov_default" id="cont_prov_default" ng-model="cont_prov_default" placeholder=""
+                                                   readonly>
+                                            <input type="hidden" name="cont_prov_default_h" id="cont_prov_default_h" ng-model="cont_prov_default_h">
+                                            <input type="hidden" name="id_cont_prov_default_h" id="id_cont_prov_default_h" ng-model="id_cont_prov_default_h">
+                                            <span class="input-group-btn" role="group">
+                                                <button type="button" class="btn btn-info" id="btn-cont-prov" ng-click="showPlanCuenta('cont_prov_default', 'cont_prov_default_h')">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-default" id="btn-l-cont-prov" ng-click = "clean('cont_prov_default', 'cont_prov_default_h')">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
                                 </form>
 
                                 <div class="col-xs-12 text-center" style="margin-top: 5px;">
