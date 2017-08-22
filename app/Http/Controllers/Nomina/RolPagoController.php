@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Nomina;
 
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Configuracion\ConfigNomina;
+use App\Modelos\Contabilidad\Cont_Kardex;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Nomina\ConceptoPago;
 use App\Modelos\Nomina\Empleado;
@@ -101,16 +102,16 @@ class RolPagoController extends Controller
 
     public function anularRol(Request $request)
     {
+        $idtransaccion = $request->input('idtransaccion');
         $numdocumento = $request->input('numdocumento');
 
-        $rol = RolPago::find($numdocumento);
-        $rol->estadoanulado =  true;
+        $rolPago = RolPago::whereRaw('numdocumento = ' . $numdocumento)->update(['estadoanulado' => true]);
 
-        if ($rol->save()) {
+        if ($rolPago == true) {
 
-            CoreContabilidad::AnularAsientoContable($rol->idtransaccion);
+            CoreContabilidad::AnularAsientoContable($idtransaccion);
 
-            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $rol->idtransaccion)
+            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $idtransaccion)
                 ->update(['estadoanulado' => true]);
 
             if ($result == false) {

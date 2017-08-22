@@ -29,6 +29,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.listCuentas = [];
 
     $scope.numdocumento = 0;
+    $scope.idtransaccion = 0;
+    $scope.estadoanulado = false;
 
     $scope.cuentaLiquida = '';
     $scope.dataSueldoLiquido = '';
@@ -703,8 +705,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $http.get(API_URL + 'rolPago/getRolPago/' + item.numdocumento).success(function(response){
 
-            console.log(response);
-
+            $scope.estadoanulado = item.estadoanulado;
             $scope.numdocumento = item.numdocumento;
             $scope.empleado = item.id_empleado;
             $scope.identificacion = response[0].numdocidentific;
@@ -1034,14 +1035,18 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     };
 
     $scope.showModalConfirm = function(item){
+
         $scope.numdocumento = item.numdocumento;
+        $scope.idtransaccion = item.numtransaccion;
+
         $('#modalConfirmAnular').modal('show');
     };
 
     $scope.anularRol = function(){
 
         var object = {
-            numdocumento: $scope.numdocumento
+            numdocumento: $scope.numdocumento,
+            idtransaccion: $scope.idtransaccion
         };
 
         $http.post(API_URL + 'rolPago/anularRol', object).success(function(response) {
@@ -1058,7 +1063,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             } else {
                 $scope.message_error = 'Ha ocurrido un error al intentar anular el rol de pago seleccionado...';
-                $('#modalMessageError').modal('show');
+                $('#modalError').modal('show');
             }
 
         });
