@@ -116,9 +116,28 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
                             $http.get(API_URL + 'proveedor/getIVADefault').success(function(response){
 
-                                if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
-                                    $scope.iva = parseInt(response[0].optionvalue);
+                                var longitud = response.length;
+
+                                for (var i = 0; i < longitud; i++) {
+                                    if (response[i].optionname === 'SRI_IVA_DEFAULT') {
+
+                                        if (response[i].optionvalue !== null && response[i].optionvalue !== '') {
+                                            $scope.iva = parseInt(response[i].optionvalue);
+                                        }
+
+                                    } else if (response[i].optionname === 'CONT_PROV_DEFAULT') {
+
+                                        $scope.cuenta_employee = response[i].concepto;
+
+                                        $scope.select_cuenta = {
+                                            idplancuenta: response[i].optionvalue,
+                                            concepto: response[i].concepto
+                                        };
+
+                                    }
                                 }
+
+
 
                                 $scope.documentoidentidadempleado = '';
                                 $('#documentoidentidadempleado').val('');
@@ -132,8 +151,8 @@ app.controller('proveedoresController', function($scope, $http, API_URL, Upload)
 
                                 $scope.fechaingreso = fecha();
 
-                                $scope.cuenta_employee = '';
-                                $scope.select_cuenta = null;
+                                /*$scope.cuenta_employee = '';
+                                $scope.select_cuenta = null;*/
 
                                 $scope.form_title = "Ingresar Nuevo Proveedor";
 
