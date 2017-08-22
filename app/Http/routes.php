@@ -532,6 +532,7 @@ Route::get('empleado/searchDuplicate/{identify}', 'Nomina\EmpleadoController@sea
 Route::get('empleado/getRegistroSalario/{id}', 'Nomina\EmpleadoController@getRegistroSalario');
 Route::resource('/empleado', 'Nomina\EmpleadoController');
 
+Route::post('rolPago/anularRol', 'Nomina\RolPagoController@anularRol');
 Route::get('rolPago/getRoles', 'Nomina\RolPagoController@getRoles');
 Route::get('rolPago/getCuentas', 'Nomina\RolPagoController@getCuentas');
 Route::get('rolPago/getPlanCuenta', 'Nomina\RolPagoController@getPlanCuenta');

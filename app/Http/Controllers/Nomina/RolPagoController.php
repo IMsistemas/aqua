@@ -88,12 +88,39 @@ class RolPagoController extends Controller
 
     public function getRolPago($numdocumento)
     {
-        return RolPago::where('numdocumento', $numdocumento)->orderBy('id_rolpago', 'asc')->get();
+        return RolPago::join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
+            ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+            ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
+            ->where('numdocumento', $numdocumento)->orderBy('id_rolpago', 'asc')->get();
     }
 
     public function show($id)
     {
 
+    }
+
+    public function anularRol(Request $request)
+    {
+        $numdocumento = $request->input('numdocumento');
+
+        $rol = RolPago::find($numdocumento);
+        $rol->estadoanulado =  true;
+
+        if ($rol->save()) {
+
+            CoreContabilidad::AnularAsientoContable($rol->idtransaccion);
+
+            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $rol->idtransaccion)
+                ->update(['estadoanulado' => true]);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
     public function store(Request $request)

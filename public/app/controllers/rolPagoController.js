@@ -28,6 +28,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.listCuentas = [];
 
+    $scope.numdocumento = 0;
+
     $scope.cuentaLiquida = '';
     $scope.dataSueldoLiquido = '';
     $scope.dataSueldoBasico = '';
@@ -101,7 +103,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             var longitud = response.length;
             var array_temp = [{label: '-- Seleccione --', id: ''}];
             for(var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].namepersona, id: response[i].idpersona})
+                array_temp.push({label: response[i].namepersona + " " + response[i].lastnamepersona, id: response[i].idpersona})
             }
 
             $scope.empleados = array_temp;
@@ -703,6 +705,13 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             console.log(response);
 
+            $scope.numdocumento = item.numdocumento;
+            $scope.empleado = item.id_empleado;
+            $scope.identificacion = response[0].numdocidentific;
+            $scope.cargo = response[0].namecargo;
+            $scope.sueldo = response[0].salario;
+            $scope.fecha = item.fecha;
+
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
@@ -762,8 +771,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                 $scope.sueldo_liquido_h = $scope.sueldos[0].contabilidad[0].idplancuenta;
 
             }
-
-
 
             $scope.calcValores(response[2]);
 
@@ -1024,6 +1031,37 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             }
         }).error(function (res) {});
 
+    };
+
+    $scope.showModalConfirm = function(item){
+        $scope.numdocumento = item.numdocumento;
+        $('#modalConfirmAnular').modal('show');
+    };
+
+    $scope.anularRol = function(){
+
+        var object = {
+            numdocumento: $scope.numdocumento
+        };
+
+        $http.post(API_URL + 'rolPago/anularRol', object).success(function(response) {
+
+            $('#modalConfirmAnular').modal('hide');
+
+            if(response.success === true){
+                $scope.initLoad(1);
+                $scope.numdocumento = 0;
+                $scope.message = 'Se ha anulado el rol de pago seleccionado...';
+                $('#modalMessage').modal('show');
+
+                $('#btn-anular').prop('disabled', true);
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar anular el rol de pago seleccionado...';
+                $('#modalMessageError').modal('show');
+            }
+
+        });
     };
 
 });

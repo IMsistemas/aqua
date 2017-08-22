@@ -20,14 +20,18 @@
 
         <div class="col-xs-6 text-right" style="margin-top: 5px;">
             <button type="button" ng-show="!listado" class="btn btn-primary" ng-click="InicioList();">
-                Registros <span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Registros <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
             </button>
 
-            <button type="button" ng-show="!listado" class="btn btn-success" id="btn-save" ng-click="save()" >
+            <button type="button" ng-show="!listado" class="btn btn-default" ng-model="btn-anular" ng-disabled="numdocumento == 0" ng-click="showModalConfirm(item,0)">
+                Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+            </button>
+
+            <button type="button" ng-show="!listado" class="btn btn-success" id="btn-save" ng-disabled="numdocumento !== 0" ng-click="save()" >
                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
             </button>
 
-            <button type="button" ng-show="!listado" class="btn btn-info" ng-click="">
+            <button type="button" ng-show="!listado" class="btn btn-info" ng-model="btn-print" ng-disabled="numdocumento == 0" ng-click="imprimirRol()">
                 Imprimir <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
             </button>
 
@@ -420,6 +424,8 @@
         </div>
     </div>
 
+    <!----------MODALES---------->
+
     <div class="modal fade" tabindex="-1" role="dialog" id="modalPlanCuenta">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -496,6 +502,29 @@
                 </div>
                 <div class="modal-body">
                     <span>{{message_info}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalConfirmAnular">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Está seguro que desea Anular el Rol de Pago: <strong>"{{numdocumento}}"</strong> seleccionado?</span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btn-save" ng-click="anularRol()">
+                        Anular
+                    </button>
                 </div>
             </div>
         </div>
