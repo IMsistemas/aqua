@@ -250,11 +250,32 @@
 
                                 $http.get(API_URL + 'cliente/getIVADefault').success(function(response){
 
-                                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
-                                        $scope.iva = parseInt(response[0].optionvalue);
+                                    var longitud = response.length;
+
+                                    for (var i = 0; i < longitud; i++) {
+                                        if (response[i].optionname === 'SRI_IVA_DEFAULT') {
+
+                                            if (response[i].optionvalue !== null && response[i].optionvalue !== '') {
+                                                $scope.iva = parseInt(response[i].optionvalue);
+                                            }
+
+                                        } else if (response[i].optionname === 'CONT_CLIENT_DEFAULT') {
+
+                                            console.log(response);
+
+                                            /*$scope.id_cont_cliente_default_h = response[i].idconfiguracionsystem;
+                                            $scope.cont_cliente_default_h = parseInt(response[i].optionvalue);
+                                            $scope.cont_cliente_default = response[i].concepto;*/
+
+                                            $scope.cuenta_employee = response[i].concepto;
+
+                                            $scope.select_cuenta = {
+                                                idplancuenta: response[i].optionvalue,
+                                                concepto: response[i].concepto
+                                            };
+
+                                        }
                                     }
-
-
 
                                     $scope.t_codigocliente = 0;
                                     $scope.t_fecha_ingreso = $scope.nowDate();
@@ -274,9 +295,11 @@
                                     $scope.telefonosecundariotrabajo = '';
                                     $scope.direcciontrabajo = '';
                                     $scope.correo = '';
-                                    $scope.cuenta_employee = '';
+                                    //$scope.cuenta_employee = '';
 
-                                    $scope.select_cuenta = null;
+                                    //$scope.select_cuenta = null;
+
+
 
                                     $scope.s_estado = '1';
 
@@ -506,6 +529,7 @@
                                 $scope.telefonosecundariotrabajo = item.telefonosecundariotrabajo;
                                 $scope.direcciontrabajo = item.direcciontrabajo;
                                 $scope.correo = item.email;
+
                                 $scope.cuenta_employee = item.concepto;
 
                                 var objectPlan = {

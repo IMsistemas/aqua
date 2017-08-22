@@ -114,7 +114,14 @@ class ClienteController extends Controller
 
     public function getIVADefault()
     {
-        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+        //return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
+
+        return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')
+                                    ->orWhere('optionname','CONT_CLIENT_DEFAULT')
+                                    ->selectRaw("*, (SELECT concepto FROM cont_plancuenta 
+                                                            WHERE cont_plancuenta.idplancuenta = (configuracionsystem.optionvalue)::INT 
+                                                            AND configuracionsystem.optionname <> 'SRI_IVA_DEFAULT') ")
+                                    ->get();
     }
 
     /**
