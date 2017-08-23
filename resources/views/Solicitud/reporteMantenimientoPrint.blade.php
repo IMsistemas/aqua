@@ -160,7 +160,6 @@
 						<td><?= ++$i ?></td>
 						<td class="text-center"><?= $elem->idsuministro ?></td>
 						<td class="text-left"><?= $elem->lastnamepersona . ' ' . $elem->namepersona ?></td>
-						<td class="text-right"><?= $elem->celphone ?></td>
 						<td class=""><?= $elem->direccionsuministro ?></td>
 						<td class=""><?= $elem->observacion  ?></td>
 
