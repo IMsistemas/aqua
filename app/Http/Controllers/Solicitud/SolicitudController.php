@@ -13,6 +13,7 @@ use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
+use App\Modelos\SRI\SRI_Establecimiento;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -255,6 +256,40 @@ class SolicitudController extends Controller
         $solicitud->telefonosuminstro = $request->input('telefonosuministro');
         $result = $solicitud->save();
         return ($result) ? response()->json(['success' => true]) : response()->json(['success' => false]);
+    }
+
+
+    private function getMantenimiento()
+    {
+        $solicitud = SolicitudMantenimiento::join('solicitud', 'solicitud.idsolicitud', '=', 'solicitudmantenimiento.idsolicitud')
+                                            ->join('cliente', 'cliente.idcliente', '=', 'solicitudmantenimiento.idcliente')
+                                            ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                                            ->join('suministro', 'suministro.idsuministro', '=', 'solicitudmantenimiento.idsuministro')
+                                            ->where('solicitud.estadoprocesada', true)->get();
+
+        return $solicitud;
+    }
+
+
+    public function reporte_printM()
+    {
+        ini_set('max_execution_time', 3000);
+
+        $filtro = $this->getMantenimiento();
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Solicitud.reporteMantenimientoPrint', compact('filtro','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('reportM_' . $today);
     }
 
 }

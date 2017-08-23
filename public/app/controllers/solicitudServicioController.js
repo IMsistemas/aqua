@@ -1728,6 +1728,18 @@
             $scope.reverse = !$scope.reverse;
         };
 
+        $scope.printReportMant = function() {
+
+            var accion = API_URL + 'solicitud/reporte_printM';
+
+            $('#WPrint_head').html('Listado Mantenimientos Pendientes');
+
+            $('#WPrint').modal('show');
+
+            $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+        };
+
         $scope.initLoad();
     });
 

@@ -24,6 +24,8 @@ Route::resource('/inicio', 'Index\IndexController');
  * -------------------------------------MODULO SOLICITUD----------------------------------------------------------------
  */
 
+Route::get('solicitud/reporte_printM', 'Solicitud\SolicitudController@reporte_printM');
+
 Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicitudes');
 Route::get('solicitud/getSolicitudOtro/{id}', 'Solicitud\SolicitudController@getSolicitudOtro');
 Route::get('solicitud/getSolicitudMantenimiento/{id}', 'Solicitud\SolicitudController@getSolicitudMantenimiento');
