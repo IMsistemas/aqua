@@ -557,7 +557,7 @@ $scope.cmb_estado_fact="A";
     	//--Costo venta producto
     	//---obtener costo venta
 
-        /*var costoventa={};
+        var costoventa={};
     	for(i=0;i<$scope.Configuracion.length;i++){
     		if($scope.Configuracion[i].Descripcion=="CONT_COSTO_VENTA"){
     			var auxcosto=$scope.Configuracion[i].Contabilidad;
@@ -578,7 +578,7 @@ $scope.cmb_estado_fact="A";
 		    	};
 		    	RegistroC.push(productocosto);
     		}	
-    	}*/
+    	}
     	//--Costo venta producto
 
     	//--Ingreso del item producto o servicio
