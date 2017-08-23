@@ -24,7 +24,9 @@ class SuministroController extends Controller
     public function getsuministros(Request $request)
     {
        return Suministro::with('cliente.persona', 'calle.barrio', 'cont_documentoventa.cont_puntoventa.sri_establecimiento')
-                                    ->orderBy('idsuministro', 'asc')->paginate(8);
+                        ->join('cliente', 'cliente.idcliente', '=', 'suministro.idcliente')
+                        ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                        ->orderBy('persona.lastnamepersona', 'asc')->paginate(8);
     }
 
     public function getSuministrosByBarrio($filter)

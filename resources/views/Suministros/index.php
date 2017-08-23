@@ -72,7 +72,7 @@
                 <tbody>
                 <tr dir-paginate="suministro in suministros| orderBy:sortKey:reverse|filter:busqueda|itemsPerPage:8" total-items="totalItems" ng-cloak>
                     <td>{{suministro.idsuministro}}</td>
-                    <td>{{suministro.cliente.persona.lastnamepersona}} {{suministro.cliente.persona.namepersona}}</td>
+                    <td>{{suministro.lastnamepersona}} {{suministro.namepersona}}</td>
                     <td>{{suministro.calle.barrio.namebarrio}}</td>
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
