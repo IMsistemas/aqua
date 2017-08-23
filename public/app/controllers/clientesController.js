@@ -585,6 +585,25 @@
             });
         };
 
+        $scope.printReport = function() {
+
+            var filtro = {
+                clientes: $scope.clientes
+            };
+
+            console.log(JSON.stringify(filtro));
+
+
+            var accion = API_URL + 'cliente/reporte_print/' + encodeURIComponent(JSON.stringify(filtro));
+
+            $('#WPrint_head').html('Reporte Centro de Costos');
+
+            $('#WPrint').modal('show');
+
+            $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+        };
+
         $scope.initLoad(1);
 
 

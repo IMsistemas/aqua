@@ -16,7 +16,7 @@
                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-3 col-xs-12">
                     <div class="input-group">
                         <span class="input-group-addon">Estado:</span>
                         <select class="form-control" name="s_estado_search" id="s_estado_search" ng-model="s_estado_search" ng-change="initLoad(1)">
@@ -26,10 +26,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-2 col-xs-12">
-                    <button type="button" class="btn btn-primary" style="float: right;" ng-click="showModalAddCliente()">
-                        Agregar <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
+                <div class="col-sm-3 col-xs-12">
+
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-primary" style="" ng-click="showModalAddCliente()">
+                            Agregar <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-info" ng-click="printReport();">
+                            Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
 
@@ -1714,6 +1721,27 @@
                         </div>
                         <div class="modal-body">
                             <span>{{message_error}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="WPrint" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header btn-primary">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="WPrint_head"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12" id="bodyprint">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i> </button>
                         </div>
                     </div>
                 </div>

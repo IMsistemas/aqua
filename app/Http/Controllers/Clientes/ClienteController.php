@@ -21,6 +21,7 @@ use App\Modelos\Solicitud\SolicitudMantenimiento;
 use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
+use App\Modelos\SRI\SRI_Establecimiento;
 use App\Modelos\SRI\SRI_Parte;
 use App\Modelos\SRI\SRI_TipoEmpresa;
 use App\Modelos\SRI\SRI_TipoIdentificacion;
@@ -293,6 +294,27 @@ class ClienteController extends Controller
         if ($cliente->delete()) {
             return response()->json(['success' => true]);
         } else return response()->json(['success' => false]);
+    }
+
+    public function reporte_print($parametro)
+    {
+        ini_set('max_execution_time', 300);
+
+        $filtro = json_decode(urldecode($parametro));
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Clientes.reporteClientePrint', compact('filtro','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->stream('reportCC_' . $today);
     }
 
 
