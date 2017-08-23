@@ -79,15 +79,19 @@
                 <td>
 
                     <span ng-if="item.total != null">
-                        <button type="button" class="btn btn-info btn-sm" ng-click="printer(item)"  title="Imprimir">
-                            <i class="fa fa-lg fa-print" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
-                            <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm" ng-click="showModalListCobro(item)" title="Cobros" >
-                             <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                        </button>
+
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-info btn-sm" ng-click="printer(item)"  title="Imprimir">
+                                <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
+                                <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showModalListCobro(item)" title="Cobros" >
+                                 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
                     </span>
 
 
