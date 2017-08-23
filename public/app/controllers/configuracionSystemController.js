@@ -63,7 +63,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                 $scope.t_pto = temp_ruc[1];
                 $scope.t_secuencial = temp_ruc[2];
 
-                if (response[0].contribuyenteespecial !== null) {
+                if (response[0].contribuyenteespecial !== null && response[0].contribuyenteespecial !== 'null') {
                     $scope.t_contribuyente = response[0].contribuyenteespecial;
                 } else $scope.t_contribuyente = '';
 
@@ -77,7 +77,6 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                     $scope.url_foto =API_URL+ response[0].rutalogo;
                     $scope.file = API_URL+response[0].rutalogo;
                 } else {
-
                     $scope.url_foto = 'img/empleado.png';
                 }
 
