@@ -594,9 +594,9 @@
             console.log(JSON.stringify(filtro));
 
 
-            var accion = API_URL + 'cliente/reporte_print/' + encodeURIComponent(JSON.stringify(filtro));
+            var accion = API_URL + 'cliente/reporte_print';
 
-            $('#WPrint_head').html('Reporte Centro de Costos');
+            $('#WPrint_head').html('Listado');
 
             $('#WPrint').modal('show');
 

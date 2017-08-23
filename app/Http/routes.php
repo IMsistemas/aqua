@@ -83,7 +83,7 @@ Route::resource('/tarifa', 'Tarifas\TarifaController');
  * -------------------------------------MODULO CLIENTE-------------------------------------------------------------------
  */
 
-Route::get('cliente/reporte_print/{filtro}', 'Clientes\ClienteController@reporte_print');
+Route::get('cliente/reporte_print', 'Clientes\ClienteController@reporte_print');
 Route::get('cliente/getTipoParte', 'Clientes\ClienteController@getTipoParte');
 Route::get('cliente/getTipoEmpresa', 'Clientes\ClienteController@getTipoEmpresa');
 Route::get('cliente/getClienteByIdentify/{idcliente}', 'Clientes\ClienteController@getClienteByIdentify');

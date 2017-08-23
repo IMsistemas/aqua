@@ -156,7 +156,7 @@
 			<tbody>
 				<?php $i = 0;?>
 
-				<?php foreach ($filtro->clientes as $elem):?>
+				<?php foreach ($filtro as $elem):?>
 					<tr>
 
 						<td><?= ++$i ?></td>

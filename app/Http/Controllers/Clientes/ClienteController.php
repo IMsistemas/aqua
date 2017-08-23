@@ -296,11 +296,19 @@ class ClienteController extends Controller
         } else return response()->json(['success' => false]);
     }
 
-    public function reporte_print($parametro)
+    private function getListClient()
+    {
+        return Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+            ->with('sri_tipoempresa', 'sri_parte')
+            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*')->orderBy('lastnamepersona', 'asc')->get();
+    }
+
+    public function reporte_print()
     {
         ini_set('max_execution_time', 300);
 
-        $filtro = json_decode(urldecode($parametro));
+        $filtro = $this->getListClient();
 
         $aux_empresa = SRI_Establecimiento::all();
 
