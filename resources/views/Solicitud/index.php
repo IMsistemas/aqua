@@ -44,7 +44,7 @@
                         Imprimir <i class="glyphicon glyphicon-print"></i> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#" ng-click="printReportMant();" ><i class="glyphicon glyphicon-print"></i> Mantenimientos sin atender</a></li>
+                        <li><a href="#" ng-click="printReportMant();" ><i class="glyphicon glyphicon-print"></i> Mantenimientos Pendientes</a></li>
                     </ul>
                 </div>
             </div>
