@@ -465,6 +465,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     //-----------------------------------------------------------------------------------------------------------------
 
     $scope.getConfigNC = function () {
+
+        $scope.getTipoComprobanteNC();
+
         $http.get(API_URL + 'configuracion/getConfigNC').success(function(response){
 
             var longitud = response.length;
@@ -504,6 +507,32 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         });
     };
 
+    $scope.getTipoComprobanteNC = function () {
+        $http.get(API_URL + 'configuracion/getTipoComprobanteNC').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecomprobante, id: response[i].idtipocomprobante})
+            }
+            $scope.listcomprobante_nc = array_temp;
+            $scope.comprobante_nc = '';
+
+            $http.get(API_URL + '/configuracion/getTipoComprobanteNCDefault').success(function(response){
+
+                if(response.length > 0){
+
+                    $scope.comprobante_nc_h = response[0].idconfiguracionsystem;
+
+                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                        $scope.comprobante_nc = parseInt(response[0].optionvalue);
+                    }
+                }
+            });
+
+        });
+    };
+
     $scope.saveConfigNC = function () {
         var iva = {
             idconfiguracionsystem: $scope.id_iva_nc_h,
@@ -517,10 +546,13 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             idconfiguracionsystem: $scope.id_irbpnr_nc_h,
             optionvalue: $scope.irbpnr_nc_h
         };
-
         var propina = {
             idconfiguracionsystem: $scope.id_propina_nc_h,
             optionvalue: $scope.propina_nc_h
+        };
+        var tipocomp = {
+            idconfiguracionsystem: $scope.comprobante_nc_h,
+            optionvalue: $scope.comprobante_nc
         };
 
         /*var retrenta = {
@@ -540,7 +572,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         var data = {
             //array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
-            array_data: [iva, ice, irbpnr, propina, costo]
+            array_data: [iva, ice, irbpnr, propina, costo, tipocomp]
         };
 
         console.log(data);

@@ -35,7 +35,8 @@ class Cont_DocumentoNotaCreditFactura extends Model
         'valortotalncf',
         'estadoanulado',
         'idtransaccion',
-        'motivoncf'
+        'motivoncf',
+        'idtipocomprobante',
     ];
 
     public function cliente(){

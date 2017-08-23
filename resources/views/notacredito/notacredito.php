@@ -11,7 +11,7 @@
     </div>
 
     <!--<div  class="container-fluid" ng-controller="Venta" ng-cloak ng-init="NumeroRegistroVenta();AllDocVenta();GetBodegas();GetFormaPago();GetPuntodeVenta(); ConfigContable();">-->
-    <div  class="col-xs-12" ng-controller="NC" ng-cloak ng-init=";GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();">
+    <div  class="col-xs-12" ng-controller="NC" ng-cloak ng-init=";GetPuntodeVenta(); ConfigContable();NumeroRegistroVenta();GetBodegas();GetFormaPago();GetTipoComprobanteV();">
 
 
 
@@ -215,6 +215,16 @@
                                     <span class="input-group-addon">Fecha Emisión: </span>
                                     <input type="text" class="form-control datepicker" id="FechaEmision" ng-model="FechaEmision"/>
                                 </div>
+                            </div>
+
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Tipo Comprobante: </span>
+                                    <select ng-disabled="impreso" class="form-control" name="tipocomprobante" id="tipocomprobante" ng-model="tipocomprobante" ng-required="true"
+                                            ng-options="value.id as value.label for value in listtipocomprobante">
+                                    </select>
+                                </div>
+                                <span class="help-block error" ng-show="formventa.tipocomprobante.$invalid && formventa.tipocomprobante.$touched">El Tipo Comprobante es requerido</span>
                             </div>
 
                             <!--<div class="col-xs-12" style="margin-top: 5px;">

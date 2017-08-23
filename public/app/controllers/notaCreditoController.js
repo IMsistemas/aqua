@@ -203,6 +203,32 @@ $scope.cmb_estado_fact="A";
 	            console.log(response);
 	     });
 	};
+    ///---
+    $scope.GetTipoComprobanteV=function () {
+        $http.get(API_URL + 'DocumentoNC/getTipoComprobante').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for (var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecomprobante, id: response[i].idtipocomprobante})
+            }
+
+            $scope.listtipocomprobante = array_temp;
+            $scope.tipocomprobante = '';
+
+            $http.get(API_URL + '/configuracion/getTipoComprobanteNCDefault').success(function(response){
+
+                if(response.length > 0){
+
+                    $scope.comprobante_venta_h = response[0].idconfiguracionsystem;
+
+                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                        $scope.tipocomprobante = parseInt(response[0].optionvalue);
+                    }
+                }
+            });
+        });
+    };
 	///---
 	$scope.GetFormaPago=function () {
 		$http.get(API_URL + 'DocumentoNC/formapago')
@@ -710,7 +736,8 @@ $scope.cmb_estado_fact="A";
             valortotalncf:$scope.ValorTotal,
     		estadoanulado:'false',
             motivoncf: $scope.observacion,
-    		idtransaccion:''
+    		idtransaccion:'',
+            idtipocomprobante: $scope.tipocomprobante
     	};
     	//--Documento de venta
     	//--Items venta

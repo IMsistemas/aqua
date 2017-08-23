@@ -592,6 +592,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Tipo Comprobante (defecto): </span>
+                                            <select class="form-control" name="comprobante_nc" id="comprobante_nc" ng-model="comprobante_nc"
+                                                    ng-options="value.id as value.label for value in listcomprobante_nc" required></select>
+                                            <input type="hidden" name="comprobante_nc_h" id="comprobante_nc_h" ng-model="comprobante_nc_h" />
+                                        </div>
+                                        <span class="help-block error"
+                                              ng-show="formNC.comprobante_nc.$invalid && formNC.comprobante_nc.$touched">El Tipo de Comprobante es requerido</span>
+                                    </div>
+
                                 </form>
 
 

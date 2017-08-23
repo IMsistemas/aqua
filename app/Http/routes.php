@@ -397,6 +397,7 @@ Route::resource('DocumentoCompras', 'Compras\ComprasController');
  * ----------------------------------MODULO NOTA CREDITO----------------------------------------------------------------
  */
 
+Route::get('DocumentoNC/getTipoComprobante', 'NotaCredito\NotaCreditoController@getTipoComprobante' );
 Route::get('DocumentoNC/getSuministroByFactura', 'NotaCredito\NotaCreditoController@getSuministroByFactura');
 Route::get('DocumentoNC/getProductoPorSuministro', 'NotaCredito\NotaCreditoController@getProductoPorSuministro');
 Route::get('DocumentoNC/getInfoClienteXCIRuc/{getInfoCliente}', 'NotaCredito\NotaCreditoController@getInfoClienteXCIRuc');
@@ -669,6 +670,10 @@ Route::get('configuracion/getSaveServicio', 'ConfiguracionSystem\ConfiguracionSy
 Route::get('configuracion/getListServicio', 'ConfiguracionSystem\ConfiguracionSystemController@getListServicio');
 Route::get('configuracion/getTipoComprobanteVenta', 'ConfiguracionSystem\ConfiguracionSystemController@getTipoComprobanteVenta');
 Route::get('configuracion/getTipoComprobanteVentaDefault', 'ConfiguracionSystem\ConfiguracionSystemController@getTipoComprobanteVentaDefault');
+
+Route::get('configuracion/getTipoComprobanteNC', 'ConfiguracionSystem\ConfiguracionSystemController@getTipoComprobanteNC');
+Route::get('configuracion/getTipoComprobanteNCDefault', 'ConfiguracionSystem\ConfiguracionSystemController@getTipoComprobanteNCDefault');
+
 Route::resource('configuracion', 'ConfiguracionSystem\ConfiguracionSystemController');
 
 
