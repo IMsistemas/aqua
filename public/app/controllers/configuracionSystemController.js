@@ -50,7 +50,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $http.get(API_URL + '/configuracion/getDataEmpresa').success(function(response){
 
-            if(response.length != 0){
+            console.log(response);
+
+            if(response.length !== 0){
                 $scope.t_razonsocial = response[0].razonsocial;
                 $scope.t_nombrecomercial = response[0].nombrecomercial;
                 $scope.t_direccion = response[0].direccionestablecimiento;
@@ -61,9 +63,11 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                 $scope.t_pto = temp_ruc[1];
                 $scope.t_secuencial = temp_ruc[2];
 
-                $scope.t_contribuyente = response[0].contribuyenteespecial;
+                if (response[0].contribuyenteespecial !== null) {
+                    $scope.t_contribuyente = response[0].contribuyenteespecial;
+                } else $scope.t_contribuyente = '';
 
-                if (response[0].obligadocontabilidad == true) {
+                if (response[0].obligadocontabilidad === true) {
                     $scope.s_obligado = '1';
                 } else $scope.s_obligado = '0';
 
