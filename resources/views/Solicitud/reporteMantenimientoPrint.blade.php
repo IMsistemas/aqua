@@ -145,10 +145,10 @@
 			<thead>
 				<tr>
 					<th style="width: 5%;">NO.</th>
-					<th style="width: 12%;">CONEXION</th>
+					<th style="width: 10%;">CONEXION</th>
 					<th>RAZON SOCIAL / APELLIDOS Y NOMBRE</th>
-					<th style="width: 25%;">DIRECCION</th>
-					<th style="width: 10%;">OBSERVACION</th>
+					<th style="width: 40%;">DIRECCION</th>
+					<th style="width: 30%;">OBSERVACION</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -160,7 +160,7 @@
 						<td><?= ++$i ?></td>
 						<td class="text-center"><?= $elem->idsuministro ?></td>
 						<td class="text-left"><?= $elem->lastnamepersona . ' ' . $elem->namepersona ?></td>
-						<td class=""><?= $elem->direccionsuministro ?></td>
+						<td class=""><?= $elem->direccionsumnistro ?></td>
 						<td class=""><?= $elem->observacion  ?></td>
 
 					</tr>
