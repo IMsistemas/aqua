@@ -147,8 +147,8 @@
 					<th style="width: 5%;">NO.</th>
 					<th style="width: 10%;">CONEXION</th>
 					<th>RAZON SOCIAL / APELLIDOS Y NOMBRE</th>
-					<th style="width: 40%;">DIRECCION</th>
-					<th style="width: 30%;">OBSERVACION</th>
+					<th style="width: 30%;">DIRECCION</th>
+					<th style="width: 25%;">OBSERVACION</th>
 				</tr>
 			</thead>
 			<tbody>
