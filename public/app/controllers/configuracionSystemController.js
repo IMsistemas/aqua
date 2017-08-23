@@ -193,6 +193,18 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
                             $scope.cont_prov_default_h = parseInt(response[i].optionvalue);
                             $scope.cont_prov_default = response[i].concepto;
 
+                        } else if (response[i].optionname === 'CONT_CXC_DEFAULT') {
+
+                            $scope.id_cont_cxc_default_h = response[i].idconfiguracionsystem;
+                            $scope.cont_cxc_default_h = parseInt(response[i].optionvalue);
+                            $scope.cont_cxc_default = response[i].concepto;
+
+                        } else if (response[i].optionname === 'CONT_CXP_DEFAULT') {
+
+                            $scope.id_cont_cxp_default_h = response[i].idconfiguracionsystem;
+                            $scope.cont_cxp_default_h = parseInt(response[i].optionvalue);
+                            $scope.cont_cxp_default = response[i].concepto;
+
                         }
                     }
                 }
@@ -213,9 +225,19 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             optionvalue: $scope.cont_prov_default_h
         };
 
+        var cxc = {
+            idconfiguracionsystem: $scope.id_cont_cxc_default_h,
+            optionvalue: $scope.cont_cxc_default_h
+        };
+
+        var cxp = {
+            idconfiguracionsystem: $scope.id_cont_cxp_default_h,
+            optionvalue: $scope.cont_cxp_default_h
+        };
+
         var data = {
             optionvalue: $scope.iva,
-            array_data: [cliente, proveedor]
+            array_data: [cliente, proveedor, cxc, cxp]
         };
 
         console.log(data);
