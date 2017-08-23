@@ -306,7 +306,7 @@ class ClienteController extends Controller
 
     public function reporte_print()
     {
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 3000);
 
         $filtro = $this->getListClient();
 
