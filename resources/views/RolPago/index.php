@@ -23,7 +23,7 @@
                 Registros <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
             </button>
 
-            <button type="button" ng-show="!listado" class="btn btn-default" ng-model="btn-anular" ng-disabled="numdocumento == 0 || estadoanulado == true" ng-click="showModalConfirm(item,0)">
+            <button type="button" ng-show="!listado" class="btn btn-default" id="btn-anular" ng-disabled="numdocumento == 0 || estadoanulado == true" ng-click="showModalConfirm(item,0)">
                 Anular <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
             </button>
 
@@ -31,7 +31,7 @@
                 Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
             </button>
 
-            <button type="button" ng-show="!listado" class="btn btn-info" ng-model="btn-print" ng-disabled="numdocumento == 0" ng-click="imprimirRol()">
+            <button type="button" ng-show="!listado" class="btn btn-info" id="btn-print" ng-disabled="numdocumento == 0" ng-click="imprimirRol()">
                 Imprimir <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
             </button>
 
