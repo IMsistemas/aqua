@@ -7,6 +7,7 @@ use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\SRI\SRI_Establecimiento;
 use App\Modelos\SRI\SRI_TipoAmbiente;
+use App\Modelos\SRI\SRI_TipoComprobante;
 use App\Modelos\SRI\SRI_TipoEmision;
 use Illuminate\Http\Request;
 use App\Modelos\SRI\SRI_TipoImpuestoIva;
@@ -61,6 +62,16 @@ class ConfiguracionSystemController extends Controller
                                         ->orWhere('optionname','SERV_MEDAMB_LECT')
                                         ->select('*')
                                         ->get();
+    }
+
+    public function getTipoComprobanteVenta()
+    {
+        return SRI_TipoComprobante::orderBy('namecomprobante', 'asc')->get();
+    }
+
+    public function getTipoComprobanteVentaDefault()
+    {
+        return ConfiguracionSystem::where('optionname','SRI_TIPOCOMP_VENTA_DEFAULT')->get();
     }
 
     public function updateListServicio(Request $request, $id)

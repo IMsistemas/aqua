@@ -333,6 +333,9 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
     //-----------------------------------------------------------------------------------------------------------------
 
     $scope.getConfigVenta = function () {
+
+        $scope.getTipoComprobanteVenta();
+
         $http.get(API_URL + 'configuracion/getConfigVenta').success(function(response){
 
             var longitud = response.length;
@@ -372,7 +375,34 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         });
     };
 
+    $scope.getTipoComprobanteVenta = function () {
+        $http.get(API_URL + 'configuracion/getTipoComprobanteVenta').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].namecomprobante, id: response[i].idtipocomprobante})
+            }
+            $scope.listcomprobante_venta = array_temp;
+            $scope.comprobante_venta = '';
+
+            $http.get(API_URL + '/configuracion/getTipoComprobanteVentaDefault').success(function(response){
+
+                if(response.length > 0){
+
+                    $scope.comprobante_venta_h = response[0].idconfiguracionsystem;
+
+                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                        $scope.comprobante_venta = parseInt(response[0].optionvalue);
+                    }
+                }
+            });
+
+        });
+    };
+
     $scope.saveConfigVenta = function () {
+
         var iva = {
             idconfiguracionsystem: $scope.id_iva_venta_h,
             optionvalue: $scope.iva_venta_h
@@ -385,11 +415,13 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
             idconfiguracionsystem: $scope.id_irbpnr_venta_h,
             optionvalue: $scope.irbpnr_venta_h
         };
-
-
         var propina = {
             idconfiguracionsystem: $scope.id_propina_venta_h,
             optionvalue: $scope.propina_venta_h
+        };
+        var tipocomp = {
+            idconfiguracionsystem: $scope.comprobante_venta_h,
+            optionvalue: $scope.comprobante_venta
         };
 
         /*var retrenta = {
@@ -409,7 +441,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         var data = {
             //array_data: [iva, ice, irbpnr, retiva, propina, retrenta, costo]
-            array_data: [iva, ice, irbpnr, propina, costo]
+            array_data: [iva, ice, irbpnr, propina, costo, tipocomp]
         };
 
         $http.put(API_URL + '/configuracion/updateConfigVenta/0', data ).success(function (response) {

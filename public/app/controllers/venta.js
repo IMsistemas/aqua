@@ -233,6 +233,18 @@ $scope.cmb_estado_fact="A";
 
             $scope.listtipocomprobante = array_temp;
             $scope.tipocomprobante = '';
+
+            $http.get(API_URL + '/configuracion/getTipoComprobanteVentaDefault').success(function(response){
+
+                if(response.length > 0){
+
+                    $scope.comprobante_venta_h = response[0].idconfiguracionsystem;
+
+                    if (response[0].optionvalue !== null && response[0].optionvalue !== '') {
+                        $scope.tipocomprobante = parseInt(response[0].optionvalue);
+                    }
+                }
+            });
         });
     };
 	///---
