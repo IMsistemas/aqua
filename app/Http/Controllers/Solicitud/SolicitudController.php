@@ -265,7 +265,7 @@ class SolicitudController extends Controller
                                             ->join('cliente', 'cliente.idcliente', '=', 'solicitudmantenimiento.idcliente')
                                             ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
                                             ->join('suministro', 'suministro.idsuministro', '=', 'solicitudmantenimiento.idsuministro')
-                                            ->where('solicitud.estadoprocesada', true)->get();
+                                            ->where('solicitud.estadoprocesada', false)->get();
 
         return $solicitud;
     }
