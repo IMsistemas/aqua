@@ -36,9 +36,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getListServicio();
 
 
-        setTimeout($scope.getConceptos(), 3000);
-
-
+        setTimeout($scope.getConceptos(), 5000);
 
 
     };
