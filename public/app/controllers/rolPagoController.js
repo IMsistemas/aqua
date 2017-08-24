@@ -57,7 +57,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             ignoreReadonly: true
         });
 
-        $scope.getCuentas();
+        //$scope.getCuentas();
 
         $scope.getDataEmpresa();
 
@@ -65,7 +65,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $scope.getRoles();
 
-        setTimeout(function(){ $scope.getConceptos(); }, 1500);
+        //setTimeout(function(){ $scope.getConceptos(); }, 1500);
 
         $scope.diascalculo = 30;
         $scope.horascalculo  = 240;
@@ -118,6 +118,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $http.get(API_URL + 'rolPago/getCuentas').success(function(response){
 
             $scope.listCuentas = response;
+
+            $scope.getConceptos();
 
         });
     };
@@ -702,6 +704,14 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     };
 
     $scope.viewInfoRol = function (item) {
+
+        $scope.sueldos = [];
+        $scope.ingresos1 = [];
+        $scope.ingresos2 = [];
+        $scope.ingresos3 = [];
+        $scope.beneficios = [];
+        $scope.deducciones = [];
+        $scope.benefadicionales = [];
 
         $http.get(API_URL + 'rolPago/getRolPago/' + item.numdocumento).success(function(response){
 
