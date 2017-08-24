@@ -13,7 +13,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.initLoad = function () {
 
-        $scope.getCuentas();
+        //$scope.getCuentas();
 
         $scope.getDataEmpresa();
 
@@ -36,7 +36,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getListServicio();
 
 
-        setTimeout($scope.getConceptos(), 5000);
+        //setTimeout($scope.getConceptos(), 5000);
 
 
     };
@@ -629,6 +629,8 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $http.get(API_URL + 'rolPago/getCuentas').success(function(response){
 
             $scope.listCuentas = response;
+
+            $scope.getConceptos();
 
         });
     };
