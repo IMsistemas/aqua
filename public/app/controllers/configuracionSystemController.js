@@ -13,7 +13,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.initLoad = function () {
 
-        $scope.getCuentas();
+        //$scope.getCuentas();
 
         $scope.getDataEmpresa();
 
@@ -25,7 +25,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $scope.getConfigNC();
 
-        //$scope.getConceptos();
+        $scope.getConceptos();
 
         $scope.getConfigNomina();
 
@@ -664,7 +664,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $http.get(API_URL + 'configNomina/getConceptos').success(function(response){
 
-            //console.log(response);
+            console.log(response);
 
             var longitud = response.length;
             var array_temp = [];
