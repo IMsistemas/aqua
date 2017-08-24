@@ -25,7 +25,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
         $scope.getConfigNC();
 
-        $scope.getConceptos();
+
 
         $scope.getConfigNomina();
 
@@ -34,6 +34,11 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
         $scope.getConfigSRI();
 
         $scope.getListServicio();
+
+
+        setTimeout($scope.getConceptos(), 3000);
+
+
 
 
     };
