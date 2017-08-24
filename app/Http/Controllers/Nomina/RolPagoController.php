@@ -40,7 +40,7 @@ class RolPagoController extends Controller
         return Empleado::join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
             ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
             ->select('empleado.*', 'cargo.namecargo', 'persona.*' )
-            ->where('persona.idpersona', $id)->get();
+            ->where('empleado.idempleado', $id)->get();
 
     }
 
