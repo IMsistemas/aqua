@@ -111,14 +111,8 @@ class RolPagoController extends Controller
 
             CoreContabilidad::AnularAsientoContable($idtransaccion);
 
-            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $idtransaccion)
-                ->update(['estadoanulado' => true]);
-
-            if ($result == false) {
-                return response()->json(['success' => false]);
-            }
-
             return response()->json(['success' => true]);
+
         } else {
             return response()->json(['success' => false]);
         }
