@@ -57,6 +57,14 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             ignoreReadonly: true
         });
 
+        $scope.sueldos = [];
+        $scope.ingresos1 = [];
+        $scope.ingresos2 = [];
+        $scope.ingresos3 = [];
+        $scope.beneficios = [];
+        $scope.deducciones = [];
+        $scope.benefadicionales = [];
+
         $scope.getCuentas();
 
         $scope.getDataEmpresa();
