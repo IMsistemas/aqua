@@ -13,7 +13,7 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     $scope.initLoad = function () {
 
-        //$scope.getCuentas();
+        $scope.getCuentas();
 
         $scope.getDataEmpresa();
 
