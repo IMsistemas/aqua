@@ -119,8 +119,6 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             $scope.listCuentas = response;
 
-            //$scope.getConceptos();
-
         });
     };
 
@@ -705,13 +703,13 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.viewInfoRol = function (item) {
 
-        $scope.sueldos = [];
+        /*$scope.sueldos = [];
         $scope.ingresos1 = [];
         $scope.ingresos2 = [];
         $scope.ingresos3 = [];
         $scope.beneficios = [];
         $scope.deducciones = [];
-        $scope.benefadicionales = [];
+        $scope.benefadicionales = [];*/
 
         $http.get(API_URL + 'rolPago/getRolPago/' + item.numdocumento).success(function(response){
 
