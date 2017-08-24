@@ -57,7 +57,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             ignoreReadonly: true
         });
 
-        //$scope.getCuentas();
+        $scope.getCuentas();
 
         $scope.getDataEmpresa();
 
