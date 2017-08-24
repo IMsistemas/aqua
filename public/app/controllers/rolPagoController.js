@@ -105,7 +105,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             var longitud = response.length;
             var array_temp = [{label: '-- Seleccione --', id: ''}];
             for(var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].namepersona + " " + response[i].lastnamepersona, id: response[i].idpersona})
+                array_temp.push({label: response[i].namepersona + " " + response[i].lastnamepersona, id: response[i].idempleado})
             }
 
             $scope.empleados = array_temp;
