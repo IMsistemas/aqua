@@ -64,6 +64,9 @@
                     <th style="width: 12%;">
                         <a href="#" style="text-decoration:none; color:white;" >FACTURA</a>
                     </th>
+                    <th style="width: 8%;">
+                        <a href="#" style="text-decoration:none; color:white;" >VALOR</a>
+                    </th>
                     <th style="width: 12%;">
                         <a href="#" style="text-decoration:none; color:white;" >ACCIONES</a>
                     </th>
@@ -77,6 +80,7 @@
                     <td>{{suministro.direccionsumnistro}}</td>
                     <td>{{suministro.telefonosuministro}}</td>
                     <td>{{numFactura(suministro)}}</td>
+                    <td class="text-right">{{suministro.valortotalsuministro}}</td>
                     <td>
 
                         <div class="btn-group" role="group" aria-label="...">
