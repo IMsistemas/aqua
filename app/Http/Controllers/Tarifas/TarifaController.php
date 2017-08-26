@@ -6,6 +6,7 @@ use App\Modelos\Suministros\Suministro;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Tarifas\TarifaAguaPotable;
+use App\Modelos\Tarifas\TarifaRubro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -63,6 +64,11 @@ class TarifaController extends Controller
     public function getExcedente($id)
     {
         return ExcedenteTarifa::where('idtarifaaguapotable', $id)->get();
+    }
+
+    public function getRubro($id)
+    {
+        return TarifaRubro::where('idtarifaaguapotable', $id)->get();
     }
 
 
@@ -187,7 +193,25 @@ class TarifaController extends Controller
 
                 }
 
-                return response()->json(['success' => true]);
+                $result2 = TarifaRubro::where('idtarifaaguapotable', $id)->delete();
+
+                if ($result2 !== false) {
+
+                    $rubros = new TarifaRubro();
+                    $rubros->idtarifaaguapotable = $id;
+                    $rubros->alcantarillado = $request->input('alcantarillado');
+                    $rubros->desechosolido = $request->input('ddss');
+                    $rubros->medioambiente = $request->input('ma');
+
+                    if ($rubros->save() == false) {
+                        return response()->json(['success' => false, 'who' => 'insertrubro']);
+                    }
+
+                    return response()->json(['success' => true]);
+
+                } else return response()->json(['success' => false, 'who' => 'deleterubros']);
+
+
 
             } else return response()->json(['success' => false, 'who' => 'deleteexcedente']);
 

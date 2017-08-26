@@ -70,6 +70,7 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
  * -------------------------------------MODULO TARIFA-------------------------------------------------------------------
  */
 
+Route::get('tarifa/getRubro/{id}', 'Tarifas\TarifaController@getRubro');
 Route::get('tarifa/getExcedente/{id}', 'Tarifas\TarifaController@getExcedente');
 Route::get('tarifa/getTarifaBasica/{id}', 'Tarifas\TarifaController@getTarifaBasica');
 Route::get('tarifa/getTarifaByID/{id}', 'Tarifas\TarifaController@getTarifaByID');

@@ -58,6 +58,9 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
 
                 $scope.listbasica = [];
                 $scope.listexcedente = [];
+                $scope.alcantarillado = '';
+                $scope.ddss = '';
+                $scope.ma = '';
 
                 $scope.idc = id;
 
@@ -69,7 +72,16 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
 
                         $scope.listexcedente = response;
 
-                        $('#modalAction').modal('show');
+                        $http.get(API_URL + 'tarifa/getRubro/' + id).success(function(response) {
+
+                            if (response.length !== 0) {
+                                $scope.alcantarillado = response[0].alcantarillado;
+                                $scope.ddss = response[0].desechosolido;
+                                $scope.ma = response[0].medioambiente;
+                            }
+
+                            $('#modalAction').modal('show');
+                        });
                     });
                 });
 
