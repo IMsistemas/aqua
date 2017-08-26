@@ -31,12 +31,14 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
+
             case 'add':
                 $scope.form_title = "Nueva Tarifa";
                 $scope.nombretarifa = '';
                 $('#modalActionCargo').modal('show');
 
                 break;
+
             case 'edit':
 
                 $scope.form_title = "Editar Tarifa";
@@ -51,13 +53,71 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
                     $('#modalActionCargo').modal('show');
                 });
                 break;
+
+            case 'action':
+
+                $scope.listbasica = [];
+                $scope.listexcedente = [];
+
+                $scope.idc = id;
+
+                $http.get(API_URL + 'tarifa/getTarifaBasica/' + id).success(function(response) {
+
+                    $scope.listbasica = response;
+
+                    $http.get(API_URL + 'tarifa/getExcedente/' + id).success(function(response) {
+
+                        $scope.listexcedente = response;
+
+                        $('#modalAction').modal('show');
+                    });
+                });
+
+                break;
+
             default:
                 break;
         }
     };
 
-    $scope.Save = function (){
+    $scope.createRowBasica = function () {
 
+        var item = {
+            apartirdenm3: '',
+            valortarifa: ''
+        };
+
+        $scope.listbasica.push(item);
+
+    };
+
+    $scope.deleteRowBasica = function (item) {
+
+        var posicion = $scope.listbasica.indexOf(item);
+        $scope.listbasica.splice(posicion,1);
+
+    };
+
+    $scope.createRowExcedente = function () {
+
+        var item = {
+            desdenm3: '',
+            valorexcedente: ''
+        };
+
+        $scope.listexcedente.push(item);
+
+    };
+
+    $scope.deleteRowExcedente = function (item) {
+
+        var posicion = $scope.listexcedente.indexOf(item);
+        $scope.listexcedente.splice(posicion,1);
+
+    };
+
+
+    $scope.Save = function (){
 
         var data = {
             nametarifaaguapotable: $scope.nombretarifa
@@ -103,6 +163,37 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
                 });
                 break;
         }
+    };
+
+    $scope.saveParams = function () {
+
+        var data = {
+            basica: $scope.listbasica,
+            excedente: $scope.listexcedente
+        };
+
+        console.log(data);
+
+        $http.put(API_URL + 'tarifa/saveParams/'+ $scope.idc, data ).success(function (response) {
+
+            $('#modalAction').modal('hide');
+
+            if (response.success === true) {
+
+                $scope.message = 'Se editó correctamente los parametros de la Tarifa seleccionada';
+                $('#modalMessage').modal('show');
+
+            } else {
+
+                $scope.message_error = 'Ha ocurrido un error al intentar editar los parametros de la Tarifa seleccionada...';
+                $('#modalMessageError').modal('show');
+            }
+
+            $scope.hideModalMessage();
+        }).error(function (res) {
+
+        });
+
     };
 
     $scope.showModalConfirm = function (item) {

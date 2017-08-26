@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Tarifas;
 
 use App\Modelos\Suministros\Suministro;
+use App\Modelos\Tarifas\CostoTarifa;
+use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Tarifas\TarifaAguaPotable;
 use Illuminate\Http\Request;
 
@@ -50,6 +52,19 @@ class TarifaController extends Controller
     {
         return TarifaAguaPotable::where('idtarifaaguapotable', $id)->get();
     }
+
+
+
+    public function getTarifaBasica($id)
+    {
+        return CostoTarifa::where('idtarifaaguapotable', $id)->get();
+    }
+
+    public function getExcedente($id)
+    {
+        return ExcedenteTarifa::where('idtarifaaguapotable', $id)->get();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -134,6 +149,49 @@ class TarifaController extends Controller
                 return response()->json(['success' => false, 'repeat' => false]);
             }
         }
+    }
+
+    public function updateParams(Request $request, $id)
+    {
+        $result0 = CostoTarifa::where('idtarifaaguapotable', $id)->delete();
+
+        if ($result0 !== false) {
+
+            foreach ($request->input('basica') as $item) {
+
+                $costotarifa = new CostoTarifa();
+                $costotarifa->idtarifaaguapotable = $id;
+                $costotarifa->apartirdenm3 = $item['apartirdenm3'];
+                $costotarifa->valortarifa = $item['valortarifa'];
+
+                if ($costotarifa->save() == false) {
+                    return response()->json(['success' => false, 'who' => 'insertbasica']);
+                }
+
+            }
+
+            $result1 = ExcedenteTarifa::where('idtarifaaguapotable', $id)->delete();
+
+            if ($result1 !== false) {
+
+                foreach ($request->input('excedente') as $item) {
+
+                    $excedente = new ExcedenteTarifa();
+                    $excedente->idtarifaaguapotable = $id;
+                    $excedente->desdenm3 = $item['desdenm3'];
+                    $excedente->valorexcedente = $item['valorexcedente'];
+
+                    if ($excedente->save() == false) {
+                        return response()->json(['success' => false, 'who' => 'insertexcedente']);
+                    }
+
+                }
+
+                return response()->json(['success' => true]);
+
+            } else return response()->json(['success' => false, 'who' => 'deleteexcedente']);
+
+        } else return response()->json(['success' => false, 'who' => 'deletebasica']);
     }
 
     /**

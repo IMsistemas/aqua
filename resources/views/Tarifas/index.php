@@ -1,6 +1,5 @@
 
 
-
 <div ng-controller="tarifaController">
 
     <div class="col-xs-12">
@@ -31,24 +30,27 @@
                 <thead class="bg-primary">
                 <tr>
                     <th>NOMBRE TARIFA</th>
-                    <th style="width: 18%;">ACCIONES</th>
+                    <th style="width: 25%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="item in tarifas | orderBy:sortKey:reverse | itemsPerPage:10" total-items="totalItems" ng-cloak">
-                <td>{{item.nametarifaaguapotable}}</td>
-                <td class="text-center">
+                    <td>{{item.nametarifaaguapotable}}</td>
+                    <td class="text-center">
 
-                    <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idtarifaaguapotable)">
-                            Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
-                            Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
-                    </div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary" ng-click="toggle('action', item.idtarifaaguapotable)">
+                                Parametros <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning" ng-click="toggle('edit', item.idtarifaaguapotable)">
+                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="showModalConfirm(item)">
+                                Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </div>
 
-                </td>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -153,6 +155,136 @@
                         Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+
+                <form class="form-horizontal" name="formTarifa" novalidate="">
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div id="dvTab" style="margin-top: 5px;">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active tabs"><a href="#basica" aria-controls="basica" role="tab" data-toggle="tab"> Basica</a></li>
+                                    <li role="presentation" class="tabs"><a href="#excedente" aria-controls="excedente" role="tab" data-toggle="tab"> Excedente</a></li>
+                                    <li role="presentation" class="tabs"><a href="#otros" aria-controls="otros" role="tab" data-toggle="tab"> Otros</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="basica" style="padding-top: 3px;">
+
+                                        <div class="col-xs-12" style="margin-top: 5px;">
+                                            <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="createRowBasica()">
+                                                Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                                            </button>
+                                        </div>
+
+                                        <div class="col-xs-12" style="font-size: 12px !important; margin-top: 5px;">
+
+                                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                                <thead class="bg-primary">
+                                                <tr>
+                                                    <th>DESDE</th>
+                                                    <th>VALOR</th>
+                                                    <th style="width: 5%;"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="elem_b in listbasica" ng-cloak >
+
+                                                        <td>
+                                                            <input type="text" class="form-control" ng-model="elem_b.apartirdenm3" ng-keypress="onlyNumber($event, undefined, undefined)" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" ng-model="elem_b.valortarifa" />
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger" ng-click="deleteRowBasica(elem_b)"
+                                                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="excedente">
+
+                                        <div class="col-xs-12" style="margin-top: 5px;">
+                                            <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="createRowExcedente()">
+                                                Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                                            </button>
+                                        </div>
+
+                                        <div class="col-xs-12" style="font-size: 12px !important; margin-top: 5px;">
+
+                                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                                <thead class="bg-primary">
+                                                <tr>
+                                                    <th>DESDE</th>
+                                                    <th>VALOR</th>
+                                                    <th style="width: 5%;"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="elem_e in listexcedente" ng-cloak >
+
+                                                        <td>
+                                                            <input type="text" class="form-control" ng-model="elem_e.desdenm3" ng-keypress="onlyNumber($event, undefined, undefined)" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" ng-model="elem_e.valorexcedente" />
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger" ng-click="deleteRowExcedente(elem_e)"
+                                                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="otros">
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formEmployee.$invalid">
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>

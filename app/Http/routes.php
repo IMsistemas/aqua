@@ -70,8 +70,10 @@ Route::resource('verLectura', 'Lecturas\ViewLecturaController');
  * -------------------------------------MODULO TARIFA-------------------------------------------------------------------
  */
 
+Route::get('tarifa/getExcedente/{id}', 'Tarifas\TarifaController@getExcedente');
+Route::get('tarifa/getTarifaBasica/{id}', 'Tarifas\TarifaController@getTarifaBasica');
 Route::get('tarifa/getTarifaByID/{id}', 'Tarifas\TarifaController@getTarifaByID');
-
+Route::put('tarifa/saveParams/{id}', 'Tarifas\TarifaController@updateParams');
 Route::get('tarifa/getTarifas', 'Tarifas\TarifaController@getTarifas');
 Route::get('tarifa/getAreaCaudal/{data}', 'Tarifas\TarifaController@getAreaCaudal');
 Route::get('tarifa/getConstante', 'Tarifas\TarifaController@getConstante');

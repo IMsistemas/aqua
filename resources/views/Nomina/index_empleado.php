@@ -1,6 +1,4 @@
 
-
-
 <div ng-controller="empleadosController">
 
     <div class="col-xs-12">
