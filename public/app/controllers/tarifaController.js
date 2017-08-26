@@ -169,7 +169,10 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
 
         var data = {
             basica: $scope.listbasica,
-            excedente: $scope.listexcedente
+            excedente: $scope.listexcedente,
+            alcantarillado: $scope.alcantarillado,
+            ddss: $scope.ddss,
+            ma: $scope.ma
         };
 
         console.log(data);

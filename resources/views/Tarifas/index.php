@@ -265,6 +265,35 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="otros">
 
+                                        <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Alcantarillado (%): </span>
+                                                <input type="text" class="form-control" name="alcantarillado" id="alcantarillado" ng-model="alcantarillado" placeholder=""
+                                                       ng-required="true">
+                                            </div>
+                                            <span class="help-block error"
+                                                  ng-show="formTarifa.alcantarillado.$invalid && formTarifa.alcantarillado.$touched">Alcantarillado es requerido</span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Desechos Sólidos (%): </span>
+                                                <input type="text" class="form-control" name="ddss" id="ddss" ng-model="ddss" placeholder=""
+                                                       ng-required="true">
+                                            </div>
+                                            <span class="help-block error"
+                                                  ng-show="formTarifa.ddss.$invalid && formTarifa.ddss.$touched">Desechos Sólidos es requerido</span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-12 error" style="margin-top: 5px;">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Medio Ambiente: </span>
+                                                <input type="text" class="form-control" name="ma" id="ma" ng-model="ma" placeholder=""
+                                                       ng-required="true">
+                                            </div>
+                                            <span class="help-block error"
+                                                  ng-show="formTarifa.ma.$invalid && formTarifa.ma.$touched">Medio Ambiente es requerido</span>
+                                        </div>
 
                                     </div>
                                 </div>
