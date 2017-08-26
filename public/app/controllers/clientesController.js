@@ -587,20 +587,23 @@
 
         $scope.printReport = function() {
 
-            var filtro = {
-                clientes: $scope.clientes
-            };
+            if ($scope.clientes.length > 0) {
 
-            console.log(JSON.stringify(filtro));
+                var accion = API_URL + 'cliente/reporte_print';
 
+                $('#WPrint_head').html('Listado');
 
-            var accion = API_URL + 'cliente/reporte_print';
+                $('#WPrint').modal('show');
 
-            $('#WPrint_head').html('Listado');
+                $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
 
-            $('#WPrint').modal('show');
+            } else {
 
-            $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+                $scope.message_error = 'No existen datos para imprimir...';
+
+                $('#modalMessageError').modal('show');
+
+            }
 
         };
 

@@ -50,10 +50,10 @@ $scope.cmb_estado_fact="A";
                     var precioventa = 0;
 
 
-                    if (response0[i].idcatalogitem == 1) {
-                        precioventa = response[0].valoralcantarillado;
-                    } else if (response0[i].idcatalogitem == 2) {
-                        precioventa = response[0].valoraguapotable;
+                    if (response0[i].idcatalogitem === 1) {
+                        precioventa = response[0].valortotalsuministro;
+                    } else if (response0[i].idcatalogitem === 2) {
+                        precioventa = response[0].valorgarantia;
                     } else {
                         precioventa = response0[i].precioventa;
                     }

@@ -802,7 +802,7 @@
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">Dividendos: </span>
+                                <span class="input-group-addon">Dividendos (Cantidad Cuotas): </span>
                                 <input type="text" class="form-control" placeholder="Para sistema AYORA"
                                     name="t_ayora_dividendos" id="t_ayora_dividendos" ng-model="t_ayora_dividendos" required
                                        ng-keypress="onlyNumber($event, 100, 't_ayora_dividendos')" />
@@ -852,7 +852,7 @@
                     <hr>
 
                     <form class="form-horizontal" name="formEspecifica" novalidate="">
-                        <table class="table table-responsive table-striped">
+                        <table class="table table-responsive table-striped table-bordered">
                             <thead class="bg-primary">
                                 <tr>
                                     <th style="width: 50%;">LECTURA</th>
