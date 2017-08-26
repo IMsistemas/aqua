@@ -247,5 +247,44 @@ app.controller('tarifaController', function($scope, $http, API_URL) {
     };
 
 
+    $scope.onlyNumber = function ($event, length, field) {
+
+        if (length != undefined) {
+            var valor = $('#' + field).val();
+            if (valor.length == length) $event.preventDefault();
+        }
+
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /\d/;
+        var n = String.fromCharCode(k);
+
+        if (n == ".") {
+            return true;
+        } else {
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+            }
+            else return true;
+        }
+    };
+
+    $scope.onlyDecimal = function ($event) {
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /\d/;
+        var n = String.fromCharCode(k);
+        if (n == ".") {
+            return true;
+        } else {
+            if(patron.test(n) == false){
+                $event.preventDefault();
+            }
+            else return true;
+        }
+    };
+
+
     $scope.initLoad();
 });

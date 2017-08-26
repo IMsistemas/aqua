@@ -176,7 +176,7 @@
 
                             <div id="dvTab" style="margin-top: 5px;">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active tabs"><a href="#basica" aria-controls="basica" role="tab" data-toggle="tab"> Basica</a></li>
+                                    <li role="presentation" class="active tabs"><a href="#basica" aria-controls="basica" role="tab" data-toggle="tab"> Básica</a></li>
                                     <li role="presentation" class="tabs"><a href="#excedente" aria-controls="excedente" role="tab" data-toggle="tab"> Excedente</a></li>
                                     <li role="presentation" class="tabs"><a href="#otros" aria-controls="otros" role="tab" data-toggle="tab"> Otros</a></li>
                                 </ul>
@@ -203,10 +203,10 @@
                                                     <tr ng-repeat="elem_b in listbasica" ng-cloak >
 
                                                         <td>
-                                                            <input type="text" class="form-control" ng-model="elem_b.apartirdenm3" ng-keypress="onlyNumber($event, undefined, undefined)" />
+                                                            <input type="text" class="form-control" ng-model="elem_b.apartirdenm3" ng-keypress="onlyDecimal($event)" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" ng-model="elem_b.valortarifa" />
+                                                            <input type="text" class="form-control" ng-model="elem_b.valortarifa" ng-keypress="onlyDecimal($event)" />
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-danger" ng-click="deleteRowBasica(elem_b)"
@@ -244,10 +244,10 @@
                                                     <tr ng-repeat="elem_e in listexcedente" ng-cloak >
 
                                                         <td>
-                                                            <input type="text" class="form-control" ng-model="elem_e.desdenm3" ng-keypress="onlyNumber($event, undefined, undefined)" />
+                                                            <input type="text" class="form-control" ng-model="elem_e.desdenm3" ng-keypress="onlyDecimal($event)" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" ng-model="elem_e.valorexcedente" />
+                                                            <input type="text" class="form-control" ng-model="elem_e.valorexcedente" ng-keypress="onlyDecimal($event)" />
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-danger" ng-click="deleteRowExcedente(elem_e)"
@@ -269,7 +269,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Alcantarillado (%): </span>
                                                 <input type="text" class="form-control" name="alcantarillado" id="alcantarillado" ng-model="alcantarillado" placeholder=""
-                                                       ng-required="true">
+                                                       ng-required="true" ng-keypress="onlyDecimal($event)">
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formTarifa.alcantarillado.$invalid && formTarifa.alcantarillado.$touched">Alcantarillado es requerido</span>
@@ -279,7 +279,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Desechos Sólidos (%): </span>
                                                 <input type="text" class="form-control" name="ddss" id="ddss" ng-model="ddss" placeholder=""
-                                                       ng-required="true">
+                                                       ng-required="true" ng-keypress="onlyDecimal($event)">
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formTarifa.ddss.$invalid && formTarifa.ddss.$touched">Desechos Sólidos es requerido</span>
@@ -289,7 +289,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">Medio Ambiente: </span>
                                                 <input type="text" class="form-control" name="ma" id="ma" ng-model="ma" placeholder=""
-                                                       ng-required="true">
+                                                       ng-required="true" ng-keypress="onlyDecimal($event)">
                                             </div>
                                             <span class="help-block error"
                                                   ng-show="formTarifa.ma.$invalid && formTarifa.ma.$touched">Medio Ambiente es requerido</span>
@@ -309,7 +309,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formEmployee.$invalid">
+                    <button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formTarifa.$invalid">
                         Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                     </button>
                 </div>
