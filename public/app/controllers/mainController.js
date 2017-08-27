@@ -329,6 +329,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "rolPago";
     };
 
+    $scope.toModuloReembolso = function(){
+        $scope.titulo = "Reembolso";
+        $scope.toModulo = "reembolso";
+    };
+
     $scope.toModuloTarifa = function(){
         $scope.titulo = "Tarifas";
         $scope.toModulo = "tarifa";

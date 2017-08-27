@@ -131,6 +131,7 @@
                                         <ul class="dropdown-menu">
                                             <li id="permiso_10"><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
                                             <li id="permiso_11"><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
+                                            <li id="permiso_11"><a href="#" ng-click="toModuloReembolso();">Reembolso</a></li>
                                             <li id="permiso_13"><a href="#" ng-click="toModuloCuentasxPagar();">Cuentas por Pagar (Comprobante Egreso)</a></li>
                                             <li id="permiso_39"><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
