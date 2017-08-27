@@ -1,15 +1,11 @@
 
 app.controller('suministrosController', function($scope, $http, API_URL) {
 
-
     $( document ).ready(function() {
         $('#modalFactura').on('hidden.bs.modal', function () {
             $scope.initLoad(1);
         });
     });
-
-
-
 
     $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
