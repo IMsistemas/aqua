@@ -317,6 +317,12 @@ Route::get('transportista/searchDuplicate/{identify}', 'Transportista\Transporti
 Route::resource('/transportista', 'Transportista\TransportistaController');
 
 /*
+ * -------------------------------------MODULO REEMBOLSO----------------------------------------------------------------
+ */
+
+Route::resource('/reembolso', 'Reembolso\ReembolsoController');
+
+/*
  * -------------------------------------MODULO RETENCION COMPRA---------------------------------------------------------
  */
 
@@ -334,7 +340,7 @@ Route::post('retencionCompra/getCompras', 'Retencion\RetencionCompraController@g
 Route::resource('retencionCompras', 'Retencion\RetencionCompraController');
 
 /*
- * -------------------------------------MODULO RETENCION COMPRA---------------------------------------------------------
+ * -------------------------------------MODULO RETENCION VENTA----------------------------------------------------------
  */
 
 Route::post('retencionVenta/anularRetencion', 'Retencion\RetencionVentaController@anularRetencion');

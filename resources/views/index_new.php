@@ -422,6 +422,7 @@
     <script src="<?= asset('app/controllers/cobroServicioController.js') ?>"></script>
     <script src="<?= asset('app/controllers/rolPagoController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ConciliacionController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/reembolsoController.js') ?>"></script>
 
     </body>
 </html>

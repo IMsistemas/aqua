@@ -16,7 +16,7 @@ class ReembolsoController extends Controller
      */
     public function index()
     {
-        //
+        return view('reembolso.index');
     }
 
     /**
