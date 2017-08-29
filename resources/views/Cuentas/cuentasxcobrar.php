@@ -40,13 +40,13 @@
                 <thead class="bg-primary">
                     <tr>
                         <th style="width: 4%;">NO.</th>
-                        <th style="width: 10%;">FECHA</th>
+                        <th style="width: 8%;">FECHA</th>
                         <th>CLIENTE</th>
                         <th style="width: 11%;">NO FACTURA</th>
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
-                        <th style="width: 11%;">PENDIENTE</th>
-                        <th style="width: 11%;">ACCION</th>
+                        <th style="width: 11%;">VALOR PENDIENTE</th>
+                        <th style="width: 8%;">ACCION</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                         <td class="text-center" ng-if="item.fecharegistroventa != undefined">{{item.fecharegistroventa}}</td>
                         <td class="text-center" ng-if="item.fechacobro != undefined">{{item.fechacobro}}</td>
 
-                        <td>{{item.razonsocial}}</td>
+                        <td>{{item.lastnamepersona + ' ' + item.namepersona}}</td>
 
 
                         <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
@@ -72,7 +72,7 @@
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
-                        <td class="text-right">
+                        <td class="text-center">
                             <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
                                Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
                             </button>
