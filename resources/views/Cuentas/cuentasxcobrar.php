@@ -12,7 +12,7 @@
 
     <div class="col-xs-12" style="margin-top: 5px;">
 
-        <div class="col-sm-6 col-xs-8">
+        <div class="col-sm-5 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad()">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -33,10 +33,16 @@
             </div>
         </div>
 
+        <div class="col-sm-1 col-xs-2">
+            <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
+                Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
+            </button>
+        </div>
+
 
         <div class="col-xs-12" style="font-size: 12px !important;">
 
-            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+            <table class="table table-responsive table-striped table-hover table-bordered">
                 <thead class="bg-primary">
                     <tr>
                         <th style="width: 1%;"></th>
@@ -48,7 +54,6 @@
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
                         <th style="width: 11%;">VALOR PENDIENTE</th>
-                        <th style="width: 8%;">ACCION</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,11 +88,6 @@
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
-                        <td class="text-center">
-                            <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
-                               Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
-                            </button>
-                        </td>
 
                     </tr>
                 </tbody>
