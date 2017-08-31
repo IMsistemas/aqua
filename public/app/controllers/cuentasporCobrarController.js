@@ -6,6 +6,8 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     $scope.Cliente = 0;
     $scope.select_cuenta = null;
 
+    $scope.listSelected = [];
+
     $scope.pago_anular = '';
 
     $scope.fecha_i = '';
@@ -55,6 +57,15 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                     configurable: true
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
+
+
+                var acobrar = {
+                    value: '0',
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i], 'acobrar', acobrar);
 
                 //------------------------------------------------------------------------------------------------------
 
@@ -190,6 +201,130 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
         }
 
         console.log($scope.listcobro)
+    };
+
+    $scope.pushListSelect = function (tipo, id, item) {
+
+        //console.log($('#' + tipo + id));
+
+        var checked = $('#' + tipo + id).prop('checked');
+
+        if (checked === true) {
+
+            if ($scope.listSelected.length === 0) {
+                item.acobrar = item.valortotalventa - item.valorcobrado;
+                $scope.listSelected.push(item);
+            } else {
+                if ($scope.listSelected[0].idcliente === item.idcliente){
+                    item.acobrar = item.valortotalventa - item.valorcobrado;
+                    $scope.listSelected.push(item);
+                } else {
+
+                }
+            }
+
+        } else {
+            item.acobrar = '0';
+            var pos = $scope.listSelected.indexOf(item);
+            $scope.listSelected.splice(pos, 1);
+        }
+
+        console.log($scope.listSelected);
+    };
+
+    $scope.showModalListCobro2 = function () {
+
+
+        console.log($scope.listSelected);
+
+        //$('#listCobros').modal('show');
+
+        var longitud = $scope.listSelected.length;
+
+        for (var i = 0; i < longitud; i++) {
+
+            var item = $scope.listSelected[i];
+
+
+            /*if ($scope.listSelected[i].iddocumentoventa !== undefined && $scope.listSelected[i].iddocumentoventa !== '') {
+
+
+
+            } else if ($scope.listSelected[i].idcobroservicio !== undefined && $scope.listSelected[i].idcobroservicio !== '') {
+
+
+
+            } else if ($scope.listSelected[i].idcobroagua !== undefined && $scope.listSelected[i].idcobroagua !== '') {
+
+
+
+            }*/
+
+            console.log(item);
+
+            $scope.item_select = item;
+
+            if (item.fecharegistroventa !== undefined) {
+                $scope.fecha_i = item.fecharegistroventa;
+            } else {
+                $scope.fecha_i = item.fechacobro;
+            }
+
+            if (item.valortotalventa !== undefined) {
+                if (item.valortotalventa !== item.valorcobrado) {
+                    $('#btn-cobrar').prop('disabled', false);
+                } else {
+                    $('#btn-cobrar').prop('disabled', true);
+                }
+            } else {
+                if (item.total !== item.valorcobrado) {
+                    $('#btn-cobrar').prop('disabled', false);
+                } else {
+                    $('#btn-cobrar').prop('disabled', true);
+                }
+            }
+
+            $scope.infoCliente(item.idcliente);
+
+            if (item.iddocumentoventa !== undefined && item.iddocumentoventa !== null && item.idlectura === undefined) {
+                $http.get(API_URL + 'cuentasxcobrar/getCobros/' + item.iddocumentoventa).success(function(response){
+
+                    $scope.listcobro = response;
+
+                    $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
+
+                    //$('#listCobros').modal('show');
+
+                });
+            } else if (item.idcobroservicio !== undefined) {
+                $http.get(API_URL + 'cuentasxcobrar/getCobrosServices/' + item.idcobroservicio).success(function(response){
+
+                    $scope.listcobro = response;
+
+                    $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                    //$('#listCobros').modal('show');
+
+                });
+            } else {
+                $http.get(API_URL + 'cuentasxcobrar/getCobrosLecturas/' + item.idcobroagua).success(function(response){
+
+                    $scope.listcobro = response;
+
+                    $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+
+                    //$('#listCobros').modal('show');
+
+                });
+            }
+
+            console.log($scope.listcobro)
+
+        }
+
+
+        $('#listCobros').modal('show');
+
     };
 
     $scope.showModalConfirm = function(item){

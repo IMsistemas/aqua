@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-sm-1 col-xs-2">
-            <button type="button" class="btn btn-primary" ng-click="showModalListCobro(item)" title="Cobros">
+            <button type="button" class="btn btn-primary" ng-click="showModalListCobro2()" title="Cobros">
                 Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
             </button>
         </div>
@@ -54,6 +54,7 @@
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
                         <th style="width: 11%;">VALOR PENDIENTE</th>
+                        <th style="width: 11%;">VALOR A COBRAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +62,7 @@
 
                         <td>
                             <span ng-if="item.iddocumentoventa != undefined">
-                                <input type="checkbox" ng-model="item.iddocumentoventa" />
+                                <input type="checkbox" id="f{{item.iddocumentoventa}}" ng-click="pushListSelect('f', item.iddocumentoventa, item)"/>
                             </span>
                             <span ng-if="item.idcobroservicio != undefined">
                                 <input type="checkbox" ng-model="item.idcobroservicio" />
@@ -88,6 +89,9 @@
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
+                        <td>
+                            <input type="text" class="form-control" ng-model="item.acobrar">
+                        </td>
 
                     </tr>
                 </tbody>
