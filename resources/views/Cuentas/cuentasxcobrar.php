@@ -39,10 +39,12 @@
             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                     <tr>
+                        <th style="width: 1%;"></th>
                         <th style="width: 4%;">NO.</th>
                         <th style="width: 8%;">FECHA</th>
                         <th>CLIENTE</th>
                         <th style="width: 11%;">NO FACTURA</th>
+                        <th style="width: 11%;">VALOR CUOTAS</th>
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
                         <th style="width: 11%;">VALOR PENDIENTE</th>
@@ -50,7 +52,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in list track by $index" ng-cloak">
+                    <tr ng-repeat="item in list track by $index" ng-cloak>
+
+                        <td>
+                            <span ng-if="item.iddocumentoventa != undefined">
+                                <input type="checkbox" ng-model="item.iddocumentoventa" />
+                            </span>
+                            <span ng-if="item.idcobroservicio != undefined">
+                                <input type="checkbox" ng-model="item.idcobroservicio" />
+                            </span>
+                            <span ng-if="item.idcobroagua != undefined">
+                                <input type="checkbox" ng-model="item.idcobroagua" />
+                            </span>
+                        </td>
 
                         <td>{{$index + 1}}</td>
 
@@ -59,16 +73,13 @@
 
                         <td>{{item.lastnamepersona + ' ' + item.namepersona}}</td>
 
-
                         <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
                         <td class="text-center" ng-if="item.idcobroservicio != undefined">Solicitud Servicio</td>
                         <td class="text-center" ng-if="item.idcobroagua != undefined">Toma Lectura</td>
-
+                        <td class="text-right" ng-if="item.cuotas != undefined">$ {{item.cuotas }}</td>
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
-
                         <td class="text-right">$ {{item.valorcobrado}}</td>
-
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{(item.valortotalventa - item.valorcobrado).toFixed(2)}}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 

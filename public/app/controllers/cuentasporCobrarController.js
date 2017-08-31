@@ -58,6 +58,14 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                 //------------------------------------------------------------------------------------------------------
 
+                var cuotas = {
+                    value: '0.00',
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                };
+                Object.defineProperty(response[i], 'cuotas', cuotas);
+
                 if (response[i].suministro !== undefined) {
 
                     if (response[i].suministro.length > 0) {
@@ -67,7 +75,9 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                         var valor_cuota = totalsuministro_venta / cant_cuotas;
 
-                        for (var x = 0; x < cant_cuotas; x++) {
+                        response[i].cuotas = valor_cuota.toFixed(2);
+
+                        /*for (var x = 0; x < cant_cuotas; x++) {
 
                             var obj = response[i];
 
@@ -75,13 +85,13 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                             listado.push(obj);
 
-                        }
+                        }*/
 
                     }
 
-                } else {
-                    listado.push(response[i]);
                 }
+
+                listado.push(response[i]);
 
                 //------------------------------------------------------------------------------------------------------
 
