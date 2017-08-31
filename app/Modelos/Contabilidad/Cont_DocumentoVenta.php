@@ -66,4 +66,9 @@ class Cont_DocumentoVenta extends Model
         return $this->hasMany('App\Modelos\SRI\SRI_RetencionVenta','iddocumentoventa');
     }
 
+    public function suministro()
+    {
+        return $this->hasMany('App\Modelos\Suministros\Suministro','idsuministro');
+    }
+
 }

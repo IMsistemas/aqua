@@ -26,13 +26,13 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
             console.log(response);
 
-            $scope.list = response;
+            var listado = [];
 
             var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
 
-                if (response[i].total == null && response[i].total != undefined ) {
+                if (response[i].total === null && response[i].total !== undefined ) {
                     response[i].total = 0;
                 }
 
@@ -56,8 +56,42 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 };
                 Object.defineProperty(response[i], 'valorcobrado', complete_name);
 
+                //------------------------------------------------------------------------------------------------------
+
+                if (response[i].suministro !== undefined) {
+
+                    if (response[i].suministro.length > 0) {
+
+                        var cant_cuotas = parseInt(response[i].suministro[0].dividendocredito);
+                        var totalsuministro_venta = parseFloat(response[i].valortotalventa);
+
+                        var valor_cuota = totalsuministro_venta / cant_cuotas;
+
+                        for (var x = 0; x < cant_cuotas; x++) {
+
+                            var obj = response[i];
+
+                            obj.valortotalventa = valor_cuota.toFixed(2);
+
+                            listado.push(obj);
+
+                        }
+
+                    }
+
+                } else {
+                    listado.push(response[i]);
+                }
+
+                //------------------------------------------------------------------------------------------------------
+
+
 
             }
+
+            console.log(listado);
+
+            $scope.list = listado;
 
         });
 

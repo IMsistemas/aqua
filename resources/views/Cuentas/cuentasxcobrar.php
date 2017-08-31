@@ -50,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in list | filter : busqueda" ng-cloak">
+                    <tr ng-repeat="item in list track by $index" ng-cloak">
 
                         <td>{{$index + 1}}</td>
 
