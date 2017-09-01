@@ -291,7 +291,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                     $scope.listcobro = response;
 
-                    $scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
+                    //$scope.valorpendiente = (item.valortotalventa - item.valorcobrado).toFixed(2);
 
                     //$('#listCobros').modal('show');
 
@@ -301,7 +301,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                     $scope.listcobro = response;
 
-                    $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+                    //$scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
 
                     //$('#listCobros').modal('show');
 
@@ -311,7 +311,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                     $scope.listcobro = response;
 
-                    $scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
+                    //$scope.valorpendiente = (item.total - item.valorcobrado).toFixed(2);
 
                     //$('#listCobros').modal('show');
 
@@ -357,6 +357,19 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             $scope.valorrecibido = '';
             $scope.cuenta_employee = '';
             $('#fecharegistro').val('');
+
+            var longitud = $scope.listSelected.length;
+
+            var acobrar = 0;
+
+            for (var i = 0; i < longitud; i++) {
+
+                acobrar = acobrar + parseFloat($scope.listSelected[i].acobrar);
+
+            }
+
+            $scope.valorpendiente = (acobrar).toFixed(2);
+            $scope.valorrecibido = (acobrar).toFixed(2);
 
             $('#formCobros').modal('show');
         });

@@ -201,14 +201,14 @@
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">A Cobrar: </span>
-                                <input type="text" class="form-control" id="valorpendiente" ng-model="valorpendiente" disabled>
+                                <input type="text" class="form-control text-right" id="valorpendiente" ng-model="valorpendiente" disabled>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Cobrado: </span>
-                                <input type="text" class="form-control" name="valorrecibido" id="valorrecibido" ng-model="valorrecibido" required />
+                                <input type="text" class="form-control text-right" name="valorrecibido" id="valorrecibido" ng-model="valorrecibido" required />
                             </div>
                             <span class="help-block error"
                                   ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
