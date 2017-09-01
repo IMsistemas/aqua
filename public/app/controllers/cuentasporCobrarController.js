@@ -339,6 +339,11 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'cuentasxcobrar/getLastID').success(function(response){
 
+            if (response === '') {
+                response = 0;
+            }
+
+
             $('.datepicker').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD',
@@ -371,7 +376,21 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             $scope.valorpendiente = (acobrar).toFixed(2);
             $scope.valorrecibido = (acobrar).toFixed(2);
 
-            $('#formCobros').modal('show');
+
+            $http.get(API_URL + 'cuentasxcobrar/getDefaultCxC').success(function(response0){
+
+                //console.log(response0);
+
+                $scope.cuenta_employee = response0[0].concepto;
+
+                $scope.select_cuenta = {
+                    idplancuenta: response0[0].optionvalue,
+                    concepto: response0[0].concepto
+                };
+
+
+                $('#formCobros').modal('show');
+            });
         });
 
     };
@@ -419,9 +438,9 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
         var descripcion = '';
 
-        if ($scope.concepto !== undefined) {
+        /*if ($scope.concepto !== undefined) {
             descripcion = $scope.concepto;
-        }
+        }*/
 
 
         if (descripcion === '') {
@@ -518,7 +537,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                 $('#formCobros').modal('hide');
 
-                if (response.success == true) {
+                if (response.success === true) {
                     $scope.initLoad();
                     $scope.showModalListCobro($scope.item_select);
 

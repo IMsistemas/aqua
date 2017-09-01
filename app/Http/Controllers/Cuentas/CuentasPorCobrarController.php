@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cuentas;
 
 use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Contabilidad\Cont_RegistroContable;
@@ -92,6 +93,13 @@ class CuentasPorCobrarController extends Controller
     public function getLastID()
     {
         return CuentasporCobrar::max('idcuentasporcobrar');
+    }
+
+    public function getDefaultCxC()
+    {
+        return ConfiguracionSystem::where('optionname', 'CONT_CXC_DEFAULT')
+            ->selectRaw("*, (SELECT concepto FROM cont_plancuenta WHERE cont_plancuenta.idplancuenta = (configuracionsystem.optionvalue)::INT)")
+            ->get();
     }
 
     public function anular(Request $request)

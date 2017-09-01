@@ -90,7 +90,7 @@
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
                         <td>
-                            <input type="text" class="form-control" ng-model="item.acobrar">
+                            <input type="text" class="form-control text-right" ng-model="item.acobrar">
                         </td>
 
                     </tr>
@@ -214,12 +214,12 @@
                                   ng-show="formCobro.valorrecibido.$invalid && formCobro.valorrecibido.$touched">Cobrado es requerido</span>
                         </div>
 
-                        <div class="col-xs-12" style="margin-top: 5px;">
+                        <!--<div class="col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Concepto: </span>
                                 <input type="text" class="form-control" id="concepto" ng-model="concepto" />
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
