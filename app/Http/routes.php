@@ -359,7 +359,10 @@ Route::resource('retencionVenta', 'Retencion\RetencionVentaController');
  */
 
 Route::post('cuentasxcobrar/anular', 'Cuentas\CuentasPorCobrarController@anular');
+
+Route::get('cuentasxcobrar/getCuentaCxC/{id}', 'Cuentas\CuentasPorCobrarController@getCuentaCxC');
 Route::get('cuentasxcobrar/getDefaultCxC', 'Cuentas\CuentasPorCobrarController@getDefaultCxC');
+
 Route::get('cuentasxcobrar/printComprobante/{id}', 'Cuentas\CuentasPorCobrarController@printComprobanteIngreso');
 Route::get('cuentasxcobrar/getLastID', 'Cuentas\CuentasPorCobrarController@getLastID');
 Route::get('cuentasxcobrar/getInfoClienteByID/{idcliente}', 'Cuentas\CuentasPorCobrarController@getInfoClienteByID');

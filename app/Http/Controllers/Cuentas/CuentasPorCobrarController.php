@@ -6,6 +6,7 @@ use App\Http\Controllers\Contabilidad\CoreContabilidad;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Configuracion\ConfiguracionSystem;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_PlanCuenta;
 use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Contabilidad\Cont_RegistroContable;
 use App\Modelos\Cuentas\CobroAgua;
@@ -102,6 +103,11 @@ class CuentasPorCobrarController extends Controller
             ->get();
     }
 
+    public function getCuentaCxC($id)
+    {
+        return Cont_PlanCuenta::where('idplancuenta', $id)->get();
+    }
+
     public function anular(Request $request)
     {
         $idcuentasporcobrar = $request->input('idcuentasporcobrar');
@@ -184,7 +190,49 @@ class CuentasPorCobrarController extends Controller
          * ----------------------------------------CONTABILIDAD-------------------------------------------------------
          */
 
-        $cuenta = new CuentasporCobrar();
+        foreach ($request->input('listSelected') as $item) {
+
+            $cuenta = new CuentasporCobrar();
+
+            $cuenta->nocomprobante = $request->input('nocomprobante');
+            $cuenta->idformapago = $request->input('idformapago');
+            $cuenta->valorpagado = $item['acobrar'];
+            $cuenta->fecharegistro = $request->input('fecharegistro');
+            $cuenta->idplancuenta = $request->input('cuenta');
+            $cuenta->idtransaccion = $id_transaccion;
+            $cuenta->descripcion = $request->input('descripcion');
+
+            if ($item['type'] == 'venta') {
+                if ($item['iddocumentoventa'] != 0) {
+                    $cuenta->iddocumentoventa = $item['iddocumentoventa'];
+                }
+            } else if ($item['type'] == 'servicio') {
+                $cuenta->idcobroservicio = $item['idcobroservicio'];
+            } else {
+                $cuenta->idcobroagua = $item['idcobroagua'];
+            }
+
+            $cuenta->estadoanulado = false;
+
+            if ($cuenta->save()) {
+
+                $cuenta2 = CuentasporCobrar::find($cuenta->idcuentasporcobrar);
+                $cuenta2->nocomprobante = $cuenta->idcuentasporcobrar;
+
+                if ($cuenta2->save() == false) {
+                    return response()->json(['success' => false]);
+                }
+
+
+            } else {
+                return response()->json(['success' => false]);
+            }
+
+        }
+
+        return response()->json(['success' => true]);
+
+        /*$cuenta = new CuentasporCobrar();
 
         $cuenta->nocomprobante = $request->input('nocomprobante');
         $cuenta->idformapago = $request->input('idformapago');
@@ -220,7 +268,9 @@ class CuentasPorCobrarController extends Controller
 
         } else {
             return response()->json(['success' => false]);
-        }
+        }*/
+
+
     }
 
     /**

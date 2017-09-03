@@ -61,6 +61,7 @@
                     <tr ng-repeat="item in list track by $index" ng-cloak>
 
                         <td>
+
                             <span ng-if="item.iddocumentoventa != undefined">
                                 <input type="checkbox" id="f{{item.iddocumentoventa}}" ng-click="pushListSelect('f', item.iddocumentoventa, item)"/>
                             </span>
@@ -70,6 +71,7 @@
                             <span ng-if="item.idcobroagua != undefined">
                                 <input type="checkbox" ng-model="item.idcobroagua" />
                             </span>
+
                         </td>
 
                         <td>{{$index + 1}}</td>
@@ -90,7 +92,10 @@
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
                         <td>
+
                             <input type="text" class="form-control text-right" ng-model="item.acobrar">
+
+
                         </td>
 
                     </tr>
@@ -138,12 +143,16 @@
                                         <td class="text-right">$ {{item.valorpagado}}</td>
                                         <td class="text-right">{{(item.estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
                                         <td class="text-center">
-                                            <button ng-show="item.estadoanulado == false" type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
-                                                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-                                            </button>
-                                            <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporcobrar)" title="Imprimir">
-                                                <span class="glyphicon glyphicon-print" aria-hidden="true">
-                                            </button>
+
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button ng-show="item.estadoanulado == false" type="button" class="btn btn-default" ng-click="showModalConfirm(item)" title="Anular">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+                                                </button>
+                                                <button type="button" class="btn btn-info" ng-click="printComprobante(item.idcuentasporcobrar)" title="Imprimir">
+                                                    <span class="glyphicon glyphicon-print" aria-hidden="true">
+                                                </button>
+                                            </div>
+
                                         </td>
 
                                     </tr>
@@ -200,7 +209,7 @@
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
                             <div class="input-group">
-                                <span class="input-group-addon">A Cobrar: </span>
+                                <span class="input-group-addon">Pendiente a Cobrar: </span>
                                 <input type="text" class="form-control text-right" id="valorpendiente" ng-model="valorpendiente" disabled>
                             </div>
                         </div>

@@ -137,6 +137,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
     };
 
     $scope.click_radio = function (item) {
+        console.log(item);
         $scope.select_cuenta = item;
     };
 
@@ -343,14 +344,12 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 response = 0;
             }
 
-
             $('.datepicker').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD',
                 //format: 'DD/MM/YYYY',
                 minDate: $scope.fecha_i
             });
-
 
             $('#fecharegistro').val($scope.fecha_i);
 
@@ -361,17 +360,21 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
             $scope.nocomprobante = parseInt(response) + 1;
             $scope.valorrecibido = '';
             $scope.cuenta_employee = '';
-            $('#fecharegistro').val('');
+            //$('#fecharegistro').val('');
 
             var longitud = $scope.listSelected.length;
 
             var acobrar = 0;
+            var total = 0;
 
             for (var i = 0; i < longitud; i++) {
 
                 acobrar = acobrar + parseFloat($scope.listSelected[i].acobrar);
+                total = total + parseFloat($scope.listSelected[i].total);
 
             }
+
+            //var pendiente =
 
             $scope.valorpendiente = (acobrar).toFixed(2);
             $scope.valorrecibido = (acobrar).toFixed(2);
@@ -383,13 +386,14 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
 
                 $scope.cuenta_employee = response0[0].concepto;
 
-                $scope.select_cuenta = {
-                    idplancuenta: response0[0].optionvalue,
-                    concepto: response0[0].concepto
-                };
+                $http.get(API_URL + 'cuentasxcobrar/getCuentaCxC/' + response0[0].optionvalue).success(function(response){
+
+                    $scope.select_cuenta = response[0];
+
+                    $('#formCobros').modal('show');
+                });
 
 
-                $('#formCobros').modal('show');
             });
         });
 
@@ -503,7 +507,31 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
          * --------------------------------- FIN CONTABILIDAD ----------------------------------------------------------
          */
 
-        if ($scope.item_select.idcobroservicio !== undefined) {
+        var longitud = $scope.listSelected.length;
+
+        for (var i = 0; i < longitud; i++) {
+            if ($scope.listSelected[i].idcobroservicio !== undefined) {
+                id = $scope.listSelected[i].idcobroservicio;
+                type = 'servicio';
+            } else if ($scope.listSelected[i].idcobroagua !== undefined) {
+                id = $scope.listSelected[i].idcobroagua;
+                type = 'lectura';
+            } else {
+                id = $scope.listSelected[i].iddocumentoventa;
+                type = 'venta';
+            }
+
+            var type_trans = {
+                value: type,
+                writable: true,
+                enumerable: true,
+                configurable: true
+            };
+
+            Object.defineProperty($scope.listSelected[i], 'type', type_trans);
+        }
+
+        /*if ($scope.item_select.idcobroservicio !== undefined) {
             id = $scope.item_select.idcobroservicio;
             type = 'servicio';
         } else if ($scope.item_select.idcobroagua !== undefined) {
@@ -512,7 +540,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
         } else {
             id = $scope.item_select.iddocumentoventa;
             type = 'venta';
-        }
+        }*/
 
         if (parseFloat($scope.valorpendiente) >= parseFloat($scope.valorrecibido)) {
 
@@ -526,6 +554,7 @@ app.controller('cuentasporCobrarController',  function($scope, $http, API_URL) {
                 iddocumentoventa: id,
                 descripcion: descripcion,
                 type: type,
+                listSelected: $scope.listSelected,
                 contabilidad: JSON.stringify(transaccion_venta_full)
             };
 

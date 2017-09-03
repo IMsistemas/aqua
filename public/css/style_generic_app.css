@@ -183,10 +183,15 @@ td {
     position: fixed;
 }
 
-/*body{
-    background-color: #292929 !important;
+
+body{
+    background-color: #263238 !important;
+}
+
+h4, legend {
+    color: #FFFFFF !important;
 }
 
 table {
     background-color: #FFFFFF !important;
-}*/
+}
