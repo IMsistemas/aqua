@@ -790,6 +790,161 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.ShowModalFactura = function (item) {
+
+        $http.get(API_URL + 'factura/getMultas').success(function(response){
+
+            console.log(item);
+            console.log(response);
+
+            $scope.num_factura = item.idcobroagua;
+
+            $scope.mes = Auxiliar(yearmonth(item.fechacobro));
+            $scope.multa = '';
+
+            $scope.documentoidentidad_cliente = item.suministro.cliente.persona.numdocidentific;
+            $scope.nom_cliente = item.suministro.cliente.persona.razonsocial;
+            $scope.direcc_cliente = item.suministro.cliente.persona.direccion;
+            $scope.telf_cliente = item.suministro.cliente.persona.celphone;
+
+            var arreg = [];
+            var total = 0.00;
+
+            /*if (item != null) {
+                if (item.valortarifabasica == null) {
+                    var valores_atrasados = {
+                        nombre: "Consumo Agua" + ' - ' +  $scope.mes  ,
+                        valor: 0.00,
+                        id: 0
+                    }
+                }else {
+                    var consumo_agua = {
+                        nombre: "Consumo Agua" + ' - ' +  $scope.mes ,
+                        valor: item.valortarifabasica,
+                        id: 0
+                    }
+                }
+                arreg.push(consumo_agua);
+
+                if (item.valorexcedente == null) {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua" + ' - ' +  $scope.mes,
+                        valor:  0.00,
+                        id: 0
+                    }
+
+                } else {
+                    var excedente_agua = {
+                        nombre: "Excedente Agua" + ' - ' +  $scope.mes,
+                        valor: item.valorexcedente,
+                        id: 0
+                    }
+                }
+                arreg.push(excedente_agua);
+
+                if (item.valormesesatrasados == null) {
+                    var valores_atrasados = {
+                        nombre: "Valores Atrasados",
+                        valor: 0.00,
+                        id: 0
+                    }
+                }else
+                {
+                    var valores_atrasados = {
+                        nombre: "Valores Atrasados",
+                        valor: item.valormesesatrasados,
+                        id: 0
+                    }
+                }
+                arreg.push(valores_atrasados);
+            }*/
+
+            if (item.catalogoitem_cobroagua != null) {
+                if( item.catalogoitem_cobroagua.length > 0) {
+                    $scope.servicios = item.catalogoitem_cobroagua;
+
+                    for (var a = 0; a < $scope.servicios.length; a++) {
+                        var auxiliar = {
+                            nombre: $scope.servicios[a].cont_catalogitem.nombreproducto,
+                            valor: $scope.servicios[a].valor,
+                            id: 0
+                        };
+                        arreg.push(auxiliar);
+                    }
+                }
+            } else {
+                /*if( item.cliente.servicioscliente.length > 0) {
+                    $scope.servicios = item.catalogoitem_cobroagua;
+
+                    for (var a = 0; a < $scope.servicios.length; a++) {
+                        var auxiliar = {
+                            nombre: $scope.servicios[a].serviciojunta.nombreservicio,
+                            valor: $scope.servicios[a].valor,
+                            id: 0
+                        }
+                        arreg.push(auxiliar);
+                    }
+                }*/
+            }
+
+
+            //------------multas-----------------------------------
+
+            /*if (response.length > 0){
+                for (var j = 0; j < response.length; j++) {
+
+                    var otrosvalores = {
+                        nombre: response[j].nombreotrosvalores,
+                        valor: 0.00,
+                        id: response[j].idotrosvalores
+                    };
+
+                    if (item.otrosvalores_cobroagua.length > 0){
+                        for (var x = 0; x < item.otrosvalores_cobroagua.length; x++) {
+                            if (otrosvalores.id == item.otrosvalores_cobroagua[x].idotrosvalores) {
+                                otrosvalores.valor = item.otrosvalores_cobroagua[x].valor;
+                            }
+                        }
+                    }
+
+                    arreg.push(otrosvalores);
+                }
+            }*/
+
+            //------------fin multas-----------------------------------
+
+            if (arreg.length > 0) {
+                for (var i = 0; i < arreg.length; i++) {
+                    total = total + parseFloat(arreg[i].valor);
+                }
+            }
+
+            $scope.total = total.toFixed(2);
+
+            $scope.aux_modal = arreg;
+
+            $scope.item_select = item;
+
+            if (item.estadopagado == true) {
+
+                $('#footer-modal-factura').hide();
+
+                $('#btn-save').prop('disabled', true);
+                $('#btn-pagar').prop('disabled', true);
+            } else {
+                $('#footer-modal-factura').show();
+
+                $('#btn-save').prop('disabled', false);
+                $('#btn-pagar').prop('disabled', false);
+            }
+
+
+            $('#modalFactura').modal('show');
+            // $scope.total =  parseFloat($scope.multa_asamblea) + parseFloat($scope.valores_atrasados) + parseFloat($scope.excedente_agua) + parseFloat($scope.consumo_agua);
+        });
+
+    };
+
 
     $scope.fechaByFilter();
     $scope.initLoad();

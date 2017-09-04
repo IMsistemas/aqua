@@ -370,6 +370,114 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura">
+        <div class="modal-dialog" role="document" style="width: 50%;">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <div class="col-md-11 col-xs-12">
+                        <h4 class="modal-title">Factura: {{num_factura}} </h4>
+                    </div>
+                    <div class="col-sm-1 col-xs-12 text-right">
+                        <div class="col-xs-2"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formProcess" novalidate="">
+
+                        <div class="row">
+                            <div class="col-xs-12" style="padding: 2%; margin-top: -20px !important;">
+                                <fieldset ng-cloak>
+                                    <legend style="font-size: 16px; font-weight: bold;">Datos del Cliente</legend>
+
+                                    <div class="col-xs-12" style="padding: 0;">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">RUC/CI: </span>
+                                                <input type="text" class="form-control" name="documentoidentidad_cliente" ng-model="documentoidentidad_cliente" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Cliente: </span>
+                                                <input type="text" class="form-control" name="nom_cliente" ng-model="nom_cliente" readonly/>
+                                            </div>
+                                            <input type="hidden" ng-model="h_codigocliente">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12" style="padding: 0; margin-top: 5px;">
+
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Dirección Domicilio: </span>
+                                                <input type="text" class="form-control" name="direcc_cliente" ng-model="direcc_cliente" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Teléf. Celular: </span>
+                                                <input type="text" class="form-control" name="telf_cliente" ng-model="telf_cliente" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xs-12" style="padding: 0% 2% 0% 2%;">
+                                <fieldset style="">
+                                    <legend style="font-size: 16px; font-weight: bold;">Detalle</legend>
+
+                                    <div class="col-xs-12">
+                                        <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                            <thead class="bg-primary">
+                                            <tr>
+                                                <th style="width: 70%;">Descripción</th>
+                                                <th>Valor</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tbody>
+                                            <tr ng-repeat="item in aux_modal" ng-cloak >
+                                                <td>{{item.nombre}}</td>
+                                                <td ng-if="item.id == 0">
+                                                    <input type="text" class="form-control" ng-model="item.valor" style="text-align: right !important;" disabled>
+                                                </td>
+                                                <td ng-if="item.id != 0">
+                                                    <input type="text" class="form-control" style="text-align: right !important;" ng-model="item.valor" ng-keypress="onlyDecimal($event)" ng-blur="reCalculateTotal()">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="text-right">TOTAL:</th>
+                                                <th style="text-align: right;"> {{total}}</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+                <!--<div class="modal-footer" id="footer-modal-factura">
+                    <button type="button" class="btn btn-primary" id="btn-save"
+                            ng-click="save()" ng-disabled="formProcess.$invalid">
+                        Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-pagar" ng-click="showModalListCobro()" >
+                        Cobrar <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                    </button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="WPrint" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
