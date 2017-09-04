@@ -14,6 +14,10 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
 
+        $http.get(API_URL + 'factura/verifyPeriodo').success(function(response){
+            (response.success == false) ? $('#btn-generate').prop('disabled', false) : $('#btn-generate').prop('disabled', false);
+        });
+
         $('.datepicker').datetimepicker({
             locale: 'es',
             format: 'YYYY-MM-DD'
@@ -113,6 +117,27 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
             console.log(listado);
 
             $scope.list = listado;
+
+        });
+
+    };
+
+    $scope.generate = function () {
+
+        $http.get(API_URL + 'factura/generate').success(function(response){
+
+            if (response.result === '1') {
+
+                $scope.initLoad();
+                $scope.message = 'Se ha generado los cobros de Lecturas/Servicios del mes actual correctamente...';
+                $('#modalMessage').modal('show');
+
+            } else if (response.result === '2') {
+
+                $scope.message = 'No existen registros para generar cobros de Lecturas/Servicios en el mes...';
+                $('#modalMessage').modal('show');
+
+            }
 
         });
 

@@ -4,7 +4,7 @@
 
     <div class="col-xs-12">
 
-        <h4>Recaudación</h4>
+        <h4>Recaudación (Cobros)</h4>
 
         <hr>
 
@@ -12,31 +12,38 @@
 
     <div class="col-xs-12" style="margin-top: 5px;">
 
-        <div class="col-sm-5 col-xs-6">
+        <div class="col-sm-4 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad()">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
 
-        <div class="col-sm-3 col-xs-2">
+        <div class="col-sm-2 col-xs-2">
             <div class="input-group">
                 <span class="input-group-addon">Fecha Inicio:</span>
                 <input type="text" class="datepicker form-control" name="fechainicio" id="fechainicio" ng-model="fechainicio" ng-blur="initLoad()">
             </div>
         </div>
 
-        <div class="col-sm-3 col-xs-2">
+        <div class="col-sm-2 col-xs-2">
             <div class="input-group">
                 <span class="input-group-addon">Fecha Fin:</span>
                 <input type="text" class="datepicker form-control" name="fechafin" id="fechafin" ng-model="fechafin" ng-blur="initLoad()">
             </div>
         </div>
 
-        <div class="col-sm-1 col-xs-2">
-            <button type="button" class="btn btn-primary" ng-click="showModalListCobro2()" title="Cobros">
-                Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
-            </button>
+        <div class="col-sm-3 col-xs-2">
+
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-primary" id="btn-generate" ng-click="generate()" disabled="true">
+                    GENERAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="showModalListCobro2()" title="Cobros">
+                    COBROS <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                </button>
+            </div>
+
         </div>
 
 
@@ -49,12 +56,13 @@
                         <th style="width: 4%;">NO.</th>
                         <th style="width: 8%;">FECHA</th>
                         <th>CLIENTE</th>
-                        <th style="width: 11%;">NO FACTURA</th>
-                        <th style="width: 11%;">VALOR CUOTAS</th>
-                        <th style="width: 11%;">VALOR TOTAL</th>
-                        <th style="width: 11%;">VALOR COBRADO</th>
-                        <th style="width: 11%;">VALOR PENDIENTE</th>
-                        <th style="width: 11%;">VALOR A COBRAR</th>
+                        <th style="width: 9%;">NO FACTURA</th>
+                        <th style="width: 9%;">VALOR CUOTAS</th>
+                        <th style="width: 9%;">VALOR TOTAL</th>
+                        <th style="width: 9%;">VALOR COBRADO</th>
+                        <th style="width: 9%;">VALOR PENDIENTE</th>
+                        <th style="width: 9%;">VALOR A COBRAR</th>
+                        <th style="width: 2%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,10 +100,13 @@
                         <td class="text-right" ng-if="item.total != undefined">$ {{(item.total - item.valorcobrado).toFixed(2)}}</td>
 
                         <td>
-
                             <input type="text" class="form-control text-right" ng-model="item.acobrar">
+                        </td>
 
-
+                        <td>
+                            <button type="button" class="btn btn-info" ng-click="">
+                                <span style="font-size: 16px;" class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
+                            </button>
                         </td>
 
                     </tr>
