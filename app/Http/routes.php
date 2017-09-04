@@ -167,6 +167,19 @@ Route::get('recaudacion/verifyPeriodo', 'Cuentas\CobroAguaController@verifyPerio
 Route::get('recaudacion/generate', 'Cuentas\CobroAguaController@generate');
 Route::resource('/recaudacion', 'Cuentas\CobroAguaController');
 
+
+Route::post('recaudacioncobro/anular', 'Cuentas\RecaudacionCobroController@anular');
+Route::get('recaudacioncobro/getCuentaCxC/{id}', 'Cuentas\RecaudacionCobroController@getCuentaCxC');
+Route::get('recaudacioncobro/getDefaultCxC', 'Cuentas\RecaudacionCobroController@getDefaultCxC');
+Route::get('recaudacioncobro/printComprobante/{id}', 'Cuentas\RecaudacionCobroController@printComprobanteIngreso');
+Route::get('recaudacioncobro/getLastID', 'Cuentas\RecaudacionCobroController@getLastID');
+Route::get('recaudacioncobro/getInfoClienteByID/{idcliente}', 'Cuentas\RecaudacionCobroController@getInfoClienteByID');
+Route::get('recaudacioncobro/getCobrosLecturas/{id}', 'Cuentas\RecaudacionCobroController@getCobrosLecturas');
+Route::get('recaudacioncobro/getCobrosServices/{id}', 'Cuentas\RecaudacionCobroController@getCobrosServices');
+Route::get('recaudacioncobro/getCobros/{id}', 'Cuentas\RecaudacionCobroController@getCobros');
+Route::get('recaudacioncobro/getFacturas', 'Cuentas\RecaudacionCobroController@getFacturas');
+Route::resource('recaudacioncobro', 'Cuentas\RecaudacionCobroController');
+
 /*
  * -------------------------------------MODULO SECTORIZACION------------------------------------------------------------
  */

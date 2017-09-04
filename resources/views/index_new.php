@@ -76,6 +76,7 @@
                                     <li id="permiso_30"><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
                                     <li id="permiso_31"><a href="#" ng-click="toModuloSolicitud();">Solicitud</a></li>
                                     <li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministro</a></li>
+                                    <li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionCobro();">Recaudación</a></li>
                                     <li id="permiso_33"><a href="#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
                                     <li id="permiso_35"><a href="#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>
                                     <li id="permiso_34"><a href="#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
@@ -384,6 +385,7 @@
     <script src="<?= asset('app/controllers/esperaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/tarifaController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/recaudacionCobroController.js') ?>"></script>
 
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
 

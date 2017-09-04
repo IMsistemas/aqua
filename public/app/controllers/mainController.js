@@ -138,31 +138,36 @@ app.controller('mainController',function($scope, $http, API_URL) {
     $scope.toModuloDepartamento = function(){
         $scope.titulo = "Departamento";
         $scope.toModulo = "departamento";
-    }
+    };
 
     $scope.toModuloNewLectura = function(){
         window.open(API_URL + '/nuevaLectura');
-    }
+    };
 
     $scope.toModuloLectura = function(){
         $scope.titulo = "Lecturas";
         $scope.toModulo = "verLectura";
-    }
+    };
 
     $scope.toModuloRecaudacion = function(){
         $scope.titulo = "Recaudación";
         $scope.toModulo = "factura";
-    }
+    };
 
     $scope.toModuloRecaudacionServicio = function(){
         $scope.titulo = "Recaudación Servicio";
         $scope.toModulo = "cobroservicio";
-    }
+    };
+
+    $scope.toModuloRecaudacionCobro = function(){
+        $scope.titulo = "Recaudación Cobro";
+        $scope.toModulo = "recaudacioncobro";
+    };
 
     $scope.toModuloSolicitud = function(){
         $scope.titulo = "Solicitudes";
         $scope.toModulo = "solicitud";
-    }
+    };
 
     $scope.toModuloSolicitudEspera = function(){
         $scope.titulo = "Solicitudes";
