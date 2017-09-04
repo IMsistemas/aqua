@@ -28,7 +28,7 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
             fin: $('#fechafin').val()
         };
 
-        $http.get(API_URL + 'cuentasxcobrar/getFacturas?filter=' + JSON.stringify(filter)).success(function(response){
+        $http.get(API_URL + 'recaudacioncobro/getFacturas?filter=' + JSON.stringify(filter)).success(function(response){
 
             console.log(response);
 
@@ -696,6 +696,100 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
         $scope.fechafin = toDay;
 
     };
+
+    /*
+     -----------------------------------------------------------------------------------------------------------------
+     */
+
+    $scope.printer = function (item) {
+
+
+        console.log(item);
+
+        var subtotal = 0;
+
+        if (item.catalogoitem_cobroagua.length > 0) {
+
+            for (var i = 0; i < item.catalogoitem_cobroagua.length; i++) {
+                subtotal += parseFloat(item.catalogoitem_cobroagua[i].valor);
+            }
+
+        }
+
+        if (item.otrosvalores_cobroagua.length > 0) {
+
+            for (var i = 0; i < item.otrosvalores_cobroagua.length; i++) {
+                subtotal += parseFloat(item.otrosvalores_cobroagua[i].valor);
+            }
+
+        }
+
+        subtotal += parseFloat(item.valorexcedente);
+        subtotal += parseFloat(item.valortarifabasica);
+        subtotal += parseFloat(item.valormesesatrasados);
+
+        var porcentaje_iva_cliente = parseFloat(item.suministro.cliente.sri_tipoimpuestoiva.porcentaje);
+
+        var total_iva = 0;
+
+        if(porcentaje_iva_cliente != 0){
+            total_iva = (subtotal * porcentaje_iva_cliente) / 100;
+        }
+
+        var total = subtotal + total_iva;
+
+        var date_p = (item.lectura.fechalectura).split('-');
+        var date_p0 = date_p[1] + '/' + date_p[0];
+
+        var partial_date = {
+            value: date_p0,
+            writable: true,
+            enumerable: true,
+            configurable: true
+        };
+        Object.defineProperty(item, 'partial_date', partial_date);
+
+
+        var subtotalfactura = {
+            value: subtotal.toFixed(2),
+            writable: true,
+            enumerable: true,
+            configurable: true
+        };
+        Object.defineProperty(item, 'subtotalfactura', subtotalfactura);
+
+        var iva = {
+            value: total_iva.toFixed(2),
+            writable: true,
+            enumerable: true,
+            configurable: true
+        };
+        Object.defineProperty(item, 'iva', iva);
+
+        var totalfactura = {
+            value: total.toFixed(2),
+            writable: true,
+            enumerable: true,
+            configurable: true
+        };
+        Object.defineProperty(item, 'totalfactura', totalfactura);
+
+        console.log(item);
+
+        var a = {
+            item: item
+        };
+
+        $http.post(API_URL + 'factura/print', a).success(function(response){
+            console.log(response);
+
+            var ventana = window.open(response.url);
+            setTimeout(function(){ ventana.print(); }, 2000);
+
+        });
+
+    };
+
 
     $scope.fechaByFilter();
     $scope.initLoad();

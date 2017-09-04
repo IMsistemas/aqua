@@ -214,7 +214,8 @@
 
             $http.get(url).success(function(response) {
 
-                console.log(response);
+                //console.log(response);
+                //console.log($scope.ConfiguracionServicios);
 
                 $scope.meses_atrasados = response.cant_meses_atrasados;
                 $scope.rubros = response.value_tarifas;
@@ -225,9 +226,39 @@
 
                 var longitud = ($scope.rubros).length;
                 var suma = 0;
-                for(var i = 0; i < longitud; i++){
-                    suma += parseFloat(($scope.rubros)[i].valor);
+                for(var x = 0; x < longitud; x++){
+
+                    suma += parseFloat(($scope.rubros)[x].valor);
+
+                    for(var z = 0; z < $scope.ConfiguracionServicios.length; z++){
+
+                        if ($scope.rubros[x].nombreservicio === 'Consumo Tarifa Básica' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_TARIFAB_LECT') {
+
+                            $scope.rubros[x].id = $scope.ConfiguracionServicios[z].configuracion.optionvalue;
+
+                        } else if ($scope.rubros[x].nombreservicio === 'Excedente' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_EXCED_LECT') {
+
+                            $scope.rubros[x].id = $scope.ConfiguracionServicios[z].configuracion.optionvalue;
+
+                        } else if ($scope.rubros[x].nombreservicio === 'Alcantarillado' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_ALCANT_LECT') {
+
+                            $scope.rubros[x].id = $scope.ConfiguracionServicios[z].configuracion.optionvalue;
+
+                        } else if ($scope.rubros[x].nombreservicio === 'Desechos Solidos' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_RRDDSS_LECT') {
+
+                            $scope.rubros[x].id = $scope.ConfiguracionServicios[z].configuracion.optionvalue;
+
+                        } else if ($scope.rubros[x].nombreservicio === 'Medio Ambiente' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_MEDAMB_LECT') {
+
+                            $scope.rubros[x].id = $scope.ConfiguracionServicios[z].configuracion.optionvalue;
+
+                        }
+
+                    }
+
                 }
+
+                console.log($scope.rubros);
 
                 $scope.total = suma.toFixed(2);
             });

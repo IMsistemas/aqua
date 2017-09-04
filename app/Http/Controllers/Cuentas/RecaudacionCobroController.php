@@ -48,7 +48,8 @@ class RecaudacionCobroController extends Controller
             ->whereRaw("cobroservicio.fechacobro BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
             ->orderBy('fechacobro', 'desc')->get();
 
-        $cobroagua_lectura = CobroAgua::with('cont_cuentasporcobrar')
+        $cobroagua_lectura = CobroAgua::with('cont_cuentasporcobrar', 'suministro.tarifaaguapotable', 'lectura', 'catalogoitem_cobroagua.cont_catalogitem', 'otrosvalores_cobroagua.otrosvalores',
+            'suministro.cliente.sri_tipoimpuestoiva', 'suministro.cliente.persona')
             ->join('suministro', 'suministro.idsuministro', '=', 'cobroagua.idsuministro')
             ->join('cliente', 'cliente.idcliente', '=', 'suministro.idcliente')
             ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')

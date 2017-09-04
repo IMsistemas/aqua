@@ -62,7 +62,7 @@
                         <th style="width: 9%;">VALOR COBRADO</th>
                         <th style="width: 9%;">VALOR PENDIENTE</th>
                         <th style="width: 9%;">VALOR A COBRAR</th>
-                        <th style="width: 2%;"></th>
+                        <th style="width: 7%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
 
                         <td>
 
-                            <span ng-if="item.iddocumentoventa != undefined">
+                            <span ng-if="item.iddocumentoventa != undefined && item.idcobroagua == undefined">
                                 <input type="checkbox" id="f{{item.iddocumentoventa}}" ng-click="pushListSelect('f', item.iddocumentoventa, item)"/>
                             </span>
                             <span ng-if="item.idcobroservicio != undefined">
@@ -84,7 +84,7 @@
 
                         <td>{{$index + 1}}</td>
 
-                        <td class="text-center" ng-if="item.fecharegistroventa != undefined">{{item.fecharegistroventa}}</td>
+                        <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.fecharegistroventa}}</td>
                         <td class="text-center" ng-if="item.fechacobro != undefined">{{item.fechacobro}}</td>
 
                         <td>{{item.lastnamepersona + ' ' + item.namepersona}}</td>
@@ -92,6 +92,7 @@
                         <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
                         <td class="text-center" ng-if="item.idcobroservicio != undefined">Solicitud Servicio</td>
                         <td class="text-center" ng-if="item.idcobroagua != undefined">Toma Lectura</td>
+
                         <td class="text-right" ng-if="item.cuotas != undefined">$ {{item.cuotas }}</td>
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
@@ -104,9 +105,25 @@
                         </td>
 
                         <td>
-                            <button type="button" class="btn btn-info" ng-click="">
+                            <!--<button type="button" class="btn btn-info" ng-click="">
                                 <span style="font-size: 16px;" class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
-                            </button>
+                            </button>-->
+
+                            <span ng-if="item.idcobroagua != undefined">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="printer(item)"  title="Imprimir">
+                                        <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="ShowModalFactura(item)" title="Información">
+                                        <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+
+
+                            </span>
+
+
+
                         </td>
 
                     </tr>

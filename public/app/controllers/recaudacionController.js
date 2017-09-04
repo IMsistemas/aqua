@@ -1,3 +1,4 @@
+
 app.controller('recaudacionController', function($scope, $http, API_URL) {
     //retrieve employees listing from API
 
@@ -143,9 +144,9 @@ app.controller('recaudacionController', function($scope, $http, API_URL) {
 
 
 
-    $scope.generarPDF = function (numerocuenta) {
+    /*$scope.generarPDF = function (numerocuenta) {
         window.open(API_URL + "recaudacion/cobroagua/cuentas/pdf/" + numerocuenta);
-    };
+    };*/
 
 
     /*$scope.onKeyDown = function ($event) {
