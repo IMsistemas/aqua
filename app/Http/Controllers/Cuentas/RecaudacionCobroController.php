@@ -40,7 +40,7 @@ class RecaudacionCobroController extends Controller
             ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
             ->get();
 
-        $cobroservicio = CobroServicio::with('cont_cuentasporcobrar')
+        $cobroservicio = CobroServicio::with('cont_cuentasporcobrar', 'solicitudservicio.catalogoitem_solicitudservicio.cont_catalogitem')
             ->join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
             ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
             ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')

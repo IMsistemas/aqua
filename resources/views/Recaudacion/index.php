@@ -118,10 +118,15 @@
                                         <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                                     </button>
                                 </div>
-
-
                             </span>
 
+                            <span ng-if="item.idcobroservicio != undefined">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-info btn-sm" ng-click="printerServicio(item)"  title="Imprimir">
+                                        <i class="fa fa-lg fa-print" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </span>
 
 
                         </td>

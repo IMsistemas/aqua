@@ -31,6 +31,7 @@
     body{
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 12px;
+        padding-top: 10%;
     }
 
     .container {
@@ -154,7 +155,7 @@
 
 <div class="container">
     <div class="subcontainer1">
-        <table style="width: 100%; margin-top: 100px;">
+        <table style="width: 100%;">
             <tr>
                 <td class="label_text" style="width: 20%; font-weight: bold;">NOMBRE:</td>
                 <td colspan="3"><?= $data['suministro']['cliente']['persona']['lastnamepersona'] . ' ' . $data['suministro']['cliente']['persona']['namepersona'] ?></td>
@@ -179,7 +180,7 @@
                 <td class="label_text" colspan="4" style="font-weight: bold;">DETALLE:</td>
             </tr>
             <tr>
-                <table class="table table-responsive table-striped table-hover table-condensed table-bordered" style="width: 70%;">
+                <table class="table table-responsive table-striped table-hover table-condensed table-bordered" style="width: 72%;">
                     <tr>
                         <td><?= $data['partial_date'] ?></td>
                         <td><?= $data['lectura']['lecturaanterior'] ?></td>
@@ -187,8 +188,8 @@
                         <td><?= $data['lectura']['consumo'] ?> m3</td>
                     </tr>
                     <tr>
-                        <td class="label_text" style="width: 23%; font-weight: bold;">PERIODO</td>
-                        <td class="label_text" style="width: 27%; font-weight: bold;">L. ANTERIOR</td>
+                        <td class="label_text" style="width: 22%; font-weight: bold;">PERIODO</td>
+                        <td class="label_text" style="width: 28%; font-weight: bold;">L. ANTERIOR</td>
                         <td class="label_text" style="width: 25%; font-weight: bold;">L. ACTUAL</td>
                         <td class="label_text" style="width: 25%; font-weight: bold;">CONSUMO</td>
                     </tr>
