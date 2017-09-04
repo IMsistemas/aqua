@@ -129,7 +129,7 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'factura/generate').success(function(response){
 
-            console.log(response);
+            //console.log(response);
 
             if (response.success === true) {
                 result_agua = true;
@@ -137,7 +137,7 @@ app.controller('recaudacionCobroController',  function($scope, $http, API_URL) {
 
             $http.get(API_URL + 'cobroservicio/generate').success(function(response){
 
-                console.log(response);
+                //console.log(response);
 
                 if (response.success === true) {
                     result_servicio = true;

@@ -19,6 +19,7 @@ use App\Modelos\Servicios\ServiciosEnFactura;
 use App\Modelos\Tarifas\CostoTarifa;
 use App\Modelos\Tarifas\ExcedenteTarifa;
 use App\Modelos\Suministros\Suministro;
+use App\Modelos\Tarifas\TarifaRubro;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
@@ -300,6 +301,24 @@ class LecturaController extends Controller
 
     }
 
+    private function calculateServicios($idtarifa, $valueTarifa, $valueExcedente)
+    {
+
+        $result = TarifaRubro::where('idtarifaaguapotable', $idtarifa)->get();
+
+        $constante_alcantarillado = $result[0]->alcantarillado;
+        $constante_desechosolido = $result[0]->desechosolido;
+        $constante_medioambiente = $result[0]->medioambiente;
+
+        settype($constante_medioambiente, 'float');
+
+        $total_alcantarillado = (($valueTarifa + $valueExcedente) * 100) / $constante_alcantarillado;
+        $total_desechosolido = (($valueTarifa + $valueExcedente) * 100) / $constante_desechosolido;
+
+        return ['alcantarillado' => $total_alcantarillado, 'desechosolido' => $total_desechosolido, 'medioambiente' => $constante_medioambiente];
+
+    }
+
     /**
      * Calculo general de la lectura
      *
@@ -314,17 +333,23 @@ class LecturaController extends Controller
         $excedente = $this->calculateExcedente($consumo, $tarifa);
         $meses_atrasados = $this->calculateMonthAtrasados($numerosuministro);
 
-        $servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
+        //$servicios = $this->calculateServiciosJunta($tarifa, $tarifa_basica, $excedente);
+        $servicios = $this->calculateServicios($tarifa, $tarifa_basica, $excedente);
 
         $array_tarifabasica = ['nombreservicio' => 'Consumo Tarifa Básica', 'valor' => $tarifa_basica, 'id' => 0];
         $array_excedente = ['nombreservicio' => 'Excedente', 'valor' => $excedente, 'id' => 0];
         $array_valoratrasado = ['nombreservicio' => 'Valores Atrasados', 'valor' => $meses_atrasados['valor_meses_atrasados'], 'id' => 0];
 
-        $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado];
+        $array_alcantarillado = ['nombreservicio' => 'Alcantarillado', 'valor' => $servicios['alcantarillado'], 'id' => 0];
+        $array_desechosolido = ['nombreservicio' => 'Desechos Solidos', 'valor' => $servicios['desechosolido'], 'id' => 0];
+        $array_medioambiente = ['nombreservicio' => 'Medio Ambiente', 'valor' => $servicios['medioambiente'], 'id' => 0];
 
-        foreach ($servicios as $servicio) {
+
+        $value_return = [$array_tarifabasica, $array_excedente, $array_valoratrasado, $array_alcantarillado, $array_desechosolido, $array_medioambiente];
+
+        /*foreach ($servicios as $servicio) {
             $value_return[] = $servicio;
-        }
+        }*/
 
         return [
             'value_tarifas' => $value_return, 'cant_meses_atrasados' => $meses_atrasados['cant_meses_atrasados'],

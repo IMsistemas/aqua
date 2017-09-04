@@ -31,9 +31,70 @@
             window.location = API_URL;
         };
 
+        $scope.getConfiguracionContable = function () {
+
+            $http.get(API_URL + 'nuevaLectura/getConfiguracionContable').success(function(response){
+
+                $scope.Configuracion = response;
+                console.log(response);
+
+                for(var x = 0; x < $scope.Configuracion.length; x++){
+
+                    if($scope.Configuracion[x].Descripcion === "CONT_IVA_VENTA"){
+                        if($scope.Configuracion[x].IdContable === null || $scope.Configuracion[x].IdContable === ''){
+
+                            $('#btn_ingresar').hide();
+
+                            $scope.message_error = 'Por favor, verificar que este seleccionada una cuenta para el Impuesto IVA en Configuracion...';
+                            $('#modalMessageError').modal('show');
+
+
+                        } else {
+
+                            $('#btn_ingresar').show();
+
+                            $http.get(API_URL + 'nuevaLectura/getConfiguracionServicio').success(function(response){
+
+                                var longitud = response.length;
+                                var status = true;
+
+                                for (var i = 0; i < longitud; i++) {
+
+                                    if (response[i].configuracion.optionvalue === null) {
+                                        status = false;
+                                    }
+
+                                }
+
+                                if (status === false) {
+
+                                    $('#btn_ingresar').hide();
+
+                                    $scope.message_error = 'Por favor, verificar que la Configuracion de la Toma de Lectura este completada..';
+                                    $('#modalMessageError').modal('show');
+
+                                } else {
+                                    $scope.ConfiguracionServicios = response;
+                                    console.log($scope.ConfiguracionServicios);
+                                }
+
+
+                            });
+
+                        }
+                    }
+                }
+
+            });
+
+
+        };
+
         $scope.initData = function(){
 
             //$scope.createTableRubros();
+
+            $scope.getConfiguracionContable();
 
             $http.get(API_URL + 'nuevaLectura/lastId').success(function(response){
 
@@ -82,37 +143,6 @@
                                 $scope.Cliente = response[0];
                                 console.log($scope.Cliente);
 
-                        });
-
-                        $http.get(API_URL + 'nuevaLectura/getConfiguracionContable').success(function(response){
-
-                                $scope.Configuracion = response;
-                                console.log(response);
-
-                                /*for(var x = 0; x < $scope.Configuracion.length; x++){
-
-                                    if($scope.Configuracion[x].Descripcion === "CONT_IVA_VENTA"){
-                                        if($scope.Configuracion[x].IdContable === null){
-                                            $scope.Valida="1";
-                                            QuitarClasesMensaje();
-                                            $("#titulomsm").addClass("btn-danger");
-                                            $("#msm").modal("show");
-                                            $scope.Mensaje="La venta necesita la cuenta contable de IVA DE VENTA";
-                                        }
-                                    }
-                                }
-                                if(String($scope.Configuracion[0].IdContable)==""){
-                                    QuitarClasesMensaje();
-                                    $("#titulomsm").addClass("btn-danger");
-                                    $("#msm").modal("show");
-                                    $scope.Mensaje="La venta necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
-                                }*/
-
-                        });
-
-                        $http.get(API_URL + 'nuevaLectura/getConfiguracionServicio').success(function(response){
-                                $scope.ConfiguracionServicios = response;
-                                console.log($scope.ConfiguracionServicios);
                         });
 
                         var lectura_anterior = 0;
@@ -178,15 +208,17 @@
             });
         }*/
 
-
-
         $scope.getValueRublos = function(consumo, tarifa){
             var id = $scope.t_no_suministro;
             var url = API_URL + 'nuevaLectura/calculate/' + consumo + '/' + tarifa + '/' + id;
 
             $http.get(url).success(function(response) {
+
+                console.log(response);
+
                 $scope.meses_atrasados = response.cant_meses_atrasados;
                 $scope.rubros = response.value_tarifas;
+
                 $scope.excedente = response.excedente;
                 $scope.tarifa_basica = response.tarifa_basica;
                 $scope.valormesesatrasados = response.valor_meses_atrasados;
@@ -196,9 +228,10 @@
                 for(var i = 0; i < longitud; i++){
                     suma += parseFloat(($scope.rubros)[i].valor);
                 }
+
                 $scope.total = suma.toFixed(2);
             });
-        }
+        };
 
         $scope.confirmSave = function(){
             $('#modalConfirm').modal('show');
@@ -251,7 +284,7 @@
                 tipocuenta: $scope.Cliente.tipocuenta,
                 Debe: $scope.total,
                 Haber: 0,
-                Descipcion: ''
+                Descipcion: 'Registro de Nueva Lectura en Cliente'
             };
 
             RegistroC.push(cliente);
@@ -271,7 +304,7 @@
                             tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
                             Debe: 0,
                             Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
-                            Descipcion:''
+                            Descipcion:'Consumo Tarifa Básica'
                         };
                         RegistroC.push(itemproductoservicio);
 
@@ -284,11 +317,11 @@
                             tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
                             Debe: 0,
                             Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
-                            Descipcion:''
+                            Descipcion:'Excedente'
                         };
                         RegistroC.push(itemproductoservicio);
 
-                    } else if ($scope.rubros[x].nombreservicio === 'ALCANTARILLADO' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_ALCANT_LECT') {
+                    } else if ($scope.rubros[x].nombreservicio === 'Alcantarillado' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_ALCANT_LECT') {
 
                         var itemproductoservicio = {
                             idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
@@ -297,11 +330,11 @@
                             tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
                             Debe: 0,
                             Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
-                            Descipcion:''
+                            Descipcion:'Alcantarillado'
                         };
                         RegistroC.push(itemproductoservicio);
 
-                    } else if ($scope.rubros[x].nombreservicio === 'RECOGIDA DESECHOS SOLIDOS' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_RRDDSS_LECT') {
+                    } else if ($scope.rubros[x].nombreservicio === 'Desechos Solidos' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_RRDDSS_LECT') {
 
                         var itemproductoservicio = {
                             idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
@@ -310,11 +343,11 @@
                             tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
                             Debe: 0,
                             Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
-                            Descipcion:''
+                            Descipcion:'Desechos Solidos'
                         };
                         RegistroC.push(itemproductoservicio);
 
-                    } else if ($scope.rubros[x].nombreservicio === 'MEDIO AMBIENTE' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_MEDAMB_LECT') {
+                    } else if ($scope.rubros[x].nombreservicio === 'Medio Ambiente' && $scope.ConfiguracionServicios[z].configuracion.optionname === 'SERV_MEDAMB_LECT') {
 
                         var itemproductoservicio = {
                             idplancuenta: $scope.ConfiguracionServicios[z].contabilidad[0].idplancuenta_ingreso,
@@ -323,7 +356,7 @@
                             tipocuenta: $scope.ConfiguracionServicios[z].contabilidad[0].tipocuenta,
                             Debe: 0,
                             Haber: (parseFloat($scope.rubros[x].valor)).toFixed(4),
-                            Descipcion:''
+                            Descipcion:'Medio Ambiente'
                         };
                         RegistroC.push(itemproductoservicio);
 
@@ -379,7 +412,7 @@
                 Descipcion:''
             };
 
-            RegistroC.push(iva);
+            //RegistroC.push(iva);
             //--Iva venta
 
             var Contabilidad={
@@ -442,7 +475,7 @@
 
             };
 
-            //console.log(lectura_data);
+            console.log(lectura_data);
 
 
             var url = API_URL + "nuevaLectura";
@@ -528,7 +561,7 @@
                 }
 
 
-        }
+        };
 
         $scope.initData();
 

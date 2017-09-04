@@ -18,7 +18,7 @@
 
             <div class="row">
                 <div class="col-xs-6 text-left">
-                    <h3>NUEVA LECTURA</h3>
+                    <h3>NUEVA TOMA DE LECTURA</h3>
                 </div>
 
                 <div class="col-xs-6 text-right">
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="col-xs-12 text-center" style="margin-top: 5px;">
-                        <button type="button" class="btn btn-primary" ng-click="loadInfo();" ng-disabled="formNewLectura.$invalid">
+                        <button type="button" class="btn btn-primary" id="btn_ingresar" ng-click="loadInfo();" ng-disabled="formNewLectura.$invalid">
                             Ingresar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </button>
                     </div>
@@ -263,6 +263,20 @@
                     </div>
                     <div class="modal-body">
                         <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Información</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message_error}}</span>
                     </div>
                 </div>
             </div>
