@@ -191,7 +191,13 @@ class FacturaController extends Controller
                             $cobro->fechacobro = date('Y-m-d');
                             $cobro->idsuministro = $item0->idsuministro;
                             $cobro->estadopagado = false;
-                            $cobro->save();
+
+
+                            if ($cobro->save()) {
+                                return response()->json( [ 'success' => true ] );
+                            } else {
+                                return response()->json( [ 'success' => false ] );
+                            }
 
                             /*$factura = new Factura();
                             $factura->fechafactura = date('Y-m-d');
@@ -207,6 +213,10 @@ class FacturaController extends Controller
                     }
 
                 } else {
+
+                    return response()->json( [ 'success' => true ] );
+
+
                     /*$partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM facturacobro WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
                     $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
 
@@ -224,6 +234,8 @@ class FacturaController extends Controller
                 }
             }
         }
+
+        return response()->json( [ 'success' => true ] );
 
     }
 
