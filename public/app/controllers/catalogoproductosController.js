@@ -9,6 +9,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.lineas = $scope.sublineasFiltro  =[];   
     $scope.select_cuentaC = null;
     $scope.opcion = 0;
+
+    $scope.listopenbalance = [];
     
     $scope.searchByFilter = function(){
     
@@ -67,15 +69,16 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
            
         });
        
-    }
+    };
     
-    $scope.initLoad();   
+
 	
     $scope.toggle = function(modalstate, id) {
 
     	$scope.modalstate = modalstate;
     	$scope.formProducto.$setPristine();
         $scope.formProducto.$setUntouched(); 
+
         switch (modalstate) {
             case 'add':
             	$scope.thumbnail = {
@@ -255,8 +258,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             default:
                 break;
         }
-    }
-
+    };
 
     $scope.showPlanCuenta = function (opcion) {
     	$scope.opcion = opcion;
@@ -416,18 +418,15 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         });
     }   
-    
 
     $scope.formatDate = function(date){
         var dateOut = new Date(date);
         return dateOut;
-  };
-  
-    
-  
+    };
+
     $scope.thumbnail = {
             dataUrl: ''
-      };
+    };
 
     $scope.fileReaderSupported = window.FileReader != null;
 
@@ -449,8 +448,47 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 	    };
   
 
-  
-    
+    /*
+    --------------------------------------- OPEN BALANCE ---------------------------------------------------------------
+     */
+
+    $scope.showListOpenBalance = function () {
+        $('#modalOpenBalance').modal('show')
+    };
+
+    $scope.getBodegas = function () {
+
+        $http.get(API_URL + 'catalogoproducto/getBodegas').success(function(response){
+
+            var longitud = response.length;
+            var array_temp = [{label: '-- Seleccione --', id: null}];
+            for(var i = 0; i < longitud; i++){
+                array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
+            }
+            $scope.listbodegas = array_temp;
+
+        });
+
+    };
+
+    $scope.createRowOB = function () {
+
+        var item = {
+            fecha:null,
+            idbodega: null,
+            contabilidad:0,
+            totalvalor:0,
+            totalstock:0,
+        };
+        $scope.listopenbalance.push(item);
+
+    };
+
+
+    $scope.initLoad();
+
+    $scope.getBodegas();
+
 });
 
 function defaultImage (obj){

@@ -3,7 +3,7 @@
 
             <div class="col-xs-12">
 
-                <h4>Gestión de Item</h4>
+                <h4>Gestión de Items</h4>
 
                 <hr>
 
@@ -52,12 +52,12 @@
                     <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                         <thead class="bg-primary">
                         <tr>
-                            <th style="text-align: center;">FOTO</th>
-                            <th style="text-align: center; width: 15%;"">CODIGO</th>
-                            <th style="text-align: center; width: 35%;"">DETALLE ITEM</th>
-                            <th style="text-align: center; width: 15%;"">TIPO ITEM</th>
+                            <th style="text-align: center; width: 10%;">FOTO</th>
+                            <th style="text-align: center; width: 15%;">CODIGO</th>
+                            <th style="text-align: center;">DETALLE ITEM</th>
+                            <th style="text-align: center; width: 15%;">TIPO ITEM</th>
                             <th style="text-align: center; width: 10%;">FECHA INGRESO</th>
-                            <th style="text-align: center; width: 15%;">ACCIONES</th>
+                            <th style="text-align: center; width: 10%;">ACCIONES</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,18 +70,23 @@
                             <td style="">{{producto.nameclaseitem}}</td>
                             <td style="text-align: center;">{{ formatDate(producto.created_at) | date:'yyyy-MM-dd' }}</p></td>
                             <td style="text-align: center;">
-                                <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
-                                        data-toggle="tooltip" data-placement="bottom" title="Editar" >
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                </button>
-                                <button ng-show="producto.idcatalogitem != 1 && producto.idcatalogitem != 2" type="button" class="btn btn-danger" ng-click="showModalConfirm(producto.idcatalogitem)"
-                                        data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-info" ng-click="toggle('info',producto.idcatalogitem)"
-                                        data-toggle="tooltip" data-placement="bottom" title="Información">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </button>
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-warning" ng-click="toggle('edit', producto.idcatalogitem)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Editar" >
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    </button>
+                                    <button ng-show="producto.idcatalogitem != 1 && producto.idcatalogitem != 2" type="button" class="btn btn-danger" ng-click="showModalConfirm(producto.idcatalogitem)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info" ng-click="toggle('info',producto.idcatalogitem)"
+                                            data-toggle="tooltip" data-placement="bottom" title="Información">
+                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+
                             </td>
                         </tr>
                         </tbody>
@@ -267,6 +272,11 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
+
+                        <button type="button" class="btn btn-primary" id="btn-save" ng-click="showListOpenBalance()" ng-disabled="formProducto.$invalid">
+                            Open Balance   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+
                         <button type="button" class="btn btn-success" id="btn-save" ng-click="save(modalstate, id)" ng-disabled="formProducto.$invalid">
                             Guardar   <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                         </button>
@@ -275,6 +285,97 @@
             </div>
         </div>
 
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalOpenBalance">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header modal-header-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Open Balance</h4>
+                    </div>
+
+                    <form class="form-horizontal" name="formOpenBalance" novalidate="">
+
+                        <div class="modal-body">
+
+                            <div class="row">
+
+                                <div class="col-xs-12" style="margin-top: 5px;">
+                                    <button type="button" class="btn btn-primary" id="btnAgregar" style="float: right;" ng-click="createRowOB()">
+                                        Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                                    </button>
+                                </div>
+
+                                <div class="col-xs-12" style="font-size: 12px !important; margin-top: 5px;">
+
+                                    <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                        <thead class="bg-primary">
+                                            <tr>
+                                                <th>FECHA</th>
+                                                <th>BODEGA</th>
+                                                <th>CUENTA CONTABLE INICIAL</th>
+                                                <th>TOTAL STOCK</th>
+                                                <th>TOTAL VALOR</th>
+                                                <th style="width: 5%;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listopenbalance" ng-cloak >
+
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="item.fecha" />
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" ng-model="item.idbodega">
+                                                        <option ng-repeat="elem in listbodegas" value="{{elem.id}}" >{{elem.label}}</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               ng-model="item.contabilidad" placeholder=""  readonly ng-required="true">
+                                                        <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
+                                                        <span class="input-group-btn" role="group">
+                                                                <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
+                                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="item.totalstock" ng-keypress="onlyDecimal($event)" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="item.totalvalor" ng-keypress="onlyDecimal($event)" />
+                                                </td>
+                                                <td>
+
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formOpenBalance.$invalid">
+                            Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <!--<div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
             <div class="modal-dialog" role="document">

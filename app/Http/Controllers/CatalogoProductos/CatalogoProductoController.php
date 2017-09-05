@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CatalogoProductos;
 
 use App\Modelos\CatalogoProductos\CatalogoProducto;
 use App\Modelos\Categoria;
+use App\Modelos\Contabilidad\Cont_Bodega;
 use App\Modelos\Contabilidad\Cont_Itemactivofijo;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_ClaseItem;
@@ -70,7 +71,14 @@ class CatalogoProductoController extends Controller
     {
         return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
     }
-    
+
+    public function getBodegas()
+    {
+        return Cont_Bodega::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cont_bodega.idplancuenta')
+                            ->get();
+    }
+
+
     /**
      * Obtener las lineas para filtro
      *
