@@ -311,11 +311,11 @@
                                     <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
-                                                <th>FECHA</th>
-                                                <th>BODEGA</th>
+                                                <th style="width: 13%;">FECHA</th>
+                                                <th style="width: 23%;">BODEGA</th>
                                                 <th>CUENTA CONTABLE INICIAL</th>
-                                                <th>TOTAL STOCK</th>
-                                                <th>TOTAL VALOR</th>
+                                                <th style="width: 10%;">TOTAL STOCK</th>
+                                                <th style="width: 10%;">TOTAL VALOR</th>
                                                 <th style="width: 5%;"></th>
                                             </tr>
                                         </thead>
@@ -323,10 +323,10 @@
                                             <tr ng-repeat="item in listopenbalance" ng-cloak >
 
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="item.fecha" />
+                                                    <input type="text" class="form-control" ng-model="item.fecha" ng-required="true"/>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" ng-model="item.idbodega">
+                                                    <select class="form-control" ng-model="item.idbodega" ng-required="true">
                                                         <option ng-repeat="elem in listbodegas" value="{{elem.id}}" >{{elem.label}}</option>
                                                     </select>
                                                 </td>
@@ -348,10 +348,10 @@
 
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="item.totalstock" ng-keypress="onlyDecimal($event)" />
+                                                    <input type="text" class="form-control text-right" ng-required="true" ng-model="item.totalstock" ng-keypress="onlyDecimal($event)" />
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="item.totalvalor" ng-keypress="onlyDecimal($event)" />
+                                                    <input type="text" class="form-control text-right" ng-required="true" ng-model="item.totalvalor" ng-keypress="onlyDecimal($event)" />
                                                 </td>
                                                 <td>
                                                     <button type="button" ng-hide="item.id == null" ng-disabled="item.estadoanulado == true" class="btn btn-default" data-dismiss="modal">

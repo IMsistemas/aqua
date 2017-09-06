@@ -12,6 +12,6 @@ class Cont_OpenBalanceItems extends Model
 
     public function cont_plancuenta()
     {
-        return $this->belongsTo('App\Modelos\Contabilidad\Cont_PlanCuenta', 'iddplancuenta');
+        return $this->belongsTo('App\Modelos\Contabilidad\Cont_PlanCuenta', 'idplancuenta');
     }
 }

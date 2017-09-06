@@ -484,11 +484,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     $scope.showListOpenBalance = function () {
 
-        console.log($scope.producto);
-
         $http.get(API_URL + 'catalogoproducto/getOpenBalanceProducto/' + $scope.producto.idcatalogitem).success(function(response){
-
-            console.log(response);
 
             $scope.openbalance_item = $scope.producto.nombreproducto;
 
@@ -505,8 +501,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                     contabilidad:response[i].cont_plancuenta,
                     totalvalor: response[i].totalvalor,
                     totalstock: response[i].totalstock,
-                    estadoanulado: false
+                    estadoanulado: response[i].estadoanulado
                 };
+
                 $scope.listopenbalance.push(item);
 
             }
@@ -525,10 +522,12 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             $scope.BodegasList = response;
 
             var longitud = response.length;
-            var array_temp = [{label: '-- Seleccione --', id: null}];
+            var array_temp = [{label: '-- Seleccione --', id: ''}];
+
             for(var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].namebodega, id: response[i].idbodega})
+                array_temp.push({label: response[i].namebodega, id: parseInt(response[i].idbodega)})
             }
+
             $scope.listbodegas = array_temp;
 
         });
@@ -539,11 +538,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         var item = {
             id: null,
-            fecha:null,
-            idbodega: null,
+            fecha: null,
+            idbodega: '',
             contabilidad:'',
-            totalvalor:0,
-            totalstock:0,
+            totalvalor: 0,
+            totalstock: 0,
             estadoanulado: false
         };
         $scope.listopenbalance.push(item);
