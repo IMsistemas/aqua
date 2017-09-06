@@ -53,14 +53,18 @@
             </div>
           </div>
 
-          <div class="col-md-1 col-xs-3">
-            <button id="btn_generar" ng-click="genera_report();" class="btn btn-primary"> Generar <i class="glyphicon glyphicon glyphicon-cog"></i></button>
-          </div>
 
-          <div class="col-md-1 col-xs-3">
-            <button type="button" class="btn btn-info" ng-click="print_report();">
-                Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
-            </button>
+
+          <div class="col-md-2 col-xs-3">
+              <div class="btn-group" role="group" aria-label="...">
+                  <button id="btn_generar" ng-click="genera_report();" class="btn btn-primary">
+                      Generar <i class="glyphicon glyphicon glyphicon-cog"></i>
+                  </button>
+                  <button type="button" class="btn btn-info" ng-click="print_report();">
+                      Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
+                  </button>
+              </div>
+
           </div>
 
         </div>
