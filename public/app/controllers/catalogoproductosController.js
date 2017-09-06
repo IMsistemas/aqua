@@ -11,6 +11,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.opcion = 0;
 
     $scope.listopenbalance = [];
+    $scope.BodegasList = [];
     $scope.item_cuenta = null;
     $scope.producto = null;
     
@@ -482,6 +483,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         $http.get(API_URL + 'catalogoproducto/getBodegas').success(function(response){
 
+            $scope.BodegasList = response;
+
             var longitud = response.length;
             var array_temp = [{label: '-- Seleccione --', id: null}];
             for(var i = 0; i < longitud; i++){
@@ -533,10 +536,10 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         var aux_bodegaseleccionada = {};
 
-        for(var i = 0; i < $scope.listbodegas.length; i++){
-            if(parseInt($scope.listbodegas[i].idbodega) === parseInt(item.idbodega)){
-                aux_bodegaseleccionada = $scope.listbodegas[i];
-                break;
+        for(var i = 0; i < $scope.BodegasList.length; i++){
+            console.log($scope.BodegasList[i]);
+            if(parseInt($scope.BodegasList[i].idbodega) === parseInt(item.idbodega)){
+                aux_bodegaseleccionada = $scope.BodegasList[i];
             }
         }
 
@@ -544,10 +547,10 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             idplancuenta: aux_bodegaseleccionada.idplancuenta,
             concepto: aux_bodegaseleccionada.concepto,
             controlhaber: aux_bodegaseleccionada.controlhaber,
-            tipocuenta: tipocuenta.tipocuenta,
+            tipocuenta: aux_bodegaseleccionada.tipocuenta,
             Debe: item.totalvalor,
             Haber: 0,
-            Descipcion: 'OPEN BALANCE BODEGA: ' + aux_bodegaseleccionada.namebodega + ' PARA ITEM: ' + $scope.producto.nombreproducto
+            Descipcion: 'OPEN BALANCE BODEGA: ' + aux_bodegaseleccionada.namebodega + ', PARA ITEM: ' + $scope.producto.nombreproducto
         };
 
         var cuentaInicial = {
@@ -591,6 +594,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         var openBalance = {
 
+            idtransaccion: 0,
             idcatalogitem: $scope.producto.idcatalogitem,
             idbodega: item.idbodega,
             idplancuenta: item.contabilidad.idplancuenta,
@@ -600,7 +604,6 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         };
 
-
         var data = {
             DataContabilidad: Contabilidad,
             Datakardex: kardex,
@@ -609,7 +612,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         console.log(data);
 
-        var transaccion = {
+        /*var transaccion = {
             datos:JSON.stringify(data)
         };
 
@@ -633,7 +636,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         }).error(function(err){
             console.log(err);
-        });
+        });*/
 
     };
 

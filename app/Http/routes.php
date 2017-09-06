@@ -278,6 +278,7 @@ Route::resource('puntoventa', 'Contabilidad\PuntoVentaController');
  * -------------------------------------MODULO CATALOGO PRODUCTO--------------------------------------------------------
  */
 
+Route::post('catalogoproducto/saveOpenBalance', 'CatalogoProductos\CatalogoProductoController@saveOpenBalance');
 Route::get('catalogoproducto/getBodegas', 'CatalogoProductos\CatalogoProductoController@getBodegas');
 Route::get('catalogoproducto/getCategoriasToFilter', 'CatalogoProductos\CatalogoProductoController@getCategoriasToFilter');
 Route::get('catalogoproducto/getLastCatalogoProducto', 'CatalogoProductos\CatalogoProductoController@getLastCatalogoProducto');
