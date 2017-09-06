@@ -322,8 +322,8 @@
                                         <tbody>
                                             <tr ng-repeat="item in listopenbalance" ng-cloak >
 
-                                                <td>
-                                                    <input type="text" class="form-control" ng-model="item.fecha" ng-required="true"/>
+                                                <td class="container-date">
+                                                    <input type="text" class="datepickerA form-control" id="d_{{$index + 1}}" ng-model="item.fecha" ng-required="true" ng-blur="reafirmData('d_', item, $index + 1)"/>
                                                 </td>
                                                 <td>
                                                     <select class="form-control" ng-model="item.idbodega" ng-required="true">
@@ -331,10 +331,6 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <!--<input type="hidden" ng-model="item.idplancuenta">
-                                                    <input type="hidden" ng-model="item.tipocuenta">
-                                                    <input type="hidden" ng-model="item.controlhaber">
-                                                    <input type="hidden" ng-model="item.contabilidad">-->
 
                                                     <div class="input-group">
                                                         <input type="text" class="form-control"

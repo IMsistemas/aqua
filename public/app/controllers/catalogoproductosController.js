@@ -508,6 +508,13 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
             }
 
+            $(document).ready (function(){
+                $('.datepickerA').datetimepicker({
+                    locale: 'es',
+                    format: 'YYYY-MM-DD'
+                });
+            });
+
             $('#modalOpenBalance').modal('show')
 
         });
@@ -534,7 +541,20 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     };
 
+    $scope.reafirmData = function (tipo, item, field) {
+
+        item.fecha = $('#' + tipo + field).val();
+
+    };
+
     $scope.createRowOB = function () {
+
+        $(document).ready (function(){
+            $('.datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
+        });
 
         var item = {
             id: null,
@@ -546,6 +566,13 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             estadoanulado: false
         };
         $scope.listopenbalance.push(item);
+
+        $(document).ready (function(){
+            $('.datepickerA').datetimepicker({
+                locale: 'es',
+                format: 'YYYY-MM-DD'
+            });
+        });
 
     };
 
@@ -659,6 +686,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             console.log(response);
 
             if (response.success === true) {
+
+                $scope.showListOpenBalance();
 
                 $scope.message = 'Se insertó correctamente el Open Balance...';
 
