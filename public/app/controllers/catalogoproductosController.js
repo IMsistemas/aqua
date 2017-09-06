@@ -14,6 +14,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.BodegasList = [];
     $scope.item_cuenta = null;
     $scope.producto = null;
+    $scope.ob_anular = 0;
     
     $scope.searchByFilter = function(){
     
@@ -707,6 +708,37 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
     };
 
+    $scope.anular = function (item) {
+
+        $scope.ob_anular = item.id;
+
+        $('#modalConfirmAnular').modal('show');
+    };
+
+    $scope.anularOB = function () {
+        var object = {
+            idopenbalanceitems: $scope.ob_anular
+        };
+
+        $http.post(API_URL + 'catalogoproducto/anularOB', object).success(function(response) {
+
+            $('#modalConfirmAnular').modal('hide');
+
+            if(response.success === true){
+
+                $scope.showListOpenBalance();
+
+                $scope.ob_anular = 0;
+                $scope.message = 'Se ha anulado el Open Balance seleccionado...';
+                $('#modalMessage').modal('show');
+
+            } else {
+                $scope.message_error = 'Ha ocurrido un error al intentar anular el Open Balance seleccionado...';
+                $('#modalMessageError').modal('show');
+            }
+
+        });
+    };
 
     $scope.initLoad();
 

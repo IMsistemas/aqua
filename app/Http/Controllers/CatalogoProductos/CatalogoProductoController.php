@@ -9,6 +9,7 @@ use App\Modelos\Contabilidad\Cont_Bodega;
 use App\Modelos\Contabilidad\Cont_Itemactivofijo;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_ClaseItem;
+use App\Modelos\Contabilidad\Cont_Kardex;
 use App\Modelos\Contabilidad\Cont_OpenBalanceItems;
 use App\Modelos\SRI\SRI_TipoImpuestoIce;
 use App\Modelos\SRI\SRI_TipoImpuestoIva;
@@ -227,6 +228,30 @@ class CatalogoProductoController extends Controller
 
             return response()->json(['success' => false]);
 
+        }
+    }
+
+    public function anularOB(Request $request)
+    {
+        $idopenbalanceitems = $request->input('idopenbalanceitems');
+
+        $ob = Cont_OpenBalanceItems::find($idopenbalanceitems);
+        $ob->estadoanulado = true;
+
+        if ($ob->save()) {
+
+            CoreContabilidad::AnularAsientoContable($ob->idtransaccion);
+
+            $result = Cont_Kardex::whereRaw('idtransaccion = ' . $ob->idtransaccion)
+                ->update(['estadoanulado' => true]);
+
+            if ($result == false) {
+                return response()->json(['success' => false]);
+            }
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
         }
     }
 
