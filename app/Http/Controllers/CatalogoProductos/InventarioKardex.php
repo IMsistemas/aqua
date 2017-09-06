@@ -122,7 +122,7 @@ class InventarioKardex extends Controller
     			$aux_total=$aux_total+$item->costototal;
 
     			if($aux_cantidad!=0){
-    				$aux_costop=($aux_total/$aux_cantidad);
+    				$aux_costop=round(($aux_total/$aux_cantidad), 4);
     			}else{
     				$aux_costop=0;
     			}
@@ -148,7 +148,7 @@ class InventarioKardex extends Controller
     		}else{
     			
     			if($aux_cantidad!=0){
-    				$aux_costop=($aux_total/$aux_cantidad);
+    				$aux_costop=round(($aux_total/$aux_cantidad), 4);
     			}else{
     				$aux_costop=0;
     			}

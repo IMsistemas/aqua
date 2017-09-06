@@ -243,7 +243,7 @@ class CatalogoProductoController extends Controller
             CoreContabilidad::AnularAsientoContable($ob->idtransaccion);
 
             $result = Cont_Kardex::whereRaw('idtransaccion = ' . $ob->idtransaccion)
-                ->update(['estadoanulado' => true]);
+                ->update(['estadoanulado' => false]);
 
             if ($result == false) {
                 return response()->json(['success' => false]);
