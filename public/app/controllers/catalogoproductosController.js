@@ -11,6 +11,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.opcion = 0;
 
     $scope.listopenbalance = [];
+    $scope.item_cuenta = null;
+    $scope.producto = null;
     
     $scope.searchByFilter = function(){
     
@@ -261,6 +263,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     };
 
     $scope.showPlanCuenta = function (opcion) {
+
+        $scope.item_cuenta = null;
+
     	$scope.opcion = opcion;
         $http.get(API_URL + 'empleado/getPlanCuenta').success(function(response){
             $scope.cuentas = response;
@@ -271,22 +276,34 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     };
 
     $scope.selectCuenta = function () {
-    	
-        var selected = $scope.select_cuenta;
-        var concepto = selected.concepto;
-        var idplan = selected.idplancuenta; 
-        if(idplan == 0){
-        	concepto = "";
-            idplan = null; 
-        }
-        if($scope.opcion == 1){
-        	$scope.t_cuentacontable = concepto;
-            $scope.producto.idplancuenta = idplan;
+
+        if ($scope.item_cuenta !== null) {
+
+            $scope.item_cuenta.contabilidad = $scope.select_cuenta;
+
+            console.log($scope.item_cuenta);
+
         } else {
-        	$scope.t_cuentacontableingreso = concepto;
-            $scope.producto.idplancuenta_ingreso = idplan;
+
+            var selected = $scope.select_cuenta;
+            var concepto = selected.concepto;
+            var idplan = selected.idplancuenta;
+
+            if(idplan == 0){
+                concepto = "";
+                idplan = null;
+            }
+            if($scope.opcion == 1){
+                $scope.t_cuentacontable = concepto;
+                $scope.producto.idplancuenta = idplan;
+            } else {
+                $scope.t_cuentacontableingreso = concepto;
+                $scope.producto.idplancuenta_ingreso = idplan;
+            }
+
         }
-        
+    	
+
 
         $('#modalPlanCuenta').modal('hide');
     };
@@ -453,6 +470,11 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
      */
 
     $scope.showListOpenBalance = function () {
+
+        console.log($scope.producto);
+
+        $scope.openbalance_item = $scope.producto.nombreproducto;
+
         $('#modalOpenBalance').modal('show')
     };
 
@@ -463,7 +485,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             var longitud = response.length;
             var array_temp = [{label: '-- Seleccione --', id: null}];
             for(var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].nameclaseitem, id: response[i].idclaseitem})
+                array_temp.push({label: response[i].namebodega, id: response[i].idbodega})
             }
             $scope.listbodegas = array_temp;
 
@@ -474,13 +496,144 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
     $scope.createRowOB = function () {
 
         var item = {
+            id: null,
             fecha:null,
             idbodega: null,
-            contabilidad:0,
+            contabilidad:'',
             totalvalor:0,
             totalstock:0,
+            estadoanulado: false
         };
         $scope.listopenbalance.push(item);
+
+    };
+
+    $scope.showPlanCuentaItem = function (item) {
+
+        $scope.item_cuenta = item;
+
+        $http.get(API_URL + 'configuracion/getPlanCuenta').success(function(response){
+
+            $scope.cuentas = response;
+            $('#modalPlanCuenta').modal('show');
+        });
+
+    };
+
+    $scope.saveItemOB = function (item) {
+
+        var Transaccion={
+            fecha: item.fecha,
+            idtipotransaccion: 1,
+            numcomprobante:1,
+            descripcion: 'OPEN BALANCE ITEM: ' + $scope.producto.nombreproducto
+        };
+
+        var RegistroC = [];
+
+        var aux_bodegaseleccionada = {};
+
+        for(var i = 0; i < $scope.listbodegas.length; i++){
+            if(parseInt($scope.listbodegas[i].idbodega) === parseInt(item.idbodega)){
+                aux_bodegaseleccionada = $scope.listbodegas[i];
+                break;
+            }
+        }
+
+        var cuentaBodega = {
+            idplancuenta: aux_bodegaseleccionada.idplancuenta,
+            concepto: aux_bodegaseleccionada.concepto,
+            controlhaber: aux_bodegaseleccionada.controlhaber,
+            tipocuenta: tipocuenta.tipocuenta,
+            Debe: item.totalvalor,
+            Haber: 0,
+            Descipcion: 'OPEN BALANCE BODEGA: ' + aux_bodegaseleccionada.namebodega + ' PARA ITEM: ' + $scope.producto.nombreproducto
+        };
+
+        var cuentaInicial = {
+            idplancuenta: item.contabilidad.idplancuenta,
+            concepto: item.contabilidad.concepto,
+            controlhaber: item.contabilidad.controlhaber,
+            tipocuenta: item.contabilidad.tipocuenta,
+            Debe: 0,
+            Haber: item.totalvalor,
+            Descipcion: 'OPEN BALANCE CUENTA INICIAL PARA ITEM: ' + $scope.producto.nombreproducto
+        };
+
+        RegistroC.push(cuentaBodega);
+        RegistroC.push(cuentaInicial);
+
+
+        var Contabilidad = {
+            transaccion: Transaccion,
+            registro: RegistroC
+        };
+
+        //--proceso kardex
+        var kardex = [];
+
+        var producto = {
+            idtransaccion: 0,
+            idcatalogitem: $scope.producto.idcatalogitem,
+            idbodega: item.idbodega,
+            fecharegistro: item.fecha,
+            cantidad: parseInt(item.totalstock),
+            costounitario: parseFloat(item.totalvalor) / parseInt(item.totalstock),
+            costototal: parseFloat(item.totalvalor),
+            tipoentradasalida:1,
+            estadoanulado:true,
+            descripcion: 'OPEN BALANCE ITEM: ' + $scope.producto.nombreproducto
+        };
+
+        kardex.push(producto);
+        //--proceso kardex
+
+
+        var openBalance = {
+
+            idcatalogitem: $scope.producto.idcatalogitem,
+            idbodega: item.idbodega,
+            idplancuenta: item.contabilidad.idplancuenta,
+            fecha: item.fecha,
+            totalstock: item.totalstock,
+            totalvalor: item.totalvalor
+
+        };
+
+
+        var data = {
+            DataContabilidad: Contabilidad,
+            Datakardex: kardex,
+            DataOpenBalance: openBalance
+        };
+
+        console.log(data);
+
+        var transaccion = {
+            datos:JSON.stringify(data)
+        };
+
+        $http.post(API_URL + 'catalogoproducto/saveOpenBalance', transaccion).success(function (response) {
+
+            console.log(response);
+
+            if (response.success === true) {
+
+                $scope.message = 'Se insertó correctamente el Open Balance...';
+
+                $('#modalMessage').modal('show');
+
+            }
+            else {
+
+                $scope.message_error = 'Ha ocurrido un error al intentar guardar la Compra...';
+
+                $('#modalMessageError').modal('show');
+            }
+
+        }).error(function(err){
+            console.log(err);
+        });
 
     };
 

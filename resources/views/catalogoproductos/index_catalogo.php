@@ -291,7 +291,7 @@
 
                     <div class="modal-header modal-header-primary">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Open Balance</h4>
+                        <h4 class="modal-title">Open Balance Item: {{openbalance_item}}</h4>
                     </div>
 
                     <form class="form-horizontal" name="formOpenBalance" novalidate="">
@@ -331,16 +331,21 @@
                                                     </select>
                                                 </td>
                                                 <td>
+                                                    <!--<input type="hidden" ng-model="item.idplancuenta">
+                                                    <input type="hidden" ng-model="item.tipocuenta">
+                                                    <input type="hidden" ng-model="item.controlhaber">
+                                                    <input type="hidden" ng-model="item.contabilidad">-->
+
                                                     <div class="input-group">
                                                         <input type="text" class="form-control"
-                                                               ng-model="item.contabilidad" placeholder=""  readonly ng-required="true">
-                                                        <input type="hidden" name="producto.idplancuenta_ingreso" id="h_idplancuenta_i" ng-model="h_idplancuenta_i">
+                                                               ng-model="item.contabilidad.concepto" placeholder=""  readonly ng-required="true">
                                                         <span class="input-group-btn" role="group">
-                                                                <button type="button" class="btn btn-info" id="btn-pcc_i" ng-click="showPlanCuenta(2)">
+                                                            <button type="button" class="btn btn-info" ng-click="showPlanCuentaItem(item)">
                                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                             </button>
                                                         </span>
                                                     </div>
+
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" ng-model="item.totalstock" ng-keypress="onlyDecimal($event)" />
@@ -349,7 +354,13 @@
                                                     <input type="text" class="form-control" ng-model="item.totalvalor" ng-keypress="onlyDecimal($event)" />
                                                 </td>
                                                 <td>
+                                                    <button type="button" ng-hide="item.id == null" ng-disabled="item.estadoanulado == true" class="btn btn-default" data-dismiss="modal">
+                                                        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                    </button>
 
+                                                    <button type="button" ng-hide="item.id != null" class="btn btn-success" id="btn-save" ng-click="saveItemOB(item)" ng-disabled="formOpenBalance.$invalid">
+                                                        <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+                                                    </button>
                                                 </td>
 
                                             </tr>
@@ -368,9 +379,9 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formOpenBalance.$invalid">
+                        <!--<button type="button" class="btn btn-success" id="btn-save" ng-click="saveParams()" ng-disabled="formOpenBalance.$invalid">
                             Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-                        </button>
+                        </button>-->
                     </div>
 
                 </div>
