@@ -273,7 +273,7 @@
                             Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
 
-                        <button type="button" class="btn btn-primary" id="btn-save" ng-click="showListOpenBalance()" ng-disabled="formProducto.$invalid">
+                        <button type="button" class="btn btn-primary" id="btn-ob" ng-click="showListOpenBalance()" ng-disabled="formProducto.$invalid">
                             Open Balance   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </button>
 

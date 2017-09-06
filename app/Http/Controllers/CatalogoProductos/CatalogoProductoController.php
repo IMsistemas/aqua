@@ -111,6 +111,10 @@ class CatalogoProductoController extends Controller
     	return $producto;
     }
 
+    public function getOpenBalanceProducto($id)
+    {
+        return Cont_OpenBalanceItems::with('cont_plancuenta')->where('idcatalogitem', $id)->get();
+    }
     
     /**
      * Almacenar el producto

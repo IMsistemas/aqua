@@ -84,6 +84,9 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         switch (modalstate) {
             case 'add':
+
+                $('#btn-ob').hide();
+
             	$scope.thumbnail = {
         	        dataUrl: ''
         	    };
@@ -162,14 +165,23 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             case 'edit':
 
             	$scope.form_title = "Editar Item";
+
+
                 $scope.id = id;
                 $scope.producto = null;              
                 $http.get(API_URL + 'catalogoproducto/'  + id ).success(function(response){
 
                     console.log(response);
 
-                  	$scope.producto = response;    	
- 
+                  	$scope.producto = response;
+
+                  	if (response.idclaseitem === 1) {
+                        $('#btn-ob').show();
+                    } else {
+                        $('#btn-ob').hide();
+                    }
+
+
                 	$http.get(API_URL + 'catalogoproducto/getTipoItem').success(function(response){
 
                         var longitud = response.length;
@@ -474,9 +486,36 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         console.log($scope.producto);
 
-        $scope.openbalance_item = $scope.producto.nombreproducto;
+        $http.get(API_URL + 'catalogoproducto/getOpenBalanceProducto/' + $scope.producto.idcatalogitem).success(function(response){
 
-        $('#modalOpenBalance').modal('show')
+            console.log(response);
+
+            $scope.openbalance_item = $scope.producto.nombreproducto;
+
+            var longitud = response.length;
+
+            $scope.listopenbalance = [];
+
+            for (var i = 0; i < longitud; i++) {
+
+                var item = {
+                    id: response[i].idopenbalanceitems,
+                    fecha:response[i].fecha,
+                    idbodega: response[i].idbodega,
+                    contabilidad:response[i].cont_plancuenta,
+                    totalvalor: response[i].totalvalor,
+                    totalstock: response[i].totalstock,
+                    estadoanulado: false
+                };
+                $scope.listopenbalance.push(item);
+
+            }
+
+            $('#modalOpenBalance').modal('show')
+
+        });
+
+
     };
 
     $scope.getBodegas = function () {
@@ -528,7 +567,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         var Transaccion={
             fecha: item.fecha,
             idtipotransaccion: 1,
-            numcomprobante:1,
+            numcomprobante: 1,
             descripcion: 'OPEN BALANCE ITEM: ' + $scope.producto.nombreproducto
         };
 
@@ -583,8 +622,8 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
             cantidad: parseInt(item.totalstock),
             costounitario: parseFloat(item.totalvalor) / parseInt(item.totalstock),
             costototal: parseFloat(item.totalvalor),
-            tipoentradasalida:1,
-            estadoanulado:true,
+            tipoentradasalida: 1,
+            estadoanulado: true,
             descripcion: 'OPEN BALANCE ITEM: ' + $scope.producto.nombreproducto
         };
 
@@ -612,7 +651,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         console.log(data);
 
-        /*var transaccion = {
+        var transaccion = {
             datos:JSON.stringify(data)
         };
 
@@ -636,7 +675,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
 
         }).error(function(err){
             console.log(err);
-        });*/
+        });
 
     };
 
