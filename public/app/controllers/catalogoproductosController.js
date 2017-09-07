@@ -498,7 +498,7 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 var item = {
                     id: response[i].idopenbalanceitems,
                     fecha:response[i].fecha,
-                    idbodega: response[i].idbodega,
+                    idbodega: (response[i].idbodega).toString(),
                     contabilidad:response[i].cont_plancuenta,
                     totalvalor: response[i].totalvalor,
                     totalstock: response[i].totalstock,
