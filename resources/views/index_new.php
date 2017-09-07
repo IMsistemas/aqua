@@ -74,13 +74,13 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li id="permiso_30"><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
-                                    <li id="permiso_31"><a href="#" ng-click="toModuloSolicitud();">Solicitud</a></li>
-                                    <li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministro</a></li>
+                                    <li id="permiso_31"><a href="#" ng-click="toModuloSolicitud();">Solicitudes</a></li>
+                                    <li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministros</a></li>
                                     <li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionCobro();">Recaudación (Cobros)</a></li>
                                     <!--<li id="permiso_33"><a href="#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
                                     <li id="permiso_35"><a href="#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>-->
-                                    <li id="permiso_34"><a href="#" ng-click="toModuloLectura();">Registro de Lecturas</a></li>
-                                    <li id="permiso_36"><a href="#" ng-click="toModuloNewLectura();">Crear Lecturas</a></li>
+                                    <li id="permiso_34"><a href="#" ng-click="toModuloLectura();">Registro Tomas de Lecturas</a></li>
+                                    <li id="permiso_36"><a href="#" ng-click="toModuloNewLectura();">Crear Toma de Lectura</a></li>
                                 </ul>
                             </li>
 
@@ -104,7 +104,7 @@
                                     <li role="separator" class="divider"></li>
 
                                     <li id="permiso_5"><a href="#" ng-click="toModuloPlanCuentas();">Plan de Cuenta</a></li>
-                                    <li id="permiso_5"><a href="#" ng-click="toModuloConciliacion();">Conciliacion</a></li>
+                                    <li id="permiso_5"><a href="#" ng-click="toModuloConciliacion();">Conciliación</a></li>
 
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes Contabilidad</a>
@@ -132,7 +132,7 @@
                                         <ul class="dropdown-menu">
                                             <li id="permiso_10"><a tabindex="-1" href="#" ng-click="toModuloCompras();">Facturación de Compras</a></li>
                                             <li id="permiso_11"><a href="#" ng-click="toModuloRetencionesCompras();">Retención Compras</a></li>
-                                            <li id="permiso_11"><a href="#" ng-click="toModuloReembolso();">Reembolso</a></li>
+                                            <li id="permiso_11"><a href="#" ng-click="toModuloReembolso();">Comprobantes de Reembolso</a></li>
                                             <li id="permiso_13"><a href="#" ng-click="toModuloCuentasxPagar();">Cuentas por Pagar (Comprobante Egreso)</a></li>
                                             <li id="permiso_39"><a href="#" ng-click="toModuloReporteCompras();">Reporte de Compras</a></li>
                                         </ul>
