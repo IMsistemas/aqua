@@ -282,8 +282,6 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
 
         });
 
-
-
     };
 
 
