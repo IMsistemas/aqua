@@ -28,17 +28,7 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
         ignoreReadonly: false
     });
 
-    $scope.tiporetencion = [
-        { id: 0, name: '-- Tipos de Retención --' },
-        { id: 1, name: 'Retención IVA' },
-        { id: 2, name: 'Retención Fuente a la Renta' }
-    ];
-    $scope.s_tiporetencion = 0;
 
-    $scope.codigosretencion = [
-        { id: 0, name: '-- Códigos de Retención --' }
-    ];
-    $scope.s_codigoretencion = 0;
 
     $scope.meses = [
         { id: 0, name: '-- Meses --' },
@@ -57,19 +47,7 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
     ];
     $scope.s_month = 0;
 
-    $scope.retencion = [];
-
-    $scope.idretencion = 0;
-
-    $scope.itemretencion = [];
-    $scope.baseimponible = 0;
-    $scope.baseimponibleIVA = 0;
-    $scope.idretencion = 0;
-    $scope.retencion = '';
-
-    $scope.iddocumentocompra = 0;
-
-    $scope.ProveedorContable = null;
+    $scope.idcomprobantereembolso = 0;
 
     $scope.initLoad = function (pageNumber) {
 
@@ -143,6 +121,8 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
                 $scope.t_montoiva = item.montoiva;
                 $scope.t_montoice = item.montoice;
 
+                $scope.idcomprobantereembolso = item.idcomprobantereembolso;
+
                 $scope.action_comp = 'Editar';
 
                 $('#modalAction').modal('show');
@@ -200,6 +180,8 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
                 $scope.t_montoiva = '';
                 $scope.t_montoice = '';
 
+                $scope.idcomprobantereembolso = 0;
+
                 $scope.action_comp = 'Agregar';
 
                 $('#modalAction').modal('show');
@@ -233,28 +215,56 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
 
         console.log(comprobante);
 
-        var url = API_URL + 'reembolso';
+        if ($scope.idcomprobantereembolso === 0) {
 
-        $http.post(url, comprobante ).success(function (response) {
+            $http.post(API_URL + 'reembolso', comprobante ).success(function (response) {
 
-            console.log(response);
+                console.log(response);
 
-            $('#modalAction').modal('hide');
+                $('#modalAction').modal('hide');
 
-            if (response.success === true) {
-                $scope.initLoad(1);
-                $scope.message = 'Se guardó correctamente la información del Comprobante de Reembolso...';
+                if (response.success === true) {
+                    $scope.initLoad(1);
+                    $scope.message = 'Se guardó correctamente la información del Comprobante de Reembolso...';
 
-                $('#modalMessage').modal('show');
-                $scope.hideModalMessage();
-            }
-            else {
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+                else {
 
-                $scope.message_error = 'Ha ocurrido un error..';
+                    $scope.message_error = 'Ha ocurrido un error..';
 
-                $('#modalMessageError').modal('show');
-            }
-        });
+                    $('#modalMessageError').modal('show');
+                }
+            });
+
+        } else {
+
+            $http.put(API_URL + 'reembolso/'+ $scope.idcomprobantereembolso, comprobante ).success(function (response) {
+
+                $scope.initLoad();
+
+                $('#modalAction').modal('hide');
+
+                if (response.success === true) {
+                    $scope.initLoad(1);
+                    $scope.message = 'Se editó correctamente el Comprobante de Reembolso seleccionado';
+
+                    $('#modalMessage').modal('show');
+                    $scope.hideModalMessage();
+                }
+                else {
+
+                    $scope.message_error = 'Ha ocurrido un error al intentar editar el Comprobante de Reembolso seleccionado..';
+
+                    $('#modalMessageError').modal('show');
+                }
+
+
+            }).error(function (res) {
+
+            });
+        }
 
     };
 

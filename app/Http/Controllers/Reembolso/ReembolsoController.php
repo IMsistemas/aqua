@@ -112,7 +112,28 @@ class ReembolsoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reembolso = SRI_ComprobanteReembolso::find($id);
+
+        $reembolso->iddocumentocompra = $request->input('iddocumentocompra');
+
+        $reembolso->idtipoidentificacion = $request->input('idtipoidentificacion');
+        $reembolso->idtipocomprobante = $request->input('idtipocomprobante');
+        $reembolso->numdocidentific = $request->input('numdocidentific');
+        $reembolso->numdocumentoreembolso = $request->input('numdocumentoreembolso');
+        $reembolso->noauthreembolso = $request->input('noauthreembolso');
+        $reembolso->fechaemisionreembolso = $request->input('fechaemisionreembolso');
+        $reembolso->ivacero = $request->input('ivacero');
+        $reembolso->iva = $request->input('iva');
+        $reembolso->ivanoobj = $request->input('ivanoobj');
+        $reembolso->ivaexento = $request->input('ivaexento');
+        $reembolso->montoiva = $request->input('montoiva');
+        $reembolso->montoice = $request->input('montoice');
+
+        if ($reembolso->save()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 
     /**
