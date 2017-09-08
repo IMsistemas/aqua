@@ -94,64 +94,15 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
             search: search
         };
 
-        console.log(filtros);
+        //console.log(filtros);
 
-        $http.get(API_URL + 'retencionCompra/getRetenciones?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
+        $http.get(API_URL + 'reembolso/getReembolsos?page=' + pageNumber + '&filter=' + JSON.stringify(filtros)).success(function(response){
 
-            //console.log(response.data);
+            console.log(response.data);
 
-            /*var longitud = response.data.length;
-            for (var i = 0; i < longitud; i++) {
-
-                var longitud_sri_retenciondetallecompra = (response.data[i].sri_retenciondetallecompra).length;
-                var total = 0;
-
-                for (var j = 0; j < longitud_sri_retenciondetallecompra; j++) {
-                    total += parseFloat(response.data[i].sri_retenciondetallecompra[j].valorretenido);
-                }
-
-                var total_retenido = {
-                    value: total.toFixed(2),
-                    writable: true,
-                    enumerable: true,
-                    configurable: true
-                };
-                Object.defineProperty(response.data[i], 'total_retenido', total_retenido);
-            }*/
-
-            var longitud = response.data.length;
-            for (var i = 0; i < longitud; i++) {
-
-                var longitud_sri_retenciondetallecompra = (response.data[i].cont_documentocompra[0].sri_retencioncompra).length;
-
-                var total = 0;
-
-                if (longitud_sri_retenciondetallecompra > 0) {
-
-                    var longitud_detalleretencion = response.data[i].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra.length;
-
-
-                    for (var j = 0; j < longitud_detalleretencion; j++) {
-
-                        var valorretenido = response.data[i].cont_documentocompra[0].sri_retencioncompra[0].sri_retenciondetallecompra[j].valorretenido;
-
-                        total += parseFloat(valorretenido);
-                    }
-
-
-                }
-
-                var total_retenido = {
-                    value: total.toFixed(2),
-                    writable: true,
-                    enumerable: true,
-                    configurable: true
-                };
-                Object.defineProperty(response.data[i], 'total_retenido', total_retenido);
-            }
-
-            $scope.retencion = response.data;
+            $scope.comprobantes = response.data;
             $scope.totalItems = response.total;
+
         });
     };
 

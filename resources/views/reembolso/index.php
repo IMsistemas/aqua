@@ -29,8 +29,9 @@
     <div class="col-xs-12" style="font-size: 12px !important;">
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
+            <th>NO. DOC. COMPRAS</th>
             <th class="text-center" style="width: 10%;" ng-click="sort('')">
-                NO. RETENCION
+                TIPO DE COMPROBANTE
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
@@ -40,33 +41,32 @@
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
             <th class="text-center" ng-click="sort('')">
-                PROVEEDOR
+                NO. DE SERIE
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
             <th class="text-center" style="width: 13%;" ng-click="sort('')">
-                NO. DOC. RETENC.
+                NO. IDENTIFICACION.
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
             <th class="text-center" style="width: 9%;" ng-click="sort('')">
-                VALOR
+                BASE IMPONIBLE
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th style="text-align: center; width: 9%;">
-                ESTADO
-            </th>
+
             <th class="text-center" style="width: 10%;">ACCIONES</th>
             </thead>
             <tbody>
-            <tr dir-paginate="item in retencion | orderBy:sortKey:reverse | itemsPerPage:8 " total-items="totalItems" ng-cloak>
-                <td>{{$index + 1}}</td>
-                <td class="text-center">{{item.fechaemisioncomprob | formatDate}}</td>
-                <td style="font-weight: bold;">{{item.cont_documentocompra[0].proveedor.persona.razonsocial}}</td>
-                <td class="text-center">{{item.nocomprobante}}</td>
-                <td class="text-right">$ {{item.total_retenido}}</td>
-                <td class="text-right">{{(item.cont_documentocompra[0].sri_retencioncompra[0].estadoanulado) ? 'ANULADA' : 'NO ANULADA'}}</td>
+            <tr dir-paginate="item in comprobantes | orderBy:sortKey:reverse | itemsPerPage:8 " total-items="totalItems" ng-cloak>
+                <td class="text-center">{{item.numdocumentocompra}}</td>
+                <td>{{item.namecomprobante}}</td>
+                <td class="text-center">{{item.fechaemisionreembolso | formatDate}}</td>
+                <td class="text-center">{{item.numdocumentoreembolso}}</td>
+                <td>{{item.numdocidentific}}</td>
+                <td class="text-right">$ {{item.montoiva}}</td>
+
                 <td  class="text-center">
                     <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
                         <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>

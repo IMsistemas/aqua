@@ -337,6 +337,7 @@ Route::resource('/transportista', 'Transportista\TransportistaController');
  * -------------------------------------MODULO REEMBOLSO----------------------------------------------------------------
  */
 
+Route::get('reembolso/getReembolsos', 'Reembolso\ReembolsoController@getReembolsos');
 Route::resource('/reembolso', 'Reembolso\ReembolsoController');
 
 /*
@@ -452,8 +453,6 @@ Route::resource('DocumentoNC', 'NotaCredito\NotaCreditoController');
 /*
  * -----------------------------------MODULO GUIA REMISION--------------------------------------------------------------
  */
-
-
 
 Route::get('guiaremision/getGiaremision', 'Guiaremision\GuiaremisionController@show');
 Route::get('guiaremision/getItemsVenta', 'Guiaremision\GuiaremisionController@getItemsVenta');

@@ -20,6 +20,13 @@ class ReembolsoController extends Controller
         return view('reembolso.index');
     }
 
+    public function getReembolsos()
+    {
+        return SRI_ComprobanteReembolso::join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'sri_comprobantereembolso.idtipocomprobante')
+                    ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'sri_comprobantereembolso.iddocumentocompra')
+                    ->paginate(8);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
