@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reembolso;
 
+use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\SRI\SRI_ComprobanteReembolso;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,16 @@ class ReembolsoController extends Controller
     {
         return SRI_ComprobanteReembolso::join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'sri_comprobantereembolso.idtipocomprobante')
                     ->join('cont_documentocompra', 'cont_documentocompra.iddocumentocompra', '=', 'sri_comprobantereembolso.iddocumentocompra')
+                    ->selectRaw('sri_comprobantereembolso.*, sri_tipocomprobante.*, cont_documentocompra.numdocumentocompra')
                     ->paginate(8);
+    }
+
+    public function getCompras(Request $request)
+    {
+        $compra = Cont_DocumentoCompra::whereRaw("cont_documentocompra.numdocumentocompra::text ILIKE '%" . $request->input('q') . "%'")
+            ->get();
+
+        return $compra;
     }
 
     /**

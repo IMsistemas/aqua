@@ -337,6 +337,7 @@ Route::resource('/transportista', 'Transportista\TransportistaController');
  * -------------------------------------MODULO REEMBOLSO----------------------------------------------------------------
  */
 
+Route::get('reembolso/getCompras/{codigo}', 'Reembolso\ReembolsoController@getCompras');
 Route::get('reembolso/getReembolsos', 'Reembolso\ReembolsoController@getReembolsos');
 Route::resource('/reembolso', 'Reembolso\ReembolsoController');
 

@@ -72,25 +72,12 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
     $scope.ProveedorContable = null;
 
     $scope.initLoad = function (pageNumber) {
-        $scope.idretencion = 0;
-
-        $scope.t_year = $('#t_year').val();
-
-        if ($scope.s_month == 0) {
-            var m = null;
-        } else var m = $scope.s_month;
-
-        if ($scope.t_year == '') {
-            var y = null;
-        } else var y = $scope.t_year;
 
         if ($scope.t_busqueda == undefined || $scope.t_busqueda == '') {
             var search = null;
         } else var search = $scope.t_busqueda;
 
         var filtros = {
-            month: m,
-            year: y,
             search: search
         };
 
@@ -112,94 +99,61 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
         $scope.initLoad(newPage);
     };
 
-    $scope.loadFormPage = function(){
+    $scope.edit = function(item){
 
-
-    };
-
-    $scope.getCodigosRetencion = function () {
-        var tipo = $scope.s_tiporetencion;
-
-        if (tipo != 0) {
-            $http.get(API_URL + 'retencionCompra/getCodigosRetencion/' + tipo).success(function(response){
-                var longitud = response.length;
-                var array_temp = [{ id: 0, name: '-- Códigos de Retención --' }];
-                for (var i = 0; i < longitud; i++) {
-                    array_temp.push({id: response[i].iddetalleretencionfuente, name: response[i].codigoSRI})
-                }
-                $scope.codigosretencion = array_temp;
-                $scope.s_codigoretencion = 0;
-            });
-        } else {
-            $scope.codigosretencion = [
-                { id: 0, name: '-- Códigos de Retención --' }
-            ];
-            $scope.s_codigoretencion = 0;
-        }
-    };
-
-    $scope.getLastIDRetencion = function () {
-
-        $http.get(API_URL + 'retencionCompra/getLastIDRetencion').success(function(response){
-
-            if (response != null && response != 0) {
-                $scope.t_nroretencion = parseInt(response) + 1;
-            } else {
-                $scope.t_nroretencion = 1;
-            }
-
-        });
-    };
-
-    $scope.getTipoPagoComprobante = function () {
-
-        $http.get(API_URL + 'DocumentoCompras/getTipoPagoComprobante').success(function(response){
-
-            var longitud = response.length;
-            var array_temp = [{label: '-- Seleccione --', id: ''}];
-
-            for (var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].tipopagoresidente, id: response[i].idpagoresidente})
-            }
-
-            $scope.listtipopago = array_temp;
-            $scope.tipopago = array_temp[0].id
-
-        });
-
-    };
-
-    $scope.getPaisPagoComprobante = function () {
-
-        $http.get(API_URL + 'DocumentoCompras/getPaisPagoComprobante').success(function(response){
-
-            var longitud = response.length;
-            var array_temp = [{label: '-- Seleccione --', id: ''}];
-
-            for (var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].pais, id: response[i].idpagopais})
-            }
-
-            $scope.listpaispago = array_temp;
-            $scope.paispago = array_temp[0].id
-
-        });
-
-    };
-
-    $scope.getProveedores = function () {
-        $http.get(API_URL + 'retencionCompra/getProveedores').success(function(response){
-
+        $http.get(API_URL + 'cliente/getTipoIdentificacion').success(function(response){
             var longitud = response.length;
             var array_temp = [{label: '-- Seleccione --', id: ''}];
             for(var i = 0; i < longitud; i++){
-                array_temp.push({label: response[i].razonsocial, id: response[i].idproveedor})
+                array_temp.push({label: response[i].nameidentificacion, id: response[i].idtipoidentificacion})
             }
-            $scope.listproveedor = array_temp;
-            $scope.proveedor = '';
+            $scope.idtipoidentificacion = array_temp;
+            $scope.tipoidentificacion = item.idtipoidentificacion;
+
+            $http.get(API_URL + 'DocumentoVenta/getTipoComprobante').success(function(response){
+
+                var longitud = response.length;
+                var array_temp = [{label: '-- Seleccione --', id: ''}];
+                for (var i = 0; i < longitud; i++){
+                    array_temp.push({label: response[i].namecomprobante, id: response[i].idtipocomprobante})
+                }
+
+                $scope.listtipocomprobante = array_temp;
+                $scope.tipocomprobante = item.idtipocomprobante;
+
+
+                $scope.numdocidentific = item.numdocidentific;
+
+                var arrayNoReembolso = (item.numdocumentoreembolso).split('-');
+
+                $scope.t_establ = arrayNoReembolso[0];
+                $scope.t_pto = arrayNoReembolso[1];
+                $scope.t_secuencial = arrayNoReembolso[2];
+
+                $('#t_nrocompra').val((item.numdocumentocompra).toString());
+
+                $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', (item.numdocumentocompra).toString());
+
+                $scope.t_nroautorizacion = item.noauthreembolso;
+                $scope.fechaemisioncomprobante = item.fechaemisionreembolso;
+                $scope.t_tarifaivacero = item.ivacero;
+                $scope.t_tarifadifcero = item.iva;
+                $scope.t_tarifanoobj = item.ivanoobj;
+                $scope.t_tarifaex = item.ivaexento;
+                $scope.t_montoiva = item.montoiva;
+                $scope.t_montoice = item.montoice;
+
+                $scope.action_comp = 'Editar';
+
+                $('#modalAction').modal('show');
+            });
+
 
         });
+
     };
+
+
 
     $scope.searchAPI = function(userInputString, timeoutPromise) {
         return $http.post(API_URL + 'retencionCompra/getCompras', {q: userInputString, idproveedor: $scope.proveedor}, {timeout: timeoutPromise});
@@ -226,6 +180,27 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
 
                 $scope.listtipocomprobante = array_temp;
                 $scope.tipocomprobante = '';
+
+                $scope.numdocidentific = '';
+
+                $scope.t_establ = '';
+                $scope.t_pto = '';
+                $scope.t_secuencial = '';
+
+                $('#t_nrocompra').val('');
+                $scope.$broadcast('angucomplete-alt:changeInput', 't_nrocompra', '');
+                $scope.$broadcast('angucomplete-alt:clearInput', 't_nrocompra');
+
+                $scope.t_nroautorizacion = '';
+                $scope.fechaemisioncomprobante = '';
+                $scope.t_tarifaivacero = '';
+                $scope.t_tarifadifcero = '';
+                $scope.t_tarifanoobj = '';
+                $scope.t_tarifaex = '';
+                $scope.t_montoiva = '';
+                $scope.t_montoice = '';
+
+                $scope.action_comp = 'Agregar';
 
                 $('#modalAction').modal('show');
             });
@@ -291,12 +266,9 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
     };
 
 
-
-
-
     $scope.showDataPurchase = function (object) {
 
-        console.log(object);
+        //console.log(object);
 
     };
 

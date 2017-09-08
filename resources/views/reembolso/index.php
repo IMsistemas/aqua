@@ -56,7 +56,7 @@
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
 
-            <th class="text-center" style="width: 10%;">ACCIONES</th>
+            <th class="text-center" style="width: 15%;">ACCIONES</th>
             </thead>
             <tbody>
             <tr dir-paginate="item in comprobantes | orderBy:sortKey:reverse | itemsPerPage:8 " total-items="totalItems" ng-cloak>
@@ -68,13 +68,24 @@
                 <td class="text-right">$ {{item.montoiva}}</td>
 
                 <td  class="text-center">
-                    <button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
+
+
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-warning" ng-click="edit(item)">
+                            Editar <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger" ng-click="delete(item)">
+                            Eliminar <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <!--<button type="button" class="btn btn-info btn-sm" ng-click="loadFormPage(item.idcomprobanteretencion)">
                         <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>
                     </button>
 
                     <button type="button" class="btn btn-default btn-sm" ng-click="showModalConfirmAnular(item)" ng-disabled="item.cont_documentocompra[0].sri_retencioncompra[0].estadoanulado==true">
                         <i class="fa fa-lg fa-ban" aria-hidden="true"></i>
-                    </button>
+                    </button>-->
                 </td>
             </tr>
             </tbody>
@@ -103,7 +114,7 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar Comprobante Reembolso</h4>
+                    <h4 class="modal-title">{{action_comp}} Comprobante Reembolso</h4>
                 </div>
                 <div class="modal-body">
 
@@ -125,11 +136,11 @@
                                             pause = "400"
                                             selected-object = "showDataPurchase"
 
-                                            remote-url = "{{API_URL}}retencionCompra/getCompras/"
+                                            remote-url = "{{API_URL}}reembolso/getCompras/"
                                             remote-url-request-formatter="remoteUrlRequestFn"
 
 
-                                            remote-api-handler="searchAPI"
+
 
                                             title-field="numdocumentocompra"
 
