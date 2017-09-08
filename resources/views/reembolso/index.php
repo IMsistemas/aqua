@@ -29,8 +29,8 @@
     <div class="col-xs-12" style="font-size: 12px !important;">
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
-            <th>NO. DOC. COMPRAS</th>
-            <th class="text-center" style="width: 10%;" ng-click="sort('')">
+            <th style="width: 10%;">NO. DOC. COMPRAS</th>
+            <th ng-click="sort('')">
                 TIPO DE COMPROBANTE
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -40,12 +40,12 @@
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th class="text-center" ng-click="sort('')">
+            <th style="width: 10%;" class="text-center" ng-click="sort('')">
                 NO. DE SERIE
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th class="text-center" style="width: 13%;" ng-click="sort('')">
+            <th class="text-center" style="width: 10%;" ng-click="sort('')">
                 NO. IDENTIFICACION.
                 <span class="glyphicon sort-icon" ng-show="sortKey==''"
                       ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
