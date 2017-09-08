@@ -269,6 +269,39 @@ app.controller('reembolsoComprasController', function($scope, $http, API_URL) {
     };
 
 
+    $scope.showModalConfirm = function (item) {
+
+        console.log(item);
+
+        $scope.idcomprobantereembolso = item.idcomprobantereembolso;
+        $scope.comprobante_selecc = item.numdocumentoreembolso;
+        $('#modalConfirmDelete').modal('show');
+    };
+
+    $scope.delete = function(){
+        $http.delete(API_URL + 'reembolso/' + $scope.idcomprobantereembolso).success(function(response) {
+
+            $('#modalConfirmDelete').modal('hide');
+
+            if(response.success === true){
+
+                $scope.initLoad(1);
+                $scope.idcomprobantereembolso = 0;
+                $scope.message = 'Se eliminó correctamente el Comprobante de Reembolso seleccionado...';
+                $('#modalMessage').modal('show');
+                $scope.hideModalMessage();
+
+            } else {
+
+                $scope.message_error = 'Ha ocurrido un error al intentar eliminar el Comprobante de Reembolso seleccionado..';
+                $('#modalMessageError').modal('show');
+
+            }
+        });
+
+    };
+
+
     $scope.valueFecha = function () {
 
         $scope.fechaemisioncomprobante = $('#fechaemisioncomprobante').val();

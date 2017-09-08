@@ -144,6 +144,13 @@ class ReembolsoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comprobante = SRI_ComprobanteReembolso::find($id);
+
+        if($comprobante->delete()) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+
     }
 }
