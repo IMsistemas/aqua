@@ -106,9 +106,6 @@
 
 
 
-
-
-
     <div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -220,8 +217,8 @@
                                       ng-show="formRteCompras.t_nroautorizacion.$invalid && formRteCompras.t_nroautorizacion.$touched" >El Nro. de Autorización es requerido</span>
                             </div>
 
-                            <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                                <div class="input-group">
+                            <div class="col-sm-6 col-xs-12 " style="margin-top: 5px;">
+                                <div class="container-date input-group">
                                     <span class="input-group-addon">Fecha Emisión Comprobante: </span>
                                     <input type="text" class="form-control datepicker" name="fechaemisioncomprobante" id="fechaemisioncomprobante" ng-model="fechaemisioncomprobante" ng-blur="valueFecha()" required/>
                                 </div>
