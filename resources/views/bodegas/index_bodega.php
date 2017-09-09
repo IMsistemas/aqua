@@ -415,7 +415,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="item in cuentas | filter:searchContabilidad" ng-cloak >
-                                        <td>{{item.jerarquia}}</td>
+                                        <td>{{orden_plan_cuenta(item.jerarquia)}}</td>
                                         <td>{{item.concepto}}</td>
                                         <td>{{item.codigosri}}</td>
                                         <td>
