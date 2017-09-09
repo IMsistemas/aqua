@@ -1196,6 +1196,34 @@ app.controller('configuracionSystemController', function($scope, $http, $parse, 
 
     //-----------------------------------------------------------------------------------------------------------------
 
+    $scope.orden_plan_cuenta = function(orden){
+        var aux_orden=orden.split(".");
+        var aux_numero_orden="";
+        var aux_numero_completar="";
+        var tam=aux_orden.length;
+        if(tam>0){
+            for(var x=0;x<tam;x++){
+                if(x<3){
+                    aux_numero_orden+=aux_orden[x];
+                }else if(x>=3){
+                    if(x==3){
+                        aux_numero_completar=aux_orden[x];
+                        if( aux_numero_completar.length==1){
+                            aux_numero_completar="0"+aux_numero_completar;
+                        }
+                        aux_numero_orden+=aux_numero_completar;
+                    }else if(x>3){
+                        aux_numero_orden+=aux_orden[x];
+                    }
+
+                }
+            }
+        }else{
+            aux_numero_orden=orden;
+        }
+        return aux_numero_orden;
+    };
+
     $scope.showPlanCuentaItem = function (item, btn) {
 
         if (btn !== undefined) {
