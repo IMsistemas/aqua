@@ -218,9 +218,9 @@
                                               ng-show="formProducto.s_ice.$invalid && formProducto.s_ice.$touched">El Impuesto ICE es requerido</span>
                                     </div>
 
-                                    <!--<div class="col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Cuenta Contable: </span>
+                                            <span class="input-group-addon">Cuenta Contable (Activo): </span>
                                             <input type="text" class="form-control" name="t_cuentacontable" id="t_cuentacontable" ng-model="t_cuentacontable" placeholder=""
                                                    ng-required="true" readonly>
                                             <input type="hidden" name="h_idplancuenta" id="h_idplancuenta" ng-model="producto.idplancuenta">
@@ -231,7 +231,7 @@
                                             </span>
                                         </div>
                                         <span class="help-block error" ng-show="formProducto.t_cuentacontable.$error.required">La asignación de una cuenta es requerida</span>
-                                    </div>-->
+                                    </div>
 
                                     <div class="col-xs-12" style="margin-top: 5px;">
                                         <div class="input-group">

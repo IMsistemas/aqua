@@ -139,7 +139,7 @@ class CatalogoProductoController extends Controller
                $catalogo->idtipoimpuestoice = $request->input('idtipoimpuestoice');
             }
             
-            //$catalogo->idplancuenta = $request->input('idplancuenta');
+            $catalogo->idplancuenta = $request->input('idplancuenta');
 
             if ($request->input('idplancuenta_ingreso') != null) {
                 $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
@@ -314,7 +314,7 @@ class CatalogoProductoController extends Controller
             }
 
 
-            //$catalogo->idplancuenta = $request->input('idplancuenta');
+            $catalogo->idplancuenta = $request->input('idplancuenta');
 
             if ($request->input('idplancuenta_ingreso') != null && $request->input('idplancuenta_ingreso')!= 'null') {
                 $catalogo->idplancuenta_ingreso = $request->input('idplancuenta_ingreso');
