@@ -180,6 +180,9 @@ Route::get('recaudacioncobro/getCobros/{id}', 'Cuentas\RecaudacionCobroControlle
 Route::get('recaudacioncobro/getFacturas', 'Cuentas\RecaudacionCobroController@getFacturas');
 Route::resource('recaudacioncobro', 'Cuentas\RecaudacionCobroController');
 
+
+Route::resource('recaudacionC', 'Cuentas\RecaudacionCController');
+
 /*
  * -------------------------------------MODULO SECTORIZACION------------------------------------------------------------
  */

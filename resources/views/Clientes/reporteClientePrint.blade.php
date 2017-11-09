@@ -122,7 +122,7 @@
 		.bg-warning{
 		    background:#FCF8E3 !important;
 		}
-</style>	
+</style>
 </head>
 <body>
 

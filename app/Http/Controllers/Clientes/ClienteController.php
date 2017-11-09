@@ -322,7 +322,7 @@ class ClienteController extends Controller
 
         $pdf->setPaper('A4', 'landscape');
 
-        return $pdf->stream('reportCC_' . $today);
+        return @$pdf->stream('reportCC_' . $today);
     }
 
 
@@ -821,7 +821,7 @@ class ClienteController extends Controller
             mkdir(public_path().'/uploads/pdf_suministros/');
         }
 
-        return $pdf->save(public_path() . '/' . $url_pdf);
+        return @$pdf->save(public_path() . '/' . $url_pdf);
     }
 
 

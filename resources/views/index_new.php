@@ -386,6 +386,7 @@
     <script src="<?= asset('app/controllers/viewLecturaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/tarifaController.js') ?>"></script>
     <script src="<?= asset('app/controllers/recaudacionCobroController.js') ?>"></script>
+    <script src="<?= asset('app/controllers/recaudacionCController.js') ?>"></script>
 
     <script src="<?= asset('app/controllers/cuentasporCobrarController.js') ?>"></script>
 
