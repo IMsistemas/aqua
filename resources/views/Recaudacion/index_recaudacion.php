@@ -60,7 +60,7 @@
                 <td>{{item.lastnamepersona}} {{item.namepersona}}</td>
                 <td  class="text-center">
 
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="showModalAction(item)">
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="getTransacciones(item.idcliente)">
                         <i class="fa fa-lg fa-cogs" aria-hidden="true" title=""></i>
                     </button>
 
@@ -81,6 +81,53 @@
 
         </dir-pagination-controls>
 
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="listCobros">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Listado de Transacciones a Cobrar </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-xs-12 text-right">
+                            <button type="button" id="btn-cobrar" class="btn btn-primary" ng-click="showModalFormaCobro()">
+                                Cobrar <span class="glyphicon glyphicon-usd" aria-hidden="true">
+                            </button>
+                        </div>
+
+                        <div class="col-xs-12" style="font-size: 12px !important; margin-top: 5px;">
+
+                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                    <tr>
+                                        <th style="width: 4%;"></th>
+                                        <th style="width: 10%;">FECHA</th>
+                                        <th>TIPO</th>
+                                        <th style="width: 11%;">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listTransacciones" ng-cloak">
+
+                                        <td></td>
+                                        <td class="text-center">{{item.fecha}}</td>
+                                        <td>{{item.name}}</td>
+                                        <td class="text-right">$ {{item.total}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

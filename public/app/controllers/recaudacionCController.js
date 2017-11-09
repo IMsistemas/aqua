@@ -24,5 +24,37 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
     };
 
+    $scope.getTransacciones = function (idcliente) {
+
+        $scope.listTransacciones = [];
+
+        $http.get(API_URL + 'recaudacionC/getFacConsumo/' + idcliente).success(function(response){
+
+            $scope.clientes = response.data;
+            $scope.totalItems = response.total;
+
+
+            var longitud_facConsumo = response.length;
+
+            for (var i = 0; i < longitud_facConsumo; i++) {
+
+                var obj = {
+                    id: response[i].idcobroagua,
+                    total: response[i].total,
+                    fecha: response[i].fechacobro,
+                    type: 'facConsumo',
+                    name: 'Fac. Consumo'
+                };
+
+                $scope.listTransacciones.push(obj)
+
+            }
+
+            $('#listCobros').modal('show');
+
+        });
+
+    };
+
 
 });
