@@ -373,7 +373,7 @@ class LecturaController extends Controller
 
 
         //  $aux = $request->all();
-        $filtro = json_decode($request->input('contabilidad'));
+        /*$filtro = json_decode($request->input('contabilidad'));
 
 
         //--Parte contable
@@ -390,7 +390,7 @@ class LecturaController extends Controller
             'numerodocumento' => "",
             'estadoanulado' => false);
 
-        $aux_registrocliente  = Cont_RegistroCliente::create($registrocliente);
+        $aux_registrocliente  = Cont_RegistroCliente::create($registrocliente);*/
 
 
 
