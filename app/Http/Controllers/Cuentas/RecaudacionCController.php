@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cuentas;
 
+use App\Modelos\Clientes\Cliente;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,6 +19,52 @@ class RecaudacionCController extends Controller
     {
         return view('Recaudacion.index_recaudacion');
     }
+
+
+
+    /**
+     * Obtener los clientes paginados
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getClientes(Request $request)
+    {
+        $filter = json_decode($request->get('filter'));
+        $search = $filter->search;
+
+        $cliente = null;
+
+        $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+            ->with('sri_tipoempresa', 'sri_parte')
+            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*')
+            ->where("cliente.estado", true);
+
+        if ($search != null) {
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
+        }
+
+        return $cliente->orderBy('lastnamepersona', 'asc')->paginate(8);
+    }
+
+
+
+    public function getFacConsumo($idcliente)
+    {
+
+    }
+
+    public function getDerechoAcometida($idcliente)
+    {
+
+    }
+
+    public function getOtrosCargos($idcliente)
+    {
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

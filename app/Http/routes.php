@@ -181,6 +181,7 @@ Route::get('recaudacioncobro/getFacturas', 'Cuentas\RecaudacionCobroController@g
 Route::resource('recaudacioncobro', 'Cuentas\RecaudacionCobroController');
 
 
+Route::get('recaudacionC/getClientes', 'Cuentas\RecaudacionCController@getClientes');
 Route::resource('recaudacionC', 'Cuentas\RecaudacionCController');
 
 /*

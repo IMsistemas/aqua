@@ -164,6 +164,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.toModulo = "recaudacioncobro";
     };
 
+    $scope.toModuloRecaudacionV2 = function(){
+        $scope.titulo = "Recaudación Cobro";
+        $scope.toModulo = "recaudacionC";
+    };
+
     $scope.toModuloSolicitud = function(){
         $scope.titulo = "Solicitudes";
         $scope.toModulo = "solicitud";
