@@ -28,6 +28,7 @@ use App\Modelos\SRI\SRI_TipoIdentificacion;
 use App\Modelos\SRI\SRI_TipoImpuestoIva;
 use App\Modelos\Suministros\Producto;
 use App\Modelos\Suministros\Suministro;
+use App\Modelos\Suministros\SuministroCatalogItem;
 use App\Modelos\Tarifas\TarifaAguaPotable;
 use Illuminate\Http\Request;
 
@@ -747,6 +748,23 @@ class ClienteController extends Controller
         //$suministro->idcatalogitem = $request->input('idproducto');
 
         if ($suministro->save()) {
+
+
+            $o = new SuministroCatalogItem();
+            $o->idsuministro = $suministro->idsuministro;
+            $o->idcatalogitem = 1;
+            $o->valor = $request->input('valor_partial');
+
+            $o->save();
+
+            $oo = new SuministroCatalogItem();
+            $oo->idsuministro = $suministro->idsuministro;
+            $oo->idcatalogitem = 1;
+            $oo->valor = $request->input('garantia');
+
+            $oo->save();
+
+
 
             $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
 
