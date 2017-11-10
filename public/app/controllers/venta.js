@@ -109,6 +109,7 @@ $scope.cmb_estado_fact="A";
                             producto: response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
                         };
 
+                        console.log(item);
 
                         $scope.items.push(item);
 
@@ -615,6 +616,7 @@ $scope.cmb_estado_fact="A";
     	$("#ConfirmarVenta").modal("show");
     };
     $scope.EnviarDatosGuardarVenta=function(){
+
     	var Transaccion={
     		fecha:convertDatetoDB($("#FechaEmision").val()),
     		idtipotransaccion: 6,
@@ -630,7 +632,10 @@ $scope.cmb_estado_fact="A";
     			aux_bodegaseleccionada=$scope.Bodegas[i];
     		}
     	}
-    	var cliente={
+
+
+
+    	/*var cliente={
     		idplancuenta: $scope.Cliente.idplancuenta,
     		concepto: $scope.Cliente.concepto,
     		controlhaber: $scope.Cliente.controlhaber,
@@ -640,7 +645,9 @@ $scope.cmb_estado_fact="A";
     		Descipcion:''
     	};
 
-    	RegistroC.push(cliente);
+    	RegistroC.push(cliente);*/
+
+
     	//--Sacar producto de bodega -- el producto es un activo pero como se lo vente disminuye por el haber
     	for(x=0;x<$scope.items.length;x++){
     		if($scope.items[x].productoObj.originalObject.idclaseitem==1){
@@ -683,21 +690,44 @@ $scope.cmb_estado_fact="A";
     		}	
     	}
     	//--Costo venta producto
+
+
+        //--ACTIVO del item producto o servicio
+        for(x=0;x<$scope.items.length;x++){
+            if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==2){
+                var itemproductoservicio={
+                    idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
+                    concepto: $scope.items[x].productoObj.originalObject.concepto,
+                    controlhaber: $scope.items[x].productoObj.originalObject.controlhaber,
+                    tipocuenta: $scope.items[x].productoObj.originalObject.tipocuenta,
+                    Debe: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+                    Haber: 0,
+                    Descipcion:''
+                };
+                RegistroC.push(itemproductoservicio);
+            }
+        }
+
+        //--ACTIVO del item producto o servicio
+
+
+
+
     	//--Ingreso del item producto o servicio
-    	for(x=0;x<$scope.items.length;x++){
-    		if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==2){
-    			var itemproductoservicio={
-		    		idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
-		    		concepto: $scope.items[x].productoObj.originalObject.conceptoingreso,
-		    		controlhaber: $scope.items[x].productoObj.originalObject.controlhaberingreso,
-		    		tipocuenta: $scope.items[x].productoObj.originalObject.tipocuentaingreso,
-		    		Debe: 0,
-		    		Haber: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
-		    		Descipcion:''
-		    	};
-		    	RegistroC.push(itemproductoservicio);
-    		}	
-    	}
+        for(x=0;x<$scope.items.length;x++){
+            if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==2){
+                var itemproductoservicio={
+                    idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta_ingreso,
+                    concepto: $scope.items[x].productoObj.originalObject.conceptoingreso,
+                    controlhaber: $scope.items[x].productoObj.originalObject.controlhaberingreso,
+                    tipocuenta: $scope.items[x].productoObj.originalObject.tipocuentaingreso,
+                    Debe: 0,
+                    Haber: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+                    Descipcion:''
+                };
+                RegistroC.push(itemproductoservicio);
+            }
+        }
     	//--Ingreso del item producto o servicio
 
         //-- ICE venta

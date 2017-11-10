@@ -75,9 +75,9 @@
                                 <ul class="dropdown-menu">
                                     <li id="permiso_30"><a href="#" ng-click="toModuloCliente();">Gestión de Clientes</a></li>
                                     <li id="permiso_31"><a href="#" ng-click="toModuloSolicitud();">Solicitudes</a></li>
-                                    <li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministros</a></li>
-                                    <li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionCobro();">Recaudación (Cobros)</a></li>
-                                    <li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionV2();">Recaudación (Cobros) v2</a></li>
+                                    <!--<li id="permiso_32"><a href="#" ng-click="toModuloSuministro();">Suministros</a></li>-->
+                                    <!--<li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionCobro();">Recaudación (Cobros)</a></li>-->
+                                    <li id="permiso_32"><a href="#" ng-click="toModuloRecaudacionV2();">Recaudación (Cobros)</a></li>
                                     <!--<li id="permiso_33"><a href="#" ng-click="toModuloRecaudacion();">Registro Cobro Agua</a></li>
                                     <li id="permiso_35"><a href="#" ng-click="toModuloRecaudacionServicio();">Registro Cobro Servicios</a></li>-->
                                     <li id="permiso_34"><a href="#" ng-click="toModuloLectura();">Registro Tomas de Lecturas</a></li>
