@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -54,7 +55,8 @@ class RecaudacionCController extends Controller
     public function getFacConsumo($idcliente)
     {
         $cobroagua = CobroAgua::join('suministro', 'suministro.idsuministro', '=', 'cobroagua.idsuministro')
-                        ->where('suministro.idcliente', $idcliente)->orderBy('idcobroagua', 'desc')->get();
+                        ->where('suministro.idcliente', $idcliente)->orderBy('idcobroagua', 'desc')
+                        ->where('cobroagua.total', '!=', null)->get();
 
 
         return $cobroagua;
@@ -62,7 +64,9 @@ class RecaudacionCController extends Controller
 
     public function getDerechoAcometida($idcliente)
     {
+        $suministro = Suministro::where('idcliente', $idcliente)->orderBy('idsuministro', 'desc')->get();
 
+        return $suministro;
     }
 
     public function getOtrosCargos($idcliente)

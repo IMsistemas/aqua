@@ -28,11 +28,10 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         $scope.listTransacciones = [];
 
+
+
+
         $http.get(API_URL + 'recaudacionC/getFacConsumo/' + idcliente).success(function(response){
-
-            $scope.clientes = response.data;
-            $scope.totalItems = response.total;
-
 
             var longitud_facConsumo = response.length;
 
@@ -43,14 +42,62 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
                     total: response[i].total,
                     fecha: response[i].fechacobro,
                     type: 'facConsumo',
-                    name: 'Fac. Consumo'
+                    name: 'Toma Lectura Consumo',
+                    idtype : response[i].idcobroagua + '_' + 'facConsumo'
                 };
 
                 $scope.listTransacciones.push(obj)
 
             }
 
-            $('#listCobros').modal('show');
+            $http.get(API_URL + 'recaudacionC/getDerechoAcometida/' + idcliente).success(function(response){
+
+
+                var longitud_derAcometida = response.length;
+
+                for (var i = 0; i < longitud_derAcometida; i++) {
+
+                    if (parseInt(response[i].dividendocredito) === 1) {
+
+                        var obj = {
+                            id: response[i].idsuministro,
+                            total: response[i].valortotalsuministro,
+                            fecha: response[i].fechainstalacion,
+                            type: 'derAcometida',
+                            name: 'Derecho Acometida No. Suministro: ' + response[i].idsuministro,
+                            idtype : response[i].idsuministro + '_' + 'derAcometida'
+                        };
+
+                        $scope.listTransacciones.push(obj);
+
+                    } else {
+
+                        var total = parseFloat(response[i].valortotalsuministro) / parseInt(response[i].dividendocredito);
+
+                        for(var j = 0; j < parseInt(response[i].dividendocredito); j++) {
+
+                            var obj = {
+                                id: response[i].idsuministro,
+                                total: total.toFixed(2),
+                                fecha: response[i].fechainstalacion,
+                                type: 'derAcometida',
+                                name: 'Derecho Acometida (Cuota # ' + (j + 1) + ') No. Suministro: ' + response[i].idsuministro,
+                                idtype : response[i].idsuministro + '_' + 'derAcometida'
+                            };
+
+                            $scope.listTransacciones.push(obj);
+
+                        }
+
+                    }
+
+
+
+                }
+
+                $('#listCobros').modal('show');
+
+            });
 
         });
 

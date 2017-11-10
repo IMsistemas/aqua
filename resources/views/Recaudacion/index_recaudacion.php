@@ -113,7 +113,9 @@
                                 <tbody>
                                     <tr ng-repeat="item in listTransacciones" ng-cloak">
 
-                                        <td></td>
+                                        <td>
+                                            <input type="checkbox" ng-model="item.idtype" />
+                                        </td>
                                         <td class="text-center">{{item.fecha}}</td>
                                         <td>{{item.name}}</td>
                                         <td class="text-right">$ {{item.total}}</td>
