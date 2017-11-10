@@ -322,15 +322,15 @@ class DocumentoVenta extends Controller
 
         if (Session::has('suministro_to_facturar')) {
 
-            $object_s = Session::get('suministro_to_facturar');
+            //$object_s = Session::get('suministro_to_facturar');
 
             //dd(Session::get('suministro_to_facturar'));
 
-            $suministro = Suministro::find($object_s[0]->idsuministro);
+            /*$suministro = Suministro::find($object_s[0]->idsuministro);
 
             $suministro->iddocumentoventa = $aux_addVenta->last()->iddocumentoventa;
 
-            $suministro->save();
+            $suministro->save();*/
 
         }
 

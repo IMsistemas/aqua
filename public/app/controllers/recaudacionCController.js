@@ -92,7 +92,31 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
                 }
 
-                $('#listCobros').modal('show');
+
+                $http.get(API_URL + 'recaudacionC/getOtrosCargos/' + idcliente).success(function(response){
+
+                    var longitud_otrosCargos = response.length;
+
+                    for (var i = 0; i < longitud_otrosCargos; i++) {
+
+                        var obj = {
+                            id: response[i].idsolicitudservicio,
+                            total: 0,
+                            fecha: response[i].fechaprocesada,
+                            type: 'otrosCargos',
+                            name: 'Otros Cargos',
+                            idtype : response[i].idsolicitudservicio + '_' + 'otrosCargos'
+                        };
+
+                        $scope.listTransacciones.push(obj)
+
+                    }
+
+                    $('#listCobros').modal('show');
+
+                });
+
+
 
             });
 

@@ -73,7 +73,10 @@ class RecaudacionCController extends Controller
 
     public function getOtrosCargos($idcliente)
     {
+        $otrosCargos = SolicitudServicio::join('solicitud', 'solicitud.idsolicitud', '=', 'solicitudservicio.idsolicitud')
+            ->where('solicitud.idcliente', $idcliente)->orderBy('fechaprocesada', 'desc')->get();
 
+        return $otrosCargos;
     }
 
     public function createFactura(Request $request)
@@ -149,9 +152,7 @@ class RecaudacionCController extends Controller
                         //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
                     }
 
-                ])
-                    ->join('suministro', 'suministro.idsuministro', '=', 'cobroagua.idsuministro')
-                    ->where('cobroagua.idcobroagua', $item->id)->get();
+                ])->where('solicitudservicio.idsolicitudservicio', $item->id)->get();
 
                 $result[] = $cobroagua[0];
 

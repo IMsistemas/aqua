@@ -35,16 +35,26 @@ $scope.cmb_estado_fact="A";
 
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
 
+            console.log(response);
+
             if (response[0].cliente !== undefined) {
+
                 $scope.DICliente = response[0].cliente.persona.numdocidentific;
+
+            } else if (response[0].catalogoitem_solicitudservicio !== undefined) {
+
+                $scope.DICliente = response[0].solicitud.cliente.persona.numdocidentific;
+
             } else {
+
                 $scope.DICliente = response[0].suministro.cliente.persona.numdocidentific;
+
             }
 
 
             $scope.BuscarCliente();
 
-            console.log(response);
+
 
             var longitud = response.length;
 
@@ -108,6 +118,33 @@ $scope.cmb_estado_fact="A";
                             ice: 0,
                             total: precio,
                             producto: response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
+                        };
+
+                        console.log(item);
+
+                        $scope.items.push(item);
+
+                    }
+
+                } else if(response[i].catalogoitem_solicitudservicio !== undefined) {
+
+
+                    var longitud_itemsuministro = response[i].catalogoitem_solicitudservicio.length;
+
+                    for (var j = 0; j < longitud_itemsuministro; j++) {
+
+                        var item = {
+                            productoObj:{
+                                title:response[i].catalogoitem_solicitudservicio[j].cont_catalogitem.codigoproducto,
+                                originalObject:response[i].catalogoitem_solicitudservicio[j].cont_catalogitem
+                            },
+                            cantidad: 1,
+                            precioU: response[i].catalogoitem_solicitudservicio[j].valor,
+                            descuento: 0,
+                            iva: 0,
+                            ice: 0,
+                            total: response[i].catalogoitem_solicitudservicio[j].valor,
+                            producto: response[i].catalogoitem_solicitudservicio[j].cont_catalogitem.codigoproducto,
                         };
 
                         console.log(item);
