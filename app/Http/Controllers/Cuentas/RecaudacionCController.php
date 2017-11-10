@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
 
@@ -85,27 +86,6 @@ class RecaudacionCController extends Controller
 
             if ($item->type == 'derAcometida') {
 
-                /*$suministro = Suministro::with([
-                        'cliente.persona', 'calle.barrio',
-                        'cont_catalogitem' => function ($query) {
-                            $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
-                                //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
-                                ->selectRaw("*")
-                                ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
-                                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
-                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
-                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
-                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
-                                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
-                                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
-                                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
-                                ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio");
-                                //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
-                                //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
-                        }
-                    ])
-                    ->where('idsuministro', $item->id)->get();*/
-
                 $suministro = Suministro::with([
                     'cliente.persona', 'calle.barrio',
                     'suministrocatalogitem.cont_catalogitem' => function ($query) {
@@ -116,7 +96,6 @@ class RecaudacionCController extends Controller
                             ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
                             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
                             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
-
                             ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
                             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
                             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
@@ -132,23 +111,47 @@ class RecaudacionCController extends Controller
 
                 $cobroagua = CobroAgua::with([
                                 'suministro.cliente.persona', 'catalogoitem_cobroagua.cont_catalogitem' => function ($query) {
-                                        return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
-                                            ->selectRaw("*")
-                                            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
-                                            ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
-                                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
-                                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
-                                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                                    return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                                        ->selectRaw("*")
+                                        ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                                        ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                                        ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio");
+                                        //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
+                                }
 
-                                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
-                                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
-                                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
-                                            ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio");
-                                            //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
-                                    }
                                 ])
                                 ->join('suministro', 'suministro.idsuministro', '=', 'cobroagua.idsuministro')
                                 ->where('cobroagua.idcobroagua', $item->id)->get();
+
+                $result[] = $cobroagua[0];
+
+            } else if ($item->type == 'otrosCargos') {
+
+                $cobroagua = SolicitudServicio::with([
+                    'solicitud.cliente.persona', 'catalogoitem_solicitudservicio.cont_catalogitem' => function ($query) {
+                        return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                            ->selectRaw("*")
+                            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                            ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                            ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio");
+                        //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
+                    }
+
+                ])
+                    ->join('suministro', 'suministro.idsuministro', '=', 'cobroagua.idsuministro')
+                    ->where('cobroagua.idcobroagua', $item->id)->get();
 
                 $result[] = $cobroagua[0];
 

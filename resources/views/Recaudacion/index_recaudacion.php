@@ -29,14 +29,18 @@
         </div>
         <div class="col-sm-3 col-xs-12">
 
-            <div class="btn-group" role="group" aria-label="...">
+            <!--<div class="btn-group" role="group" aria-label="...">
                 <button type="button" class="btn btn-primary" style="" ng-click="showModalAddCliente()">
                     Agregar <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn btn-info" ng-click="printReport();">
                     Imprimir <span class="glyphicon glyphicon glyphicon-print" aria-hidden="true"></span>
                 </button>
-            </div>
+            </div>-->
+
+            <button type="button" class="btn btn-primary" id="btn-generate" ng-click="generate()" >
+                GENERAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
 
         </div>
     </div>
@@ -145,6 +149,34 @@
 
                     </div>
                     <!--<object id="aux_venta" height="450px" width="100%" > <!--content--> <!--/object>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message_error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{message}}</span>
                 </div>
             </div>
         </div>

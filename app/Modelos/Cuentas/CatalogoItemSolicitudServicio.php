@@ -16,8 +16,8 @@ class CatalogoItemSolicitudServicio extends Model
         return $this->belongsTo('App\Modelos\Contabilidad\Cont_CatalogItem', 'idcatalogitem');
     }
 
-    /*public function solicitudservicio()
+    public function solicitudservicio()
     {
-        return $this->hasMany('App\Modelos\Solicitud\SolicitudServicio', 'idsolicitudservicio');
-    }*/
+        return $this->belongsTo('App\Modelos\Solicitud\SolicitudServicio', 'idsolicitudservicio');
+    }
 }

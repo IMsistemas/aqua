@@ -135,5 +135,45 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.generate = function () {
+
+        var result_agua = false;
+        var result_servicio = false;
+
+        $http.get(API_URL + 'factura/generate').success(function(response){
+
+            //console.log(response);
+
+            if (response.success === true) {
+                result_agua = true;
+            }
+
+            $http.get(API_URL + 'cobroservicio/generate').success(function(response){
+
+                //console.log(response);
+
+                if (response.success === true) {
+                    result_servicio = true;
+                }
+
+                if (result_agua === true && result_servicio === true) {
+
+                    $scope.initLoad();
+
+                    $scope.message = 'Se ha generado los cobros de Lecturas/Servicios del mes actual correctamente...';
+                    $('#modalMessage').modal('show');
+                } else {
+                    $scope.message_error = 'Ha ocurrido un error al intentar generar los Cobros respectivos al mes...';
+                    $('#modalMessageError').modal('show');
+                }
+
+
+            });
+
+        });
+
+
+
+    };
 
 });
