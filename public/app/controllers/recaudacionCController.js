@@ -28,9 +28,6 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         $scope.listTransacciones = [];
 
-
-
-
         $http.get(API_URL + 'recaudacionC/getFacConsumo/' + idcliente).success(function(response){
 
             var longitud_facConsumo = response.length;
@@ -98,6 +95,41 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
                 $('#listCobros').modal('show');
 
             });
+
+        });
+
+    };
+
+    $scope.createFactura = function () {
+
+        var selected = [];
+
+        $(".transfer:checked").each(function() {
+
+
+
+            var a = ($(this).val()).split('_');
+
+            var o = {
+
+                id: a[0],
+                type: a[1]
+
+            };
+
+            selected.push(o);
+
+        });
+
+        console.log(selected);
+
+        $http.get(API_URL + 'recaudacionC/createFactura?data=' + JSON.stringify(selected)).success(function(response){
+
+            $scope.currentProjectUrl = '';
+
+            $scope.currentProjectUrl = API_URL + 'DocumentoVenta?flag_suministro=1';
+            $("#aux_venta").html("<object height='450px' width='100%' data='"+$scope.currentProjectUrl+"'></object>");
+            $('#modalFactura').modal('show');
 
         });
 

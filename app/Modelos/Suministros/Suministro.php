@@ -40,6 +40,11 @@ class Suministro extends Model
         return $this->hasMany('App\Modelos\Cuentas\CobroAgua','idsuministro');
     }
 
+    public function suministrocatalogitem()
+    {
+        return $this->hasMany('App\Modelos\Suministros\SuministroCatalogItem','idsuministro');
+    }
+
     public function cuentaporcobrarsuministro()
     {
         return $this->hasMany('App\Modelos\Cuentas\CuentasPorCobrarSuministro','idsuministro');

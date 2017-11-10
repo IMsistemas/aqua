@@ -94,7 +94,7 @@
                     <div class="row">
 
                         <div class="col-xs-12 text-right">
-                            <button type="button" id="btn-cobrar" class="btn btn-primary" ng-click="showModalFormaCobro()">
+                            <button type="button" id="btn-cobrar" class="btn btn-primary" ng-click="createFactura()">
                                 Cobrar <span class="glyphicon glyphicon-usd" aria-hidden="true">
                             </button>
                         </div>
@@ -114,7 +114,7 @@
                                     <tr ng-repeat="item in listTransacciones" ng-cloak">
 
                                         <td>
-                                            <input type="checkbox" ng-model="item.idtype" />
+                                            <input class="transfer" type="checkbox" ng-model="item.idtype" value="{{item.idtype}}" ng-true-value="{{item.idtype}}"  />
                                         </td>
                                         <td class="text-center">{{item.fecha}}</td>
                                         <td>{{item.name}}</td>
@@ -127,6 +127,24 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--=================================Modal FACTURA====================================-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura">
+        <div class="modal-dialog modal-lg" role="document"  style="height: 90%; width: 90%;">
+            <div class="modal-content" style="height: 90%;">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Factura</h4>
+                </div>
+                <div class="modal-body" id="bodyfactura">
+                    <div id="aux_venta">
+
+                    </div>
+                    <!--<object id="aux_venta" height="450px" width="100%" > <!--content--> <!--/object>-->
                 </div>
             </div>
         </div>

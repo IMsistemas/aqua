@@ -32,14 +32,99 @@ $scope.ValidacionCueContExt="0";
 $scope.cmb_estado_fact="A";
 
     $scope.verifySuministroFactura = function () {
+
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
 
-            $scope.DICliente = response[0].cliente.persona.numdocidentific;
+            if (response[0].cliente !== undefined) {
+                $scope.DICliente = response[0].cliente.persona.numdocidentific;
+            } else {
+                $scope.DICliente = response[0].suministro.cliente.persona.numdocidentific;
+            }
+
+
             $scope.BuscarCliente();
 
 
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                if (response[i].catalogoitem_cobroagua !== undefined) {
+
+                    console.log(response[i].catalogoitem_cobroagua !== undefined);
+
+                    var longitud_itemlectura = response[i].catalogoitem_cobroagua.length;
+
+                    for (var j = 0; j < longitud_itemlectura; j++) {
+
+                        var item0 = {
+                            productoObj:{
+                                title:response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
+                                originalObject:response[i].catalogoitem_cobroagua[j].cont_catalogitem
+                            },
+                            cantidad: 1,
+                            precioU: response[i].catalogoitem_cobroagua[j].valor,
+                            descuento: 0,
+                            iva: 0,
+                            ice: 0,
+                            total: response[i].catalogoitem_cobroagua[j].valor,
+                            producto: response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
+                        };
+
+
+                        console.log(item0);
+
+                        $scope.items.push(item0);
+
+                    }
+
+                } else if(response[i].suministrocatalogitem !== undefined) {
+
+                    var dividendo = parseInt(response[i].dividendocredito);
+
+                    var totalsuministro = parseFloat(response[i].valortotalsuministro) / dividendo;
+                    var totalgarantia = parseFloat(response[i].valorgarantia) / dividendo;
+
+                    var longitud_itemsuministro = response[i].suministrocatalogitem.length;
+
+                    for (var j = 0; j < longitud_itemsuministro; j++) {
+
+                        if (response[i].suministrocatalogitem[j].cont_catalogitem.idcatalogitem === 1) {
+                            var precio = totalsuministro;
+                        } else {
+                            var precio = totalgarantia;
+                        }
+
+                        var item = {
+                            productoObj:{
+                                title:response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
+                                originalObject:response[i].suministrocatalogitem[j].cont_catalogitem
+                            },
+                            cantidad: 1,
+                            precioU: precio,
+                            descuento: 0,
+                            iva: 0,
+                            ice: 0,
+                            total: precio,
+                            producto: response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
+                        };
+
+
+                        $scope.items.push(item);
+
+                    }
+
+                }
+
+            }
+
+            $scope.CalculaValores();
+
+
+
+
             //$http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro/' + response[0].cont_catalogitem.codigoproducto).success(function(response0){
-            $http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro').success(function(response0){
+            /*$http.get(API_URL + 'DocumentoVenta/getProductoPorSuministro').success(function(response0){
 
                 console.log(response0);
 
@@ -78,7 +163,7 @@ $scope.cmb_estado_fact="A";
 
                 $scope.CalculaValores();
 
-            });
+            });*/
 
 
 
