@@ -759,7 +759,7 @@ class ClienteController extends Controller
 
             $oo = new SuministroCatalogItem();
             $oo->idsuministro = $suministro->idsuministro;
-            $oo->idcatalogitem = 1;
+            $oo->idcatalogitem = 2;
             $oo->valor = $request->input('garantia');
 
             $oo->save();

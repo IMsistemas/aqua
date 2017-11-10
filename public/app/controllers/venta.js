@@ -44,6 +44,7 @@ $scope.cmb_estado_fact="A";
 
             $scope.BuscarCliente();
 
+            console.log(response);
 
             var longitud = response.length;
 
