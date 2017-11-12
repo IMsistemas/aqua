@@ -2,7 +2,7 @@
 
     <div ng-controller="categoriasController">
 
-        <div class="col-xs-12">
+        <div class="container">
 
             <h4>Portafolio</h4>
 
@@ -10,7 +10,7 @@
 
         </div>
     
-        <div class="col-xs-12" style="margin-top: 2%; margin-bottom: 2%">
+        <div class="container" style="margin-top: 2%; margin-bottom: 2%">
             <div class="col-sm-4 col-xs-6">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" id="search" placeholder="BUSCAR..."

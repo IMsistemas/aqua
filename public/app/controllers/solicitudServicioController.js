@@ -1157,8 +1157,13 @@
 
         $scope.calculateTotalSuministro = function () {
 
-            if ($scope.t_suministro_aguapotable != '' && $scope.t_suministro_alcantarillado != '' &&
-                $scope.t_suministro_cuota != '' && $scope.s_suministro_credito != 0 && $scope.s_suministro_credito != '') {
+            console.log($scope.s_suministro_credito);
+            console.log($scope.t_suministro_cuota);
+            console.log($scope.tasainteres);
+
+
+            if ($scope.t_suministro_aguapotable !== '' && $scope.t_suministro_alcantarillado !== '' &&
+                $scope.t_suministro_cuota !== '' && $scope.s_suministro_credito !== 0 && $scope.s_suministro_credito !== '') {
 
 
                 /*var n = $scope.s_suministro_credito / 12;
