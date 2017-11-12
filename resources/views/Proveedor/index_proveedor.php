@@ -1,7 +1,7 @@
 
     <div ng-controller="proveedoresController">
 
-        <div class="col-xs-12">
+        <div class="container">
 
             <h4>Gestión de Proveedores</h4>
 
@@ -9,7 +9,7 @@
 
         </div>
 
-        <div class="col-xs-12" style="margin-top: 5px;">
+        <div class="container" style="margin-top: 5px;">
 
             <div class="col-sm-6 col-xs-8">
                 <div class="form-group has-feedback">

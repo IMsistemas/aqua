@@ -2,7 +2,7 @@
 
     <div class="col-xs-12" ng-controller="solicitudController">
 
-        <div class="col-xs-12">
+        <div class="container">
 
             <h4>Gestión de Solicitudes</h4>
 
@@ -10,7 +10,7 @@
 
         </div>
 
-        <div class="col-xs-12">
+        <div class="container">
             <div class="col-sm-4 col-xs-12">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" id="search" placeholder="BUSCAR..." ng-model="search" ng-keyup="searchByFilter()">
@@ -51,7 +51,7 @@
 
         </div>
 
-        <div class="col-xs-12" style="font-size: 12px;">
+        <div class="container" style="font-size: 12px;">
             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                 <thead class="bg-primary">
                     <tr>

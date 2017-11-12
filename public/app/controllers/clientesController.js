@@ -779,12 +779,15 @@
                 //console.log($scope.t_suministro_costomedidor);
 
                 var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+
                 if ($scope.t_suministro_costomedidor !== '' && $scope.t_suministro_costomedidor !== undefined){
                     C += parseFloat($scope.t_suministro_costomedidor);
                 }
 
 
-                var I = n * ($scope.tasainteres / 100) * C;
+                //var I = n * ($scope.tasainteres / 100) * C;
+
+                var I = n * C;
 
                 var M = C + I;
 
