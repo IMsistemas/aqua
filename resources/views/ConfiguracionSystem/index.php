@@ -1,7 +1,7 @@
 
 <div ng-controller="configuracionSystemController" ng-init="getCuentas()">
 
-    <div class="col-xs-12">
+    <div class="container">
 
         <div class="col-xs-12">
 
