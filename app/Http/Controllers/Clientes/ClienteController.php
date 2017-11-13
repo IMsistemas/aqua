@@ -749,7 +749,6 @@ class ClienteController extends Controller
 
         if ($suministro->save()) {
 
-
             $o = new SuministroCatalogItem();
             $o->idsuministro = $suministro->idsuministro;
             $o->idcatalogitem = 1;
@@ -764,6 +763,12 @@ class ClienteController extends Controller
 
             $oo->save();
 
+            $ooo = new SuministroCatalogItem();
+            $ooo->idsuministro = $suministro->idsuministro;
+            $ooo->idcatalogitem = 3;
+            $ooo->valor = $request->input('cuota_inicial');
+
+            $ooo->save();
 
 
             $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
