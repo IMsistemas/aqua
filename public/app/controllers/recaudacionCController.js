@@ -54,6 +54,37 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
                 for (var i = 0; i < longitud_derAcometida; i++) {
 
+                    if (response[i].valorcuotainicial !== null) {
+
+                        var obj = {
+                            id: response[i].idsuministro,
+                            total: response[i].valorcuotainicial,
+                            fecha: response[i].fechainstalacion,
+                            type: 'derAcometida-cuotaInicial',
+                            name: 'Cuota Inicial - Derecho Acometida No. Suministro: ' + response[i].idsuministro,
+                            idtype : response[i].idsuministro + '_' + 'derAcometida-cuotaInicial'
+                        };
+
+                        $scope.listTransacciones.push(obj);
+
+                    }
+
+                    if (response[i].valorgarantia !== null) {
+
+                        var obj = {
+                            id: response[i].idsuministro,
+                            total: response[i].valorgarantia,
+                            fecha: response[i].fechainstalacion,
+                            type: 'derAcometida-garantia',
+                            name: 'Garantía - Derecho Acometida No. Suministro: ' + response[i].idsuministro,
+                            idtype : response[i].idsuministro + '_' + 'derAcometida-garantia'
+                        };
+
+                        $scope.listTransacciones.push(obj);
+
+                    }
+
+
                     if (parseInt(response[i].dividendocredito) === 1) {
 
                         var obj = {
@@ -130,15 +161,11 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         $(".transfer:checked").each(function() {
 
-
-
             var a = ($(this).val()).split('_');
 
             var o = {
-
                 id: a[0],
                 type: a[1]
-
             };
 
             selected.push(o);

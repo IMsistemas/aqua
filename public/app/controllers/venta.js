@@ -76,7 +76,7 @@ $scope.cmb_estado_fact="A";
                             cantidad: 1,
                             precioU: response[i].catalogoitem_cobroagua[j].valor,
                             descuento: 0,
-                            iva: 0,
+                            iva: response[i].catalogoitem_cobroagua[j].cont_catalogitem.porcentiva,
                             ice: 0,
                             total: response[i].catalogoitem_cobroagua[j].valor,
                             producto: response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
@@ -91,38 +91,48 @@ $scope.cmb_estado_fact="A";
 
                 } else if(response[i].suministrocatalogitem !== undefined) {
 
-                    var dividendo = parseInt(response[i].dividendocredito);
-
-                    var totalsuministro = parseFloat(response[i].valortotalsuministro) / dividendo;
-                    var totalgarantia = parseFloat(response[i].valorgarantia) / dividendo;
 
                     var longitud_itemsuministro = response[i].suministrocatalogitem.length;
 
                     for (var j = 0; j < longitud_itemsuministro; j++) {
 
-                        if (response[i].suministrocatalogitem[j].cont_catalogitem.idcatalogitem === 1) {
-                            var precio = totalsuministro;
-                        } else {
-                            var precio = totalgarantia;
+                        var precio = 0;
+
+                        if (response[i].suministrocatalogitem[j].cont_catalogitem !== null) {
+
+                            if (response[i].suministrocatalogitem[j].cont_catalogitem.idcatalogitem === 1) {
+
+                                var dividendo = parseInt(response[i].dividendocredito);
+                                precio = parseFloat(response[i].valortotalsuministro) / dividendo;
+
+                            } else if (response[i].suministrocatalogitem[j].cont_catalogitem.idcatalogitem === 2) {
+
+                                precio = parseFloat(response[i].valorgarantia);
+
+                            } else if (response[i].suministrocatalogitem[j].cont_catalogitem.idcatalogitem === 3) {
+
+                                precio = parseFloat(response[i].valorcuotainicial);
+                            }
+
+                            var item = {
+                                productoObj:{
+                                    title:response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
+                                    originalObject:response[i].suministrocatalogitem[j].cont_catalogitem
+                                },
+                                cantidad: 1,
+                                precioU: precio,
+                                descuento: 0,
+                                iva: response[i].suministrocatalogitem[j].cont_catalogitem.porcentiva,
+                                ice: 0,
+                                total: precio,
+                                producto: response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
+                            };
+
+                            console.log(item);
+
+                            $scope.items.push(item);
+
                         }
-
-                        var item = {
-                            productoObj:{
-                                title:response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
-                                originalObject:response[i].suministrocatalogitem[j].cont_catalogitem
-                            },
-                            cantidad: 1,
-                            precioU: precio,
-                            descuento: 0,
-                            iva: 0,
-                            ice: 0,
-                            total: precio,
-                            producto: response[i].suministrocatalogitem[j].cont_catalogitem.codigoproducto,
-                        };
-
-                        console.log(item);
-
-                        $scope.items.push(item);
 
                     }
 
@@ -141,7 +151,7 @@ $scope.cmb_estado_fact="A";
                             cantidad: 1,
                             precioU: response[i].catalogoitem_solicitudservicio[j].valor,
                             descuento: 0,
-                            iva: 0,
+                            iva: response[i].catalogoitem_solicitudservicio[j].cont_catalogitem.porcentiva,
                             ice: 0,
                             total: response[i].catalogoitem_solicitudservicio[j].valor,
                             producto: response[i].catalogoitem_solicitudservicio[j].cont_catalogitem.codigoproducto,
