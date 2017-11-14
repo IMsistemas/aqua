@@ -103,12 +103,62 @@ class RecaudacionCController extends Controller
                             ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
                             ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                             ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-                            ->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
+                            ->whereRaw(" cont_catalogitem.idcatalogitem = 1");
+                            //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
+                    }
+                ])
+                ->where('idsuministro', $item->id)->get();
+
+                $result[] = $suministro[0];
+
+                //------------------------------------------------------------------------------------------------------
+
+                $suministro1 = Suministro::with([
+                    'cliente.persona', 'calle.barrio',
+                    'suministrocatalogitem.cont_catalogitem' => function ($query) {
+                        return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                            ->selectRaw("*")
+                            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                            ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                            ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                            ->whereRaw(" cont_catalogitem.idcatalogitem = 2");
+                        //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
                     }
                 ])
                     ->where('idsuministro', $item->id)->get();
 
-                $result[] = $suministro[0];
+                $result[] = $suministro1[0];
+
+                //------------------------------------------------------------------------------------------------------
+
+                $suministro2 = Suministro::with([
+                    'cliente.persona', 'calle.barrio',
+                    'suministrocatalogitem.cont_catalogitem' => function ($query) {
+                        return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                            ->selectRaw("*")
+                            ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                            ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                            ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                            ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                            ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                            ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                            ->whereRaw(" cont_catalogitem.idcatalogitem = 3");
+                        //->whereRaw(" cont_catalogitem.idcatalogitem = 1 OR cont_catalogitem.idcatalogitem = 2");
+                    }
+                ])
+                    ->where('idsuministro', $item->id)->get();
+
+                $result[] = $suministro2[0];
+
 
             } else if ($item->type == 'facConsumo') {
 

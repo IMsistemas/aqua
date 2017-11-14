@@ -752,7 +752,7 @@
             $scope.calculateTotalSuministro();
         };
 
-        $scope.calculateTotalSuministro = function () {
+        $scope.calculateTotalSuministro_tempOriginal = function () {
 
             if ($scope.t_suministro_aguapotable != '' && $scope.t_suministro_alcantarillado != '' &&
                 $scope.t_suministro_cuota != '' && $scope.s_suministro_credito != 0 && $scope.s_suministro_credito != '') {
@@ -818,6 +818,7 @@
 
                 $('#info_partial').show();
                 $('#info_total').show();
+
             } else {
                 $scope.total_partial = 0;
                 $scope.credit_cant = 0;
@@ -826,6 +827,37 @@
                 $('#info_total').hide();
             }
         };
+
+        $scope.calculateTotalSuministro = function () {
+
+            if ($scope.t_suministro_aguapotable !== '' && $scope.t_suministro_alcantarillado !== '' &&
+                $scope.t_suministro_cuota !== '' && $scope.s_suministro_credito !== 0 && $scope.s_suministro_credito !== '') {
+
+
+                var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
+
+                var M = C - parseFloat($scope.t_suministro_cuota);
+
+                var cuotas = M / parseInt($scope.s_suministro_credito);
+
+                $scope.total_partial = M.toFixed(2);
+                $scope.credit_cant = $scope.s_suministro_credito;
+                $scope.total_suministro = cuotas.toFixed(2);
+
+                $('#info_partial').show();
+                $('#info_total').show();
+
+            } else {
+
+                $scope.total_partial = 0;
+                $scope.credit_cant = 0;
+                $scope.total_suministro = 0;
+                $('#info_partial').hide();
+                $('#info_total').hide();
+            }
+        };
+
+
 
         $scope.actionSuministro = function () {
             //$scope.getInfoMedidor();
