@@ -14,9 +14,9 @@
     </head>
     <body ng-controller="nuevaLecturaController">
 
-        <div class="col-xs-12" style="margin-top: 5px;">
+        <div class="container" style="margin-top: 5px;">
 
-            <div class="row">
+            <div class="col-xs-12">
                 <div class="col-xs-6 text-left">
                     <h3>NUEVA TOMA DE LECTURA</h3>
                 </div>
@@ -27,9 +27,12 @@
                         IR AL SISTEMA <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>
+
+                <hr>
+
             </div>
 
-            <hr>
+
 
             <form class="form-horizontal" name="formNewLectura" novalidate >
 
@@ -59,10 +62,12 @@
 
                 <div class="col-xs-12">
 
-                    <h4>Periodo:</h4>
-                    <hr>
+                    <div class="col-xs-12">
+                        <h4>Periodo:</h4>
+                        <hr>
+                    </div>
 
-                    <div class="row">
+                    <div class="col-xs-12">
 
                         <div class="col-md-3 col-xs-6">
 
@@ -121,8 +126,10 @@
                     </div>
 
 
-                    <h4>Datos Suministro:</h4>
-                    <hr>
+                    <div class="col-xs-12">
+                        <h4>Datos Suministro:</h4>
+                        <hr>
+                    </div>
 
                     <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
 
@@ -185,8 +192,10 @@
 
                 <div class="col-xs-12" style="margin-top: 15px;">
 
-                    <h4>Detalle de Consumo:</h4>
-                    <hr>
+                    <div class="col-xs-12">
+                        <h4>Detalle de Consumo:</h4>
+                        <hr>
+                    </div>
 
                     <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
 
