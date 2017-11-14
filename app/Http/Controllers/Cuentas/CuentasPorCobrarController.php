@@ -40,7 +40,7 @@ class CuentasPorCobrarController extends Controller
                                         ->whereRaw("cont_documentoventa.fecharegistroventa BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
                                         ->get();
 
-        $cobroservicio = CobroServicio::with('cont_cuentasporcobrar')
+        /*$cobroservicio = CobroServicio::with('cont_cuentasporcobrar')
                                         ->join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'cobroservicio.idsolicitudservicio')
                                         ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
                                         ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')
@@ -54,7 +54,7 @@ class CuentasPorCobrarController extends Controller
                                         ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
                                         ->whereRaw("cobroagua.fechacobro BETWEEN '" . $filter->inicio . "' AND '"  . $filter->fin . "'")
                                         ->whereRaw("cobroagua.total IS NOT NULL")
-                                        ->orderBy('fechacobro', 'desc')->get();
+                                        ->orderBy('fechacobro', 'desc')->get();*/
 
         $result = [];
 
@@ -62,13 +62,13 @@ class CuentasPorCobrarController extends Controller
             $result[] = $item;
         }
 
-        foreach ($cobroagua_lectura as $item0) {
+        /*foreach ($cobroagua_lectura as $item0) {
             $result[] = $item0;
         }
 
         foreach ($cobroservicio as $item1) {
             $result[] = $item1;
-        }
+        }*/
 
         return $result;
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
@@ -51,8 +52,6 @@ class RecaudacionCController extends Controller
 
         return $cliente->orderBy('lastnamepersona', 'asc')->paginate(8);
     }
-
-
 
     public function getFacConsumo($idcliente)
     {
@@ -214,6 +213,22 @@ class RecaudacionCController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function getFacturas($idcliente)
+    {
+
+        $factura = Cont_DocumentoVenta::with('cont_cuentasporcobrar', 'suministro')
+                                        ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
+                                        ->join('persona','persona.idpersona','=','cliente.idpersona')
+                                        ->where('cont_documentoventa.idcliente', $idcliente)
+                                        ->get();
+        $result = [];
+
+        foreach ($factura as $item) {
+            $result[] = $item;
+        }
+
+        return $result;
+    }
 
     /**
      * Show the form for creating a new resource.

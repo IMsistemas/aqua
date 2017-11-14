@@ -2,7 +2,7 @@
 
 <div ng-controller="cuentasporCobrarController">
 
-    <div class="col-xs-12">
+    <div class="container">
 
         <h4>Cuentas por Cobrar</h4>
 
@@ -10,9 +10,9 @@
 
     </div>
 
-    <div class="col-xs-12" style="margin-top: 5px;">
+    <div class="container" style="margin-top: 5px;">
 
-        <div class="col-sm-5 col-xs-6">
+        <div class="col-sm-4 col-xs-6">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad()">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -49,7 +49,7 @@
                         <th style="width: 4%;">NO.</th>
                         <th style="width: 8%;">FECHA</th>
                         <th>CLIENTE</th>
-                        <th style="width: 11%;">NO FACTURA</th>
+                        <th style="width: 12%;">NO FACTURA</th>
                         <th style="width: 11%;">VALOR CUOTAS</th>
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
