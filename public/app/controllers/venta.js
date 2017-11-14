@@ -68,24 +68,28 @@ $scope.cmb_estado_fact="A";
 
                     for (var j = 0; j < longitud_itemlectura; j++) {
 
-                        var item0 = {
-                            productoObj:{
-                                title:response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
-                                originalObject:response[i].catalogoitem_cobroagua[j].cont_catalogitem
-                            },
-                            cantidad: 1,
-                            precioU: response[i].catalogoitem_cobroagua[j].valor,
-                            descuento: 0,
-                            iva: response[i].catalogoitem_cobroagua[j].cont_catalogitem.porcentiva,
-                            ice: 0,
-                            total: response[i].catalogoitem_cobroagua[j].valor,
-                            producto: response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
-                        };
+                        if (parseFloat(response[i].catalogoitem_cobroagua[j].valor) !== 0) {
+
+                            var item0 = {
+                                productoObj:{
+                                    title:response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
+                                    originalObject:response[i].catalogoitem_cobroagua[j].cont_catalogitem
+                                },
+                                cantidad: 1,
+                                precioU: response[i].catalogoitem_cobroagua[j].valor,
+                                descuento: 0,
+                                iva: response[i].catalogoitem_cobroagua[j].cont_catalogitem.porcentiva,
+                                ice: 0,
+                                total: response[i].catalogoitem_cobroagua[j].valor,
+                                producto: response[i].catalogoitem_cobroagua[j].cont_catalogitem.codigoproducto,
+                            };
 
 
-                        console.log(item0);
+                            console.log(item0);
 
-                        $scope.items.push(item0);
+                            $scope.items.push(item0);
+
+                        }
 
                     }
 
