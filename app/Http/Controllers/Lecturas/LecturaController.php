@@ -312,8 +312,8 @@ class LecturaController extends Controller
 
         settype($constante_medioambiente, 'float');
 
-        $total_alcantarillado = (($valueTarifa + $valueExcedente) * 100) / $constante_alcantarillado;
-        $total_desechosolido = (($valueTarifa + $valueExcedente) * 100) / $constante_desechosolido;
+        $total_alcantarillado = ($valueTarifa + $valueExcedente) * $constante_alcantarillado / 100;
+        $total_desechosolido = ($valueTarifa + $valueExcedente) * $constante_desechosolido / 100;
 
         return ['alcantarillado' => $total_alcantarillado, 'desechosolido' => $total_desechosolido, 'medioambiente' => $constante_medioambiente];
 
