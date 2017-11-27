@@ -563,7 +563,7 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
                 if (response.success === true) {
                     $scope.initLoad();
-                    $scope.showModalListCobro($scope.item_select);
+                    $scope.showModalListCobro2($scope.item_select);
 
                     $scope.message = 'Se insertó correctamente el Cobro...';
                     $('#modalMessage').modal('show');
@@ -651,12 +651,14 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     };
 
     $scope.infoCliente = function (idcliente) {
+
         $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ idcliente).success(function(response){
 
             $scope.Cliente = response[0];
             console.log($scope.Cliente);
 
         });
+
     };
 
     $scope.pushListSelect = function (tipo, id, item) {

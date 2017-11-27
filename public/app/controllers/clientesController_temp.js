@@ -643,19 +643,19 @@
          */
 
         $scope.getLastIDSolSuministro = function () {
-            $http.get(API_URL + 'solicitud/getLastID/solsuministro').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
                 $scope.num_solicitud_suministro = response.id;
             });
         };
 
         $scope.getLastIDSuministro = function () {
-            $http.get(API_URL + 'solicitud/getLastID/suministro').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/suministro').success(function(response){
                 $scope.t_suministro_nro = response.id;
             });
         };
 
         $scope.getTarifas = function () {
-            $http.get(API_URL + 'solicitud/getTarifas').success(function(response){
+            $http.get(API_URL + 'cliente/getTarifas').success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
@@ -667,7 +667,7 @@
         };
 
         $scope.getBarrios = function () {
-            $http.get(API_URL + 'solicitud/getBarrios').success(function(response){
+            $http.get(API_URL + 'cliente/getBarrios').success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
@@ -685,7 +685,7 @@
             var idbarrio = $scope.s_suministro_zona;
 
             if (idbarrio != 0) {
-                $http.get(API_URL + 'solicitud/getCalles/' + idbarrio).success(function(response){
+                $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
                     var longitud = response.length;
                     var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
@@ -701,7 +701,7 @@
         };
 
         $scope.getDividendo = function () {
-            $http.get(API_URL + 'solicitud/getDividendos').success(function(response){
+            $http.get(API_URL + 'cliente/getDividendos').success(function(response){
 
                 var dividendos = parseInt(response[0].optionvalue);
 
@@ -717,7 +717,7 @@
         };
 
         $scope.getInfoMedidor = function () {
-            $http.get(API_URL + 'solicitud/getInfoMedidor').success(function(response){
+            $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
                 $scope.marcaproducto = response[0].marca;
                 $scope.precioproducto = response[0].precioproducto;
                 $scope.idproducto = response[0].idproducto;
@@ -857,6 +857,8 @@
             }
         };
 
+
+
         $scope.actionSuministro = function () {
             //$scope.getInfoMedidor();
             $scope.getLastIDSolSuministro();
@@ -902,7 +904,7 @@
 
             console.log(data);
 
-            $http.post(API_URL + 'solicitud/storeSolicitudSuministro', data).success(function(response){
+            $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -992,7 +994,7 @@
 
             console.log(data);
 
-            var url = API_URL + 'solicitud/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
+            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.idsolicitud_to_process;
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
@@ -1046,14 +1048,13 @@
 
         };
 
-
         /*
          *  ACTIONS FOR SOLICITUD SERVICIOS-----------------------------------------------------------------------------
          */
 
         $scope.getExistsSolicitudServicio = function () {
             var codigocliente = $scope.objectAction.idcliente;
-            $http.get(API_URL + 'solicitud/getExistsSolicitudServicio/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
                 if (response.success == false){
                     $scope.actionServicioShow();
                 } else {
@@ -1066,7 +1067,7 @@
         };
 
         $scope.getServicios = function () {
-            $http.get(API_URL + 'solicitud/getServicios').success(function(response){
+            $http.get(API_URL + 'cliente/getServicios').success(function(response){
                 var longitud = response.length;
                 var array_temp = [];
                 for (var i = 0; i < longitud; i++) {
@@ -1082,7 +1083,7 @@
         };
 
         $scope.getLastIDSolicServicio = function () {
-            $http.get(API_URL + 'solicitud/getLastID/solicitudservicio').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/solicitudservicio').success(function(response){
                 $scope.num_solicitud_servicio = response.id;
             });
         };
@@ -1121,7 +1122,7 @@
                 servicios: $scope.services
             };
 
-            $http.post(API_URL + 'solicitud/storeSolicitudServicios', solicitud).success(function(response){
+            $http.post(API_URL + 'cliente/storeSolicitudServicios', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad(1);
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -1139,7 +1140,7 @@
          */
 
         $scope.getLastIDOtros = function () {
-            $http.get(API_URL + 'solicitud/getLastID/solicitudotro').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/solicitudotro').success(function(response){
                 $scope.num_solicitud_otro = response.id;
             });
         };
@@ -1150,7 +1151,7 @@
                 codigocliente: $scope.objectAction.idcliente,
                 observacion: $scope.t_observacion_otro
             };
-            $http.post(API_URL + 'solicitud/storeSolicitudOtro', solicitud).success(function(response){
+            $http.post(API_URL + 'cliente/storeSolicitudOtro', solicitud).success(function(response){
 
                 if(response.success == true){
                     $scope.initLoad();
@@ -1188,14 +1189,14 @@
          */
 
         $scope.getLastIDMantenimiento = function () {
-            $http.get(API_URL + 'solicitud/getLastID/solicitudmantenimiento').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/solicitudmantenimiento').success(function(response){
                 $scope.num_solicitud_mant = response.id;
             });
         };
 
         $scope.getSuministros = function () {
             var codigocliente = $scope.objectAction.idcliente;
-            $http.get(API_URL + 'solicitud/getSuministros/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
@@ -1237,7 +1238,7 @@
                 numerosuministro: $scope.s_suministro_mant,
                 observacion: $scope.t_observacion_mant
             };
-            $http.post(API_URL + 'solicitud/storeSolicitudMantenimiento', solicitud).success(function(response){
+            $http.post(API_URL + 'cliente/storeSolicitudMantenimiento', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -1282,14 +1283,14 @@
          */
 
         $scope.getLastSetName = function () {
-            $http.get(API_URL + 'solicitud/getLastID/solicitudcambionombre').success(function(response){
+            $http.get(API_URL + 'cliente/getLastID/solicitudcambionombre').success(function(response){
                 $scope.num_solicitud_setnombre = response.id;
             });
         };
 
         $scope.getIdentifyClientes = function () {
             var idcliente = $scope.objectAction.codigocliente;
-            $http.get(API_URL + 'solicitud/getIdentifyClientes/' + idcliente).success(function(response){
+            $http.get(API_URL + 'cliente/getIdentifyClientes/' + idcliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
                 $scope.list_clientes = [];
@@ -1313,7 +1314,7 @@
 
                 if (codigocliente != 0 && codigocliente != undefined) {
 
-                    $http.get(API_URL + 'solicitud/getInfoCliente/' + codigocliente).success(function(response){
+                    $http.get(API_URL + 'cliente/getInfoCliente/' + codigocliente).success(function(response){
                         $scope.nom_new_cliente_setnombre = object.originalObject.razonsocial;
                         $scope.direcc_new_cliente_setnombre = object.originalObject.direccion;
                         $scope.telf_new_cliente_setnombre = response[0].telefonoprincipaldomicilio;
@@ -1335,7 +1336,7 @@
 
         $scope.getSuministrosForSetName = function () {
             var codigocliente = $scope.objectAction.idcliente;
-            $http.get(API_URL + 'solicitud/getSuministros/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 $scope.list_suministros = [];
@@ -1380,7 +1381,7 @@
                 numerosuministro: $scope.s_suministro_setnombre
             };
 
-            $http.post(API_URL + 'solicitud/storeSolicitudCambioNombre', solicitud).success(function(response){
+            $http.post(API_URL + 'cliente/storeSolicitudCambioNombre', solicitud).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
@@ -1399,7 +1400,7 @@
                 codigoclientenuevo: $scope.h_codigocliente_new
             };
             var numerosuministro = $scope.s_suministro_setnombre;
-            var url = API_URL + 'solicitud/updateSetNameSuministro/' + numerosuministro;
+            var url = API_URL + 'cliente/updateSetNameSuministro/' + numerosuministro;
 
             $http.put(url, data).success(function (response) {
                 if (response.success == true){
@@ -1564,7 +1565,6 @@
                 else return true;
             }
         };
-
     });
 
     function convertDatetoDB(now, revert){
