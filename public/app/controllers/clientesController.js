@@ -1489,7 +1489,7 @@
         $scope.showModalAction = function (item) {
             $scope.objectAction = item;
 
-            $http.get(API_URL + 'cliente/getSuministroByClient/' + item.idcliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministroByClient/' + item.idcliente).success(function(response){
 
                 if (response == 0) {
                     $('#btnSetName').prop('disabled', true);

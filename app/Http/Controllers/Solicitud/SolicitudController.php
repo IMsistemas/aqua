@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Solicitud;
 
 use App\Modelos\Configuracion\ConfiguracionSystem;
 //use App\Modelos\Configuraciones\Configuracion;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
+use App\Modelos\Sectores\Barrio;
+use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServiciosCliente;
 use App\Modelos\Solicitud\Solicitud;
 use App\Modelos\Solicitud\SolicitudCambioNombre;
@@ -14,6 +17,10 @@ use App\Modelos\Solicitud\SolicitudOtro;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Solicitud\SolicitudSuministro;
 use App\Modelos\SRI\SRI_Establecimiento;
+use App\Modelos\Suministros\Producto;
+use App\Modelos\Suministros\Suministro;
+use App\Modelos\Suministros\SuministroCatalogItem;
+use App\Modelos\Tarifas\TarifaAguaPotable;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;

@@ -27,23 +27,24 @@ Route::resource('/inicio', 'Index\IndexController');
 
 Route::get('solicitud/getLastID/{table}', 'Solicitud\SolicitudController@getLastID');
 Route::get('solicitud/getTarifas', 'Solicitud\SolicitudController@getTarifas');
-Route::get('solicitud/getBarrios', 'Solicitud\Solicitud@getBarrios');
-Route::get('solicitud/getCalles/{idbarrio}', 'Solicitud\Solicitud@getCalles');
-Route::get('solicitud/getDividendos', 'Solicitud\Solicitud@getDividendos');
-Route::get('solicitud/getInfoMedidor', 'Solicitud\Solicitud@getInfoMedidor');
+Route::get('solicitud/getBarrios', 'Solicitud\SolicitudController@getBarrios');
+Route::get('solicitud/getCalles/{idbarrio}', 'Solicitud\SolicitudController@getCalles');
+Route::get('solicitud/getDividendos', 'Solicitud\SolicitudController@getDividendos');
+Route::get('solicitud/getInfoMedidor', 'Solicitud\SolicitudController@getInfoMedidor');
 
-Route::post('solicitud/storeSolicitudCambioNombre', 'Solicitud\Solicitud@storeSolicitudCambioNombre');
-Route::post('solicitud/storeSolicitudMantenimiento', 'Solicitud\Solicitud@storeSolicitudMantenimiento');
-Route::post('solicitud/storeSolicitudOtro', 'Solicitud\Solicitud@storeSolicitudOtro');
-Route::post('solicitud/storeSolicitudServicios', 'Solicitud\Solicitud@storeSolicitudServicios');
-Route::post('solicitud/storeSolicitudSuministro', 'Solicitud\Solicitud@storeSolicitudSuministro');
-Route::put('solicitud/processSolicitudSuministro/{idsolicitud}', 'Solicitud\Solicitud@processSolicitudSuministro');
-Route::get('solicitud/getExistsSolicitudServicio/{codigocliente}', 'Solicitud\Solicitud@getExistsSolicitudServicio');
-Route::get('solicitud/getServicios', 'Solicitud\Solicitud@getServicios');
-Route::get('solicitud/getSuministros/{codigocliente}', 'Solicitud\Solicitud@getSuministros');
-Route::get('solicitud/getIdentifyClientes/{text}', 'Solicitud\Solicitud@getIdentifyClientes');
-Route::get('solicitud/getInfoCliente/{idcliente}', 'Solicitud\Solicitud@getInfoCliente');
+Route::post('solicitud/storeSolicitudCambioNombre', 'Solicitud\SolicitudController@storeSolicitudCambioNombre');
+Route::post('solicitud/storeSolicitudMantenimiento', 'Solicitud\SolicitudController@storeSolicitudMantenimiento');
+Route::post('solicitud/storeSolicitudOtro', 'Solicitud\SolicitudController@storeSolicitudOtro');
+Route::post('solicitud/storeSolicitudServicios', 'Solicitud\SolicitudController@storeSolicitudServicios');
+Route::post('solicitud/storeSolicitudSuministro', 'Solicitud\SolicitudController@storeSolicitudSuministro');
+Route::put('solicitud/processSolicitudSuministro/{idsolicitud}', 'Solicitud\SolicitudController@processSolicitudSuministro');
+Route::get('solicitud/getExistsSolicitudServicio/{codigocliente}', 'Solicitud\SolicitudController@getExistsSolicitudServicio');
+Route::get('solicitud/getServicios', 'Solicitud\SolicitudController@getServicios');
+Route::get('solicitud/getSuministros/{codigocliente}', 'Solicitud\SolicitudController@getSuministros');
+Route::get('solicitud/getIdentifyClientes/{text}', 'Solicitud\SolicitudController@getIdentifyClientes');
+Route::get('solicitud/getInfoCliente/{idcliente}', 'Solicitud\SolicitudController@getInfoCliente');
 
+Route::get('solicitud/getSuministroByClient/{idcliente}', 'Solicitud\SolicitudController@getSuministroByClient');
 Route::get('solicitud/getTasaInteres', 'Solicitud\SolicitudController@getTasaInteres');
 
 Route::get('solicitud/reporte_printM', 'Solicitud\SolicitudController@reporte_printM');
@@ -147,7 +148,7 @@ Route::get('cliente/getItems', 'Clientes\ClienteController@getItems');
 //Route::get('cliente/getTasaInteres', 'Clientes\ClienteController@getTasaInteres');
 Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
-Route::get('cliente/getSuministroByClient/{idcliente}', 'Clientes\ClienteController@getSuministroByClient');
+//Route::get('cliente/getSuministroByClient/{idcliente}', 'Clientes\ClienteController@getSuministroByClient');
 Route::get('cliente/getTipoCliente', 'Clientes\ClienteController@getTipoCliente');
 Route::get('cliente/getTipoIdentificacion', 'Clientes\ClienteController@getTipoIdentificacion');
 Route::get('cliente/getImpuestoIVA', 'Clientes\ClienteController@getImpuestoIVA');
