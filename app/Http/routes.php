@@ -44,6 +44,7 @@ Route::get('solicitud/getSuministros/{codigocliente}', 'Solicitud\Solicitud@getS
 Route::get('solicitud/getIdentifyClientes/{text}', 'Solicitud\Solicitud@getIdentifyClientes');
 Route::get('solicitud/getInfoCliente/{idcliente}', 'Solicitud\Solicitud@getInfoCliente');
 
+Route::get('solicitud/getTasaInteres', 'Solicitud\SolicitudController@getTasaInteres');
 
 Route::get('solicitud/reporte_printM', 'Solicitud\SolicitudController@reporte_printM');
 
@@ -143,7 +144,7 @@ Route::put('cliente/processSolicitud/{idsolicitud}', 'Clientes\ClienteController
 //Route::put('cliente/processSolicitudSuministro/{idsolicitud}', 'Clientes\ClienteController@processSolicitudSuministro');
 Route::put('cliente/updateSetNameSuministro/{numerosuministro}', 'Clientes\ClienteController@updateSetNameSuministro');
 Route::get('cliente/getItems', 'Clientes\ClienteController@getItems');
-Route::get('cliente/getTasaInteres', 'Clientes\ClienteController@getTasaInteres');
+//Route::get('cliente/getTasaInteres', 'Clientes\ClienteController@getTasaInteres');
 Route::get('cliente/getDividendos', 'Clientes\ClienteController@getDividendos');
 Route::get('cliente/getCalles/{idbarrio}', 'Clientes\ClienteController@getCalles');
 Route::get('cliente/getSuministroByClient/{idcliente}', 'Clientes\ClienteController@getSuministroByClient');
