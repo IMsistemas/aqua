@@ -7,6 +7,7 @@ use App\Modelos\Configuracion\ConfiguracionSystem;
 //use App\Modelos\Configuraciones\Configuracion;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
+use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Sectores\Barrio;
 use App\Modelos\Sectores\Calle;
 use App\Modelos\Servicios\ServiciosCliente;
@@ -464,6 +465,29 @@ class SolicitudController extends Controller
 
         if ($suministro->save()) {
 
+            $cobrocliente = new CobroCliente();
+
+            $cobrocliente->idcatalogitem = 2;
+            $cobrocliente->valor = $request->input('garantia');
+            $cobrocliente->idcliente = $request->input('codigocliente');
+            $cobrocliente->save();
+
+
+            $dividendos = $request->input('dividendos');
+            $valor = $request->input('valor_partial') / $dividendos;
+
+            for ($i = 0; $i < $dividendos; $i++) {
+
+                $cobrocliente = new CobroCliente();
+
+                $cobrocliente->idcatalogitem = 1;
+                $cobrocliente->valor = $valor;
+                $cobrocliente->idcliente = $request->input('codigocliente');
+                $cobrocliente->save();
+
+            }
+
+
             $o = new SuministroCatalogItem();
             $o->idsuministro = $suministro->idsuministro;
             $o->idcatalogitem = 1;
@@ -484,7 +508,6 @@ class SolicitudController extends Controller
             $ooo->valor = $request->input('cuota_inicial');
 
             $ooo->save();
-
 
             $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
 

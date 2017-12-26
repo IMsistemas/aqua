@@ -46,7 +46,7 @@
 
         $scope.initLoad = function (pageNumber) {
 
-            $http.get(API_URL + 'cliente/getTasaInteres').success(function(response){
+            $http.get(API_URL + 'solicitud/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
@@ -414,7 +414,7 @@
          */
 
         $scope.getLastIDOtros = function () {
-            $http.get(API_URL + 'cliente/getLastID/solicitudotro').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/solicitudotro').success(function(response){
                 $scope.num_solicitud_otro = response.id;
             });
         };
@@ -480,13 +480,13 @@
          */
 
         $scope.getLastIDMantenimiento = function () {
-            $http.get(API_URL + 'cliente/getLastID/solicitudmantenimiento').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/solicitudmantenimiento').success(function(response){
                 $scope.num_solicitud_mant = response.id;
             });
         };
 
         $scope.getSuministros = function (codigocliente, numsuministro) {
-            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
                 $scope.list_suministros = [];
@@ -542,7 +542,7 @@
 
             //$scope.getSuministros(solicitud.cliente.idcliente, solicitud.data.numerosuministro);
 
-            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministros/' + solicitud.idcliente).success(function(response){
 
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
@@ -603,13 +603,13 @@
          */
 
         $scope.getLastSetName = function () {
-            $http.get(API_URL + 'cliente/getLastID/solicitudcambionombre').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/solicitudcambionombre').success(function(response){
                 $scope.num_solicitud_setnombre = response.id;
             });
         };
 
         $scope.getIdentifyClientes = function (idcliente, codigoclientenuevo) {
-            $http.get(API_URL + 'cliente/getIdentifyClientes/' + idcliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getIdentifyClientes/' + idcliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
                 $scope.list_clientes = [];
@@ -679,7 +679,7 @@
         };
 
         $scope.getSuministrosForSetName = function (codigocliente, numerosuministro) {
-            $http.get(API_URL + 'cliente/getSuministros/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministros/' + codigocliente).success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: 0}];
                 $scope.list_suministros = [];
@@ -758,7 +758,7 @@
                 codigoclientenuevo: $scope.s_ident_new_client_setnombre
             };
             var numerosuministro = $scope.s_suministro_setnombre;
-            var url = API_URL + 'cliente/updateSetNameSuministro/' + numerosuministro;
+            var url = API_URL + 'solicitud/updateSetNameSuministro/' + numerosuministro;
 
             $http.put(url, data).success(function (response) {
                 if (response.success == true){
@@ -783,7 +783,7 @@
             $scope.celular_cliente_setnombre = solicitud.celphone;
             $scope.telf_trab_cliente_setnombre = solicitud.telefonoprincipaltrabajo;
 
-            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministros/' + solicitud.idcliente).success(function(response){
 
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
@@ -854,7 +854,7 @@
 
         $scope.getExistsSolicitudServicio = function () {
             var codigocliente = $scope.objectAction.codigocliente;
-            $http.get(API_URL + 'cliente/getExistsSolicitudServicio/' + codigocliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getExistsSolicitudServicio/' + codigocliente).success(function(response){
                 if (response.length == 0){
                     $scope.actionServicioShow();
                 } else {
@@ -867,7 +867,7 @@
         };
 
         $scope.getServicios = function () {
-            $http.get(API_URL + 'cliente/getServicios').success(function(response){
+            $http.get(API_URL + 'solicitud/getServicios').success(function(response){
                 var longitud = response.length;
                 var array_temp = [];
                 for (var i = 0; i < longitud; i++) {
@@ -883,7 +883,7 @@
         };
 
         $scope.getLastIDSolicServicio = function () {
-            $http.get(API_URL + 'cliente/getLastID/solicitudservicio').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/solicitudservicio').success(function(response){
                 $scope.num_solicitud_servicio = response.id;
             });
         };
@@ -927,7 +927,7 @@
             $scope.celular_cliente = solicitud.celphone;
             $scope.telf_trab_cliente = solicitud.telefonoprincipaltrabajo;
 
-            $http.get(API_URL + 'cliente/getSuministros/' + solicitud.idcliente).success(function(response){
+            $http.get(API_URL + 'solicitud/getSuministros/' + solicitud.idcliente).success(function(response){
 
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
@@ -1104,7 +1104,7 @@
         };*/
 
         $scope.getInfoMedidor = function () {
-            $http.get(API_URL + 'cliente/getInfoMedidor').success(function(response){
+            $http.get(API_URL + 'solicitud/getInfoMedidor').success(function(response){
                 $scope.marcaproducto = response[0].marca;
                 $scope.precioproducto = response[0].precioproducto;
                 $scope.idproducto = response[0].idproducto;
@@ -1224,19 +1224,19 @@
         };
 
         $scope.getLastIDSolSuministro = function () {
-            $http.get(API_URL + 'cliente/getLastID/solsuministro').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/solsuministro').success(function(response){
                 $scope.num_solicitud_suministro = response.id;
             });
         };
 
         $scope.getLastIDSuministro = function () {
-            $http.get(API_URL + 'cliente/getLastID/suministro').success(function(response){
+            $http.get(API_URL + 'solicitud/getLastID/suministro').success(function(response){
                 $scope.t_suministro_nro = response.id;
             });
         };
 
         $scope.getTarifas = function () {
-            $http.get(API_URL + 'cliente/getTarifas').success(function(response){
+            $http.get(API_URL + 'solicitud/getTarifas').success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
@@ -1248,7 +1248,7 @@
         };
 
         $scope.getBarrios = function () {
-            $http.get(API_URL + 'cliente/getBarrios').success(function(response){
+            $http.get(API_URL + 'solicitud/getBarrios').success(function(response){
                 var longitud = response.length;
                 var array_temp = [{label: '-- Seleccione --', id: ''}];
                 for(var i = 0; i < longitud; i++){
@@ -1266,7 +1266,7 @@
             var idbarrio = $scope.s_suministro_zona;
 
             if (idbarrio != 0) {
-                $http.get(API_URL + 'cliente/getCalles/' + idbarrio).success(function(response){
+                $http.get(API_URL + 'solicitud/getCalles/' + idbarrio).success(function(response){
                     var longitud = response.length;
                     var array_temp = [{label: '-- Seleccione --', id: ''}];
                     for(var i = 0; i < longitud; i++){
@@ -1288,7 +1288,7 @@
         };
 
         $scope.getDividendo = function () {
-            $http.get(API_URL + 'cliente/getDividendos').success(function(response){
+            $http.get(API_URL + 'solicitud/getDividendos').success(function(response){
 
                 var dividendos = parseInt(response[0].optionvalue);
 
@@ -1600,7 +1600,7 @@
 
             console.log(data);
 
-            var url = API_URL + 'cliente/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
+            var url = API_URL + 'solicitud/processSolicitudSuministro/' + $scope.num_solicitud_suministro;
 
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
@@ -1665,7 +1665,7 @@
          */
 
         $scope.procesarSolicitud = function (id_btn) {
-            var url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
+            var url = API_URL + 'solicitud/processSolicitud/' + $scope.idsolicitud_to_process;
 
             var data = {
                 idsolicitud: $scope.idsolicitud_to_process
