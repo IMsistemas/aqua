@@ -6,6 +6,7 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     $scope.select_cuenta = null;
 
     $scope.listSelected = [];
+    $scope.listItemsCobrar = [];
 
     $scope.pago_anular = '';
 
@@ -33,6 +34,40 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         });
     };
+
+
+    $scope.getItemsCobro = function (idcliente) {
+
+        $http.get(API_URL + 'recaudacionC/getItemsCobro/' + idcliente).success(function(response){
+
+            $scope.listItemsCobrar = [];
+
+            var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                var item = {
+                    idcatalogitem: response[i].idcatalogitem,
+                    nombreproducto: response[i].nombreproducto,
+                    valor: response[i].valor,
+                    idcliente: response[i].idcliente,
+                    acobrar: 0
+                };
+
+                $scope.listItemsCobrar.push(item);
+
+            }
+
+            $('#modalCobrosItems').modal('show');
+
+        });
+
+    };
+
+
+
+
+
 
     $scope.getTransacciones = function (idcliente) {
 
@@ -164,6 +199,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
 
     };
+
+
 
     $scope.createFactura = function () {
 

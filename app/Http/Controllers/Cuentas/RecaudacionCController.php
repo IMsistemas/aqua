@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cuentas;
 use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
@@ -77,6 +78,26 @@ class RecaudacionCController extends Controller
 
         return $otrosCargos;
     }
+
+
+    public function getItemsCobro($idcliente)
+    {
+        return CobroCliente::join('cont_catalogitem', 'cont_catalogitem.idcatalogitem', '=', 'cobrocliente.idcatalogitem')
+                ->where('idcliente', $idcliente)->get();
+    }
+
+
+    public function createFacturaItems(Request $request)
+    {
+
+    }
+
+
+
+
+
+
+
 
     public function createFactura(Request $request)
     {
@@ -212,6 +233,14 @@ class RecaudacionCController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+
+
+
+
+
 
     public function getFacturas($idcliente)
     {

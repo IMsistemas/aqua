@@ -64,11 +64,15 @@
                 <td>{{item.lastnamepersona}} {{item.namepersona}}</td>
                 <td  class="text-center">
 
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="getTransacciones(item.idcliente)">
+                    <!--<button type="button" class="btn btn-primary btn-sm" ng-click="getTransacciones(item.idcliente)">
                         <i class="fa fa-lg fa-cogs" aria-hidden="true" title=""></i>
                     </button>
 
                     <button type="button" class="btn btn-primary btn-sm" ng-click="getFacturas(item.idcliente)">
+                        <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
+                    </button>-->
+
+                    <button type="button" class="btn btn-primary" ng-click="getItemsCobro(item.idcliente)">
                         <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
                     </button>
 
@@ -454,6 +458,60 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalCobrosItems">
+        <div class="modal-dialog modal-lg" role="document"  style="">
+            <div class="modal-content" style="height: 90%;">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">A Cobrar</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!--<div class="col-sm-1 col-xs-2">
+                        <button type="button" class="btn btn-primary" ng-click="showModalListCobro2()" title="Cobros">
+                            Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
+                        </button>
+                    </div>-->
+
+                    <table class="table table-responsive table-striped table-hover table-bordered">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>ITEMS</th>
+                                <th style="width: 20%;">VALOR PENDIENTE</th>
+                                <th style="width: 20%;">VALOR A COBRAR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listItemsCobrar track by $index" ng-cloak>
+
+                                <td class="text-left">{{item.nombreproducto}}</td>
+                                <td class="text-right">$ {{item.valor}}</td>
+                                <td>
+                                    <input type="text" class="form-control text-right" ng-model="item.acobrar">
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="">
+                        Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 

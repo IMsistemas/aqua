@@ -208,6 +208,8 @@ Route::get('recaudacioncobro/getCobros/{id}', 'Cuentas\RecaudacionCobroControlle
 Route::get('recaudacioncobro/getFacturas', 'Cuentas\RecaudacionCobroController@getFacturas');
 Route::resource('recaudacioncobro', 'Cuentas\RecaudacionCobroController');
 
+
+Route::get('recaudacionC/getItemsCobro/{idcliente}', 'Cuentas\RecaudacionCController@getItemsCobro');
 Route::get('recaudacionC/getFacturas/{idcliente}', 'Cuentas\RecaudacionCController@getFacturas');
 Route::get('recaudacionC/createFactura', 'Cuentas\RecaudacionCController@createFactura');
 Route::get('recaudacionC/getDerechoAcometida/{idcliente}', 'Cuentas\RecaudacionCController@getDerechoAcometida');
