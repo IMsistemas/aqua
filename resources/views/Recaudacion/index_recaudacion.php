@@ -53,6 +53,7 @@
                 <th style="width: 10%;">CI / RUC</th>
                 <th style="width: 10%;">FECHA INGRESO</th>
                 <th style="">RAZON SOCIAL / APELLIDOS Y NOMBRE</th>
+                <th style="width: 10%;">VALOR COBRAR</th>
                 <th style="width: 8%;">ACCION</th>
             </tr>
             </thead>
@@ -62,6 +63,7 @@
                 <td>{{item.numdocidentific}}</td>
                 <td>{{item.fechaingreso | formatDate}}</td>
                 <td>{{item.lastnamepersona}} {{item.namepersona}}</td>
+                <td class="text-right">$ {{item.valorcobrar}}</td>
                 <td  class="text-center">
 
                     <!--<button type="button" class="btn btn-primary btn-sm" ng-click="getTransacciones(item.idcliente)">

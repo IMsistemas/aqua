@@ -46,7 +46,7 @@ class RecaudacionCController extends Controller
         $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
             ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
             ->with('sri_tipoempresa', 'sri_parte')
-            ->select('cliente.*', 'persona.*', 'cont_plancuenta.*')
+            ->selectRaw('cliente.*, persona.*, cont_plancuenta.*, (SELECT SUM(valor) FROM cobrocliente WHERE cobrocliente.idcliente = cliente.idcliente) AS valorcobrar')
             ->where("cliente.estado", true);
 
         if ($search != null) {
