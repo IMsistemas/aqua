@@ -7,10 +7,22 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.listSelected = [];
     $scope.listItemsCobrar = [];
+    $scope.idcliente = null;
 
     $scope.pago_anular = '';
 
     $scope.fecha_i = '';
+
+
+    $('#modalFactura').on('hidden.bs.modal', function () {
+        $scope.initLoad(1);
+
+        if ($scope.idcliente !== null) {
+            $scope.getItemsCobro($scope.idcliente);
+        }
+
+    });
+
 
     $scope.pageChanged = function(newPage) {
         $scope.initLoad(newPage);
@@ -37,6 +49,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
 
     $scope.getItemsCobro = function (idcliente) {
+
+        $scope.idcliente = idcliente;
 
         $http.get(API_URL + 'recaudacionC/getItemsCobro/' + idcliente).success(function(response){
 

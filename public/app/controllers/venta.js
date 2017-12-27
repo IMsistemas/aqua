@@ -82,12 +82,6 @@ $scope.cmb_estado_fact="A";
 
                 }
 
-
-
-
-
-
-
                 /*if (response[i].catalogoitem_cobroagua !== undefined) {
 
                     console.log(response[i].catalogoitem_cobroagua !== undefined);

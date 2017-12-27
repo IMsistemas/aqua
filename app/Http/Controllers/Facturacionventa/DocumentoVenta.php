@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Facturacionventa;
 
 use App\Modelos\Bodegas\Bodega;
+use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\SRI\SRI_TipoComprobante;
 use App\Modelos\Suministros\Suministro;
@@ -321,6 +322,23 @@ class DocumentoVenta extends Controller
         ]);
 
         if (Session::has('suministro_to_facturar')) {
+
+
+            $aux_itemventa=(array) $filtro->DataItemsVenta;
+            //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+            for($x=0;$x<count($filtro->DataItemsVenta);$x++){
+
+                $cobrocliente = CobroCliente::where('idcatalogitem', $filtro->DataItemsVenta[$x]->idcatalogitem)
+                                            ->where('idcliente', $filtro->DataVenta->idcliente)->get();
+
+                $cobrocliente = CobroCliente::find($cobrocliente[0]->idcobrocliente);
+
+                $cobrocliente->valor = $cobrocliente->valor - $filtro->DataItemsVenta[$x]->preciototal;
+
+                $cobrocliente->save();
+
+            }
+
 
             //$object_s = Session::get('suministro_to_facturar');
 

@@ -141,7 +141,7 @@ class RecaudacionCController extends Controller
                 ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
                 ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
                 //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
-                ->selectRaw("*")
+                ->selectRaw("cont_catalogitem.*, persona.*, sri_tipoimpuestoiva.*, cobrocliente.*, cliente.idcliente")
                 ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
                 ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
                 ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
