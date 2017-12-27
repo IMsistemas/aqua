@@ -145,7 +145,7 @@
     </div>
 
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFactura" style="z-index: 99988;">
         <div class="modal-dialog modal-lg" role="document"  style="height: 90%; width: 90%;">
             <div class="modal-content" style="height: 90%;">
                 <div class="modal-header modal-header-primary">
@@ -503,7 +503,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="">
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="createFacturaItems()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>

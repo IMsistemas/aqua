@@ -64,6 +64,37 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.createFacturaItems = function () {
+
+        var selected = [];
+
+        var longitud = $scope.listItemsCobrar.length;
+
+        for (var i = 0; i < longitud; i++) {
+
+            if (parseFloat($scope.listItemsCobrar[i].acobrar) !== 0) {
+                selected.push($scope.listItemsCobrar[i]);
+            }
+
+        }
+
+        console.log(selected);
+
+        $http.get(API_URL + 'recaudacionC/createFacturaItems?data=' + JSON.stringify(selected)).success(function(response){
+
+            $scope.currentProjectUrl = '';
+
+            $scope.currentProjectUrl = API_URL + 'DocumentoVenta?flag_suministro=1';
+            $("#aux_venta").html("<object height='450px' width='100%' data='"+$scope.currentProjectUrl+"'></object>");
+            $('#modalFactura').modal('show');
+
+        });
+
+    };
+
+
+
+
 
 
 
@@ -199,8 +230,6 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
 
     };
-
-
 
     $scope.createFactura = function () {
 

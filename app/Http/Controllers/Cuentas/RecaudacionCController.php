@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cuentas;
 
 use App\Modelos\Clientes\Cliente;
+use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\CobroCliente;
@@ -89,7 +90,62 @@ class RecaudacionCController extends Controller
 
     public function createFacturaItems(Request $request)
     {
+        $data = json_decode($request->get('data'));
 
+        $result = [];
+
+        foreach ($data as $item) {
+
+            $result_query = CobroCliente::with([
+                'cliente.persona',
+                'cont_catalogitem' => function ($query) use ($item) {
+                    return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                        ->selectRaw("*")
+                        ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                        ->selectRaw("(SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                        ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                        ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                        ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                        //->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                        ->whereRaw(" cont_catalogitem.idcatalogitem = " . $item->idcatalogitem);
+                }
+            ])
+            ->get();
+
+
+
+            /*$result_query = Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+                //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
+                ->selectRaw("*")
+                ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
+                ->selectRaw(" (SELECT aux_ice.porcentaje FROM sri_tipoimpuestoice aux_ice WHERE aux_ice.idtipoimpuestoice=cont_catalogitem.idtipoimpuestoice ) as PorcentIce ")
+                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as concepto")
+                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as controlhaber")
+                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta) as tipocuenta")
+                ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
+                ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
+                ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
+                ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
+                ->whereRaw(" cont_catalogitem.idcatalogitem = " . $item->idcatalogitem)
+                ->get();*/
+
+            $temp = $result_query[0];
+
+            $temp->valor = $item->acobrar;
+
+            $result[] = $temp;
+
+        }
+
+        Session::forget('suministro_to_facturar');
+
+        Session::put('suministro_to_facturar', $result);
+
+        return response()->json(['success' => true]);
     }
 
 

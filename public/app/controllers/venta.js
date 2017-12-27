@@ -60,7 +60,33 @@ $scope.cmb_estado_fact="A";
 
             for (var i = 0; i < longitud; i++) {
 
-                if (response[i].catalogoitem_cobroagua !== undefined) {
+                if (response[i].cont_catalogitem !== null) {
+
+                    var item0 = {
+                        productoObj:{
+                            title:response[i].cont_catalogitem.codigoproducto,
+                            originalObject:response[i].cont_catalogitem
+                        },
+                        cantidad: 1,
+                        precioU: response[i].valor,
+                        descuento: 0,
+                        iva: response[i].cont_catalogitem.porcentiva,
+                        ice: 0,
+                        total: response[i].valor,
+                        producto: response[i].cont_catalogitem.codigoproducto
+                    };
+
+                    $scope.items.push(item0);
+
+                }
+
+
+
+
+
+
+
+                /*if (response[i].catalogoitem_cobroagua !== undefined) {
 
                     console.log(response[i].catalogoitem_cobroagua !== undefined);
 
@@ -167,7 +193,7 @@ $scope.cmb_estado_fact="A";
 
                     }
 
-                }
+                }*/
 
             }
 

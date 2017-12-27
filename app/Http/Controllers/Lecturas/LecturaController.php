@@ -11,6 +11,7 @@ use App\Modelos\Contabilidad\Cont_RegistroCliente;
 use App\Modelos\Cuentas\CatalogoItemCobroAgua;
 use App\Modelos\Cuentas\CatalogoItemTarifaAguapotable;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Facturas\Factura;
 use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Servicios\ServicioAguaPotable;
@@ -441,9 +442,39 @@ class LecturaController extends Controller
 
         $cliente = Cliente::join('suministro', 'suministro.idcliente', '=', 'cliente.idcliente')
                             ->join('persona', 'cliente.idpersona', '=', 'persona.idpersona')
-                            ->select('persona.email', 'persona.razonsocial')
+                            ->select('persona.email', 'persona.razonsocial', 'cliente.idcliente')
                             ->where('suministro.idsuministro', '=', $request->input('numerosuministro'))
                             ->get();
+
+
+        foreach ($servicios as $item) {
+
+            if ($item['id'] != 0) {
+
+                $query = CobroCliente::where('idcatalogitem', $item['id'])
+                                    ->where('idcliente', $cliente[0]->idcliente)->get();
+
+                if (count($query) == 0) {
+
+                    $cobrocliente = new CobroCliente();
+                    $cobrocliente->idcatalogitem = $item['id'];
+                    $cobrocliente->idcliente = $cliente[0]->idcliente;
+                    $cobrocliente->valor = $item['valor'];
+
+                    $cobrocliente->save();
+
+                } else {
+
+                    $cobrocliente = CobroCliente::find($query[0]->idcobrocliente);
+                    $cobrocliente->valor = $cobrocliente->valor + $item['valor'];
+                    $cobrocliente->save();
+
+                }
+
+            }
+
+        }
+
 
         if ($cliente[0]->email != '' && $cliente[0]->email != null) {
             $correo_cliente = $cliente[0]->email;
