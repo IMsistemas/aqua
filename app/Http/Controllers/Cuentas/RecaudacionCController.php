@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class RecaudacionCController extends Controller
@@ -96,9 +97,11 @@ class RecaudacionCController extends Controller
 
         foreach ($data as $item) {
 
-            $result_query = CobroCliente::with([
+            $id = $item->idcatalogitem;
+
+            /*$result_query = CobroCliente::with([
                 'cliente.persona',
-                'cont_catalogitem' => function ($query) use ($item) {
+                'cont_catalogitem' => function ($query) use ($id) {
                     return $query->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
                         ->selectRaw("*")
                         ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
@@ -109,15 +112,14 @@ class RecaudacionCController extends Controller
                         ->selectRaw("( SELECT concepto FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as conceptoingreso")
                         ->selectRaw("( SELECT controlhaber FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as controlhaberingreso")
                         ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
-                        //->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
-                        ->whereRaw(" cont_catalogitem.idcatalogitem = " . $item->idcatalogitem);
+                        ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
+                        ->whereRaw("cont_catalogitem.idcatalogitem = " . $id);
                 }
             ])
-            ->get();
+            ->get();*/
 
-
-
-            /*$result_query = Cont_CatalogItem::join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
+            $result_query = Cont_CatalogItem::with('cobrocliente.cliente.persona')
+                ->join("sri_tipoimpuestoiva","sri_tipoimpuestoiva.idtipoimpuestoiva","=","cont_catalogitem.idtipoimpuestoiva")
                 //->join("sri_tipoimpuestoice","sri_tipoimpuestoice.idtipoimpuestoice","=","cont_catalogitem.idtipoimpuestoice")
                 ->selectRaw("*")
                 ->selectRaw("sri_tipoimpuestoiva.porcentaje as PorcentIva ")
@@ -130,16 +132,21 @@ class RecaudacionCController extends Controller
                 ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                 ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
                 //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
-                ->whereRaw(" cont_catalogitem.idcatalogitem = " . $item->idcatalogitem)
-                ->get();*/
+                ->whereRaw(" cont_catalogitem.idcatalogitem = " . $id)
+                ->get();
+
 
             $temp = $result_query[0];
+
+
 
             $temp->valor = $item->acobrar;
 
             $result[] = $temp;
 
         }
+
+
 
         Session::forget('suministro_to_facturar');
 

@@ -26,5 +26,9 @@ class Cont_CatalogItem extends Model
         return $this->belongsTo('App\Modelos\Contabilidad');
     }
 
+    public function cobrocliente(){
+        return $this->hasMany('App\Modelos\Cuentas\CobroCliente', 'idcatalogitem');
+    }
+
 
 }
