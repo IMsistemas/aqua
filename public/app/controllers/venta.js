@@ -37,7 +37,7 @@ $scope.cmb_estado_fact="A";
 
             console.log(response);
 
-            if (response[0].cliente !== undefined) {
+            /*if (response[0].cliente !== undefined) {
 
                 $scope.DICliente = response[0].cliente.persona.numdocidentific;
 
@@ -49,7 +49,9 @@ $scope.cmb_estado_fact="A";
 
                 $scope.DICliente = response[0].suministro.cliente.persona.numdocidentific;
 
-            }
+            }*/
+
+            $scope.DICliente = response[0].numdocidentific;
 
 
             $scope.BuscarCliente();
@@ -60,20 +62,20 @@ $scope.cmb_estado_fact="A";
 
             for (var i = 0; i < longitud; i++) {
 
-                if (response[i].cont_catalogitem !== null) {
+                if (response[i] !== null) {
 
                     var item0 = {
                         productoObj:{
-                            title:response[i].cont_catalogitem.codigoproducto,
-                            originalObject:response[i].cont_catalogitem
+                            title:response[i].codigoproducto,
+                            originalObject:response[i]
                         },
                         cantidad: 1,
                         precioU: response[i].valor,
                         descuento: 0,
-                        iva: response[i].cont_catalogitem.porcentiva,
+                        iva: response[i].porcentiva,
                         ice: 0,
                         total: response[i].valor,
-                        producto: response[i].cont_catalogitem.codigoproducto
+                        producto: response[i].codigoproducto
                     };
 
                     $scope.items.push(item0);
