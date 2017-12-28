@@ -197,9 +197,6 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         });
 
-        console.log(debe);
-        console.log(haber);
-
         if (debe !== haber) {
 
             $scope.message_error = 'No se puede realizar el Cierre de Caja debido a que no coinciden loas valores...';
