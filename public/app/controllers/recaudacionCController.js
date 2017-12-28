@@ -125,6 +125,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
                 });
 
+                $scope.totalacerrar = $scope.totalacerrar.toFixed(4);
+
                 $('#listCuentasCerrar').modal('show');
 
             } else {
@@ -186,68 +188,89 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.ProcesarDatosAsientoContable=function () {
 
-        var f = new Date();
+        var debe = 0;
+        var haber = parseFloat($scope.totalacerrar);
 
-        var aux_fecha= f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate();
+        $scope.RegistroC.forEach(function (element) {
 
-        var Transaccion={
-            fecha: aux_fecha,
-            idtipotransaccion: 3,
-            numcomprobante: 0,
-            descripcion: 'CIERRE CAJA: ' + f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate()
-        };
+            debe += parseFloat(element.Debe);
 
+        });
 
-        var registros = $scope.RegistroC;
+        console.log(debe);
+        console.log(haber);
 
-        for (var i = 0; i < $scope.listCuentas.length; i++){
+        if (debe !== haber) {
 
-            var item={
-                idplancuenta: $scope.listCuentas[i].idplancuenta,
-                aux_jerarquia:$scope.listCuentas[i].jerarquia,
-                concepto:$scope.listCuentas[i].concepto,
-                controlhaber:$scope.listCuentas[i].controlhaber,
-                tipocuenta:$scope.listCuentas[i].tipocuenta,
-                Debe:0,
-                Haber:$scope.listCuentas[i].valor,
-                Descipcion:""
+            $scope.message_error = 'No se puede realizar el Cierre de Caja debido a que no coinciden loas valores...';
+            $('#modalMessageError').modal('show');
+
+        } else {
+
+            var f = new Date();
+
+            var aux_fecha= f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate();
+
+            var Transaccion={
+                fecha: aux_fecha,
+                idtipotransaccion: 3,
+                numcomprobante: 0,
+                descripcion: 'CIERRE CAJA: ' + f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate()
             };
-            registros.push(item);
+
+
+            var registros = $scope.RegistroC;
+
+            for (var i = 0; i < $scope.listCuentas.length; i++){
+
+                var item={
+                    idplancuenta: $scope.listCuentas[i].idplancuenta,
+                    aux_jerarquia:$scope.listCuentas[i].jerarquia,
+                    concepto:$scope.listCuentas[i].concepto,
+                    controlhaber:$scope.listCuentas[i].controlhaber,
+                    tipocuenta:$scope.listCuentas[i].tipocuenta,
+                    Debe:0,
+                    Haber:$scope.listCuentas[i].valor,
+                    Descipcion:""
+                };
+                registros.push(item);
+
+            }
+
+            var Contabilidad={
+                transaccion: Transaccion,
+                registro: registros
+            };
+            $http.get(API_URL + 'estadosfinacieros/asc/'+JSON.stringify(Contabilidad))
+                .success(function(response){
+                    if(!isNaN(response)){
+
+                        $http.delete(API_URL + 'recaudacionC/0' ).success(function (response) {
+
+                            $('#formCobros').modal('hide');
+
+                            if (response.success === true) {
+
+                                $('#listCuentasCerrar').modal('hide');
+
+                                $scope.message = 'Se realizo correctamente el Cierre de Caja...';
+                                $('#modalMessage').modal('show');
+
+                            }
+                            else {
+                                $scope.message_error = 'Ha ocurrido un error...';
+                                $('#modalMessageError').modal('show');
+                            }
+                        });
+
+                    }else{
+                        $scope.message_error = 'Ha ocurrido un error...';
+                        $('#modalMessageError').modal('show');
+                    }
+
+                });
 
         }
-
-        var Contabilidad={
-            transaccion: Transaccion,
-            registro: registros
-        };
-        $http.get(API_URL + 'estadosfinacieros/asc/'+JSON.stringify(Contabilidad))
-            .success(function(response){
-                if(!isNaN(response)){
-
-                    $http.delete(API_URL + 'recaudacionC/0' ).success(function (response) {
-
-                        $('#formCobros').modal('hide');
-
-                        if (response.success === true) {
-
-                            $('#listCuentasCerrar').modal('hide');
-
-                            $scope.message = 'Se realizo correctamente el Cierre de Caja...';
-                            $('#modalMessage').modal('show');
-
-                        }
-                        else {
-                            $scope.message_error = 'Ha ocurrido un error...';
-                            $('#modalMessageError').modal('show');
-                        }
-                    });
-
-                }else{
-                    $scope.message_error = 'Ha ocurrido un error...';
-                    $('#modalMessageError').modal('show');
-                }
-
-            });
 
     };
 

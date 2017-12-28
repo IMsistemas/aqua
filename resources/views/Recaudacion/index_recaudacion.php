@@ -558,10 +558,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="2">
+                                        <th colspan="2" class="text-right">
                                             TOTAL
                                         </th>
-                                        <th>{{totalacerrar}}</th>
+                                        <th class="text-right">$ {{totalacerrar}}</th>
                                     </tr>
                                 </tfoot>
                             </table>
