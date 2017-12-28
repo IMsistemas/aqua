@@ -112,33 +112,28 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'recaudacionC/getCuentasCerrar').success(function(response){
 
-            $scope.listCuentas = response;
 
-            $scope.totalacerrar = 0;
+            if (response.length !== 0) {
 
-            response.forEach(function (element) {
+                $scope.listCuentas = response;
 
-                $scope.totalacerrar += parseFloat(element.valor);
+                $scope.totalacerrar = 0;
 
-            });
+                response.forEach(function (element) {
 
-            /*var longitud = response.length;
+                    $scope.totalacerrar += parseFloat(element.valor);
 
-            for (var i = 0; i < longitud; i++) {
+                });
 
-                var item = {
-                    idcatalogitem: response[i].idcatalogitem,
-                    nombreproducto: response[i].nombreproducto,
-                    valor: response[i].valor,
-                    idcliente: response[i].idcliente,
-                    acobrar: 0
-                };
+                $('#listCuentasCerrar').modal('show');
 
-                $scope.listItemsCobrar.push(item);
+            } else {
 
-            }*/
+                $scope.message_error = 'No existe transaccion alguna...';
+                $('#modalMessageError').modal('show');
 
-            $('#listCuentasCerrar').modal('show');
+            }
+
 
         });
 
