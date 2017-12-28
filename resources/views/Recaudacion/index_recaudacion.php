@@ -491,12 +491,6 @@
                 </div>
                 <div class="modal-body">
 
-                    <!--<div class="col-sm-1 col-xs-2">
-                        <button type="button" class="btn btn-primary" ng-click="showModalListCobro2()" title="Cobros">
-                            Cobros <span class="glyphicon glyphicon-usd" aria-hidden="true">
-                        </button>
-                    </div>-->
-
                     <table class="table table-responsive table-striped table-hover table-bordered">
                         <thead class="bg-primary">
                             <tr>
@@ -511,12 +505,15 @@
                                 <td class="text-left">{{item.nombreproducto}}</td>
                                 <td class="text-right">$ {{item.valor}}</td>
                                 <td>
-                                    <input type="text" class="form-control text-right" ng-model="item.acobrar">
+                                    <input type="text" class="form-control text-right" ng-model="item.acobrar"
+                                           ng-keypress="onlyNumber($event, undefined, undefined)"
+                                            ng-blur="verifiedCobro(item)">
                                 </td>
 
                             </tr>
                         </tbody>
                     </table>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">

@@ -251,6 +251,46 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.verifiedCobro = function (item) {
+
+        if (parseFloat(item.acobrar) > parseFloat(item.valor)) {
+
+            $scope.message_error = 'No debe situar un valor superior (' + item.acobrar + ') al valor total...';
+            $('#modalMessageError').modal('show');
+
+            item.acobrar = 0;
+
+        } else {
+
+            item.acobrar = parseFloat(item.acobrar).toFixed(2);
+
+        }
+
+    };
+
+    $scope.onlyNumber = function ($event, length, field) {
+
+        if (length != undefined) {
+            var valor = $('#' + field).val();
+            if (valor.length == length) $event.preventDefault();
+        }
+
+        var k = $event.keyCode;
+        if (k == 8 || k == 0) return true;
+        var patron = /\d/;
+        var n = String.fromCharCode(k);
+
+        if (n == ".") {
+            return true;
+        } else {
+
+            if(patron.test(n) == false){
+                $event.preventDefault();
+            }
+            else return true;
+        }
+    };
+
 //-------------------------------------------------------------------------------------------------------------------
 
 
