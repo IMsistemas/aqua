@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Facturacionventa;
 
 use App\Modelos\Bodegas\Bodega;
+use App\Modelos\Cuentas\CobroCierreCaja;
 use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\SRI\SRI_TipoComprobante;
@@ -326,6 +327,7 @@ class DocumentoVenta extends Controller
 
             $aux_itemventa=(array) $filtro->DataItemsVenta;
             //$itemventa=Cont_ItemVenta::create($aux_itemventa);
+
             for($x=0;$x<count($filtro->DataItemsVenta);$x++){
 
                 $cobrocliente = CobroCliente::where('idcatalogitem', $filtro->DataItemsVenta[$x]->idcatalogitem)
@@ -336,6 +338,32 @@ class DocumentoVenta extends Controller
                 $cobrocliente->valor = $cobrocliente->valor - $filtro->DataItemsVenta[$x]->preciototal;
 
                 $cobrocliente->save();
+
+
+                $catalogitem = Cont_CatalogItem::find($filtro->DataItemsVenta[$x]->idcatalogitem);
+
+
+                $cobrocierrecaja = CobroCierreCaja::where('idplancuenta', $catalogitem->idplancuenta)->get();
+
+                if (count($cobrocierrecaja) == 0) {
+
+                    $o = new CobroCierreCaja();
+
+                    $o->idplancuenta = $catalogitem->idplancuenta;
+                    $o->valor = $filtro->DataItemsVenta[$x]->preciototal;
+
+                    $o->save();
+
+                } else {
+
+                    $o = CobroCierreCaja::find($cobrocierrecaja[0]->idcobrocierrecaja);
+
+                    $o->idplancuenta = $catalogitem->idplancuenta;
+                    $o->valor = $o->valor + $filtro->DataItemsVenta[$x]->preciototal;
+
+                    $o->save();
+
+                }
 
             }
 
