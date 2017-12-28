@@ -228,9 +228,28 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         $http.get(API_URL + 'estadosfinacieros/asc/'+JSON.stringify(Contabilidad))
             .success(function(response){
                 if(!isNaN(response)){
-                    alert('SIIIIIII');
+
+                    $http.delete(API_URL + 'recaudacionC/0' ).success(function (response) {
+
+                        $('#formCobros').modal('hide');
+
+                        if (response.success === true) {
+
+                            $('#listCuentasCerrar').modal('hide');
+
+                            $scope.message = 'Se realizo correctamente el Cierre de Caja...';
+                            $('#modalMessage').modal('show');
+
+                        }
+                        else {
+                            $scope.message_error = 'Ha ocurrido un error...';
+                            $('#modalMessageError').modal('show');
+                        }
+                    });
+
                 }else{
-                    alert('NOOOOOOOO');
+                    $scope.message_error = 'Ha ocurrido un error...';
+                    $('#modalMessageError').modal('show');
                 }
 
             });

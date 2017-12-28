@@ -545,9 +545,9 @@
                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                 <thead class="bg-primary">
                                     <tr>
-                                        <th style="width: 10%;">CODIGO</th>
+                                        <th style="width: 15%;">CODIGO</th>
                                         <th>CONCEPTO</th>
-                                        <th style="width: 11%;">TOTAL</th>
+                                        <th style="width: 20%;">TOTAL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -572,10 +572,8 @@
                         </div>
 
                         <div class="col-xs-6">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <button ng-disabled="EstadoSave=='M'"  ng-click="AddIntemCotable()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
+                            <div class="col-xs-12">
+                                <button ng-disabled="EstadoSave=='M'"  ng-click="AddIntemCotable()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
                             </div>
 
                             <div class="col-xs-12">

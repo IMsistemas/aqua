@@ -408,6 +408,13 @@ class RecaudacionCController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $result = DB::table('cobrocierrecaja')->delete();
+
+        if ($result){
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }
