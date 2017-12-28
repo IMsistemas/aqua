@@ -38,9 +38,19 @@
                 </button>
             </div>-->
 
-            <button type="button" class="btn btn-primary" id="btn-generate" ng-click="generate()" >
-                GENERAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-            </button>
+            <div class="btn-group" role="group" aria-label="...">
+
+                <button type="button" class="btn btn-primary" id="btn-generate" ng-click="generate()" >
+                    GENERAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </button>
+
+                <button type="button" class="btn btn-warning" id="btn-generate" ng-click="showCierreCaja()" >
+                    CIERRE <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                </button>
+
+            </div>
+
+
 
         </div>
     </div>
@@ -465,6 +475,13 @@
 
 
 
+
+
+
+
+
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="modalCobrosItems">
         <div class="modal-dialog modal-lg" role="document"  style="">
             <div class="modal-content" style="height: 90%;">
@@ -513,6 +530,154 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="listCuentasCerrar" style="">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Listado de Cuentas a Cerrar </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-xs-6">
+
+                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                    <tr>
+                                        <th style="width: 10%;">CODIGO</th>
+                                        <th>CONCEPTO</th>
+                                        <th style="width: 11%;">TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in listCuentas" ng-cloak">
+
+                                        <td class="text-center">{{item.jerarquia}}</td>
+                                        <td>{{item.concepto}}</td>
+                                        <td class="text-right">$ {{item.valor}}</td>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="2">
+                                            TOTAL
+                                        </th>
+                                        <th>{{totalacerrar}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button ng-disabled="EstadoSave=='M'"  ng-click="AddIntemCotable()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                    <tr class="bg-primary">
+                                        <th></th>
+                                        <th></th>
+                                        <th>CUENTA</th>
+                                        <th>VALOR</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="registro in RegistroC">
+                                        <td>
+                                            <button ng-disabled="EstadoSave=='M'"  class="btn btn-danger" ng-click="BorrarFilaAsientoContable(registro);"><i class="glyphicon glyphicon-trash"></i></button>
+                                        </td>
+                                        <td>
+                                            <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.aux_jerarquia" readonly>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.idplancuenta">
+                                                <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.tipocuenta">
+                                                <input type="hidden" class="form-control datepicker  input-sm"  ng-model="registro.controlhaber">
+                                                <input type="type" class="form-control datepicker  input-sm"  ng-model="registro.concepto" readonly>
+                                                <span ng-disabled="EstadoSave=='M'" ng-click="BuscarCuentaContable(registro);" class="btn btn-info input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input ng-disabled="EstadoSave=='M'" type="type" class="form-control datepicker  input-sm"  ng-model="registro.Debe" ng-keyup="SumarDebeHaber();">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-ok" ng-click="ProcesarDatosAsientoContable()">
+                        Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="PlanContable" style="z-index: 5000;" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-primary" id="titulomsm">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Plan de cuentas contables</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group  has-feedback">
+                                <input type="text" class="form-control" id="" ng-model="FiltraCuenta" placeholder="Buscar" >
+                                <span class="glyphicon glyphicon-search form-control-feedback" ></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-bordered table-condensed">
+                                <thead>
+                                <tr class="btn-primary">
+                                    <th></th>
+                                    <th>Descripción</th>
+                                    <th>Codigo </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="cuenta in aux_plancuentas | filter:FiltraCuenta">
+                                    <td>{{cuenta.aux_jerarquia}}</td>
+                                    <td>{{cuenta.concepto}}</td>
+                                    <td>{{cuenta.codigosri}}</td>
+                                    <td>
+                                        <input ng-show="cuenta.madreohija=='1' " ng-hide="cuenta.madreohija!='1' " type="checkbox" name="" ng-click="AsignarCuentaContable(cuenta);">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar <i class="glyphicon glyphicon glyphicon-ban-circle"></i></button>
+                    <button type="button" class="btn btn-primary" ng-click="AsignarCuentaContable();" >Aceptar <i class="glyphicon glyphicon glyphicon-ok"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>

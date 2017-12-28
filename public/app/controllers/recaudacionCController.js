@@ -13,6 +13,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.fecha_i = '';
 
+    $scope.RegistroC=[];
+
 
     $('#modalFactura').on('hidden.bs.modal', function () {
         $scope.initLoad(1);
@@ -106,12 +108,136 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     };
 
+    $scope.showCierreCaja = function () {
+
+        $http.get(API_URL + 'recaudacionC/getCuentasCerrar').success(function(response){
+
+            $scope.listCuentas = response;
+
+            $scope.totalacerrar = 0;
+
+            response.forEach(function (element) {
+
+                $scope.totalacerrar += parseFloat(element.valor);
+
+            });
+
+            /*var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                var item = {
+                    idcatalogitem: response[i].idcatalogitem,
+                    nombreproducto: response[i].nombreproducto,
+                    valor: response[i].valor,
+                    idcliente: response[i].idcliente,
+                    acobrar: 0
+                };
+
+                $scope.listItemsCobrar.push(item);
+
+            }*/
+
+            $('#listCuentasCerrar').modal('show');
+
+        });
 
 
 
+    };
+
+    $scope.AddIntemCotable=function(){
+        var item={
+            idplancuenta:"",
+            aux_jerarquia:"",
+            concepto:"",
+            controlhaber:"",
+            tipocuenta:'',
+            Debe:0,
+            Haber:0,
+            Descipcion:""
+        };
+        $scope.RegistroC.push(item);
+    };
+
+    $scope.BorrarFilaAsientoContable=function(item){
+        var posicion= $scope.RegistroC.indexOf(item);
+        $scope.RegistroC.splice(posicion,1);
+        //$scope.SumarDebeHaber();
+    };
 
 
+    $scope.aux_plancuentas=[];
+    $scope.aux_cuentabuscar={};
+    $scope.BuscarCuentaContable=function(registro){
+        $scope.aux_cuentabuscar=registro;
+        $("#PlanContable").modal("show");
+        $http.get(API_URL + 'estadosfinacieros/plancontabletotal')
+            .success(function(response){
+                $scope.aux_plancuentas=response;
+            });
+    };
 
+
+    $scope.AsignarCuentaContable=function(cuenta){
+        $scope.aux_cuentabuscar.idplancuenta=cuenta.idplancuenta;
+        $scope.aux_cuentabuscar.aux_jerarquia=cuenta.aux_jerarquia;
+        $scope.aux_cuentabuscar.concepto=cuenta.concepto;
+        $scope.aux_cuentabuscar.controlhaber=cuenta.controlhaber;
+        $scope.aux_cuentabuscar.tipocuenta=cuenta.tipocuenta;
+        $("#PlanContable").modal("hide");
+        $scope.FiltraCuenta="";
+    };
+
+    $scope.ProcesarDatosAsientoContable=function () {
+
+        var f = new Date();
+
+        var aux_fecha= f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate();
+
+        var Transaccion={
+            fecha: aux_fecha,
+            idtipotransaccion: 3,
+            numcomprobante: 0,
+            descripcion: 'CIERRE CAJA: ' + f.getFullYear() + '-' + (f.getMonth() + 1) + '-' + f.getDate()
+        };
+
+
+        var registros = $scope.RegistroC;
+
+        for (var i = 0; i < $scope.listCuentas.length; i++){
+
+            var item={
+                idplancuenta: $scope.listCuentas[i].idplancuenta,
+                aux_jerarquia:$scope.listCuentas[i].jerarquia,
+                concepto:$scope.listCuentas[i].concepto,
+                controlhaber:$scope.listCuentas[i].controlhaber,
+                tipocuenta:$scope.listCuentas[i].tipocuenta,
+                Debe:0,
+                Haber:$scope.listCuentas[i].valor,
+                Descipcion:""
+            };
+            registros.push(item);
+
+        }
+
+        var Contabilidad={
+            transaccion: Transaccion,
+            registro: registros
+        };
+        $http.get(API_URL + 'estadosfinacieros/asc/'+JSON.stringify(Contabilidad))
+            .success(function(response){
+                if(!isNaN(response)){
+                    alert('SIIIIIII');
+                }else{
+                    alert('NOOOOOOOO');
+                }
+
+            });
+
+    };
+
+//-------------------------------------------------------------------------------------------------------------------
 
 
     $scope.getTransacciones = function (idcliente) {

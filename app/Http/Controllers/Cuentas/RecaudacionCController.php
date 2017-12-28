@@ -6,6 +6,7 @@ use App\Modelos\Clientes\Cliente;
 use App\Modelos\Contabilidad\Cont_CatalogItem;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Cuentas\CobroAgua;
+use App\Modelos\Cuentas\CobroCierreCaja;
 use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
@@ -174,7 +175,11 @@ class RecaudacionCController extends Controller
     }
 
 
-
+    public function getCuentasCerrar()
+    {
+        return CobroCierreCaja::join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cobrocierrecaja.idplancuenta')
+                                ->get();
+    }
 
 
 
