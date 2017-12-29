@@ -1,5 +1,5 @@
 
-<div ng-controller="NomencladorController" ng-init="CargadataProvincia();">
+<div class="container" ng-controller="NomencladorController" ng-init="CargadataProvincia();">
 
     <div class="col-xs-12">
 

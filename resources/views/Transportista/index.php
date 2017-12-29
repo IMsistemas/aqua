@@ -1,5 +1,5 @@
 
-<div ng-controller="transportistaController">
+<div class="container" ng-controller="transportistaController">
 
     <div class="col-xs-12">
 

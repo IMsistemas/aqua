@@ -1,5 +1,5 @@
 
-<div ng-controller="barrioController">
+<div class="container" ng-controller="barrioController">
 
     <div class="col-xs-12">
 

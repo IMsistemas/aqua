@@ -11,7 +11,7 @@
     }
 </style>
 
-<div class="col-xs-12" ng-controller="rolPagoController" ng-init="initLoad()">
+<div class="container" ng-controller="rolPagoController" ng-init="initLoad()">
 
     <div class="col-xs-12">
         <div class="col-xs-6">

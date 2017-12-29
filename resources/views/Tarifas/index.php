@@ -1,6 +1,6 @@
 
 
-<div ng-controller="tarifaController">
+<div class="container" ng-controller="tarifaController">
 
     <div class="col-xs-12">
 
@@ -30,7 +30,7 @@
                 <thead class="bg-primary">
                 <tr>
                     <th>NOMBRE TARIFA</th>
-                    <th style="width: 25%;">ACCIONES</th>
+                    <th style="width: 35%;">ACCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
