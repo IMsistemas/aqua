@@ -374,7 +374,7 @@ class DocumentoVenta extends Controller
                 $cobrohistorial->idcatalogitem = $filtro->DataItemsVenta[$x]->idcatalogitem;
                 $cobrohistorial->idcliente = $filtro->DataVenta->idcliente;
                 $cobrohistorial->fecha = date('Y-m-d');
-                $cobrohistorial->valor = $totaldescontado;
+                $cobrohistorial->valor = $filtro->DataItemsVenta[$x]->preciototal;
                 $cobrohistorial->iddocumentoventa = $aux_addVenta->last()->iddocumentoventa;
 
                 $cobrohistorial->save();
