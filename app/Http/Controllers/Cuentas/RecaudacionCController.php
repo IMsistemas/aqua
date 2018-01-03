@@ -8,6 +8,7 @@ use App\Modelos\Contabilidad\Cont_DocumentoVenta;
 use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\CobroCierreCaja;
 use App\Modelos\Cuentas\CobroCliente;
+use App\Modelos\Cuentas\CobroHistorial;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
@@ -87,6 +88,12 @@ class RecaudacionCController extends Controller
     {
         return CobroCliente::join('cont_catalogitem', 'cont_catalogitem.idcatalogitem', '=', 'cobrocliente.idcatalogitem')
                 ->where('idcliente', $idcliente)->get();
+    }
+
+    public function getRegistroCobro($idcliente)
+    {
+        return CobroHistorial::with('cont_catalogitem')
+                                ->where('idcliente', $idcliente)->get();
     }
 
 

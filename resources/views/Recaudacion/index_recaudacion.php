@@ -74,7 +74,7 @@
                 <td>{{item.fechaingreso | formatDate}}</td>
                 <td>{{item.lastnamepersona}} {{item.namepersona}}</td>
                 <td class="text-right">$ {{item.valorcobrar}}</td>
-                <td  class="text-center">
+                <td class="text-center">
 
                     <!--<button type="button" class="btn btn-primary btn-sm" ng-click="getTransacciones(item.idcliente)">
                         <i class="fa fa-lg fa-cogs" aria-hidden="true" title=""></i>
@@ -84,9 +84,20 @@
                         <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
                     </button>-->
 
-                    <button type="button" class="btn btn-primary" ng-click="getItemsCobro(item.idcliente)">
-                        <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
-                    </button>
+
+
+
+                    <div class="btn-group" role="group" aria-label="...">
+
+                        <button type="button" class="btn btn-primary" ng-click="getItemsCobro(item.idcliente)">
+                            <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
+                        </button>
+
+                        <button type="button" class="btn btn-info" ng-click="getRegistroCobro(item.idcliente)" >
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        </button>
+
+                    </div>
 
                 </td>
             </tr>
@@ -620,6 +631,45 @@
                     <button type="button" class="btn btn-primary" id="btn-ok" ng-click="ProcesarDatosAsientoContable()">
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalRegistroCobros">
+        <div class="modal-dialog" role="document"  style="">
+            <div class="modal-content" style="height: 90%;">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registro</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-responsive table-striped table-hover table-bordered">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>FACTURA</th>
+                                <th style="width: 20%;">FECHA</th>
+                                <th style="width: 20%;">VALOR</th>
+                                <th style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="e in listRegistro track by $index" ng-cloak>
+
+                                <td class="text-left"></td>
+                                <td class="text-center"></td>
+                                <td class="text-right">$ {{e.valor}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info" ng-click="" >
+                                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.listSelected = [];
     $scope.listItemsCobrar = [];
+    $scope.listRegistro = [];
     $scope.idcliente = null;
 
     $scope.pago_anular = '';
@@ -79,6 +80,38 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
 
     };
+
+
+    $scope.getRegistroCobro = function (idcliente) {
+
+        $scope.idcliente = idcliente;
+
+        $http.get(API_URL + 'recaudacionC/getRegistroCobro/' + idcliente).success(function(response){
+
+            $scope.listRegistro = response;
+
+            /*var longitud = response.length;
+
+            for (var i = 0; i < longitud; i++) {
+
+                var item = {
+                    idcatalogitem: response[i].idcatalogitem,
+                    nombreproducto: response[i].nombreproducto,
+                    valor: response[i].valor,
+                    idcliente: response[i].idcliente,
+                    acobrar: 0
+                };
+
+                $scope.listItemsCobrar.push(item);
+
+            }*/
+
+            $('#modalRegistroCobros').modal('show');
+
+        });
+
+    };
+
 
     $scope.createFacturaItems = function () {
 
