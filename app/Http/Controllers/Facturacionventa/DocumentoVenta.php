@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Facturacionventa;
 use App\Modelos\Bodegas\Bodega;
 use App\Modelos\Cuentas\CobroCierreCaja;
 use App\Modelos\Cuentas\CobroCliente;
+use App\Modelos\Cuentas\CobroHistorial;
 use App\Modelos\Nomina\Departamento;
 use App\Modelos\SRI\SRI_TipoComprobante;
 use App\Modelos\Suministros\Suministro;
@@ -335,7 +336,9 @@ class DocumentoVenta extends Controller
 
                 $cobrocliente = CobroCliente::find($cobrocliente[0]->idcobrocliente);
 
-                $cobrocliente->valor = $cobrocliente->valor - $filtro->DataItemsVenta[$x]->preciototal;
+                $totaldescontado = $cobrocliente->valor - $filtro->DataItemsVenta[$x]->preciototal;
+
+                $cobrocliente->valor = $totaldescontado;
 
                 $cobrocliente->save();
 
@@ -364,6 +367,17 @@ class DocumentoVenta extends Controller
                     $o->save();
 
                 }
+
+
+                $cobrohistorial = new CobroHistorial();
+
+                $cobrohistorial->idcatalogitem = $filtro->DataItemsVenta[$x]->idcatalogitem;
+                $cobrohistorial->idcliente = $filtro->DataVenta->idcliente;
+                $cobrohistorial->fecha = date('Y-m-d');
+                $cobrohistorial->valor = $totaldescontado;
+                $cobrohistorial->iddocumentoventa = $aux_addVenta->last()->iddocumentoventa;
+
+                $cobrohistorial->save();
 
             }
 
