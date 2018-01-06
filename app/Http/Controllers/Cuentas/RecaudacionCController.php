@@ -330,7 +330,44 @@ class RecaudacionCController extends Controller
 
 
 
+    public function generate()
+    {
 
+        $suministro = Suministro::orderBy('idsuministro', 'asc')->get();
+
+        if (count($suministro) > 0) {
+
+            foreach ($suministro as $item) {
+
+                $objectCobro = CobroAgua::where('idsuministro', $item->idsuministro)
+                                ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . date('m'))
+                                ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . date('Y'))
+                                ->count();
+
+                if ($objectCobro == 0) {
+
+                    $cobro = new CobroAgua();
+                    $cobro->fechacobro = date('Y-m-d');
+                    $cobro->idsuministro = $item->idsuministro;
+                    $cobro->estadopagado = false;
+
+
+                    if ($cobro->save() == false) {
+                        return response()->json( [ 'success' => false ] );
+                    }
+                }
+
+            }
+
+            return response()->json( [ 'success' => true ] );
+
+        } else {
+
+            return response()->json( [ 'success' => true ] );
+
+        }
+
+    }
 
 
 

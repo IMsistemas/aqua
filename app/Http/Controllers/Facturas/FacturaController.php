@@ -174,68 +174,86 @@ class FacturaController extends Controller
 
     public function generate()
     {
-        $cliente = Cliente::all();
+
+        $suministro = Suministro::orderBy('idsuministro', 'asc')->get();
+
+        if (count($suministro) > 0) {
+
+            foreach ($suministro as $item) {
+
+                $objectCobro = CobroAgua::where('idsuministro', $item->idsuministro)
+                    ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . date('m'))
+                    ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . date('Y'))
+                    ->count();
+
+                if ($objectCobro == 0) {
+
+                    $cobro = new CobroAgua();
+                    $cobro->fechacobro = date('Y-m-d');
+                    $cobro->idsuministro = $item->idsuministro;
+                    $cobro->estadopagado = false;
+
+
+                    if ($cobro->save() == false) {
+                        return response()->json( [ 'success' => false ] );
+                    }
+                }
+
+            }
+
+            return response()->json( [ 'success' => true ] );
+
+        } else {
+
+            return response()->json( [ 'success' => true ] );
+
+        }
+
+
+
+
+
+
+        /*$cliente = Cliente::all();
 
         if (count($cliente) > 0) {
+
             foreach ($cliente as $item) {
+
                 $cliente_suministro = Suministro::where('idcliente', $item->idcliente)->get();
+
                 if (count($cliente_suministro) > 0) {
 
                     foreach ($cliente_suministro as $item0) {
+
                         $objectCobro = CobroAgua::where('idsuministro', $item0->idsuministro)
                                                     ->whereRaw('EXTRACT( MONTH FROM fechacobro) = ' . date('m'))
                                                     ->whereRaw('EXTRACT( YEAR FROM fechacobro) = ' . date('Y'))
                                                     ->count();
                         if ($objectCobro == 0) {
+
                             $cobro = new CobroAgua();
                             $cobro->fechacobro = date('Y-m-d');
                             $cobro->idsuministro = $item0->idsuministro;
                             $cobro->estadopagado = false;
 
 
-                            if ($cobro->save()) {
-                                return response()->json( [ 'success' => true ] );
-                            } else {
+                            if ($cobro->save() == false) {
                                 return response()->json( [ 'success' => false ] );
                             }
-
-                            /*$factura = new Factura();
-                            $factura->fechafactura = date('Y-m-d');
-                            $factura->idcobroagua = $cobro->idcobroagua;
-                            $factura->codigocliente = $item->codigocliente;
-                            $factura->estapagado = false;
-                            $factura->save();
-
-                            $cobro2 = CobroAgua::find($cobro->idcobroagua);
-                            $cobro2->idfactura = $factura->idfactura;
-                            $cobro2->save();*/
                         }
+
                     }
 
                 } else {
 
                     return response()->json( [ 'success' => true ] );
 
-
-                    /*$partialSQL = 'codigocliente NOT IN (SELECT codigocliente FROM facturacobro WHERE EXTRACT( MONTH FROM fechafactura ) = ' . date('m');
-                    $partialSQL .= ' AND EXTRACT( YEAR FROM fechafactura ) = ' .  date('Y') . ' )';
-
-                    $cliente_servicio = ServiciosCliente::where('codigocliente', $item->codigocliente)
-                                                        ->whereRaw( $partialSQL )
-                                                        ->get();
-                    if ( count($cliente_servicio) > 0 ) {
-                        $factura = new Factura();
-                        $factura->fechafactura = date('Y-m-d');
-                        $factura->codigocliente = $item->codigocliente;
-                        $factura->estapagado = false;
-                        $factura->save();
-                    }*/
-
                 }
             }
         }
 
-        return response()->json( [ 'success' => true ] );
+        return response()->json( [ 'success' => true ] );*/
 
     }
 

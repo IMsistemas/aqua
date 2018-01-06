@@ -61,35 +61,52 @@ class LecturaController extends Controller
      */
     public function getInfo($filter)
     {
+
         $filter = json_decode($filter);
 
-        $count = CobroAgua::where('idsuministro', $filter->id)
-                            ->whereRaw('EXTRACT( MONTH FROM fechacobro) =' . $filter->month)
-                            ->whereRaw('EXTRACT( YEAR FROM fechacobro) =' . $filter->year)
-                            ->get();
+        $search_s = Suministro::where('numconexion', $filter->id)->get();
 
-        if (count($count) == 0) {
+        if (count($search_s) == 0) {
+
             $result_array = ['success' => false, 'flag' => 'no_exists'];
+
         } else {
-            if ($count[0]->idlectura == null) {
 
-                $suministro = Suministro::with('cliente.persona', 'tarifaaguapotable', 'calle.barrio')
-                    ->where('suministro.idsuministro', $filter->id)
-                    ->get();
+            $count = CobroAgua::where('idsuministro', $search_s[0]->idsuministro)
+                                ->whereRaw('EXTRACT( MONTH FROM fechacobro) =' . $filter->month)
+                                ->whereRaw('EXTRACT( YEAR FROM fechacobro) =' . $filter->year)
+                                ->get();
 
-                $lectura = Lectura::where('idsuministro', $filter->id)
-                    ->orderBy('idlectura', 'desc')
-                    ->take(1)
-                    ->get();
+            if (count($count) == 0) {
 
+                $result_array = ['success' => false, 'flag' => 'no_exists'];
 
-
-
-                $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
             } else {
-                $result_array = ['success' => false, 'flag' => 'exists'];
+
+                if ($count[0]->idlectura == null) {
+
+                    $suministro = Suministro::with('cliente.persona', 'tarifaaguapotable', 'calle.barrio')
+                                                ->where('suministro.idsuministro', $search_s[0]->idsuministro)
+                                                ->get();
+
+                    $lectura = Lectura::where('idsuministro', $search_s[0]->idsuministro)
+                                                ->orderBy('idlectura', 'desc')
+                                                ->take(1)
+                                                ->get();
+
+                    $result_array = ['success' => true, 'suministro' => $suministro, 'lectura' => $lectura];
+
+                } else {
+
+                    $result_array = ['success' => false, 'flag' => 'exists'];
+
+                }
             }
+
         }
+
+
+
 
         return response()->json($result_array);
     }
