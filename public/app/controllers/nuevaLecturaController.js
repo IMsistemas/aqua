@@ -23,6 +23,10 @@
         $scope.excedente = 0;
         $scope.valormesesatrasados = 0;
 
+
+        $scope.suministro_selected = null;
+
+
         $scope.Cliente = 0;
         $scope.Configuracion = '';
         $scope.ConfiguracionServicios = '';
@@ -136,6 +140,12 @@
                         $scope.message = 'No existe registro del Número de Suministro Insertado...';
                         $('#modalMessage').modal('show');
                     } else {
+
+
+                        $scope.suministro_selected = response.suministro[0];
+
+                        console.log($scope.suministro_selected);
+
 
                         $http.get(API_URL + 'nuevaLectura/getInfoClienteByID/'+ response.suministro[0].cliente.idcliente)
                             .success(function(response){
@@ -489,7 +499,7 @@
                 fechalectura: convertDatetoDB($scope.t_fecha_ing),
                 anno: $scope.s_anno,
                 mes: $scope.s_mes,
-                numerosuministro: $scope.t_no_suministro,
+                numerosuministro: $scope.suministro_selected.idsuministro,
                 lecturaanterior: $scope.lectura_anterior,
                 lecturaactual: $scope.lectura_actual,
                 consumo: $scope.consumo,
