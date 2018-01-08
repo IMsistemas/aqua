@@ -657,9 +657,9 @@
                         <tbody>
                             <tr ng-repeat="e in listRegistro track by $index" ng-cloak>
 
-                                <td class="text-left"></td>
-                                <td class="text-center"></td>
-                                <td class="text-right">$ {{e.valor}}</td>
+                                <td class="text-left">{{e.numdocumentoventa}}</td>
+                                <td class="text-center">{{e.fecharegistroventa}}</td>
+                                <td class="text-right">$ {{e.valortotalventa}}</td>
                                 <td>
                                     <button type="button" class="btn btn-info" ng-click="" >
                                         <span class="glyphicon glyphicon-print" aria-hidden="true"></span>

@@ -105,8 +105,15 @@ class RecaudacionCController extends Controller
 
     public function getRegistroCobro($idcliente)
     {
-        return CobroHistorial::join('cont_catalogitem', 'cont_catalogitem.idcatalogitem', '=', 'cobrohistorial.idcatalogitem')
-                                ->where('idcliente', $idcliente)->get();
+
+        $facturas = Cont_DocumentoVenta::join('cobrohistorial', 'cobrohistorial.iddocumentoventa', '=', 'cont_documentoventa.iddocumentoventa')
+                                    ->join('cont_catalogitem', 'cont_catalogitem.idcatalogitem', '=', 'cobrohistorial.idcatalogitem')
+                                    ->where('cobrohistorial.idcliente', $idcliente)->get();
+
+        return $facturas;
+
+        /*return CobroHistorial::join('cont_catalogitem', 'cont_catalogitem.idcatalogitem', '=', 'cobrohistorial.idcatalogitem')
+                                ->where('idcliente', $idcliente)->get();*/
     }
 
 

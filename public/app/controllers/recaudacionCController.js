@@ -88,23 +88,57 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         $http.get(API_URL + 'recaudacionC/getRegistroCobro/' + idcliente).success(function(response){
 
-            $scope.listRegistro = response;
+            $scope.listRegistro = [];
 
-            /*var longitud = response.length;
+            var temp = [];
+
+
+            var longitud = response.length;
 
             for (var i = 0; i < longitud; i++) {
 
-                var item = {
-                    idcatalogitem: response[i].idcatalogitem,
-                    nombreproducto: response[i].nombreproducto,
-                    valor: response[i].valor,
-                    idcliente: response[i].idcliente,
-                    acobrar: 0
-                };
+                if (temp.length === 0) {
 
-                $scope.listItemsCobrar.push(item);
+                    var item = {
+                        iddocumentoventa: response[i].iddocumentoventa,
+                        numdocumentoventa: response[i].numdocumentoventa,
+                        valortotalventa: response[i].valortotalventa,
+                        fecharegistroventa: response[i].fecharegistroventa,
+                        objectItem: response[i]
+                    };
 
-            }*/
+                    $scope.listRegistro.push(item);
+
+                } else {
+
+                    for (var j = 0; j < $scope.listRegistro.length; j++) {
+
+                        console.log(parseInt($scope.listRegistro[j].iddocumentoventa) + '-' + parseInt(response[i].iddocumentoventa));
+
+                        if (parseInt($scope.listRegistro[j].iddocumentoventa) !== parseInt(response[i].iddocumentoventa)) {
+
+                            var item = {
+                                iddocumentoventa: response[i].iddocumentoventa,
+                                numdocumentoventa: response[i].numdocumentoventa,
+                                valortotalventa: response[i].valortotalventa,
+                                fecharegistroventa: response[i].fecharegistroventa,
+                                objectItem: response[i]
+                            };
+
+                            $scope.listRegistro.push(item);
+
+                        }
+
+                    }
+
+                }
+
+
+
+
+            }
+
+            //$scope.listRegistro = temp;
 
             $('#modalRegistroCobros').modal('show');
 
