@@ -1012,6 +1012,9 @@ $scope.cmb_estado_fact="A";
 				        $scope.Mensaje="La venta se guardo correctamente";
 				        $scope.LimiarDataVenta();
 				        $scope.NumeroRegistroVenta();
+
+                        close();
+
                     }else{
                     	QuitarClasesMensaje();
 				        $("#titulomsm").addClass("btn-danger");

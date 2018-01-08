@@ -8,6 +8,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
 
     $scope.list_breadcrumb = [];
 
+
     $scope.logoutSystem = function () {
 
         $http.get(API_URL + '/logout' ).success(function (response) {
@@ -366,3 +367,7 @@ app.controller('mainController',function($scope, $http, API_URL) {
     $scope.getPermisosRol();
 
 });
+
+function close() {
+    $('#modalFactura').modal('hide');
+}

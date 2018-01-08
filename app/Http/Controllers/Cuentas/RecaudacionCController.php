@@ -173,7 +173,7 @@ class RecaudacionCController extends Controller
                 ->selectRaw("( SELECT tipocuenta FROM cont_plancuenta  WHERE idplancuenta=cont_catalogitem.idplancuenta_ingreso) as tipocuentaingreso")
                 ->selectRaw("(SELECT f_costopromedioitem(cont_catalogitem.idcatalogitem,'') ) as CostoPromedio")
                 //->whereRaw(" upper(cont_catalogitem.codigoproducto) LIKE upper('%$id%') OR cont_catalogitem.idcatalogitem = 7  OR cont_catalogitem.idcatalogitem = 2")
-                ->whereRaw(" cont_catalogitem.idcatalogitem = " . $id)
+                ->whereRaw(" cont_catalogitem.idcatalogitem = " . $id . " AND cobrocliente.idcliente = " . $item->idcliente)
                 ->get();
 
 
