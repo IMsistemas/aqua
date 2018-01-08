@@ -101,7 +101,7 @@ class SolicitudController extends Controller
         } else if ($table == 'solsuministro') {
             $max = SolicitudSuministro::max('idsolicitudsuministro');
         } else if ($table == 'suministro') {
-            $max = Suministro::max('idsuministro');
+            $max = Suministro::max('numconexion');
         } else if ($table == 'solicitudcambionombre') {
             $max = SolicitudCambioNombre::max('idsolicitudcambionombre');
         } else if ($table == 'solicitudmantenimiento') {
@@ -460,6 +460,10 @@ class SolicitudController extends Controller
         $suministro->valortotalsuministro = $request->input('valor_partial');
 
         $suministro->formapago = $request->input('formapago');
+
+        $numconexion = Suministro::max('numconexion');
+
+        $suministro->numconexion = $numconexion + 1;
 
         //$suministro->idcatalogitem = $request->input('idproducto');
 
