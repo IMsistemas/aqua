@@ -545,6 +545,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.generate = function () {
 
+        $('#myModalTest').modal('show');
+
         var result_agua = false;
         var result_servicio = false;
 
@@ -560,6 +562,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
                 //console.log(response);
 
+                $('#myModalTest').modal('hide');
+
                 if (response.success === true) {
                     result_servicio = true;
                 }
@@ -567,6 +571,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
                 if (result_agua === true && result_servicio === true) {
 
                     $scope.initLoad();
+
+
 
                     $scope.message = 'Se ha generado los cobros de Lecturas/Servicios del mes actual correctamente...';
                     $('#modalMessage').modal('show');
