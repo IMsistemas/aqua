@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Facturas;
 
 use App\Modelos\Cuentas\CatalogoItemSolicitudServicio;
+use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Cuentas\CobroServicio;
 use App\Modelos\Solicitud\SolicitudServicio;
 use Illuminate\Http\Request;
@@ -77,6 +78,39 @@ class CobroServicioController extends Controller
                 }
 
             }
+
+            $servicios = CatalogoItemSolicitudServicio::join('solicitudservicio', 'solicitudservicio.idsolicitudservicio', '=', 'catalogoitem_solicitudservicio.idsolicitudservicio')
+                                    ->join('solicitud', 'solicitudservicio.idsolicitud', '=', 'solicitud.idsolicitud')
+                                    ->get();
+
+            foreach ($servicios as $item) {
+
+                //if ($item->estadoprocesada != true) {
+
+                    $query = CobroCliente::where('idcatalogitem', $item->idcatalogitem)
+                                            ->where('idcliente', $item->idcliente)->get();
+
+                    if (count($query) == 0) {
+
+                        $cobrocliente = new CobroCliente();
+                        $cobrocliente->idcatalogitem = $item->idcatalogitem;
+                        $cobrocliente->idcliente = $item->idcliente;
+                        $cobrocliente->valor = $item->valor;
+
+                        $cobrocliente->save();
+
+                    } else {
+
+                        $cobrocliente = CobroCliente::find($query[0]->idcobrocliente);
+                        $cobrocliente->valor = $cobrocliente->valor + $item->valor;
+                        $cobrocliente->save();
+
+                    }
+
+                //}
+
+            }
+
 
             return response()->json( [ 'success' => true ] );
 
