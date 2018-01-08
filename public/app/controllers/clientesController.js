@@ -1456,7 +1456,7 @@
 
             $('#' + id_btn).prop('disabled', true);
 
-            var url = API_URL + 'cliente/processSolicitud/' + $scope.idsolicitud_to_process;
+            var url = API_URL + 'solicitud/processSolicitud/' + $scope.idsolicitud_to_process;
 
             var data = {
                 idsolicitud: $scope.idsolicitud_to_process
