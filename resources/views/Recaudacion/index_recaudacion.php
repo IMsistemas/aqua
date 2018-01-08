@@ -59,7 +59,7 @@
         <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
             <thead class="bg-primary">
             <tr>
-                <th style="width: 5%;">NO</th>
+                <th style="width: 8%;">NO. CONEX.</th>
                 <th style="width: 10%;">CI / RUC</th>
                 <th style="width: 10%;">FECHA INGRESO</th>
                 <th style="">RAZON SOCIAL / APELLIDOS Y NOMBRE</th>
@@ -69,7 +69,7 @@
             </thead>
             <tbody>
             <tr dir-paginate="item in clientes|orderBy:sortKey:reverse| itemsPerPage:8" total-items="totalItems" ng-cloak >
-                <td>{{$index + 1}}</td>
+                <td>{{item.numconexion}}</td>
                 <td>{{item.numdocidentific}}</td>
                 <td>{{item.fechaingreso | formatDate}}</td>
                 <td>{{item.lastnamepersona}} {{item.namepersona}}</td>

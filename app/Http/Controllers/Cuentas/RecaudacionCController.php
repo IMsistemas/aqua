@@ -45,7 +45,7 @@ class RecaudacionCController extends Controller
 
         $cliente = null;
 
-        $cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+        /*$cliente = Cliente::join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
             ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
             ->with('sri_tipoempresa', 'sri_parte')
             ->selectRaw('cliente.*, persona.*, cont_plancuenta.*, (SELECT SUM(valor) FROM cobrocliente WHERE cobrocliente.idcliente = cliente.idcliente) AS valorcobrar')
@@ -55,7 +55,20 @@ class RecaudacionCController extends Controller
             $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
         }
 
-        return $cliente->orderBy('lastnamepersona', 'asc')->paginate(8);
+        return $cliente->orderBy('lastnamepersona', 'asc')->paginate(8);*/
+
+        $cliente = Suministro::join('cliente', 'cliente.idcliente', '=', 'suministro.idcliente')
+                                ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+            ->join('cont_plancuenta', 'cont_plancuenta.idplancuenta', '=', 'cliente.idplancuenta')
+            //->with('sri_tipoempresa', 'sri_parte')
+            ->selectRaw('suministro.*, cliente.*, persona.*, cont_plancuenta.*, (SELECT SUM(valor) FROM cobrocliente WHERE cobrocliente.idcliente = cliente.idcliente) AS valorcobrar')
+            ->where("cliente.estado", true);
+
+        if ($search != null) {
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%' OR CAST(suministro.numconexion AS TEXT) LIKE '%" . $search . "%')");
+        }
+
+        return $cliente->orderBy('numconexion', 'asc')->paginate(8);
     }
 
     public function getFacConsumo($idcliente)
