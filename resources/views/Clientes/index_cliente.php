@@ -1745,4 +1745,26 @@
                 </div>
             </div>
 
+            <!-- MODAL PARA LA ACCION DE MOSTRAR MENSAJE DE CARGA -->
+            <div class="modal fade" id="myModalTest" data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog" style="margin-top: 200px;">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p style="font-size: 12px !important; font-weight: bold;">ESPERE POR FAVOR!...</p>
+                                </div>
+                                <div class="col-xs-12" style="margin-top: 5px;">
+                                    <div class="progress">
+                                        <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                            <span id="text-bar-load-product" class=""></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
         </div>

@@ -68,7 +68,7 @@ class ClienteController extends Controller
                             ->select('cliente.*', 'persona.*', 'cont_plancuenta.*');
 
         if ($search != null) {
-            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%')");
+            $cliente = $cliente->whereRaw("(persona.razonsocial ILIKE '%" . $search . "%' OR persona.numdocidentific ILIKE '%" . $search . "%' OR persona.lastnamepersona ILIKE '%" . $search . "%' OR persona.namepersona ILIKE '%" . $search . "%')");
         }
 
         if ($estado != '0') {

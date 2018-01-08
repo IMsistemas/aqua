@@ -617,13 +617,19 @@
 
             if ($scope.clientes.length > 0) {
 
+                $('#myModalTest').modal('show');
+
                 var accion = API_URL + 'cliente/reporte_print';
 
                 $('#WPrint_head').html('Listado');
 
+                $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
                 $('#WPrint').modal('show');
 
-                $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+                $('#myModalTest').modal('hide');
+
 
             } else {
 
