@@ -1013,7 +1013,7 @@ $scope.cmb_estado_fact="A";
 				        $scope.LimiarDataVenta();
 				        $scope.NumeroRegistroVenta();
 
-                        close();
+                        window.parent.closeModal();
 
                     }else{
                     	QuitarClasesMensaje();

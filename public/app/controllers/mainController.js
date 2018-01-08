@@ -369,5 +369,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
 });
 
 function close() {
+
     $('#modalFactura').modal('hide');
 }
+
+window.closeModal = function(){
+    $('#modalFactura').modal('hide');
+    $('#modalCobrosItems').modal('hide');
+};

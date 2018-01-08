@@ -20,9 +20,9 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     $('#modalFactura').on('hidden.bs.modal', function () {
         $scope.initLoad(1);
 
-        if ($scope.idcliente !== null) {
+        /*if ($scope.idcliente !== null) {
             $scope.getItemsCobro($scope.idcliente);
-        }
+        }*/
 
     });
 
@@ -1004,3 +1004,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     };
 
 });
+
+window.closeModal = function(){
+    $('#modalFactura').modal('hide');
+    $('#modalCobrosItems').modal('hide');
+};
