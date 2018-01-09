@@ -20,6 +20,8 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     $('#modalFactura').on('hidden.bs.modal', function () {
         $scope.initLoad(1);
 
+        $scope.printFactura();
+
         /*if ($scope.idcliente !== null) {
             $scope.getItemsCobro($scope.idcliente);
         }*/
@@ -376,6 +378,18 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
             }
             else return true;
         }
+    };
+
+    $scope.printFactura = function() {
+
+        var accion = API_URL + 'recaudacionC/printFactura';
+
+        $('#WPrint_head').html('Factura');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+        $('#WPrint').modal('show');
+
     };
 
 //-------------------------------------------------------------------------------------------------------------------

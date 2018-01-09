@@ -481,4 +481,35 @@ class RecaudacionCController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function printFactura()
+    {
+        ini_set('max_execution_time', 3000);
+
+
+        $data = $this->getDataFactura();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Recaudacion.factura_print', compact('data'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'portrait');
+
+        return @$pdf->stream('reportCC_' . $today);
+    }
+
+    private function getDataFactura()
+    {
+        $factura = Cont_DocumentoVenta::with('cont_itemventa.cont_catalogoitem')
+                        ->join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
+                        ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                        ->join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'cont_documentoventa.idtipoimpuestoiva')
+                        ->where('iddocumentoventa', Session::get('iddocumentoventa'))->get();
+
+        return $factura;
+    }
 }

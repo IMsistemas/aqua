@@ -381,6 +381,10 @@ class DocumentoVenta extends Controller
 
             }
 
+            Session::forget('iddocumentoventa');
+
+            Session::put('iddocumentoventa', $aux_addVenta->last()->iddocumentoventa);
+
 
             //$object_s = Session::get('suministro_to_facturar');
 
