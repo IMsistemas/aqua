@@ -210,7 +210,8 @@ Route::get('recaudacioncobro/getFacturas', 'Cuentas\RecaudacionCobroController@g
 Route::resource('recaudacioncobro', 'Cuentas\RecaudacionCobroController');
 
 
-Route::get('recaudacionC/printFactura', 'Cuentas\RecaudacionCController@printFactura');
+Route::get('recaudacionC/printFactura/{idlectura}', 'Cuentas\RecaudacionCController@printFactura');
+Route::get('recaudacionC/getListLecturas/{idsuministro}', 'Cuentas\RecaudacionCController@getListLecturas');
 Route::get('recaudacionC/getRegistroCobro/{idcliente}', 'Cuentas\RecaudacionCController@getRegistroCobro');
 Route::get('recaudacionC/getCuentasCerrar', 'Cuentas\RecaudacionCController@getCuentasCerrar');
 Route::get('recaudacionC/getItemsCobro/{idcliente}', 'Cuentas\RecaudacionCController@getItemsCobro');

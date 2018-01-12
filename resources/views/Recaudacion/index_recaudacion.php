@@ -84,20 +84,20 @@
                         <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
                     </button>-->
 
+                    <button type="button" class="btn btn-primary" ng-click="getItemsCobro(item)">
+                        <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
+                    </button>
 
 
+                    <!--<div class="btn-group" role="group" aria-label="...">
 
-                    <div class="btn-group" role="group" aria-label="...">
 
-                        <button type="button" class="btn btn-primary" ng-click="getItemsCobro(item.idcliente)">
-                            <i class="fa fa-lg fa-usd" aria-hidden="true" title=""></i>
-                        </button>
 
                         <button type="button" class="btn btn-info" ng-click="getRegistroCobro(item.idcliente)" >
                             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         </button>
 
-                    </div>
+                    </div>-->
 
                 </td>
             </tr>
@@ -632,6 +632,55 @@
                         Aceptar <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="listLecturas" style="">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Listado de Lecturas a la Conexion (Suministro) </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+
+                            <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+                                <thead class="bg-primary">
+                                    <tr>
+                                        <th style="width: 15%;">FECHA</th>
+                                        <th>LECTURA ANTERIOR</th>
+                                        <th>LECTURA ACTUAL</th>
+                                        <th>CONSUMO</th>
+                                        <th style="width: 5%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemLectura in listLecturas" ng-cloak >
+
+                                        <td class="text-center">{{itemLectura.fechalectura}}</td>
+                                        <td>{{itemLectura.lecturaanterior}}</td>
+                                        <td>{{itemLectura.lecturaactual}}</td>
+                                        <td>{{itemLectura.consumo}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info" ng-click="printFactura(itemLectura)" >
+                                                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

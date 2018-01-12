@@ -164,7 +164,7 @@
                 <td class="label_text" style="width: 20%; font-weight: bold;">RUC/CI:</td>
                 <td><?= $data[0]->numdocidentific ?></td>
                 <td class="label_text" style="width: 20%; font-weight: bold;">CONEXION:</td>
-                <td></td>
+                <td><?= $lectura[0]->numconexion ?></td>
             </tr>
             <tr>
                 <td class="label_text" style="font-weight: bold;">DIRECCION:</td>
@@ -182,10 +182,20 @@
             <tr>
                 <table class="table table-responsive table-striped table-hover table-condensed table-bordered" style="width: 72%;">
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>m3</td>
+                        <td>
+
+                            <?php
+
+                                $array = explode('-', $lectura[0]->fechalectura);
+
+                                echo $array[1] . '/' . $array[0];
+
+                            ?>
+
+                        </td>
+                        <td><?= $lectura[0]->lecturaanterior ?></td>
+                        <td><?= $lectura[0]->lecturaactual ?></td>
+                        <td><?= $lectura[0]->consumo ?> m3</td>
                     </tr>
                     <tr>
                         <td class="label_text" style="width: 22%; font-weight: bold;">PERIODO</td>

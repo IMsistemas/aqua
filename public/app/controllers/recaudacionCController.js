@@ -3,8 +3,9 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     $scope.item_select = 0;
     $scope.Cliente = 0;
+    $scope.clienteSelected = null;
     $scope.select_cuenta = null;
-
+    $scope.s_estado_search = "0";
     $scope.listSelected = [];
     $scope.listItemsCobrar = [];
     $scope.listRegistro = [];
@@ -20,7 +21,12 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
     $('#modalFactura').on('hidden.bs.modal', function () {
         $scope.initLoad(1);
 
-        $scope.printFactura();
+        $scope.showListLecturas();
+
+
+        //$scope.printFactura();
+
+
 
         /*if ($scope.idcliente !== null) {
             $scope.getItemsCobro($scope.idcliente);
@@ -52,12 +58,12 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
     };
 
+    $scope.getItemsCobro = function (item) {
 
-    $scope.getItemsCobro = function (idcliente) {
+        $scope.clienteSelected = item;
+        $scope.idcliente = item.idcliente;
 
-        $scope.idcliente = idcliente;
-
-        $http.get(API_URL + 'recaudacionC/getItemsCobro/' + idcliente).success(function(response){
+        $http.get(API_URL + 'recaudacionC/getItemsCobro/' + $scope.idcliente).success(function(response){
 
             $scope.listItemsCobrar = [];
 
@@ -82,7 +88,6 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         });
 
     };
-
 
     $scope.getRegistroCobro = function (idcliente) {
 
@@ -148,7 +153,6 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
     };
 
-
     $scope.createFacturaItems = function () {
 
         var selected = [];
@@ -208,9 +212,22 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
 
         });
 
+    };
 
+
+    $scope.showListLecturas = function () {
+
+        $http.get(API_URL + 'recaudacionC/getListLecturas/' + $scope.clienteSelected.idsuministro).success(function(response){
+
+            $scope.listLecturas = response;
+
+            $('#listLecturas').modal('show');
+
+
+        });
 
     };
+
 
     $scope.AddIntemCotable=function(){
         var item={
@@ -380,9 +397,9 @@ app.controller('recaudacionCController',  function($scope, $http, API_URL) {
         }
     };
 
-    $scope.printFactura = function() {
+    $scope.printFactura = function(item) {
 
-        var accion = API_URL + 'recaudacionC/printFactura';
+        var accion = API_URL + 'recaudacionC/printFactura/' + item.idlectura;
 
         $('#WPrint_head').html('Factura');
 

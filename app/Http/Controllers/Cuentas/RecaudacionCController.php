@@ -9,6 +9,7 @@ use App\Modelos\Cuentas\CobroAgua;
 use App\Modelos\Cuentas\CobroCierreCaja;
 use App\Modelos\Cuentas\CobroCliente;
 use App\Modelos\Cuentas\CobroHistorial;
+use App\Modelos\Lecturas\Lectura;
 use App\Modelos\Solicitud\SolicitudServicio;
 use App\Modelos\Suministros\Suministro;
 use Illuminate\Http\Request;
@@ -94,6 +95,11 @@ class RecaudacionCController extends Controller
             ->where('solicitud.idcliente', $idcliente)->orderBy('fechaprocesada', 'desc')->get();
 
         return $otrosCargos;
+    }
+
+    public function getListLecturas($idsuministro)
+    {
+        return Lectura::where('idsuministro', $idsuministro)->orderBy('fechalectura', 'desc')->get();
     }
 
 
@@ -482,16 +488,17 @@ class RecaudacionCController extends Controller
         }
     }
 
-    public function printFactura()
+    public function printFactura($idlectura)
     {
         ini_set('max_execution_time', 3000);
 
-
         $data = $this->getDataFactura();
+
+        $lectura = $this->getLectura($idlectura);
 
         $today = date("Y-m-d H:i:s");
 
-        $view =  \View::make('Recaudacion.factura_print', compact('data'))->render();
+        $view =  \View::make('Recaudacion.factura_print', compact('data', 'lectura'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
 
@@ -511,5 +518,12 @@ class RecaudacionCController extends Controller
                         ->where('iddocumentoventa', Session::get('iddocumentoventa'))->get();
 
         return $factura;
+    }
+
+
+    private function getLectura($idlectura)
+    {
+        return Lectura::join('suministro', 'suministro.idsuministro', '=', 'lectura.idsuministro')
+            ->where('idlectura', $idlectura)->get();
     }
 }
