@@ -38,6 +38,9 @@
         </div>
 
     </div>
+
+    <hr>
+
     <div class="col-xs-12">
         <hr>
     </div>
@@ -145,7 +148,7 @@
 
     <!-- Nomina -->
     <div class="col-xs-12" ng-show="!listado">
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="padding-right: 0;">
 
             <fieldset>
                 <legend>Datos de la Empresa</legend>
@@ -183,9 +186,10 @@
                     </div>
                 </div>
             </fieldset>
+
         </div>
 
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="padding-right: 0;">
             <fieldset>
                 <legend>Datos del Empleado</legend>
                 <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
@@ -247,7 +251,7 @@
             </fieldset>
         </div>
 
-        <div class="col-xs-12" style="margin-top: 15px;">
+        <div class="row" style="margin-top: 15px;">
             <div class="col-xs-12" style="margin-top: 10px;">
                 <fieldset>
                     <legend>Ingresos</legend>
@@ -303,13 +307,13 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
+        <div class="row">
             <div class="col-xs-6" style="margin-top: 10px;">
                 <fieldset>
                     <legend>Deducciones</legend>
                     <div class="col-xs-12" style="padding: 0px;">
                         <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                            <thead class="bg-danger">
+                            <thead class="btn-danger">
                             <tr>
                                 <th style="width: 20%;">Concepto</th>
                                 <th style="width: 8%;">%</th>
@@ -323,12 +327,12 @@
                                 <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                             </tr>
                             <tr>
-                                <td class="bg-danger" colspan="2">Total Deducciones:</td>
-                                <td class="bg-danger" colspan="1">{{total_deducciones}}</td>
+                                <td class="btn-danger" colspan="2">Total Deducciones:</td>
+                                <td class="btn-danger" colspan="1">{{total_deducciones}}</td>
                             </tr>
                             <tr>
-                                <td class="bg-danger" colspan="2">Ingreso Bruto (-) Deducciones:</td>
-                                <td class="bg-danger" colspan="1">{{ingresoBruto_deducciones}}</td>
+                                <td class="btn-danger" colspan="2">Ingreso Bruto (-) Deducciones:</td>
+                                <td class="btn-danger" colspan="1">{{ingresoBruto_deducciones}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -341,7 +345,7 @@
                     <legend>Beneficios de Ley</legend>
                     <div class="col-xs-12" style="padding: 0px; margin: 0px;">
                         <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                            <thead class="bg-warning">
+                            <thead class="btn-warning">
                             <tr>
                                 <th style="width: 20%;">Concepto</th>
                                 <th style="width: 8%;">%</th>
@@ -355,12 +359,12 @@
                                 <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                             </tr>
                             <tr>
-                                <td class="bg-warning" colspan="2">Total Beneficios de Ley:</td>
-                                <td class="bg-warning" colspan="1">{{total_beneficios}}</td>
+                                <td class="btn-warning" colspan="2">Total Beneficios de Ley:</td>
+                                <td class="btn-warning" colspan="1">{{total_beneficios}}</td>
                             </tr>
                             <tr>
-                                <td class="bg-warning" colspan="2">Subtotal mensual + Beneficios de Ley:</td>
-                                <td class="bg-warning" colspan="1">{{ingresoBruto_beneficios}}</td>
+                                <td class="btn-warning" colspan="2">Subtotal mensual + Beneficios de Ley:</td>
+                                <td class="btn-warning" colspan="1">{{ingresoBruto_beneficios}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -396,7 +400,7 @@
                 <legend>Beneficios Adicionales</legend>
                 <div class="col-xs-12" style="padding: 0px; margin: 0px;">
                     <table style="padding-top: 0px; margin-top: 0px;" class="table table-responsive table-striped table-hover table-condensed table-bordered">
-                        <thead class="bg-success">
+                        <thead class="btn-success">
                         <tr>
                             <th style="width: 20%;">Concepto</th>
                             <th style="width: 8%;">%</th>
@@ -410,12 +414,12 @@
                             <td><input type="text" class="form-control" ng-model="item.valorTotal" ng-blur="calcValores(item)"/></td>
                         </tr>
                         <tr>
-                            <td class="bg-success" colspan="2">Total Beneficios Adicionales:</td>
-                            <td class="bg-success" colspan="1">{{total_adicionales}}</td>
+                            <td class="btn-success" colspan="2">Total Beneficios Adicionales:</td>
+                            <td class="btn-success" colspan="1">{{total_adicionales}}</td>
                         </tr>
                         <tr>
-                            <td class="bg-success" colspan="2">Total Gasto Empresarial:</td>
-                            <td class="bg-success" colspan="1">{{total_empresarial}}</td>
+                            <td class="btn-success" colspan="2">Total Gasto Empresarial:</td>
+                            <td class="btn-success" colspan="1">{{total_empresarial}}</td>
                         </tr>
                         </tbody>
                     </table>
