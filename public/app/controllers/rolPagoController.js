@@ -804,7 +804,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         var descripcion = 'ROL PAGO A: ';
         var fecha = $('#fecha').val();
-        var array_fecha = fecha.split("-")
+        var array_fecha = fecha.split("-");
         var anno = array_fecha[0];
         var mes = array_fecha[1];
 

@@ -135,7 +135,7 @@ class RolPagoController extends Controller
                 $rol->diascalculo = $request->input('diascalculo');
                 if($item['cantidad'] === ""){
                     $rol->valormedida = 0;
-                }else $rol->valormedida = $item['cantidad'];
+                }else $rol->valormedida = str_replace('%', '', $item['cantidad']);
 
                 if($item['valorTotal'] === ""){
                     $rol->valormoneda = 0;
