@@ -447,7 +447,7 @@
                                                         <input type="text" class="form-control" ng-model="family.parentesco" />
                                                     </td>
                                                     <td class="container-date">
-                                                        <input type="text" class="datepickerA form-control" ng-model="family.fechanacimiento" />
+                                                        <input type="text" class="datepickerA form-control" id="fecha_fa_{{$index}}" ng-model="family.fechanacimiento"  />
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-danger" ng-click="deleteItem(family)"
@@ -488,7 +488,7 @@
                                                         <input type="text" class="form-control" ng-model="elemento.salario" ng-keypress="onlyNumber($event, undefined, undefined)" />
                                                     </td>
                                                     <td class="container-date">
-                                                        <input type="text" class="datepickerA form-control" ng-model="elemento.fechainicio" />
+                                                        <input type="text" class="datepickerB form-control" id="fecha_hi_{{$index}}" ng-model="elemento.fechainicio" />
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" ng-model="elemento.observacion" />

@@ -432,6 +432,11 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             $('datepickerA').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD'
+            }).on('dp.change', function (e) {
+
+
+                $scope.reafirmDateFamiliar(e.target.id, e.target.value);
+
             });
         });
 
@@ -448,6 +453,9 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
             $('.datepickerA').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD'
+            }).on('dp.change', function (e) {
+
+                $scope.reafirmDateFamiliar(e.target.id, e.target.value);
             });
         });
 
@@ -460,12 +468,37 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
 
     };
 
+
+    $scope.reafirmDateFamiliar = function (id, value) {
+
+        var a = id.split('_');
+
+        $scope.familiares[a[2]].fechanacimiento = value;
+
+
+
+    };
+
+    $scope.reafirmDateSalario = function (id, value) {
+
+        var a = id.split('_');
+
+        $scope.historial[a[2]].fechainicio = value;
+
+        console.log($scope.historial);
+
+    };
+
+
     $scope.createRowHistory = function () {
 
         $(document).ready (function(){
-            $('.datepickerA').datetimepicker({
+            $('.datepickerB').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD'
+            }).on('dp.change', function (e) {
+
+                $scope.reafirmDateSalario(e.target.id, e.target.value);
             });
         });
 
@@ -479,9 +512,12 @@ app.controller('empleadosController', function($scope, $http, API_URL, Upload) {
         $scope.historial.push(item);
 
         $(document).ready (function(){
-            $('.datepickerA').datetimepicker({
+            $('.datepickerB').datetimepicker({
                 locale: 'es',
                 format: 'YYYY-MM-DD'
+            }).on('dp.change', function (e) {
+
+                $scope.reafirmDateSalario(e.target.id, e.target.value);
             });
         });
 
