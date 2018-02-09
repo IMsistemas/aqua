@@ -308,7 +308,7 @@
       	</div>
 
       	<div class="col-xs-12">
-      		<div class="input-group">
+      		<div class="input-group container-date">
               <span class="input-group-addon">Fecha I.: </span>
               <input type="type" class="form-control datepicker  input-sm" id="FechaI" ng-model="FechaI" >
             </div>

@@ -179,7 +179,7 @@
                     <form class="form-horizontal" name="formCobro" novalidate="">
 
                         <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
-                            <div class="input-group">
+                            <div class="input-group container-date">
                                 <span class="input-group-addon">Fecha Cobro: </span>
                                 <input type="text" class="form-control datepicker" name="fecharegistro" id="fecharegistro" ng-model="fecharegistro" ng-blur="autoAssignDate()" required >
                             </div>
