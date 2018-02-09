@@ -444,11 +444,11 @@
                             <td>IVA</td>
                             <td><input type="text" class="text-right form-control input-sm" id="ValIVA"  ng-model="ValIVA" /></td>
                         </tr>
-                        <tr>
+                        <tr ng-hide="1 == 1">
                             <td>IRBPNR</td>
                             <td><input type="text" class="text-right form-control input-sm" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
                         </tr>
-                        <tr>
+                        <tr ng-hide="1 == 1">
                             <td>PROPINA</td>
                             <td><input type="text" class="text-right form-control input-sm" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
                         </tr>

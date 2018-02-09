@@ -599,11 +599,11 @@
                         <td>IVA</td>
                         <td><input type="text" class="form-control input-sm text-right" id="ValIVA"  ng-model="ValIVA" /></td>
                     </tr>
-                    <tr>
+                    <tr ng-hide="1 == 1">
                         <td>IRBPNR</td>
                         <td><input type="text" class="form-control input-sm text-right" id="ValIRBPNR" ng-keyup="CalculaValores();"  ng-model="ValIRBPNR"/></td>
                     </tr>
-                    <tr>
+                    <tr ng-hide="1 == 1">
                         <td>Propina</td>
                         <td><input type="text" class="form-control input-sm text-right" id="ValPropina" ng-keyup="CalculaValores();"  ng-model="ValPropina" /></td>
                     </tr>
