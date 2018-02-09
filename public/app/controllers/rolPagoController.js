@@ -745,6 +745,12 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $scope.select_cuenta = item;
     };
 
+    $scope.valueFecha = function () {
+
+        $scope.fecha = $('#fecha').val();
+
+    };
+
     $scope.InicioList=function() {
         $scope.listado =  true;
         $scope.initLoad(1);
