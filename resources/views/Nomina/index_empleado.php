@@ -264,10 +264,10 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Teléfono Principal: </span>
                                                     <input type="text" class="form-control" name="telefonoprincipal" id="telefonoprincipal"
-                                                           ng-model="telefonoprincipal" ng-minlength="9" ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/" >
+                                                           ng-model="telefonoprincipal" ng-minlength="9" ng-maxlength="10" ng-pattern="/^([0-9-\(\)]+)$/" >
                                                 </div>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.maxlength">La longitud máxima es de 16 números</span>
+                                                      ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.maxlength">La longitud máxima es de 10 números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonoprincipal.$invalid && formEmployee.telefonoprincipal.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
@@ -278,10 +278,10 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Teléfono Secundario: </span>
                                                     <input type="text" class="form-control" name="telefonosecundario" id="telefonosecundario"
-                                                           ng-model="telefonosecundario" ng-minlength="9"  ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/" >
+                                                           ng-model="telefonosecundario" ng-minlength="9"  ng-maxlength="10" ng-pattern="/^([0-9-\(\)]+)$/" >
                                                 </div>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.maxlength">La longitud máxima es de 16 números</span>
+                                                      ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.maxlength">La longitud máxima es de 10 números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.telefonosecundario.$invalid && formEmployee.telefonosecundario.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
@@ -294,10 +294,10 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon">Celular: </span>
                                                     <input type="text" class="form-control" name="celular" id="celular"
-                                                           ng-model="celular" ng-minlength="10" ng-maxlength="16" ng-pattern="/^([0-9-\(\)]+)$/">
+                                                           ng-model="celular" ng-minlength="10" ng-maxlength="10" ng-pattern="/^([0-9-\(\)]+)$/">
                                                 </div>
                                                 <span class="help-block error"
-                                                      ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.maxlength">La longitud máxima es de 16 números</span>
+                                                      ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.maxlength">La longitud máxima es de 10 números</span>
                                                 <span class="help-block error"
                                                       ng-show="formEmployee.celular.$invalid && formEmployee.celular.$error.pattern">El Teléfono debe ser solo números</span>
                                                 <span class="help-block error"
