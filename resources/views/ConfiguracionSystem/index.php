@@ -268,7 +268,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;" ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta IRBPNR: </span>
                                             <input type="text" class="form-control" name="irbpnr_compra" id="irbpnr_compra" ng-model="irbpnr_compra" placeholder=""
@@ -286,7 +286,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;"  ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Propina: </span>
                                             <input type="text" class="form-control" name="propina_compra" id="propina_compra" ng-model="propina_compra" placeholder=""
@@ -392,7 +392,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;" ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta IRBPNR: </span>
                                             <input type="text" class="form-control" name="irbpnr_venta" id="irbpnr_venta" ng-model="irbpnr_venta" placeholder=""
@@ -410,7 +410,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;" ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Propina: </span>
                                             <input type="text" class="form-control" name="propina_venta" id="propina_venta" ng-model="propina_venta" placeholder=""
@@ -548,7 +548,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;" ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta IRBPNR: </span>
                                             <input type="text" class="form-control" name="irbpnr_nc" id="irbpnr_nc" ng-model="irbpnr_nc" placeholder=""
@@ -566,7 +566,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;">
+                                    <div class="col-sm-6 col-xs-12" style="margin-top: 5px;" ng-hide="1 == 1">
                                         <div class="input-group">
                                             <span class="input-group-addon">Cuenta Propina: </span>
                                             <input type="text" class="form-control" name="propina_nc" id="propina_nc" ng-model="propina_nc" placeholder=""
