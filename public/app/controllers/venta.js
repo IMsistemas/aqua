@@ -566,12 +566,30 @@ $scope.cmb_estado_fact="A";
                 switch($scope.items[x].productoObj.originalObject.idtipoimpuestoiva){
                     case 1: // 0%
                         aux_subtoto_cero+=parseFloat($scope.items[x].total);
+
+                        if(parseFloat($scope.items[x].ice)>0){
+                            var aux_totalaplicaice=((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*((parseFloat($scope.items[x].ice)))/100);
+                            aux_subtoto_cero+=aux_totalaplicaice;
+                        }
+
                     break;
                     case 4: // no objeto iva
                         aux_no_objeto_iva+=parseFloat($scope.items[x].total);
+
+                        if(parseFloat($scope.items[x].ice)>0){
+                            var aux_totalaplicaice=((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*((parseFloat($scope.items[x].ice)))/100);
+                            aux_no_objeto_iva+=aux_totalaplicaice;
+                        }
+
                     break;
                     case 5: // excento iva
                         aux_excento_iva+=parseFloat($scope.items[x].total);
+
+                        if(parseFloat($scope.items[x].ice)>0){
+                            var aux_totalaplicaice=((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*((parseFloat($scope.items[x].ice)))/100);
+                            aux_excento_iva+=aux_totalaplicaice;
+                        }
+
                     break;
                 }
             }else{
@@ -579,6 +597,12 @@ $scope.cmb_estado_fact="A";
                     if($scope.items[x].cantidad!=undefined && $scope.items[x].precioU!=undefined ){
                         //aux_subtotalconimpuestos+=(parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU));
                         aux_subtotalconimpuestos+=parseFloat($scope.items[x].total);
+
+                        if(parseFloat($scope.items[x].ice)>0){
+                            var aux_totalaplicaice=((parseFloat($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU))*((parseFloat($scope.items[x].ice)))/100);
+                            aux_subtotalconimpuestos+=aux_totalaplicaice;
+                        }
+
                         con_iva+=((parseFloat($scope.items[x].total)) * (parseInt($scope.items[x].iva))/100);
                     }
                 }
@@ -675,7 +699,7 @@ $scope.cmb_estado_fact="A";
         //totalFC += parseFloat($scope.Subtotalnobjetoiva) + parseFloat($scope.Subototalexentoiva);
         //totalFC += parseFloat($scope.ValIVA) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina);
         //totalFC -= parseFloat($scope.Totaldescuento);
-        var totalFC = subtotalsinimp + parseFloat($scope.ValIVA) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina);
+        var totalFC = subtotalsinimp + parseFloat($scope.ValIVA) + parseFloat($scope.ValICE) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina);
         $scope.ValorTotal = totalFC.toFixed(4);
 
         //$scope.ValorTotal=((parseFloat($scope.Subtotalconimpuestos)+parseFloat($scope.ValIVA) + parseFloat($scope.ValICE) + parseFloat($scope.ValIRBPNR) + parseFloat($scope.ValPropina) )   - ($scope.Totaldescuento)).toFixed(4);
