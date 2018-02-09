@@ -42,6 +42,10 @@
                 z-index: 999999;
             }
 
+            .error {
+                color: red !important;
+            }
+
         </style>
 
     </head>

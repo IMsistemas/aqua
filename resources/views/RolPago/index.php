@@ -108,7 +108,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in roles">
-                    <td style="text-align: center;">{{item.numtransaccion}}</td>
+                    <td style="text-align: center;">{{$index + 1}}</td>
                     <td class="text-center">{{item.razonsocial}}</td>
                     <td class="text-left">{{item.fecha}}</td>
                     <td class="text-right">$ {{item.valormoneda}}</td>
