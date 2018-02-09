@@ -1474,7 +1474,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"> Teléfono Instalac.: </span>
                                                     <input type="text" class="form-control" name="t_suministro_telf" id="t_suministro_telf"
-                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-maxlength="9" ng-pattern="/^([0-9]+)$/">
+                                                           ng-model="t_suministro_telf" ng-required="true" ng-keypress="onlyNumber($event)" ng-minlength="9" ng-maxlength="40" ng-pattern="/^([0-9]+)$/">
                                                 </div>
 
                                                 <span class="help-block error"
