@@ -41,6 +41,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.fieldconcepto = '';
     $scope.fieldid = '';
 
+    $scope.rolSelected = null;
+
     var ss = 0;
     var dc = 0;
     var hc = 0;
@@ -781,6 +783,10 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $http.get(API_URL + 'rolPago/getRolPago/' + item.numdocumento).success(function(response){
 
+            console.log(response);
+
+            $scope.rolSelected = response;
+
             $scope.estadoanulado = item.estadoanulado;
             $scope.numdocumento = item.numdocumento;
             $scope.empleado = item.id_empleado;
@@ -836,6 +842,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
                 }
 
             }
+
 
             if (response[0].id_conceptopago === $scope.sueldos[0].id_conceptospago) {
 
@@ -1153,6 +1160,19 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         var fFecha2 = Date.UTC(aFecha2[0],aFecha2[1]-1,aFecha2[2]);
         var dif = fFecha2 - fFecha1;
         return Math.floor(dif / (1000 * 60 * 60 * 24));
+
+    };
+
+    $scope.printRol = function() {
+
+        var accion = API_URL + 'rolPago/reporte_print/' + $scope.rolSelected[0].numdocumento;
+
+        $('#WPrint_head').html('Rol de Pago');
+
+        $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+        $('#WPrint').modal('show');
+
 
     };
 

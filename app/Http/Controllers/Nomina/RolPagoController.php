@@ -156,4 +156,32 @@ class RolPagoController extends Controller
             }
         }
     }
+
+
+    public function printRol($numdocumento)
+    {
+
+        ini_set('max_execution_time', 3000);
+
+        $rol = RolPago::join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
+            ->join('rrhh_conceptospago', 'rrhh_conceptospago.id_conceptospago', '=', 'rrhh_rolpago.id_conceptopago')
+            ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
+            ->join('cargo', 'cargo.idcargo', '=', 'empleado.idcargo')
+            ->where('numdocumento', $numdocumento)->orderBy('id_rolpago', 'asc')->get();
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('RolPago.rolpago', compact('rol','today','aux_empresa'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($view);
+
+        $pdf->setPaper('A4', 'portrait');
+
+        return @$pdf->stream('reportCC_' . $today);
+    }
+
 }

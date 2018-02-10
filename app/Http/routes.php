@@ -620,6 +620,7 @@ Route::get('rolPago/getEmpleados', 'Nomina\RolPagoController@getEmpleados');
 Route::get('rolPago/getDataEmpresa', 'Nomina\RolPagoController@getDataEmpresa');
 Route::get('rolPago/getExistsConfig', 'Nomina\RolPagoController@getExistsConfig');
 Route::get('rolPago/getRolPago/{numdocumento}', 'Nomina\RolPagoController@getRolPago');
+Route::get('rolPago/reporte_print/{numdocumento}', 'Nomina\RolPagoController@printRol');
 Route::resource('rolPago', 'Nomina\RolPagoController');
 
 Route::get('configNomina/getConceptos', 'ConfiguracionSystem\ConfigNominaController@getConceptos');
