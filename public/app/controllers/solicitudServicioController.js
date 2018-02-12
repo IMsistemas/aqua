@@ -1498,6 +1498,7 @@
                 telefonosuministro: $scope.t_suministro_telf,
             };
             var idsolicitud = $scope.num_solicitud_suministro;
+
             $http.put(API_URL + 'solicitud/updateSolicitudSuministro/' + idsolicitud, data).success(function(response){
                 if(response.success == true){
                     $scope.initLoad();
@@ -1508,34 +1509,7 @@
                 }
             });
 
-            //$('#btn-save-solsuministro').prop('disabled', true);
 
-            /*var data = {
-                idtarifa: $scope.s_suministro_tarifa,
-                idcalle: $scope.s_suministro_transversal,
-                garantia: $scope.t_suministro_garantia,
-                codigocliente: $scope.codigoclienteSuministro,
-                direccionsuministro: $scope.t_suministro_direccion,
-                telefonosuministro: $scope.t_suministro_telf,
-                idproducto: $scope.idproducto,
-                valor: $scope.total_suministro,
-                dividendos: $scope.s_suministro_credito,
-                valor_partial: $scope.total_partial
-            };
-
-            console.log(data);
-
-            $http.post(API_URL + 'cliente/storeSolicitudSuministro', data).success(function(response){
-                if(response.success == true){
-                    $scope.initLoad();
-                    $scope.idsolicitud_to_process = response.idsolicitud;
-
-                    $('#btn-process-solsuministro').prop('disabled', false);
-                    $scope.message = 'Se ha ingresado la solicitud deseada correctamente...';
-                    $('#modalMessage').modal('show');
-                    $scope.hideModalMessage();
-                }
-            });*/
         };
 
         $scope.procesarSolicitudSuministro = function () {

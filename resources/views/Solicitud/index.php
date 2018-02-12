@@ -1879,7 +1879,7 @@
                             Guardar <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
                         </button>
                         <button type="button" class="btn btn-primary" id="btn-process-solsuministro"
-                                ng-click="procesarSolicitudSuministro()" disabled>
+                                ng-click="procesarSolicitud('btn-process-solsuministro')" disabled>
                             Procesar <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </button>
                     </div>
