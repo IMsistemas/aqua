@@ -147,12 +147,12 @@
 
         <tr>
             <th style="width: 30%;">CLIENTE</th>
-            <td></td>
+            <td><?= $filtro[0]->lastnamepersona . ' ' . $filtro[0]->namepersona ?></td>
         </tr>
 
         <tr>
             <th>CI</th>
-            <td></td>
+            <td><?= $filtro[0]->numdocidentific ?></td>
         </tr>
 
         </tbody>
@@ -169,21 +169,21 @@
 
         <tr>
             <th>Tarifa</th>
-            <td></td>
+            <td><?= $filtro[0]->nametarifaaguapotable ?></td>
             <th>Zona</th>
-            <td></td>
+            <td><?= $filtro[0]->namebarrio ?></td>
         </tr>
 
         <tr>
             <th>Transversal</th>
-            <td></td>
+            <td><?= $filtro[0]->namecalle ?></td>
             <th>Teléfono Instalación</th>
-            <td></td>
+            <td><?= $filtro[0]->telefonosuministro ?></td>
         </tr>
 
         <tr>
             <th>Dirección Instalación</th>
-            <td colspan="3"></td>
+            <td colspan="3"><?= $filtro[0]->direccionsumnistro ?></td>
         </tr>
 
         </tbody>
@@ -203,14 +203,14 @@
 
         <tr>
             <th>Agua Potable</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valoraguapotable ?></td>
             <th>Alcantarillado</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valoralcantarillado ?></td>
         </tr>
 
         <tr>
             <th>Garantía Apertura</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valorgarantia ?></td>
             <th></th>
             <td></td>
         </tr>
@@ -233,16 +233,16 @@
 
         <tr>
             <th>Cuota Inicial</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valorcuotainicial ?></td>
             <th>Crédito</th>
-            <td></td>
+            <td><?= $filtro[0]->dividendocredito ?></td>
         </tr>
 
         <tr>
             <th>Total</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valortotalsuministro ?></td>
             <th>Cuotas de</th>
-            <td>USD $ </td>
+            <td>USD $ <?= $filtro[0]->valortotalsuministro / $filtro[0]->dividendocredito ?></td>
         </tr>
 
         </tbody>
@@ -250,10 +250,10 @@
 
 </div>
 
-<div class="container" style="margin-top: 2%;">
-    <span style="font-size: 12px;">
+<div class="container" style="margin-top: 1%;">
+    <span style="font-size: 12px; margin-bottom: 25px;">
         <p>
-            El valor a plazos se cancelará en # dividendos de # dólares americanos más el consumo mensual.
+            El valor a plazos se cancelará en <?= $filtro[0]->dividendocredito ?> dividendos de <?= $filtro[0]->valortotalsuministro / $filtro[0]->dividendocredito ?> dólares americanos más el consumo mensual.
         </p>
 
         <p>
@@ -263,7 +263,30 @@
             El mismo que se suscribe en original y copia en común de acuerdo en:
         </p>
     </span>
+    <br><br>
+    <div class="col-xs-12" style="font-size: 12px !important;">
+
+        <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
+            <tbody>
+
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tr>
+                <th>SOLICITANTE</th>
+                <th><?= $aux_empresa[0]->nombrecomercial ?></th>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
 </div>
+
+
+
 
 </body>
 </html>

@@ -659,17 +659,30 @@ class SolicitudController extends Controller
 
     }
 
+    private function getDataSuministro($solicitudsuministro)
+    {
+        return SolicitudSuministro::join('solicitud', 'solicitud.idsolicitud', '=', 'solicitudsuministro.idsolicitud')
+                        ->join('cliente', 'cliente.idcliente', '=', 'solicitud.idcliente')
+                        ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
+                        ->join('suministro', 'suministro.idsuministro', '=', 'solicitudsuministro.idsuministro')
+                        ->join('tarifaaguapotable', 'tarifaaguapotable.idtarifaaguapotable', '=', 'suministro.idtarifaaguapotable')
+                        ->join('calle', 'calle.idcalle', '=', 'suministro.idcalle')
+                        ->join('barrio', 'barrio.idbarrio', '=', 'calle.idbarrio')
+                        ->where('solicitudsuministro.idsolicitudsuministro', $solicitudsuministro)->get();
+    }
+
+
     public function reporteContrato($solicitudsuministro)
     {
         ini_set('max_execution_time', 3000);
 
-        //$filtro = $this->getMantenimiento();
+        $filtro = $this->getDataSuministro($solicitudsuministro);
 
         $aux_empresa = SRI_Establecimiento::all();
 
         $today = date("Y-m-d H:i:s");
 
-        $view =  \View::make('Solicitud.contract', compact('today','aux_empresa'))->render();
+        $view =  \View::make('Solicitud.contract', compact('filtro','today','aux_empresa'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
 
