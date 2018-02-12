@@ -106,7 +106,7 @@
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                                 </button>-->
                                 <span ng-if="solicitud.tipo == 'Suministro'">
-                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.rutapdf)" title="Archivo de Solicitud">
+                                    <button type="button" class="btn btn-default" id="btn_pdf" ng-click="viewPDF(solicitud.solicitudsuministro)" title="Archivo de Solicitud">
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>
                                 </span>
@@ -122,7 +122,7 @@
                                 <!--<button type="button" class="btn btn-primary" id="btn_process" ng-click="showModalProcesar(solicitud)" >
                                     <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                                 </button>-->
-                                <span ng-if="solicitud.tipo == 'Suministro'">
+                                <span ng-if="solicitud.tipo == 'Suministro'" ng-hide="solicitud.estadoprocesada == false">
                                     <button type="button" class="btn btn-default" id="btn_pdf" disabled>
                                         <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true" style="color: red !important;"></i>
                                     </button>

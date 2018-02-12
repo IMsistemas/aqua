@@ -1659,9 +1659,16 @@
             });
         };
 
-        $scope.viewPDF = function (url) {
-            console.log(url);
-            window.open(url);
+        $scope.viewPDF = function (solicitudsuministro) {
+
+            var accion = API_URL + 'solicitud/reporteContrato/' + solicitudsuministro;
+
+            $('#WPrint_head').html('Contrato');
+
+            $('#bodyprint').html("<object width='100%' height='600' data='" + accion + "'></object>");
+
+            $('#WPrint').modal('show');
+
         };
 
         $scope.getListItem = function () {

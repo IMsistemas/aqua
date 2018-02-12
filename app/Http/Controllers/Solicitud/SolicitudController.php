@@ -606,7 +606,7 @@ class SolicitudController extends Controller
 
             $url_pdf = 'uploads/pdf_suministros/' . $name;
 
-            $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+            //$this->createPDF($request->input('data_to_pdf'), $url_pdf);
 
             $solicitudsuministro = SolicitudSuministro::find($id);
 
@@ -659,23 +659,25 @@ class SolicitudController extends Controller
 
     }
 
-    private function createPDF($data0, $url_pdf)
+    public function reporteContrato($solicitudsuministro)
     {
-        $data = json_decode($data0);
-        $plantilla = 'Solicitud.index_createpdf';
-        $view = \View::make($plantilla, compact('data'))->render();
+        ini_set('max_execution_time', 3000);
+
+        //$filtro = $this->getMantenimiento();
+
+        $aux_empresa = SRI_Establecimiento::all();
+
+        $today = date("Y-m-d H:i:s");
+
+        $view =  \View::make('Solicitud.contract', compact('today','aux_empresa'))->render();
+
         $pdf = \App::make('dompdf.wrapper');
+
         $pdf->loadHTML($view);
 
-        if (! is_dir(public_path().'/uploads/')){
-            mkdir(public_path().'/uploads/');
-        }
+        $pdf->setPaper('A4', 'portrait');
 
-        if (! is_dir(public_path().'/uploads/pdf_suministros/')){
-            mkdir(public_path().'/uploads/pdf_suministros/');
-        }
-
-        return @$pdf->save(public_path() . '/' . $url_pdf);
+        return @$pdf->stream('reportM_' . $today);
     }
 
 

@@ -49,6 +49,8 @@ Route::get('solicitud/getTasaInteres', 'Solicitud\SolicitudController@getTasaInt
 
 Route::get('solicitud/reporte_printM', 'Solicitud\SolicitudController@reporte_printM');
 
+Route::get('solicitud/reporteContrato/{solicitudsuministro}', 'Solicitud\SolicitudController@reporteContrato');
+
 Route::get('solicitud/getSolicitudes', 'Solicitud\SolicitudController@getSolicitudes');
 Route::get('solicitud/getSolicitudOtro/{id}', 'Solicitud\SolicitudController@getSolicitudOtro');
 Route::get('solicitud/getSolicitudMantenimiento/{id}', 'Solicitud\SolicitudController@getSolicitudMantenimiento');
