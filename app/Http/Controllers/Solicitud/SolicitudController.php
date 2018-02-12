@@ -315,11 +315,11 @@ class SolicitudController extends Controller
 
                     $ooo->save();
 
-                    $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
+                    /*$name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
 
                     $url_pdf = 'uploads/pdf_suministros/' . $name;
 
-                    $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+                    $this->createPDF($request->input('data_to_pdf'), $url_pdf);*/
 
                     return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
 

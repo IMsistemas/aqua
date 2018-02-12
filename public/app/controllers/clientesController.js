@@ -924,8 +924,6 @@
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
 
-                //idproducto: $scope.iditem,
-
                 idsolicitud: $scope.num_solicitud_suministro,
 
                 formapago: $scope.s_suministro_formapago,
@@ -936,7 +934,7 @@
             console.log(data);
 
             $http.post(API_URL + 'solicitud/storeSolicitudSuministro', data).success(function(response){
-                if(response.success == true){
+                if(response.success === true){
                     $scope.initLoad();
                     $scope.idsolicitud_to_process = response.idsolicitud;
 
