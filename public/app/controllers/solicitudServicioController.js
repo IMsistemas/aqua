@@ -1335,6 +1335,8 @@
 
                 console.log(response);
 
+                $scope.idsolicitud_to_process = response[0].idsolicitud;
+
                 $scope.t_suministro_telf = response[0].telefonosuminstro;
                 $scope.t_suministro_direccion = response[0].direccioninstalacion;
 
@@ -1493,10 +1495,62 @@
 
         $scope.saveSolicitudSuministro = function () {
 
-            var data = {
+            /*var data = {
                 direccionsuministro: $scope.t_suministro_direccion,
                 telefonosuministro: $scope.t_suministro_telf,
+            };*/
+
+
+            var tarifa = $('#s_suministro_tarifa option:selected').text();
+            var zona = $('#s_suministro_zona option:selected').text();
+            var transversal = $('#s_suministro_transversal option:selected').text();
+
+            /*var data_to_pdf = {
+                tarifa: tarifa,
+                zona: zona,
+                transversal: transversal,
+                no_suministro: $scope.t_suministro_nro,
+                nomcliente: $scope.nom_cliente_suministro,
+                ci: $scope.objectAction.numdocidentific,
+                telefono: $scope.t_suministro_telf,
+                direccion: $scope.t_suministro_direccion,
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+                total_suministro: $scope.total_suministro
+
+            };*/
+
+            var data = {
+                idtarifa: $scope.s_suministro_tarifa,
+                idcalle: $scope.s_suministro_transversal,
+
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+
+                codigocliente: $scope.codigoclienteSuministro,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+
+                idsolicitud: $scope.num_solicitud_suministro,
+
+                formapago: $scope.s_suministro_formapago,
+
+                //data_to_pdf: JSON.stringify(data_to_pdf)
             };
+
+            console.log(data);
+
+
             var idsolicitud = $scope.num_solicitud_suministro;
 
             $http.put(API_URL + 'solicitud/updateSolicitudSuministro/' + idsolicitud, data).success(function(response){
@@ -1660,7 +1714,7 @@
             $http.put(url, data ).success(function (response) {
                 $scope.idsolicitud_to_process = 0;
 
-                $scope.initLoad();
+                $scope.initLoad(1);
 
                 $('#' + id_btn).prop('disabled', true);
 

@@ -277,6 +277,7 @@ class SolicitudController extends Controller
                     $cobrocliente->idcatalogitem = 2;
                     $cobrocliente->valor = $request->input('garantia');
                     $cobrocliente->idcliente = $request->input('codigocliente');
+                    $cobrocliente->idsuministro = $suministro->idsuministro;
                     $cobrocliente->save();
 
                     $dividendos = $request->input('dividendos');
@@ -289,6 +290,7 @@ class SolicitudController extends Controller
                         $cobrocliente->idcatalogitem = 1;
                         $cobrocliente->valor = $valor;
                         $cobrocliente->idcliente = $request->input('codigocliente');
+                        $cobrocliente->idsuministro = $suministro->idsuministro;
                         $cobrocliente->save();
 
                     }
@@ -914,7 +916,7 @@ class SolicitudController extends Controller
 
         if ($solicitudsuministro->save() != false) {
 
-            $temp_solicitud = SolicitudSuministro::find($solicitudsuministro->idsuministro);
+            $temp_solicitud = SolicitudSuministro::find($solicitudsuministro->idsolicitudsuministro);
 
             $suministro = Suministro::find($temp_solicitud->idsuministro);
 
@@ -936,12 +938,15 @@ class SolicitudController extends Controller
 
             if ($suministro->save()) {
 
+                CobroCliente::where('idsuministro', $temp_solicitud->idsuministro)->delete();
+
 
                 $cobrocliente = new CobroCliente();
 
                 $cobrocliente->idcatalogitem = 2;
                 $cobrocliente->valor = $request->input('garantia');
                 $cobrocliente->idcliente = $request->input('codigocliente');
+                $cobrocliente->idsuministro = $suministro->idsuministro;
                 $cobrocliente->save();
 
                 $dividendos = $request->input('dividendos');
@@ -954,6 +959,7 @@ class SolicitudController extends Controller
                     $cobrocliente->idcatalogitem = 1;
                     $cobrocliente->valor = $valor;
                     $cobrocliente->idcliente = $request->input('codigocliente');
+                    $cobrocliente->idsuministro = $suministro->idsuministro;
                     $cobrocliente->save();
 
                 }
