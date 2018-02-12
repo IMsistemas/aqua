@@ -958,26 +958,23 @@ class SolicitudController extends Controller
 
                 }
 
-
-                $o = new SuministroCatalogItem();
-                $o->idsuministro = $suministro->idsuministro;
-                $o->idcatalogitem = 1;
+                $o = SuministroCatalogItem::where('idsuministro', $temp_solicitud->idsuministro)
+                                            ->where('idcatalogitem', 1)->get();
+                $o = SuministroCatalogItem::find($o[0]->idsuministro_catalogitem);
                 $o->valor = $request->input('valor_partial');
-
                 $o->save();
 
-                $oo = new SuministroCatalogItem();
-                $oo->idsuministro = $suministro->idsuministro;
-                $oo->idcatalogitem = 2;
-                $oo->valor = $request->input('garantia');
 
+                $oo = SuministroCatalogItem::where('idsuministro', $temp_solicitud->idsuministro)
+                                                ->where('idcatalogitem', 2)->get();
+                $oo = SuministroCatalogItem::find($oo[0]->idsuministro_catalogitem);
+                $oo->valor = $request->input('garantia');
                 $oo->save();
 
-                $ooo = new SuministroCatalogItem();
-                $ooo->idsuministro = $suministro->idsuministro;
-                $ooo->idcatalogitem = 3;
+                $ooo = SuministroCatalogItem::where('idsuministro', $temp_solicitud->idsuministro)
+                                                ->where('idcatalogitem', 3)->get();
+                $ooo = SuministroCatalogItem::find($ooo[0]->idsuministro_catalogitem);
                 $ooo->valor = $request->input('cuota_inicial');
-
                 $ooo->save();
 
                 /*$name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
