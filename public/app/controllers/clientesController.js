@@ -26,30 +26,6 @@
 
         $scope.s_estado_search = '0';
 
-        /*$scope.initLoad = function () {
-
-            $http.get(API_URL + 'cliente/getConfiguracion').success(function(response){
-
-                console.log(response);
-
-                $scope.tasainteres = parseFloat(response[0].tasainteres);
-
-            });
-
-            $http.get(API_URL + 'cliente/getClientes').success(function(response){
-                var longitud = response.length;
-                for (var i = 0; i < longitud; i++) {
-                    var complete_name = {
-                        value: response[i].apellidos + ', ' + response[i].nombres,
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    };
-                    Object.defineProperty(response[i], 'complete_name', complete_name);
-                }
-                $scope.clientes = response;
-            });
-        };*/
 
         $scope.nowDate = function () {
             var now = new Date();
@@ -88,15 +64,15 @@
 
         $scope.initLoad = function (pageNumber) {
 
-
             $http.get(API_URL + 'solicitud/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
 
+            var search = null;
 
-            if ($scope.busqueda == undefined) {
-                var search = null;
-            } else var search = $scope.busqueda;
+            if ($scope.busqueda !== undefined) {
+                search = $scope.busqueda;
+            }
 
             var filtros = {
                 search: search,
@@ -107,6 +83,7 @@
 
                 $scope.clientes = response.data;
                 $scope.totalItems = response.total;
+
             });
         };
 
@@ -890,9 +867,10 @@
         };
 
         $scope.saveSolicitudSuministro = function () {
+
             $('#btn-save-solsuministro').prop('disabled', true);
 
-            var data = {
+            /*var data = {
                 idtarifa: $scope.s_suministro_tarifa,
                 idcalle: $scope.s_suministro_transversal,
                 garantia: $scope.t_suministro_garantia,
@@ -904,6 +882,55 @@
                 dividendos: $scope.s_suministro_credito,
                 valor_partial: $scope.total_partial,
                 formapago: $scope.s_suministro_formapago
+            };*/
+
+            var tarifa = $('#s_suministro_tarifa option:selected').text();
+            var zona = $('#s_suministro_zona option:selected').text();
+            var transversal = $('#s_suministro_transversal option:selected').text();
+
+            var data_to_pdf = {
+                tarifa: tarifa,
+                zona: zona,
+                transversal: transversal,
+                no_suministro: $scope.t_suministro_nro,
+                nomcliente: $scope.nom_cliente_suministro,
+                ci: $scope.objectAction.numdocidentific,
+                telefono: $scope.t_suministro_telf,
+                direccion: $scope.t_suministro_direccion,
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+                total_suministro: $scope.total_suministro
+
+            };
+
+            var data = {
+                idtarifa: $scope.s_suministro_tarifa,
+                idcalle: $scope.s_suministro_transversal,
+
+                agua_potable: $scope.t_suministro_aguapotable,
+                alcantarillado: $scope.t_suministro_alcantarillado,
+                garantia: $scope.t_suministro_garantia,
+                cuota_inicial: $scope.t_suministro_cuota,
+                valor: $scope.total_suministro,
+                dividendos: $scope.s_suministro_credito,
+                valor_partial: $scope.total_partial,
+
+                codigocliente: $scope.objectAction.idcliente,
+                direccionsuministro: $scope.t_suministro_direccion,
+                telefonosuministro: $scope.t_suministro_telf,
+
+                //idproducto: $scope.iditem,
+
+                idsolicitud: $scope.num_solicitud_suministro,
+
+                formapago: $scope.s_suministro_formapago,
+
+                data_to_pdf: JSON.stringify(data_to_pdf)
             };
 
             console.log(data);

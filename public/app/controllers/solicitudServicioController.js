@@ -46,6 +46,9 @@
 
         $scope.initLoad = function (pageNumber) {
 
+            $scope.getDividendo();
+
+
             $http.get(API_URL + 'solicitud/getTasaInteres').success(function(response){
                 $scope.tasainteres = parseFloat(response[0].optionvalue);
             });
@@ -1157,9 +1160,9 @@
 
         $scope.calculateTotalSuministro = function () {
 
-            console.log($scope.s_suministro_credito);
+            /*console.log($scope.s_suministro_credito);
             console.log($scope.t_suministro_cuota);
-            console.log($scope.tasainteres);
+            console.log($scope.tasainteres);*/
 
 
             if ($scope.t_suministro_aguapotable !== '' && $scope.t_suministro_alcantarillado !== '' &&
@@ -1181,21 +1184,24 @@
 
                 var cuotas = M / $scope.s_suministro_credito;*/
 
-                var n = $scope.s_suministro_credito / 12;
+                var n = parseFloat($scope.s_suministro_credito) / 12;
 
                 var C = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
-                if ($scope.t_suministro_costomedidor != ''){
-                    C += parseFloat($scope.t_suministro_costomedidor);
-                }
 
-                var I = n * ($scope.tasainteres / 100) * C;
+                /*if ($scope.t_suministro_costomedidor !== ''){
+                    C += parseFloat($scope.t_suministro_costomedidor);
+                }*/
+
+                var I = n * (parseFloat($scope.tasainteres) / 100) * C;
 
                 var M = C + I;
 
-                var cuotas = (M - parseFloat($scope.t_suministro_cuota)) / $scope.s_suministro_credito;
+                var cuotas = (M - parseFloat($scope.t_suministro_cuota)) / parseFloat($scope.s_suministro_credito);
+
+                console.log(C);
 
                 $scope.total_partial = M.toFixed(2);
-                $scope.credit_cant = $scope.s_suministro_credito;
+                $scope.credit_cant = parseFloat($scope.s_suministro_credito);
                 $scope.total_suministro = cuotas.toFixed(2);
 
                 /*var total_partial = parseFloat($scope.t_suministro_aguapotable) + parseFloat($scope.t_suministro_alcantarillado);
@@ -1315,7 +1321,7 @@
             $scope.getLastIDSuministro();
             $scope.getTarifas();
             $scope.getBarrios();
-            $scope.getDividendo();
+            //$scope.getDividendo();
 
             console.log(solicitud);
 
@@ -1332,35 +1338,41 @@
                 $scope.t_suministro_telf = response[0].telefonosuminstro;
                 $scope.t_suministro_direccion = response[0].direccioninstalacion;
 
+
+                $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
+                $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
+
+                $scope.getCalles(response[0].suministro.calle.idcalle);
+
+                $scope.s_suministro_transversal = response[0].suministro.calle.idcalle;
+
+                $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
+
+                $scope.t_suministro_aguapotable = response[0].suministro.valoraguapotable;
+                $scope.t_suministro_alcantarillado = response[0].suministro.valoralcantarillado;
+                $scope.t_suministro_garantia = response[0].suministro.valorgarantia;
+                $scope.t_suministro_cuota = response[0].suministro.valorcuotainicial;
+
+                console.log(parseInt(response[0].suministro.dividendocredito).toString());
+
+                $scope.s_suministro_credito = parseInt(response[0].suministro.dividendocredito);
+
+                $scope.s_suministro_formapago = response[0].suministro.formapago.toString();
+
+                $scope.calculateTotalSuministro();
+
+                if(response[0].suministro.cont_catalogitem != null) {
+                    $scope.t_suministro_medidor = true;
+                    $scope.t_suministro_marca = response[0].suministro.cont_catalogitem.nombreproducto;
+                    $scope.t_suministro_costomedidor = response[0].suministro.cont_catalogitem.precioventa;
+                } else {
+                    $scope.t_suministro_medidor = false;
+                    $scope.t_suministro_marca = '';
+                    $scope.t_suministro_costomedidor = '';
+                }
+
+
                 if(solicitud.estadoprocesada == true) {
-
-                    $scope.s_suministro_tarifa = response[0].suministro.tarifaaguapotable.idtarifaaguapotable;
-                    $scope.s_suministro_zona = response[0].suministro.calle.barrio.idbarrio;
-
-                    $scope.getCalles(response[0].suministro.calle.idcalle);
-
-                    $scope.s_suministro_transversal = response[0].suministro.calle.idcalle;
-
-                    $scope.num_solicitud_suministro = response[0].idsolicitudsuministro;
-
-                    $scope.t_suministro_aguapotable = response[0].suministro.valoraguapotable;
-                    $scope.t_suministro_alcantarillado = response[0].suministro.valoralcantarillado;
-                    $scope.t_suministro_garantia = response[0].suministro.valorgarantia;
-                    $scope.t_suministro_cuota = response[0].suministro.valorcuotainicial;
-
-                    $scope.s_suministro_credito = response[0].suministro.dividendocredito;
-
-                    $scope.s_suministro_formapago = response[0].suministro.formapago;
-
-                    if(response[0].suministro.cont_catalogitem != null) {
-                        $scope.t_suministro_medidor = true;
-                        $scope.t_suministro_marca = response[0].suministro.cont_catalogitem.nombreproducto;
-                        $scope.t_suministro_costomedidor = response[0].suministro.cont_catalogitem.precioventa;
-                    } else {
-                        $scope.t_suministro_medidor = false;
-                        $scope.t_suministro_marca = '';
-                        $scope.t_suministro_costomedidor = '';
-                    }
 
                     $('#s_suministro_tarifa').prop('disabled', true);
                     $('#s_suministro_zona').prop('disabled', true);
@@ -1384,7 +1396,7 @@
 
                 } else {
 
-                    $scope.t_suministro_aguapotable = '';
+                    /*$scope.t_suministro_aguapotable = '';
                     $scope.t_suministro_alcantarillado = '';
                     $scope.t_suministro_garantia = '';
                     //$scope.t_suministro_medidor = false;
@@ -1392,7 +1404,7 @@
                     //$scope.t_suministro_costomedidor = '';
                     //$scope.t_suministro_cuota = '';
 
-                    $scope.s_suministro_formapago = '';
+                    $scope.s_suministro_formapago = '';*/
 
                     $('#s_suministro_tarifa').prop('disabled', false);
                     $('#s_suministro_zona').prop('disabled', false);

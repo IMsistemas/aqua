@@ -351,7 +351,7 @@
     <div class="modal-content">
       <div class="modal-header btn-primary" id="titulomsm">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Plan de cuentas contables</h4>
+        <h4 class="modal-title">Plan de Cuentas</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -363,7 +363,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12" style="height:380px; overflow: auto;">
             <table class="table table-bordered table-condensed">
               <thead>
                 <tr class="btn-primary">

@@ -678,7 +678,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12">
+                        <div class="col-xs-12" style="height:380px; overflow: auto;">
                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                 <thead class="bg-primary">
                                 <tr>

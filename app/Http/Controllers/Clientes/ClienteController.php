@@ -73,9 +73,9 @@ class ClienteController extends Controller
 
         if ($estado != '0') {
             if ($estado == '1') {
-                $cliente = $cliente->where("cliente.estado", true);
+                $cliente = $cliente->where('cliente.estado', true);
             } else {
-                $cliente = $cliente->where("cliente.estado", false);
+                $cliente = $cliente->where('cliente.estado', false);
             }
         }
 
@@ -117,7 +117,6 @@ class ClienteController extends Controller
 
     public function getIVADefault()
     {
-        //return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')->get();
 
         return ConfiguracionSystem::where('optionname', 'SRI_IVA_DEFAULT')
                                     ->orWhere('optionname','CONT_CLIENT_DEFAULT')

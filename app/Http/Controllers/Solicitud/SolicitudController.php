@@ -240,11 +240,98 @@ class SolicitudController extends Controller
             $solicitudsuministro->telefonosuminstro = $request->input('telefonosuministro');
 
             if ($solicitudsuministro->save() != false) {
-                return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+
+                $fecha_actual = date('Y-m-d');
+
+                $suministro = new Suministro();
+                $suministro->idcalle = $request->input('idcalle');
+                $suministro->idcliente = $request->input('codigocliente');
+                $suministro->idtarifaaguapotable = $request->input('idtarifa');
+                $suministro->direccionsumnistro = $request->input('direccionsuministro');
+                $suministro->telefonosuministro = $request->input('telefonosuministro');
+                $suministro->fechainstalacion = $fecha_actual;
+
+                $suministro->valoraguapotable = $request->input('agua_potable');
+                $suministro->valoralcantarillado = $request->input('alcantarillado');
+                $suministro->valorgarantia = $request->input('garantia');
+                $suministro->valorcuotainicial = $request->input('cuota_inicial');
+                $suministro->dividendocredito = $request->input('dividendos');
+
+                $suministro->valortotalsuministro = $request->input('valor_partial');
+
+                $suministro->formapago = $request->input('formapago');
+
+                $numconexion = Suministro::max('numconexion');
+
+                $suministro->numconexion = $numconexion + 1;
+
+
+                if ($suministro->save()) {
+
+                    $updateSolicitudSuministro = SolicitudSuministro::find($solicitudsuministro->idsolicitudsuministro);
+                    $updateSolicitudSuministro->idsuministro = $suministro->idsuministro;
+                    $updateSolicitudSuministro->save();
+
+                    $cobrocliente = new CobroCliente();
+
+                    $cobrocliente->idcatalogitem = 2;
+                    $cobrocliente->valor = $request->input('garantia');
+                    $cobrocliente->idcliente = $request->input('codigocliente');
+                    $cobrocliente->save();
+
+                    $dividendos = $request->input('dividendos');
+                    $valor = $request->input('valor_partial') / $dividendos;
+
+                    for ($i = 0; $i < $dividendos; $i++) {
+
+                        $cobrocliente = new CobroCliente();
+
+                        $cobrocliente->idcatalogitem = 1;
+                        $cobrocliente->valor = $valor;
+                        $cobrocliente->idcliente = $request->input('codigocliente');
+                        $cobrocliente->save();
+
+                    }
+
+
+                    $o = new SuministroCatalogItem();
+                    $o->idsuministro = $suministro->idsuministro;
+                    $o->idcatalogitem = 1;
+                    $o->valor = $request->input('valor_partial');
+
+                    $o->save();
+
+                    $oo = new SuministroCatalogItem();
+                    $oo->idsuministro = $suministro->idsuministro;
+                    $oo->idcatalogitem = 2;
+                    $oo->valor = $request->input('garantia');
+
+                    $oo->save();
+
+                    $ooo = new SuministroCatalogItem();
+                    $ooo->idsuministro = $suministro->idsuministro;
+                    $ooo->idcatalogitem = 3;
+                    $ooo->valor = $request->input('cuota_inicial');
+
+                    $ooo->save();
+
+                    $name = date('Ymd') . '_' . $suministro->idsuministro . '.pdf';
+
+                    $url_pdf = 'uploads/pdf_suministros/' . $name;
+
+                    $this->createPDF($request->input('data_to_pdf'), $url_pdf);
+
+                    return response()->json(['success' => true, 'idsolicitud' => $solicitudsuministro->idsolicitudsuministro]);
+
+                } else return response()->json(['success' => false]);
+
+
             } else return response()->json(['success' => false]);
 
         } else {
+
             return response()->json(['success' => false]);
+
         }
     }
 
