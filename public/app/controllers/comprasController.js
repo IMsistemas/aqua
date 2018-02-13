@@ -544,17 +544,19 @@
             $scope.Totaldescuento=aux_totaldescuento.toFixed(4);
             $scope.ValICE=aux_totalIce.toFixed(4);
 
-            console.log($scope.Configuracion);
+
 
             if(parseFloat($scope.ValICE)>0){
                 for(x=0;x<$scope.Configuracion.length;x++){
-                    if($scope.Configuracion[x].Descripcion=="CONT_ICE_VENTA"){
+
+                    if($scope.Configuracion[x].Descripcion==="CONT_ICE_COMPRA"){
+
                         if($scope.Configuracion[x].IdContable==null){
                             $scope.ValidacionCueContExt="1";
                             QuitarClasesMensaje();
                             $("#titulomsm").addClass("btn-danger");
                             $("#msm").modal("show");
-                            $scope.Mensaje="La venta necesita la cuenta contable de ICE";
+                            $scope.Mensaje="La Transacción necesita la cuenta contable de ICE";
                         }else{
                             $scope.ValidacionCueContExt="0";
                         }
@@ -563,13 +565,13 @@
             }
             if(parseFloat($scope.ValIRBPNR)>0){
                 for(x=0;x<$scope.Configuracion.length;x++){
-                    if($scope.Configuracion[x].Descripcion=="CONT_IRBPNR_VENTA"){
+                    if($scope.Configuracion[x].Descripcion==="CONT_IRBPNR_COMPRA"){
                         if($scope.Configuracion[x].IdContable==null){
                             $scope.ValidacionCueContExt="1";
                             QuitarClasesMensaje();
                             $("#titulomsm").addClass("btn-danger");
                             $("#msm").modal("show");
-                            $scope.Mensaje="La venta necesita la cuenta contable de IRBPNR";
+                            $scope.Mensaje="La Transacción necesita la cuenta contable de IRBPNR";
                         }else{
                             $scope.ValidacionCueContExt="0";
                         }
@@ -579,13 +581,13 @@
 
             if(parseFloat($scope.ValPropina)>0){
                 for(x=0;x<$scope.Configuracion.length;x++){
-                    if($scope.Configuracion[x].Descripcion=="CONT_PROPINA_VENTA"){
+                    if($scope.Configuracion[x].Descripcion==="CONT_PROPINA_COMPRA"){
                         if($scope.Configuracion[x].IdContable==null){
                             $scope.ValidacionCueContExt="1";
                             QuitarClasesMensaje();
                             $("#titulomsm").addClass("btn-danger");
                             $("#msm").modal("show");
-                            $scope.Mensaje="La venta necesita la cuenta contable de PROPINA";
+                            $scope.Mensaje="La Transacción necesita la cuenta contable de PROPINA";
                         }else{
                             $scope.ValidacionCueContExt="0";
                         }

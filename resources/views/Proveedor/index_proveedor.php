@@ -33,7 +33,7 @@
                         <th>DIRECCION</th>
                         <th style="width: 8%">TELEFONO</th>
                         <th style="width: 8%">CELULAR</th>
-                        <th style="width: 24%;">ACCIONES</th>
+                        <th style="width: 30%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>

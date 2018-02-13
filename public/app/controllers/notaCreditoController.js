@@ -583,7 +583,7 @@ $scope.cmb_estado_fact="A";
 
         var costoventa={};
     	for(i=0;i<$scope.Configuracion.length;i++){
-    		if($scope.Configuracion[i].Descripcion=="CONT_COSTO_VENTA"){
+    		if($scope.Configuracion[i].Descripcion=="CONT_COSTO_NC"){
     			var auxcosto=$scope.Configuracion[i].Contabilidad;
     			costoventa=auxcosto[0];
     		}
