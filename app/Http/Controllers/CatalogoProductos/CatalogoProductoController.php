@@ -267,11 +267,11 @@ class CatalogoProductoController extends Controller
      	
      	return Cont_CatalogItem::join('sri_tipoimpuestoiva', 'sri_tipoimpuestoiva.idtipoimpuestoiva', '=', 'cont_catalogitem.idtipoimpuestoiva')
 		     	->leftJoin('sri_tipoimpuestoice', 'sri_tipoimpuestoice.idtipoimpuestoice', '=', 'cont_catalogitem.idtipoimpuestoice')
-		     	//->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
+		     	->join('cont_plancuenta as p1', 'p1.idplancuenta', '=', 'cont_catalogitem.idplancuenta')
 		     	->leftJoin('cont_plancuenta as p2', 'p2.idplancuenta', '=', 'cont_catalogitem.idplancuenta_ingreso')
 		     	->join('cont_claseitem', 'cont_claseitem.idclaseitem', '=', 'cont_catalogitem.idclaseitem')
 		     	->join('cont_categoria', 'cont_categoria.idcategoria', '=', 'cont_catalogitem.idcategoria')
-		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia', 'p2.concepto as c2')
+		     	->select('cont_catalogitem.*','sri_tipoimpuestoiva.nametipoimpuestoiva','sri_tipoimpuestoice.nametipoimpuestoice', 'cont_claseitem.nameclaseitem', 'cont_categoria.nombrecategoria', 'cont_categoria.jerarquia', 'p2.concepto as c2', 'p1.concepto as c1')
 		     	->whereRaw("cont_catalogitem.idcatalogitem = '".$id."'")
 		     	->first();
      }

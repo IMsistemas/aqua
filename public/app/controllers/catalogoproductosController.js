@@ -74,7 +74,6 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
         });
        
     };
-    
 
 	
     $scope.toggle = function(modalstate, id) {
@@ -236,10 +235,12 @@ app.controller('catalogoproductosController',  function($scope, $http, API_URL,U
                 	$scope.idcat = $scope.producto.idcategoria;
 	                $scope.loadSubLinea($scope.s_linea,false, $scope.idcat);
 	                 
-	                $scope.t_cuentacontable = $scope.producto.concepto;	                
+	                $scope.h_idplancuenta_i = $scope.producto.idplancuenta_ingreso;
 	                $scope.t_cuentacontableingreso = $scope.producto.c2;
-	                
-	                
+
+                    //$scope.t_cuentacontable = $scope.producto.idplancuenta;
+                    $scope.t_cuentacontable = $scope.producto.c1;
+
 	                $scope.thumbnail = {
 	            	        dataUrl: $scope.producto.foto
 	            	    };

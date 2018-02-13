@@ -463,7 +463,6 @@
             }
 
 
-
             $scope.tipoempresa = item.sri_tipoempresa.nametipoempresa;
             $scope.tipoparte= item.sri_parte.nameparte;
 
