@@ -11,7 +11,7 @@
     </div>
 
     <div class="container" style="margin-top: 5px;">
-        <div class="col-sm-6 col-xs-12">
+        <div class="col-sm-5 col-xs-12">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" id="t_busqueda" placeholder="BUSCAR..." ng-model="busqueda" ng-keyup="initLoad(1)">
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -27,7 +27,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-sm-3 col-xs-12">
+        <div class="col-sm-4 col-xs-12">
 
             <!--<div class="btn-group" role="group" aria-label="...">
                 <button type="button" class="btn btn-primary" style="" ng-click="showModalAddCliente()">
@@ -41,11 +41,15 @@
             <div class="btn-group" role="group" aria-label="...">
 
                 <button type="button" class="btn btn-primary" id="btn-generate" ng-click="generate()" >
-                    GENERAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    GENERAR <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 </button>
 
                 <button type="button" class="btn btn-warning" id="btn-generate" ng-click="showCierreCaja()" >
                     CIERRE <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                </button>
+
+                <button type="button" class="btn btn-info" id="btn-update" ng-click="initLoad(1)" >
+                    ACTUALIZAR <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                 </button>
 
             </div>
