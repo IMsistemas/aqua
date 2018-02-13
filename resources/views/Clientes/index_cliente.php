@@ -475,7 +475,7 @@
             </div>
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modalInfoCliente">
-                <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header modal-header-info">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -483,37 +483,68 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-xs-12 text-center" style="margin-bottom: 10px; font-weight: bold;">DATOS PERSONALES</div>
+
                                 <div class="col-xs-12">
-                                    <span style="font-weight: bold">CI / RUC: </span>{{identify_cliente}}
+                                    <table class="table table-responsive table-hover table-condensed table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <th class="bg-info">Razón Social</th>
+                                            <td>{{name_cliente}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">Dirección</th>
+                                            <td>{{address_cliente}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-responsive table-hover table-condensed table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <th class="bg-info">CI / RUC</th>
+                                            <td>{{identify_cliente}}</td>
+                                            <th class="bg-info">Fecha Solicitud</th>
+                                            <td>{{fecha_solicitud}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-info">Email</th>
+                                            <td colspan="3">{{email_cliente}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-responsive table-hover table-condensed table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="bg-info">Celular</th>
+                                                <td>{{celular_cliente}}</td>
+                                                <th class="bg-info">Teléfonos Domicilio</th>
+                                                <td>{{telf_cliente}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="bg-info">Teléfonos Trabajo</th>
+                                                <td>{{telf_cliente_emp}}</td>
+                                                <th class="bg-info">Tipo</th>
+                                                <td>{{tipoempresa}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-responsive table-hover table-condensed table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <th class="bg-info">Tipo Parte</th>
+                                            <td>{{tipoparte}}</td>
+                                            <th class="bg-info">Estado</th>
+                                            <td>{{estado_solicitud}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Fecha Solicitud: </span>{{fecha_solicitud}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Dirección Domicilio: </span>{{address_cliente}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Email: </span>{{email_cliente}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Celular: </span>{{celular_cliente}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Teléfonos Domicilio: </span>{{telf_cliente}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Teléfonos Trabajo: </span>{{telf_cliente_emp}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Tipo: </span>{{tipoempresa}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Tipo Parte: </span>{{tipoparte}}
-                                </div>
-                                <div class="col-xs-12">
-                                    <span style="font-weight: bold">Estado: </span>{{estado_solicitud}}
-                                </div>
+
+
+
+
+
 
                             </div>
                         </div>

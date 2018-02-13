@@ -432,14 +432,37 @@
         };
 
         $scope.showModalInfoCliente = function (item) {
+
+            console.log(item);
+
             $scope.name_cliente = item.razonsocial;
             $scope.identify_cliente = item.numdocidentific;
             $scope.fecha_solicitud = item.fechaingreso;
             $scope.address_cliente = item.direccion;
             $scope.email_cliente = item.email;
             $scope.celular_cliente = item.celphone;
-            $scope.telf_cliente = item.telefonoprincipaldomicilio + ' / ' + item.telefonosecundariodomicilio;
-            $scope.telf_cliente_emp = item.telefonoprincipaltrabajo + ' / ' + item.telefonosecundariotrabajo;
+
+            if (item.telefonoprincipaldomicilio !== null && item.telefonosecundariodomicilio !== null) {
+                $scope.telf_cliente = item.telefonoprincipaldomicilio + ' / ' + item.telefonosecundariodomicilio;
+            } else if (item.telefonoprincipaldomicilio === null && item.telefonosecundariodomicilio !== null) {
+                $scope.telf_cliente = item.telefonosecundariodomicilio;
+            } else if (item.telefonoprincipaldomicilio !== null && item.telefonosecundariodomicilio === null) {
+                $scope.telf_cliente = item.telefonoprincipaldomicilio;
+            } else {
+                $scope.telf_cliente = '';
+            }
+
+            if (item.telefonoprincipaltrabajo !== null && item.telefonosecundariotrabajo !== null) {
+                $scope.telf_cliente_emp = item.telefonoprincipaltrabajo + ' / ' + item.telefonosecundariotrabajo;
+            } else if (item.telefonoprincipaltrabajo === null && item.telefonosecundariotrabajo !== null) {
+                $scope.telf_cliente_emp = item.telefonosecundariotrabajo;
+            } else if (item.telefonoprincipaltrabajo !== null && item.telefonosecundariotrabajo === null) {
+                $scope.telf_cliente_emp = item.telefonoprincipaltrabajo;
+            } else {
+                $scope.telf_cliente_emp = '';
+            }
+
+
 
             $scope.tipoempresa = item.sri_tipoempresa.nametipoempresa;
             $scope.tipoparte= item.sri_parte.nameparte;
