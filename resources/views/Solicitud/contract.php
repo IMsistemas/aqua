@@ -146,6 +146,11 @@
         <tbody>
 
         <tr>
+            <th style="width: 30%;">NO: CONEXION</th>
+            <td><?= $filtro[0]->numconexion?></td>
+        </tr>
+
+        <tr>
             <th style="width: 30%;">CLIENTE</th>
             <td><?= $filtro[0]->lastnamepersona . ' ' . $filtro[0]->namepersona ?></td>
         </tr>
