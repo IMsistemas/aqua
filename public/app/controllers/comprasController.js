@@ -301,22 +301,14 @@
                     $scope.Configuracion=response;
                     //console.log(response);
                     for(x=0;x<$scope.Configuracion.length;x++){
-                        if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
+
+                        if($scope.Configuracion[x].Descripcion=="CONT_IVA_COMPRA"){
                             if($scope.Configuracion[x].IdContable==null){
                                 $scope.Valida="1";
                                 QuitarClasesMensaje();
                                 $("#titulomsm").addClass("btn-danger");
                                 $("#msm").modal("show");
-                                $scope.Mensaje="La venta necesita la cuenta contable de COSTO DE VENTA";
-                            }
-                        }
-                        if($scope.Configuracion[x].Descripcion=="CONT_IVA_VENTA"){
-                            if($scope.Configuracion[x].IdContable==null){
-                                $scope.Valida="1";
-                                QuitarClasesMensaje();
-                                $("#titulomsm").addClass("btn-danger");
-                                $("#msm").modal("show");
-                                $scope.Mensaje="La venta necesita la cuenta contable de IVA DE VENTA";
+                                $scope.Mensaje="La Transacción necesita la cuenta contable de IVA DE COMPRA";
                             }
                         }
                     }
@@ -324,7 +316,7 @@
                         QuitarClasesMensaje();
                         $("#titulomsm").addClass("btn-danger");
                         $("#msm").modal("show");
-                        $scope.Mensaje="La venta necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
+                        $scope.Mensaje="La Transacción necesita que llene los campos de configuracion esten llenos para poder realizar esta transaccion";
                     }
                 }).error(function(res){
                 QuitarClasesMensaje();
