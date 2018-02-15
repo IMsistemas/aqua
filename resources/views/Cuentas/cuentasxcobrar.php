@@ -50,7 +50,7 @@
                         <th style="width: 8%;">FECHA</th>
                         <th>CLIENTE</th>
                         <th style="width: 12%;">NO FACTURA</th>
-                        <th style="width: 11%;">VALOR CUOTAS</th>
+                        <!--<th style="width: 11%;">VALOR CUOTAS</th>-->
                         <th style="width: 11%;">VALOR TOTAL</th>
                         <th style="width: 11%;">VALOR COBRADO</th>
                         <th style="width: 11%;">VALOR PENDIENTE</th>
@@ -84,7 +84,7 @@
                         <td class="text-center" ng-if="item.numdocumentoventa != undefined">{{item.numdocumentoventa}}</td>
                         <td class="text-center" ng-if="item.idcobroservicio != undefined">Solicitud Servicio</td>
                         <td class="text-center" ng-if="item.idcobroagua != undefined">Toma Lectura</td>
-                        <td class="text-right" ng-if="item.cuotas != undefined">$ {{item.cuotas }}</td>
+                        <!--<td class="text-right" ng-if="item.cuotas != undefined">$ {{item.cuotas }}</td>-->
                         <td class="text-right" ng-if="item.valortotalventa != undefined">$ {{item.valortotalventa }}</td>
                         <td class="text-right" ng-if="item.total != undefined">$ {{item.total }}</td>
                         <td class="text-right">$ {{item.valorcobrado}}</td>
