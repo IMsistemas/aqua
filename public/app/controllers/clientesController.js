@@ -846,7 +846,7 @@
                 var cuotas = M / parseInt($scope.s_suministro_credito);
 
                 $scope.total_partial = M.toFixed(2);
-                $scope.credit_cant = $scope.s_suministro_credito;
+                $scope.credit_cant = parseFloat($scope.s_suministro_credito);
                 $scope.total_suministro = cuotas.toFixed(2);
 
                 $('#info_partial').show();
