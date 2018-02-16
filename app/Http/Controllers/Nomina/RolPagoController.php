@@ -146,6 +146,7 @@ class RolPagoController extends Controller
                 $rol->fecha = $request->input('fecha');
                 $rol->numtransaccion = $id_transaccion;
                 $rol->numdocumento = $request->input('numdocumento');
+                $rol->periodo = $request->input('periodo');
 
                 if ($rol->save() == false) {
                     return response()->json(['success' => false]);

@@ -70,17 +70,19 @@
                             <span class="glyphicon sort-icon" ng-show="sortKey=='razonsocialproveedor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>-->
                         <th style="text-align: center; width: 5%;">NO.</th>
-                        <th style="text-align: center;">EMPLEADO</th>
-                        <th style="text-align: center; width: 10%;">FECHA</th>
-                        <th style="text-align: center; width: 25%;">VALOR LIQUIDO</th>
+                        <th style="text-align: left;">EMPLEADO</th>
+                        <th style="text-align: center; width: 12%;">FECHA REGISTRO</th>
+                        <th style="text-align: center; width: 10%;">PERIODO</th>
+                        <th style="text-align: center; width: 15%;">VALOR LIQUIDO</th>
                         <th class="text-center" style="width: 10%;">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in roles">
                     <td style="text-align: center;">{{$index + 1}}</td>
-                    <td class="text-center">{{item.razonsocial}}</td>
-                    <td class="text-left">{{item.fecha}}</td>
+                    <td class="text-left">{{item.razonsocial}}</td>
+                    <td class="text-center">{{item.fecha}}</td>
+                    <td class="text-center">{{item.periodo}}</td>
                     <td class="text-right">$ {{item.valormoneda}}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-info" ng-click="viewInfoRol(item)"

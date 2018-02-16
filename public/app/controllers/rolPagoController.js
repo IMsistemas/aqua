@@ -128,7 +128,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             }
 
             $scope.empleados = array_temp;
-            $scope.empleado = '';
+            $scope.empleadoFiltro = '';
 
         });
     };
@@ -807,6 +807,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             $scope.cargo = response[0].namecargo;
             $scope.sueldo = response[0].salario;
             $scope.fecha = item.fecha;
+            $scope.periodo = response[0].periodo;
 
             var longitud = response.length;
 
@@ -884,7 +885,11 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         var descripcion = 'ROL PAGO A: ';
         var fecha = $('#fecha').val();
-        var array_fecha = fecha.split("-");
+        /*var array_fecha = fecha.split("-");
+        var anno = array_fecha[0];
+        var mes = array_fecha[1];*/
+
+        var array_fecha = $scope.periodo.split("-");
         var anno = array_fecha[0];
         var mes = array_fecha[1];
 
@@ -1104,7 +1109,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             diascalculo: $scope.diascalculo,
             horascalculo: $scope.horascalculo,
             fecha: fecha,
-            numdocumento: parseInt($scope.empleado.toString()+mes+anno),
+            periodo: $scope.periodo,
+            numdocumento: parseInt($scope.empleado.toString() + mes + anno),
             dataRoldePago: $scope.dataRoldePago
         };
 
