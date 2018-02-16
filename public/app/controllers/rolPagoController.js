@@ -784,6 +784,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.activeForm = function (action) {
 
         $scope.listado = false;
+
+        $('#btn-save').show();
     };
 
     $scope.viewInfoRol = function (item) {
@@ -875,6 +877,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             $scope.calcValores(response[2]);
 
             $scope.listado = false;
+
+            $('#btn-save').hide();
 
         });
 
