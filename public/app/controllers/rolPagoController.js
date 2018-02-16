@@ -129,8 +129,10 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             $scope.empleados = array_temp;
             $scope.empleadoFiltro = '';
+            $scope.empleado = '';
 
         });
+
     };
 
     $scope.getCuentas = function () {
@@ -879,11 +881,21 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     };
 
     $scope.save = function () {
+
+        var nameempleado = '';
+
+        for (var j = 0; $scope.empleados.length; j++) {
+            if (parseInt($scope.empleado) === parseInt($scope.empleados[j].id)) {
+                nameempleado = $scope.empleados[j].label;
+                break;
+            }
+        }
+
         /*
          * -------------------------INICIO CONTABILIDAD-------------------------------------------------------------
          */
 
-        var descripcion = 'ROL PAGO A: ';
+        var descripcion = 'ROL PAGO A: ' + nameempleado;
         var fecha = $('#fecha').val();
         /*var array_fecha = fecha.split("-");
         var anno = array_fecha[0];
