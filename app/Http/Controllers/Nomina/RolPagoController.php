@@ -78,11 +78,10 @@ class RolPagoController extends Controller
 
     public function getRoles()
     {
-        //SELECT * FROM rrhh_rolpago WHERE id_conceptopago = 2 AND fecha = (SELECT MAX(fecha)  FROM rrhh_rolpago)
 
         return RolPago::join('empleado', 'empleado.idempleado', '=', 'rrhh_rolpago.id_empleado')
             ->join('persona', 'persona.idpersona', '=', 'empleado.idpersona')
-            ->where('id_conceptopago', 1)
+            ->where('id_conceptopago', 1)->where('estadoanulado', false)
             ->whereRaw('EXTRACT( MONTH FROM fecha) = (SELECT MAX(EXTRACT( MONTH FROM fecha)) FROM rrhh_rolpago)')
             ->whereRaw('EXTRACT( YEAR FROM fecha) = (SELECT MAX(EXTRACT( YEAR FROM fecha)) FROM rrhh_rolpago)')->get();
     }
@@ -147,6 +146,8 @@ class RolPagoController extends Controller
                 $rol->numtransaccion = $id_transaccion;
                 $rol->numdocumento = $request->input('numdocumento');
                 $rol->periodo = $request->input('periodo');
+                $rol->estadoanulado = false;
+
 
                 if ($rol->save() == false) {
                     return response()->json(['success' => false]);

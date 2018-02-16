@@ -38,10 +38,8 @@
                 <div class="form-group has-feedback">
                     <select class="form-control" name="estado" id="estado" ng-model="estadoFiltro"
                             ng-change="searchByFilter()">
-                        <option value="">-- Seleccione Estado --</option>
-                        <option ng-repeat="item in estados"
-                                value="{{item.id}}">{{item.nombre}}
-                        </option>
+                        <option value="">ACTIVOS</option>
+                        <option value="0">ANULADOS</option>
                     </select>
                 </div>
             </div>
@@ -91,7 +89,7 @@
                         </button>
 
                         <button type="button" class="btn btn-default" ng-click="showModalConfirm(item,0)"
-                                data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==1" title="Anular">
+                                data-toggle="tooltip" data-placement="bottom" title="Anular"  ng-disabled="item.estadoanulado==true" title="Anular">
                             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                         </button>
 

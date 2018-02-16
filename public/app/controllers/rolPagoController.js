@@ -84,7 +84,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
         $scope.getRoles();
 
-        setTimeout(function(){ $scope.getConceptos(); }, 1500);
+        //setTimeout(function(){ $scope.getConceptos(); }, 1500);
 
         $scope.diascalculo = 30;
         $scope.horascalculo  = 240;
@@ -139,6 +139,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $http.get(API_URL + 'rolPago/getCuentas').success(function(response){
 
             $scope.listCuentas = response;
+
+            $scope.getConceptos();
 
         });
     };
@@ -776,8 +778,9 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.getRoles = function () {
 
         $http.get(API_URL + 'rolPago/getRoles').success(function(response){
+
             $scope.roles = response;
-            //$('#modalPlanCuenta').modal('show');
+
         });
     };
 
