@@ -61,6 +61,13 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
             ignoreReadonly: true
         });
 
+        $('.datepickerP').datetimepicker({
+            locale: 'es',
+            format: 'YYYY-MM',
+            ignoreReadonly: true
+        });
+
+
         $scope.sueldos = [];
         $scope.ingresos1 = [];
         $scope.ingresos2 = [];
@@ -750,6 +757,12 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
     $scope.valueFecha = function () {
 
         $scope.fecha = $('#fecha').val();
+
+    };
+
+    $scope.valuePeriodo = function () {
+
+        $scope.periodo = $('#periodo').val();
 
     };
 

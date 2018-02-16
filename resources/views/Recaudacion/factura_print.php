@@ -168,11 +168,11 @@
             </tr>
             <tr>
                 <td class="label_text" style="font-weight: bold;">DIRECCION:</td>
-                <td colspan="3">$lectura[0]->direccionsumnistro</td>
+                <td colspan="3"> <?= $lectura[0]->direccionsumnistro ?></td>
             </tr>
             <tr>
                 <td class="label_text" style="font-weight: bold;">TELEFONO:</td>
-                <td>$lectura[0]->telefonosuministro</td>
+                <td><?= $lectura[0]->telefonosuministro ?></td>
                 <td class="label_text" style="font-weight: bold;">FECHA:</td>
                 <td><?= date('d/m/Y') ?></td>
             </tr>

@@ -1,15 +1,4 @@
-<style type="text/css">
-    .form-control {
-        height: 30px;
-        padding: 2px 12px;
-    }
-    textarea.form-control {
-        height: 30px;
-    }
-    .btn {
-        padding: 4px 10px;
-    }
-</style>
+
 
 <div class="container" ng-controller="rolPagoController" ng-init="initLoad()">
 
@@ -20,7 +9,7 @@
 
     </div>
 
-    <hr>
+
 
     <div class="col-xs-12">
         <hr>
@@ -60,7 +49,7 @@
 
             <div class="col-sm-2 col-xs-6">
                 <button type="button" class="btn btn-primary" style="float: right;" ng-click="activeForm(0)">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -137,27 +126,27 @@
                 <fieldset>
                     <legend>Datos de la Empresa</legend>
 
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">Razón Social: </span>
                             <input type="text" class="form-control" disabled name="razonsocial" id="razonsocial" ng-model="razonsocial" required/>
                         </div>
                     </div>
 
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">Nombre Comercial: </span>
                             <input type="text" class="form-control" disabled name="nombrecomercial" id="nombrecomercial" ng-model="nombrecomercial" required/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">Dirección: </span>
                             <input type="text" class="form-control" disabled name="direccion" id="direccion" ng-model="direccion" required />
                         </div>
 
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">RUC: </span>
                             <span class="input-group-btn" style="width: 15%;">
@@ -176,59 +165,67 @@
             <div class="col-xs-4" style="padding-right: 0;">
                 <fieldset>
                     <legend>Datos del Empleado</legend>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style=" padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">Empleado: </span>
                             <select class="form-control" name="empleado" id="empleado" ng-model="empleado"
                                     ng-options="value.id as value.label for value in empleados" ng-change="fillDataEmpleado()" required></select>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
-                            <span class="input-group-addon">Identificacion: </span>
+                            <span class="input-group-addon">Identificación: </span>
                             <input type="text" disabled class="form-control" name="identificacion" id="identificacion" ng-model="identificacion" required/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon">Cargo: </span>
                             <input type="text" disabled class="form-control" name="cargo" id="cargo" ng-model="cargo" required/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
-                            <span class="input-group-addon">Sueldo Basico: </span>
+                            <span class="input-group-addon">Sueldo Básico: </span>
                             <input type="text" disabled class="form-control" name="sueldo" id="sueldo" ng-model="sueldo" required/>
                         </div>
                     </div>
                 </fieldset>
             </div>
 
-            <div class="col-xs-4">
+            <div class="col-xs-4" >
 
                 <fieldset>
                     <legend>Datos del Rol de Pago</legend>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="padding: 0;">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i> Dias Calculo: </span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tags" aria-hidden="true"></i> Días Cálculo: </span>
                             <input type="text" disabled class="form-control" name="diascalculo" id="diascalculo" ng-model="diascalculo" required/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> Horas Calculo: </span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> Horas Cálculo: </span>
                             <input type="text" disabled class="form-control" name="horascalculo" id="horascalculo" ng-model="horascalculo" required/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i> Fecha: </span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i> Periodo: </span>
+                            <input type="text" class="form-control datepickerP" name="periodo" id="periodo" ng-model="periodo" ng-blur="valuePeriodo()" required/>
+                        </div>
+                        <span class="help-block error"
+                              ng-show="formRolPago.periodo.$invalid && formRolPago.periodo.$touched">El Periodo es requerido</span>
+                    </div>
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i> Fecha Registro: </span>
                             <input type="text" class="form-control datepicker" name="fecha" id="fecha" ng-model="fecha" ng-blur="valueFecha()" required/>
                         </div>
                         <span class="help-block error"
-                              ng-show="formRolPago.fecha.$invalid && formRolPago.fecha.$touched">La Fecha es requerida</span>
+                              ng-show="formRolPago.fecha.$invalid && formRolPago.fecha.$touched">La Fecha de Registro es requerida</span>
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0;">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-usd" aria-hidden="true"></i> Base Aporte IESS: </span>
                             <input type="text" disabled class="form-control" name="baseiess" id="baseiess" ng-model="baseiess" required/>
@@ -237,7 +234,7 @@
                 </fieldset>
             </div>
 
-            <div class="row" style="margin-top: 15px;">
+            <div class="row" style="margin-top: 10px;">
                 <div class="col-xs-12" style="margin-top: 10px;">
                     <fieldset>
                         <legend>Ingresos</legend>
@@ -358,7 +355,8 @@
                     </fieldset>
 
                     <div class="col-sm-12 col-xs-12" style="margin-top: 5px; padding: 0px;">
-                        <div class="col-sm-6 col-sm-12" style="padding: 0px;">
+
+                        <div class="col-xs-12" style="padding: 0px;">
                             <div class="input-group">
                                 <span class="input-group-addon">Total Sueldo Liquido: </span>
                                 <input type="text" class="form-control" disabled name="sueldoliquido" id="sueldoliquido" ng-model="sueldoliquido" />
@@ -366,7 +364,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-xs-12" style="margin-top: 0px; padding: 0px;">
+                        <div class="col-xs-12" style="margin-top: 5px; padding: 0px;">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="sueldo_liquido" id="sueldo_liquido" ng-model="sueldo_liquido" placeholder="Cuenta Contable"
                                        readonly required />
