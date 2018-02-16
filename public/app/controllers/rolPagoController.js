@@ -800,7 +800,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
             console.log(response);
 
-            $scope.rolSelected = response;
+            $scope.rolSelected = item.numdocumento;
 
             $scope.estadoanulado = item.estadoanulado;
             $scope.numdocumento = item.numdocumento;
@@ -1133,6 +1133,8 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
         $http.post(url, data_full).success(function (response) {
             if (response.success === true) {
 
+                $scope.rolSelected = parseInt($scope.empleado.toString() + mes + anno);
+
                 //$scope.idretencion = response.idretencioncompra;
                 //$('#btn-export').show();
                 $scope.message = 'Se insertó correctamente el rol de pago del trabajador seleccionado...';
@@ -1196,7 +1198,7 @@ app.controller('rolPagoController', function ($scope,$http,$parse,API_URL) {
 
     $scope.printRol = function() {
 
-        var accion = API_URL + 'rolPago/reporte_print/' + $scope.rolSelected[0].numdocumento;
+        var accion = API_URL + 'rolPago/reporte_print/' + $scope.rolSelected;
 
         $('#WPrint_head').html('Rol de Pago');
 
