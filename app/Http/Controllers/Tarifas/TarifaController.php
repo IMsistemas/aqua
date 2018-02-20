@@ -230,6 +230,11 @@ class TarifaController extends Controller
         if ($count > 0) {
             return response()->json(['success' => false, 'exists' => true]);
         } else {
+
+            $tarifarubro = TarifaRubro::where('idtarifaaguapotable', $id)->delete();
+            $costotarifa = CostoTarifa::where('idtarifaaguapotable', $id)->delete();
+            $excedente = ExcedenteTarifa::where('idtarifaaguapotable', $id)->delete();
+
             $departamento = TarifaAguaPotable::find($id);
 
             if ($departamento->delete()) {

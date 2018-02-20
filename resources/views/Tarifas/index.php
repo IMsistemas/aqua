@@ -165,7 +165,7 @@
 
                 <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Confirmación</h4>
+                    <h4 class="modal-title">Parámetros</h4>
                 </div>
 
                 <form class="form-horizontal" name="formTarifa" novalidate="">
@@ -194,7 +194,7 @@
                                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                                 <thead class="bg-primary">
                                                 <tr>
-                                                    <th>DESDE</th>
+                                                    <th>DESDE (m3)</th>
                                                     <th>VALOR</th>
                                                     <th style="width: 5%;"></th>
                                                 </tr>
@@ -235,7 +235,7 @@
                                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                                 <thead class="bg-primary">
                                                 <tr>
-                                                    <th>DESDE</th>
+                                                    <th>DESDE (m3)</th>
                                                     <th>VALOR</th>
                                                     <th style="width: 5%;"></th>
                                                 </tr>
