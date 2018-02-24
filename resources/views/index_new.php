@@ -63,7 +63,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a id="view-home" class="navbar-brand" href="#" data-toggle="tooltip" data-placement="bottom" title="Ir a Inicio">
+                        <a id="view-home" class="navbar-brand" href="#" data-toggle="tooltip" data-placement="bottom" title="Ir a Inicio" ng-click="tografico();">
                             <img src="img/logotipo-interno.png" alt="Brand">
                         </a>
                     </div>
@@ -224,9 +224,13 @@
     </header>
 
 
-    <div class="container" style="margin-top: 8%; display: none;">
+    <div class="container" >
 
-        <div class="col-lg-3 col-md-6">
+
+
+
+
+        <div class="col-lg-3 col-md-6" style="margin-top: 8%; display: none;">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -249,7 +253,9 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+
+
+        <div class="col-lg-3 col-md-6" style="margin-top: 8%; display: none;">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <div class="row">
@@ -272,7 +278,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6" style="margin-top: 8%; display: none;">
             <div class="panel panel-warning">
                 <div class="panel-heading">
                     <div class="row">
@@ -295,7 +301,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6" style="margin-top: 8%; display: none;">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="row">
@@ -373,9 +379,17 @@
     <script src="<?= asset('app/lib/angular/angucomplete-alt.min.js') ?>"></script>
 
 
+    <script src="<?= asset('app/lib/Chart/Chart.bundle.min.js') ?>"></script>
+    <script src="<?= asset('app/lib/Chart/Chart.min.js') ?>"></script>
+
     <script src="<?= asset('app/app.js') ?>"></script>
 
+
+
     <script src="<?= asset('app/controllers/mainController.js') ?>"></script>
+
+    <script src="<?= asset('app/controllers/graficocontroller.js') ?>"></script>
+
     <script src="<?= asset('app/controllers/clientesController.js') ?>"></script>
     <script src="<?= asset('app/controllers/cargosController.js') ?>"></script>
     <script src="<?= asset('app/controllers/empleadosController.js') ?>"></script>
@@ -431,6 +445,9 @@
     <script src="<?= asset('app/controllers/rolPagoController.js') ?>"></script>
     <script src="<?= asset('app/controllers/ConciliacionController.js') ?>"></script>
     <script src="<?= asset('app/controllers/reembolsoController.js') ?>"></script>
+
+
+
 
     </body>
 </html>

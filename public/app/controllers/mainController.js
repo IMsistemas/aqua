@@ -2,7 +2,7 @@
 app.controller('mainController',function($scope, $http, API_URL) {
 
     $scope.titulo = "Inicio";
-    $scope.toModulo = "";
+    $scope.toModulo = "graficos";
 
     $scope.username = 'Secretaría';
 
@@ -344,6 +344,14 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.titulo = "Reembolso";
         $scope.toModulo = "reembolso";
     };
+
+
+    $scope.tografico = function(){
+        $scope.titulo = "Graficos";
+        $scope.toModulo = "graficos";
+    };
+
+    //$scope.tografico();
 
     $scope.toModuloTarifa = function(){
         $scope.titulo = "Tarifas";

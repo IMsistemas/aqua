@@ -16,6 +16,8 @@ Route::get('/logout', 'Index\IndexController@logout');
 Route::resource('/', 'Index\IndexController');
 Route::resource('/inicio', 'Index\IndexController');
 
+Route::resource('graficos', 'Index\GraficosController');
+
 /*
  * -------------------------------------NEGOCIO AYORA-------------------------------------------------------------------
  */
