@@ -9,18 +9,9 @@ app.controller('graficos', function($scope, $http, API_URL) {
     var fechai=f.getFullYear()+"-"+mes+"-01";
     var fechaf=f.getFullYear()+"-"+mes+"-"+dia;
 
-    $scope.generar_balance_de_comprobacion_grafico=function() {
-        $scope.filtro_balance_de_comprobacion={
-            FechaI:fechai,
-            FechaF:fechaf,
-            Estado: 1
-        };
-        $http.get(API_URL + 'Balance/balance_de_comprobacion/'+JSON.stringify($scope.filtro_balance_de_comprobacion))
-            .success(function(response){
-                console.log(response);
-            });
-    };
-    //$scope.generar_balance_de_comprobacion_grafico();
+    $scope.balacer="Estado de Situación Financiera Hasta:"+ fechaf;
+    $scope.estador="Estado de Resultados Desde:"+ fechai+"  Hasta:"+fechaf;
+
 
 
 
@@ -94,11 +85,14 @@ app.controller('graficos', function($scope, $http, API_URL) {
                         },
                         title: {
                             display: true,
-                            text: "Estado De Situacion Finaciera Hasta :"+ fechaf
+                            text: ''
                         }
                     }
                 });
 
+                $scope.balacer="Estado de Situación Financiera Hasta: "+ fechaf;
+                $scope.balacer=$scope.balacer.toUpperCase();
+                $scope.estador=$scope.estador.toUpperCase();
             });
     };
 
@@ -143,7 +137,7 @@ app.controller('graficos', function($scope, $http, API_URL) {
                     },
                     {
                         label: "Gastos",
-                        backgroundColor: [ "rgba(103,58, 183, 0.7)"],
+                        backgroundColor: [ "rgba(229,57, 53, 0.7)"],
                         data: [estadorvalores[2]]
                     }
                 ];
@@ -166,11 +160,14 @@ app.controller('graficos', function($scope, $http, API_URL) {
                         },
                         title: {
                             display: true,
-                            text: "Estado De Resultados Desde:"+ fechai+"  Hasta :"+fechaf
+                            text: ''
                         }
                     }
                 });
 
+                $scope.estador="Estado de Resultados Desde: "+ fechai+"  Hasta: "+fechaf;
+                $scope.balacer=$scope.balacer.toUpperCase();
+                $scope.estador=$scope.estador.toUpperCase();
             });
     };
 
