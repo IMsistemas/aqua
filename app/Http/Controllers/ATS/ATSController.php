@@ -80,7 +80,7 @@ class ATSController extends Controller
         $numEstabRuc = $xml->createElement('numEstabRuc',$numestabruc);
         $iva->appendChild($numEstabRuc);
 
-        $totalVentas = $xml->createElement('totalVentas', 0);
+        $totalVentas = $xml->createElement('totalVentas', $this->getTotalVentas($year, $month));
         $iva->appendChild($totalVentas);
 
         $codigoOperativo = $xml->createElement('codigoOperativo', $codigooperativo);
@@ -411,7 +411,6 @@ class ATSController extends Controller
             }
 
 
-
         }
 
         $ventas = Cont_DocumentoVenta::join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
@@ -421,62 +420,53 @@ class ATSController extends Controller
             ->selectRaw('cont_documentoventa.*, sri_tipocomprobante.*, persona.numdocidentific')
                                         ->get();
 
+        $ventasTag = $xml->createElement('ventas');
+        $ventasTag = $iva->appendChild($ventasTag);
+
         for ($j = 0; $j < count($ventas); $j++) {
 
             $detalleVentas = $xml->createElement('detalleVentas');
-            $detalleVentas = $xml->appendChild($detalleVentas);
+            $detalleVentas = $ventasTag->appendChild($detalleVentas);
 
-            $vtpIdCliente = '05';
-            $tpIdCliente = $xml->createElement('tpIdCliente', $vtpIdCliente);
-            $tpIdCliente = $detalleVentas->appendChild($tpIdCliente);
+            $tpIdCliente = $xml->createElement('tpIdCliente', '05');
+            $detalleVentas->appendChild($tpIdCliente);
 
-            $vidCliente = $ventas[$j]->numdocidentific;
-            $idCliente = $xml->createElement('idCliente', $vidCliente);
-            $idCliente = $detalleVentas->appendChild($idCliente);
+            $idCliente = $xml->createElement('idCliente', $ventas[$j]->numdocidentific);
+            $detalleVentas->appendChild($idCliente);
 
-            $vparteRelVtas = 'NO';
-            $parteRelVtas = $xml->createElement('parteRelVtas',$vparteRelVtas);
-            $parteRelVtas = $detalleVentas->appendChild($parteRelVtas);
+            $parteRelVtas = $xml->createElement('parteRelVtas', 'NO');
+            $detalleVentas->appendChild($parteRelVtas);
 
-            $vtipoComprobante = $ventas[$j]->codigosri;
-            $vtipoComprobante1 = str_pad($vtipoComprobante, 2,"0", STR_PAD_LEFT);
+            $vtipoComprobante1 = str_pad($ventas[$j]->codigosri, 2,"0", STR_PAD_LEFT);
             $tipoComprobante = $xml->createElement('tipoComprobante', $vtipoComprobante1);
-            $tipoComprobante = $detalleVentas->appendChild($tipoComprobante);
+            $detalleVentas->appendChild($tipoComprobante);
 
-            $vtipoEmision = 'F';
-            $tipoEmision = $xml->createElement('tipoEmision', $vtipoEmision);
-            $tipoEmision = $detalleVentas->appendChild($tipoEmision);
+            $tipoEmision = $xml->createElement('tipoEmision', 'F');
+            $detalleVentas->appendChild($tipoEmision);
 
-            $vnumeroComprobantes = 1;
-            $numeroComprobantes = $xml->createElement('numeroComprobantes',$vnumeroComprobantes);
-            $numeroComprobantes = $detalleVentas->appendChild($numeroComprobantes);
+            $numeroComprobantes = $xml->createElement('numeroComprobantes',1);
+            $detalleVentas->appendChild($numeroComprobantes);
 
-            $vbaseNoGraIva = $ventas[$j]->subtotalnoobjivaventa;
-            $baseNoGraIva = $xml->createElement('baseNoGraIva', $vbaseNoGraIva);
-            $baseNoGraIva = $detalleVentas->appendChild($baseNoGraIva);
+            $baseNoGraIva = $xml->createElement('baseNoGraIva', $ventas[$j]->subtotalnoobjivaventa);
+            $detalleVentas->appendChild($baseNoGraIva);
 
-            $vbaseImponible = $ventas[$j]->subtotalceroventa;
-            $baseImponible = $xml->createElement('baseImponible', $vbaseImponible);
-            $baseImponible = $detalleVentas->appendChild($baseImponible);
+            $baseImponible = $xml->createElement('baseImponible', $ventas[$j]->subtotalceroventa);
+            $detalleVentas->appendChild($baseImponible);
 
-            $vbaseImpGrav = $ventas[$j]->subtotalconimpuestoventa;
-            $baseImpGrav = $xml->createElement('baseImpGrav', number_format($vbaseImpGrav, 2, '.', ''));
-            $baseImpGrav = $detalleVentas->appendChild($baseImpGrav);
+            $baseImpGrav = $xml->createElement('baseImpGrav', $ventas[$j]->subtotalconimpuestoventa);
+            $detalleVentas->appendChild($baseImpGrav);
 
-            $vmontoIva = $ventas[$j]->ivacompra;
-            $montoIva = $xml->createElement('montoIva', $vmontoIva);
-            $montoIva = $detalleVentas->appendChild($montoIva);
+            $montoIva = $xml->createElement('montoIva', $ventas[$j]->ivacompra);
+            $detalleVentas->appendChild($montoIva);
 
-
-            $vmontoIce = $ventas[$j]->icecompra;
-            $montoIce = $xml->createElement('montoIce', $vmontoIce);
-            $montoIce = $detalleVentas->appendChild($montoIce);
+            $montoIce = $xml->createElement('montoIce', $ventas[$j]->icecompra);
+            $detalleVentas->appendChild($montoIce);
 
             $valorRetIva = $xml->createElement('valorRetIva', '0.00');
-            $valorRetIva = $detalleVentas->appendChild($valorRetIva);
+            $detalleVentas->appendChild($valorRetIva);
 
             $valorRetRenta = $xml->createElement('valorRetRenta', '0.00');
-            $valorRetRenta = $detalleVentas->appendChild($valorRetRenta);
+            $detalleVentas->appendChild($valorRetRenta);
 
         }
 
@@ -495,6 +485,13 @@ class ATSController extends Controller
 
         return response()->json(['success' => true]);
 
+    }
+
+    private function getTotalVentas($year, $month)
+    {
+        $result = Cont_DocumentoVenta::selectRaw('SUM(valortotalventa) AS total')->get();
+
+        return $result[0]->total;
     }
 
     /**
