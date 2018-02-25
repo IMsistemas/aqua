@@ -90,6 +90,11 @@ app.controller('mainController',function($scope, $http, API_URL) {
         $scope.prepareListBreadcrumb(list);
     }
 
+    $scope.toModuloATS = function(){
+        $scope.titulo = "ATS";
+        $scope.toModulo = "ats";
+    }
+
     $scope.toModuloProvincia = function(){
         $scope.titulo = "Provincias";
         $scope.toModulo = "provincias";
