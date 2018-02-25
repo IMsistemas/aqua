@@ -58,7 +58,7 @@ class ATSController extends Controller
 
         header("Content-Type: text/html;charset=utf-8");
 
-        $xml = new \DomDocument('1.0', 'UTF-8');
+        $xml = new \DOMDocument('1.0', 'UTF-8');
         $iva = $xml->createElement('iva');
         $iva = $xml->appendChild($iva);
 
