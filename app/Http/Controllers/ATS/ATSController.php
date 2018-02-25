@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\ATS;
 
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
+use App\Modelos\SRI\SRI_ComprobanteReembolso;
 use App\Modelos\SRI\SRI_Establecimiento;
+use App\Modelos\SRI\SRI_RetencionCompra;
+use App\Modelos\SRI\SRI_RetencionDetalleCompra;
+use App\Modelos\SRI\SRI_TipoComprobante;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -85,7 +89,9 @@ class ATSController extends Controller
         $compras = Cont_DocumentoCompra::join('sri_sustentotributario', 'sri_sustentotributario.idsustentotributario', '=', 'cont_documentocompra.idsustentotributario')
             ->join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'cont_documentocompra.idtipocomprobante')
             ->join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
+            ->join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
             ->join('proveedor', 'proveedor.idparte', '=', 'sri_parte.idparte')
+            ->selectRaw('cont_documentocompra.*, sri_tipocomprobante.*, persona.numdocidentific, sri_parte.codigoats AS relacionado')
             ->get();
 
 
@@ -98,22 +104,334 @@ class ATSController extends Controller
             $codSustento = $xml->createElement('codSustento', $vcodSustento);
             $detalleCompras->appendChild($codSustento);
 
-            $vtpIdProv = $atsFILA['tpldProv'];
+            $vtpIdProv = 01;
             $tpIdProv = $xml->createElement('tpIdProv', $vtpIdProv);
             $tpIdProv = $detalleCompras->appendChild($tpIdProv);
 
-            $vidProv = $atsFILA['idProv'];
+            $vidProv = $compras[$i]->numdocidentific;
             $idProv = $xml->createElement('idProv', $vidProv);
             $idProv = $detalleCompras->appendChild($idProv);
 
-            $vtipoComprobante = $atsFILA['tipoComprobante']; // el tipo de comprobante de la base GUIA TABLA 4 OK
+            $vtipoComprobante = $compras[$i]->codigosri; // el tipo de comprobante de la base GUIA TABLA 4 OK
             $vtipoComprobante = str_pad($vtipoComprobante, 2,"0", STR_PAD_LEFT);
             $tipoComprobante = $xml->createElement('tipoComprobante', $vtipoComprobante);
             $tipoComprobante = $detalleCompras->appendChild($tipoComprobante);
 
-            $vparteRel = $atsFILA['parteRel'];
+            $vparteRel = $compras[$i]->relacionado;
             $parteRel = $xml->createElement('parteRel', $vparteRel);
             $parteRel = $detalleCompras->appendChild($parteRel);
+
+
+            //----------------------------------------------------------------------------------------------------------
+
+            $vfechaRegistro = $compras[$i]->fecharegistrocompra;
+            $fechaRegistro = $xml->createElement('fechaRegistro', $vfechaRegistro);
+            $fechaRegistro = $detalleCompras->appendChild($fechaRegistro);
+
+
+            $vestablecimiento = explode('-', $compras[$i]->numdocumentocompra)[0];
+            $establecimiento = $xml->createElement('establecimiento', $vestablecimiento);
+            $establecimiento = $detalleCompras->appendChild($establecimiento);
+
+            $vpuntoEmision = explode('-', $compras[$i]->numdocumentocompra)[1];
+            $puntoEmision = $xml->createElement('puntoEmision', $vpuntoEmision);
+            $puntoEmision = $detalleCompras->appendChild($puntoEmision);
+
+            $vsecuencial = explode('-', $compras[$i]->numdocumentocompra)[2];
+            $secuencial = $xml->createElement('secuencial', $vsecuencial);
+            $secuencial = $detalleCompras->appendChild($secuencial);
+
+            $vfechaEmision = $compras[$i]->fechaemisioncompra;
+            $fechaEmision = $xml->createElement('fechaEmision', $vfechaEmision);
+            $fechaEmision = $detalleCompras->appendChild($fechaEmision);
+
+            $vautorizacion = $compras[$i]->nroautorizacioncompra;
+            $autorizacion = $xml->createElement('autorizacion', $vautorizacion);
+            $autorizacion = $detalleCompras->appendChild($autorizacion);
+
+            $vbaseNoGraIva = $compras[$i]->subtotalnoobjivacompra;
+            $baseNoGraIva = $xml->createElement('baseNoGraIva', $vbaseNoGraIva);
+            $baseNoGraIva = $detalleCompras->appendChild($baseNoGraIva);
+
+            $vbaseImponible = $compras[$i]->subtotalcerocompra;
+            $baseImponible = $xml->createElement('baseImponible', $vbaseImponible);
+            $baseImponible = $detalleCompras->appendChild($baseImponible);
+
+            $vbaseImpGrav = $compras[$i]->subtotalconimpuestocompra;
+            $baseImpGrav = $xml->createElement('baseImpGrav', number_format($vbaseImpGrav, 2, '.', ''));
+            $baseImpGrav = $detalleCompras->appendChild($baseImpGrav);
+
+            $vbaseImpExe = $compras[$i]->subtotalexentivacompra;
+            $baseImpExe = $xml->createElement('baseImpExe', $vbaseImpExe);
+            $baseImpExe = $detalleCompras->appendChild($baseImpExe);
+
+            $vmontoIce = $compras[$i]->icecompra;
+            $montoIce = $xml->createElement('montoIce', $vmontoIce);
+            $montoIce = $detalleCompras->appendChild($montoIce);
+
+            $vmontoIva = $compras[$i]->ivacompra;
+            $montoIva = $xml->createElement('montoIva', $vmontoIva);
+            $montoIva = $detalleCompras->appendChild($montoIva);
+
+            $retencion = SRI_RetencionCompra::where('iddocumentocompra', $compras[$i]->iddocumentocompra)
+                                            ->where('estadoanulado', false)->get();
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                                                            ->where('iddetalleimpuestoretencion', 21)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value10 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value10 = '0.00';
+            }
+
+            $vvalRetBien10 = $value10;
+            $valRetBien10 = $xml->createElement('valRetBien10', $vvalRetBien10);
+            $valRetBien10 = $detalleCompras->appendChild($valRetBien10);
+
+
+            //---------20%
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                ->where('iddetalleimpuestoretencion', 22)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value20 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value20 = '0.00';
+            }
+
+            $vvalRetServ20 = $value20;
+            $valRetServ20 = $xml->createElement('valRetServ20', $vvalRetServ20);
+            $valRetServ20 = $detalleCompras->appendChild($valRetServ20);
+
+            //---------30%
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                ->where('iddetalleimpuestoretencion', 23)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value30 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value30 = '0.00';
+            }
+
+            $vvalorRetBienes = $value30;
+            $valorRetBienes = $xml->createElement('valorRetBienes', $vvalorRetBienes);
+            $valorRetBienes = $detalleCompras->appendChild($valorRetBienes);
+
+            //---------50%
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                ->where('iddetalleimpuestoretencion', 24)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value50 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value50 = '0.00';
+            }
+
+            $vvalRetServ50 = $value50;
+            $valRetServ50 = $xml->createElement('valRetServ50', $vvalRetServ50);
+            $valRetServ50 = $detalleCompras->appendChild($valRetServ50);
+
+            //---------70%
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                                                            ->where('iddetalleimpuestoretencion', 25)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value70 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value70 = '0.00';
+            }
+
+            $vvalorRetServicios = $value70;
+            $valorRetServicios = $xml->createElement('valorRetServicios', $vvalorRetServicios);
+            $valorRetServicios = $detalleCompras->appendChild($valorRetServicios);
+
+            //---------100%
+
+            $retenciondetalle = SRI_RetencionDetalleCompra::where('idretencioncompra', $retencion[0]->idretencioncompra)
+                ->where('iddetalleimpuestoretencion', 26)->get();
+
+            if (count($retenciondetalle) > 0){
+                $value100 = $retenciondetalle[0]->valorretenido;
+            } else {
+                $value100 = '0.00';
+            }
+
+            $vvalRetServ100 = $value100;
+            $valRetServ100 = $xml->createElement('valRetServ100', $vvalRetServ100);
+            $valRetServ100 = $detalleCompras->appendChild($valRetServ100);
+
+
+            $comprob_reemb = SRI_ComprobanteReembolso::where('iddocumentocompra', $compras[$i]->iddocumentocompra)
+                                                        ->get();
+
+            $vtotbasesImpReemb = '0.00';
+
+            if (count($comprob_reemb) > 0) {
+
+                foreach ($comprob_reemb as $item_r) {
+
+                    $vtotbasesImpReemb += $item_r->ivacero + $item_r->iva + $item_r->ivanoobj + $item_r->ivaexento;
+
+                }
+
+            }
+
+            $totbasesImpReemb = $xml->createElement('totbasesImpReemb', $vtotbasesImpReemb);
+            $totbasesImpReemb = $detalleCompras->appendChild($totbasesImpReemb);
+
+            $pagoExterior = $xml->createElement('pagoExterior');
+            $pagoExterior = $detalleCompras->appendChild($pagoExterior);
+
+            $vpagoLocExt = '01';
+            $pagoLocExt = $xml->createElement('pagoLocExt', $vpagoLocExt);
+            $pagoLocExt = $pagoExterior->appendChild($pagoLocExt);
+
+            $vpaisEfecPago = "NA"; // TODO: VALIDAR generar en la base codigos segun paises tabla 16 ficha, es condicional si es pago no residente cod 02 se usa este campo
+            $paisEfecPago = $xml->createElement('paisEfecPago', $vpaisEfecPago);
+            $paisEfecPago = $pagoExterior->appendChild($paisEfecPago);
+
+            $vaplicConvDobTrib = "NA";
+            $aplicConvDobTrib = $xml->createElement('aplicConvDobTrib', $vaplicConvDobTrib);
+            $aplicConvDobTrib = $pagoExterior->appendChild($aplicConvDobTrib);
+
+            $vpagExtSujRetNorLeg = "NA";
+            $pagExtSujRetNorLeg = $xml->createElement('pagExtSujRetNorLeg', $vpagExtSujRetNorLeg);
+            $pagExtSujRetNorLeg = $pagoExterior->appendChild($pagExtSujRetNorLeg);
+
+            if (count($comprob_reemb) > 0) {
+
+                $reembolsos = $xml->createElement('reembolsos');
+                $reembolsos = $detalleCompras->appendChild($reembolsos);
+
+                foreach ($comprob_reemb as $item_r) {
+
+                    $reembolso = $xml->createElement('reembolso');
+                    $reembolso = $reembolsos->appendChild($reembolso);
+
+                    $tipoc = SRI_TipoComprobante::where('idtipocomprobante', $item_r->$item_r)->get();
+
+                    $tipo_temp = str_pad($tipoc[0]->codigosri, 2, "0", STR_PAD_LEFT);
+
+                    $tipoComprobanteReemb = $xml->createElement('tipoComprobanteReemb', $tipo_temp);
+                    $tipoComprobanteReemb = $reembolso->appendChild($tipoComprobanteReemb);
+
+
+                    //$vtpIdProvReemb = $cJSONReembolso['t_reem_ident']; // TODO: no sale el tipo sino la identificacion cambiar por tipo
+                    $tpIdProvReemb = $xml->createElement('tpIdProvReemb', '01');
+                    $tpIdProvReemb = $reembolso->appendChild($tpIdProvReemb);
+
+
+                    $vidProvReemb = $item_r->numdocidentific;
+                    $idProvReemb = $xml->createElement('idProvReemb', $vidProvReemb);
+                    $idProvReemb = $reembolso->appendChild($idProvReemb);
+
+                    $vestablecimientoReemb = explode('-', $item_r->numdocidentific)[0];
+                    $establecimientoReemb = $xml->createElement('establecimientoReemb', $vestablecimientoReemb);
+                    $establecimientoReemb = $reembolso->appendChild($establecimientoReemb);
+
+                    $vpuntoEmisionReemb = explode('-', $item_r->numdocidentific)[1];
+                    $puntoEmisionReemb = $xml->createElement('puntoEmisionReemb', $vpuntoEmisionReemb);
+                    $puntoEmisionReemb = $reembolso->appendChild($puntoEmisionReemb);
+
+                    $vsecuencialReemb = explode('-', $item_r->numdocidentific)[2];
+                    $secuencialReemb = $xml->createElement('secuencialReemb', $vsecuencialReemb);
+                    $secuencialReemb = $reembolso->appendChild($secuencialReemb);
+
+                    $vfechaEmisionReemb = $item_r->fechaemisionreembolso;
+                    $fechaEmisionReemb = $xml->createElement('fechaEmisionReemb', $vfechaEmisionReemb);
+                    $fechaEmisionReemb = $reembolso->appendChild($fechaEmisionReemb);
+
+                    $vautorizacionReemb = $item_r->noauthreembolso;
+                    $autorizacionReemb = $xml->createElement('autorizacionReemb', $vautorizacionReemb);
+                    $autorizacionReemb = $reembolso->appendChild($autorizacionReemb);
+
+                    $vbaseImponibleReemb = $item_r->ivacero;
+                    $vbaseImponibleReemb = str_replace(array("$", " "), '', $vbaseImponibleReemb); //TODO: validar que la variable  $vbaseImponibleReemb quede como formato numero sino toca hacer un cast
+                    $baseImponibleReemb = $xml->createElement('baseImponibleReemb', number_format($vbaseImponibleReemb, 2, '.', ''));
+                    $baseImponibleReemb = $reembolso->appendChild($baseImponibleReemb);
+
+                    $vbaseImpGravReemb = $item_r->iva;
+                    $baseImpGravReemb = $xml->createElement('baseImpGravReemb', $vbaseImpGravReemb);
+                    $baseImpGravReemb = $reembolso->appendChild($baseImpGravReemb);
+
+                    $vbaseNoGraIvaReemb = $item_r->ivanoobj;
+                    $baseNoGraIvaReemb = $xml->createElement('baseNoGraIvaReemb', $vbaseNoGraIvaReemb);
+                    $baseNoGraIvaReemb = $reembolso->appendChild($baseNoGraIvaReemb);
+
+                    $vbaseImpExeReemb = $item_r->ivaexento;
+                    $baseImpExeReemb = $xml->createElement('baseImpExeReemb', $vbaseImpExeReemb);
+                    $baseImpExeReemb = $reembolso->appendChild($baseImpExeReemb);
+
+                    $vmontoIceReemb = $item_r->montoice;
+                    $montoIceReemb = $xml->createElement('montoIceRemb', $vmontoIceReemb);
+                    $montoIceReemb = $reembolso->appendChild($montoIceReemb);
+
+                    $vmontoIvaReemb = $item_r->montoiva;
+                    $montoIvaReemb = $xml->createElement('montoIvaRemb', $vmontoIvaReemb);
+                    $montoIvaReemb = $reembolso->appendChild($montoIvaReemb);
+
+
+                }
+
+            }
+
+            $retenciondetalleRENTA = SRI_RetencionDetalleCompra::join('sri_detalleimpuestoretencion', 'sri_detalleimpuestoretencion.iddetalleimpuestoretencion', '=', 'sri_retenciondetallecompra.iddetalleimpuestoretencion')
+                                                            ->where('idretencioncompra', $retencion[0]->idretencioncompra)
+                                                            ->whereRaw('iddetalleimpuestoretencion NOT IN (21,22,23,24,25,26)')->get();
+
+            if (count($retenciondetalleRENTA) > 0 && count($comprob_reemb) == 0){
+
+                $air = $xml->createElement('air');
+                $air = $detalleCompras->appendChild($air);
+
+                foreach ($retenciondetalleRENTA as $item_r) {
+
+                    $detalleAir = $xml->createElement('detalleAir');
+                    $detalleAir = $air->appendChild($detalleAir);
+
+                    $vcodRetAir = $item_r->codigosri;
+                    $codRetAir = $xml->createElement('codRetAir', $vcodRetAir);
+                    $codRetAir = $detalleAir->appendChild($codRetAir);
+
+                    $vbaseImpAir = $compras[$i]->subtotalsinimpuestocompra;
+                    $baseImpAir = $xml->createElement('baseImpAir', number_format($vbaseImpAir, 2, '.', ''));
+                    $baseImpAir = $detalleAir->appendChild($baseImpAir);
+
+                    $vporcentajeAir = $item_r->porcentajeretenido;
+                    $porcentajeAir = $xml->createElement('porcentajeAir', $vporcentajeAir);
+                    $porcentajeAir = $detalleAir->appendChild($porcentajeAir);
+
+                    $vvalRetAir = $item_r->valorretenido;
+                    $valRetAir = $xml->createElement('valRetAir', number_format($vvalRetAir, 2, '.', ''));
+                    $valRetAir = $detalleAir->appendChild($valRetAir);
+
+                }
+
+
+                $estabRetencion1 = $xml->createElement('estabRetencion1', explode('-', $retencion[0]->nocomprobante)[0]);
+                $estabRetencion1 = $detalleCompras->appendChild($estabRetencion1);
+
+                $ptoEmiRetencion1 = $xml->createElement('ptoEmiRetencion1', explode('-', $retencion[0]->nocomprobante)[1]);
+                $ptoEmiRetencion1 = $detalleCompras->appendChild($ptoEmiRetencion1);
+
+                $secRetencion1 = $xml->createElement('secRetencion1', explode('-', $retencion[0]->nocomprobante)[2]);
+                $secRetencion1 = $detalleCompras->appendChild($secRetencion1);
+
+                $autRetencion1 = $xml->createElement('autRetencion1', $retencion[0]->noauthcomprobante);
+                $autRetencion1 = $detalleCompras->appendChild($autRetencion1);
+
+                $fechaEmiRet1 = $xml->createElement('fechaEmiRet1', $retencion[0]->fechaemisioncomprob);
+                $fechaEmiRet1 = $detalleCompras->appendChild($fechaEmiRet1);
+
+
+            }
+
+
 
         }
 
