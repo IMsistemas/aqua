@@ -91,8 +91,8 @@ class ATSController extends Controller
             ->join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'cont_documentocompra.idtipocomprobante')
             ->join('proveedor', 'proveedor.idproveedor', '=', 'cont_documentocompra.idproveedor')
             ->join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
-            ->join('proveedor', 'proveedor.idparte', '=', 'sri_parte.idparte')
-            ->selectRaw('cont_documentocompra.*, sri_tipocomprobante.*, persona.numdocidentific, sri_parte.codigoats AS relacionado')
+            //->join('proveedor', 'proveedor.idparte', '=', 'sri_parte.idparte')
+            ->selectRaw("cont_documentocompra.*, sri_tipocomprobante.*, persona.numdocidentific")
             ->get();
 
 
@@ -118,7 +118,7 @@ class ATSController extends Controller
             $tipoComprobante = $xml->createElement('tipoComprobante', $vtipoComprobante);
             $tipoComprobante = $detalleCompras->appendChild($tipoComprobante);
 
-            $vparteRel = $compras[$i]->relacionado;
+            $vparteRel = 'NO';
             $parteRel = $xml->createElement('parteRel', $vparteRel);
             $parteRel = $detalleCompras->appendChild($parteRel);
 
@@ -438,9 +438,9 @@ class ATSController extends Controller
 
         $ventas = Cont_DocumentoVenta::join('cliente', 'cliente.idcliente', '=', 'cont_documentoventa.idcliente')
                                         ->join('persona', 'persona.idpersona', '=', 'cliente.idpersona')
-                                        ->join('cliente', 'cliente.idparte', '=', 'sri_parte.idparte')
+                                        //->join('cliente', 'cliente.idparte', '=', 'sri_parte.idparte')
             ->join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'cont_documentoventa.idtipocomprobante')
-            ->selectRaw('cont_documentoventa.*, sri_tipocomprobante.*, persona.numdocidentific, sri_parte.codigoats AS relacionado')
+            ->selectRaw('cont_documentoventa.*, sri_tipocomprobante.*, persona.numdocidentific')
                                         ->get();
 
         for ($j = 0; $j < count($ventas); $j++) {
@@ -456,7 +456,7 @@ class ATSController extends Controller
             $idCliente = $xml->createElement('idCliente', $vidCliente);
             $idCliente = $detalleVentas->appendChild($idCliente);
 
-            $vparteRelVtas = $ventas[$j]->relacionado;
+            $vparteRelVtas = 'NO';
             $parteRelVtas = $xml->createElement('parteRelVtas',$vparteRelVtas);
             $parteRelVtas = $detalleVentas->appendChild($parteRelVtas);
 
@@ -511,7 +511,7 @@ class ATSController extends Controller
             mkdir(public_path() . $dir);
         }
 
-        $ubicacionXML = $dir . '/AT'. $year . '_' . $month . '.xml';
+        $ubicacionXML = public_path() . $dir . '/AT-'. $year . '_' . $month . '.xml';
 
         $xml->save($ubicacionXML);
 
