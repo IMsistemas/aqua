@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ATS;
 
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_PuntoDeVenta;
 use App\Modelos\SRI\SRI_ComprobanteReembolso;
 use App\Modelos\SRI\SRI_Establecimiento;
 use App\Modelos\SRI\SRI_RetencionCompra;
@@ -49,7 +50,7 @@ class ATSController extends Controller
 
         $tipoidinformante = 'R';
         $codigooperativo = 'IVA';
-        $numestabruc = '002';
+        $numestabruc = '001';
 
         $empresa = SRI_Establecimiento::all();
 
@@ -62,19 +63,19 @@ class ATSController extends Controller
         $iva = $xml->createElement('iva');
         $iva = $xml->appendChild($iva);
 
-        $TipoIDInformante = $xml->createElement('tipoidinformante', $tipoidinformante);
+        $TipoIDInformante = $xml->createElement('TipoIDInformante', $tipoidinformante);
         $iva->appendChild($TipoIDInformante);
 
-        $IdInformante = $xml->createElement('idinformante', $idinformante);
+        $IdInformante = $xml->createElement('IdInformante', $idinformante);
         $iva->appendChild($IdInformante);
 
-        $razonSocial = $xml->createElement('razonsocial', $empresa[0]->razonsocial);
+        $razonSocial = $xml->createElement('razonSocial', $empresa[0]->razonsocial);
         $iva->appendChild($razonSocial);
 
-        $Anio = $xml->createElement('anio',$year);
+        $Anio = $xml->createElement('Anio',$year);
         $iva->appendChild($Anio);
 
-        $Mes = $xml->createElement('mes', $month);
+        $Mes = $xml->createElement('Mes', $month);
         $iva->appendChild($Mes);
 
         $numEstabRuc = $xml->createElement('numEstabRuc',$numestabruc);
@@ -470,6 +471,19 @@ class ATSController extends Controller
 
         }
 
+        $ventasEstablecimiento = $xml->createElement('ventasEstablecimiento');
+        $ventasEstablecimiento = $iva->appendChild($ventasEstablecimiento);
+        $ventaEst = $xml->createElement('ventaEst');
+        $ventaEst = $ventasEstablecimiento->appendChild($ventaEst);
+
+        $codEstab = $xml->createElement('codEstab', '001');
+        $ventaEst->appendChild($codEstab);
+
+        $ventasEstab = $xml->createElement('ventasEstab',$this->getTotalVentas($year, $month));
+        $ventaEst->appendChild($ventasEstab);
+
+        $ivaComp = $xml->createElement('ivaComp', '0.00');
+        $ventaEst->appendChild($ivaComp);
 
         $xml->formatOutput = true;
 
@@ -493,6 +507,8 @@ class ATSController extends Controller
 
         return $result[0]->total;
     }
+
+
 
     /**
      * Display the specified resource.
