@@ -36,7 +36,7 @@
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalAction">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -45,22 +45,22 @@
                 <div class="modal-body">
                     <form class="form-horizontal" name="formCargo" novalidate="">
                         <div class="row">
-                            <div class="col-xs-6 error"  style="margin-top: 5px;">
-                                <div class="input-group">
+                            <div class="col-xs-12 error"  style="margin-top: 5px;">
+                                <div class="input-group container-date">
                                     <span class="input-group-addon">Año: </span>
-                                    <input type="text" class="form-control" name="year" id="year" ng-model="year" placeholder=""
-                                           ng-required="true">
+                                    <input type="text" class="form-control datepickerY" name="year" id="year" ng-model="year" placeholder=""
+                                           ng-required="true" ng-blur="reafirmYear()">
                                 </div>
                                 <span class="help-block error"
                                       ng-show="formCargo.year.$invalid && formCargo.year.$touched">El Año es requerido</span>
 
                             </div>
 
-                            <div class="col-xs-6 error" style="margin-top: 5px;">
-                                <div class="input-group">
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group container-date">
                                     <span class="input-group-addon">Mes: </span>
-                                    <input type="text" class="form-control" name="month" id="month" ng-model="month" placeholder=""
-                                           ng-required="true">
+                                    <input type="text" class="form-control datepickerM" name="month" id="month" ng-model="month" placeholder=""
+                                           ng-required="true" ng-blur="reafirmMonth()">
                                 </div>
                                 <span class="help-block error"
                                       ng-show="formCargo.month.$invalid && formCargo.month.$touched">El Mes es requerido</span>

@@ -9,6 +9,18 @@ app.controller('atsController', function($scope, $http, API_URL) {
 
     $scope.initLoad = function(){
 
+        $('.datepickerY').datetimepicker({
+            locale: 'es',
+            format: 'YYYY',
+            //ignoreReadonly: true
+        });
+
+        $('.datepickerM').datetimepicker({
+            locale: 'es',
+            format: 'MM',
+            //ignoreReadonly: true
+        });
+
         $http.get(API_URL + 'ats/getFiles').success(function(response){
 
             response = response.reverse();
@@ -32,6 +44,13 @@ app.controller('atsController', function($scope, $http, API_URL) {
 
     };
 
+    $scope.reafirmYear = function () {
+        $scope.year = $('#year').val();
+    };
+
+    $scope.reafirmMonth = function () {
+        $scope.month = $('#month').val();
+    };
 
     $scope.generarShow = function () {
 
