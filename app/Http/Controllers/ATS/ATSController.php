@@ -28,6 +28,29 @@ class ATSController extends Controller
         return view('ATS.index_ats');
     }
 
+    public function getFiles()
+    {
+
+        $dir = public_path() . '/uploads/ATS';
+
+        $filehandle = opendir($dir);
+
+        $files = [];
+
+        while ($file = readdir($filehandle)) {
+
+            if ($file != '.' && $file != '..') {
+
+                $files[] = $file;
+
+            }
+
+        }
+
+        return $files;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

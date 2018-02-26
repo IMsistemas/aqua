@@ -1,6 +1,6 @@
 
 
-<div class="container" ng-controller="atsController">
+<div class="container" ng-controller="atsController" ng-init="initLoad()">
 
     <div class="col-xs-12">
 
@@ -11,7 +11,6 @@
     </div>
 
     <div class="col-xs-12" style="margin-top: 5px;">
-
 
 
         <div class="col-xs-12 text-right">
@@ -28,9 +27,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="item in archivos" ng-cloak >
-                    <td>{{item.namedepartamento}}</td>
-                </tr>
+                    <tr ng-repeat="item in archivos" ng-cloak >
+                        <td><a href="{{item.url}}">{{item.name}}</a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

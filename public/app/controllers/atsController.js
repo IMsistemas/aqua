@@ -7,8 +7,28 @@ app.controller('atsController', function($scope, $http, API_URL) {
         $scope.initLoad(newPage);
     };
 
-    $scope.initLoad = function(pageNumber){
+    $scope.initLoad = function(){
 
+        $http.get(API_URL + 'ats/getFiles').success(function(response){
+
+            response = response.reverse();
+
+            $scope.archivos = [];
+
+            response.forEach(function (value) {
+
+                var t = {
+
+                    name: value,
+                    url: 'uploads/ATS/' + value
+
+                };
+
+                $scope.archivos.push(t);
+
+            });
+
+        });
 
     };
 
@@ -33,11 +53,11 @@ app.controller('atsController', function($scope, $http, API_URL) {
 
         $http.post(API_URL + 'ats', data ).success(function (response) {
 
-            console.log(response);
-
             $('#modalAction').modal('hide');
 
             if (response.success === true) {
+
+                $scope.initLoad();
 
                 $scope.message = 'Se ha generado el XML correspondiente al Periodo solicitado...';
 

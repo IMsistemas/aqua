@@ -293,6 +293,7 @@ Route::resource('/derivaciones', 'Tomas\DerivacionesController');
  * --------------------------------------CONTABILIDAD-------------------------------------------------------------------
  */
 
+Route::get('ats/getFiles', 'ATS\ATSController@getFiles');
 Route::resource('ats', 'ATS\ATSController');
 
 /*
