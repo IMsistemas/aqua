@@ -118,6 +118,8 @@ class ATSController extends Controller
             ->join('persona', 'persona.idpersona', '=', 'proveedor.idpersona')
             //->join('proveedor', 'proveedor.idparte', '=', 'sri_parte.idparte')
             ->selectRaw("cont_documentocompra.*, sri_tipocomprobante.*, persona.numdocidentific, sri_sustentotributario.*")
+            ->whereRaw('EXTRACT( MONTH FROM cont_documentocompra.fecharegistrocompra ) = ' . $month)
+            ->whereRaw('EXTRACT( YEAR FROM cont_documentocompra.fecharegistrocompra ) = ' . $year)
             ->get();
 
 
@@ -443,7 +445,9 @@ class ATSController extends Controller
                                         //->join('cliente', 'cliente.idparte', '=', 'sri_parte.idparte')
             ->join('sri_tipocomprobante', 'sri_tipocomprobante.idtipocomprobante', '=', 'cont_documentoventa.idtipocomprobante')
             ->selectRaw('cont_documentoventa.*, sri_tipocomprobante.*, persona.numdocidentific')
-                                        ->get();
+            ->whereRaw('EXTRACT( MONTH FROM cont_documentoventa.fecharegistroventa ) = ' . $month)
+            ->whereRaw('EXTRACT( YEAR FROM cont_documentoventa.fecharegistroventa ) = ' . $year)
+            ->get();
 
         $ventasTag = $xml->createElement('ventas');
         $ventasTag = $iva->appendChild($ventasTag);
@@ -541,7 +545,10 @@ class ATSController extends Controller
 
     private function getTotalVentas($year, $month)
     {
-        $result = Cont_DocumentoVenta::selectRaw('SUM(valortotalventa) AS total')->get();
+        $result = Cont_DocumentoVenta::selectRaw('SUM(valortotalventa) AS total')
+            ->whereRaw('EXTRACT( MONTH FROM cont_documentoventa.fecharegistroventa ) = ' . $month)
+            ->whereRaw('EXTRACT( YEAR FROM cont_documentoventa.fecharegistroventa ) = ' . $year)
+            ->get();
 
         return $result[0]->total;
     }
