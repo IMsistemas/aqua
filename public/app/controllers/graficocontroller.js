@@ -12,15 +12,35 @@ app.controller('graficos', function($scope, $http, API_URL) {
     $scope.balacer="Estado de Situación Financiera Hasta:"+ fechaf;
     $scope.estador="Estado de Resultados Desde:"+ fechai+"  Hasta:"+fechaf;
 
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD',
+        ignoreReadonly: true
+    });
+
+    $scope.tipografico="bar";
+    $scope.tipografico2="bar";
+
+    $scope.FechaF=fechaf;
+    $scope.FechaI=fechai;
+    $scope.FechaF2=fechaf;
 
 
-
+    $('#FechaF').on('dp.change', function(e){
+        $scope.FechaF=$(this).val();
+    });
+    $('#FechaI').on('dp.change', function(e){
+        $scope.FechaI=$(this).val();
+    });
+    $('#FechaF2').on('dp.change', function(e){
+        $scope.FechaF2=$(this).val();
+    });
 
     $scope.generar_balance_general_grafico=function () {
         $scope.aux_formula_patrimonial=0;
         $scope.filtro_balance_general={
-            FechaI: fechai,
-            FechaF: fechaf,
+            FechaI: $scope.FechaI,
+            FechaF: $scope.FechaF,
             Estado: 1
         };
         $http.get(API_URL + 'Balance/balance_general/'+JSON.stringify($scope.filtro_balance_general))
@@ -76,7 +96,8 @@ app.controller('graficos', function($scope, $http, API_URL) {
                 $("#stay_canvas1").html("<canvas id='balance'></canvas>");
                 var ctx = document.getElementById('balance').getContext('2d');
                 var chart = new Chart(ctx, {
-                    type: 'bar',
+                    //type: 'bar',
+                    type: $scope.tipografico,
                     data:data,
                     options: {
                         responsive: true,
@@ -99,8 +120,8 @@ app.controller('graficos', function($scope, $http, API_URL) {
 
     $scope.generar_de_estado_resultados_grafico=function () {
         $scope.filtro_estado_resultados={
-            FechaI:fechai,
-            FechaF:fechaf,
+            FechaI: $scope.FechaI,
+            FechaF: $scope.FechaF2,
             Estado: 1
         };
         $http.get(API_URL + 'Balance/estado_de_resultados/'+JSON.stringify($scope.filtro_estado_resultados))
@@ -151,7 +172,8 @@ app.controller('graficos', function($scope, $http, API_URL) {
                 $("#stay_canvas2").html("<canvas id='etador'></canvas>");
                 var ctx = document.getElementById('etador').getContext('2d');
                 var chart = new Chart(ctx, {
-                    type: 'bar',
+                    //type: 'bar',
+                    type: $scope.tipografico2,
                     data:data,
                     options: {
                         responsive: true,
@@ -173,5 +195,58 @@ app.controller('graficos', function($scope, $http, API_URL) {
 
     $scope.generar_de_estado_resultados_grafico();
     $scope.generar_balance_general_grafico();
+
+});
+
+function convertDatetoDB(now, revert){
+    if (revert == undefined){
+        var t = now.split('/');
+        return t[2] + '-' + t[1] + '-' + t[0];
+    } else {
+        var t = now.split('-');
+        return t[2] + '/' + t[1] + '/' + t[0];
+    }
+}
+
+function now(){
+    var now = new Date();
+    var dd = now.getDate();
+    if (dd < 10) dd = '0' + dd;
+    var mm = now.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+    var yyyy = now.getFullYear();
+    return dd + "\/" + mm + "\/" + yyyy;
+}
+function first(){
+    var now = new Date();
+    var yyyy = now.getFullYear();
+    return "01/01/"+ yyyy;
+}
+
+function completarNumer(valor){
+    if(valor.toString().length>0){
+        var i=5;
+        var completa="0";
+        var aux_com=i-valor.toString().length;
+        for(x=0;x<aux_com;x++){
+            completa+="0";
+        }
+    }
+    return completa+valor.toString();
+}
+
+function QuitarClasesMensaje() {
+    $("#titulomsm").removeClass("btn-primary");
+    $("#titulomsm").removeClass("btn-warning");
+    $("#titulomsm").removeClass("btn-success");
+    $("#titulomsm").removeClass("btn-info");
+    $("#titulomsm").removeClass("btn-danger");
+}
+$(document).ready(function(){
+    $('.datepicker').datetimepicker({
+        locale: 'es',
+        format: 'YYYY-MM-DD',
+        ignoreReadonly: true
+    });
 
 });
