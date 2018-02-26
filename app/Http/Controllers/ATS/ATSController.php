@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ATS;
 
 use App\Modelos\Contabilidad\Cont_DocumentoCompra;
 use App\Modelos\Contabilidad\Cont_DocumentoVenta;
+use App\Modelos\Contabilidad\Cont_FormaPagoDocumentoVenta;
 use App\Modelos\Contabilidad\Cont_PuntoDeVenta;
 use App\Modelos\SRI\SRI_ComprobanteReembolso;
 use App\Modelos\SRI\SRI_Establecimiento;
@@ -468,6 +469,20 @@ class ATSController extends Controller
 
             $valorRetRenta = $xml->createElement('valorRetRenta', '0.00');
             $detalleVentas->appendChild($valorRetRenta);
+
+            $formaPagoR = Cont_FormaPagoDocumentoVenta::join('cont_formapago', 'cont_formapago.idformapago', '=', 'cont_formapago_documentoventa.idformapago')
+                ->where('iddocumentoventa',  $ventas[$j]->iddocumentoventa)->get();
+
+            if (count($formaPagoR) > 0) {
+
+                $formasDePago = $xml->createElement('formasDePago');
+                $formasDePago = $detalleVentas->appendChild($formasDePago);
+
+                $formaPago = $xml->createElement('formaPago', $formaPagoR[0]->codigosri);
+                $formasDePago->appendChild($formaPago);
+
+            }
+
 
         }
 
