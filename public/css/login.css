@@ -1,6 +1,8 @@
 
 body {
-	background-image: url("../img/background-inicio.jpg");
+	/*background-image: url("../img/background-inicio.jpg");*/
+
+	background-color: #5BC9F4 !important;
 	width: 100%;
 	height: 100%;
 	margin:0;
