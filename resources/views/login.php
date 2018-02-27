@@ -2,7 +2,13 @@
 <html lang="es-ES" ng-app="softver-aqua">
 	<head>
 
-		<title>Aqua-Inicio Sesión</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+        <title>Aqua-Inicio Sesión</title>
+
+        <link rel="shortcut icon" href="<?= asset('favicon.ico') ?>">
+
 		<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
 		<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
 		<link href="<?= asset('css/login.css') ?>" rel="stylesheet">
