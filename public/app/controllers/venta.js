@@ -6,6 +6,7 @@ app.controller('Venta', function($scope, $http, API_URL) {
 $scope.FechaRegistro=now();
 $scope.FechaEmision=now();
 $scope.VerFactura=2;
+    $scope.diffFactura=2;
 $scope.DICliente="";
 $scope.Cliente={};
 $scope.Bodegas=[];
@@ -35,7 +36,7 @@ $scope.cmb_estado_fact="A";
 
         $http.get(API_URL + 'DocumentoVenta/getSuministroByFactura').success(function(response){
 
-            console.log(response);
+            //console.log(response);
 
             /*if (response[0].cliente !== undefined) {
 
@@ -256,22 +257,28 @@ $scope.cmb_estado_fact="A";
 
     	if($('#otherFactura').val() == 'true') {
             $scope.VerFactura = 1;
+            $scope.diffFactura = 1;
             $scope.verifySuministroFactura();
         } else {
             $scope.VerFactura = 2;
+            $scope.diffFactura = 2;
         }
 
         var filtros = {
             search: $scope.busquedaventa,
             estado: $scope.cmb_estado_fact
         };
+
+        console.log($scope.VerFactura);
+        console.log($scope.diffFactura);
+
         $http.get(API_URL + 'DocumentoVenta/getAllFitros?page=' + pageNumber + '&filter=' + JSON.stringify(filtros))
             .success(function(response){
                 /*$scope.Allventas=response;
                 console.log(response);*/
                 $scope.Allventas = response.data;
                 $scope.totalItems = response.total;
-                console.log(response);
+                //console.log(response);
          });
     };
     $scope.initLoad(1);
@@ -279,7 +286,7 @@ $scope.cmb_estado_fact="A";
 	$scope.NumeroRegistroVenta=function() {
         $http.get(API_URL + 'DocumentoVenta/NumRegistroVenta')
         .success(function(response){
-        	console.log(response)
+        	//console.log(response)
 
         /*NoVenta iddocumentoventa*/
             if(response.iddocumentoventa!=null ){
@@ -302,7 +309,7 @@ $scope.cmb_estado_fact="A";
 		$http.get(API_URL + 'DocumentoVenta/getAllFitros')
 	        .success(function(response){
 	            $scope.Allventas=response;
-	            console.log(response);
+	            //console.log(response);
 	     });
 	};
 	///---Cliente
@@ -311,7 +318,7 @@ $scope.cmb_estado_fact="A";
 			$http.get(API_URL + 'DocumentoVenta/getInfoClienteXCIRuc/'+$scope.DICliente)
 		        .success(function(response){
 		            $scope.Cliente=response[0];
-		            console.log($scope.Cliente);
+		            //console.log($scope.Cliente);
 		     });
 		}else{
 			QuitarClasesMensaje();
@@ -325,7 +332,7 @@ $scope.cmb_estado_fact="A";
 		$http.get(API_URL + 'DocumentoVenta/porcentajeivaiceotro')
 	        .success(function(response){
 	            $scope.Configuracion=response;
-	            console.log(response);
+	            //console.log(response);
                 for(x=0;x<$scope.Configuracion.length;x++){
 
                     /*if($scope.Configuracion[x].Descripcion=="CONT_COSTO_VENTA"){
@@ -366,7 +373,7 @@ $scope.cmb_estado_fact="A";
 		$http.get(API_URL + 'DocumentoVenta/AllBodegas')
 	        .success(function(response){
 	            $scope.Bodegas=response;
-	            console.log(response);
+	            //console.log(response);
 	     });
 	};
 	///---
@@ -417,7 +424,7 @@ $scope.cmb_estado_fact="A";
                     $("#msm").modal("show");
                     $scope.Mensaje="La venta necesita que llene las formas de pago";        
                 }
-	            console.log(response);
+	            //console.log(response);
 	     });
 	};
 	///---
@@ -425,13 +432,13 @@ $scope.cmb_estado_fact="A";
 		$http.get(API_URL + 'DocumentoVenta/getheaddocumentoventa')
 	        .success(function(response){
 	            $scope.PuntoVenta=response;
-                console.log($scope.PuntoVenta);
+                //console.log($scope.PuntoVenta);
                 if($scope.Formapago.PuntoVenta==0){
                     $("#titulomsm").addClass("btn-danger");
                     $("#msm").modal("show");
                     $scope.Mensaje="La venta necesita puntos de venta y agente de venta";        
                 }
-	            console.log(response);
+	            //console.log(response);
 	    });
 	};
 	///---
@@ -452,7 +459,7 @@ $scope.cmb_estado_fact="A";
 	///---
 	$scope.items=[];
 	$scope.Agregarfila=function(){
-		console.log($scope.Cliente.numdocidentific);
+		//console.log($scope.Cliente.numdocidentific);
 		if($scope.Cliente.numdocidentific!=undefined){
 			var item={
 				productoObj:null,
@@ -532,7 +539,7 @@ $scope.cmb_estado_fact="A";
     	var aux_subtotalconimpuestos=0;
         var aux_totaldescuento=0;
         var aux_totalIce=0;
-        console.log($scope.items);
+        //console.log($scope.items);
     	for(x=0;x<$scope.items.length;x++){
     		//console.log($scope.items[x]);
     		//if(parseInt($scope.items[x].iva)==0 ){
@@ -560,7 +567,7 @@ $scope.cmb_estado_fact="A";
         var aux_excento_iva=0;
     	for(x=0;x<$scope.items.length;x++){
     		//console.log($scope.items[x]);
-            console.log(parseInt($scope.items[x].iva));
+            //console.log(parseInt($scope.items[x].iva));
 
             if(parseInt($scope.items[x].iva)==0){ // 0% no objeto , excento
                 switch($scope.items[x].productoObj.originalObject.idtipoimpuestoiva){
@@ -731,20 +738,26 @@ $scope.cmb_estado_fact="A";
     		}
     	}
 
+    	console.log($scope.VerFactura);
+    	console.log($scope.diffFactura);
 
+        if ($scope.diffFactura === 2) {
 
-    	/*var cliente={
-    		idplancuenta: $scope.Cliente.idplancuenta,
-    		concepto: $scope.Cliente.concepto,
-    		controlhaber: $scope.Cliente.controlhaber,
-    		tipocuenta: $scope.Cliente.tipocuenta,
-    		Debe: $scope.ValorTotal,
-    		Haber: 0,
-    		Descipcion:''
-    	};
+            var cliente = {
+                idplancuenta: $scope.Cliente.idplancuenta,
+                concepto: $scope.Cliente.concepto,
+                controlhaber: $scope.Cliente.controlhaber,
+                tipocuenta: $scope.Cliente.tipocuenta,
+                Debe: $scope.ValorTotal,
+                Haber: 0,
+                Descipcion:''
+            };
 
-    	RegistroC.push(cliente);*/
+            console.log(cliente);
 
+            RegistroC.push(cliente);
+
+        }
 
     	//--Sacar producto de bodega -- el producto es un activo pero como se lo vente disminuye por el haber
     	for(x=0;x<$scope.items.length;x++){
@@ -791,20 +804,32 @@ $scope.cmb_estado_fact="A";
 
 
         //--ACTIVO del item producto o servicio
-        for(x=0;x<$scope.items.length;x++){
-            if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==2){
-                var itemproductoservicio={
-                    idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
-                    concepto: $scope.items[x].productoObj.originalObject.concepto,
-                    controlhaber: $scope.items[x].productoObj.originalObject.controlhaber,
-                    tipocuenta: $scope.items[x].productoObj.originalObject.tipocuenta,
-                    Debe: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
-                    Haber: 0,
-                    Descipcion:''
-                };
-                RegistroC.push(itemproductoservicio);
+
+        if ($scope.diffFactura === 1) {
+
+            for(x=0;x<$scope.items.length;x++){
+                if($scope.items[x].productoObj.originalObject.idclaseitem==1 || $scope.items[x].productoObj.originalObject.idclaseitem==2){
+
+                    var itemproducto = {
+                        idplancuenta: $scope.items[x].productoObj.originalObject.idplancuenta,
+                        concepto: $scope.items[x].productoObj.originalObject.concepto,
+                        controlhaber: $scope.items[x].productoObj.originalObject.controlhaber,
+                        tipocuenta: $scope.items[x].productoObj.originalObject.tipocuenta,
+                        Debe: (parseInt($scope.items[x].cantidad)*parseFloat($scope.items[x].precioU)).toFixed(4),
+                        Haber: 0,
+                        Descipcion:''
+                    };
+
+
+
+
+                    RegistroC.push(itemproducto);
+                }
             }
+
         }
+
+
 
         //--ACTIVO del item producto o servicio
 
@@ -985,10 +1010,10 @@ $scope.cmb_estado_fact="A";
 
             var bodega = null;
 
-            console.log($scope.Bodega);
+            //console.log($scope.Bodega);
 
             if ($scope.Bodega !== '0' || $scope.Bodega !== undefined || $scope.Bodega.trim() !== '') {
-                console.log($scope.Bodega);
+                //console.log($scope.Bodega);
                 bodega = $scope.Bodega;
             }
 
@@ -1093,7 +1118,7 @@ $scope.cmb_estado_fact="A";
     $scope.ViewVenta=function(venta){
     	$http.get(API_URL + 'DocumentoVenta/loadEditVenta/'+venta.iddocumentoventa)
 	        .success(function(response){
-	            console.log(response);
+	            //console.log(response);
                 $scope.VerFactura=1;
                 $scope.Cliente=response.Cliente[0];
                 var aux_ventadata=response.Venta[0];

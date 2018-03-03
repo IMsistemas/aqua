@@ -32,7 +32,7 @@ class Balances extends Controller
         return view('Estadosfinancieros/BalanceContabilidad');
     }
     /**
-     * Consultar libro diario por parametro de 2 fechas
+     * Consultar libro diario por parametro de 2 fechas!
      * el libro diario trae todas las transacciones 
      * 
      */
@@ -230,18 +230,18 @@ class Balances extends Controller
     	///activo aumenta por el debe y se calcula todo 
     	$aux_total_activo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
     									->selectRaw("COALESCE(SUM(cont_registrocontable.debe_c)-SUM(cont_registrocontable.haber_c),0) AS total_activo ")
-    									->whereRaw("cont_plancuenta.tipocuenta='A' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+    									->whereRaw("cont_plancuenta.tipocuenta='A' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
     									->get();
     	///pasivo aumenta por el haber y se calcula todo 
     	$aux_total_pasivo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
     									->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0) AS total_pasivo")
-    									->whereRaw("cont_plancuenta.tipocuenta='P' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+    									->whereRaw("cont_plancuenta.tipocuenta='P' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
     									->get();
 
     	///patrimonio aumenta por el haber y se calcula todo 
     	$aux_total_patrimonio=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
     									->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0) AS total_patrimonio")
-    									->whereRaw("cont_plancuenta.tipocuenta='PT' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+    									->whereRaw("cont_plancuenta.tipocuenta='PT' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
     									->get();
 
     	///ingreso aumenta por el debe y se calcula en el periodo seleccionado
@@ -252,12 +252,12 @@ class Balances extends Controller
     	///costo aumenta por el haber y se calcula en el periodo seleccionado
     	$aux_total_costo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
     									->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_costo ")
-    									->whereRaw("cont_plancuenta.tipocuenta='C' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+    									->whereRaw("cont_plancuenta.tipocuenta='C' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
     									->get();
     	///gasto aumenta por el haber y se calcula en el periodo seleccionado
     	$aux_total_gasto=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
     									->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_gasto ")
-    									->whereRaw("cont_plancuenta.tipocuenta='G' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+    									->whereRaw("cont_plancuenta.tipocuenta='G' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."'   ")
     									->get();
     	/// utilidad 
 
@@ -415,17 +415,18 @@ class Balances extends Controller
         ///ingreso aumenta por el debe y se calcula en el periodo seleccionado
         $aux_total_ingresos=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
             ->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_ingreso ")
-            ->whereRaw("cont_plancuenta.tipocuenta='I' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            ->whereRaw("cont_plancuenta.tipocuenta='I' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
             ->get();
         ///costo aumenta por el haber y se calcula en el periodo seleccionado
         $aux_total_costo=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
-            ->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_costo ")
-            ->whereRaw("cont_plancuenta.tipocuenta='C' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            //->selectRaw("COALESCE(SUM(cont_registrocontable.haber_c)-SUM(cont_registrocontable.debe_c),0.0) AS total_costo ")
+            ->selectRaw("COALESCE(SUM(cont_registrocontable.debe_c)-SUM(cont_registrocontable.haber_c),0.0) AS total_costo ")
+            ->whereRaw("cont_plancuenta.tipocuenta='C' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
             ->get();
         ///gasto aumenta por el haber y se calcula en el periodo seleccionado
         $aux_total_gasto=Cont_PlanCuenta::join("cont_registrocontable","cont_registrocontable.idplancuenta","=","cont_plancuenta.idplancuenta")
             ->selectRaw("COALESCE(SUM(cont_registrocontable.debe_c)-SUM(cont_registrocontable.haber_c),0.0) AS total_gasto ")
-            ->whereRaw("cont_plancuenta.tipocuenta='G' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."' ")
+            ->whereRaw("cont_plancuenta.tipocuenta='G' AND cont_registrocontable.estadoanulado=TRUE AND cont_registrocontable.fecha>='".$filtro->FechaI."' AND cont_registrocontable.fecha<='".$filtro->FechaF."'  ")
             ->get();
         /// utilidad
         $aux_utilidad= ( ((float) $aux_total_ingresos[0]->total_ingreso) -  ((float) $aux_total_costo[0]->total_costo) -  ((float) $aux_total_gasto[0]->total_gasto) );
@@ -434,7 +435,10 @@ class Balances extends Controller
             'Activo' => $aux_data_balance_activo,
             'Pasivo' => $aux_data_balance_pasivo,
             'Patrimonio' => $aux_data_balance_patrimonio,
-            'Utilidad'=>$aux_utilidad
+            'Utilidad'=>$aux_utilidad,
+            'Ingresos'=>$aux_total_ingresos[0]->total_ingreso,
+            'Costos'=>$aux_total_costo[0]->total_costo,
+            'Gastos'=>$aux_total_gasto[0]->total_gasto,
             );
         return $aux_data_plan;
     }
