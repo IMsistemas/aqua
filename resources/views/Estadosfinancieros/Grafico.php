@@ -6,7 +6,7 @@
                 <span class="input-group-addon">Tipo: </span>
                 <select class="form-control" ng-model="tipografico" name="tipografico" id="tipografico" ng-change="generar_balance_general_grafico();">
                     <option value="bar">Barras</option>
-                    <option value="horizontalBar">Barras Horizaontales</option>
+                    <option value="horizontalBar">Barras Horizontales</option>
                     <!--<option value="doughnut">Dona</option>
                     <option value="pie">Pie</option>
                     <option value="line">Linea</option>-->
@@ -18,7 +18,7 @@
                 <span class="input-group-addon">Tipo: </span>
                 <select class="form-control" ng-model="tipografico2" name="tipografico2" id="tipografico2" ng-change="generar_de_estado_resultados_grafico()">
                     <option value="bar">Barras</option>
-                    <option value="horizontalBar">Barras Horizaontales</option>
+                    <option value="horizontalBar">Barras Horizontales</option>
                     <!--<option value="doughnut">Dona</option>
                     <option value="pie">Pie</option>
                     <option value="line">Linea</option>-->
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 5px;">
         <dic class="col-md-6 col-xs-12">
             <div class="row">
                 <div class="col-md-6 col-xs-12">

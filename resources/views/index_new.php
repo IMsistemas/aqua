@@ -208,8 +208,8 @@
                                     <i class="fa fa-user fa-lg" ></i> <span id="active-user"></span> <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#profile"><i class="fa fa-pencil-square-o fa-lg" ></i> Perfil</a></li>
-                                    <li role="separator" class="divider"></li>
+                                    <!--<li><a href="#profile"><i class="fa fa-pencil-square-o fa-lg" ></i> Perfil</a></li>
+                                    <li role="separator" class="divider"></li>-->
                                     <li id="permiso_42"><a href="#" ng-click="toModuloRol()">Gestión de Roles</a></li>
                                     <li id="permiso_43"><a href="#" ng-click="toModuloUsuario()">Gestión de Usuarios</a></li>
                                     <li role="separator" class="divider"></li>
