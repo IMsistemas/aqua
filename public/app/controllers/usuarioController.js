@@ -58,6 +58,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
                         $scope.usuario = '';
                         $scope.password = '';
+                        $scope.email = '';
 
                         $scope.form_title = "Nuevo Usuario";
                         $scope.nombrerol = '';
@@ -104,6 +105,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
 
                             $scope.usuario = response.usuario;
                             $scope.password = '';
+                            $scope.email = response.email;
 
                             $('#modalActionCargo').modal('show');
 
@@ -133,6 +135,7 @@ app.controller('usuarioController', function($scope, $http, API_URL) {
             idrol: $scope.rol,
             usuario: $scope.usuario,
             password: $scope.password,
+            email: $scope.email,
             idempleado: empleado
         };
 

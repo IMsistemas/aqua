@@ -5,12 +5,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-        <title>Aqua-Inicio Sesión</title>
+        <title>AQUA - Inicio Sesión</title>
 
         <link rel="shortcut icon" href="<?= asset('favicon.ico') ?>">
 
 		<link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
 		<link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/style_generic_app.css') ?>" rel="stylesheet">
 		<link href="<?= asset('css/login.css') ?>" rel="stylesheet">
 
 	</head>
@@ -26,15 +27,23 @@
             <div class="col-md-4 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="col-xs-12" style="padding: 0; margin-top: 20px;">
+                        <div class="col-xs-12" style="padding: 0; margin-top: 10px;">
 
                             <div class="col-xs-12">
                                 <input type="text" id="t_usuario" ng-model="t_usuario" class="form-control" placeholder="Usuario">
                             </div>
+                            
                             <div class="col-xs-12" style="margin-top: 5px;">
                                 <input type="password" id="t_password" ng-model="t_password" class="form-control" placeholder="Contraseña">
                             </div>
-                            <div class="col-xs-12" style="margin-top: 20px;">
+
+                            <div class="col-xs-12 text-center" style="margin-top: 10px;">
+
+                                <a href="#" ng-click="showConfirm()">Recuperar Contraseña</a>
+                                
+                            </div>
+                            
+                            <div class="col-xs-12" style="margin-top: 10px;">
                                 <button class="btn btn-primary btn-lg btn-block" ng-click="verifyLogin()">ENTRAR</button>
                             </div>
 
@@ -49,6 +58,92 @@
             <div class="col-md-4 col-xs-12"></div>
 
         </div>
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalResetPassword">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación Cambio de Contraseña</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" name="formReset" novalidate="">
+
+                            <div class="row">
+                                <div class="col-xs-12 error">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Usuario: </span>
+                                        <input type="text" class="form-control" name="user_reset" id="user_reset" ng-model="user_reset" placeholder="" ng-required="true">
+                                    </div>
+                                    <span class="help-block error"
+                                          ng-show="formReset.user_reset.$invalid && formReset.user_reset.$touched">El Usuario es requerido</span>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Cancelar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-click="resetPassword()" ng-disabled="formReset.$invalid">
+                            Enviar al Correo <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessage">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirmación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modalMessageError" style="z-index: 99999;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Información</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>{{message_error}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL PARA LA ACCION DE MOSTRAR MENSAJE DE CARGA -->
+        <div class="modal fade" id="myModalTest" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" style="margin-top: 200px;">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p style="font-size: 12px !important; font-weight: bold;">ESPERE POR FAVOR!...</p>
+                            </div>
+                            <div class="col-xs-12" style="margin-top: 5px;">
+                                <div class="progress">
+                                    <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span id="text-bar-load-product" class=""></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 
 		<!--<div class="container" style="border-bottom: solid 1px #9e9e9e ; padding-bottom: 4%;">

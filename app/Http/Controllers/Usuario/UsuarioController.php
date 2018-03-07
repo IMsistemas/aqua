@@ -81,6 +81,7 @@ class UsuarioController extends Controller
             $user = new Usuario();
             $user->idrol = $request->input('idrol');
             $user->usuario = $request->input('usuario');
+            $user->email = $request->input('email');
 
             if ($request->input('idempleado') != null) {
                 $user->idempleado = $request->input('idempleado');
@@ -137,12 +138,18 @@ class UsuarioController extends Controller
             $user = Usuario::find($id);
             $user->idrol = $request->input('idrol');
             $user->usuario = $request->input('usuario');
+            $user->email = $request->input('email');
 
             if ($request->input('idempleado') != null) {
                 $user->idempleado = $request->input('idempleado');
             }
 
-            $user->password = Hash::make($request->input('password'));
+            if ($request->input('password') != null && $request->input('password') != '') {
+
+                $user->password = Hash::make($request->input('password'));
+
+            }
+
 
             if ($user->save()) {
                 return response()->json(['success' => true]);

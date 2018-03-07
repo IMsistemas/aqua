@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class IndexController extends Controller
@@ -92,6 +93,72 @@ class IndexController extends Controller
             return response()->json(['success' => false]);
 
         }
+    }
+
+    public function resetPassword(Request $request)
+    {
+
+        $user = Usuario::where( 'usuario', $request->input('user' ) )->get();
+
+        if ( count( $user ) > 0 ) {
+
+            $user = Usuario::find($user[0]->idusuario);
+
+            if ($user->email != null && $user->email != '') {
+
+                $newPassword = $this->generatePassword(8);
+
+                $user->password = Hash::make($newPassword);
+
+                if ($user->save()) {
+
+                    $correo = $user->email;
+
+                    Mail::send('usuario.bodyResetPass',['emailnew' => $newPassword] , function($message) use ($correo)
+                    {
+                        $message->from('notificacionimnegocios@gmail.com', 'AQUA');
+
+                        $message->to($correo)->subject('Solicitud de Cambio de Password');
+                    });
+
+                    return response()->json(['success' => true]);
+
+                } else {
+
+                    return response()->json(['success' => false]);
+
+                }
+
+            } else {
+
+                return response()->json(['success' => false, 'email' => false]);
+
+            }
+
+        } else {
+
+            return response()->json(['success' => false, 'user' => false]);
+
+        }
+
+    }
+
+    private function generatePassword($longitud)
+    {
+
+        $codigo = '';
+
+        $caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+        $max = strlen($caracteres) - 1;
+
+        for($i = 0; $i < $longitud; $i++) {
+
+            $codigo .= $caracteres[rand(0, $max)];
+
+        }
+
+        return $codigo;
     }
 
     /**

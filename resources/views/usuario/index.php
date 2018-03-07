@@ -1,6 +1,6 @@
 
 
-<div ng-controller="usuarioController">
+<div class="container" ng-controller="usuarioController">
 
     <div class="col-xs-12">
 
@@ -96,6 +96,13 @@
                                     <span class="input-group-addon">Empleado: </span>
                                     <select class="form-control" name="empleado" id="empleado" ng-model="empleado"
                                             ng-options="value.id as value.label for value in empleados"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 error" style="margin-top: 5px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Email: </span>
+                                    <input type="text" class="form-control" name="email" id="email" ng-model="email" placeholder="">
                                 </div>
                             </div>
 
