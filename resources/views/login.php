@@ -216,7 +216,7 @@
 
             <div class="container">
 
-                <div class="col-xs-12 col-sm-8 text-center" style="color: #9d1c30 !important;">
+                <div class="col-xs-12 col-sm-8 text-right" style="color: #9d1c30 !important;">
                     Copyright &copy; 2012 - <?= date('Y'); ?>
 
                     <a href="https://www.AquaPotable.org" target="_blank" style="color: #9d1c30 !important; font-weight: bold;">
