@@ -17,14 +17,16 @@
 	</head>
 	<body ng-controller="loginController">
 
-		<div class="container" style="border-bottom: solid 1px #9e9e9e ;">
+		<div class="container" style="">
 			<img src="img/logotipo-interno.png">
 		</div>
 
         <div class="container">
 
             <div class="col-md-4 col-xs-12"></div>
+
             <div class="col-md-4 col-xs-12">
+
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-xs-12" style="padding: 0; margin-top: 10px;">
@@ -211,7 +213,38 @@
         -->
 
 		<footer>
-			<a href="https://www.imnegocios.com/" target="_blank"><img src="img/logotipo-imnegocios.png" style="width: 180px;"></a>
+
+            <div class="container">
+
+                <div class="col-xs-12 col-sm-8 text-center" style="color: #9d1c30 !important;">
+                    Copyright &copy; 2012 - <?= date('Y'); ?>
+
+                    <a href="https://www.AquaPotable.org" target="_blank" style="color: #9d1c30 !important; font-weight: bold;">
+                        www.AquaPotable.org
+                    </a>
+                    Digital-Fusion Cia. Ltda. Todos los derechos reservados
+
+                </div>
+
+                <div class="col-xs-6 col-sm-2" style="padding: 0; float: left; margin-top: -2.3%;">
+                    <a href="https://www.imnegocios.com" target="_blank"><img src="img/logo-powered.png" style="width: 65%;">
+                    </a>
+                </div>
+
+                <div class="col-xs-6 col-sm-1 text-left" style="padding: 0; float: left; margin-top: -2%;">
+                    <a href="https://www.facebook.com/SoftverAqua/" target="_blank" style="padding: 0; float: left;">
+                        <img src="img/facebook-logo.png" style="width: 30px;">
+                    </a>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
 		</footer>
 
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
