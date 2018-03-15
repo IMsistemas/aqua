@@ -147,7 +147,7 @@
 
         <div style="text-align: center;">
             <a href="https://www.aquapotable.org/" target="_blank" >
-                <img src="https://<?= $_SERVER['HTTP_HOST'] ?>/img/logotipo-interno.png" alt="AquaPotable" style="width: 25%;">
+                <img src="https://<?= $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ?>/img/logotipo-interno.png" alt="AquaPotable" style="width: 25%;">
             </a>
         </div>
 
@@ -160,7 +160,7 @@
             <div style="padding: 0px 10px;">
                 <h3 class="bodys"><b>Para reiniciar su contraseña, haz click en el siguiente enlace</b>
                     <br />
-                    <a target="_blank" href="https://<?= $_SERVER['HTTP_HOST'] . '/' . $_SERVER['PHP_SELF'] ?>/changePassword/<?= $token ?>">Recuperar Contraseña</a>
+                    <a target="_blank" href="https://<?= $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ?>/changePassword/<?= $token ?>">Recuperar Contraseña</a>
                 </h3>
             </div>
 
