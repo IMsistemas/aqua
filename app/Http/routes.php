@@ -14,6 +14,7 @@
 
 Route::get('/logout', 'Index\IndexController@logout');
 Route::post('/resetPassword', 'Index\IndexController@resetPassword');
+Route::get('changePassword/{token}', 'Index\IndexController@changePassword');
 Route::resource('/', 'Index\IndexController');
 Route::resource('/inicio', 'Index\IndexController');
 

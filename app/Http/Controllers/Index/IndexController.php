@@ -54,24 +54,6 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        /*$count = Usuario::where('usuario', $request->input('user'))
-                            ->where('password', Hash::make($request->input('pass')))->count();*/
-
-        /*$count = Usuario::where('usuario', $request->input('user'))
-                            //->where('password', $request->input('pass'))->count();
-                            ->where('password', Hash::make( $request->input('pass')))->count();
-
-        if ($count == 0) {
-            return response()->json(['success' => false]);
-        } else {
-            $usuario = Usuario::where('usuario', $request->input('user'))
-                                ->where('password', Hash::make( $request->input('pass')))->get();
-
-            Session::put('users', $usuario);
-
-            return response()->json(['success' => true]);
-        }*/
-
         $user = Usuario::where( 'usuario', $request->input('user' ) )->get();
 
         if ( count( $user ) > 0 ) {
@@ -106,7 +88,31 @@ class IndexController extends Controller
 
             if ($user->email != null && $user->email != '') {
 
-                $newPassword = $this->generatePassword(8);
+                $user->token = md5(time().rand());
+
+                if ($user->save()) {
+
+                    $correo = $user->email;
+                    $token = $user->token;
+                    $username = $user->usuario;
+
+                    Mail::send('usuario.bodyEmail_1',['token' => $token, 'username' => $username] , function($message) use ($correo)
+                    {
+                        $message->from('notificacionimnegocios@gmail.com', 'Verificación de Correo Electrónico');
+
+                        $message->to($correo)->subject('Verificación de Correo Electrónico');
+                    });
+
+                    return response()->json(['success' => true]);
+
+                } else {
+
+                    return response()->json(['success' => false]);
+
+                }
+
+
+                /*$newPassword = $this->generatePassword(8);
 
                 $user->password = Hash::make($newPassword);
 
@@ -122,6 +128,55 @@ class IndexController extends Controller
                     });
 
                     return response()->json(['success' => true]);
+
+                } else {
+
+                    return response()->json(['success' => false]);
+
+                }*/
+
+            } else {
+
+                return response()->json(['success' => false, 'email' => false]);
+
+            }
+
+        } else {
+
+            return response()->json(['success' => false, 'user' => false]);
+
+        }
+
+    }
+
+    public function changePassword($token)
+    {
+
+        $user = Usuario::where( 'token', $token )->get();
+
+        if ( count( $user ) > 0 ) {
+
+            $user = Usuario::find($user[0]->idusuario);
+
+            if ($user->email != null && $user->email != '') {
+
+                $newPassword = $this->generatePassword(10);
+
+                $user->password = Hash::make($newPassword);
+
+                if ($user->save()) {
+
+                    $correo = $user->email;
+                    $username = $user->usuario;
+
+                    Mail::send('usuario.bodyEmail_2',['newPassword' => $newPassword, 'username' => $username] , function($message) use ($correo)
+                    {
+                        $message->from('notificacionimnegocios@gmail.com', 'Actualización de Contraseña exitoso');
+
+                        $message->to($correo)->subject('Actualización de Contraseña exitoso');
+                    });
+
+                    return redirect('/');
 
                 } else {
 
@@ -148,7 +203,7 @@ class IndexController extends Controller
 
         $codigo = '';
 
-        $caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $caracteres = "!'#$%&/()=?¡*][_:;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         $max = strlen($caracteres) - 1;
 

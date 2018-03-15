@@ -55,7 +55,7 @@ app.controller('loginController', function($scope, $http, API_URL) {
 
             if (response.success === true) {
 
-                $scope.message = 'Se ha cambiado y enviado por Email registrado el password nuevo...';
+                $scope.message = 'Se ha enviado por Email registrado la solicitud de actualización de Contraseña...';
 
                 $('#modalMessage').modal('show');
 
