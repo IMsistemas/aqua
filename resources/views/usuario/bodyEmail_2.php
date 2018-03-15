@@ -143,11 +143,19 @@
 
 <div class="main" style="text-align: center;">
 
-    <div style="width:50%;background:#f6f6f6;margin:0 auto;padding: 50px;">
+    <div style="width:50%;background:#f6f6f6;margin:0 auto;padding: 20px;">
+
+        <?php
+
+            $file = $_SERVER['PHP_SELF'];
+
+            $file = str_replace('index.php', '', $file);
+
+        ?>
 
         <div style="text-align: center;">
             <a href="https://www.aquapotable.org/" target="_blank" >
-                <img src="https://<?= $_SERVER['HTTP_HOST'] ?>/img/logotipo-interno.png" alt="AquaPotable" style="width: 25%;">
+                <img src="https://<?= $_SERVER['HTTP_HOST'] . $file ?>/img/logotipo-interno.png" alt="AquaPotable" style="width: 25%;">
             </a>
         </div>
 
@@ -174,7 +182,7 @@
 
             <div class="content-block  powered-by" style="text-align:center">
                 <a href="https://www.imnegocios.com" target="_blank" style="margin-left:30px;">
-                    <img src="https://<?= $_SERVER['HTTP_HOST'] ?>/img/logo-powered.png" alt="IM Negocios">
+                    <img src="https://<?= $_SERVER['HTTP_HOST'] . $file ?>/img/logo-powered.png" alt="IM Negocios">
                 </a>
             </div>
 
