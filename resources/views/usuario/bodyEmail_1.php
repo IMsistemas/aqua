@@ -138,18 +138,18 @@
 <body>
 
 <div style="text-align: center;">
-    <h2>Verificación de Correo Electronico</h2>
+    <h2>Verificación de Correo Electrónico</h2>
 </div>
 
 <div class="main" style="text-align: center;">
 
-    <div style="width:50%;background:#f6f6f6;margin:0 auto;padding: 50px;">
+    <div style="width:50%;background:#f6f6f6;margin:0 auto;padding: 20px;">
 
         <?php
 
-        $file = $_SERVER['PHP_SELF'];
+            $file = $_SERVER['PHP_SELF'];
 
-        $file = str_replace('index.php', '', $file);
+            $file = str_replace('index.php', '', $file);
 
         ?>
 
