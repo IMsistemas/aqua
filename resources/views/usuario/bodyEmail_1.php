@@ -160,7 +160,7 @@
             <div style="padding: 0px 10px;">
                 <h3 class="bodys"><b>Para reiniciar su contraseña, haz click en el siguiente enlace</b>
                     <br />
-                    <a target="_blank" href="http://<?= $_SERVER['HTTP_HOST'] ?>/changePassword/<?= $token ?>">Recuperar Contraseña</a>
+                    <a target="_blank" href="https://<?= $_SERVER['HTTP_HOST'] ?>/changePassword/<?= $token ?>">Recuperar Contraseña</a>
                 </h3>
             </div>
 
