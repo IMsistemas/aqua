@@ -505,6 +505,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                 if (obafect == "tppagores") {
                     $scope.form_title = "Nuevo Tipo Pago Residente";
                     $scope.tipopagoresidente = '';
+                    $scope.codigosriats = '';
                     $('#modalActionPagoResidente').modal('show');
                 }
 
@@ -731,6 +732,7 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
                     $scope.idtipodocumento = id;
                     $http.get(API_URL + 'Nomenclador/getPagoResidenteByID/' + id).success(function(response) {
                         $scope.tipopagoresidente =  response[0].tipopagoresidente;
+                        $scope.codigosriats =  response[0].codigosriats;
 
                         $('#modalActionPagoResidente').modal('show');
                     });
@@ -943,7 +945,8 @@ app.controller('NomencladorController', function($scope, $http, API_URL, Upload)
 
         if (tbafect == "tppagores"){
             var data = {
-                tipopagoresidente: $scope.tipopagoresidente
+                tipopagoresidente: $scope.tipopagoresidente,
+                codigosriats: $scope.codigosriats,
             };
         }
 

@@ -666,6 +666,7 @@ class NomencladorController extends Controller
 
             $TipopagoR = new SRI_PagoResidente();
             $TipopagoR -> tipopagoresidente = $request->input('tipopagoresidente');
+            $TipopagoR -> codigosriats = $request->input('codigosriats');
 
 
             if ($TipopagoR  ->save()) {
@@ -1170,6 +1171,8 @@ class NomencladorController extends Controller
 
         $PagoR = SRI_PagoResidente::find($id);
         $PagoR ->tipopagoresidente = $request->input('tipopagoresidente');
+        $PagoR -> codigosriats = $request->input('codigosriats');
+
         if ($PagoR ->save()) {
             return response()->json(['success' => true]);
         } else {

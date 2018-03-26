@@ -797,7 +797,9 @@
             var mm = now.getMonth() + 1;
             if (mm < 10) mm = '0' + mm;
             var yyyy = now.getFullYear();
-            return dd + "\/" + mm + "\/" + yyyy;
+            return yyyy + "-" + mm + "-" + dd;
+
+            //return dd + "\/" + mm + "\/" + yyyy;
         };
 
         $scope.convertDatetoDB = function (now, revert){

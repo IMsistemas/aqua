@@ -870,13 +870,15 @@
                                 <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                     <thead class="bg-primary">
                                     <tr>
-                                        <th style="width: 80%;">PAGO RESIDENTE</th>
+                                        <th style="width: 60%;">PAGO RESIDENTE</th>
+                                        <th style="width: 20%;">CODIGO SRI</th>
                                         <th>ACCIONES</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr dir-paginate="PagoResidente in sri_PagoResidente | orderBy:sortKey:reverse | itemsPerPage:8" total-items="totalItemstpresindentpgs" current-page="currentPage" pagination-id="tpresindentpg" ng-cloak >
                                         <td>{{PagoResidente.tipopagoresidente}}</td>
+                                        <td>{{PagoResidente.codigosriats}}</td>
                                         <td class="text-center">
 
                                             <div class="btn-group" role="group" aria-label="...">
@@ -1613,6 +1615,7 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" name="formsriPagoResidente" novalidate="">
+
                             <div class="row">
                                 <div class="col-xs-12 error">
                                     <div class="input-group">
@@ -1626,6 +1629,21 @@
                                           ng-show="formsriPagoResidente.tipopagoresidente.$invalid && formsriPagoResidente.tipopagoresidente.$error.maxlength">La longitud máxima es de 150 caracteres</span>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 error">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Codigo SRI: </span>
+                                        <input type="text" class="form-control" name="codigosriats" id="codigosriats" ng-model="codigosriats" placeholder=""
+                                               ng-required="true" ng-maxlength="2">
+                                    </div>
+                                    <span class="help-block error"
+                                          ng-show="formsriPagoResidente.codigosriats.$invalid && formsriPagoResidente.codigosriats.$touched">El Codigo es requerido</span>
+                                    <span class="help-block error"
+                                          ng-show="formsriPagoResidente.codigosriats.$invalid && formsriPagoResidente.codigosriats.$error.maxlength">La longitud máxima es de 2 caracteres</span>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -1939,7 +1957,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12" style="height:380px; overflow: auto;">
+                        <div class="col-xs-12">
                             <table class="table table-responsive table-striped table-hover table-condensed table-bordered">
                                 <thead class="bg-primary">
                                 <tr>
