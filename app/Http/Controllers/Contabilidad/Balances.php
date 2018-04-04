@@ -339,8 +339,35 @@ class Balances extends Controller
                                 ->orderBy("jerarquia","ASC")
                                 ->get();
         $aux_data_plan=array();
+        $cont_aux=0;
         $aux_data_balance_activo=array();
         foreach ($balance_activo as $item) {
+            if($cont_aux==0){ //activo
+                $activo_aux = Cont_PlanCuenta::selectRaw("*")
+                                        ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                        ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                        ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='A' ")
+                                        ->orderBy("jerarquia","ASC")
+                                        ->get();
+                $aux_item = array(
+                'balance' => $activo_aux[0]->balance ,
+                'codigosri' => $activo_aux[0]->codigosri ,
+                'concepto' => $activo_aux[0]->concepto ,
+                'controlhaber' => $activo_aux[0]->controlhaber ,
+                'created_at' => $activo_aux[0]->created_at ,
+                'estado' => $activo_aux[0]->estado ,
+                'idplancuenta' => $activo_aux[0]->idplancuenta ,
+                'jerarquia' => $activo_aux[0]->jerarquia ,
+                'saldo' => $activo_aux[0]->saldo ,
+                'tipocuenta' => $activo_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $activo_aux[0]->tipoestadofinanz ,
+                'updated_at' => $activo_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($activo_aux[0]->jerarquia),
+                 );
+                 if($activo_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_activo, $aux_item);  
+                 }  
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -357,6 +384,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_activo, $aux_item); 
+                $cont_aux++;
         }
 
         $balance_pasivo=Cont_PlanCuenta::selectRaw("*")
@@ -366,8 +394,35 @@ class Balances extends Controller
                                 ->orderBy("jerarquia","ASC")
                                 ->get();
 
+        $cont_aux=0;
         $aux_data_balance_pasivo=array();
         foreach ($balance_pasivo as $item) {
+            if($cont_aux==0){ // pasivo
+                $pasivo_aux=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='P'  ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+                $aux_item = array(
+                'balance' => $pasivo_aux[0]->balance ,
+                'codigosri' => $pasivo_aux[0]->codigosri ,
+                'concepto' => $pasivo_aux[0]->concepto ,
+                'controlhaber' => $pasivo_aux[0]->controlhaber ,
+                'created_at' => $pasivo_aux[0]->created_at ,
+                'estado' => $pasivo_aux[0]->estado ,
+                'idplancuenta' => $pasivo_aux[0]->idplancuenta ,
+                'jerarquia' => $pasivo_aux[0]->jerarquia ,
+                'saldo' => $pasivo_aux[0]->saldo ,
+                'tipocuenta' => $pasivo_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $pasivo_aux[0]->tipoestadofinanz ,
+                'updated_at' => $pasivo_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($pasivo_aux[0]->jerarquia),
+                 );
+                 if($pasivo_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_pasivo, $aux_item); 
+                 }    
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -384,6 +439,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_pasivo, $aux_item); 
+                $cont_aux++;
         }
 
         $balance_patrimonio=Cont_PlanCuenta::selectRaw("*")
@@ -393,7 +449,34 @@ class Balances extends Controller
                                 ->orderBy("jerarquia","ASC")
                                 ->get();
         $aux_data_balance_patrimonio=array();
+        $cont_aux=0;
         foreach ($balance_patrimonio as $item) {
+            if($cont_aux==0){
+                 $patrimonio_aux=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='PT'  ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+                $aux_item = array(
+                'balance' => $patrimonio_aux[0]->balance ,
+                'codigosri' => $patrimonio_aux[0]->codigosri ,
+                'concepto' => $patrimonio_aux[0]->concepto ,
+                'controlhaber' => $patrimonio_aux[0]->controlhaber ,
+                'created_at' => $patrimonio_aux[0]->created_at ,
+                'estado' => $patrimonio_aux[0]->estado ,
+                'idplancuenta' => $patrimonio_aux[0]->idplancuenta ,
+                'jerarquia' => $patrimonio_aux[0]->jerarquia ,
+                'saldo' => $patrimonio_aux[0]->saldo ,
+                'tipocuenta' => $patrimonio_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $patrimonio_aux[0]->tipoestadofinanz ,
+                'updated_at' => $patrimonio_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
+                 );
+                 if($patrimonio_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_patrimonio, $aux_item); 
+                 }  
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -410,6 +493,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_patrimonio, $aux_item); 
+                $cont_aux++;
         }
 
         ///ingreso aumenta por el debe y se calcula en el periodo seleccionado
@@ -458,7 +542,36 @@ class Balances extends Controller
                                 ->get();
         $aux_data_plan=array();
         $aux_data_balance_ingreso=array();
+        $cont_aux=0;
+
         foreach ($balance_ingreso as $item) {
+            if($cont_aux==0){
+                $ingreso_aux=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='I'  ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+                $aux_item = array(
+                'balance' => $ingreso_aux[0]->balance ,
+                'codigosri' => $ingreso_aux[0]->codigosri ,
+                'concepto' => $ingreso_aux[0]->concepto ,
+                'controlhaber' => $ingreso_aux[0]->controlhaber ,
+                'created_at' => $ingreso_aux[0]->created_at ,
+                'estado' => $ingreso_aux[0]->estado ,
+                'idplancuenta' => $ingreso_aux[0]->idplancuenta ,
+                'jerarquia' => $ingreso_aux[0]->jerarquia ,
+                'saldo' => $ingreso_aux[0]->saldo ,
+                'tipocuenta' => $ingreso_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $ingreso_aux[0]->tipoestadofinanz ,
+                'updated_at' => $ingreso_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($ingreso_aux[0]->jerarquia),
+                 );
+                 if($ingreso_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_ingreso, $aux_item); 
+                 }  
+
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -475,6 +588,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_ingreso, $aux_item); 
+                $cont_aux++;
         }
 
         $balance_costo=Cont_PlanCuenta::selectRaw("*")
@@ -485,7 +599,34 @@ class Balances extends Controller
                                 ->get();
 
         $aux_data_balance_costo=array();
+        $cont_aux=0;
         foreach ($balance_costo as $item) {
+            if($cont_aux==0){
+                $costo_aux=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='C'  ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+                $aux_item = array(
+                'balance' => $costo_aux[0]->balance ,
+                'codigosri' => $costo_aux[0]->codigosri ,
+                'concepto' => $costo_aux[0]->concepto ,
+                'controlhaber' => $costo_aux[0]->controlhaber ,
+                'created_at' => $costo_aux[0]->created_at ,
+                'estado' => $costo_aux[0]->estado ,
+                'idplancuenta' => $costo_aux[0]->idplancuenta ,
+                'jerarquia' => $costo_aux[0]->jerarquia ,
+                'saldo' => $costo_aux[0]->saldo ,
+                'tipocuenta' => $costo_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $costo_aux[0]->tipoestadofinanz ,
+                'updated_at' => $costo_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($costo_aux[0]->jerarquia),
+                 ); 
+                 if($costo_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_costo, $aux_item); 
+                 } 
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -502,6 +643,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_costo, $aux_item); 
+                $cont_aux++;
         }
 
         $balance_gasto=Cont_PlanCuenta::selectRaw("*")
@@ -511,7 +653,34 @@ class Balances extends Controller
                                 ->orderBy("jerarquia","ASC")
                                 ->get();
         $aux_data_balance_gasto=array();
+        $cont_aux=0;
         foreach ($balance_gasto as $item) {
+            if($cont_aux==0){
+                $gasto_aux=Cont_PlanCuenta::selectRaw("*")
+                                ->selectRaw("f_balancecuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') balance ")
+                                ->selectRaw("f_saldocuentacontable(idplancuenta,'".$filtro->FechaI."','".$filtro->FechaF."') saldo ")
+                                ->whereRaw("jerarquia ~ '*{1}' AND tipocuenta='G'  ")
+                                ->orderBy("jerarquia","ASC")
+                                ->get();
+                $aux_item = array(
+                'balance' => $gasto_aux[0]->balance ,
+                'codigosri' => $gasto_aux[0]->codigosri ,
+                'concepto' => $gasto_aux[0]->concepto ,
+                'controlhaber' => $gasto_aux[0]->controlhaber ,
+                'created_at' => $gasto_aux[0]->created_at ,
+                'estado' => $gasto_aux[0]->estado ,
+                'idplancuenta' => $gasto_aux[0]->idplancuenta ,
+                'jerarquia' => $gasto_aux[0]->jerarquia ,
+                'saldo' => $gasto_aux[0]->saldo ,
+                'tipocuenta' => $gasto_aux[0]->tipocuenta ,
+                'tipoestadofinanz' => $gasto_aux[0]->tipoestadofinanz ,
+                'updated_at' => $gasto_aux[0]->updated_at ,
+                'aux_jerarquia' => $this->orden_plan_cuenta($gasto_aux[0]->jerarquia),
+                 );  
+                 if($gasto_aux[0]->idplancuenta!=$item->idplancuenta){
+                    array_push($aux_data_balance_gasto, $aux_item); 
+                 }
+            }
             $aux_item = array(
                 'balance' => $item->balance ,
                 'codigosri' => $item->codigosri ,
@@ -528,6 +697,7 @@ class Balances extends Controller
                 'aux_jerarquia' => $this->orden_plan_cuenta($item->jerarquia),
                  );  
                 array_push($aux_data_balance_gasto, $aux_item); 
+                $cont_aux++;
         }
         $aux_data_plan = array(
             'Ingreso' => $aux_data_balance_ingreso,
